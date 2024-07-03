@@ -107,7 +107,7 @@ export function validateLink(link, index, field, setErrors) {
 export function validateDisplayedDate(field) {
   const obj = field.value;
   if ((obj.displayedDateOption === "" || obj.displayedDateOption === "posting") && !obj.advisoryDate) {
-    field.setError("Please enter a date for 'Advisory date'");
+    field.setError("Please choose a date to display");
     return false;
   } else if (obj.displayedDateOption === "start" && !obj.startDate) {
     field.setError("Please enter a date for 'Start date'");
@@ -167,7 +167,7 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
   }
   if (!validData) {
     advisoryData.formError(
-      "Please enter valid information in all required fields."
+      "Please complete required fields"
     );
   }
   return validData;
