@@ -178,6 +178,11 @@ const MegaMenu = ({ content, menuMode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuElements])
 
+  const isExternalUrl = (url) => {
+    // a URL is considered external if it begins with "http://" or "https://"
+    return /^(http:\/\/|https:\/\/)/.test(url);
+  }
+
   useEffect(() => {
     // create sorted + structured menuTree from menuContent
 
@@ -253,9 +258,10 @@ const MegaMenu = ({ content, menuMode }) => {
                 </a>
               </li>
               <li className="menu-button menu-header">
-                {item.url.toLowerCase().startsWith('http') ?
+                {isExternalUrl(item.url) ?
                   <a className="menu-button__title" href={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
+                    <FontAwesomeIcon icon="fa-regular fa-arrow-up-right-from-square" />
                     <FontAwesomeIcon icon={faCircleChevronRight} className="menu-button__title--icon" />
                   </a> :
                   <Link
@@ -278,13 +284,14 @@ const MegaMenu = ({ content, menuMode }) => {
                       : "unselected")
                   }
                   >
-                    {page.url.toLowerCase().startsWith('http') ?
+                    {isExternalUrl(page.url) ?
                       <a
                         className="menu-button__title"
                         href={page.url}
                         role="menuitem"
                       >
                         {page.title}
+                        <FontAwesomeIcon icon="fa-regular fa-arrow-up-right-from-square" />
                       </a>
                       :
                       <Link
@@ -325,9 +332,10 @@ const MegaMenu = ({ content, menuMode }) => {
           <nav>
             <ul role="presentation">
               <li className="menu-button menu-header">
-                {item.url.toLowerCase().startsWith('http') ?
+                {isExternalUrl(item.url) ?
                   <a className="menu-button__title" href={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
+                    <FontAwesomeIcon icon="fa-regular fa-arrow-up-right-from-square" />
                   </a> :
                   <Link className="menu-button__title" to={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}

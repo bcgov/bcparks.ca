@@ -130,6 +130,9 @@ nav {
           font-size: 1rem;
           margin: 0 0 2px 8px;
         }
+        svg.fa-arrow-up-right-from-square {
+          margin-left: 4px;
+        } 
       }
       .menu-button__arr {
         float: right;
@@ -431,13 +434,15 @@ nav {
           outline-offset: 0px;
           border-radius: 4px;
         }
-
         .menu-button__arr {
           float: right;
           &.fa-chevron-right {
             padding-top: 4px;
           }
         }
+        svg.fa-arrow-up-right-from-square {
+          margin-left: 4px;
+        } 
       }
       &.menu-header {
         .menu-button__title {
