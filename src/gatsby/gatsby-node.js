@@ -37,12 +37,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     linkUrl: String
   }
 
-  type STRAPI_PARK_CONTACT implements Node @derivedTypes @dontInfer {
+  type STRAPI_PARK_CONTACT implements Node @dontInfer {
     title: String
     content: STRAPI_PARK_CONTACTContent
     rank: Int
     isActive: Boolean
-    link: [STRAPI__COMPONENT_CONTACT_LINK] @link(by: "id", from: "link___NODE")
+    links: [STRAPI__COMPONENT_CONTACT_LINK] @link(by: "id", from: "links___NODE")
   }
 
   type STRAPI_ACCESS_STATUS implements Node {

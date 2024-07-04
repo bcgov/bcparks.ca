@@ -33,7 +33,7 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
-    "link": {
+    "links": {
       "displayName": "Link",
       "type": "component",
       "repeatable": true,

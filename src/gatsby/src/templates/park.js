@@ -774,7 +774,7 @@ export const query = graphql`
             content
           }
         }
-        link {
+        links {
           icon
           linkText
           linkUrl
