@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_contact_links",
+  "info": {
+    "displayName": "Link",
+    "icon": "link",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "enumeration",
+      "enum": [
+        "phone",
+        "envelope",
+        "laptop",
+        "messages"
+      ],
+      "required": true
+    },
+    "linkText": {
+      "type": "string",
+      "required": true
+    },
+    "linkUrl": {
+      "type": "string",
+      "required": false
+    }
+  }
+}

@@ -334,6 +334,12 @@
       "relation": "oneToMany",
       "target": "api::trail-report.trail-report",
       "mappedBy": "protectedArea"
+    },
+    "parkContacts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-contact.park-contact",
+      "mappedBy": "protectedArea"
     }
   }
 }

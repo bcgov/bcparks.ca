@@ -23,6 +23,28 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   const typeDefs = `
+  type STRAPI_PARK_CONTACT_CONTENT_TEXTNODE implements Node @dontInfer {
+    content: String
+  }
+
+  type STRAPI_PARK_CONTACTContent {
+    data: STRAPI_PARK_CONTACT_CONTENT_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI__COMPONENT_CONTACT_LINK implements Node @dontInfer {
+    icon: String
+    linkText: String
+    linkUrl: String
+  }
+
+  type STRAPI_PARK_CONTACT implements Node @derivedTypes @dontInfer {
+    title: String
+    content: STRAPI_PARK_CONTACTContent
+    rank: Int
+    isActive: Boolean
+    link: [STRAPI__COMPONENT_CONTACT_LINK] @link(by: "id", from: "link___NODE")
+  }
+
   type STRAPI_ACCESS_STATUS implements Node {
     groupLabel: String
   }
@@ -132,6 +154,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     hasDiscoverParksLink: Boolean
     nearbyParks: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "nearbyParks___NODE")
     trailReports: [STRAPI_TRAIL_REPORT] @link(by: "id", from: "trailReports___NODE")
+    parkContacts: [STRAPI_PARK_CONTACT] @link(by: "id", from: "parkContacts___NODE")
   }
   
   type STRAPI__COMPONENT_PARKS_RTE_LIST_CONTENT_TEXTNODE implements Node @dontInfer {

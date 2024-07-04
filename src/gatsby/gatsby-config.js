@@ -48,6 +48,7 @@ module.exports = {
           "park-operation-sub-area",
           "park-operation-sub-area-date",
           "park-operation-sub-area-type",
+          "park-contact",
           "park-photo",
           "park-sub-page",
           "public-advisory",
@@ -152,6 +153,9 @@ module.exports = {
                     }]
                   },                  
                 },
+                parkContacts: {
+                  fields: "*"
+                }
               }
             },
             queryLimit: 100
