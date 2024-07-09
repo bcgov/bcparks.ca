@@ -131,6 +131,12 @@ const getProtectedAreaStatus = async (ctx) => {
       populate: { 
         facilityType: { fields: ["facilityName", "facilityCode"] }
       }
+    },
+    parkCampingTypes: {
+      fields: ["id"],
+      populate: {
+        campingType: { fields: ["campingTypeName", "campingTypeCode"] }
+      }
     }
   };
 
@@ -273,6 +279,17 @@ const getProtectedAreaStatus = async (ctx) => {
       };
     });
 
+    const parkCampingTypes = protectedArea.parkCampingTypes.map((a) => {
+      return {
+        campingTypeName: a.campingType.campingTypeName,
+        campingTypeCode: a.campingType.campingTypeCode,
+        description: a.description,
+        icon: a.campingType.icon,
+        iconNA: a.campingType.iconNA,
+        rank: a.campingType.rank,
+      };
+    });
+
     const links = publicAdvisory.links.map((link) => {
       return {
         title: link.title,
@@ -329,6 +346,7 @@ const getProtectedAreaStatus = async (ctx) => {
       ),
       parkActivities: parkActivities,
       parkFacilities: parkFacilities,
+      parkCampingTypes: parkCampingTypes,
       orderUrl: links
         .filter((f) => f.type.toLowerCase().includes("order"))
         .map((m) => m.url),

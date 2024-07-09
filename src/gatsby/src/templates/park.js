@@ -71,32 +71,20 @@ export default function ParkTemplate({ data }) {
     ["facilityType.rank", "facilityType.facilityName"],
     ["asc"]
   )
+  const activeCampings = sortBy(
+    park.parkCampingTypes.filter(
+      campingType => campingType.isActive && campingType.campingType?.isActive
+    ),
+    ["campingType.rank", "campingType.campingTypeName"],
+    ["asc"]
+  )
 
-  const campingActivities =
-    activeActivities.filter(
-      activity => activity.activityType.isCamping
-    )
-  const campingFacilities =
-    activeFacilities.filter(
-      facility => facility.facilityType.isCamping
-    )
   const nonCampingActivities =
     activeActivities
-      .filter(activity => !activity.activityType.isCamping)
       .sort((a, b) => a.activityType.activityName.localeCompare(b.activityType.activityName))
   const nonCampingFacilities =
     activeFacilities
-      .filter(facility => !facility.facilityType.isCamping)
       .sort((a, b) => a.facilityType.facilityName.localeCompare(b.facilityType.facilityName))
-  const activeCampings = campingActivities.concat(campingFacilities).sort((a, b) => {
-    if ((a.activityType?.activityName || a.facilityType?.facilityName) < (b.activityType?.activityName || b.facilityType?.facilityName)) {
-      return -1;
-    }
-    if ((a.activityType?.activityName || a.facilityType?.facilityName) > (b.activityType?.activityName || b.facilityType?.facilityName)) {
-      return 1;
-    }
-    return 0
-  })
 
   const hasReservations = operations.hasReservations
   const hasDayUsePass = operations.hasDayUsePass
@@ -598,7 +586,6 @@ export const query = graphql`
           activityName
           activityCode
           isActive
-          isCamping
           icon
           iconNA
           rank
@@ -621,7 +608,28 @@ export const query = graphql`
           facilityName
           facilityCode
           isActive
-          isCamping
+          icon
+          iconNA
+          rank
+          defaultDescription {
+            data
+          }
+          appendStandardCalloutText {
+            data
+          }
+        }
+      }
+      parkCampingTypes {
+        isActive
+        isCampingOpen
+        hideStandardCallout
+        description {
+          data
+        }
+        campingType {
+          campingTypeName
+          campingTypeCode
+          isActive
           icon
           iconNA
           rank
@@ -755,7 +763,6 @@ export const query = graphql`
           isActive
           icon
           rank
-          isCamping
         }
       }
       parkOperationDates {
@@ -796,7 +803,6 @@ export const query = graphql`
             facilityNumber
             facilityCode
             isActive
-            isCamping
           }
         }
       }
@@ -824,7 +830,6 @@ export const query = graphql`
             facilityNumber
             facilityCode
             isActive
-            isCamping
           }
         }
       }
@@ -852,7 +857,6 @@ export const query = graphql`
             facilityNumber
             facilityCode
             isActive
-            isCamping
           }
         }
       }

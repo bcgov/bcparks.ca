@@ -121,7 +121,7 @@ const ParkCard = ({ r }) => {
                   iconSize={32}
                   parkFacilities={r.parkFacilities}
                   parkActivities={r.parkActivities}
-                  campingFacilities={r.campingFacilities}
+                  parkCampingTypes={r.parkCampingTypes}
                 />
               </div>
               <div className="park-content-bottom--right">
@@ -212,7 +212,7 @@ const ParkCard = ({ r }) => {
               iconSize={32}
               parkFacilities={r.parkFacilities}
               parkActivities={r.parkActivities}
-              campingFacilities={r.campingFacilities}
+              parkCampingTypes={r.parkCampingTypes}
             />
           </div>
           <div className="text-blue">

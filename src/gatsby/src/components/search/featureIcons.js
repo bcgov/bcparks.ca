@@ -22,10 +22,10 @@ const Icon = ({ src, label, size }) => {
   )
 }
 
-const FeatureIcons = ({ page, slug, iconSize, parkFacilities, parkActivities, campingFacilities }) => {
+const FeatureIcons = ({ page, slug, iconSize, parkFacilities, parkActivities, parkCampingTypes }) => {
   const facilities = parkFacilities.filter(f => [6].includes(f.num)) || [];
   const activities = parkActivities.filter(a => [1, 3, 8, 9].includes(a.num)) || [];
-  const campings = campingFacilities.filter(c => [1, 36].includes(c.num)) || [];
+  const campings = parkCampingTypes.filter(c => [1, 36].includes(c.num)) || [];
 
   return (
     <>

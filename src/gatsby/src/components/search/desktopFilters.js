@@ -9,17 +9,17 @@ import "../../styles/search.scss"
 const DesktopFilters = ({
   data: {
     areaItems,
-    campingFacilityItems,
+    campingTypeItems,
     activityItems,
     facilityItems,
     selectedAreas,
-    selectedCampingFacilities,
+    selectedParkCampingTypes,
     selectedActivities,
     selectedFacilities,
     searchText,
     setFilters,
     handleAreaCheck,
-    handleCampingFacilityCheck,
+    handleCampingTypeCheck,
     handleActivityCheck,
     handleFacilityCheck
   },
@@ -37,7 +37,7 @@ const DesktopFilters = ({
   }, [
     searchText,
     selectedAreas,
-    selectedCampingFacilities,
+    selectedParkCampingTypes,
     selectedActivities,
     selectedFacilities,
     setFilters
@@ -69,11 +69,11 @@ const DesktopFilters = ({
       <fieldset className="mb-2">
         <legend className="filter-heading">Popular</legend>
         <Filter
-          filterItems={campingFacilityItems.filter(
+          filterItems={campingTypeItems.filter(
             c => c.value === 36
           )}
-          selectedFilterItems={selectedCampingFacilities}
-          handleFilterCheck={handleCampingFacilityCheck}
+          selectedFilterItems={selectedParkCampingTypes}
+          handleFilterCheck={handleCampingTypeCheck}
           filterType="popular"
         />
         <Filter
@@ -99,11 +99,11 @@ const DesktopFilters = ({
           filterType="popular"
         />
         <Filter
-          filterItems={campingFacilityItems.filter(
+          filterItems={campingTypeItems.filter(
             c => c.value === 1
           )}
-          selectedFilterItems={selectedCampingFacilities}
-          handleFilterCheck={handleCampingFacilityCheck}
+          selectedFilterItems={selectedParkCampingTypes}
+          handleFilterCheck={handleCampingTypeCheck}
           filterType="popular"
         />
       </fieldset>
@@ -143,9 +143,9 @@ const DesktopFilters = ({
       <fieldset className="mb-2">
         <legend className="filter-heading">Camping</legend>
         <Filter
-          filterItems={campingFacilityItems}
-          selectedFilterItems={selectedCampingFacilities}
-          handleFilterCheck={handleCampingFacilityCheck}
+          filterItems={campingTypeItems}
+          selectedFilterItems={selectedParkCampingTypes}
+          handleFilterCheck={handleCampingTypeCheck}
           filterType="camping"
         />
       </fieldset>
@@ -222,17 +222,17 @@ const DesktopFilters = ({
 DesktopFilters.propTypes = {
   data: PropTypes.shape({
     areaItems: PropTypes.array.isRequired,
-    campingFacilityItems: PropTypes.array.isRequired,
+    campingTypeItems: PropTypes.array.isRequired,
     activityItems: PropTypes.array.isRequired,
     facilityItems: PropTypes.array.isRequired,
     selectedAreas: PropTypes.array.isRequired,
-    selectedCampingFacilities: PropTypes.array.isRequired,
+    selectedParkCampingTypes: PropTypes.array.isRequired,
     selectedActivities: PropTypes.array.isRequired,
     selectedFacilities: PropTypes.array.isRequired,
     searchText: PropTypes.string.isRequired,
     setFilters: PropTypes.func.isRequired,
     handleAreaCheck: PropTypes.func.isRequired,
-    handleCampingFacilityCheck: PropTypes.func.isRequired,
+    handleCampingTypeCheck: PropTypes.func.isRequired,
     handleActivityCheck: PropTypes.func.isRequired,
     handleFacilityCheck: PropTypes.func.isRequired
   }),

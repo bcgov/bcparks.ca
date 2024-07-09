@@ -84,7 +84,7 @@ module.exports = ({ strapi }) => ({
     }
 
     for (const campingNum of campingNumbers) {
-      campingFilter.push({ match: { "campingFacilities.num": campingNum } })
+      campingFilter.push({ match: { "parkCampingTypes.num": campingNum } })
     }
 
     if (camping) {
@@ -201,7 +201,7 @@ module.exports = ({ strapi }) => ({
               aggs: {
                 campings: {
                   terms: {
-                    field: "campingFacilities.num",
+                    field: "parkCampingTypes.num",
                     size: 50,
                     min_doc_count: 0
                   }
@@ -253,7 +253,7 @@ module.exports = ({ strapi }) => ({
             "slug",
             "parkFacilities",
             "parkActivities",
-            "campingFacilities",
+            "parkCampingTypes",
             "parkLocations.searchArea",
             "parkLocations.searchAreaNum",
             "advisories",

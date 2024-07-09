@@ -60,6 +60,10 @@ exports.createSchemaCustomization = ({ actions }) => {
     appendStandardCalloutText: DATA
   }
 
+  type STRAPI_CAMPING_TYPE implements Node {
+    appendStandardCalloutText: DATA
+  }
+
   type STRAPI_PARK_ACTIVITY implements Node {
     activityType: STRAPI_ACTIVITY_TYPE
     hideStandardCallout: Boolean
@@ -70,6 +74,11 @@ exports.createSchemaCustomization = ({ actions }) => {
     hideStandardCallout: Boolean
   }
 
+  type STRAPI_PARK_CAMPING_TYPE implements Node {
+    campingType: STRAPI_CAMPING_TYPE
+    hideStandardCallout: Boolean
+  }
+
   type STRAPI_PROTECTED_AREA implements Node {
     managementDocuments:[STRAPI_MANAGEMENT_DOCUMENT] @link(by: "id", from: "managementDocuments___NODE")
     biogeoclimaticZones: [STRAPI_BIOGEOCLIMATIC_ZONE] @link(by: "id", from: "biogeoclimaticZones___NODE")
@@ -77,6 +86,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     terrestrialEcosections: [STRAPI_TERRESTRIAL_ECOSECTION] @link(by: "id", from: "terrestrialEcosections___NODE")
     parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
+    parkCampingTypes: [STRAPI_PARK_CAMPING_TYPE] @link(by: "id", from: "parkCampingTypes___NODE")
     seo: STRAPI__COMPONENT_PARKS_SEO
     hasDiscoverParksLink: Boolean
     nearbyParkOne: STRAPI_PROTECTED_AREA @link(by: "id", from: "nearbyParkOne___NODE")
@@ -209,6 +219,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkOperation: STRAPI_PARK_OPERATION
     parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
+    parkCampingTypes: [STRAPI_PARK_CAMPING_TYPE] @link(by: "id", from: "parkCampingTypes___NODE")
   }
 
   type STRAPI_MANAGEMENT_DOCUMENT_TYPE implements Node {

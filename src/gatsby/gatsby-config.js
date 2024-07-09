@@ -37,6 +37,7 @@ module.exports = {
           "access-status",
           "activity-type",
           "facility-type",
+          "camping-type",
           "legacy-redirect",
           "menu",
           "footer-menu",
@@ -77,6 +78,9 @@ module.exports = {
                 },
                 parkFacilities: {
                   populate: ["facilityType"]
+                },
+                parkCampingTypes: {
+                  populate: ["campingType"]
                 },
                 parkOperation: {
                   fields: "*"
@@ -131,9 +135,14 @@ module.exports = {
                   },
                   parkFacilities: {
                     populate: ["isActive", {
-                      facilityType: ["facilityNumber", "facilityCode", "isActive", "isCamping"]
+                      facilityType: ["facilityNumber", "facilityCode", "isActive"]
                     }]
                   },
+                  parkCampingTypes: {
+                    populate: ["isActive", {
+                      facilityType: ["campingTypeNumber", "campingTypeCode", "isActive"]
+                    }]
+                  },                  
                 },
                 nearbyParkTwo: {
                   populate: ["orcs", "slug", "protectedAreaName"],
@@ -147,9 +156,14 @@ module.exports = {
                   },
                   parkFacilities: {
                     populate: ["isActive", {
-                      facilityType: ["facilityNumber", "facilityCode", "isActive", "isCamping"]
+                      facilityType: ["facilityNumber", "facilityCode", "isActive"]
                     }]
                   },
+                  parkCampingTypes: {
+                    populate: ["isActive", {
+                      facilityType: ["campingTypeNumber", "campingTypeCode", "isActive"]
+                    }]
+                  },                  
                 },
                 nearbyParkThree: {
                   populate: ["orcs", "slug", "protectedAreaName"],
@@ -163,9 +177,14 @@ module.exports = {
                   },
                   parkFacilities: {
                     populate: ["isActive", {
-                      facilityType: ["facilityNumber", "facilityCode", "isActive", "isCamping"]
+                      facilityType: ["facilityNumber", "facilityCode", "isActive"]
                     }]
                   },
+                  parkCampingTypes: {
+                    populate: ["isActive", {
+                      facilityType: ["campingTypeNumber", "campingTypeCode", "isActive"]
+                    }]
+                  },                  
                 }
               }
             },
@@ -183,6 +202,9 @@ module.exports = {
                 },
                 parkFacilities: {
                   populate: ["facilityType"]
+                },
+                parkCampingTypes: {
+                  populate: ["campingType"]
                 },
                 parkOperation: {
                   fields: "*"

@@ -61,18 +61,18 @@ export const AccordionList = ({ eventKey, camping, open, hasReservation, reserva
       >
         <Accordion.Toggle
           as={"div"}
-          aria-controls={camping?.activityType?.activityName || camping?.facilityType?.facilityName}
+          aria-controls={camping?.campingType?.campingTypeName}
           eventKey={eventKey}
           onClick={() => setIsShow(!isShow)}
         >
           <div
-            id={camping?.activityType?.activityCode || camping?.facilityType?.facilityCode}
+            id={camping?.campingType?.campingTypeCode}
             className="d-flex justify-content-between accordion-toggle"
           >
             <div className="d-flex align-items-center">
-              <StaticIcon name={camping?.activityType?.icon || camping?.facilityType?.icon} size={36} />
+              <StaticIcon name={camping?.campingType?.icon} size={36} />
               <HtmlContent className="accordion-header">
-                {camping?.activityType?.activityName || camping?.facilityType?.facilityName}
+                {camping?.campingType?.campingTypeName}
               </HtmlContent>
             </div>
             <div className="d-flex align-items-center">
@@ -86,9 +86,7 @@ export const AccordionList = ({ eventKey, camping, open, hasReservation, reserva
           <div className="accordion-content">
             <HtmlContent>
               {!isNullOrWhiteSpace(camping.description.data) ?
-                camping.description.data : (
-                  camping?.activityType?.defaultDescription.data || camping?.facilityType?.defaultDescription.data
-                )
+                camping.description.data : (camping?.campingType?.defaultDescription.data)
               }
             </HtmlContent>
           </div>
@@ -124,7 +122,7 @@ export default function CampingDetails({ data }) {
     const reservationsURL = "https://camping.bcparks.ca"
     const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
     navigate(parkReservationsURL)
-  }  
+  }
 
   return (
     <div id="park-camping-details-container" className="anchor-link">

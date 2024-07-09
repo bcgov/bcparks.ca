@@ -42,7 +42,7 @@ const NearbyPark = ({ park }) => {
   // convert facilities
   if (park.parkFacilities?.length) {
     facilities = park.parkFacilities.filter(f => {
-      return f.isActive && f.facilityType?.isActive && !f.facilityType?.isCamping;
+      return f.isActive && f.facilityType?.isActive;
     }).map(f => {
       return {
         code: f.facilityType.facilityCode,
@@ -50,18 +50,18 @@ const NearbyPark = ({ park }) => {
       };
     });
     // convert camping facilities
-    campings = park.parkFacilities.filter(f => {
-      return f.isActive && f.facilityType?.isActive && f.facilityType?.isCamping;
-    }).map(f => {
-      let facilityCode = f.facilityType.facilityCode;
-      let facilityNumber = f.facilityType.facilityNumber;
-      if (facilityCode === 'wilderness-camping') {
-        facilityCode = 'backcountry-camping'
-        facilityNumber = 36
+    campings = park.parkCampingTypes.filter(ct => {
+      return ct.isActive && ct.facilityType?.isActive;
+    }).map(ct => {
+      let campingTypeCode = ct.campingType.campingTypeCode;
+      let campingTypeNumber = ct.campingType.campingTypeNumber;
+      if (campingTypeCode === 'wilderness-camping') {
+        campingTypeCode = 'backcountry-camping'
+        campingTypeNumber = 36
       }
       return {
-        code: facilityCode,
-        num: facilityNumber
+        code: campingTypeCode,
+        num: campingTypeNumber
       };
     });
   }
@@ -153,7 +153,7 @@ const NearbyPark = ({ park }) => {
             iconSize={36}
             parkFacilities={facilities}
             parkActivities={activities}
-            campingFacilities={campings}
+            parkCampingTypes={campings}
           />
         </div>
       </div>

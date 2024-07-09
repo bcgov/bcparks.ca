@@ -2,16 +2,16 @@ import React from "react"
 import { Link } from "gatsby"
 
 export default function VisitResponsibly({ campings, activities, marineProtectedArea }) {
-  const campingFacilityCodes = ["frontcountry-camping", "group-camping"]
-  const backcountryFacilityCodes = ["backcountry-camping", "wilderness-camping"]
-  const marineFacilityCode = ["marine-accessible-camping"]
-  const winterFacilityCode = ["winter-camping"]
+  const frontcountryCampingCodes = ["frontcountry-camping", "group-camping"]
+  const backcountryCampingCodes = ["backcountry-camping", "wilderness-camping"]
+  const marineCampingCode = ["marine-accessible-camping"]
+  const winterCampingCode = ["winter-camping"]
   const winterActivityCode = ["winter-recreation"]
   const activityCodes = ["fishing", "hunting"]
-  const hasCamping = campings.some(c => campingFacilityCodes.includes(c.facilityType?.facilityCode))
-  const hasBackcountry = campings.some(c => backcountryFacilityCodes.includes(c.facilityType?.facilityCode))
-  const hasMarineCamping = campings.some(c => marineFacilityCode.includes(c.facilityType?.facilityCode))
-  const hasWinterCamping = campings.some(c => winterFacilityCode.includes(c.facilityType?.facilityCode))
+  const hasFrontcountryCamping = campings.some(c => frontcountryCampingCodes.includes(c.facilityType?.facilityCode))
+  const hasBackcountryCamping = campings.some(c => backcountryCampingCodes.includes(c.facilityType?.facilityCode))
+  const hasMarineCamping = campings.some(c => marineCampingCode.includes(c.facilityType?.facilityCode))
+  const hasWinterCamping = campings.some(c => winterCampingCode.includes(c.facilityType?.facilityCode))
   const hasWinterActivities = activities.some(a => winterActivityCode.includes(a.activityType?.activityCode))
   const hasFishingOrHunting = activities.some(a => activityCodes.includes(a.activityType?.activityCode))
 
@@ -34,12 +34,12 @@ export default function VisitResponsibly({ campings, activities, marineProtected
         </li>
         <li>
           <Link to="/plan-your-trip/visit-responsibly/camping-day-use-guide">
-            {hasCamping ?
+            {hasFrontcountryCamping ?
               "Camping and day-use guide" : "Day-use guide"
             }
           </Link>
         </li>
-        {hasBackcountry &&
+        {hasBackcountryCamping &&
           <li>
             <Link to="/plan-your-trip/visit-responsibly/backcountry-guide">
               Backcountry guide
