@@ -269,7 +269,7 @@ const MegaMenu = ({ content, menuMode }) => {
                   </Link>
                 }
               </li>
-              {item.strapi_children.map((page, index) => (
+              {item.strapi_children.filter((page) => page.show).map((page, index) => (
                 <React.Fragment key={index}>
                   <li className={
                     "menu-button menu-button--" +
