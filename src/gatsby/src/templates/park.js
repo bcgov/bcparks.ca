@@ -753,16 +753,15 @@ export const query = graphql`
           isActive
           subAreaType
           subAreaTypeCode
-          iconUrl
           closureAffectsAccessStatus
-        }
-        facilityType {
-          facilityName
-          facilityCode
-          facilityNumber
-          isActive
-          icon
-          rank
+          facilityType {
+            facilityName
+            icon
+          }
+          campingType {
+            campingTypeName
+            icon
+          }
         }
       }
       parkOperationDates {

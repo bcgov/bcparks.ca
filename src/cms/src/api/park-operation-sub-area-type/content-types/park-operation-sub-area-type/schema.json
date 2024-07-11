@@ -18,17 +18,6 @@
     "subAreaTypeCode": {
       "type": "string"
     },
-    "iconUrl": {
-      "type": "string"
-    },
-    "isActive": {
-      "type": "boolean"
-    },
-    "subAreaTypeId": {
-      "type": "integer",
-      "required": true,
-      "unique": true
-    },
     "parkOperationSubAreas": {
       "type": "relation",
       "relation": "oneToMany",

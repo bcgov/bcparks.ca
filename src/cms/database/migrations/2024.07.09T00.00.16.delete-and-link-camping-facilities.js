@@ -7,14 +7,7 @@ async function up(knex) {
     await knex.raw(`DELETE FROM park_facilities WHERE id IN (SELECT park_facility_id FROM park_facilities_facility_type_links WHERE facility_type_id IN (SELECT id FROM facility_types WHERE is_camping = TRUE))`);
 
     console.log(" delete from facility-type");
-    await strapi.db.query("api::facility-type.facility-type")
-      .deleteMany({
-        where: {
-          isCamping: {
-            $eq: true
-          },
-        },
-      });
+    await knex.raw(`DELETE FROM facility_types WHERE is_camping = TRUE`);
 
     console.log(" link camping types and facility types");
 

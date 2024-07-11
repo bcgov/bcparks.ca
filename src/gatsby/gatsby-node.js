@@ -62,6 +62,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
   type STRAPI_CAMPING_TYPE implements Node {
     appendStandardCalloutText: DATA
+    defaultDescription: DATA
   }
 
   type STRAPI_PARK_ACTIVITY implements Node {
