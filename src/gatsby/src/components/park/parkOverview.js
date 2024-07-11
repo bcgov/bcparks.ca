@@ -51,18 +51,24 @@ export default function ParkOverview({ data: parkOverview, type }) {
         </HtmlContent>
       </div>
       {(hasHr || isLong) &&
-        <a
-          href="#park-highlights-container"
-          className="park-overview-link expand-icon"
+        <button
+          className="btn btn-link park-overview-link expand-icon"
           onClick={() => {
             setExpanded(!expanded)
-          }}>
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
+              setExpanded(!expanded)
+            }
+          }}
+        >
           {expanded ?
             <>Show less highlights <FontAwesomeIcon icon={faChevronUp} /></>
             :
             <>Show more highlights <FontAwesomeIcon icon={faChevronDown} /></>
           }
-        </a>
+        </button>
       }
     </div>
   );
