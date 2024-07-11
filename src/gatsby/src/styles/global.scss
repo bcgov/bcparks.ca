@@ -615,6 +615,10 @@ nav.breadcrumbs {
       .accordion-header {
         color: $colorGrey;
       }
+      svg {
+        width: 16px;
+        height: 16px;
+      }
     }
     img.advisory-status-icon {
       width: 24px;

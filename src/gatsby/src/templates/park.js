@@ -297,12 +297,12 @@ export default function ParkTemplate({ data }) {
   return (
     <div>
       <Header mode="internal" content={menuContent} />
-      <div className="park-header-container d-flex flex-wrap d-md-block">
-        <div className="parks-container bg-brown">
-          <div id="main-content" tabIndex={-1} className="park-info-container breadcrumb-container">
-            <Breadcrumbs breadcrumbs={breadcrumbs} />
-          </div>
-          {!isLoadingProtectedArea && !protectedAreaLoadError && (
+      {!isLoadingProtectedArea && !protectedAreaLoadError && (
+        <div className="park-header-container d-flex flex-wrap d-md-block">
+          <div className="parks-container bg-brown">
+            <div id="main-content" tabIndex={-1} className="park-info-container breadcrumb-container">
+              <Breadcrumbs breadcrumbs={breadcrumbs} />
+            </div>
             <ParkHeader
               orcs={park.orcs}
               slug={park.slug}
@@ -325,17 +325,17 @@ export default function ParkTemplate({ data }) {
               subAreas={park.parkOperationSubAreas}
               onStatusCalculated={handleAccessStatus}
             />
-          )}
-        </div>
-        <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
-          {photos.length > 0 && (
-            <div className="background-container bg-brown"></div>
-          )}
-          <div className="park-info-container">
-            <ParkPhotoGallery photos={photos} />
+          </div>
+          <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
+            {photos.length > 0 && (
+              <div className="background-container bg-brown"></div>
+            )}
+            <div className="park-info-container">
+              <ParkPhotoGallery photos={photos} />
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <div className="parks-container main-container">
         <div className="page-menu--mobile d-block d-md-none">
           <PageMenu
