@@ -117,7 +117,8 @@ const getProtectedAreaStatus = async (ctx) => {
       fields: ["managementAreaName"],
       populate: {
         region: { fields: ["id"]},
-        section: { fields: ["id"]}
+        section: { fields: ["id"]},
+        searchArea: { fields: ["id"]}
       }            
     },
     parkActivities: {
@@ -174,6 +175,13 @@ const getProtectedAreaStatus = async (ctx) => {
       populate: "*",
     }
   );
+  const searchAreasData = await strapi.entityService.findMany(
+    "api::search-area.search-area",
+    {
+      limit: -1,
+      populate: "*",
+    }
+  );
   const fireCentresData = await strapi.entityService.findMany(
     "api::fire-centre.fire-centre",
     {
@@ -224,6 +232,17 @@ const getProtectedAreaStatus = async (ctx) => {
             sectionsData.find(
               (section) => section.id === m.section?.id
             )?.sectionName
+        )
+      ),
+    ];
+
+    const searchAreas = [
+      ...new Set(
+        protectedArea.managementAreas.map(
+          (m) =>
+            searchAreasData.find(
+              (searchArea) => searchArea.id === m.searchArea?.id
+            )?.searchAreaName
         )
       ),
     ];
@@ -324,6 +343,7 @@ const getProtectedAreaStatus = async (ctx) => {
       isFogZone: boolToYN(protectedArea.isFogZone),
       regions: regions,
       sections: sections,
+      searchAreas: searchAreas,
       managementAreas: protectedArea.managementAreas.map(
         (m) => m.managementAreaName
       ),
