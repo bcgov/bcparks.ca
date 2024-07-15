@@ -29,16 +29,19 @@ const qs = require('qs');
 export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
   const [isLoading, setIsLoading] = useState(true);
   const [toError, setToError] = useState(false);
-  const [toDashboard, setToDashboard] = useState(false);
   const [protectedArea, setProtectedArea] = useState();
   const [expandedActivities, setExpandedActivities] = useState([]);
   const [editableActivities, setEditableActivities] = useState([]);
   const [expandedFacilities, setExpandedFacilities] = useState([]);
   const [editableFacilities, setEditableFacilities] = useState([]);
+  const [expandedCampingTypes, setExpandedCampingTypes] = useState([]);
+  const [editableCampingTypes, setEditableCampingTypes] = useState([]);
   const [parkActivities, setParkActivities] = useState([]);
   const [parkFacilities, setParkFacilities] = useState([]);
+  const [parkCampingTypes, setParkCampingTypes] = useState([]);
   const [submittingActivities, setSubmittingActivities] = useState([]);
   const [submittingFacilities, setSubmittingFacilities] = useState([]);
+  const [submittingCampingTypes, setSubmittingCampingTypes] = useState([]);
   const [loadParkInfo, setLoadParkInfo] = useState(true);
   const { keycloak, initialized } = useKeycloak();
   const { id } = useParams();
@@ -62,6 +65,10 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
         'parkFacilities.facilityType',
         'parkFacilities.protectedArea',
         'parkFacilities.site',
+        'parkCampingTypes',
+        'parkCampingTypes.campingType',
+        'parkCampingTypes.protectedArea',
+        'parkCampingTypes.site',
       ],
       filters: {
         orcs: {
@@ -133,6 +140,24 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
               setParkFacilities([...facilities]);
             }
           }
+          if (protectedAreaData.attributes.parkCampingTypes.data) {
+            const campingTypes = [];
+            protectedAreaData.attributes.parkCampingTypes.data.map((campingType) => {
+              return campingTypes.push({
+                id: campingType.id,
+                description: campingType.attributes.description,
+                name: campingType.attributes.name,
+                isCampingOpen: campingType.attributes.isCampingOpen,
+                isActive: campingType.attributes.isActive,
+                protectedArea: campingType.attributes.protectedArea.data,
+                site: campingType.attributes.site.data,
+                campingType: campingType.attributes.campingType.data,
+              });
+            });
+            if (isMounted) {
+              setParkCampingTypes([...campingTypes]);
+            }
+          }
           if (isMounted) {
             setProtectedArea(protectedAreaData);
             setIsLoading(false);
@@ -166,7 +191,8 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
     setToError,
     setLoadParkInfo,
     setParkActivities,
-    setParkFacilities
+    setParkFacilities,
+    setParkCampingTypes
   ]);
 
   const handleTabChange = (event, val) => {
@@ -415,17 +441,119 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
     }
   };
 
-  if (toDashboard) {
-    return (
-      <Redirect
-        push
-        to={{
-          pathname: `/advisories`,
-          index: 2,
-        }}
-      />
+  const handleCampingTypeAccordionChange = (event, isExpanded, campingTypeId) => {
+    if (isExpanded) {
+      const currentCampingTypes = [...expandedCampingTypes, campingTypeId];
+      setExpandedCampingTypes([...currentCampingTypes]);
+    } else {
+      const currentCampingTypes = expandedCampingTypes.filter(
+        (f) => f !== campingTypeId
+      );
+      setExpandedCampingTypes([...currentCampingTypes]);
+    }
+  };
+
+  const editCampingTypeDesc = (campingTypeId) => {
+    const currentCampingTypes = [...editableCampingTypes, campingTypeId];
+    setEditableCampingTypes([...currentCampingTypes]);
+  };
+
+  const cancelEditCampingTypeDesc = (campingTypeId) => {
+    const currentCampingType = parkCampingTypes.filter(
+      (f) => f.id === campingTypeId
+    )[0];
+    const unchangedCampingType = protectedArea.attributes.parkCampingTypes.data.filter(
+      (f) => f.id === campingTypeId
+    )[0];
+    currentCampingType.description = unchangedCampingType.attributes.description;
+    finishEditCampingTypeDesc(campingTypeId, true);
+  };
+
+  const finishEditCampingTypeDesc = (campingTypeId, expand) => {
+    const currentCampingTypes = editableCampingTypes.filter(
+      (f) => f !== campingTypeId
     );
-  }
+    setEditableCampingTypes([...currentCampingTypes]);
+    handleCampingTypeAccordionChange(null, expand, campingTypeId);
+  };
+  const handleCampingTypeDescriptionChange = (event, campingTypeId) => {
+    const currentDescriptions = parkCampingTypes;
+    currentDescriptions.filter((d) => {
+      if (d.id === campingTypeId) {
+        d.description = event.target.value;
+      }
+      return "";
+    });
+    setParkCampingTypes([...currentDescriptions]);
+  };
+
+  const handleCampingTypeDisplayChange = (campingTypeId) => {
+    const currentCampingTypes = parkCampingTypes;
+    currentCampingTypes.filter((d) => {
+      if (d.id === campingTypeId) {
+        d.isActive = !d.isActive;
+      }
+      return "";
+    });
+    setParkCampingTypes([...currentCampingTypes]);
+    saveCampingType(campingTypeId, false);
+  };
+
+  const handleCampingTypeOpenChange = (campingTypeId) => {
+    const currentCampingTypes = parkCampingTypes;
+    currentCampingTypes.filter((d) => {
+      if (d.id === campingTypeId) {
+        d.isCampingOpen = !d.isCampingOpen;
+      }
+      return "";
+    });
+    setParkCampingTypes([...currentCampingTypes]);
+    saveCampingType(campingTypeId, false);
+  };
+
+  const handleCampingTypeSubmitLoader = (campingTypeId) => {
+    const currentCampingTypes = [...submittingCampingTypes, campingTypeId];
+    setSubmittingCampingTypes([...currentCampingTypes]);
+  };
+
+  const saveCampingType = (campingTypeId, expand) => {
+    const campingTypes = parkCampingTypes.filter((d) => d.id === campingTypeId);
+    if (campingTypes.length > 0) {
+      const campingType = campingTypes[0];
+      const parkCampingType = {
+        name: campingType.name,
+        description: campingType.description,
+        isCampingOpen: campingType.isCampingOpen,
+        isActive: campingType.isActive,
+        modifiedBy: keycloak.tokenParsed.name,
+        modifiedDate: moment().toISOString(),
+        protectedArea: campingType.protectedArea,
+        site: campingType.site,
+        campingTypeType: campingType.campingTypeType,
+      };
+      cmsAxios
+        .put(`park-camping-types/${campingTypeId}`, {data:parkCampingType}, {
+          headers: { Authorization: `Bearer ${keycloak.token}` }
+        })
+        .then((res) => {
+          const currentCampingTypes = submittingCampingTypes.filter(
+            (f) => f !== campingTypeId
+          );
+          setSubmittingCampingTypes([...currentCampingTypes]);
+          finishEditCampingTypeDesc(campingTypeId, expand);
+          setLoadParkInfo(true);
+        })
+        .catch((error) => {
+          console.log("error occurred", error);
+          setToError(true);
+          setError({
+            status: 500,
+            message: "Could not update campingType",
+          });
+        });
+    }
+  };
+
   if (toError) {
     return <Redirect push to="/error" />;
   }
@@ -447,7 +575,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
                   label="Back"
                   styling="bcgov-normal-white btn mt-4"
                   onClick={() => {
-                    setToDashboard(true);
+                    history.push('/activities-and-facilities');
                   }}
                 />
               </div>
@@ -477,6 +605,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
                   >
                     <Tab label="Activities" {...a11yProps(0, "park-info")} />
                     <Tab label="Facilities" {...a11yProps(1, "park-info")} />
+                    <Tab label="Camping Types" {...a11yProps(2, "park-info")} />
                   </Tabs>
                   <TabPanel value={tabIndex} index={0} label="park-info">
                     {parkActivities &&
@@ -654,7 +783,7 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
                         <div>
                           <div className="row pt2b2">
                             <div className="col-lg-3 col-md-12 col-12 park-header">
-                              Facilities
+                              Facility
                             </div>
                             <div className="col-lg-1 col-md-12 col-12 park-header">
                               Display
@@ -819,6 +948,177 @@ export default function ParkInfo({ page: { setError, cmsData, setCmsData } }) {
                         </div>
                       ))}
                   </TabPanel>
+                  <TabPanel value={tabIndex} index={2} label="park-info">
+                    {parkCampingTypes &&
+                      parkCampingTypes.length > 0 && (
+                        <div>
+                          <div className="row pt2b2">
+                            <div className="col-lg-3 col-md-12 col-12 park-header">
+                              Camping Type
+                            </div>
+                            <div className="col-lg-1 col-md-12 col-12 park-header">
+                              Display
+                            </div>
+                            <div className="col-lg-1 col-md-12 col-12 park-header">
+                              Open
+                            </div>
+                            <div className="col-lg-3 col-md-12 col-12 park-header">
+                              Fees
+                            </div>
+                            <div className="col-lg-4 col-md-12 col-12 park-header no-right-border">
+                              Description
+                            </div>
+                          </div>
+                          {parkCampingTypes.map((f) => {
+                            return (
+                              <div
+                                className="row pt2b2"
+                                key={`campingType-${f.id}`}
+                              >
+                                <div className="col-lg-3 col-md-12 col-12 park-content">
+                                  {f.name.split(":")[1]}
+                                </div>
+                                <div className="col-lg-1 col-md-12 col-12 park-content">
+                                  <SwitchButton
+                                    checked={f.isActive}
+                                    name={`${f.id}-is-active`}
+                                    inputProps={{
+                                      "aria-label": "active campingType",
+                                    }}
+                                    onChange={() => {
+                                      handleCampingTypeDisplayChange(f.id);
+                                    }}
+                                  />
+                                </div>
+                                <div className="col-lg-1 col-md-12 col-12 park-content">
+                                  <SwitchButton
+                                    checked={f.isCampingOpen}
+                                    name={`${f.id}-is-open`}
+                                    inputProps={{
+                                      "aria-label": "open campingType",
+                                    }}
+                                    onChange={() => {
+                                      handleCampingTypeOpenChange(f.id);
+                                    }}
+                                  />
+                                </div>
+                                <div className="col-lg-3 col-md-12 col-12 park-content">
+                                  Add a fee
+                                </div>
+                                <div className="col-lg-4 col-md-12 col-12 park-content no-right-border">
+                                  <div className="wrap-text">
+                                    <Accordion
+                                      onChange={(event, isExpanded) => {
+                                        handleCampingTypeAccordionChange(
+                                          event,
+                                          isExpanded,
+                                          f.id
+                                        );
+                                      }}
+                                      className="park-desc"
+                                      expanded={expandedCampingTypes.includes(
+                                        f.id
+                                      )}
+                                    >
+                                      <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="campingType-description"
+                                        id="campingType-description"
+                                      >
+                                        {!expandedCampingTypes.includes(f.id) && (
+                                          <HTMLArea>
+                                            {f.description
+                                              ? f.description.length <
+                                                100
+                                                ? f.description
+                                                : f.description.substring(
+                                                    0,
+                                                    100
+                                                  ) + "..."
+                                              : "No description"}
+                                          </HTMLArea>
+                                        )}
+                                      </AccordionSummary>
+
+                                      <AccordionDetails className="">
+                                        {!editableCampingTypes.includes(f.id) && (
+                                          <HTMLArea>
+                                            {f.description
+                                              ? f.description
+                                              : "No description"}
+                                          </HTMLArea>
+                                        )}
+                                        {editableCampingTypes.includes(f.id) && (
+                                          <TextField
+                                            multiline
+                                            value={f.description || ""}
+                                            onChange={(event) => {
+                                              handleCampingTypeDescriptionChange(
+                                                event,
+                                                f.id
+                                              );
+                                            }}
+                                            className="bcgov-input white-background"
+                                            variant="outlined"
+                                            InputProps={{
+                                              id: `campingType-${f.id}-desc`,
+                                              required: false,
+                                              placeholder:
+                                                "Enter campingType description",
+                                            }}
+                                          />
+                                        )}
+                                      </AccordionDetails>
+                                      <AccordionActions>
+                                        {!editableCampingTypes.includes(f.id) && (
+                                          <Button
+                                            label="Edit"
+                                            styling="bcgov-normal-blue btn mt10"
+                                            onClick={() => {
+                                              editCampingTypeDesc(f.id);
+                                            }}
+                                          />
+                                        )}
+                                        {editableCampingTypes.includes(f.id) && (
+                                          <>
+                                            <Button
+                                              label="Cancel"
+                                              styling="bcgov-normal-white btn mt10"
+                                              onClick={() => {
+                                                cancelEditCampingTypeDesc(f.id);
+                                              }}
+                                            />
+                                            <Button
+                                              label="Save"
+                                              styling="bcgov-normal-blue btn mt10"
+                                              onClick={() => {
+                                                handleCampingTypeSubmitLoader(
+                                                  f.id
+                                                );
+                                                saveCampingType(f.id, true);
+                                              }}
+                                              hasLoader={submittingCampingTypes.includes(
+                                                f.id
+                                              )}
+                                            />
+                                          </>
+                                        )}
+                                      </AccordionActions>
+                                    </Accordion>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    {!parkCampingTypes ||
+                      (parkCampingTypes.length === 0 && (
+                        <div className="park-empty-info">
+                          No camping types found
+                        </div>
+                      ))}
+                  </TabPanel>                  
                 </div>
               </div>
             </div>

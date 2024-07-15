@@ -1,26 +1,22 @@
 {
   "kind": "collectionType",
-  "collectionName": "facility_types",
+  "collectionName": "camping_types",
   "info": {
-    "singularName": "facility-type",
-    "pluralName": "facility-types",
-    "displayName": "Facility-type",
-    "name": "facility-type",
-    "description": ""
+    "singularName": "camping-type",
+    "pluralName": "camping-types",
+    "displayName": "Camping-type"
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": true
   },
   "attributes": {
-    "facilityNumber": {
+    "campingTypeNumber": {
       "type": "integer"
     },
-    "facilityName": {
+    "campingTypeName": {
       "type": "string"
     },
-    "facilityCode": {
+    "campingTypeCode": {
       "type": "string"
     },
     "icon": {
@@ -36,9 +32,6 @@
       "type": "string"
     },
     "isActive": {
-      "type": "boolean"
-    },
-    "isCamping": {
       "type": "boolean"
     },
     "defaultDescription": {

@@ -47,10 +47,10 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
       <Accordion.Collapse eventKey={eventKey}>
         <div className="accordion-content">
           <dl>
-            {subArea.facilityName && (
+            {subArea.typeName && (
               <>
                 <dt>Facility type</dt>
-                <dd>{subArea.facilityName}</dd>
+                <dd>{subArea.typeName}</dd>
               </>
             )}
             {countsList
@@ -175,10 +175,11 @@ export default function ParkDates({ data }) {
     let subArea = subAreas[idx]
 
     if (subArea.isActive) {
-      const iconUrl = subArea.parkSubAreaType?.iconUrl || ""
-      subArea.typeIcon = iconUrl.split("/")[iconUrl.split("/").length - 1] // ignore path, get filename
 
-      subArea.facilityName = subArea.facilityType?.facilityName || ""
+      const facilityType = subArea.parkSubAreaType?.facilityType || {}
+      const campingType = subArea.parkSubAreaType?.campingType || {}
+      subArea.typeIcon = facilityType.icon || campingType.icon || "";
+      subArea.typeName = facilityType.facilityName || campingType.campingTypeName || ""
       subArea = groupSubAreaDates(subArea);
 
       // get distinct date ranges sorted chronologically

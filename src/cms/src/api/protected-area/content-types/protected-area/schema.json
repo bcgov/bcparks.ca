@@ -99,6 +99,12 @@
       "target": "api::park-facility.park-facility",
       "mappedBy": "protectedArea"
     },
+    "parkCampingTypes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-camping-type.park-camping-type",
+      "mappedBy": "protectedArea"
+    },
     "parkNames": {
       "type": "relation",
       "relation": "oneToMany",
