@@ -51,7 +51,7 @@ const NearbyPark = ({ park }) => {
     });
     // convert camping facilities
     campings = park.parkCampingTypes.filter(ct => {
-      return ct.isActive && ct.facilityType?.isActive;
+      return ct.isActive && ct.campingType?.isActive;
     }).map(ct => {
       let campingTypeCode = ct.campingType.campingTypeCode;
       let campingTypeNumber = ct.campingType.campingTypeNumber;
