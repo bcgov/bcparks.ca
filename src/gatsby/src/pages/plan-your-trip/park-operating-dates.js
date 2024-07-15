@@ -249,7 +249,6 @@ const ParkOperatingDatesPage = () => {
               offSeasonEndDate
             }
             parkSubAreaType {
-              iconUrl
               closureAffectsAccessStatus
               facilityType {
                  icon

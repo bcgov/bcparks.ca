@@ -750,7 +750,6 @@ export const query = graphql`
           offSeasonEndDate
         }
         parkSubAreaType {
-          isActive
           subAreaType
           subAreaTypeCode
           closureAffectsAccessStatus
