@@ -45,9 +45,8 @@
     },
     "campingType": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::camping-type.camping-type",
-      "inversedBy": "parkCampingTypes"
+      "relation": "oneToOne",
+      "target": "api::camping-type.camping-type"
     },
     "modifiedBy": {
       "type": "string"
