@@ -140,7 +140,7 @@ module.exports = {
                   },
                   parkCampingTypes: {
                     populate: ["isActive", {
-                      facilityType: ["campingTypeNumber", "campingTypeCode", "isActive"]
+                      campingType: ["campingTypeNumber", "campingTypeCode", "isActive"]
                     }]
                   },                  
                 },
@@ -161,7 +161,7 @@ module.exports = {
                   },
                   parkCampingTypes: {
                     populate: ["isActive", {
-                      facilityType: ["campingTypeNumber", "campingTypeCode", "isActive"]
+                      campingType: ["campingTypeNumber", "campingTypeCode", "isActive"]
                     }]
                   },                  
                 },
@@ -182,7 +182,7 @@ module.exports = {
                   },
                   parkCampingTypes: {
                     populate: ["isActive", {
-                      facilityType: ["campingTypeNumber", "campingTypeCode", "isActive"]
+                      campingType: ["campingTypeNumber", "campingTypeCode", "isActive"]
                     }]
                   },                  
                 }
