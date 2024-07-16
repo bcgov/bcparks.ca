@@ -370,7 +370,7 @@ export default function ParkTemplate({ data }) {
                   {!isLoadingAdvisories && !advisoryLoadError && (
                     <AdvisoryDetails advisories={advisories} parkType={parkType} />
                   )}
-                  {park.parkGuidelines.length > 0 &&
+                  {park.parkGuidelines?.length > 0 &&
                     <Row>
                       <Col>
                         <VisitorGuidelines guidelines={park.parkGuidelines} />
