@@ -332,6 +332,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::protected-area.protected-area"
+    },
+    "parkGuidelines": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-guideline.park-guideline",
+      "mappedBy": "protectedArea"
     }
   }
 }

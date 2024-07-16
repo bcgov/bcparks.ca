@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "guideline_types",
+  "info": {
+    "singularName": "guideline-type",
+    "pluralName": "guideline-types",
+    "displayName": "Guideline-type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "guidelineName": {
+      "type": "string",
+      "required": true
+    },
+    "icon": {
+      "type": "enumeration",
+      "enum": [
+        "list-check",
+        "person-hiking",
+        "car",
+        "dog-leashed",
+        "ban"
+      ],
+      "required": true
+    },
+    "defaultRank": {
+      "type": "integer",
+      "min": 1,
+      "default": 1,
+      "unique": true,
+      "required": true
+    },
+    "defaultTitle": {
+      "type": "string",
+      "required": true
+    },
+    "defaultDescription": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor",
+      "required": true
+    }
+  }
+}

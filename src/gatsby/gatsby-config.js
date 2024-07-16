@@ -38,6 +38,8 @@ module.exports = {
           "activity-type",
           "facility-type",
           "camping-type",
+          "guideline-type",
+          "park-guideline",
           "legacy-redirect",
           "menu",
           "footer-menu",
@@ -81,6 +83,9 @@ module.exports = {
                 },
                 parkCampingTypes: {
                   populate: ["campingType"]
+                },
+                parkGuidelines: {
+                  populate: ["guidelineType", "mediaLink"]
                 },
                 parkOperation: {
                   fields: "*"
