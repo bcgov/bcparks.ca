@@ -117,12 +117,12 @@ const NearbyPark = ({ park }) => {
               {photos.map(
                 (item, index) => {
                   return (
-                    <Carousel.Item 
-                    key={index} 
-                    tabIndex={0}
-                    onFocus={() => setIsTabFocused(true)}
-                    onBlur={() => setIsTabFocused(false)}
-                    onKeyDown={() => handleKeyDown(photos)}
+                    <Carousel.Item
+                      key={index}
+                      tabIndex={0}
+                      onFocus={() => setIsTabFocused(true)}
+                      onBlur={() => setIsTabFocused(false)}
+                      onKeyDown={() => handleKeyDown(photos)}
                     >
                       <img
                         alt="park carousel"

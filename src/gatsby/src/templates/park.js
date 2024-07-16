@@ -53,8 +53,8 @@ export default function ParkTemplate({ data }) {
   const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes
   const maps = park.maps.data.maps
   const contact = park.parkContact.data.parkContact
-  const hasNearbyParks = park.nearbyParkOne !== null || park.nearbyParkTwo !== null || park.nearbyParkThree !== null
-  const nearbyParks = hasNearbyParks ? [park.nearbyParkOne, park.nearbyParkTwo, park.nearbyParkThree] : []
+  const hasNearbyParks = park.nearbyParks.length > 0
+  const nearbyParks = park.nearbyParks
   const managementAreas = park.managementAreas || []
   const searchArea = managementAreas[0]?.searchArea || {}
 
@@ -809,77 +809,7 @@ export const query = graphql`
       terrestrialEcosections {
         terrestrialEcosection
       }
-      nearbyParkOne {
-        orcs
-        slug
-        protectedAreaName
-        parkPhotos {
-          isActive
-          isFeatured
-          sortOrder
-          imageUrl
-        }
-        parkActivities {
-          isActive
-          activityType {
-            activityNumber
-            activityCode
-            isActive
-          }
-        }
-        parkFacilities {
-          isActive
-          facilityType {
-            facilityNumber
-            facilityCode
-            isActive
-          }
-        }
-        parkCampingTypes {
-          isActive
-          campingType {
-            campingTypeNumber
-            campingTypeCode
-            isActive
-          }
-        }
-      }
-      nearbyParkTwo {
-        orcs
-        slug
-        protectedAreaName
-        parkPhotos {
-          isActive
-          isFeatured
-          sortOrder
-          imageUrl
-        }
-        parkActivities {
-          isActive
-          activityType {
-            activityNumber
-            activityCode
-            isActive
-          }
-        }
-        parkFacilities {
-          isActive
-          facilityType {
-            facilityNumber
-            facilityCode
-            isActive
-          }
-        }
-        parkCampingTypes {
-          isActive
-          campingType {
-            campingTypeNumber
-            campingTypeCode
-            isActive
-          }
-        }
-      }
-      nearbyParkThree {
+      nearbyParks {
         orcs
         slug
         protectedAreaName

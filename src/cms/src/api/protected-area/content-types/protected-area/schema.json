@@ -318,26 +318,16 @@
       "target": "api::park-photo.park-photo",
       "mappedBy": "protectedArea"
     },
-    "nearbyParkOne": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::protected-area.protected-area"
-    },
-    "nearbyParkTwo": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::protected-area.protected-area"
-    },
-    "nearbyParkThree": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::protected-area.protected-area"
-    },
     "parkGuidelines": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::park-guideline.park-guideline",
       "mappedBy": "protectedArea"
+    },
+    "nearbyParks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::protected-area.protected-area"
     }
   }
 }
