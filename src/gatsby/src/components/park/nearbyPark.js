@@ -49,6 +49,8 @@ const NearbyPark = ({ park }) => {
         num: f.facilityType.facilityNumber
       };
     });
+  }
+  if (park.parkCampingTypes?.length) {
     // convert camping facilities
     campings = park.parkCampingTypes.filter(ct => {
       return ct.isActive && ct.campingType?.isActive;

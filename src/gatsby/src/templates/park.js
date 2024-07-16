@@ -803,6 +803,14 @@ export const query = graphql`
             isActive
           }
         }
+        parkCampingTypes {
+          isActive
+          campingType {
+            campingTypeNumber
+            campingTypeCode
+            isActive
+          }
+        }
       }
       nearbyParkTwo {
         orcs
@@ -830,6 +838,14 @@ export const query = graphql`
             isActive
           }
         }
+        parkCampingTypes {
+          isActive
+          campingType {
+            campingTypeNumber
+            campingTypeCode
+            isActive
+          }
+        }
       }
       nearbyParkThree {
         orcs
@@ -854,6 +870,14 @@ export const query = graphql`
           facilityType {
             facilityNumber
             facilityCode
+            isActive
+          }
+        }
+        parkCampingTypes {
+          isActive
+          campingType {
+            campingTypeNumber
+            campingTypeCode
             isActive
           }
         }

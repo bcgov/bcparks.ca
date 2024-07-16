@@ -124,101 +124,68 @@ module.exports = {
                   fields: "*"
                 },
                 nearbyParkOne: {
-                  fields: ["orcs", "slug", "protectedAreaName"],
-                  populate: {
-                    parkPhotos: {
-                      fields: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
-                    },
-                    parkActivities: {
-                      fields: ["isActive"],
-                      populate: {
-                        activityType: {
-                          fields: ["activityNumber", "activityCode", "isActive"]
-                        }
-                      }
-                    },
-                    parkFacilities: {
-                      fields: ["isActive"],
-                      populate: {
-                        facilityType: {
-                          fields: ["facilityNumber", "facilityCode", "isActive"]
-                        }
-                      }
-                    },
-                    parkCampingTypes: {
-                      fields: ["isActive"],
-                      populate: {
-                        campingType: {
-                          fields: ["campingTypeNumber", "campingTypeCode", "isActive"]
-                        }
-                      }
-                    },
-                  }
+                  populate: ["orcs", "slug", "protectedAreaName"],
+                  parkPhotos: {
+                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
+                  },
+                  parkActivities: {
+                    populate: ["isActive", {
+                      activityType: ["activityNumber", "activityCode", "isActive"]
+                    }]
+                  },
+                  parkFacilities: {
+                    populate: ["isActive", {
+                      facilityType: ["facilityNumber", "facilityCode", "isActive"]
+                    }]
+                  },
+                  parkCampingTypes: {
+                    populate: ["isActive", {
+                      campingType: ["campingTypeNumber", "campingTypeCode", "isActive"]
+                    }]
+                  },                  
                 },
                 nearbyParkTwo: {
-                  fields: ["orcs", "slug", "protectedAreaName"],
-                  populate: {
-                    parkPhotos: {
-                      fields: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
-                    },
-                    parkActivities: {
-                      fields: ["isActive"],
-                      populate: {
-                        activityType: {
-                          fields: ["activityNumber", "activityCode", "isActive"]
-                        }
-                      }
-                    },
-                    parkFacilities: {
-                      fields: ["isActive"],
-                      populate: {
-                        facilityType: {
-                          fields: ["facilityNumber", "facilityCode", "isActive"]
-                        }
-                      }
-                    },
-                    parkCampingTypes: {
-                      fields: ["isActive"],
-                      populate: {
-                        campingType: {
-                          fields: ["campingTypeNumber", "campingTypeCode", "isActive"]
-                        }
-                      }
-                    },
-                  }
+                  populate: ["orcs", "slug", "protectedAreaName"],
+                  parkPhotos: {
+                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
+                  },
+                  parkActivities: {
+                    populate: ["isActive", {
+                      activityType: ["activityNumber", "activityCode", "isActive"]
+                    }]
+                  },
+                  parkFacilities: {
+                    populate: ["isActive", {
+                      facilityType: ["facilityNumber", "facilityCode", "isActive"]
+                    }]
+                  },
+                  parkCampingTypes: {
+                    populate: ["isActive", {
+                      campingType: ["campingTypeNumber", "campingTypeCode", "isActive"]
+                    }]
+                  },                  
                 },
                 nearbyParkThree: {
-                  fields: ["orcs", "slug", "protectedAreaName"],
-                  populate: {
-                    parkPhotos: {
-                      fields: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
-                    },
-                    parkActivities: {
-                      fields: ["isActive"],
-                      populate: {
-                        activityType: {
-                          fields: ["activityNumber", "activityCode", "isActive"]
-                        }
-                      }
-                    },
-                    parkFacilities: {
-                      fields: ["isActive"],
-                      populate: {
-                        facilityType: {
-                          fields: ["facilityNumber", "facilityCode", "isActive"]
-                        }
-                      }
-                    },
-                    parkCampingTypes: {
-                      fields: ["isActive"],
-                      populate: {
-                        campingType: {
-                          fields: ["campingTypeNumber", "campingTypeCode", "isActive"]
-                        }
-                      }
-                    },
-                  }
-                },
+                  populate: ["orcs", "slug", "protectedAreaName"],
+                  parkPhotos: {
+                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
+                  },
+                  parkActivities: {
+                    populate: ["isActive", {
+                      activityType: ["activityNumber", "activityCode", "isActive"]
+                    }]
+                  },
+                  parkFacilities: {
+                    populate: ["isActive", {
+                      facilityType: ["facilityNumber", "facilityCode", "isActive"]
+                    }]
+                  },
+                  parkCampingTypes: {
+                    populate: ["isActive", {
+                      campingType: ["campingTypeNumber", "campingTypeCode", "isActive"]
+                    }]
+                  },                  
+                }
               }
             },
             queryLimit: 100
