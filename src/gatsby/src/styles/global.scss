@@ -121,6 +121,7 @@ img { max-width: 100%; }
 
 // table
 figure.table {
+  color: $colorGrey;
   table {
     width: 100%;
     tr:first-of-type {
@@ -135,7 +136,12 @@ figure.table {
       background: $colorBrownLight;
     }
     td {
+      & > p:last-of-type {
+        margin-bottom: 0;
+      }
       svg {
+        width: 16px;
+        height: 16px;
         margin-right: 8px;
       }
     }

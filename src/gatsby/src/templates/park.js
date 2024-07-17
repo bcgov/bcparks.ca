@@ -436,7 +436,11 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[8].visible && (
               <div ref={contactRef} className="w-100">
-                <Contact contact={contact} parkContacts={park.parkContacts} />
+                <Contact
+                  contact={contact}
+                  parkContacts={park.parkContacts}
+                  hasReservations={hasReservations}
+                />
               </div>
             )}
           </div>
