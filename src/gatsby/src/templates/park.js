@@ -53,7 +53,7 @@ export default function ParkTemplate({ data }) {
   const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes
   const maps = park.maps.data.maps
   const contact = park.parkContact.data.parkContact
-  const hasNearbyParks = park.nearbyParks.length > 0
+  const hasNearbyParks = park.nearbyParks?.length > 0
   const nearbyParks = park.nearbyParks
   const managementAreas = park.managementAreas || []
   const searchArea = managementAreas[0]?.searchArea || {}
