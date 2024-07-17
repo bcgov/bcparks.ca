@@ -10,7 +10,8 @@ const NearbyParks = ({ parks }) => {
       <Container>
         <h2>More parks to visit nearby</h2>
         <Row>
-          {parks.map((park, index) =>
+          {/* limit 3 nearby parks */}
+          {parks.slice(0, 3).map((park, index) =>
             park !== null &&
             <Col key={index} xs={12} lg={4} className="col">
               <NearbyPark park={park} />

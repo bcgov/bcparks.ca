@@ -128,7 +128,7 @@ module.exports = {
                 parkPhotos: {
                   fields: "*"
                 },
-                nearbyParkOne: {
+                nearbyParks: {
                   populate: ["orcs", "slug", "protectedAreaName"],
                   parkPhotos: {
                     populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
@@ -149,48 +149,6 @@ module.exports = {
                     }]
                   },                  
                 },
-                nearbyParkTwo: {
-                  populate: ["orcs", "slug", "protectedAreaName"],
-                  parkPhotos: {
-                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
-                  },
-                  parkActivities: {
-                    populate: ["isActive", {
-                      activityType: ["activityNumber", "activityCode", "isActive"]
-                    }]
-                  },
-                  parkFacilities: {
-                    populate: ["isActive", {
-                      facilityType: ["facilityNumber", "facilityCode", "isActive"]
-                    }]
-                  },
-                  parkCampingTypes: {
-                    populate: ["isActive", {
-                      campingType: ["campingTypeNumber", "campingTypeCode", "isActive"]
-                    }]
-                  },                  
-                },
-                nearbyParkThree: {
-                  populate: ["orcs", "slug", "protectedAreaName"],
-                  parkPhotos: {
-                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
-                  },
-                  parkActivities: {
-                    populate: ["isActive", {
-                      activityType: ["activityNumber", "activityCode", "isActive"]
-                    }]
-                  },
-                  parkFacilities: {
-                    populate: ["isActive", {
-                      facilityType: ["facilityNumber", "facilityCode", "isActive"]
-                    }]
-                  },
-                  parkCampingTypes: {
-                    populate: ["isActive", {
-                      campingType: ["campingTypeNumber", "campingTypeCode", "isActive"]
-                    }]
-                  },                  
-                }
               }
             },
             queryLimit: 100

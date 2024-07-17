@@ -132,9 +132,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkGuidelines: [STRAPI_PARK_GUIDELINE] @link(by: "id", from: "parkGuidelines___NODE")
     seo: STRAPI__COMPONENT_PARKS_SEO
     hasDiscoverParksLink: Boolean
-    nearbyParkOne: STRAPI_PROTECTED_AREA @link(by: "id", from: "nearbyParkOne___NODE")
-    nearbyParkTwo: STRAPI_PROTECTED_AREA @link(by: "id", from: "nearbyParkTwo___NODE")
-    nearbyParkThree: STRAPI_PROTECTED_AREA @link(by: "id", from: "nearbyParkThree___NODE")
+    nearbyParks: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "nearbyParks___NODE")
   }
   
   type STRAPI__COMPONENT_PARKS_RTE_LIST_CONTENT_TEXTNODE implements Node @dontInfer {

@@ -10,7 +10,7 @@ export default function About({ parkType, natureAndCulture, biogeoclimaticZones,
         About this {parkType}
       </h2>
       <HtmlContent>{natureAndCulture}</HtmlContent>
-      <ui>
+      <ul>
         {biogeoclimaticZones?.length > 0 && (
           <li className="ecological-list">
             <strong>
@@ -62,7 +62,7 @@ export default function About({ parkType, natureAndCulture, biogeoclimaticZones,
             </ul>
           </li>
         )}
-      </ui>
+      </ul>
     </div>
   )
 }
