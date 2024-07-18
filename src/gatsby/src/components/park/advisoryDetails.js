@@ -77,8 +77,11 @@ export default function AdvisoryDetails({ advisories, parkType }) {
   })
 
   return (
-    <div id="park-advisory-details-container" className="mb-4">
-      <h3>{`Advisories (${advisories.length})`}</h3>
+    <div id="advisories" className="mb-4">
+      {/* id="park-advisory-details-container" should be removed once it's removed from the contents */}
+      <h3 id="park-advisory-details-container">
+        {`Advisories (${advisories.length})`}
+      </h3>
       <Row>
         {advisories.length === 0 && (
           <Col>

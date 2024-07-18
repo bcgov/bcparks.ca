@@ -180,61 +180,62 @@ export default function ParkTemplate({ data }) {
     {
       sectionIndex: 0,
       display: `Highlights in this ${parkType}`,
-      link: "#park-highlights-container",
+      link: "#highlights",
       visible: !isNullOrWhiteSpace(description),
     },
     {
       sectionIndex: 1,
       display: "Know before you go",
-      link: "#park-know-before-you-go-container",
+      link: "#know-before-you-go",
       visible: true,
     },
     {
       sectionIndex: 2,
       display: "Maps and location",
-      link: "#park-maps-location-container",
+      link: "#maps-and-location",
       visible: !isNullOrWhiteSpace(maps) || !isNullOrWhiteSpace(locationNotes)
     },
     {
       sectionIndex: 3,
       display: "Dates of operation",
+      // leave this link as is since the section won't exist in the future
       link: "#park-dates-container",
       visible: park.parkOperation,
     },
     {
       sectionIndex: 4,
       display: "Camping",
-      link: "#park-camping-details-container",
+      link: "#camping",
       visible: activeCampings.length > 0,
     },
     {
       sectionIndex: 5,
       display: "Things to do",
-      link: "#park-things-to-do-container",
+      link: "#things-to-do",
       visible: nonCampingActivities.length > 0,
     },
     {
       sectionIndex: 6,
       display: "Facilities",
-      link: "#park-facility-container",
+      link: "#facilities",
       visible: nonCampingFacilities.length > 0,
     },
     {
       sectionIndex: 7,
       display: `About this ${parkType}`,
-      link: "#park-about-container",
+      link: "#about-this-park",
       visible: !isNullOrWhiteSpace(natureAndCulture),
     },
     {
       sectionIndex: 8,
       display: "Reconciliation with Indigenous Peoples",
-      link: "#park-reconciliation-container",
+      link: "#reconciliation",
       visible: !isNullOrWhiteSpace(reconciliationNotes),
     },
     {
       sectionIndex: 9,
       display: `Contact`,
-      link: "#park-contact-container",
+      link: "#contact",
       visible: !isNullOrWhiteSpace(contact)
     }
   ]
@@ -349,7 +350,7 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[1].visible && (
               <div ref={knowBeforeRef} className="w-100">
-                <div id="park-know-before-you-go-container" className="anchor-link">
+                <div id="know-before-you-go" className="anchor-link">
                   <h2 className="section-heading">Know before you go</h2>
                   {isLoadingAdvisories && (
                     <div className="mb-5">

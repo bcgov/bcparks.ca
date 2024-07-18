@@ -17,7 +17,7 @@ export default function VisitResponsibly({ campings, activities, marineProtected
 
   return (
     <>
-      <h3>Visit responsibly</h3>
+      <h3 id="visit-responsibly">Visit responsibly</h3>
       <p>
         Follow these guides to ensure your activities are safe, respectful, and ecologically friendly:
       </p>

@@ -4,8 +4,8 @@ import HtmlContent from "./htmlContent"
 
 export default function About({ parkType, natureAndCulture, biogeoclimaticZones, terrestrialEcosections, marineEcosections }) {
   return (
-    <div id="park-about-container" className="anchor-link" >
-      {/* id="park-nature-and-culture-container" can be removed once it's no longer used */}
+    <div id="about-this-park" className="anchor-link" >
+      {/* id="park-nature-and-culture-container" should be removed once it's removed from the contents */}
       <h2 id="park-nature-and-culture-container" className="section-heading">
         About this {parkType}
       </h2>

@@ -36,13 +36,13 @@ export default function ParkOverview({ data: parkOverview, type }) {
   }, [])
 
   return (
-    <div id="park-highlights-container" className="anchor-link">
+    <div id="highlights" className="anchor-link">
       <div
         ref={ref}
         className={expanded ? classes.expanded : classes.collapsed}
         style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : 260}px` }}
       >
-        {/* id="park-overview-container" can be removed once it's no longer used */}
+        {/* id="park-overview-container" should be removed once it's removed from the contents */}
         <h2 id="park-overview-container" className="section-heading">
           Highlights in this {type}
         </h2>
