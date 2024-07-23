@@ -1,14 +1,23 @@
 import React from "react"
-import HtmlContent from "./htmlContent"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import HtmlContent from "./htmlContent"
 
-export const ParkContact = ({ title, content, links }) => {
+export const ParkContact = ({ contact }) => {
+  const facilityOperatorContact = contact.facilityOperatorContact
+  const links = contact.links.length > 0 ? contact.links :
+    facilityOperatorContact.defaultLinks.length > 0 ? facilityOperatorContact.defaultLinks : []
+
   return (
-    <>
-      <th>{title}</th>
+    <tr>
+      <th>
+        {contact.title ? contact.title : facilityOperatorContact.defaultTitle}
+      </th>
       <td>
-        <HtmlContent>{content}</HtmlContent>
-        {links.map((link, index) => (
+        <HtmlContent>
+          {contact.content.data.content ?
+            contact.content.data.content : facilityOperatorContact.defaultContent.data.defaultContent}
+        </HtmlContent>
+        {links.length > 0 && links.map((link, index) => (
           <p key={index}>
             <FontAwesomeIcon icon={`fa-regular fa-${link.icon}`} />
             {link.linkUrl !== null ?
@@ -21,7 +30,7 @@ export const ParkContact = ({ title, content, links }) => {
           </p>
         ))}
       </td>
-    </>
+    </tr>
   )
 }
 
@@ -68,21 +77,7 @@ export default function Contact({ contact, parkContacts, hasReservations }) {
                 </tr>
               )}
               {sortedContacts.map((contact, index) => (
-                <tr key={index}>
-                  {contact.facilityOperatorOverride ? (
-                    <ParkContact
-                      title={contact.facilityOperatorContact.defaultTitle}
-                      content={contact.facilityOperatorContact.defaultContent.data.defaultContent}
-                      links={contact.facilityOperatorContact.defaultLinks}
-                    />
-                  ) : (
-                    <ParkContact
-                      title={contact.title}
-                      content={contact.content.data.content}
-                      links={contact.links}
-                    />
-                  )}
-                </tr>
+                <ParkContact key={index} contact={contact} />
               ))}
               {/* display this info always */}
               <tr>

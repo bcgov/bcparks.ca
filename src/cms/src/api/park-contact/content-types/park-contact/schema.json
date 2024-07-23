@@ -22,11 +22,6 @@
       "default": true,
       "required": true
     },
-    "facilityOperatorOverride": {
-      "type": "boolean",
-      "default": false,
-      "required": true
-    },
     "name": {
       "type": "string"
     },

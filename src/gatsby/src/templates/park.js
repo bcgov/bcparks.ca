@@ -783,7 +783,6 @@ export const query = graphql`
           linkText
           linkUrl
         }
-        facilityOperatorOverride
         facilityOperatorContact {
           facilityOperatorName
           defaultTitle

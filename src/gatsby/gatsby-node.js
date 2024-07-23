@@ -56,7 +56,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     content: STRAPI_PARK_CONTACTContent
     rank: Int
     isActive: Boolean
-    facilityOperatorOverride: Boolean
     links: [STRAPI__COMPONENT_CONTACT_LINK] @link(by: "id", from: "links___NODE")
     facilityOperatorContact: STRAPI_FACILITY_OPERATOR_CONTACT @link(by: "id", from: "facilityOperatorContact___NODE")
   }
