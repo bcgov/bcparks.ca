@@ -23,6 +23,20 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   const typeDefs = `
+  type STRAPI_FACILITY_OPERATOR_CONTACT_DEFAULTCONTENT_TEXTNODE implements Node @dontInfer {
+    defaultContent: String
+  }
+
+  type STRAPI_FACILITY_OPERATOR_CONTACTDefaultContent {
+    data: STRAPI_FACILITY_OPERATOR_CONTACT_DEFAULTCONTENT_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_FACILITY_OPERATOR_CONTACT implements Node @derivedTypes @dontInfer {
+    facilityOperatorName: String
+    defaultTitle: String
+    defaultContent: STRAPI_FACILITY_OPERATOR_CONTACTDefaultContent
+    defaultLinks: [STRAPI__COMPONENT_CONTACT_LINK] @link(by: "id", from: "defaultLinks___NODE")
+  }
   type STRAPI_PARK_CONTACT_CONTENT_TEXTNODE implements Node @dontInfer {
     content: String
   }
@@ -42,7 +56,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     content: STRAPI_PARK_CONTACTContent
     rank: Int
     isActive: Boolean
+    facilityOperatorOverride: Boolean
     links: [STRAPI__COMPONENT_CONTACT_LINK] @link(by: "id", from: "links___NODE")
+    facilityOperatorContact: STRAPI_FACILITY_OPERATOR_CONTACT @link(by: "id", from: "facilityOperatorContact___NODE")
   }
 
   type STRAPI_ACCESS_STATUS implements Node {

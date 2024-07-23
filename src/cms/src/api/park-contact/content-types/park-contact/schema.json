@@ -19,12 +19,19 @@
     },
     "isActive": {
       "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "facilityOperatorOverride": {
+      "type": "boolean",
       "default": false,
-      "required": false
+      "required": true
+    },
+    "name": {
+      "type": "string"
     },
     "title": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "content": {
       "type": "customField",
@@ -44,6 +51,11 @@
       "relation": "manyToOne",
       "target": "api::protected-area.protected-area",
       "inversedBy": "parkContacts"
+    },
+    "facilityOperatorContact": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::facility-operator-contact.facility-operator-contact"
     }
   }
 }

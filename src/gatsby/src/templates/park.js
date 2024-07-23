@@ -783,6 +783,21 @@ export const query = graphql`
           linkText
           linkUrl
         }
+        facilityOperatorOverride
+        facilityOperatorContact {
+          facilityOperatorName
+          defaultTitle
+          defaultContent {
+            data {
+              defaultContent
+            }
+          }
+          defaultLinks {
+            icon
+            linkText
+            linkUrl
+          }
+        }
       }
     }
     featuredPhotos: allStrapiParkPhoto(

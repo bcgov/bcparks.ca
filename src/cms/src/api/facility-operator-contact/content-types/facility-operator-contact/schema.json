@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "facility_operator_contact",
+  "info": {
+    "singularName": "facility-operator-contact",
+    "pluralName": "facility-operator-contacts",
+    "displayName": "Facility-operator-contact",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "facilityOperatorName": {
+      "type": "string",
+      "required": true
+    },
+    "defaultTitle": {
+      "type": "string",
+      "required": true
+    },
+    "defaultContent": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "defaultLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "contact.link"
+    }
+  }
+}
