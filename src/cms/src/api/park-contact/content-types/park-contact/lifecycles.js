@@ -7,15 +7,15 @@ const updateName = async (data, where) => {
             "api::park-contact.park-contact", id, { populate: '*' }
         )
         const protectedArea = parkContact.protectedArea
-        const facilityOperatorContact = parkContact.facilityOperatorContact
+        const parkOperatorContact = parkContact.parkOperatorContact
 
         data.name = ""
         if (protectedArea) {
             data.name = protectedArea.orcs
         }
-        if (facilityOperatorContact) {
+        if (parkOperatorContact) {
             data.name += ":"
-            data.name += facilityOperatorContact.defaultTitle
+            data.name += parkOperatorContact.defaultTitle
         } else {
             data.name += ":"
             data.name += data.title

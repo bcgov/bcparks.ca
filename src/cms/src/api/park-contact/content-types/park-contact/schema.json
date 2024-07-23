@@ -28,14 +28,14 @@
     "title": {
       "type": "string"
     },
-    "content": {
+    "description": {
       "type": "customField",
       "options": {
         "preset": "toolbar"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
-    "links": {
+    "contactInformation": {
       "displayName": "Link",
       "type": "component",
       "repeatable": true,
@@ -47,10 +47,10 @@
       "target": "api::protected-area.protected-area",
       "inversedBy": "parkContacts"
     },
-    "facilityOperatorContact": {
+    "parkOperatorContact": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::facility-operator-contact.facility-operator-contact"
+      "target": "api::park-operator-contact.park-operator-contact"
     }
   }
 }

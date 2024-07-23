@@ -773,25 +773,25 @@ export const query = graphql`
         rank
         isActive
         title
-        content {
+        description {
           data {
-            content
+            description
           }
         }
-        links {
+        contactInformation {
           icon
           linkText
           linkUrl
         }
-        facilityOperatorContact {
+        parkOperatorContact {
           facilityOperatorName
           defaultTitle
-          defaultContent {
+          defaultDescription {
             data {
-              defaultContent
+              defaultDescription
             }
           }
-          defaultLinks {
+          defaultContactInformation {
             icon
             linkText
             linkUrl
