@@ -7,6 +7,8 @@ test.beforeEach(async ({page})=>{
     await page.goto(baseURL);
 });
 
+test.describe('Park Operating Date tests', ()=>{
+
 test('Navigate to the Park Operating page via mega menu', async ({page})=>{
    await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
    await page.getByRole('menuitem', { name: 'Park operating dates'}).click();
@@ -88,6 +90,8 @@ test('Check the park links are working and redirect to the correct site', async(
             await link.click();
             await expect(page).toHaveURL(baseURL + 'find-a-park/'); 
             await page.goBack();
-       }
-    }
+        }
+    };
+});
+
 });
