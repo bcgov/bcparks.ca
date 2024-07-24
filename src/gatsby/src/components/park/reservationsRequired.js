@@ -21,7 +21,7 @@ export default function ReservationsRequired({
 
   return (
     <>
-      <h3>Reservations required</h3>
+      <h3 id="reservations-required">Reservations required</h3>
       <p>
         Review general guidelines for
       </p>

@@ -125,10 +125,13 @@ export default function CampingDetails({ data }) {
   }
 
   return (
-    <div id="park-camping-details-container" className="anchor-link">
+    <div id="camping" className="anchor-link">
       <Row>
         <Col>
-          <h2 className="section-heading">Camping</h2>
+          {/* id="park-camping-details-container" should be removed once it's removed from the contents */}
+          <h2 id="park-camping-details-container" className="section-heading">
+            Camping
+          </h2>
         </Col>
         {data.hasReservations && (
           <Col className="mb-3" lg="4">

@@ -52,17 +52,17 @@ const FeatureIcons = ({ page, slug, iconSize, parkFacilities, parkActivities, pa
       }
       {page !== "park" && (
         campings.length ? (
-          <Link to={`/${slug}/#park-camping-details-container`}>
+          <Link to={`/${slug}/#camping`}>
             <p aria-label="See all facilities and activities">see all</p>
           </Link>
         ) : (
           (activities.length > 0 || facilities.length > 0) && (
             activities.length ? (
-              <Link to={`/${slug}/#park-things-to-do-container`}>
+              <Link to={`/${slug}/#things-to-do`}>
                 <p aria-label="See all facilities and activities">see all</p>
               </Link>
             ) : (
-              <Link to={`/${slug}/#park-facility-container`}>
+              <Link to={`/${slug}/#facilities`}>
                 <p aria-label="See all facilities and activities">see all</p>
               </Link>
             )

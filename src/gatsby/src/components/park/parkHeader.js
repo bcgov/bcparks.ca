@@ -124,12 +124,12 @@ export default function ParkHeader({
                 {(campings.length > 0 || facilities.length > 0) && (
                   <p>
                     {campings.length > 0 &&
-                      <a href="#park-camping-details-container">Check campgrounds</a>
+                      <a href="#camping">Check campgrounds</a>
                     }
                     {facilities.length > 0 &&
                       <>
                         {campings.length > 0 ? " and " : ""}
-                        <a href="#park-facility-container">{campings.length > 0 ? "facilities" : "Check facilities"}</a>
+                        <a href="#facilities">{campings.length > 0 ? "facilities" : "Check facilities"}</a>
                       </>
                     }
                     {" "}for additional dates.

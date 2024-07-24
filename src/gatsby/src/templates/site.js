@@ -152,37 +152,37 @@ export default function SiteTemplate({ data }) {
     {
       sectionIndex: 0,
       display: "Highlights in this site",
-      link: "#park-highlights-container",
+      link: "#highlights",
       visible: !isNullOrWhiteSpace(description),
     },
     {
       sectionIndex: 1,
       display: "Know before you go",
-      link: "#park-know-before-you-go-container",
+      link: "#know-before-you-go",
       visible: true,
     },
     {
       sectionIndex: 2,
       display: "Maps and Location",
-      link: "#park-maps-location-container",
+      link: "#maps-and-location",
       visible: !isNullOrWhiteSpace(locationNotes),
     },
     {
       sectionIndex: 3,
       display: "Camping",
-      link: "#park-camping-details-container",
+      link: "#camping",
       visible: activeCampings.length > 0,
     },
     {
       sectionIndex: 4,
       display: "Things to do",
-      link: "#park-things-to-do-container",
+      link: "#things-to-do",
       visible: nonCampingActivities.length > 0,
     },
     {
       sectionIndex: 5,
       display: "Facilities",
-      link: "#park-facility-container",
+      link: "#facilities",
       visible: nonCampingFacilities.length > 0,
     },
   ]
@@ -279,7 +279,7 @@ export default function SiteTemplate({ data }) {
             )}
             {menuItems[1].visible && (
               <div ref={knowBeforeRef} className="w-100">
-                <div id="park-know-before-you-go-container" className="anchor-link">
+                <div id="know-before-you-go" className="anchor-link">
                   <h2 className="section-heading">Know before you go</h2>
                   {isLoadingAdvisories && (
                     <div className="mb-5">

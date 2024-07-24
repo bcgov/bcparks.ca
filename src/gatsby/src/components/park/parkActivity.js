@@ -114,8 +114,8 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
   if (activityData.length === 0) return null
 
   return (
-    <div id="park-things-to-do-container" className="anchor-link">
-      {/* id="park-activity-container" can be removed once it's no longer used */}
+    <div id="things-to-do" className="anchor-link">
+      {/* id="park-activity-container" should be removed once it's removed from the contents */}
       <h2 id="park-activity-container" className="section-heading">
         Things to do
       </h2>

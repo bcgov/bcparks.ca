@@ -113,8 +113,11 @@ export default function ParkFacility({ data }) {
   if (facilityData.length === 0) return null
 
   return (
-    <div id="park-facility-container" className="anchor-link">
-      <h2 className="section-heading">Facilities</h2>
+    <div id="facilities" className="anchor-link">
+      {/* id="park-facility-container" should be removed once it's removed from the contents */}
+      <h2 id="park-facility-container" className="section-heading">
+        Facilities
+      </h2>
       <Row>
         <Col>
           {facilityData.length > 1 && (
