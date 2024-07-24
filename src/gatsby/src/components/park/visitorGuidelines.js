@@ -23,7 +23,7 @@ export const Guideline = ({ guide }) => {
       <Col className="guideline--right">
         <h4>{guide.title ? guide.title : guidelineType.defaultTitle}</h4>
         <HtmlContent>
-          {guide.description.data.description ? 
+          {guide.description.data.description ?
             guide.description.data.description : guidelineType.defaultDescription.data.defaultDescription}
         </HtmlContent>
         {media !== null &&
