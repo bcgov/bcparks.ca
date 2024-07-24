@@ -14,13 +14,13 @@ test('Check that the page has connected', async ({page}) =>{
 });
 
 // Checks the section headings on the home page
-test('Verify the headers are visible on the home page', async ({page}) =>{
+test('Verify the h2 headings are visible on the home page', async ({page}) =>{
     await expect(page.getByRole('heading', { name: 'Advisories' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'New to BC Parks?' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'About BC Parks'})).toBeVisible();
 });
 
-// Checks the Find a park search box
+// Checks the 'Find a park' search box
 test('Verify the Find a Park search box is present', async ({page}) =>{
     await expect(page.getByText('Find a parkBy park nameorNear')).toBeVisible();
     await expect(page.locator('h1', {name: 'Find a park'})).toBeVisible();
@@ -52,7 +52,7 @@ test('Check that the suggestion dropdown menu for city is visible', async ({page
     await expect(page).toHaveURL(baseURL + 'find-a-park/?l=268');
 });
 
-// Checks the park search button
+// Checks the park search button redirects to the Find a park page
 test('Search for a park via a valid park name from home page', async ({page}) =>{
     await page.getByLabel('By park name').fill('Garibaldi');
     await page.getByRole('button', {name: 'Search'}).click();
@@ -66,7 +66,7 @@ test('Search for a park with no search terms', async ({page})=>{
     await expect(page).toHaveURL(baseURL + 'find-a-park/');
 });
 
-// Checks the advisory links are not broken
+// Checks the advisory links can redirect to the corresponding advisory page
 test('Check that the redirect advisory links are working', async ({page})=>{
     await page.getByRole('link', { name: 'See flood advisories'}).click();
     await expect(page).toHaveURL(baseURL + 'active-advisories/?type=Flood');
@@ -81,7 +81,7 @@ test('Check that the redirect advisory links are working', async ({page})=>{
     await expect(page).toHaveTitle('Active advisories | BC Parks');
 });
 
-// Checks the New to BC Parks links are not broken
+// Checks the New to BC Parks links redirect to the corresponding page
 test('Check that the redirect New to BC Parks links are working', async ({page})=>{
     await page.getByAltText('Campers sitting near a tent').click();
     await expect(page).toHaveURL(baseURL + 'reservations/');
@@ -100,7 +100,7 @@ test('Check that the redirect New to BC Parks links are working', async ({page})
     await expect(page).toHaveTitle('Visit responsibly - Province of British Columbia | BC Parks');
 });
 
-// Checks the About BC Parks links are working
+// Checks the About BC Parks links redirect to the corresponding page
 test('Check that the redirect About BC Parks links are working', async ({page})=>{
     await page.getByRole('link', { name: 'An indigenous carving' }).click();
     await expect(page).toHaveURL(baseURL + 'about/indigenous-relations-reconciliation/');
@@ -117,4 +117,13 @@ test('Check that the redirect About BC Parks links are working', async ({page})=
     await page.getByRole('link', { name: 'People holding license plates' }).click();
     await expect(page).toHaveURL(baseURL + 'get-involved/');
     await expect(page).toHaveTitle('Get involved - Province of British Columbia | BC Parks');
+});
+
+// Check the Back to Top button is visible and works
+test('Check the Back to Top button is visible and works', async ({page})=>{
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await expect(page.getByRole('link', { name: 'BC Parks Logo' })).not.toBeInViewport();
+    await expect(page.getByLabel('scroll to top')).toBeVisible();
+    await page.getByLabel('scroll to top').click();
+    await expect(page.getByRole('link', { name: 'BC Parks Logo' })).toBeInViewport();
 });
