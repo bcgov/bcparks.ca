@@ -1,129 +1,40 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { navigate } from "gatsby"
-import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
+import ParkDates from "./parkDates"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
-import { countsList } from "../../utils/constants"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const AccordionList = ({ eventKey, camping, open, hasReservation, reservations }) => {
-  const [isShow, setIsShow] = useState(false)
-
-  useEffect(() => {
-    setIsShow(open)
-  }, [open])
-
+export const CampingType = ({ camping }) => {
   return (
-    hasReservation ? (
-      <Accordion
-        activeKey={isShow ? eventKey : ''}
-        className={`is-open--${isShow}`}
-      >
-        <Accordion.Toggle
-          as={"div"}
-          aria-controls="reservations"
-          eventKey={eventKey}
-          onClick={() => setIsShow(!isShow)}
-        >
-          <div
-            id="reservations"
-            className="d-flex justify-content-between accordion-toggle"
-          >
-            <div className="d-flex align-items-center">
-              <StaticIcon name="reservations" size={36} />
-              <div className="accordion-header">
-                Reservations
-              </div>
-            </div>
-            <div className="d-flex align-items-center">
-              {isShow ?
-                <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-              }
-            </div>
-          </div>
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey={eventKey}>
-          <div className="accordion-content">
-            <HtmlContent>{reservations}</HtmlContent>
-          </div>
-        </Accordion.Collapse>
-      </Accordion>
-    ) : (
-      <Accordion
-        activeKey={isShow ? eventKey : ''}
-        className={`is-open--${isShow}`}
-      >
-        <Accordion.Toggle
-          as={"div"}
-          aria-controls={camping?.campingType?.campingTypeName}
-          eventKey={eventKey}
-          onClick={() => setIsShow(!isShow)}
-        >
-          <div
-            id={camping?.campingType?.campingTypeCode}
-            className="d-flex justify-content-between accordion-toggle"
-          >
-            <div className="d-flex align-items-center">
-              <StaticIcon name={camping?.campingType?.icon} size={36} />
-              <HtmlContent className="accordion-header">
-                {camping?.campingType?.campingTypeName}
-              </HtmlContent>
-            </div>
-            <div className="d-flex align-items-center">
-              {isShow ?
-                <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-              }
-            </div>
-          </div>
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey={eventKey}>
-          <div className="accordion-content">
-            <HtmlContent>
-              {!isNullOrWhiteSpace(camping.description.data) ?
-                camping.description.data : (camping?.campingType?.defaultDescription.data)
-              }
-            </HtmlContent>
-          </div>
-        </Accordion.Collapse>
-      </Accordion>
-    )
+    <>
+      <div className="d-flex align-items-center mb-4">
+        <StaticIcon name={camping?.campingType?.icon || "information"} size={36} />
+        <h3 className="ml-3 mb-0">
+          {camping?.campingType?.campingTypeName}
+        </h3>
+      </div>
+      <HtmlContent className="park-camping-type-description">
+        {!isNullOrWhiteSpace(camping.description?.data) ?
+          camping.description.data : (camping?.campingType?.defaultDescription.data)
+        }
+      </HtmlContent>
+      <ParkDates data={camping.subAreas} />
+    </>
   )
 }
 
 export default function CampingDetails({ data }) {
   const activeCampings = data.activeCampings
   const parkOperation = data.parkOperation
-  const reservations = data.reservations.data.reservations
   const subAreas = data.subAreas || []
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
-  const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    if (activeCampings.length === 1) {
-      setOpen(true)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeCampings.length])
 
   if (activeCampings.length === 0) return null
-
-  const isShown = (count, countGroup) => {
-    return countGroup[count.countVar] &&
-      countGroup[count.countVar] !== "0" &&
-      countGroup[count.countVar] !== "*" &&
-      count.isActive;
-  }
-
-  const checkCountDisplay = (text) => {
-    const newText = text.replace("rv-accessible", "RV-accessible")
-    return newText
-  }
 
   const toFrontCountryReservations = () => {
     const reservationsURL = "https://camping.bcparks.ca"
@@ -152,68 +63,13 @@ export default function CampingDetails({ data }) {
           </Col>
         )}
       </Row>
-      {parkOperation &&
-        <Row>
-          <Col>
-            <dl>
-              {countsList
-                .filter(
-                  count =>
-                    isShown(count, parkOperation)).length > 0
-                && subAreas
-                  .filter(subArea => subArea.isActive).length !== 1
-                && (<>
-                  <dt>Total number of campsites</dt>
-                  {countsList
-                    .filter(count => isShown(count, parkOperation))
-                    .map((count, index) => (
-                      <dd key={index} className="mb-0">
-                        Total {checkCountDisplay(count.display.toLowerCase())}:{" "}
-                        {parkOperation[count.countVar]}
-                      </dd>
-                    ))}
-                </>
-                )}
-            </dl>
-          </Col>
-        </Row>
-      }
       <Row>
         <Col>
-          {activeCampings.length > 1 && (
-            <button
-              onClick={() => setOpen(!open)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault()
-                  setOpen(!open)
-                }
-              }}
-              className="btn btn-link expand-link expand-icon"
-            >
-              {open ?
-                <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
-                :
-                <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
-              }
-            </button>
-          )}
-          {activeCampings.length > 0 &&
-            !isNullOrWhiteSpace(reservations) && (
-              <AccordionList
-                eventKey="0"
-                open={open}
-                hasReservation={true}
-                reservations={reservations}
-              />
-            )
-          }
           {activeCampings.map((camping, index) => (
-            <AccordionList
+            <CampingType
               key={index}
               eventKey={index.toString()}
               camping={camping}
-              open={open}
             />
           ))}
         </Col>

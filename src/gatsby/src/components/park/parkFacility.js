@@ -9,6 +9,7 @@ import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
+import SubArea from "./subArea"
 
 export const AccordionList = ({ eventKey, facility, open }) => {
   const [isShow, setIsShow] = useState(false);
@@ -46,21 +47,24 @@ export const AccordionList = ({ eventKey, facility, open }) => {
         </div>
       </Accordion.Toggle>
       <Accordion.Collapse eventKey={eventKey}>
-        <div className="accordion-content">
+        <>
+          {facility.subAreas.map((subArea) => (
+            <SubArea data={subArea} showHeading={true} />
+          ))}
           <HtmlContent>
-            {!isNullOrWhiteSpace(facility.description.data) ?
+            {!isNullOrWhiteSpace(facility.description?.data) ?
               facility.description.data : facility.facilityType.defaultDescription.data
             }
           </HtmlContent>
           {!facility.hideStandardCallout &&
-            !isNullOrWhiteSpace(facility.facilityType.appendStandardCalloutText.data) && (
+            !isNullOrWhiteSpace(facility.facilityType?.appendStandardCalloutText?.data) && (
               <blockquote className="callout-box">
                 <HtmlContent>
                   {facility.facilityType.appendStandardCalloutText.data}
                 </HtmlContent>
               </blockquote>
             )}
-        </div>
+        </>
       </Accordion.Collapse>
     </Accordion>
   )
