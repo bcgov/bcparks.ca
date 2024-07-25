@@ -55,6 +55,7 @@ export default function ParkTemplate({ data }) {
   const contact = park.parkContact.data.parkContact
   const hasNearbyParks = park.nearbyParks?.length > 0
   const nearbyParks = park.nearbyParks
+  const hasParkGuidelines = park.parkGuidelines?.length > 0
   const managementAreas = park.managementAreas || []
   const searchArea = managementAreas[0]?.searchArea || {}
 
@@ -371,17 +372,17 @@ export default function ParkTemplate({ data }) {
                   {!isLoadingAdvisories && !advisoryLoadError && (
                     <AdvisoryDetails advisories={advisories} parkType={parkType} />
                   )}
-                  {park.parkGuidelines?.length > 0 &&
+                  {hasParkGuidelines &&
                     <Row>
                       <Col>
                         <VisitorGuidelines guidelines={park.parkGuidelines} />
                       </Col>
                     </Row>
                   }
-                  {!isNullOrWhiteSpace(safetyInfo) &&
+                  {(!isNullOrWhiteSpace(safetyInfo) && !hasParkGuidelines) &&
                     <SafetyInfo safetyInfo={safetyInfo} />
                   }
-                  {!isNullOrWhiteSpace(specialNotes) &&
+                  {(!isNullOrWhiteSpace(specialNotes) && !hasParkGuidelines) &&
                     <SpecialNote specialNotes={specialNotes} />
                   }
                   <blockquote className="callout-box mb-4">
