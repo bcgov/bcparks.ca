@@ -107,10 +107,10 @@ export default function ParkHeader({
                 hidePunctuation={true}
               />
             </div>
-            <div className="park-header-child">
-              <FontAwesomeIcon icon={faCalendar} />
-              <div>
-                {parkDates ? (
+            {parkDates && (
+              <div className="park-header-child">
+                <FontAwesomeIcon icon={faCalendar} />
+                <div>
                   <p>
                     The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}.
                     {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) && (
@@ -118,25 +118,25 @@ export default function ParkHeader({
                        – ${formattedTime(parkOperation.gateCloseTime)}.`
                     )}
                   </p>
-                ) : (
-                  <p>Operating dates are unavailable.</p>
-                )}
-                {(campings.length > 0 || facilities.length > 0) && (
-                  <p>
-                    {campings.length > 0 &&
-                      <a href="#camping">Check campgrounds</a>
-                    }
-                    {facilities.length > 0 &&
-                      <>
-                        {campings.length > 0 ? " and " : ""}
-                        <a href="#facilities">{campings.length > 0 ? "facilities" : "Check facilities"}</a>
-                      </>
-                    }
-                    {" "}for additional dates.
-                  </p>
-                )}
+                  {(campings.length > 0 || facilities.length > 0) && (
+                    <p>
+                      {campings.length > 0 &&
+                        <>
+                          Check <a href="#camping">campgrounds</a>
+                        </>
+                      }
+                      {facilities.length > 0 &&
+                        <>
+                          {campings.length > 0 ? " and " : "Check "}
+                          <a href="#facilities">facilities</a>
+                        </>
+                      }
+                      {" "}for additional dates.
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
             {hasCampfireBan &&
               <div className="park-header-child">
                 <CampfireBan />
