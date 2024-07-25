@@ -2,6 +2,10 @@ name: Playwright Tests
 on:
   workflow_dispatch:
     inputs:
+      branch:
+        description: 'Branch to run the workflow on'
+        required: true
+        default: 'Automated-tests'
       environment:
         description: 'Which environment to deploy to'
         required: true
