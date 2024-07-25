@@ -476,14 +476,12 @@ h2.section-heading {
 // visitor guidelines
 .guideline {
   margin-bottom: 16px;
-  &:last-of-type {
-    margin-bottom: 24px;
-  }
   &--left {
     svg {
       width: 36px;
       height: 36px;
       color: $colorBlue;
+      padding: 6px;
     }
   }
   &--right {
