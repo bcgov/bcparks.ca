@@ -93,7 +93,9 @@ export default function ParkHeader({
               <div className="park-header-child">
                 <FontAwesomeIcon icon="fa-regular fa-location-dot" />
                 {searchArea.searchAreaName}.&nbsp;
-                {latitude && longitude && (<a href={externalLink}>View detailed map.</a>)}
+                {latitude && longitude && (
+                  <><a href={externalLink}>View detailed map</a>.</>
+                )}
               </div>
             )}
             <div className="park-header-child">
@@ -103,8 +105,7 @@ export default function ParkHeader({
                 subAreas={subAreas}
                 operationDates={operationDates}
                 onStatusCalculated={onStatusCalculated}
-                punctuation={advisories.length > 0 ? `(${advisories.length}).` : ""}
-                hidePunctuation={true}
+                punctuation="."
               />
             </div>
             <div className="park-header-child">

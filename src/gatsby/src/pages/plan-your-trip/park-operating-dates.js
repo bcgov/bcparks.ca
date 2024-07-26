@@ -72,7 +72,7 @@ const ParkLink = ({ park, advisories }) => {
               slug={park.slug}
               subAreas={park.parkOperationSubAreas}
               operationDates={park.parkOperationDates}
-              punctuation={parkDates ? "." : ""}
+              punctuation="."
             />
           </span>
           {parkDates && (
