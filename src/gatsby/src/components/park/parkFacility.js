@@ -110,6 +110,13 @@ export default function ParkFacility({ data }) {
     checkHash()
   }, [facilityData, checkHash])
 
+  useEffect(() => {
+    if (facilityData.length === 1) {
+      setOpen(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [facilityData.length])
+
   if (facilityData.length === 0) return null
 
   return (

@@ -111,6 +111,13 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
     checkHash()
   }, [activityData, checkHash])
 
+  useEffect(() => {
+    if (activityData.length === 1) {
+      setOpen(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activityData.length])
+
   if (activityData.length === 0) return null
 
   return (
