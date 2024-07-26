@@ -130,7 +130,4 @@ test.describe('Home page tests', ()=>{
         await page.getByLabel('scroll to top').click();
         await expect(page.getByRole('link', { name: 'BC Parks Logo' })).toBeInViewport();
     });
-
-
-
 });
