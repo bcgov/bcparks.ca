@@ -222,6 +222,13 @@ export default function ParkDates({ data }) {
       count.isActive;
   }
 
+  useEffect(() => {
+    if (subAreas.length === 1) {
+      setOpen(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subAreas.length])
+
   return (
     <div id="park-dates-container" className="anchor-link">
       <h2 className="section-heading">Dates of operation</h2>

@@ -104,6 +104,13 @@ export default function CampingDetails({ data }) {
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
   const [open, setOpen] = useState(false)
 
+  useEffect(() => {
+    if (activeCampings.length === 1) {
+      setOpen(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeCampings.length])
+
   if (activeCampings.length === 0) return null
 
   const isShown = (count, countGroup) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { parseJSON, format } from "date-fns"
 import Accordion from "react-bootstrap/Accordion"
@@ -75,6 +75,13 @@ export default function AdvisoryDetails({ advisories, parkType }) {
       ...advisory,
     }
   })
+
+  useEffect(() => {
+    if (advisories.length === 1) {
+      expandAll(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [advisories.length])
 
   return (
     <div id="advisories" className="mb-4">
