@@ -39,7 +39,7 @@ test.describe('Home page tests', ()=>{
         await page.getByLabel('By park name').fill('Garibaldi');
         await expect(page.getByLabel('Garibaldi Park')).toBeVisible();
         await page.getByLabel('Garibaldi Park').click();
-        await expect(page).toHaveURL(baseURL + 'find-a-park/q=Garibaldi%20Park');
+        await expect(page).toHaveURL(baseURL + 'find-a-park/?q=Garibaldi%20Park');
     });
 
     // Checks the city suggestion dropdown menu and redirect to Find a park page
