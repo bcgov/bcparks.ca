@@ -9,9 +9,6 @@ import parksLogo from "../../images/park-card.png"
 import { addSmallImagePrefix, handleImgError } from "../../utils/helpers"
 
 const NearbyPark = ({ park }) => {
-  const [index, setIndex] = useState(0)
-  const [isTabFocused, setIsTabFocused] = useState(false)
-  const [hasError, setHasError] = useState(false)
   // sort photos
   const activePhotos = park.parkPhotos.filter(p => p.isActive)
   const photos = activePhotos.sort((a, b) => {
@@ -23,6 +20,11 @@ const NearbyPark = ({ park }) => {
       return a.sortOrder - b.sortOrder
     }
   })
+
+  // useStates
+  const [index, setIndex] = useState(0)
+  const [isTabFocused, setIsTabFocused] = useState(false)
+  const [errorStates, setErrorStates] = useState(Array(photos.length).fill(false))
 
   // event handlers
   const handleSelect = (selectedIndex, e) => {
@@ -83,7 +85,7 @@ const NearbyPark = ({ park }) => {
     <div className="park-card">
       {photos &&
         photos.length === 0 && (
-          <div className="park-image-div-mobile park-image-logo-div">
+          <div className="park-image-div-mobile">
             <img
               alt="logo"
               className="search-result-logo-image"
@@ -93,18 +95,18 @@ const NearbyPark = ({ park }) => {
         )}
       {photos &&
         photos.length === 1 && (
-          <div className={`${hasError ? "park-image-logo-div" : ""} park-image-div-mobile`}>
+          <div className="park-image-div-mobile">
             <img
               alt="park"
-              className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
-              src={hasError ? parksLogo : addSmallImagePrefix(photos[0].imageUrl)}
-              onError={(e) => { handleImgError(e, photos[0], setHasError) }}
+              className={`${errorStates[0] ? "search-result-logo-image" : "search-result-image"}`}
+              src={errorStates[0] ? parksLogo : addSmallImagePrefix(photos[0].imageUrl)}
+              onError={() => { handleImgError(errorStates, setErrorStates, 0) }}
             />
           </div>
         )}
       {photos &&
         photos.length > 1 && (
-          <div className={`${hasError ? "park-image-logo-div" : ""} park-image-div-mobile`}>
+          <div className="park-image-div-mobile">
             <Carousel
               fade
               interval={null}
@@ -126,9 +128,9 @@ const NearbyPark = ({ park }) => {
                     >
                       <img
                         alt="park carousel"
-                        className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
-                        src={hasError ? parksLogo : addSmallImagePrefix(item.imageUrl)}
-                        onError={(e) => { handleImgError(e, item, setHasError) }}
+                        className={`${errorStates[index] ? "search-result-logo-image" : "search-result-image"}`}
+                        src={errorStates[index] ? parksLogo : addSmallImagePrefix(item.imageUrl)}
+                        onError={() => { handleImgError(errorStates, setErrorStates, index) }}
                       />
                     </Carousel.Item>
                   )
