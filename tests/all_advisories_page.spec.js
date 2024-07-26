@@ -33,22 +33,22 @@ test.describe('All advisories page tests', ()=>{
     test('Verify the Event search is working', async ({page}) =>{
         await page.goto(activeAdvisoriesURL);
         await page.getByLabel('Select an event').fill('Avalanche');
-        await expect(page.getByLabel('menu-options'), customTimeout).toBeVisible();
+        await expect(page.getByLabel('menu-options')).toBeVisible(customTimeout);
         await page.getByLabel('Avalanche', { exact: true }).click();
         await page.getByRole('button', {name :  'Search'}).click();
-        await expect(page.locator('h1', {name : 'Active advisories | Avalanche'}, customTimeout)).toBeVisible();
+        await expect(page.locator('h1', {name : 'Active advisories | Avalanche'})).toBeVisible(customTimeout);
         await page.getByLabel('Clear').click();
         await expect(page.getByLabel('Select an event')).toBeEmpty();
         await page.getByLabel('Select an event').fill('Fire');
         await page.getByLabel('Wildfire', { exact: true }).click();
         await page.getByRole('button', {name :  'Search'}).click();
-        await expect(page.locator('h1', {name : 'Active advisories | Fire'}, customTimeout)).toBeVisible();
+        await expect(page.locator('h1', {name : 'Active advisories | Fire'})).toBeVisible(customTimeout);
     });
 
     test('Verify the search filters are working', async ({page})=>{
         await page.goto(activeAdvisoriesURL)
-        await page.getByRole('checkbox', {name : 'Park names'}, customTimeout).check();
-        await page.getByRole('textbox', {name : 'Search'}, customTimeout).fill('Babine');
+        await page.getByRole('checkbox', {name : 'Park names'}).check(customTimeout);
+        await page.getByRole('textbox', {name : 'Search'}).fill('Babine', customTimeout);
         await page.getByRole('button', {name : 'Search'}.click(), customTimeout);
     });
 
