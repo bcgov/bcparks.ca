@@ -1,14 +1,15 @@
 import { test, expect } from '@playwright/test';
 
-const baseURL = 'https://bcparks.ca/';
-const approvedManagementPlanURL = 'https://bcparks.ca/about/management-plans/approved/';
-
-test.beforeEach(async ({page})=>{
-    await page.goto(baseURL);
-});
-
-
 test.describe('Approved management plan tests', ()=>{
+
+    const baseURL = 'https://bcparks.ca/';
+    const approvedManagementPlanURL = 'https://bcparks.ca/about/management-plans/approved/';
+    
+    test.beforeEach(async ({page})=>{
+        await page.goto(baseURL);
+    });
+    
+
     test('Check that we can get to the page from homepage', async ({page})=>{
         await page.getByRole('menuitem', { name: 'About' }).click();
         await expect(page.locator('#home div').filter({ hasText: 'Main Menu BackAboutOur' }).nth(4)).toBeVisible();

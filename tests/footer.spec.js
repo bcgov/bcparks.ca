@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-const baseURL = 'https://bcparks.ca/';
-
-test.beforeEach(async ({page})=>{
-    await page.goto(baseURL);
-});
-
-
 test.describe('Footer tests', ()=>{
+
+    const baseURL = 'https://bcparks.ca/';
+
+    test.beforeEach(async ({page})=>{
+        await page.goto(baseURL);
+    });
+
     test('Check that the footer blocker is present', async ({page})=>{
         await expect(page.locator('#footer')).toBeVisible();
     });
