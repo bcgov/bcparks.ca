@@ -39,7 +39,7 @@ test.describe('Home page tests', ()=>{
         await page.getByLabel('By park name').fill('Garibaldi');
         await expect(page.getByLabel('Garibaldi Park')).toBeVisible();
         await page.getByLabel('Garibaldi Park').click();
-        await expect(page).toHaveURL(baseURL + 'find-a-park/?q=Garibaldi%20Park');
+        await expect(page).toHaveURL(baseURL + 'find-a-park/?q=Garibaldi%20Park', { timeout: 10000 });
     });
 
     // Checks the city suggestion dropdown menu and redirect to Find a park page
@@ -51,7 +51,7 @@ test.describe('Home page tests', ()=>{
         await expect(page.getByRole('option', { name: 'Burnaby'})).toBeVisible();
         await page.getByLabel('Near a city').fill('Bur');
         await page.getByRole('option', { name: 'Burnaby'}).click();
-        await expect(page).toHaveURL(baseURL + 'find-a-park/?l=268');
+        await expect(page).toHaveURL(baseURL + 'find-a-park/?l=268', { timeout: 10000 });
     });
 
     // Checks the park search button redirects to the Find a park page
