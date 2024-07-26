@@ -4,6 +4,8 @@ const baseURL = 'https://bcparks.ca/';
 
 test.describe('Find a park page tests', async ()=>{
 
+    const baseURL = 'https://bcparks.ca/';
+
     test.beforeEach(async ({page})=>{
         page.goto(baseURL);
     });

@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-const baseURL = 'https://bcparks.ca/';
-const parkOperatingDateURL = 'https://bcparks.ca/plan-your-trip/park-operating-dates/';
-
-test.beforeEach(async ({page})=>{
-    await page.goto(baseURL);
-});
-
 test.describe('Park Operating Date tests', ()=>{
+
+    const baseURL = 'https://bcparks.ca/';
+    const parkOperatingDateURL = 'https://bcparks.ca/plan-your-trip/park-operating-dates/';
+
+    test.beforeEach(async ({page})=>{
+        await page.goto(baseURL);
+    });
 
 test('Navigate to the Park Operating page via mega menu', async ({page})=>{
    await page.getByRole('menuitem', { name: 'Plan your trip' }).click();

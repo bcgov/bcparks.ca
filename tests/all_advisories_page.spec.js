@@ -1,15 +1,16 @@
 import { test, expect } from '@playwright/test';
 
-const baseURL = 'https://bcparks.ca/';
-const activeAdvisoriesURL = 'https://bcparks.ca/active-advisories/';
-const { chromium } = require('@playwright/test');
-
-
-test.beforeEach(async ({page})=>{
-    await page.goto(baseURL);
-});
-
 test.describe('All advisories page tests', ()=>{
+
+    const baseURL = 'https://bcparks.ca/';
+    const activeAdvisoriesURL = 'https://bcparks.ca/active-advisories/';
+    const { chromium } = require('@playwright/test');
+
+
+    test.beforeEach(async ({page})=>{
+        await page.goto(baseURL);
+    });
+
     test('Navigate to active advisories page', async ({page})=>{
         await page.getByText('See all advisories').click();
         await expect(page).toHaveURL(baseURL + 'active-advisories/');
