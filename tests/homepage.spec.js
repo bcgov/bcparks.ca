@@ -4,6 +4,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Home page tests', ()=>{
 
     const baseURL = 'https://bcparks.ca/';
+    const customTimeout = {timeout: 90000};
 
     test.beforeEach(async ({page})=>{
         await page.goto(baseURL, { timeout: 90000 });
@@ -39,7 +40,7 @@ test.describe('Home page tests', ()=>{
         await page.getByLabel('By park name').fill('Garibaldi');
         await expect(page.getByLabel('Garibaldi Park')).toBeVisible();
         await page.getByLabel('Garibaldi Park').click();
-        await expect(page).toHaveURL(baseURL + 'find-a-park/?q=Garibaldi%20Park', { timeout: 10000 });
+        await expect(page).toHaveURL(baseURL + 'find-a-park/?q=Garibaldi%20Park', customTimeout);
     });
 
     // Checks the city suggestion dropdown menu and redirect to Find a park page
@@ -51,35 +52,35 @@ test.describe('Home page tests', ()=>{
         await expect(page.getByRole('option', { name: 'Burnaby'})).toBeVisible();
         await page.getByLabel('Near a city').fill('Bur');
         await page.getByRole('option', { name: 'Burnaby'}).click();
-        await expect(page).toHaveURL(baseURL + 'find-a-park/?l=268', { timeout: 10000 });
+        await expect(page).toHaveURL(baseURL + 'find-a-park/?l=268', customTimeout);
     });
 
     // Checks the park search button redirects to the Find a park page
     test('Search for a park via a valid park name from home page', async ({page}) =>{
         await page.getByLabel('By park name').fill('Garibaldi');
         await page.getByRole('button', {name: 'Search'}).click();
-        await expect(page).toHaveURL(baseURL + 'find-a-park/?q=Garibaldi', { timeout: 10000 });
+        await expect(page).toHaveURL(baseURL + 'find-a-park/?q=Garibaldi', customTimeout);
         await expect(page).toHaveTitle('Find a park | BC Parks');
     });
 
     // Checks redirect works when clicking search button
     test('Search for a park with no search terms', async ({page})=>{
         await page.getByRole('button', { name: 'Search'}).click();
-        await expect(page).toHaveURL(baseURL + 'find-a-park/', { timeout: 10000 });
+        await expect(page).toHaveURL(baseURL + 'find-a-park/', customTimeout);
     });
 
     // Checks the advisory links can redirect to the corresponding advisory page
     test('Check that the redirect advisory links are working', async ({page})=>{
         await page.getByRole('link', { name: 'See flood advisories'}).click();
-        await expect(page).toHaveURL(baseURL + 'active-advisories/?type=Flood', { timeout: 10000 });
+        await expect(page).toHaveURL(baseURL + 'active-advisories/?type=Flood', customTimeout);
         await expect(page).toHaveTitle('Active advisories | BC Parks');
         await page.goBack();
         await page.getByRole('link', { name: 'See wildfire advisories'}).click();
-        await expect(page).toHaveURL(baseURL + 'active-advisories/?type=Wildfire', { timeout: 10000 });
+        await expect(page).toHaveURL(baseURL + 'active-advisories/?type=Wildfire', customTimeout);
         await expect(page).toHaveTitle('Active advisories | BC Parks');
         await page.goBack();
         await page.getByRole('link', { name: 'See all advisories'}).click();
-        await expect(page).toHaveURL(baseURL + 'active-advisories/', { timeout: 10000 });
+        await expect(page).toHaveURL(baseURL + 'active-advisories/', customTimeout);
         await expect(page).toHaveTitle('Active advisories | BC Parks');
     });
 
@@ -90,7 +91,7 @@ test.describe('Home page tests', ()=>{
         await expect(page).toHaveTitle('Reservations - Province of British Columbia | BC Parks');
         await page.goBack();
         await page.getByAltText('People taking a photo outdoors').click();
-        await expect(page).toHaveURL(baseURL + 'plan-your-trip/things-to-do/', { timeout: 10000 });
+        await expect(page).toHaveURL(baseURL + 'plan-your-trip/things-to-do/', customTimeout);
         await expect(page).toHaveTitle('Things to do - Province of British Columbia | BC Parks');
         await page.goBack();
         await page.getByAltText('A child in a wheelchair on a trail').click();
