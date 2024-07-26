@@ -5,7 +5,7 @@ test.describe('All advisories page tests', ()=>{
     const baseURL = 'https://bcparks.ca/';
     const activeAdvisoriesURL = 'https://bcparks.ca/active-advisories/';
     // const { chromium } = require('@playwright/test');
-    const customTimeout = {timeout: 120000};
+    const customTimeout = {timeout: 60000};
 
 
     test.beforeEach(async ({page})=>{
@@ -33,23 +33,24 @@ test.describe('All advisories page tests', ()=>{
     test('Verify the Event search is working', async ({page}) =>{
         await page.goto(activeAdvisoriesURL);
         await page.getByLabel('Select an event').fill('Avalanche');
-        await expect(page.getByLabel('menu-options')).toBeVisible(customTimeout);
+        await page.waitForLoadState();
+        await expect(page.getByLabel('menu-options'), customTimeout).toBeVisible();
         await page.getByLabel('Avalanche', { exact: true }).click();
         await page.getByRole('button', {name :  'Search'}).click();
-        await expect(page.locator('h1', {name : 'Active advisories | Avalanche'})).toBeVisible(customTimeout);
+        await expect(page.locator('h1', {name : 'Active advisories | Avalanche'}), customTimeout).toBeVisible();
         await page.getByLabel('Clear').click();
         await expect(page.getByLabel('Select an event')).toBeEmpty();
         await page.getByLabel('Select an event').fill('Fire');
         await page.getByLabel('Wildfire', { exact: true }).click();
         await page.getByRole('button', {name :  'Search'}).click();
-        await expect(page.locator('h1', {name : 'Active advisories | Fire'})).toBeVisible(customTimeout);
+        await expect(page.locator('h1', {name : 'Active advisories | Fire'}), customTimeout).toBeVisible();
     });
 
     test('Verify the search filters are working', async ({page})=>{
         await page.goto(activeAdvisoriesURL)
-        await page.getByRole('checkbox', {name : 'Park names'}).check(customTimeout);
-        await page.getByRole('textbox', {name : 'Search'}).fill('Babine', customTimeout);
-        await page.getByRole('button', {name : 'Search'}.click(), customTimeout);
+        await page.getByRole('checkbox').nth(1).check();
+        await page.getByRole('textbox', {name : 'Search'}).fill('Babine');
+        await page.getByRole('button', {name : 'Search'}).click();
     });
 
     test('Verify the park safety advisories legend is visible', async ({page}) =>{
