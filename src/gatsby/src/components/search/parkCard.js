@@ -23,7 +23,7 @@ const locationLabel = (parkLocations) => {
 const ParkCard = ({ r }) => {
   const [index, setIndex] = useState(0)
   const [isTabFocused, setIsTabFocused] = useState(false)
-  const [hasError, setHasError] = useState(false)
+  const [errorStates, setErrorStates] = useState(Array(r.parkPhotos.length).fill(false))
 
   // event handlers
   const handleSelect = (selectedIndex, e) => {
@@ -44,7 +44,7 @@ const ParkCard = ({ r }) => {
         <div className="row no-gutters">
           {r.parkPhotos &&
             r.parkPhotos.length === 0 && (
-              <div className="col-lg-auto park-image-div park-image-logo-div">
+              <div className="col-lg-auto park-image-div">
                 <img
                   alt="logo"
                   className="search-result-logo-image"
@@ -54,18 +54,18 @@ const ParkCard = ({ r }) => {
             )}
           {r.parkPhotos &&
             r.parkPhotos.length === 1 && (
-              <div className={`${hasError ? "park-image-logo-div" : ""} col-lg-auto park-image-div`}>
+              <div className="col-lg-auto park-image-div">
                 <img
                   alt="park"
-                  className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
-                  src={hasError ? parksLogo : addSmallImagePrefix(r.parkPhotos[0])}
-                  onError={(e) => { handleImgError(e, r.parkPhotos[0], setHasError) }}
+                  className={`${errorStates[0] ? "search-result-logo-image" : "search-result-image"}`}
+                  src={errorStates[0] ? parksLogo : addSmallImagePrefix(r.parkPhotos[0])}
+                  onError={() => handleImgError(errorStates, setErrorStates, 0)}
                 />
               </div>
             )}
           {r.parkPhotos &&
             r.parkPhotos.length > 1 && (
-              <div className={`${hasError ? "park-image-logo-div" : ""} col-lg-auto park-image-div`}>
+              <div className="col-lg-auto park-image-div">
                 <Carousel
                   fade
                   interval={null}
@@ -88,9 +88,9 @@ const ParkCard = ({ r }) => {
                           <img
                             alt="park carousel"
                             key={index}
-                            className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
-                            src={hasError ? parksLogo : addSmallImagePrefix(item)}
-                            onError={(e) => { handleImgError(e, item, setHasError) }}
+                            className={`${errorStates[index] ? "search-result-logo-image" : "search-result-image"}`}
+                            src={errorStates[index] ? parksLogo : addSmallImagePrefix(item)}
+                            onError={() => handleImgError(errorStates, setErrorStates, index)}
                           />
                         </Carousel.Item>
                       )
@@ -146,7 +146,7 @@ const ParkCard = ({ r }) => {
       <div className="d-block d-lg-none park-card">
         {r.parkPhotos &&
           r.parkPhotos.length === 0 && (
-            <div className="park-image-div-mobile park-image-logo-div">
+            <div className="park-image-div-mobile">
               <img
                 alt="logo"
                 className="search-result-logo-image"
@@ -156,18 +156,18 @@ const ParkCard = ({ r }) => {
           )}
         {r.parkPhotos &&
           r.parkPhotos.length === 1 && (
-            <div className={`${hasError ? "park-image-logo-div" : ""} park-image-div-mobile`}>
+            <div className="park-image-div-mobile">
               <img
                 alt="park"
-                className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
-                src={hasError ? parksLogo : addSmallImagePrefix(r.parkPhotos[0])}
-                onError={(e) => { handleImgError(e, r.parkPhotos[0], setHasError) }}
+                className={`${errorStates[0] ? "search-result-logo-image" : "search-result-image"}`}
+                src={errorStates[0] ? parksLogo : addSmallImagePrefix(r.parkPhotos[0])}
+                onError={() => { handleImgError(errorStates, setErrorStates, 0) }}
               />
             </div>
           )}
         {r.parkPhotos &&
           r.parkPhotos.length > 1 && (
-            <div className={`${hasError ? "park-image-logo-div" : ""} park-image-div-mobile`}>
+            <div className="park-image-div-mobile">
               <Carousel
                 fade
                 interval={null}
@@ -182,9 +182,9 @@ const ParkCard = ({ r }) => {
                         <img
                           alt="park carousel"
                           key={index}
-                          className={`${hasError ? "search-result-logo-image" : "search-result-image"}`}
-                          src={hasError ? parksLogo : addSmallImagePrefix(item)}
-                          onError={(e) => { handleImgError(e, item, setHasError) }}
+                          className={`${errorStates[index] ? "search-result-logo-image" : "search-result-image"}`}
+                          src={errorStates[index] ? parksLogo : addSmallImagePrefix(item)}
+                          onError={() => { handleImgError(errorStates, setErrorStates, index) }}
                         />
                       </Carousel.Item>
                     )
