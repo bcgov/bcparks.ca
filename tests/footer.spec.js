@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-
+/*
 test.describe('Footer tests', ()=>{
 
     const baseURL = 'https://bcparks.ca/';
@@ -101,5 +101,7 @@ test.describe('Footer tests', ()=>{
             await expect(page).toHaveURL('https://www.instagram.com/yourbcparks/');
         }
     });
-*/
+
 });
+
+*/

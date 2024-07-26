@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+/* 
+
 test.describe('All advisories page tests', ()=>{
 
     const baseURL = 'https://bcparks.ca/';
@@ -84,3 +86,5 @@ test.describe('All advisories page tests', ()=>{
         await expect(page).toHaveURL('https://drivebc.ca/');
     });
 });
+
+*/

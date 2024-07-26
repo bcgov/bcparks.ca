@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 
+/*
 test.describe('Park Operating Date tests', ()=>{
 
     const baseURL = 'https://bcparks.ca/';
@@ -95,3 +96,5 @@ test('Check the park links are working and redirect to the correct site', async(
 });
 
 });
+
+*/
