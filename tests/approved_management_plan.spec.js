@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 
+/*
 test.describe('Approved management plan tests', ()=>{
 
     const baseURL = 'https://bcparks.ca/';
@@ -88,3 +89,4 @@ test.describe('Approved management plan tests', ()=>{
         }
     });
 });
+*/

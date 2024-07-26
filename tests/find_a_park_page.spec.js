@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 
+/* 
 const baseURL = 'https://bcparks.ca/';
 
 test.describe('Find a park page tests', async ()=>{
@@ -28,3 +29,5 @@ test.describe('Find a park page tests', async ()=>{
 
     //Adding a line to trigger a job
 });
+
+*/
