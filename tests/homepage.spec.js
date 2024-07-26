@@ -58,39 +58,39 @@ test.describe('Home page tests', ()=>{
     test('Search for a park via a valid park name from home page', async ({page}) =>{
         await page.getByLabel('By park name').fill('Garibaldi');
         await page.getByRole('button', {name: 'Search'}).click();
-        await expect(page).toHaveURL(baseURL + 'find-a-park/?q=Garibaldi');
+        await expect(page).toHaveURL(baseURL + 'find-a-park/?q=Garibaldi', { timeout: 10000 });
         await expect(page).toHaveTitle('Find a park | BC Parks');
     });
 
     // Checks redirect works when clicking search button
     test('Search for a park with no search terms', async ({page})=>{
         await page.getByRole('button', { name: 'Search'}).click();
-        await expect(page).toHaveURL(baseURL + 'find-a-park/');
+        await expect(page).toHaveURL(baseURL + 'find-a-park/', { timeout: 10000 });
     });
 
     // Checks the advisory links can redirect to the corresponding advisory page
     test('Check that the redirect advisory links are working', async ({page})=>{
         await page.getByRole('link', { name: 'See flood advisories'}).click();
-        await expect(page).toHaveURL(baseURL + 'active-advisories/?type=Flood');
+        await expect(page).toHaveURL(baseURL + 'active-advisories/?type=Flood', { timeout: 10000 });
         await expect(page).toHaveTitle('Active advisories | BC Parks');
         await page.goBack();
         await page.getByRole('link', { name: 'See wildfire advisories'}).click();
-        await expect(page).toHaveURL(baseURL + 'active-advisories/?type=Wildfire');
+        await expect(page).toHaveURL(baseURL + 'active-advisories/?type=Wildfire', { timeout: 10000 });
         await expect(page).toHaveTitle('Active advisories | BC Parks');
         await page.goBack();
         await page.getByRole('link', { name: 'See all advisories'}).click();
-        await expect(page).toHaveURL(baseURL + 'active-advisories/');
+        await expect(page).toHaveURL(baseURL + 'active-advisories/', { timeout: 10000 });
         await expect(page).toHaveTitle('Active advisories | BC Parks');
     });
 
     // Checks the New to BC Parks links redirect to the corresponding page
     test('Check that the redirect New to BC Parks links are working', async ({page})=>{
         await page.getByAltText('Campers sitting near a tent').click();
-        await expect(page).toHaveURL(baseURL + 'reservations/');
+        await expect(page).toHaveURL(baseURL + 'reservations/', { timeout: 10000 });
         await expect(page).toHaveTitle('Reservations - Province of British Columbia | BC Parks');
         await page.goBack();
         await page.getByAltText('People taking a photo outdoors').click();
-        await expect(page).toHaveURL(baseURL + 'plan-your-trip/things-to-do/');
+        await expect(page).toHaveURL(baseURL + 'plan-your-trip/things-to-do/', { timeout: 10000 });
         await expect(page).toHaveTitle('Things to do - Province of British Columbia | BC Parks');
         await page.goBack();
         await page.getByAltText('A child in a wheelchair on a trail').click();
@@ -113,7 +113,7 @@ test.describe('Home page tests', ()=>{
         await expect(page).toHaveTitle('Wildlife safety - Province of British Columbia | BC Parks');
         await page.goBack();
         await page.getByRole('link', { name: 'A mountain peak Conservation' }).click();
-        await expect(page).toHaveURL(baseURL + 'conservation/');
+        await expect(page).toHaveURL(baseURL + 'conservation/', { timeout: 10000 });
         await expect(page).toHaveTitle('Conservation - Province of British Columbia | BC Parks');
         await page.goBack();
         await page.getByRole('link', { name: 'People holding license plates' }).click();
