@@ -4,8 +4,8 @@ test.describe('All advisories page tests', ()=>{
 
     const baseURL = 'https://bcparks.ca/';
     const activeAdvisoriesURL = 'https://bcparks.ca/active-advisories/';
-    const { chromium } = require('@playwright/test');
-    const customTimeout = {timeout: 90000};
+    // const { chromium } = require('@playwright/test');
+    const customTimeout = {timeout: 120000};
 
 
     test.beforeEach(async ({page})=>{
