@@ -1,24 +1,24 @@
 import { test, expect } from '@playwright/test';
-/* 
+
 test.describe('All advisories page tests', ()=>{
 
     const baseURL = 'https://bcparks.ca/';
     const activeAdvisoriesURL = 'https://bcparks.ca/active-advisories/';
     // const { chromium } = require('@playwright/test');
-    const customTimeout = {timeout: 60000};
-
 
     test.beforeEach(async ({page})=>{
         await page.goto(baseURL);
     });
 
     test('Navigate to active advisories page', async ({page})=>{
+        await page.waitForLoadState('domcontentloaded');
         await page.getByText('See all advisories').click();
         await expect(page).toHaveURL(baseURL + 'active-advisories/');
         await expect(page).toHaveTitle('Active advisories | BC Parks');
     });
 
     test('Verify the breadcrumbs are visible and working', async ({page})=>{
+        await page.waitForLoadState('domcontentloaded');
         await page.goto(activeAdvisoriesURL);
         await expect(page.getByRole('link', { name: 'Home'})).toBeVisible();
         await page.getByRole('link', {name: 'Home'}).click();
@@ -26,29 +26,30 @@ test.describe('All advisories page tests', ()=>{
     });
 
     test('Verify the h1 is visible', async ({page}) =>{
+        await page.waitForLoadState('domcontentloaded');
         await page.goto(activeAdvisoriesURL);
         await expect(page.locator('h1', {name : 'Active advisories'})).toBeVisible();
     });
-/*
+    
     test('Verify the Event search is working', async ({page}) =>{
+        await page.waitForLoadState('domcontentloaded');
         await page.goto(activeAdvisoriesURL);
         await page.getByLabel('Select an event').fill('Avalanche');
         await page.waitForLoadState();
-        await expect(page.getByLabel('menu-options'), customTimeout).toBeVisible();
+        await expect(page.getByLabel('menu-options')).toBeVisible();
         await page.getByLabel('Avalanche', { exact: true }).click();
         await page.getByRole('button', {name :  'Search'}).click();
-        await expect(page.locator('h1', {name : 'Active advisories | Avalanche'}), customTimeout).toBeVisible();
+        await expect(page.locator('h1', {name : 'Active advisories | Avalanche'})).toBeVisible();
         await page.getByLabel('Clear').click();
         await expect(page.getByLabel('Select an event')).toBeEmpty();
         await page.getByLabel('Select an event').fill('Fire');
         await page.getByLabel('Wildfire', { exact: true }).click();
         await page.getByRole('button', {name :  'Search'}).click();
-        await expect(page.locator('h1', {name : 'Active advisories | Fire'}), customTimeout).toBeVisible();
+        await expect(page.locator('h1', {name : 'Active advisories | Fire'})).toBeVisible();
     });
 
- 
-
     test('Verify the search filters are working', async ({page})=>{
+        await page.waitForLoadState('domcontentloaded');
         await page.goto(activeAdvisoriesURL)
         await page.getByRole('checkbox').nth(1).check();
         await page.getByRole('textbox', {name : 'Search'}).fill('Babine');
@@ -56,6 +57,7 @@ test.describe('All advisories page tests', ()=>{
     });
 
     test('Verify the park safety advisories legend is visible', async ({page}) =>{
+        await page.waitForLoadState('domcontentloaded');
         await page.goto(activeAdvisoriesURL)
         const highAdvisoryLegendItem = page.locator('.advisory-legend-item').first();
         const mediumAdvisoryLegendItem = page.locator('.advisory-legend-item').nth(1);
@@ -77,6 +79,7 @@ test.describe('All advisories page tests', ()=>{
     });
 
     test('Check that all links redirect to the correct pages', async ({page}) =>{
+        await page.waitForLoadState('domcontentloaded');
         await page.goto(activeAdvisoriesURL);
         await page.getByText('BC Wildfire Service').click();
         await expect(page).toHaveURL('https://www2.gov.bc.ca/gov/content/safety/wildfire-status');
@@ -88,4 +91,4 @@ test.describe('All advisories page tests', ()=>{
         await expect(page).toHaveURL('https://drivebc.ca/');
     });
 });
-   */
+   
