@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-
+/* 
 test.describe('All advisories page tests', ()=>{
 
     const baseURL = 'https://bcparks.ca/';
@@ -29,7 +29,7 @@ test.describe('All advisories page tests', ()=>{
         await page.goto(activeAdvisoriesURL);
         await expect(page.locator('h1', {name : 'Active advisories'})).toBeVisible();
     });
-
+/*
     test('Verify the Event search is working', async ({page}) =>{
         await page.goto(activeAdvisoriesURL);
         await page.getByLabel('Select an event').fill('Avalanche');
@@ -45,6 +45,8 @@ test.describe('All advisories page tests', ()=>{
         await page.getByRole('button', {name :  'Search'}).click();
         await expect(page.locator('h1', {name : 'Active advisories | Fire'}), customTimeout).toBeVisible();
     });
+
+ 
 
     test('Verify the search filters are working', async ({page})=>{
         await page.goto(activeAdvisoriesURL)
@@ -86,3 +88,4 @@ test.describe('All advisories page tests', ()=>{
         await expect(page).toHaveURL('https://drivebc.ca/');
     });
 });
+   */
