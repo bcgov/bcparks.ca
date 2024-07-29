@@ -21,6 +21,9 @@
     "hasReservations": {
       "type": "boolean"
     },
+    "hasFrontcountryReservations": {
+      "type": "boolean"
+    },
     "isDateRangeAnnual": {
       "type": "boolean"
     },
@@ -189,23 +192,44 @@
     "frontcountryGroupReservationUrl": {
       "type": "string"
     },
+    "hasFrontcountryGroupReservations": {
+      "type": "boolean"
+    },
     "frontcountryCabinReservationUrl": {
       "type": "string"
+    },
+    "hasFrontcountryCabinReservations": {
+      "type": "boolean"
     },
     "backcountryGroupReservationUrl": {
       "type": "string"
     },
+    "hasBackcountryGroupReservations": {
+      "type": "boolean"
+    },
     "backcountryWildernessReservationUrl": {
       "type": "string"
+    },
+    "hasBackcountryWildernessReservations": {
+      "type": "boolean"
     },
     "backcountryShelterReservationUrl": {
       "type": "string"
     },
+    "hasBackcountryShelterReservations": {
+      "type": "boolean"
+    },
     "canoeCircuitReservationUrl": {
       "type": "string"
     },
+    "hasCanoeCircuitReservations": {
+      "type": "boolean"
+    },
     "groupPicnicReservationUrl": {
       "type": "string"
+    },
+    "hasGroupPicnicReservations": {
+      "type": "boolean"
     }
   }
 }
