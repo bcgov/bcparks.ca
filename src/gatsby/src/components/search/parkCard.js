@@ -130,6 +130,7 @@ const ParkCard = ({ r }) => {
                   slug={r.slug}
                   subAreas={r.parkOperationSubAreas}
                   operationDates={r.parkOperationDates}
+                  hideComma={true}
                 />
                 {r.hasCampfireBan &&
                   <div className="campfire-ban-icon">
@@ -221,6 +222,7 @@ const ParkCard = ({ r }) => {
               slug={r.slug}
               subAreas={r.parkOperationSubAreas}
               operationDates={r.parkOperationDates}
+              hideComma={true}
             />
             {r.hasCampfireBan &&
               <div className="campfire-ban-icon">

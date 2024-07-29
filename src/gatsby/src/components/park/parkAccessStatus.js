@@ -134,7 +134,15 @@ function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, stat
   }
 }
 
-export default function ParkAccessStatus({ advisories, slug, subAreas, operationDates, onStatusCalculated, punctuation, hideLink, hidePunctuation }) {
+export default function ParkAccessStatus({
+  advisories,
+  slug,
+  subAreas,
+  operationDates,
+  onStatusCalculated,
+  punctuation,
+  hideComma
+}) {
 
   const staticData = useStaticQuery(
     graphql`
@@ -182,7 +190,7 @@ export default function ParkAccessStatus({ advisories, slug, subAreas, operation
               src={accessStatus.parkStatusIcon}
               alt={accessStatus.parkStatusText}
             />
-            {accessStatus.parkStatusText}{!hidePunctuation && punctuation}
+            {accessStatus.parkStatusText}{punctuation}
           </>
         ) : (
           <>
@@ -190,15 +198,11 @@ export default function ParkAccessStatus({ advisories, slug, subAreas, operation
               src={accessStatus.parkStatusIcon}
               alt={accessStatus.parkStatusText}
             />
-            {accessStatus.parkStatusText}
-            {!hideLink && (
-              <>
-                {", "}
-                <Link to={`/${slug}/#advisories`}>
-                  check advisories {punctuation}
-                </Link>
-              </>
-            )}
+            {accessStatus.parkStatusText}{!hideComma && ", "}
+            <Link to={`/${slug}/#advisories`}>
+              {hideComma ? "C": "c"}heck advisories {`(${advisories.length})`}
+            </Link>
+            {punctuation}
           </>
         )}
       </>)}
