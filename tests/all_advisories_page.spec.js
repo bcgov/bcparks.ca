@@ -35,7 +35,7 @@ test.describe('All advisories page tests', ()=>{
     test('Verify the Event search is working', async ({page}) =>{
         await page.goto(activeAdvisoriesURL);
         await page.waitForLoadState('domcontentloaded', customTimeout);
-        await page.getByLabel('Select an event').fill('Avalanche');
+        await page.getByLabel('Select an event').fill('Avalanche', customTimeout);
         await expect(page.getByLabel('menu-options')).toBeVisible();
         await page.getByLabel('Avalanche', { exact: true }).click();
         await page.getByRole('button', {name :  'Search'}).click();
