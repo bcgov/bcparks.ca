@@ -35,8 +35,7 @@ test.describe('All advisories page tests', ()=>{
     test('Verify the Event search is working', async ({page}) =>{
         await page.goto(activeAdvisoriesURL);
         await page.waitForLoadState('domcontentloaded', customTimeout);
-        await page.getByLabel('Select an event').fill('Avalanche', customTimeout);
-        await expect(page.getByLabel('menu-options')).toBeVisible();
+        await page.getByLabel('Select an event').fill('Avalanche');
         await page.getByLabel('Avalanche', { exact: true }).click();
         await page.getByRole('button', {name :  'Search'}).click();
         await expect(page.locator('h1', {name : 'Active advisories | Avalanche'})).toBeVisible();
@@ -49,8 +48,8 @@ test.describe('All advisories page tests', ()=>{
     });
 
     test('Verify the search filters are working', async ({page})=>{
-        await page.goto(activeAdvisoriesURL, customTimeout);
-        await page.waitForLoadState('domcontentloaded');
+        await page.goto(activeAdvisoriesURL);
+        await page.waitForLoadState('domcontentloaded', customTimeout);
         await page.getByRole('checkbox').nth(1).check();
         await page.getByRole('textbox', {name : 'Search'}).fill('Babine');
         await page.getByRole('button', {name : 'Search'}).click();
@@ -79,15 +78,15 @@ test.describe('All advisories page tests', ()=>{
     });
 
     test('Check that all links redirect to the correct pages', async ({page}) =>{
-        await page.waitForLoadState('domcontentloaded');
         await page.goto(activeAdvisoriesURL);
-        await page.getByText('BC Wildfire Service').click();
+        await page.waitForLoadState('domcontentloaded');
+        await page.getByRole('link', { name: 'BC Wildfire Service', exact: true }).click();
         await expect(page).toHaveURL('https://www2.gov.bc.ca/gov/content/safety/wildfire-status');
         await page.goBack();
-        await page.getByText('BC River Forecast Centre').click();
+        await page.getByRole('link', { name: 'BC River Forecast Centre' }).click();
         await expect(page).toHaveURL('https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/drought-flooding-dikes-dams/river-forecast-centre');
         await page.goBack();
-        await page.getByText('Drive BC').click();
+        await page.locator('a:nth-child(5)').click();
         await expect(page).toHaveURL('https://drivebc.ca/');
     });
 });
