@@ -46,9 +46,9 @@ exports.createSchemaCustomization = ({ actions }) => {
   }
 
   type STRAPI__COMPONENT_CONTACT_LINK implements Node @dontInfer {
-    icon: String
-    linkText: String
-    linkUrl: String
+    contactType: String
+    contactText: String
+    contactUrl: String
   }
 
   type STRAPI_PARK_CONTACT implements Node @dontInfer {

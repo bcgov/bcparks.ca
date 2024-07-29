@@ -2,13 +2,34 @@ import React from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import HtmlContent from "./htmlContent"
 
-// Helper function to get href prefix based on icon
-const getPrefix = (icon) => {
-  switch(icon) {
-    case "envelope":
+// Helper function to get href prefix based on the contactType
+const getPrefix = (contactType) => {
+  switch (contactType) {
+    case "Email":
       return "mailto:"
-    case "phone":
+    case "Phone":
       return "tel:"
+    default:
+      return ""
+  }
+}
+// Helper function to get the icon based on the contactType
+const getIcon = (contactType) => {
+  switch (contactType) {
+    case "Email":
+      return "envelope"
+    case "Phone":
+      return "phone"
+    case "Website":
+      return "laptop"
+    case "Chat":
+      return "messages"
+    case "Facebook":
+      return "facebook"
+    case "Instagram":
+      return "instagram"
+    case "X-twitter":
+      return "x-twitter"
     default:
       return ""
   }
@@ -25,19 +46,22 @@ export const ParkContact = ({ contact }) => {
         {contact.title ? contact.title : parkOperatorContact.defaultTitle}
       </th>
       <td>
-        <HtmlContent>
-          {contact.description.data.description ?
-            contact.description.data.description : parkOperatorContact.defaultDescription.data?.defaultDescription}
-        </HtmlContent>
+        {(contact.description.data.description ||
+          parkOperatorContact?.defaultDescription.data.defaultDescription) &&
+          <HtmlContent>
+            {contact.description.data.description ||
+              parkOperatorContact.defaultDescription.data.defaultDescription}
+          </HtmlContent>
+        }
         {links.length > 0 && links.map((link, index) => (
           <p key={index}>
-            <FontAwesomeIcon icon={`fa-regular fa-${link.icon}`} />
-            {link.linkUrl !== null ?
-              <a href={`${getPrefix(link.icon)}${link.linkUrl}`}>
-                {link.linkText}
+            <FontAwesomeIcon icon={`fa-regular fa-${getIcon(link.contactType)}`} />
+            {link.contactUrl !== null ?
+              <a href={`${getPrefix(link.contactType)}${link.contactUrl}`}>
+                {link.contactText}
               </a>
               :
-              link.linkText
+              link.contactText
             }
           </p>
         ))}

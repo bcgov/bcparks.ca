@@ -7,23 +7,26 @@
   },
   "options": {},
   "attributes": {
-    "icon": {
+    "contactType": {
       "type": "enumeration",
       "enum": [
-        "phone",
-        "envelope",
-        "laptop",
-        "messages"
+        "Email",
+        "Phone",
+        "Website",
+        "Chat",
+        "Facebook",
+        "Instagram",
+        "X-twitter"
       ],
       "required": true
     },
-    "linkText": {
+    "contactText": {
       "type": "string",
       "required": true
     },
-    "linkUrl": {
+    "contactUrl": {
       "type": "string",
-      "required": false
+      "required": true
     }
   }
 }

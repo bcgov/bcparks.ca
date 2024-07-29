@@ -779,9 +779,9 @@ export const query = graphql`
           }
         }
         contactInformation {
-          icon
-          linkText
-          linkUrl
+          contactType
+          contactText
+          contactText
         }
         parkOperatorContact {
           facilityOperatorName
@@ -792,9 +792,9 @@ export const query = graphql`
             }
           }
           defaultContactInformation {
-            icon
-            linkText
-            linkUrl
+            contactType
+            contactText
+            contactUrl
           }
         }
       }
