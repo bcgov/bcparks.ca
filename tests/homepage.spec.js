@@ -93,20 +93,20 @@ test.describe('Home page tests', ()=>{
 
     // Checks the New to BC Parks links redirect to the corresponding page
     test('Check that the redirect New to BC Parks links are working', async ({page})=>{
-        await page.waitForLoadState('domcontentloaded');
-        await page.getByAltText('Campers sitting near a tent').click();
+        await page.waitForLoadState('domcontentloaded', customTimeout);
+        await page.getByRole('link', { name: 'Campers sitting near a tent' }).click();
         await expect(page).toHaveURL(baseURL + 'reservations/');
         await expect(page).toHaveTitle('Reservations - Province of British Columbia | BC Parks');
         await page.goBack();
-        await page.getByAltText('People taking a photo outdoors').click();
+        await page.getByRole('link', { name: 'People taking a photo' }).click();
         await expect(page).toHaveURL(baseURL + 'plan-your-trip/things-to-do/');
         await expect(page).toHaveTitle('Things to do - Province of British Columbia | BC Parks');
         await page.goBack();
-        await page.getByAltText('A child in a wheelchair on a trail').click();
+        await page.getByRole('link', { name: 'A child in a wheelchair on a' }).click();
         await expect(page).toHaveURL('https://accessibility.bcparks.ca/');
         await expect(page).toHaveTitle('Park Accessibility Information – BC Parks');
         await page.goBack();
-        await page.getByAltText('Cleaning up after a dog').click();
+        await page.getByRole('link', { name: 'Cleaning up after a dog Visit' }).click();
         await expect(page).toHaveURL(baseURL + 'plan-your-trip/visit-responsibly/');
         await expect(page).toHaveTitle('Visit responsibly - Province of British Columbia | BC Parks');
     });
