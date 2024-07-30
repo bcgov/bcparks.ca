@@ -18,8 +18,16 @@ export default function ReservationsRequired({
   const hasBackcountry = subAreas.some(s => backcountryCodes.includes(s.facilityType?.facilityCode))
   const hasBackcountryPermit = subAreas.some(s => backcountryPermitCode.includes(s.facilityType?.facilityCode))
   const hasGroupCamping = subAreas.some(s => groupCampingCode.includes(s.facilityType?.facilityCode))
+  const hasAnyReservations =
+    (hasFrontcountry && hasReservations) ||
+    (hasGroupCamping && hasReservations) ||
+    hasPicnic ||
+    (hasBackcountry && hasBackcountryReservations) ||
+    (hasBackcountryPermit && hasBackcountryPermits) ||
+    hasDayUsePass ||
+    reservationLinks?.length > 0
 
-  return (
+  return hasAnyReservations && (
     <>
       <h3 id="reservations-required">Reservations required</h3>
       <p>

@@ -399,19 +399,17 @@ export default function ParkTemplate({ data }) {
                         marineProtectedArea={park.marineProtectedArea}
                       />
                     </Col>
-                    {(park.parkOperationSubAreas.length > 0 || hasDayUsePass) &&
-                      <Col xs={12} md={6}>
-                        <ReservationsRequired
-                          subAreas={park.parkOperationSubAreas}
-                          reservationLinks={operations.customReservationLinks}
-                          hasDayUsePass={hasDayUsePass}
-                          hasReservations={hasReservations}
-                          hasPicnic={operations.hasPicnicShelterReservations}
-                          hasBackcountryPermits={operations.hasBackcountryPermits}
-                          hasBackcountryReservations={operations.hasBackcountryReservations}
-                        />
-                      </Col>
-                    }
+                    <Col xs={12} md={6}>
+                      <ReservationsRequired
+                        subAreas={park.parkOperationSubAreas}
+                        reservationLinks={operations.customReservationLinks}
+                        hasDayUsePass={hasDayUsePass}
+                        hasReservations={hasReservations}
+                        hasPicnic={operations.hasPicnicShelterReservations}
+                        hasBackcountryPermits={operations.hasBackcountryPermits}
+                        hasBackcountryReservations={operations.hasBackcountryReservations}
+                      />
+                    </Col>
                   </Row>
                 </div>
               </div>
