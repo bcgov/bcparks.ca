@@ -560,6 +560,7 @@ export const query = graphql`
         icon
         isActive
         rank
+        pluralName
       }
     }
     allStrapiFacilityType {

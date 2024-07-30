@@ -31,6 +31,9 @@
     "note": {
       "type": "string"
     },
+    "pluralName": {
+      "type": "string"
+    },
     "isActive": {
       "type": "boolean"
     },

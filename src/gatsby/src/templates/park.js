@@ -703,13 +703,9 @@ export const query = graphql`
           subAreaTypeCode
           closureAffectsAccessStatus
           facilityType {
-            facilityName
-            icon
             facilityCode
           }
           campingType {
-            campingTypeName
-            icon
             campingTypeCode
           }
         }
@@ -824,6 +820,7 @@ export const query = graphql`
         icon
         isActive
         rank
+        pluralName
       }
     }
     allStrapiFacilityType {

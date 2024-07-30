@@ -47,7 +47,7 @@ export const AccordionList = ({ eventKey, subArea, open }) => {
 }
 
 export default function ParkDates({ data }) {
-  const subAreas = data.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
+  const subAreas = data.subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -66,46 +66,47 @@ export default function ParkDates({ data }) {
 
   return (
     <>
-      {
-        subAreas.length > 0 ? (
+      {subAreas.length > 0 && (
+        <>
           <h4>
-            {subAreas[0].parkSubAreaType.campingType.campingTypeName} campgrounds
-          </h4>) : ""
-      }
-      <Row className="mb-5">
-        <Col>
-          <>
-            {subAreas.length > 1 && (
-              <button
-                onClick={() => setOpen(!open)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault()
-                    setOpen(!open)
-                  }
-                }}
-                className="btn btn-link expand-link expand-icon"
-              >
-                {open ?
-                  <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
-                  :
-                  <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
-                }
-              </button>
-            )}
-            {subAreas
-              .filter(subArea => subArea.isActive)
-              .map((subArea, index) => (
-                <AccordionList
-                  key={index}
-                  eventKey={index.toString()}
-                  subArea={subArea}
-                  open={open}
-                />
-              ))}
-          </>
-        </Col>
-      </Row>
+            {data.campingType.pluralName}
+          </h4>
+          <Row className="mb-5">
+            <Col>
+              <>
+                {subAreas.length > 1 && (
+                  <button
+                    onClick={() => setOpen(!open)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault()
+                        setOpen(!open)
+                      }
+                    }}
+                    className="btn btn-link expand-link expand-icon"
+                  >
+                    {open ?
+                      <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                      :
+                      <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+                    }
+                  </button>
+                )}
+                {subAreas
+                  .filter(subArea => subArea.isActive)
+                  .map((subArea, index) => (
+                    <AccordionList
+                      key={index}
+                      eventKey={index.toString()}
+                      subArea={subArea}
+                      open={open}
+                    />
+                  ))}
+              </>
+            </Col>
+          </Row>
+        </>
+      )}
     </>
   )
 }

@@ -23,7 +23,7 @@ export const CampingType = ({ camping }) => {
           camping.description.data : (camping?.campingType?.defaultDescription.data)
         }
       </HtmlContent>
-      <ParkDates data={camping.subAreas} />
+      <ParkDates data={camping}  />
     </>
   )
 }

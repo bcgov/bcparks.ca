@@ -11,8 +11,6 @@ const preProcessSubAreas = (subAreas) => {
 
       const facilityType = subArea.parkSubAreaType?.facilityType || {}
       const campingType = subArea.parkSubAreaType?.campingType || {}
-      subArea.typeIcon = facilityType.icon || campingType.icon || "";
-      subArea.typeName = facilityType.facilityName || campingType.campingTypeName || ""
       subArea.typeCode = facilityType.facilityCode || campingType.campingTypeCode || ""
       subArea = groupSubAreaDates(subArea);
 
