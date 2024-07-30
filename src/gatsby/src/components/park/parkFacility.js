@@ -51,6 +51,7 @@ export const AccordionList = ({ eventKey, facility, open }) => {
           {facility.subAreas.map((subArea) => (
             <SubArea data={subArea} showHeading={true} />
           ))}
+        <div className="accordion-content">
           <HtmlContent>
             {!isNullOrWhiteSpace(facility.description?.data) ?
               facility.description.data : facility.facilityType.defaultDescription.data
@@ -64,6 +65,7 @@ export const AccordionList = ({ eventKey, facility, open }) => {
                 </HtmlContent>
               </blockquote>
             )}
+        </div>
         </>
       </Accordion.Collapse>
     </Accordion>

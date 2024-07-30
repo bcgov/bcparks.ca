@@ -499,3 +499,41 @@ h2.section-heading {
     font-size: 1rem;
   }
 }
+
+// camping (subarea)
+.subarea-container {
+  &--left, &--right {
+    display: flex;
+    .subarea-icon {
+      padding-right: 16px;
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+  &--left {
+    .subarea-list {
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+    }
+  }
+  &--right {
+    margin-top: 32px;
+    @media (min-width: $smBreakpoint) {
+      margin-top: 0;
+    }
+    .subarea-list {
+      ul {
+        padding-left: 24px;
+      }
+    }
+  }
+  .subarea-list {
+    h4 {
+      margin-bottom: 4px;
+    }
+  }
+}
