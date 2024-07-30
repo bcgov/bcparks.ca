@@ -1,4 +1,8 @@
 import React from "react"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCalendar } from "@fortawesome/free-regular-svg-icons"
 
 import HTMLArea from "../HTMLArea"
 import { countsList } from "../../utils/constants"
@@ -22,13 +26,61 @@ export default function SubArea({ data, showHeading }) {
   return (
     <div className="accordion-content">
       {showHeading && (<h4>{data.parkSubArea}</h4>)}
-      <dl>
+      <Row className="subarea-container">
+        <Col className="subarea-container--left" xs={12} sm={6}>
+          <div className="subarea-icon">
+            <FontAwesomeIcon icon={faCalendar} />
+          </div>
+          <div className="subarea-lists">
+            {data.serviceDates.length > 0 && (
+              <div className="subarea-list">
+                <h4>Operating season</h4>
+                <ul>
+                  {data.serviceDates.map((dateRange, index) =>
+                    <li key={index}>{dateRange}</li>
+                  )}
+                </ul>
+              </div>
+            )}
+            {data.resDates.length > 0 && (
+              <div className="subarea-list">
+                <h4 className="mt-3">Booking required</h4>
+                <ul>
+                  {data.resDates.map((dateRange, index) =>
+                    <li key={index}>{dateRange}</li>
+                  )}
+                </ul>
+              </div>
+            )}
+            <div className="subarea-list">
+              <h4 className="mt-3">Winter season</h4>
+              {data.offSeasonDates.length > 0 ? (
+                <ul>
+                  {data.offSeasonDates.map((dateRange, index) =>
+                    <li key={index}>{dateRange}</li>
+                  )}
+                </ul>
+              ) : (
+                data.operationDates.length > 0 ? (
+                  <>
+                    {data.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
+                  </>
+                ) : (
+                  <>Not known</>
+                )
+              )}
+            </div>
+          </div>
+        </Col>
         {countsList
           .filter(count => isShown(count, data)).length > 0 && (
-            <>
-              <dt className="mt-3">Number of campsites</dt>
-              <dd>
-                <ul className="pl-4">
+            <Col className="subarea-container--right" xs={12} sm={6}>
+              <div className="subarea-icon">
+                <FontAwesomeIcon icon="fa-regular fa-campground" />
+              </div>
+              <div className="subarea-list">
+                <h4>Number of campsites</h4>
+                <ul>
                   {countsList
                     .filter(count => isShown(count, data))
                     .map((count, index) => (
@@ -38,72 +90,28 @@ export default function SubArea({ data, showHeading }) {
                       </li>
                     ))}
                 </ul>
-              </dd>
-            </>
+              </div>
+            </Col>
           )}
-        {data.serviceDates.length > 0 && (
-          <>
-            <dt className="mt-3">
-              Main operating season
-            </dt>
-            <dd>
-              <ul className="pl-4">
-                {data.serviceDates.map((dateRange, index) =>
-                  <li key={index}>{dateRange}</li>
+      </Row>
+      {subAreasNotesList
+        .filter(note => data[note.noteVar])
+        .map((note, index) => (
+          <Row className="subarea-container">
+            <Col key={index} xs={12}>
+              <div className="subarea-list">
+                {note.display && (
+                  <h4 className="mt-3">
+                    {note.display}
+                  </h4>
                 )}
-              </ul>
-            </dd>
-          </>
-        )}
-        <>
-          <dt className="mt-3">Winter season</dt>
-          <dd>
-            {data.offSeasonDates.length > 0 ? (
-              <ul className="pl-4">
-                {data.offSeasonDates.map((dateRange, index) =>
-                  <li key={index}>{dateRange}</li>
-                )}
-              </ul>
-            ) : (
-              data.operationDates.length > 0 ? (
-                <>
-                  {data.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
-                </>
-              ) : (
-                <>Not known</>
-              )
-            )}
-          </dd>
-        </>
-        {data.resDates.length > 0 && (
-          <>
-            <dt className="mt-3">Booking required</dt>
-            <dd>
-              <ul className="pl-4">
-                {data.resDates.map((dateRange, index) =>
-                  <li key={index}>{dateRange}</li>
-                )}
-              </ul>
-            </dd>
-          </>
-        )}
-        {subAreasNotesList
-          .filter(note => data[note.noteVar])
-          .map((note, index) => (
-            <div key={index}>
-              {note.display && (
-                <dt className="mt-3">
-                  {note.display}
-                </dt>
-              )}
-              <dd>
                 <HTMLArea isVisible={true}>
                   {data[note.noteVar]}
                 </HTMLArea>
-              </dd>
-            </div>
-          ))}
-      </dl>
+              </div>
+            </Col>
+          </Row>
+        ))}
     </div>
   )
 }

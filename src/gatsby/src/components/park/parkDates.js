@@ -18,7 +18,7 @@ export const AccordionList = ({ eventKey, subArea, open }) => {
   return (
     <Accordion
       activeKey={isShow ? eventKey : ''}
-      className={`is-open--${isShow}`}
+      className={`dates-accordion is-open--${isShow}`}
     >
       <Accordion.Toggle
         as={"div"}
