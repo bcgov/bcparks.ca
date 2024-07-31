@@ -8,7 +8,7 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import HtmlContent from "./htmlContent"
 import SubArea from "./subArea"
 
-export const AccordionList = ({ eventKey, subArea, open }) => {
+export const AccordionList = ({ eventKey, subArea, open, itemCount }) => {
   const [isShow, setIsShow] = useState(false)
 
   useEffect(() => {
@@ -20,25 +20,34 @@ export const AccordionList = ({ eventKey, subArea, open }) => {
       activeKey={isShow ? eventKey : ''}
       className={`dates-accordion is-open--${isShow}`}
     >
-      <Accordion.Toggle
-        as={"div"}
-        aria-controls={subArea.parkSubArea}
-        eventKey={eventKey}
-        onClick={() => setIsShow(!isShow)}
-      >
-        <div className="d-flex justify-content-between accordion-toggle">
-          <div className="d-flex align-items-center">
+      {itemCount > 1 ?
+        (<Accordion.Toggle
+          as={"div"}
+          aria-controls={subArea.parkSubArea}
+          eventKey={eventKey}
+          onClick={() => setIsShow(!isShow)}
+        >
+          <div className="d-flex justify-content-between accordion-toggle">
+            <div className="d-flex align-items-center">
+              <HtmlContent className="accordion-header">
+                {subArea.parkSubArea}
+              </HtmlContent>
+            </div>
+            <div className="d-flex align-items-center">
+              {isShow ?
+                <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+              }
+            </div>
+          </div>
+        </Accordion.Toggle>) :
+        (
+          <div className="accordion-toggle">
             <HtmlContent className="accordion-header">
               {subArea.parkSubArea}
             </HtmlContent>
           </div>
-          <div className="d-flex align-items-center">
-            {isShow ?
-              <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-            }
-          </div>
-        </div>
-      </Accordion.Toggle>
+        )
+      }
       <Accordion.Collapse eventKey={eventKey}>
         <SubArea data={subArea} />
       </Accordion.Collapse>
@@ -97,6 +106,7 @@ export default function ParkDates({ data }) {
                   .map((subArea, index) => (
                     <AccordionList
                       key={index}
+                      itemCount={subAreas.length}
                       eventKey={index.toString()}
                       subArea={subArea}
                       open={open}
