@@ -83,7 +83,7 @@ test('Verify the hyperlinks on the page are working', async ({page})=>{
     await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
     await page.getByRole('menuitem', { name: 'Park operating dates' }).click();
     await page.waitForLoadState('networkidle');          
-    await page.getByText('active advisories').click();
+    await page.getByRole('link', { name: 'active advisories' }).click();
     await expect(page).toHaveURL(baseURL + 'active-advisories/');
     await page.goBack();
 });
