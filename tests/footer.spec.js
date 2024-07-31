@@ -69,16 +69,7 @@ test.describe('Footer tests', ()=>{
         await page.goBack();
 
     });
-/*
-    test('Verify social media links are visible and redirect to the correct page', async ({page}) =>{
-     //   await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
-        await page.getByRole('link', { name: 'Facebook' }).click();
-        await expect(page).toHaveURL('https://www.facebook.com/YourBCParks/');
-        await page.goBack();
-        await page.getByRole('link', { name: 'Instagram' }).click();
-        await expect(page).toHaveURL('https://www.instagram.com/yourbcparks/');
-    });
-*/
+
     test('Verify social media links are visible and redirect to the correct page', async ({ browser }) => {
         // Set a custom user-agent to mimic a real browser
         const context = await browser.newContext({
@@ -88,19 +79,21 @@ test.describe('Footer tests', ()=>{
         const page = await context.newPage();
 
         await page.goto(baseURL);
-
         await page.getByRole('link', { name: 'Facebook' }).click();
         await expect(page).toHaveURL('https://www.facebook.com/YourBCParks/');
         await page.goBack();
-
+        await page.waitForLoadState('networkidle');
+        // Click on the Instagram link
         await page.getByRole('link', { name: 'Instagram' }).click();
-        const instagramURL = page.url();
-        console.log(`Current URL after clicking Instagram: ${instagramURL}`);
+        await expect(page).toHaveURL('https://www.instagram.com/yourbcparks/');
+        
+        /*const instagramURL = page.url();
+         console.log(`Current URL after clicking Instagram: ${instagramURL}`);
         if (instagramURL.includes('login')) {
             console.warn('Redirected to Instagram login page.');
         } else {
+            await page.waitForLoadState('networkidle');
             await expect(page).toHaveURL('https://www.instagram.com/yourbcparks/');
-        }
+        }*/
     });
-
 });
