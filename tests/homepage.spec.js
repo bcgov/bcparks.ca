@@ -98,14 +98,17 @@ test.describe('Home page tests', ()=>{
         await expect(page).toHaveURL(baseURL + 'reservations/');
         await expect(page).toHaveTitle('Reservations - Province of British Columbia | BC Parks');
         await page.goBack();
+        await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'People taking a photo' }).click();
         await expect(page).toHaveURL(baseURL + 'plan-your-trip/things-to-do/');
         await expect(page).toHaveTitle('Things to do - Province of British Columbia | BC Parks');
         await page.goBack();
+        await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'A child in a wheelchair on a' }).click();
         await expect(page).toHaveURL('https://accessibility.bcparks.ca/');
         await expect(page).toHaveTitle('Park Accessibility Information – BC Parks');
         await page.goBack();
+        await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'Cleaning up after a dog Visit' }).click();
         await expect(page).toHaveURL(baseURL + 'plan-your-trip/visit-responsibly/');
         await expect(page).toHaveTitle('Visit responsibly - Province of British Columbia | BC Parks');
