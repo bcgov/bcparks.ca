@@ -8,6 +8,7 @@ test.describe('Park Operating Date tests', ()=>{
 
     test.beforeEach(async ({page})=>{
         await page.goto(baseURL);
+        await page.waitForLoadState('domcontentloaded');        
     });
 
 test('Navigate to the Park Operating page via mega menu', async ({page})=>{
