@@ -1,18 +1,16 @@
 import { test, expect } from '@playwright/test';
 
-/*
 test.describe('Approved management plan tests', ()=>{
 
     const baseURL = 'https://bcparks.ca/';
     const approvedManagementPlanURL = 'https://bcparks.ca/about/management-plans/approved/';
     
     test.beforeEach(async ({page})=>{
-        await page.goto(baseURL);
-        await page.waitForLoadState('domcontentloaded');        
+        await page.goto(baseURL);   
     });
     
-
     test('Check that we can get to the page from homepage', async ({page})=>{
+        await page.waitForLoadState('networkidle');     
         await page.getByRole('menuitem', { name: 'About' }).click();
         await expect(page.locator('#home div').filter({ hasText: 'Main Menu BackAboutOur' }).nth(4)).toBeVisible();
         await expect(page.getByRole('menuitem', { name: 'About', exact: true })).toBeVisible();
@@ -25,22 +23,29 @@ test.describe('Approved management plan tests', ()=>{
     });
 
     test('Check the breadcrumbs displayed', async ({page})=>{
+        await page.waitForLoadState('networkidle');     
         await expect (page.locator('#main-content')).toBeVisible();
         await page.goto(approvedManagementPlanURL);
         await page.getByRole('link', { name: 'Home' }).click();
         await expect(page).toHaveURL(baseURL);
         await page.goBack();
+        await page.waitForLoadState('networkidle'); 
         await page.getByRole('link', { name: 'About' }).click();
         await expect(page).toHaveURL(baseURL + 'about/');
         await page.goBack();
+        await page.waitForLoadState('networkidle'); 
         await page.getByRole('link', { name: 'Management plans', exact: true }).click();
         await expect(page).toHaveURL(baseURL + 'about/management-plans/');
         await page.goBack();
+        await page.waitForLoadState('networkidle'); 
         await expect(page.getByLabel('breadcrumb').getByText('Approved management plans')).toBeVisible();
     });
 
     test('Check the filter menu is present and in default setting', async ({page})=>{
-        await page.goto(approvedManagementPlanURL);
+        await page.waitForLoadState('networkidle');
+        await page.getByRole('menuitem', { name: 'About' }).click();
+        await page.getByRole('menuitem', { name: 'Management plans' }).click();
+        await page.getByRole('menuitem', { name: 'Approved management plans' }).click();     
         await expect(page.getByRole('heading', { name: 'Filter' })).toBeVisible();
 
         const allButton = page.getByRole('button', { name: 'All'});
@@ -63,7 +68,10 @@ test.describe('Approved management plan tests', ()=>{
     });
 
     test('Check the filters work and list updates', async ({page})=>{
-        await page.goto(approvedManagementPlanURL);
+        await page.waitForLoadState('networkidle');     
+        await page.getByRole('menuitem', { name: 'About' }).click();
+        await page.getByRole('menuitem', { name: 'Management plans' }).click();
+        await page.getByRole('menuitem', { name: 'Approved management plans' }).click();    
         // Check the default state
         const allButton = page.getByRole('button', { name: 'All'});
         await expect(allButton).toBeVisible();
@@ -90,4 +98,3 @@ test.describe('Approved management plan tests', ()=>{
         }
     });
 });
-*/
