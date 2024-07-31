@@ -1,29 +1,29 @@
 import React from "react"
 import { Link } from "gatsby"
 
-export default function ReservationsRequired({
-  subAreas,
-  reservationLinks,
-  hasDayUsePass,
-  hasReservations,
-  hasPicnic,
-  hasBackcountryPermits,
-  hasBackcountryReservations
-}) {
-  const frontcountryCodes = ["frontcountry-camping", "group-camping", "walk-in-camping", "cabins-huts"]
-  const backcountryCodes = ["backcountry-camping", "wilderness-camping"]
-  const backcountryPermitCode = ["backcountry-camping"]
+export default function ReservationsRequired({ subAreas, operations }) {
+  const hasDayUsePass = operations.hasDayUsePass
+  const hasFirstComeFirstServed = operations.hasFirstComeFirstServed
+  const hasCanoeCircuitReservations = operations.hasCanoeCircuitReservations
+  const hasPicnicShelterReservations = operations.hasPicnicShelterReservations
+  const hasFrontcountryReservations = operations.hasFrontcountryReservations
+  const hasFrontcountryCabinReservations = operations.hasFrontcountryCabinReservations
+  const hasBackcountryPermits = operations.hasBackcountryPermits
+  const hasBackcountryReservations = operations.hasBackcountryReservations
+  const hasBackcountryGroupReservations = operations.hasBackcountryGroupReservations
+  const hasBackcountryShelterReservations = operations.hasBackcountryShelterReservations
+  const hasBackcountryWildernessReservations = operations.hasBackcountryWildernessReservations
+  const reservationLinks = operations.customReservationLinks
   const groupCampingCode = ["group-camping"]
-  const hasFrontcountry = subAreas.some(s => frontcountryCodes.includes(s.facilityType?.facilityCode))
-  const hasBackcountry = subAreas.some(s => backcountryCodes.includes(s.facilityType?.facilityCode))
-  const hasBackcountryPermit = subAreas.some(s => backcountryPermitCode.includes(s.facilityType?.facilityCode))
   const hasGroupCamping = subAreas.some(s => groupCampingCode.includes(s.facilityType?.facilityCode))
+
   const hasAnyReservations =
-    (hasFrontcountry && hasReservations) ||
-    (hasGroupCamping && hasReservations) ||
-    hasPicnic ||
-    (hasBackcountry && hasBackcountryReservations) ||
-    (hasBackcountryPermit && hasBackcountryPermits) ||
+    (hasFrontcountryReservations || hasFirstComeFirstServed || hasFrontcountryCabinReservations) ||
+    (hasGroupCamping || hasBackcountryGroupReservations) ||
+    hasPicnicShelterReservations ||
+    (hasBackcountryReservations || hasBackcountryShelterReservations ||
+      hasBackcountryWildernessReservations || hasCanoeCircuitReservations) ||
+    hasBackcountryPermits ||
     hasDayUsePass ||
     reservationLinks?.length > 0
 
@@ -34,35 +34,36 @@ export default function ReservationsRequired({
         Review general guidelines for
       </p>
       <ul>
-        {(hasFrontcountry && hasReservations) &&
+        {(hasFrontcountryReservations || hasFirstComeFirstServed || hasFrontcountryCabinReservations) &&
           <li>
             <Link to="/reservations/frontcountry-camping">
               Frontcountry camping
             </Link>
           </li>
         }
-        {(hasGroupCamping && hasReservations) &&
+        {(hasGroupCamping || hasBackcountryGroupReservations) &&
           <li>
             <Link to="/reservations/group-camping">
               Group camping
             </Link>
           </li>
         }
-        {hasPicnic &&
+        {hasPicnicShelterReservations &&
           <li>
             <Link to="/reservations/picnic-shelters">
               Picnic shelters
             </Link>
           </li>
         }
-        {(hasBackcountry && hasBackcountryReservations) &&
+        {(hasBackcountryReservations || hasBackcountryShelterReservations ||
+          hasBackcountryWildernessReservations || hasCanoeCircuitReservations) &&
           <li>
             <Link to="/reservations/backcountry-camping/reservations">
               Backcountry camping reservations
             </Link>
           </li>
         }
-        {(hasBackcountryPermit && hasBackcountryPermits) &&
+        {hasBackcountryPermits &&
           <li>
             <Link to="/reservations/backcountry-camping/permit-registration">
               Backcountry permit registration
