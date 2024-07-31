@@ -141,10 +141,10 @@ export default function CampingDetails({ data }) {
           </h2>
         </Col>
         {data.hasReservations && (
-          <Col className="mb-3" lg="4">
+          <Col className="mb-3" xs="auto">
             <button
               aria-label="Book camping"
-              className="btn btn-warning w-100"
+              className="btn btn-secondary"
               onClick={() => toFrontCountryReservations()}
             >
               Book camping
