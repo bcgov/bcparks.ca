@@ -69,7 +69,7 @@ test.describe('Footer tests', ()=>{
         await page.goBack();
 
     });
-
+/*
     test('Verify social media links are visible and redirect to the correct page', async ({page}) =>{
      //   await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
         await page.getByRole('link', { name: 'Facebook' }).click();
@@ -78,7 +78,7 @@ test.describe('Footer tests', ()=>{
         await page.getByRole('link', { name: 'Instagram' }).click();
         await expect(page).toHaveURL('https://www.instagram.com/yourbcparks/');
     });
-/*
+*/
     test('Verify social media links are visible and redirect to the correct page', async ({ browser }) => {
         // Set a custom user-agent to mimic a real browser
         const context = await browser.newContext({
@@ -102,5 +102,5 @@ test.describe('Footer tests', ()=>{
             await expect(page).toHaveURL('https://www.instagram.com/yourbcparks/');
         }
     });
-*/
+
 });
