@@ -1,17 +1,16 @@
 import { test, expect } from '@playwright/test';
 
-/*
+
 test.describe('Park Operating Date tests', ()=>{
 
     const baseURL = 'https://bcparks.ca/';
-    const parkOperatingDateURL = 'https://bcparks.ca/plan-your-trip/park-operating-dates/';
 
     test.beforeEach(async ({page})=>{
         await page.goto(baseURL);
-        await page.waitForLoadState('domcontentloaded');        
     });
 
 test('Navigate to the Park Operating page via mega menu', async ({page})=>{
+   await page.waitForLoadState('networkidle');        
    await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
    await page.getByRole('menuitem', { name: 'Park operating dates'}).click();
    await expect(page).toHaveURL(baseURL + 'plan-your-trip/park-operating-dates/');
@@ -19,7 +18,9 @@ test('Navigate to the Park Operating page via mega menu', async ({page})=>{
 });
 
 test('Check the breadcrumbs displayed', async ({page})=>{
-    await page.goto(parkOperatingDateURL);
+    await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
+    await page.getByRole('menuitem', { name: 'Park operating dates' }).click();
+    await page.waitForLoadState('networkidle');        
     await expect (page.locator('#main-content')).toBeVisible();
     await page.getByRole('link', { name: 'Home' }).click();
     await expect(page).toHaveURL(baseURL);
@@ -31,7 +32,9 @@ test('Check the breadcrumbs displayed', async ({page})=>{
 });
 
 test('Check the filter menu is present and in default setting', async ({page})=>{
-    await page.goto(parkOperatingDateURL);
+    await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
+    await page.getByRole('menuitem', { name: 'Park operating dates' }).click();
+    await page.waitForLoadState('networkidle');      
     await expect(page.getByRole('heading', { name: 'Filter' })).toBeVisible();
 
     // Check if 'All' button is visible and selected
@@ -51,7 +54,9 @@ test('Check the filter menu is present and in default setting', async ({page})=>
 });
 
 test('Verify that the park names redirect to the correct park page', async ({page})=>{
-    await page.goto(parkOperatingDateURL);
+    await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
+    await page.getByRole('menuitem', { name: 'Park operating dates' }).click();
+    await page.waitForLoadState('networkidle');     
     await page.getByRole('link', { name: 'Adams Lake Park – Bush Creek' }).click();
     await expect(page).toHaveURL('https://bcparks.ca/adams-lake-park-bush-creek-site/');
     await expect(page).toHaveTitle('Adams Lake Park – Bush Creek Site | BC Parks');
@@ -64,7 +69,9 @@ test('Verify that the park names redirect to the correct park page', async ({pag
 })
 
 test('Check the park information is displayed', async ({page})=>{
-    await page.goto(parkOperatingDateURL);
+    await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
+    await page.getByRole('menuitem', { name: 'Park operating dates' }).click();
+    await page.waitForLoadState('networkidle');        
     await page.getByLabel('V', { exact: true}).click();
     await expect(page.getByRole('link', { name: 'Vaseux Lake Park'})).toBeVisible();
     await expect(page.getByText('Vaseux Lake ParkOpen.The park')).toBeVisible();
@@ -73,7 +80,9 @@ test('Check the park information is displayed', async ({page})=>{
 });
 
 test('Verify the hyperlinks on the page are working', async ({page})=>{
-    await page.goto(parkOperatingDateURL);
+    await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
+    await page.getByRole('menuitem', { name: 'Park operating dates' }).click();
+    await page.waitForLoadState('networkidle');          
     await page.getByText('active advisories').click();
     await expect(page).toHaveURL(baseURL + 'active-advisories/');
     await page.goBack();
@@ -81,7 +90,9 @@ test('Verify the hyperlinks on the page are working', async ({page})=>{
 
 
 test('Check the park links are working and redirect to the correct site', async({page})=>{
-    await page.goto(parkOperatingDateURL);
+    await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
+    await page.getByRole('menuitem', { name: 'Park operating dates' }).click();
+    await page.waitForLoadState('networkidle');             
     // Select all links on the page
     const links = await page.$$(`a`);
     // Loop through each link
@@ -98,4 +109,3 @@ test('Check the park links are working and redirect to the correct site', async(
 
 });
 
-*/
