@@ -70,12 +70,22 @@ export const ParkContact = ({ contact }) => {
   )
 }
 
-export default function Contact({ contact, parkContacts, hasReservations }) {
+export default function Contact({ contact, parkContacts, operations }) {
   // Filter contacts by isActive and sort by rank
   const sortedContacts =
     parkContacts.filter(contact => contact.isActive).sort((a, b) => {
       return a.rank - b.rank
     })
+  const hasAnyReservations =
+    operations.hasCanoeCircuitReservations ||
+    operations.hasPicnicShelterReservations ||
+    operations.hasFrontcountryReservations ||
+    operations.hasFrontcountryCabinReservations ||
+    operations.hasBackcountryPermits ||
+    operations.hasBackcountryReservations ||
+    operations.hasBackcountryGroupReservations ||
+    operations.hasBackcountryShelterReservations ||
+    operations.hasBackcountryWildernessReservations
 
   return (
     <div id="contact" className="anchor-link">
@@ -84,8 +94,8 @@ export default function Contact({ contact, parkContacts, hasReservations }) {
         <figure class="table">
           <table>
             <tbody>
-              {/* display if parkOperation.hasReservations is true  */}
-              {hasReservations && (
+              {/* display it if hasAnyReservations is true  */}
+              {hasAnyReservations && (
                 <tr>
                   <th>Reservations, changes, and cancellations</th>
                   <td>
@@ -117,7 +127,7 @@ export default function Contact({ contact, parkContacts, hasReservations }) {
               {sortedContacts.map((contact, index) => (
                 <ParkContact key={index} contact={contact} />
               ))}
-              {/* display this info always */}
+              {/* display it always */}
               <tr>
                 <th>General questions and feedback for BC Parks</th>
                 <td>

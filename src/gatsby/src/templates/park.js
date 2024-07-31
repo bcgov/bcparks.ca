@@ -439,7 +439,7 @@ export default function ParkTemplate({ data }) {
                 <Contact
                   contact={contact}
                   parkContacts={park.parkContacts}
-                  hasReservations={hasReservations}
+                  operations={operations}
                 />
               </div>
             )}
