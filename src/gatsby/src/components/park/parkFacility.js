@@ -34,7 +34,7 @@ export const AccordionList = ({ eventKey, facility, open }) => {
           className="d-flex justify-content-between accordion-toggle"
         >
           <div className="d-flex align-items-center">
-            <StaticIcon name={facility.facilityType.icon} size={36} />
+            <StaticIcon name={facility.facilityType.icon || "information"} size={36} />
             <HtmlContent className="accordion-header">
               {facility.facilityType.facilityName}
             </HtmlContent>
