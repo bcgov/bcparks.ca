@@ -118,14 +118,17 @@ test.describe('Home page tests', ()=>{
         await expect(page).toHaveURL(baseURL + 'about/indigenous-relations-reconciliation/');
         await expect(page).toHaveTitle('Indigenous relations and reconciliation  - Province of British Columbia | BC Parks');
         await page.goBack();
+        await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'A Bighorn Sheep Wildlife'}).click();
         await expect(page).toHaveURL(baseURL + 'plan-your-trip/visit-responsibly/wildlife-safety/');
         await expect(page).toHaveTitle('Wildlife safety - Province of British Columbia | BC Parks');
         await page.goBack();
+        await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'A mountain peak Conservation' }).click();
         await expect(page).toHaveURL(baseURL + 'conservation/');
         await expect(page).toHaveTitle('Conservation - Province of British Columbia | BC Parks');
         await page.goBack();
+        await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'People holding license plates' }).click();
         await expect(page).toHaveURL(baseURL + 'get-involved/');
         await expect(page).toHaveTitle('Get involved - Province of British Columbia | BC Parks');
