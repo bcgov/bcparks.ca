@@ -8,6 +8,7 @@ test.describe('Approved management plan tests', ()=>{
     
     test.beforeEach(async ({page})=>{
         await page.goto(baseURL);
+        await page.waitForLoadState('domcontentloaded');        
     });
     
 

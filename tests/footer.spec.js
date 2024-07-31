@@ -6,6 +6,7 @@ test.describe('Footer tests', ()=>{
 
     test.beforeEach(async ({page})=>{
         await page.goto(baseURL);
+        await page.waitForLoadState('domcontentloaded');        
     });
 
     test('Check that the footer blocker is present', async ({page})=>{

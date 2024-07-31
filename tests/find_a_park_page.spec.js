@@ -1,14 +1,12 @@
 import { test, expect } from '@playwright/test';
 
-/* 
-const baseURL = 'https://bcparks.ca/';
-
 test.describe('Find a park page tests', async ()=>{
-
     const baseURL = 'https://bcparks.ca/';
+    const findParkURL = 'https://bcparks.ca/find-a-park/';
 
     test.beforeEach(async ({page})=>{
         page.goto(baseURL);
+        await page.waitForLoadState('domcontentloaded');
     });
 
     test('Go to the find a park page', async ({page})=>{
@@ -26,8 +24,15 @@ test.describe('Find a park page tests', async ()=>{
         await expect(page).toHaveTitle('Joffre Lakes Park | BC Parks');
     });
 
-
-    //Adding a line to trigger a job
+    test('Check the filter headings are present', async ({page})=>{
+        await page.goto(findParkURL);
+        await expect(page.getByRole('heading', { name: 'Filter' })).toBeVisible();
+        await expect(page.getByText('Popular')).toBeVisible();
+        await expect(page.getByText('Area', { exact: true })).toBeVisible();
+        await expect(page.getByRole('group', { name: 'Camping' }).locator('legend')).toBeVisible();
+        await expect(page.getByText('Activities')).toBeVisible();
+        await expect(page.getByText('Facilities')).toBeVisible();
+        await expect(page.getByText('More ways to find a park')).toBeVisible();
+    });
 });
 
-*/
