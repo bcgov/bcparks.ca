@@ -9,7 +9,7 @@ async function up(knex) {
     await knex.raw(`update camping_types set plural_name = 'Boat-accessible campgrounds' where camping_type_code = 'boat-camping'`);
     await knex.raw(`update camping_types set plural_name = 'Cabins and huts' where camping_type_code = 'cabins-huts'`);
     await knex.raw(`update camping_types set plural_name = 'Frontcountry campgrounds' where camping_type_code = 'frontcountry-camping'`);
-    await knex.raw(`update camping_types set plural_name = 'Group campgrounds' where camping_type_code = 'group-camping'`);
+    await knex.raw(`update camping_types set plural_name = 'Groupsites' where camping_type_code = 'group-camping'`);
     await knex.raw(`update camping_types set plural_name = 'Huts' where camping_type_code = 'hut'`);
     await knex.raw(`update camping_types set plural_name = 'Marine-accessible campgrounds' where camping_type_code = 'marine-accessible-camping'`);
     await knex.raw(`update camping_types set plural_name = 'RV-accessible campgrounds' where camping_type_code = 'rv'`);
