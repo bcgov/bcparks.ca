@@ -93,7 +93,7 @@ test.describe('Home page tests', ()=>{
 
     // Checks the New to BC Parks links redirect to the corresponding page
     test('Check that the redirect New to BC Parks links are working', async ({page})=>{
-        await page.waitForLoadState('domcontentloaded', customTimeout);
+        await page.waitForLoadState('domcontentloaded');
         await page.getByRole('link', { name: 'Campers sitting near a tent' }).click();
         await expect(page).toHaveURL(baseURL + 'reservations/');
         await expect(page).toHaveTitle('Reservations - Province of British Columbia | BC Parks');
