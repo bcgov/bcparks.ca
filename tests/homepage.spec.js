@@ -6,7 +6,7 @@ test.describe('Home page tests', ()=>{
     const baseURL = 'https://bcparks.ca/';
 
     test.beforeEach(async ({page})=>{
-        await page.goto(baseURL, { timeout: 90000});
+        await page.goto(baseURL, { timeout: 90000 });
     })
 
     // Check that user can reach the home page
