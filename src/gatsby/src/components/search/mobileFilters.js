@@ -250,7 +250,7 @@ const MobileFilters = ({
             }}
           >
             <div className="park-select-label">
-              Activities
+              Things to do
             </div>
             {showFilters[3] ? (
               <FontAwesomeIcon icon={faChevronUp} />
