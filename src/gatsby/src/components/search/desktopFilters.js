@@ -150,7 +150,7 @@ const DesktopFilters = ({
         />
       </fieldset>
       <fieldset className="mb-2">
-        <legend className="filter-heading">Activities</legend>
+        <legend className="filter-heading">Things to do</legend>
         <Filter
           filterItems={activityItems.slice(0, truncatedActivityFilterLength)}
           selectedFilterItems={selectedActivities}
