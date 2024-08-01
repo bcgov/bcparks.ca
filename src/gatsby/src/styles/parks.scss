@@ -306,6 +306,9 @@ h2.section-heading {
       width: 670px;
       p {
         margin-bottom: 0;
+        & + p {
+          margin-top: 4px;
+        }
       }
       a:not(.btn) {
         text-decoration: underline;
