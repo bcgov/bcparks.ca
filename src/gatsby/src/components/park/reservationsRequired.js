@@ -1,12 +1,13 @@
 import React from "react"
 import { Link } from "gatsby"
 
-export default function ReservationsRequired({ subAreas, operations }) {
+export default function ReservationsRequired({ operations }) {
   const hasDayUsePass = operations.hasDayUsePass
   const hasFirstComeFirstServed = operations.hasFirstComeFirstServed
   const hasCanoeCircuitReservations = operations.hasCanoeCircuitReservations
   const hasPicnicShelterReservations = operations.hasPicnicShelterReservations
   const hasFrontcountryReservations = operations.hasFrontcountryReservations
+  const hasFrontcountryGroupReservations = operations.hasFrontcountryGroupReservations
   const hasFrontcountryCabinReservations = operations.hasFrontcountryCabinReservations
   const hasBackcountryPermits = operations.hasBackcountryPermits
   const hasBackcountryReservations = operations.hasBackcountryReservations
@@ -14,12 +15,10 @@ export default function ReservationsRequired({ subAreas, operations }) {
   const hasBackcountryShelterReservations = operations.hasBackcountryShelterReservations
   const hasBackcountryWildernessReservations = operations.hasBackcountryWildernessReservations
   const reservationLinks = operations.customReservationLinks
-  const groupCampingCode = ["group-camping"]
-  const hasGroupCamping = subAreas.some(s => groupCampingCode.includes(s.facilityType?.facilityCode))
 
   const hasAnyReservations =
     (hasFrontcountryReservations || hasFirstComeFirstServed || hasFrontcountryCabinReservations) ||
-    (hasGroupCamping || hasBackcountryGroupReservations) ||
+    (hasFrontcountryGroupReservations || hasBackcountryGroupReservations) ||
     hasPicnicShelterReservations ||
     (hasBackcountryReservations || hasBackcountryShelterReservations ||
       hasBackcountryWildernessReservations || hasCanoeCircuitReservations) ||
@@ -41,7 +40,7 @@ export default function ReservationsRequired({ subAreas, operations }) {
             </Link>
           </li>
         }
-        {(hasGroupCamping || hasBackcountryGroupReservations) &&
+        {(hasFrontcountryGroupReservations || hasBackcountryGroupReservations) &&
           <li>
             <Link to="/reservations/group-camping">
               Group camping

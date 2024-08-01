@@ -400,10 +400,7 @@ export default function ParkTemplate({ data }) {
                       />
                     </Col>
                     <Col xs={12} md={6}>
-                      <ReservationsRequired
-                        subAreas={park.parkOperationSubAreas}
-                        operations={operations}
-                      />
+                      <ReservationsRequired operations={operations} />
                     </Col>
                   </Row>
                 </div>
@@ -715,6 +712,8 @@ export const query = graphql`
         gateCloseTime
         hasPicnicShelterReservations
         hasCanoeCircuitReservations
+        hasFrontcountryReservations
+        hasFrontcountryGroupReservations
         hasFrontcountryCabinReservations
         hasBackcountryGroupReservations
         hasBackcountryShelterReservations
