@@ -9,17 +9,20 @@ import parksLogo from "../../images/park-card.png"
 import { addSmallImagePrefix, handleImgError } from "../../utils/helpers"
 
 const NearbyPark = ({ park }) => {
-  // sort photos
-  const activePhotos = park.parkPhotos.filter(p => p.isActive)
-  const photos = activePhotos.sort((a, b) => {
-    if (a.isFeatured && !b.isFeatured) {
-      return -1
-    } else if (!a.isFeatured && b.isFeatured) {
-      return 1
-    } else {
-      return a.sortOrder - b.sortOrder
-    }
-  })
+  // sort photos to keep the same conditions as the find a park page
+  // ref: scheduler/elasticsearch/transformers/park/main.js
+  const photos = park.parkPhotos
+    .filter(p => p.isActive)
+    .sort((a, b) => {
+      if (a.isFeatured && !b.isFeatured) {
+        return -1
+      } else if (!a.isFeatured && b.isFeatured) {
+        return 1
+      } else {
+        return a.sortOrder - b.sortOrder
+      }
+    })
+    .slice(0, 5)
 
   // useStates
   const [index, setIndex] = useState(0)
