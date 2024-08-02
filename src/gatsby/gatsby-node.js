@@ -152,6 +152,14 @@ exports.createSchemaCustomization = ({ actions }) => {
     totalCapacity: String
     gateOpenTime: String
     gateCloseTime: String
+    hasCanoeCircuitReservations: Boolean
+    hasFrontcountryReservations: Boolean
+    hasFrontcountryGroupReservations: Boolean
+    hasFrontcountryCabinReservations: Boolean
+    hasBackcountryGroupReservations: Boolean
+    hasBackcountryShelterReservations: Boolean
+    hasBackcountryWildernessReservations: Boolean
+    hasGroupPicnicReservations: Boolean
     hasPicnicShelterReservations: Boolean
     customReservationLinks: [STRAPI__COMPONENT_PARKS_RTE_LIST] @link(by: "id", from: "customReservationLinks___NODE")
   }

@@ -400,15 +400,7 @@ export default function ParkTemplate({ data }) {
                       />
                     </Col>
                     <Col xs={12} md={6}>
-                      <ReservationsRequired
-                        subAreas={park.parkOperationSubAreas}
-                        reservationLinks={operations.customReservationLinks}
-                        hasDayUsePass={hasDayUsePass}
-                        hasReservations={hasReservations}
-                        hasPicnic={operations.hasPicnicShelterReservations}
-                        hasBackcountryPermits={operations.hasBackcountryPermits}
-                        hasBackcountryReservations={operations.hasBackcountryReservations}
-                      />
+                      <ReservationsRequired operations={operations} />
                     </Col>
                   </Row>
                 </div>
@@ -719,6 +711,13 @@ export const query = graphql`
         gateOpenTime
         gateCloseTime
         hasPicnicShelterReservations
+        hasCanoeCircuitReservations
+        hasFrontcountryReservations
+        hasFrontcountryGroupReservations
+        hasFrontcountryCabinReservations
+        hasBackcountryGroupReservations
+        hasBackcountryShelterReservations
+        hasBackcountryWildernessReservations
         customReservationLinks {
           content {
             data {
