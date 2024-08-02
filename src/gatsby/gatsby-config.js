@@ -85,7 +85,7 @@ module.exports = {
                   populate: ["campingType"]
                 },
                 parkGuidelines: {
-                  populate: ["guidelineType", "mediaLink"]
+                  populate: ["guidelineType"]
                 },
                 parkOperation: {
                   fields: "*"
@@ -126,6 +126,9 @@ module.exports = {
                   populate: ["region", "section", "searchArea"]
                 },
                 parkPhotos: {
+                  fields: "*"
+                },
+                trailReports: {
                   fields: "*"
                 },
                 nearbyParks: {

@@ -96,13 +96,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     defaultDescription: STRAPI_GUIDELINE_TYPEDefaultDescription
   }
 
-  type STRAPI__MEDIA implements Node @dontInfer {
-    name: String
-    url: String
-    createdAt: Date
-    updatedAt: Date
-  }
-
   type STRAPI_PARK_GUIDELINE_DESCRIPTION_TEXTNODE implements Node @dontInfer {
     description: String
   }
@@ -118,7 +111,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     title: String
     description: STRAPI_PARK_GUIDELINEDescription
     guidelineType: STRAPI_GUIDELINE_TYPE @link(by: "id", from: "guidelineType___NODE")
-    mediaLink: STRAPI__MEDIA @link(by: "id", from: "mediaLink___NODE")
+  }
+
+  type STRAPI_TRAIL_REPORT implements Node @dontInfer {
+    title: String
+    reportUrl: String
+    reportDate: Date
   }
 
   type STRAPI_PROTECTED_AREA implements Node {
@@ -133,6 +131,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     seo: STRAPI__COMPONENT_PARKS_SEO
     hasDiscoverParksLink: Boolean
     nearbyParks: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "nearbyParks___NODE")
+    trailReports: [STRAPI_TRAIL_REPORT] @link(by: "id", from: "trailReports___NODE")
   }
   
   type STRAPI__COMPONENT_PARKS_RTE_LIST_CONTENT_TEXTNODE implements Node @dontInfer {

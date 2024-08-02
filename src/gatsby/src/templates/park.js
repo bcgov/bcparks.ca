@@ -375,7 +375,10 @@ export default function ParkTemplate({ data }) {
                   {hasParkGuidelines &&
                     <Row>
                       <Col>
-                        <VisitorGuidelines guidelines={park.parkGuidelines} />
+                        <VisitorGuidelines
+                          guidelines={park.parkGuidelines}
+                          trailReports={park.trailReports}
+                        />
                       </Col>
                     </Row>
                   }
@@ -660,10 +663,6 @@ export const query = graphql`
             }
           }
         }
-        mediaLink {
-          url
-          updatedAt
-        }
       }
       parkOperation {
         isActive
@@ -847,6 +846,11 @@ export const query = graphql`
         searchArea {
           searchAreaName
         }
+      }
+      trailReports {
+        title
+        reportUrl
+        reportDate
       }
     }
     featuredPhotos: allStrapiParkPhoto(

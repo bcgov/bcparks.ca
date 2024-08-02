@@ -328,6 +328,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::protected-area.protected-area"
+    },
+    "trailReports": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::trail-report.trail-report",
+      "mappedBy": "protectedArea"
     }
   }
 }

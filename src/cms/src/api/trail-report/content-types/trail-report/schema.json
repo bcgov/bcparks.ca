@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "trail_reports",
+  "info": {
+    "singularName": "trail-report",
+    "pluralName": "trail-reports",
+    "displayName": "Trail-report",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "reportUrl": {
+      "type": "string",
+      "required": true
+    },
+    "reportDate": {
+      "type": "date",
+      "required": true
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "trailReports"
+    }
+  }
+}
