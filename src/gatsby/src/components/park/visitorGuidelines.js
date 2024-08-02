@@ -11,9 +11,8 @@ const formatDate = (str) => {
   return format(date, 'MMMM d, yyyy')
 }
 
-export const Guideline = ({ guide }) => {
+export const Guideline = ({ guide, reports }) => {
   const guidelineType = guide.guidelineType
-  const media = guide.mediaLink
 
   return (
     <Row className="guideline">
@@ -26,18 +25,19 @@ export const Guideline = ({ guide }) => {
           {guide.description.data.description ?
             guide.description.data.description : guidelineType.defaultDescription.data.defaultDescription}
         </HtmlContent>
-        {media !== null &&
-          <p>
-            View the <a href={media.url}>trail conditions report [PDF]</a>
-            {` (${formatDate(media.updatedAt)})`}.
-          </p>
-        }
+        {(guidelineType.icon === "list-check" && reports?.length > 0) &&
+          reports.map((report, index) => (
+            <p key={index}>
+              View the <a href={report.reportUrl}>{report.title} [PDF]</a>
+              {` (${formatDate(report.reportDate)})`}.
+            </p>
+          ))}
       </Col>
     </Row>
   )
 }
 
-export default function VisitorGuidelines({ guidelines }) {
+export default function VisitorGuidelines({ guidelines, trailReports }) {
   // Filter guildelines by isActive and sort by rank
   const sortedGuidelines =
     guidelines.filter(guide => guide.isActive).sort((a, b) => {
@@ -49,7 +49,7 @@ export default function VisitorGuidelines({ guidelines }) {
     <>
       <h3>Visitor guidelines</h3>
       {sortedGuidelines.map((guide, index) => (
-        <Guideline key={index} guide={guide} />
+        <Guideline key={index} guide={guide} reports={trailReports} />
       ))}
     </>
   )

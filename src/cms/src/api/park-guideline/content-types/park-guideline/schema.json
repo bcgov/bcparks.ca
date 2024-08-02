@@ -44,15 +44,6 @@
       "relation": "manyToOne",
       "target": "api::protected-area.protected-area",
       "inversedBy": "parkGuidelines"
-    },
-    "mediaLink": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files"
-      ]
     }
   }
 }
