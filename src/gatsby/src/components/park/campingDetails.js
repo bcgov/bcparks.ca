@@ -105,11 +105,11 @@ export default function CampingDetails({ data }) {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    if (activeCampings.length === 1) {
+    if (activeCampings.length === 1 && isNullOrWhiteSpace(reservations)) {
       setOpen(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeCampings.length])
+  }, [activeCampings.length, reservations])
 
   if (activeCampings.length === 0) return null
 
