@@ -7,6 +7,7 @@ import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories } from '../utils/advisoryHelper';
+import { preProcessSubAreas, combineCampingTypes, combineFacilities } from '../utils/subAreaHelper';
 
 import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
@@ -32,9 +33,6 @@ export default function SiteTemplate({ data }) {
 
   const site = data.strapiSite
   const park = site.protectedArea
-  const activities = site.parkActivities
-  const facilities = site.parkFacilities
-  const campingTypes = site.parkCampingTypes
   const operations = site.parkOperation || {}
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
 
@@ -45,33 +43,16 @@ export default function SiteTemplate({ data }) {
   const searchArea = managementAreas[0]?.searchArea || {}
 
   const activeActivities = sortBy(
-    activities.filter(
+    site.parkActivities.filter(
       activity => activity.isActive && activity.activityType?.isActive
     ),
     ["activityType.rank", "activityType.activityName"],
     ["asc"]
   )
-  const activeFacilities = sortBy(
-    facilities.filter(
-      facility => facility.isActive && facility.facilityType?.isActive
-    ),
-    ["facilityType.rank", "facilityType.facilityName"],
-    ["asc"]
-  )
-  const activeCampings = sortBy(
-    campingTypes.filter(
-      campingType => campingType.isActive && campingType.campingType?.isActive
-    ),
-    ["campingType.rank", "campingType.campingTypeName"],
-    ["asc"]
-  )
 
-  const nonCampingActivities =
-    activeActivities
-      .sort((a, b) => a.activityType.activityName.localeCompare(b.activityType.activityName))
-  const nonCampingFacilities =
-    activeFacilities
-      .sort((a, b) => a.facilityType.facilityName.localeCompare(b.facilityType.facilityName))
+  const subAreas = preProcessSubAreas(site.protectedArea.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber))
+  const activeFacilities = combineFacilities(site.parkFacilities, data.allStrapiFacilityType.nodes, subAreas);
+  const activeCampings = combineCampingTypes(site.parkCampingTypes, data.allStrapiCampingType.nodes, subAreas);
 
   const hasReservations = operations.hasReservations
   const hasDayUsePass = operations.hasDayUsePass
@@ -177,13 +158,13 @@ export default function SiteTemplate({ data }) {
       sectionIndex: 4,
       display: "Things to do",
       link: "#things-to-do",
-      visible: nonCampingActivities.length > 0,
+      visible: activeActivities.length > 0,
     },
     {
       sectionIndex: 5,
       display: "Facilities",
       link: "#facilities",
-      visible: nonCampingFacilities.length > 0,
+      visible: activeFacilities.length > 0,
     },
   ]
 
@@ -232,7 +213,7 @@ export default function SiteTemplate({ data }) {
               latitude={site.latitude}
               longitude={site.longitude}
               campings={activeCampings}
-              facilities={nonCampingFacilities}
+              facilities={activeFacilities}
               hasCampfireBan={hasCampfireBan}
               hasDayUsePass={hasDayUsePass}
               hasReservations={hasReservations}
@@ -325,12 +306,12 @@ export default function SiteTemplate({ data }) {
             )}
             {menuItems[4].visible && (
               <div ref={activityRef} className="w-100">
-                <ParkActivity data={nonCampingActivities} />
+                <ParkActivity data={activeActivities} />
               </div>
             )}
             {menuItems[5].visible && (
               <div ref={facilityRef} className="w-100">
-                <ParkFacility data={nonCampingFacilities} />
+                <ParkFacility data={activeFacilities} />
               </div>
             )}
           </div>
@@ -404,18 +385,69 @@ export const query = graphql`
           gateCloseDate
         }
         parkOperationSubAreas {
+          parkSubArea
           orcsSiteNumber
           isActive
           isOpen
+          hasReservations
+          hasBackcountryReservations
+          hasBackcountryPermits
+          hasFirstComeFirstServed
+          parkAccessUnitId
+          isCleanAirSite
+          totalCapacity
+          frontcountrySites
+          reservableSites
+          nonReservableSites
+          vehicleSites
+          vehicleSitesReservable
+          doubleSites
+          pullThroughSites
+          rvSites
+          rvSitesReservable
+          electrifiedSites
+          longStaySites
+          walkInSites
+          walkInSitesReservable
+          groupSites
+          groupSitesReservable
+          backcountrySites
+          wildernessSites
+          boatAccessSites
+          horseSites
+          cabins
+          huts
+          yurts
+          shelters
+          boatLaunches
+          openNote
+          serviceNote
+          reservationNote
+          offSeasonNote
+          adminNote
           closureAffectsAccessStatus
           parkOperationSubAreaDates {
             isActive
             operatingYear
             openDate
             closeDate
+            serviceStartDate
+            serviceEndDate
+            reservationStartDate
+            reservationEndDate
+            offSeasonStartDate
+            offSeasonEndDate
           }
           parkSubAreaType {
+            subAreaType
+            subAreaTypeCode
             closureAffectsAccessStatus
+            facilityType {
+              facilityCode
+            }
+            campingType {
+              campingTypeCode
+            }
           }
         }
         managementAreas {
@@ -454,18 +486,7 @@ export const query = graphql`
           data
         }
         facilityType {
-          facilityName
           facilityCode
-          isActive
-          icon
-          iconNA
-          rank
-          defaultDescription {
-            data
-          }
-          appendStandardCalloutText {
-            data
-          }
         }
       }
       parkCampingTypes {
@@ -476,18 +497,7 @@ export const query = graphql`
           data
         }
         campingType {
-          campingTypeName
           campingTypeCode
-          isActive
-          icon
-          iconNA
-          rank
-          defaultDescription {
-            data
-          }
-          appendStandardCalloutText {
-            data
-          }
         }
       }
       parkOperation {
@@ -535,6 +545,37 @@ export const query = graphql`
             caption
           }
         }
+      }
+    }
+    allStrapiCampingType {
+      nodes {
+        appendStandardCalloutText {
+          data
+        }
+        defaultDescription {
+          data
+        }
+        campingTypeCode
+        campingTypeName
+        icon
+        isActive
+        rank
+        pluralName
+      }
+    }
+    allStrapiFacilityType {
+      nodes {
+        appendStandardCalloutText {
+          data
+        }
+        defaultDescription {
+          data
+        }
+        facilityCode
+        facilityName
+        icon
+        isActive
+        rank
       }
     }
     allStrapiMenu(

@@ -7,6 +7,7 @@ import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from '../utils/advisoryHelper';
+import { preProcessSubAreas, combineCampingTypes, combineFacilities } from '../utils/subAreaHelper';
 
 import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
@@ -18,7 +19,6 @@ import CampingDetails from "../components/park/campingDetails"
 import About from "../components/park/about"
 import Reconciliation from "../components/park/reconciliation"
 import ParkActivity from "../components/park/parkActivity"
-import ParkDates from "../components/park/parkDates"
 import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
 import ParkOverview from "../components/park/parkOverview"
@@ -66,27 +66,10 @@ export default function ParkTemplate({ data }) {
     ["activityType.rank", "activityType.activityName"],
     ["asc"]
   )
-  const activeFacilities = sortBy(
-    park.parkFacilities.filter(
-      facility => facility.isActive && facility.facilityType?.isActive
-    ),
-    ["facilityType.rank", "facilityType.facilityName"],
-    ["asc"]
-  )
-  const activeCampings = sortBy(
-    park.parkCampingTypes.filter(
-      campingType => campingType.isActive && campingType.campingType?.isActive
-    ),
-    ["campingType.rank", "campingType.campingTypeName"],
-    ["asc"]
-  )
 
-  const nonCampingActivities =
-    activeActivities
-      .sort((a, b) => a.activityType.activityName.localeCompare(b.activityType.activityName))
-  const nonCampingFacilities =
-    activeFacilities
-      .sort((a, b) => a.facilityType.facilityName.localeCompare(b.facilityType.facilityName))
+  const subAreas = preProcessSubAreas(park.parkOperationSubAreas)
+  const activeFacilities = combineFacilities(park.parkFacilities, data.allStrapiFacilityType.nodes, subAreas);
+  const activeCampings = combineCampingTypes(park.parkCampingTypes, data.allStrapiCampingType.nodes, subAreas);
 
   const hasReservations = operations.hasReservations
   const hasDayUsePass = operations.hasDayUsePass
@@ -198,43 +181,36 @@ export default function ParkTemplate({ data }) {
     },
     {
       sectionIndex: 3,
-      display: "Dates of operation",
-      // leave this link as is since the section won't exist in the future
-      link: "#park-dates-container",
-      visible: park.parkOperation,
-    },
-    {
-      sectionIndex: 4,
       display: "Camping",
       link: "#camping",
       visible: activeCampings.length > 0,
     },
     {
-      sectionIndex: 5,
+      sectionIndex: 4,
       display: "Things to do",
       link: "#things-to-do",
-      visible: nonCampingActivities.length > 0,
+      visible: activeActivities.length > 0,
+    },
+    {
+      sectionIndex: 5,
+      display: "Facilities",
+      link: "#facilities",
+      visible: activeFacilities.length > 0,
     },
     {
       sectionIndex: 6,
-      display: "Facilities",
-      link: "#facilities",
-      visible: nonCampingFacilities.length > 0,
-    },
-    {
-      sectionIndex: 7,
       display: `About this ${parkType}`,
       link: "#about-this-park",
       visible: !isNullOrWhiteSpace(natureAndCulture),
     },
     {
-      sectionIndex: 8,
+      sectionIndex: 7,
       display: "Reconciliation with Indigenous Peoples",
       link: "#reconciliation",
       visible: !isNullOrWhiteSpace(reconciliationNotes),
     },
     {
-      sectionIndex: 9,
+      sectionIndex: 8,
       display: `Contact`,
       link: "#contact",
       visible: !isNullOrWhiteSpace(contact)
@@ -303,7 +279,7 @@ export default function ParkTemplate({ data }) {
               latitude={park.latitude}
               longitude={park.longitude}
               campings={activeCampings}
-              facilities={nonCampingFacilities}
+              facilities={activeFacilities}
               hasCampfireBan={hasCampfireBan}
               hasDayUsePass={hasDayUsePass}
               hasReservations={hasReservations}
@@ -398,7 +374,7 @@ export default function ParkTemplate({ data }) {
                     <Col xs={12} md={6}>
                       <VisitResponsibly
                         campings={activeCampings}
-                        activities={nonCampingActivities}
+                        activities={activeActivities}
                         marineProtectedArea={park.marineProtectedArea}
                       />
                     </Col>
@@ -415,20 +391,6 @@ export default function ParkTemplate({ data }) {
               </div>
             )}
             {menuItems[3].visible && (
-              <div ref={parkDatesRef} className="w-100">
-                <ParkDates
-                  data={{
-                    parkType: parkType,
-                    parkOperation: park.parkOperation,
-                    subAreas: park.parkOperationSubAreas,
-                    advisories: advisories,
-                    marineProtectedArea: park.marineProtectedArea,
-                    parkOperationDates: park.parkOperationDates
-                  }}
-                />
-              </div>
-            )}
-            {menuItems[4].visible && (
               <div ref={campingRef} className="w-100">
                 <CampingDetails
                   data={{
@@ -442,21 +404,21 @@ export default function ParkTemplate({ data }) {
                 />
               </div>
             )}
-            {menuItems[5].visible && (
+            {menuItems[4].visible && (
               <div ref={activityRef} className="w-100">
                 <ParkActivity
-                  data={nonCampingActivities}
+                  data={activeActivities}
                   slug={park.slug}
                   hasDiscoverParksLink={park.hasDiscoverParksLink}
                 />
               </div>
             )}
-            {menuItems[6].visible && (
+            {menuItems[5].visible && (
               <div ref={facilityRef} className="w-100">
-                <ParkFacility data={nonCampingFacilities} />
+                <ParkFacility data={activeFacilities} />
               </div>
             )}
-            {menuItems[7].visible && (
+            {menuItems[6].visible && (
               <div ref={aboutRef} className="w-100">
                 <About
                   parkType={parkType}
@@ -467,12 +429,12 @@ export default function ParkTemplate({ data }) {
                 />
               </div>
             )}
-            {menuItems[8].visible && (
+            {menuItems[7].visible && (
               <div ref={reconciliationRef} className="w-100">
                 <Reconciliation data={reconciliationNotes} />
               </div>
             )}
-            {menuItems[9].visible && (
+            {menuItems[8].visible && (
               <div ref={contactRef} className="w-100">
                 <Contact contact={contact} />
               </div>
@@ -608,18 +570,7 @@ export const query = graphql`
           data
         }
         facilityType {
-          facilityName
           facilityCode
-          isActive
-          icon
-          iconNA
-          rank
-          defaultDescription {
-            data
-          }
-          appendStandardCalloutText {
-            data
-          }
         }
       }
       parkCampingTypes {
@@ -630,18 +581,7 @@ export const query = graphql`
           data
         }
         campingType {
-          campingTypeName
           campingTypeCode
-          isActive
-          icon
-          iconNA
-          rank
-          defaultDescription {
-            data
-          }
-          appendStandardCalloutText {
-            data
-          }
         }
       }
       parkGuidelines {
@@ -676,31 +616,6 @@ export const query = graphql`
         dayUsePassUrl
         hasParkGate
         offSeasonUse
-        totalCapacity
-        frontcountrySites
-        reservableSites
-        nonReservableSites
-        vehicleSites
-        vehicleSitesReservable
-        doubleSites
-        pullThroughSites
-        rvSites
-        rvSitesReservable
-        electrifiedSites
-        longStaySites
-        walkInSites
-        walkInSitesReservable
-        groupSites
-        groupSitesReservable
-        backcountrySites
-        wildernessSites
-        boatAccessSites
-        horseSites
-        cabins
-        huts
-        yurts
-        shelters
-        boatLaunches
         openNote
         serviceNote
         reservationsNote
@@ -784,12 +699,10 @@ export const query = graphql`
           subAreaTypeCode
           closureAffectsAccessStatus
           facilityType {
-            facilityName
-            icon
+            facilityCode
           }
           campingType {
-            campingTypeName
-            icon
+            campingTypeCode
           }
         }
       }
@@ -893,6 +806,37 @@ export const query = graphql`
             caption
           }
         }
+      }
+    }
+    allStrapiCampingType {
+      nodes {
+        appendStandardCalloutText {
+          data
+        }
+        defaultDescription {
+          data
+        }
+        campingTypeCode
+        campingTypeName
+        icon
+        isActive
+        rank
+        pluralName
+      }
+    }
+    allStrapiFacilityType {
+      nodes {
+        appendStandardCalloutText {
+          data
+        }
+        defaultDescription {
+          data
+        }
+        facilityCode
+        facilityName
+        icon
+        isActive
+        rank
       }
     }
     allStrapiMenu(
