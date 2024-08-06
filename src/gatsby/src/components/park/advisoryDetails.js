@@ -1,16 +1,16 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { parseJSON, format } from "date-fns"
 import Accordion from "react-bootstrap/Accordion"
-import Col from "react-bootstrap/Col"
-import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
-
-import blueAlertIcon from "../../images/park/blue-alert-64.png"
-import redAlertIcon from "../../images/park/red-alert-64.png"
-import yellowAlertIcon from "../../images/park/yellow-alert-64.png"
+import blueAlertIcon from "../../images/park/blue-alert.svg"
+import redAlertIcon from "../../images/park/red-alert.svg"
+import yellowAlertIcon from "../../images/park/yellow-alert.svg"
 
 import "../../styles/advisories/advisoryDetails.scss"
 
@@ -76,20 +76,24 @@ export default function AdvisoryDetails({ advisories, parkType }) {
     }
   })
 
+  useEffect(() => {
+    if (advisories.length === 1) {
+      expandAll(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [advisories.length])
+
   return (
-    <div id="park-advisory-details-container" className="anchor-link">
-      <Row>
-        <Col>
-          <div className="d-flex justify-content-between align-items-flex-start">
-            <h2 className="section-heading">{`Advisories (${advisories.length})`}</h2>
-          </div>
-        </Col>
-      </Row>
+    <div id="advisories" className="mb-4">
+      {/* id="park-advisory-details-container" should be removed once it's removed from the contents */}
+      <h3 id="park-advisory-details-container">
+        {`Advisories (${advisories.length})`}
+      </h3>
       <Row>
         {advisories.length === 0 && (
           <Col>
             <p>
-              There are no reported advisories for this {parkType.toLowerCase()}
+              There are no reported advisories for this {parkType}
             </p>
           </Col>
         )}
@@ -110,8 +114,11 @@ export default function AdvisoryDetails({ advisories, parkType }) {
                 }}
                 className="btn btn-link expand-link expand-icon"
               >
-                {allExpanded ? "Collapse all" : "Expand all"}
-                <i className={`fa fa-angle-down ${allExpanded ? "open" : "close"}`}></i>
+                {allExpanded ?
+                  <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                  :
+                  <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+                }
               </button>
             )}
             {advisoriesWithFormatting.map((advisory, index) => (
@@ -121,59 +128,52 @@ export default function AdvisoryDetails({ advisories, parkType }) {
                 // The following assigns each item its own activeKey IFF the item accordion is 'open'.
                 // Otherwise the activeKey is set to null, effectively removing the 'open' state from the accordion.
                 // This is a cheeky way to programmatically open one, some, or all items simultaneously.
-                activeKey={expandeds[index] ? advisory.id : null}
                 key={advisory.id}
                 aria-controls={advisory.title}
-                className="mb-4"
+                activeKey={expandeds[index] ? advisory.id : null}
+                className={`advisory-accordion is-open--${expandeds[index]}`}
               >
                 <Accordion.Toggle
-                  as={Container}
+                  as={"div"}
                   className="accordion-toggle"
-                  onClick={() => {
-                    handleChange(index)
-                  }}
                   eventKey={advisory.id}
+                  onClick={() => handleChange(index)}
                 >
                   <div className="d-flex justify-content-between">
-                    <div className="d-inline-flex align-items-start">
+                    <div className="d-flex align-items-center">
                       <img
                         src={advisory.alertIcon}
-                        className="small mr-3"
-                        alt="Alert icon"
+                        alt="advisory status icon"
+                        className="advisory-status-icon"
                       ></img>
-                      <HtmlContent>{advisory.title}</HtmlContent>
+                      <HtmlContent className="accordion-header">{advisory.title}</HtmlContent>
                     </div>
-                    <div className="d-flex align-items-center expand-icon">
-                      <i
-                        className={
-                          (expandeds[index] ? "open " : "close ") +
-                          "fa fa-angle-down mx-3"
-                        }
-                      ></i>
+                    <div className="d-flex align-items-center">
+                      {expandeds[index] ?
+                        <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+                      }
                     </div>
                   </div>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={advisory.id}>
-                  <div className="advisory-content p-3">
-                    <>
-                      {advisory.description && (
-                        <HtmlContent className="mb-2">
-                          {advisory.description}
-                        </HtmlContent>
-                      )}
-                      {advisory.links?.map(({ title, url, id }) => (
-                        <p key={id}>
-                          <a
-                            href={url}
-                            style={{ display: 'block' }}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {title}
-                          </a>
-                        </p>
-                      ))}
-                    </>
+                  <div className="accordion-content">
+                    {advisory.description && (
+                      <HtmlContent className="mb-2">
+                        {advisory.description}
+                      </HtmlContent>
+                    )}
+                    {advisory.links?.map(({ title, url, id }) => (
+                      <p key={id}>
+                        <a
+                          href={url}
+                          style={{ display: 'block' }}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {title}
+                        </a>
+                      </p>
+                    ))}
                     {advisory.isEffectiveDateDisplayed &&
                       advisory.formattedEffectiveDate && (
                         <p>
@@ -195,8 +195,6 @@ export default function AdvisoryDetails({ advisories, parkType }) {
                       advisory.formattedUpdatedDate && (
                         <p>Updated {advisory.formattedUpdatedDate}</p>
                       )}
-                    <br />
-                    <hr></hr>
                   </div>
                 </Accordion.Collapse>
               </Accordion>

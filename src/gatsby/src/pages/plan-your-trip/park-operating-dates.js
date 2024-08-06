@@ -35,12 +35,9 @@ const ParkLink = ({ park, advisories }) => {
 
   for (let idx in subAreas) {
     let subArea = subAreas[idx]
-    const facilityType = subArea.facilityType || {}
-    subArea.facilityName = facilityType.facilityName || ""
-    subArea.facilityIsCamping = facilityType.isCamping || false
-    const iconUrl = subArea.parkSubAreaType?.iconUrl || ""
-    subArea.typeIcon = iconUrl.split("/")[iconUrl.split("/").length - 1]
-
+    const facilityType = subArea.parkSubAreaType?.facilityType || {}
+    const campingType = subArea.parkSubAreaType?.campingType || {}
+    subArea.typeIcon = facilityType.icon || campingType.icon || "";
     subArea = groupSubAreaDates(subArea)
 
     // get distinct date ranges sorted chronologically
@@ -75,7 +72,7 @@ const ParkLink = ({ park, advisories }) => {
               slug={park.slug}
               subAreas={park.parkOperationSubAreas}
               operationDates={park.parkOperationDates}
-              punctuation={parkDates ? "." : ""}
+              punctuation="."
             />
           </span>
           {parkDates && (
@@ -251,13 +248,14 @@ const ParkOperatingDatesPage = () => {
               offSeasonStartDate
               offSeasonEndDate
             }
-            facilityType {
-              facilityName
-              isCamping
-            }
             parkSubAreaType {
-              iconUrl
               closureAffectsAccessStatus
+              facilityType {
+                 icon
+              }
+              campingType {
+                 icon
+              }
             }
           }
           parkOperationDates {
@@ -277,11 +275,13 @@ const ParkOperatingDatesPage = () => {
           url
           order
           id
+          show
           strapi_children {
             id
             title
             url
             order
+            show
           }
           strapi_parent {
             id

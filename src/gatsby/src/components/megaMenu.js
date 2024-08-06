@@ -4,7 +4,7 @@ import { Link, navigate } from "gatsby"
 import Logo from "../images/logo/BCParks_Primary_Reversed-cropped.svg"
 import LogoVertical from "../images/logo/BCParks_Primary_Reversed_Vertical.svg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faXmark, faChevronLeft, faChevronRight, faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
 
 import "../styles/megaMenu/megaMenu.scss"
 
@@ -249,7 +249,7 @@ const MegaMenu = ({ content, menuMode }) => {
                   }}
                   onClick={e => navigateBack(e, item)}
                 >
-                  <i className="menu-button__arr fa fa-chevron-left"></i> Back
+                  <FontAwesomeIcon icon={faChevronLeft} className="menu-button__arr" /> Back
                 </a>
               </li>
               <li className="menu-button menu-header">
@@ -269,7 +269,7 @@ const MegaMenu = ({ content, menuMode }) => {
                   </Link>
                 }
               </li>
-              {item.strapi_children.map((page, index) => (
+              {item.strapi_children.filter((page) => page.show).map((page, index) => (
                 <React.Fragment key={index}>
                   <li className={
                     "menu-button menu-button--" +
@@ -298,7 +298,7 @@ const MegaMenu = ({ content, menuMode }) => {
                       >
                         {page.title}
                         {page.hasChildren && (
-                          <i className="menu-button__arr fa fa-chevron-right"></i>
+                          <FontAwesomeIcon icon={faChevronRight} className="menu-button__arr" />
                         )}
                       </Link>
                     }
@@ -388,10 +388,10 @@ const MegaMenu = ({ content, menuMode }) => {
           onClick={e => toggleMenu(e)}
         >
           <nav className="menu-open">
-            <i className="fa fa-bars"></i>
+            <FontAwesomeIcon icon={faBars} />
           </nav>
           <nav className="menu-close">
-            <i className="fa fa-times"></i>
+            <FontAwesomeIcon icon={faXmark} />
           </nav>
         </div>
         <nav

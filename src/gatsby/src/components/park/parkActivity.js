@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react"
+import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import Accordion from "react-bootstrap/Accordion"
-import Container from "react-bootstrap/Container"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
-
 import DiscoverParksLogo from "../../images/discover-parks-instagram-dark-green-icon-with-text.png"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
@@ -20,37 +20,34 @@ export const AccordionList = ({ eventKey, activity, open }) => {
 
   return (
     <Accordion
-      className="park-details mb-2"
       activeKey={isShow ? eventKey : ''}
+      className={`is-open--${isShow}`}
     >
       <Accordion.Toggle
-        as={Container}
+        as={"div"}
         aria-controls={activity.activityType.activityName}
         eventKey={eventKey}
         onClick={() => setIsShow(!isShow)}
       >
         <div
           id={activity.activityType.activityCode}
-          className="d-flex justify-content-between p-3 accordion-toggle"
+          className="d-flex justify-content-between accordion-toggle"
         >
-          <div className="d-flex justify-content-left align-items-center pl-2">
-            <StaticIcon name={activity.activityType.icon} size={48} />
-            <HtmlContent className="pl-3 accordion-header">
+          <div className="d-flex align-items-center">
+            <StaticIcon name={activity.activityType.icon} size={36} />
+            <HtmlContent className="accordion-header">
               {activity.activityType.activityName}
             </HtmlContent>
           </div>
-          <div className="d-flex align-items-center expand-icon">
-            <i
-              className={
-                (isShow ? "open " : "close ") +
-                "fa fa-angle-down mx-3"
-              }
-            ></i>
+          <div className="d-flex align-items-center">
+            {isShow ?
+              <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+            }
           </div>
         </div>
       </Accordion.Toggle>
       <Accordion.Collapse eventKey={eventKey}>
-        <div className="p-4">
+        <div className="accordion-content">
           <HtmlContent>
             {!isNullOrWhiteSpace(activity.description.data) ?
               activity.description.data : activity.activityType.defaultDescription.data
@@ -114,15 +111,21 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
     checkHash()
   }, [activityData, checkHash])
 
+  useEffect(() => {
+    if (activityData.length === 1) {
+      setOpen(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activityData.length])
+
   if (activityData.length === 0) return null
 
   return (
-    <div id="park-activity-container" className="anchor-link">
-      <Row>
-        <Col>
-          <h2 className="section-heading">Activities</h2>
-        </Col>
-      </Row>
+    <div id="things-to-do" className="anchor-link">
+      {/* id="park-activity-container" should be removed once it's removed from the contents */}
+      <h2 id="park-activity-container" className="section-heading">
+        Things to do
+      </h2>
       <Row>
         <Col>
           {activityData.length > 1 && (
@@ -136,8 +139,11 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
               }}
               className="btn btn-link expand-link expand-icon"
             >
-              {open ? "Collapse all" : "Expand all"}
-              <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
+              {open ?
+                <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                :
+                <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+              }
             </button>
           )}
           {activityData.map((activity, index) => (

@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "camping_types",
+  "info": {
+    "singularName": "camping-type",
+    "pluralName": "camping-types",
+    "displayName": "Camping-type"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "campingTypeNumber": {
+      "type": "integer"
+    },
+    "campingTypeName": {
+      "type": "string"
+    },
+    "campingTypeCode": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "iconNA": {
+      "type": "string"
+    },
+    "rank": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "defaultDescription": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "appendStandardCalloutText": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    }
+  }
+}

@@ -99,6 +99,12 @@
       "target": "api::park-facility.park-facility",
       "mappedBy": "protectedArea"
     },
+    "parkCampingTypes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-camping-type.park-camping-type",
+      "mappedBy": "protectedArea"
+    },
     "parkNames": {
       "type": "relation",
       "relation": "oneToMany",
@@ -310,6 +316,23 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::park-photo.park-photo",
+      "mappedBy": "protectedArea"
+    },
+    "parkGuidelines": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-guideline.park-guideline",
+      "mappedBy": "protectedArea"
+    },
+    "nearbyParks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::protected-area.protected-area"
+    },
+    "trailReports": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::trail-report.trail-report",
       "mappedBy": "protectedArea"
     }
   }

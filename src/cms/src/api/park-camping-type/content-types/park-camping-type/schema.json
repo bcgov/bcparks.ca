@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_camping_types",
+  "info": {
+    "singularName": "park-camping-type",
+    "pluralName": "park-camping-types",
+    "displayName": "Park-camping-type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "isCampingOpen": {
+      "type": "boolean"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "hideStandardCallout": {
+      "type": "boolean",
+      "default": false
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkCampingTypes"
+    },
+    "site": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::site.site",
+      "inversedBy": "parkCampingTypes"
+    },
+    "campingType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::camping-type.camping-type"
+    },
+    "modifiedBy": {
+      "type": "string"
+    },
+    "modifiedDate": {
+      "type": "datetime"
+    }
+  }
+}

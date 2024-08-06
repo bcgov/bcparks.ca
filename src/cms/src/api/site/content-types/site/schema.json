@@ -73,6 +73,12 @@
       "target": "api::park-facility.park-facility",
       "mappedBy": "site"
     },
+    "parkCampingTypes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-camping-type.park-camping-type",
+      "mappedBy": "site"
+    },
     "isUnofficialSite": {
       "type": "boolean"
     },

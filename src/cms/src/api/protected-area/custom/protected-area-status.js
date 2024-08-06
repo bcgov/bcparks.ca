@@ -117,7 +117,8 @@ const getProtectedAreaStatus = async (ctx) => {
       fields: ["managementAreaName"],
       populate: {
         region: { fields: ["id"]},
-        section: { fields: ["id"]}
+        section: { fields: ["id"]},
+        searchArea: { fields: ["id"]}
       }            
     },
     parkActivities: {
@@ -130,6 +131,12 @@ const getProtectedAreaStatus = async (ctx) => {
       fields: ["id"],
       populate: { 
         facilityType: { fields: ["facilityName", "facilityCode"] }
+      }
+    },
+    parkCampingTypes: {
+      fields: ["id"],
+      populate: {
+        campingType: { fields: ["campingTypeName", "campingTypeCode"] }
       }
     }
   };
@@ -169,6 +176,13 @@ const getProtectedAreaStatus = async (ctx) => {
   );
   const sectionsData = await strapi.entityService.findMany(
     "api::section.section",
+    {
+      limit: -1,
+      populate: "*",
+    }
+  );
+  const searchAreasData = await strapi.entityService.findMany(
+    "api::search-area.search-area",
     {
       limit: -1,
       populate: "*",
@@ -228,6 +242,17 @@ const getProtectedAreaStatus = async (ctx) => {
       ),
     ];
 
+    const searchAreas = [
+      ...new Set(
+        protectedArea.managementAreas.map(
+          (m) =>
+            searchAreasData.find(
+              (searchArea) => searchArea.id === m.searchArea?.id
+            )?.searchAreaName
+        )
+      ),
+    ];
+
     const fireCentres = [
       ...new Set(
         protectedArea.fireZones.map((fireZone) => {
@@ -270,6 +295,17 @@ const getProtectedAreaStatus = async (ctx) => {
         icon: a.facilityType.icon,
         iconNA: a.facilityType.iconNA,
         rank: a.facilityType.rank,
+      };
+    });
+
+    const parkCampingTypes = protectedArea.parkCampingTypes.map((a) => {
+      return {
+        campingTypeName: a.campingType.campingTypeName,
+        campingTypeCode: a.campingType.campingTypeCode,
+        description: a.description,
+        icon: a.campingType.icon,
+        iconNA: a.campingType.iconNA,
+        rank: a.campingType.rank,
       };
     });
 
@@ -324,11 +360,13 @@ const getProtectedAreaStatus = async (ctx) => {
       isFogZone: boolToYN(protectedArea.isFogZone),
       regions: regions,
       sections: sections,
+      searchAreas: searchAreas,
       managementAreas: protectedArea.managementAreas.map(
         (m) => m.managementAreaName
       ),
       parkActivities: parkActivities,
       parkFacilities: parkFacilities,
+      parkCampingTypes: parkCampingTypes,
       orderUrl: links
         .filter((f) => f.type.toLowerCase().includes("order"))
         .map((m) => m.url),

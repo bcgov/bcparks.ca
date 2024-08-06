@@ -91,11 +91,13 @@ export const query = graphql`
         url
         order
         id
+        show
         strapi_children {
           id
           title
           url
           order
+          show
         }
         strapi_parent {
           id

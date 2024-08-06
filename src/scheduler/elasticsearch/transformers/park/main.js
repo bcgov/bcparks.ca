@@ -59,13 +59,34 @@ exports.createElasticPark = async function (park, photos) {
   // store protectedAreaName as lowercase for sorting
   park.nameLowerCase = park.protectedAreaName.toLowerCase().replace(/\./g, '');
 
-  // convert parkFacilities
+  // convert parkCampingTypes
   park.hasCamping = false;
-  park.campingFacilities = [];
+  if (park?.parkCampingTypes?.length) {
+    const parkCampingTypes = park.parkCampingTypes
+      .filter(ct => {
+        return ct.isActive && ct.campingType?.isActive;
+      })
+      .map(ct => {
+        park.hasCamping = true;
+        let campingTypeCode = ct.campingType.campingTypeCode;
+        let campingTypeNumber = ct.campingType.campingTypeNumber;
+        if (campingTypeCode === 'wilderness-camping') {
+          campingTypeCode = 'backcountry-camping'
+          campingTypeNumber = 36
+        }
+        return {
+          code: campingTypeCode,
+          num: campingTypeNumber
+        };
+      });
+    park.parkCampingTypes = _.uniqBy(parkCampingTypes, 'code');
+  }
+
+  // convert parkFacilities
   if (park?.parkFacilities?.length) {
-    const parkFacilities = park.parkFacilities
+    park.parkFacilities = park.parkFacilities
       .filter(f => {
-        return f.isActive && f.facilityType?.isActive && !f.facilityType.isCamping;
+        return f.isActive && f.facilityType?.isActive;
       })
       .map(f => {
         return {
@@ -73,27 +94,6 @@ exports.createElasticPark = async function (park, photos) {
           num: f.facilityType.facilityNumber
         };
       });
-
-    const campingFacilities = park.parkFacilities
-      .filter(f => {
-        return f.isActive && f.facilityType?.isActive && f.facilityType.isCamping;
-      })
-      .map(f => {
-        park.hasCamping = true;
-        let facilityCode = f.facilityType.facilityCode;
-        let facilityNumber = f.facilityType.facilityNumber;
-        if (facilityCode === 'wilderness-camping') {
-          facilityCode = 'backcountry-camping'
-          facilityNumber = 36
-        }
-        return {
-          code: facilityCode,
-          num: facilityNumber
-        };
-      });
-    park.campingFacilities = _.uniqBy(campingFacilities, 'code');
-    
-    park.parkFacilities = parkFacilities;
   }
 
   // convert parkActivities
@@ -162,6 +162,6 @@ exports.createElasticPark = async function (park, photos) {
   delete park.longitude;
   delete park.geoShape;
   delete park.searchTerms;
-
+  
   return park;
 };

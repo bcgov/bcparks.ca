@@ -54,12 +54,6 @@
         "preset": "toolbar"
       },
       "customField": "plugin::ckeditor5.CKEditor"
-    },
-    "parkOperationSubAreas": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::park-operation-sub-area.park-operation-sub-area",
-      "mappedBy": "facilityType"
     }
   }
 }

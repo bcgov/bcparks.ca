@@ -5,42 +5,18 @@
 
 .advisory-legend {
   .advisory-legend-item {
-    line-height: 1rem;
+    display: flex;
     background-color: $colorBackgroundGrey;
     margin: 2px;
-    padding: 16px;
-
+    padding: 8px 12px;
     @include media-breakpoint-up(md) {
       height: 100%;
-      margin: 2px;
     }
 
-    .legend-icon {
-      border-radius: 50%;
-      @include media-breakpoint-up(md) {
-        width: 2rem;
-        height: 2rem;
-      }
-      @include media-breakpoint-down(sm) {
-        width: 1rem;
-        height: 1rem;
-      }
+    .advisory-status-icon{
+      width: 2rem;
+      height: 2rem;
     }
-  }
-  .row {
-    margin-left: 0px;
-    margin-right: 0px;
-  }
-  .col {
-    padding: 0px 4px 0px 0px;
-    margin: 0px;
-    border-radius: 4px;
-    @include media-breakpoint-down(sm) {
-      padding: 0px;
-    }
-  }
-  .col:last-child {
-    padding: 0px;
   }
 
   a {

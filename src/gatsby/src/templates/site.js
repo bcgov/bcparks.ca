@@ -20,8 +20,8 @@ import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
 import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
-import SafetyInfo from "../components/park/safetyInfo"
 import MapLocation from "../components/park/mapLocation"
+import SafetyInfo from "../components/park/safetyInfo"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 
@@ -34,12 +34,15 @@ export default function SiteTemplate({ data }) {
   const park = site.protectedArea
   const activities = site.parkActivities
   const facilities = site.parkFacilities
+  const campingTypes = site.parkCampingTypes
   const operations = site.parkOperation || {}
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
 
   const description = site.description.data.description
   const safetyInfo = site.safetyInfo?.data?.safetyInfo
   const locationNotes = site.locationNotes.data.locationNotes
+  const managementAreas = park.managementAreas || []
+  const searchArea = managementAreas[0]?.searchArea || {}
 
   const activeActivities = sortBy(
     activities.filter(
@@ -55,32 +58,20 @@ export default function SiteTemplate({ data }) {
     ["facilityType.rank", "facilityType.facilityName"],
     ["asc"]
   )
+  const activeCampings = sortBy(
+    campingTypes.filter(
+      campingType => campingType.isActive && campingType.campingType?.isActive
+    ),
+    ["campingType.rank", "campingType.campingTypeName"],
+    ["asc"]
+  )
 
-  const campingActivities =
-    activeActivities.filter(
-      activity => activity.activityType.isCamping
-    )
-  const campingFacilities =
-    activeFacilities.filter(
-      facility => facility.facilityType.isCamping
-    )
   const nonCampingActivities =
-    activeActivities.filter(
-      activity => !activity.activityType.isCamping
-    )
+    activeActivities
+      .sort((a, b) => a.activityType.activityName.localeCompare(b.activityType.activityName))
   const nonCampingFacilities =
-    activeFacilities.filter(
-      facility => !facility.facilityType.isCamping
-    )
-  const activeCampings = campingActivities.concat(campingFacilities).sort((a, b) => {
-    if ((a.activityType?.activityName || a.facilityType?.facilityName) < (b.activityType?.activityName || b.facilityType?.facilityName)) {
-      return -1;
-    }
-    if ((a.activityType?.activityName || a.facilityType?.facilityName) > (b.activityType?.activityName || b.facilityType?.facilityName)) {
-      return 1;
-    }
-    return 0
-  })
+    activeFacilities
+      .sort((a, b) => a.facilityType.facilityName.localeCompare(b.facilityType.facilityName))
 
   const hasReservations = operations.hasReservations
   const hasDayUsePass = operations.hasDayUsePass
@@ -136,21 +127,19 @@ export default function SiteTemplate({ data }) {
   }, [apiBaseUrl, park?.orcs, site.orcsSiteNumber])
 
   const parkOverviewRef = useRef("")
-  const advisoryRef = useRef("")
-  const safetyRef = useRef("")
-  const campingRef = useRef("")
-  const facilityRef = useRef("")
-  const activityRef = useRef("")
+  const knowBeforeRef = useRef("")
   const mapLocationRef = useRef("")
+  const campingRef = useRef("")
+  const activityRef = useRef("")
+  const facilityRef = useRef("")
 
   const sectionRefs = [
     parkOverviewRef,
-    advisoryRef,
-    safetyRef,
-    campingRef,
-    facilityRef,
-    activityRef,
+    knowBeforeRef,
     mapLocationRef,
+    campingRef,
+    activityRef,
+    facilityRef,
   ]
 
   const activeSection = useScrollSpy({
@@ -162,57 +151,41 @@ export default function SiteTemplate({ data }) {
   const menuItems = [
     {
       sectionIndex: 0,
-      display: "Site overview",
-      link: "#park-overview-container",
+      display: "Highlights in this site",
+      link: "#highlights",
       visible: !isNullOrWhiteSpace(description),
     },
     {
       sectionIndex: 1,
-      display:
-        !isLoadingAdvisories && !advisoryLoadError
-          ? `Advisories (${advisories.length})`
-          : "Advisories",
-      link: "#park-advisory-details-container",
+      display: "Know before you go",
+      link: "#know-before-you-go",
       visible: true,
     },
     {
       sectionIndex: 2,
-      display: "Safety info",
-      link: "#park-safety-info-container",
-      visible: !isNullOrWhiteSpace(safetyInfo),
+      display: "Maps and Location",
+      link: "#maps-and-location",
+      visible: !isNullOrWhiteSpace(locationNotes),
     },
     {
       sectionIndex: 3,
       display: "Camping",
-      link: "#park-camping-details-container",
+      link: "#camping",
       visible: activeCampings.length > 0,
     },
     {
       sectionIndex: 4,
-      display: "Facilities",
-      link: "#park-facility-container",
-      visible: nonCampingFacilities.length > 0,
-    },
-    {
-      sectionIndex: 5,
-      display: "Activities",
-      link: "#park-activity-container",
+      display: "Things to do",
+      link: "#things-to-do",
       visible: nonCampingActivities.length > 0,
     },
     {
-      sectionIndex: 6,
-      display: "Location",
-      link: "#park-maps-location-container",
-      visible: (site.latitude && site.longitude) || !isNullOrWhiteSpace(locationNotes),
+      sectionIndex: 5,
+      display: "Facilities",
+      link: "#facilities",
+      visible: nonCampingFacilities.length > 0,
     },
   ]
-
-  const mapData = {
-    latitude: site.latitude,
-    longitude: site.longitude,
-    mapZoom: site.mapZoom,
-    parkOrcs: site.orcsSiteNumber
-  }
 
   const breadcrumbs = [
     <GatsbyLink key="1" to="/">
@@ -220,7 +193,7 @@ export default function SiteTemplate({ data }) {
     </GatsbyLink>,
     <GatsbyLink
       key="2"
-      to="/find-a-park"
+      to="/find-a-park/"
       onClick={(e) => {
         if (sessionStorage.getItem("lastSearch")) {
           e.preventDefault();
@@ -230,7 +203,8 @@ export default function SiteTemplate({ data }) {
     >
       Find a park
     </GatsbyLink>,
-    <GatsbyLink key="3"
+    <GatsbyLink
+      key="3"
       to={`/${park?.slug ? park.slug : 'parks/protected-area'}`}
     >
       {park?.protectedAreaName}
@@ -241,44 +215,54 @@ export default function SiteTemplate({ data }) {
   ]
 
   return (
-    <div className="grey-background">
+    <div>
       <Header mode="internal" content={menuContent} />
-      <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
-        <div className="container parks-container order-2">
-          <div id="main-content" tabIndex={-1} className="park-info-container pt-5">
+      <div className="park-header-container d-flex flex-wrap d-md-block">
+        <div className="parks-container bg-brown">
+          <div id="main-content" tabIndex={-1} className="park-info-container breadcrumb-container">
             <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
           {!isLoadingProtectedArea && !protectedAreaLoadError && (
-            <div>
-              <ParkHeader
-                slug={`${park.slug}/${site.slug}`}
-                parkName={`${park?.protectedAreaName}: ${site.siteName}`}
-                hasReservations={hasReservations}
-                hasDayUsePass={hasDayUsePass}
-                hasCampfireBan={hasCampfireBan}
-                isLoadingAdvisories={isLoadingAdvisories}
-                advisoryLoadError={advisoryLoadError}
-                advisories={advisories}
-                subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
-                operationDates={park.parkOperationDates}
-              />
-            </div>
+            <ParkHeader
+              orcs={site.orcsSiteNumber}
+              slug={`${park.slug}/${site.slug}`}
+              parkName={`${park?.protectedAreaName}: ${site.siteName}`}
+              parkType="site"
+              mapZoom={site.mapZoom}
+              latitude={site.latitude}
+              longitude={site.longitude}
+              campings={activeCampings}
+              facilities={nonCampingFacilities}
+              hasCampfireBan={hasCampfireBan}
+              hasDayUsePass={hasDayUsePass}
+              hasReservations={hasReservations}
+              advisories={advisories}
+              advisoryLoadError={advisoryLoadError}
+              isLoadingAdvisories={isLoadingAdvisories}
+              searchArea={searchArea}
+              parkOperation={site.parkOperation}
+              operationDates={park.parkOperationDates}
+              subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
+            />
           )}
         </div>
-        <div className="page-menu--mobile d-block d-md-none order-3">
+        <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
+          {photos.length > 0 && (
+            <div className="background-container bg-brown"></div>
+          )}
+          <div className="park-info-container">
+            <ParkPhotoGallery photos={photos} />
+          </div>
+        </div>
+      </div>
+      <div className="parks-container main-container">
+        <div className="page-menu--mobile d-block d-md-none">
           <PageMenu
             pageSections={menuItems}
             activeSection={activeSection}
             menuStyle="select"
           />
         </div>
-        <div className="container parks-container gallery-container order-1">
-          <div className="park-info-container">
-            <ParkPhotoGallery photos={photos} />
-          </div>
-        </div>
-      </div>
-      <div className="container parks-container main-container">
         <div className="row no-gutters park-info-container">
           <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
             <PageMenu
@@ -294,31 +278,37 @@ export default function SiteTemplate({ data }) {
               </div>
             )}
             {menuItems[1].visible && (
-              <div ref={advisoryRef} className="w-100">
-                {isLoadingAdvisories && (
-                  <div className="mb-5">
-                    <h2 className="section-heading">{`Advisories`}</h2>
-                    <div className="spinner-border" role="status">
-                      <span className="sr-only">Loading...</span>
+              <div ref={knowBeforeRef} className="w-100">
+                <div id="know-before-you-go" className="anchor-link">
+                  <h2 className="section-heading">Know before you go</h2>
+                  {isLoadingAdvisories && (
+                    <div className="mb-5">
+                      <h2 className="section-heading">{`Advisories`}</h2>
+                      <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                      </div>
                     </div>
-                  </div>
-                )}
-                {!isLoadingAdvisories && advisoryLoadError && (
-                  <div className="mb-5">
-                    <div className="alert alert-danger" role="alert">
-                      An error occurred while loading current public
-                      advisories.
+                  )}
+                  {!isLoadingAdvisories && advisoryLoadError && (
+                    <div className="mb-5">
+                      <div className="alert alert-danger" role="alert">
+                        An error occurred while loading current public
+                        advisories.
+                      </div>
                     </div>
-                  </div>
-                )}
-                {!isLoadingAdvisories && !advisoryLoadError && (
-                  <AdvisoryDetails advisories={advisories} parkType="site" />
-                )}
+                  )}
+                  {!isLoadingAdvisories && !advisoryLoadError && (
+                    <AdvisoryDetails advisories={advisories} parkType="site" />
+                  )}
+                  {!isNullOrWhiteSpace(safetyInfo) &&
+                    <SafetyInfo safetyInfo={safetyInfo} />
+                  }
+                </div>
               </div>
             )}
             {menuItems[2].visible && (
-              <div ref={safetyRef} className="w-100">
-                <SafetyInfo safetyInfo={safetyInfo} />
+              <div ref={mapLocationRef} className="w-100">
+                <MapLocation locationNotes={locationNotes} />
               </div>
             )}
             {menuItems[3].visible && (
@@ -334,26 +324,13 @@ export default function SiteTemplate({ data }) {
               </div>
             )}
             {menuItems[4].visible && (
-              <div ref={facilityRef} className="w-100">
-                <ParkFacility data={nonCampingFacilities} />
-              </div>
-            )}
-            {menuItems[5].visible && (
               <div ref={activityRef} className="w-100">
                 <ParkActivity data={nonCampingActivities} />
               </div>
             )}
-            {menuItems[6].visible && (
-              <div ref={mapLocationRef} className="w-100">
-                <MapLocation data={mapData} />
-                {locationNotes && (
-                  <div id="park-location-notes-container"
-                    dangerouslySetInnerHTML={{
-                      __html: locationNotes,
-                    }}
-                  >
-                  </div>
-                )}
+            {menuItems[5].visible && (
+              <div ref={facilityRef} className="w-100">
+                <ParkFacility data={nonCampingFacilities} />
               </div>
             )}
           </div>
@@ -441,6 +418,11 @@ export const query = graphql`
             closureAffectsAccessStatus
           }
         }
+        managementAreas {
+          searchArea {
+            searchAreaName
+          }
+        }
       }
       parkActivities {
         isActive
@@ -453,7 +435,6 @@ export const query = graphql`
           activityName
           activityCode
           isActive
-          isCamping
           icon
           iconNA
           rank
@@ -476,7 +457,28 @@ export const query = graphql`
           facilityName
           facilityCode
           isActive
-          isCamping
+          icon
+          iconNA
+          rank
+          defaultDescription {
+            data
+          }
+          appendStandardCalloutText {
+            data
+          }
+        }
+      }
+      parkCampingTypes {
+        isActive
+        isCampingOpen
+        hideStandardCallout
+        description {
+          data
+        }
+        campingType {
+          campingTypeName
+          campingTypeCode
+          isActive
           icon
           iconNA
           rank
@@ -496,7 +498,8 @@ export const query = graphql`
     featuredPhotos: allStrapiParkPhoto(
       filter: {
         orcsSiteNumber: {eq: $orcsSiteNumber},
-        isFeatured: {eq: true}, isActive: {eq: true}
+        isFeatured: {eq: true},
+        isActive: {eq: true}
       }
       sort: [
         {sortOrder: ASC},
@@ -544,11 +547,13 @@ export const query = graphql`
         url
         order
         id
+        show
         strapi_children {
           id
           title
           url
           order
+          show
         }
         strapi_parent {
           id

@@ -101,7 +101,7 @@ h3.subtitle {
       }
       .expand-link {
         margin-bottom: 0;
-        i {
+        svg {
           font-size: 1rem;
           margin-left: 6px;
         }
@@ -116,11 +116,6 @@ h3.subtitle {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          i {
-            font-size: 1rem;
-            color: $colorGreyMed;
-            margin-left: 6px;
-          }
         }
       }
     }
@@ -294,10 +289,6 @@ div[class$="-singleValue"] {
   padding-right: 0px !important;
 }
 
-.park-image-logo-div {
-  background-color: $colorBlue;
-}
-
 .search-result-logo-image {
   width: 100%;
   height: 100%;
@@ -305,69 +296,6 @@ div[class$="-singleValue"] {
   object-position: center;
 }
 
-.park-carousel,
-.park-carousel-mobile,
-.CarouselItem,
-.CarouselItem div {
-  height: 100% !important;
-}
-
-.park-carousel,
-.park-carousel-mobile {
-  .indicator {
-    margin-top: -30px;
-    &-button {
-      z-index: 1;
-      pointer-events: none;
-      color: rgba($colorWhite, .6);
-      svg {
-        width: 8px;
-        height: 8px;
-        margin: 0 4px;
-      }
-      &--active {
-        color: rgba($colorWhite, 1);
-      }
-    }
-  }
-}
-// display carousel nav with hovering on laptop
-.park-carousel {
-  .carousel-nav {
-    display: none;
-  }
-  &:hover {
-    .carousel-nav {
-      display: block;
-      &-botton {
-        width: 24px;
-        height: 24px;
-        color: $colorGrey;
-        background-color: rgba($colorWhite, .72);
-        &:hover, &:focus {
-          color: $colorGrey;
-          background-color: rgba($colorWhite, .72);
-        }
-      }
-    }
-  }
-}
-// display carousel nav without hovering on tablet/mobile
-.park-carousel-mobile  {
-  .carousel-nav {
-    display: block;
-    &-botton {
-      width: 24px;
-      height: 24px;
-      color: $colorGrey;
-      background-color: rgba($colorWhite, .72);
-      &:hover, &:focus {
-        color: $colorGrey;
-        background-color: rgba($colorWhite, .72);
-      }
-    }
-  }
-}
 
 .search-result-image {
   width: 100% !important;
@@ -444,7 +372,7 @@ div[class$="-singleValue"] {
         outline-offset: 0px;
         border-radius: 4px;
       }
-      i {
+      svg {
         font-size: 1rem;
         margin-left: 6px;
       }
@@ -524,7 +452,7 @@ div[class$="-singleValue"] {
         }
       }
       &--right {
-        min-width: 160px;
+        min-width: 165px;
       }
     }
   }
@@ -548,14 +476,19 @@ div[class$="-singleValue"] {
         border-radius: 4px; 
       }
     }
-  }
-
-  // park card icon
-  .access-status-icon {
-    margin-bottom: 8px;
-    img {
+    svg, img {
       width: 24px;
       height: 24px;
+    }
+  }
+  .access-status-icon {
+    margin-bottom: 8px;
+  }
+  .campfire-ban-icon {
+    display: flex;
+    svg {
+      color: $colorRed;
+      margin-right: 8px;
     }
   }
 

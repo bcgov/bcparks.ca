@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import Filter from "./filter"
 
 import "../../styles/search.scss"
@@ -7,17 +9,17 @@ import "../../styles/search.scss"
 const DesktopFilters = ({
   data: {
     areaItems,
-    campingFacilityItems,
+    campingTypeItems,
     activityItems,
     facilityItems,
     selectedAreas,
-    selectedCampingFacilities,
+    selectedParkCampingTypes,
     selectedActivities,
     selectedFacilities,
     searchText,
     setFilters,
     handleAreaCheck,
-    handleCampingFacilityCheck,
+    handleCampingTypeCheck,
     handleActivityCheck,
     handleFacilityCheck
   },
@@ -35,7 +37,7 @@ const DesktopFilters = ({
   }, [
     searchText,
     selectedAreas,
-    selectedCampingFacilities,
+    selectedParkCampingTypes,
     selectedActivities,
     selectedFacilities,
     setFilters
@@ -67,11 +69,11 @@ const DesktopFilters = ({
       <fieldset className="mb-2">
         <legend className="filter-heading">Popular</legend>
         <Filter
-          filterItems={campingFacilityItems.filter(
+          filterItems={campingTypeItems.filter(
             c => c.value === 36
           )}
-          selectedFilterItems={selectedCampingFacilities}
-          handleFilterCheck={handleCampingFacilityCheck}
+          selectedFilterItems={selectedParkCampingTypes}
+          handleFilterCheck={handleCampingTypeCheck}
           filterType="popular"
         />
         <Filter
@@ -97,11 +99,11 @@ const DesktopFilters = ({
           filterType="popular"
         />
         <Filter
-          filterItems={campingFacilityItems.filter(
+          filterItems={campingTypeItems.filter(
             c => c.value === 1
           )}
-          selectedFilterItems={selectedCampingFacilities}
-          handleFilterCheck={handleCampingFacilityCheck}
+          selectedFilterItems={selectedParkCampingTypes}
+          handleFilterCheck={handleCampingTypeCheck}
           filterType="popular"
         />
       </fieldset>
@@ -128,12 +130,12 @@ const DesktopFilters = ({
           {showMoreAreas ? (
             <>
               Show all {areaItems.length}
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             </>
           ) : (
             <>
               Show less
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             </>
           )}
         </button>
@@ -141,14 +143,14 @@ const DesktopFilters = ({
       <fieldset className="mb-2">
         <legend className="filter-heading">Camping</legend>
         <Filter
-          filterItems={campingFacilityItems}
-          selectedFilterItems={selectedCampingFacilities}
-          handleFilterCheck={handleCampingFacilityCheck}
+          filterItems={campingTypeItems}
+          selectedFilterItems={selectedParkCampingTypes}
+          handleFilterCheck={handleCampingTypeCheck}
           filterType="camping"
         />
       </fieldset>
       <fieldset className="mb-2">
-        <legend className="filter-heading">Activities</legend>
+        <legend className="filter-heading">Things to do</legend>
         <Filter
           filterItems={activityItems.slice(0, truncatedActivityFilterLength)}
           selectedFilterItems={selectedActivities}
@@ -170,12 +172,12 @@ const DesktopFilters = ({
           {showMoreActivities ? (
             <>
               Show all {activityItems.length}
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             </>
           ) : (
             <>
               Show less
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             </>
           )}
         </button>
@@ -203,12 +205,12 @@ const DesktopFilters = ({
           {showMoreFacilities ? (
             <>
               Show all {facilityItems.length}
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             </>
           ) : (
             <>
               Show less
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             </>
           )}
         </button>
@@ -220,17 +222,17 @@ const DesktopFilters = ({
 DesktopFilters.propTypes = {
   data: PropTypes.shape({
     areaItems: PropTypes.array.isRequired,
-    campingFacilityItems: PropTypes.array.isRequired,
+    campingTypeItems: PropTypes.array.isRequired,
     activityItems: PropTypes.array.isRequired,
     facilityItems: PropTypes.array.isRequired,
     selectedAreas: PropTypes.array.isRequired,
-    selectedCampingFacilities: PropTypes.array.isRequired,
+    selectedParkCampingTypes: PropTypes.array.isRequired,
     selectedActivities: PropTypes.array.isRequired,
     selectedFacilities: PropTypes.array.isRequired,
     searchText: PropTypes.string.isRequired,
     setFilters: PropTypes.func.isRequired,
     handleAreaCheck: PropTypes.func.isRequired,
-    handleCampingFacilityCheck: PropTypes.func.isRequired,
+    handleCampingTypeCheck: PropTypes.func.isRequired,
     handleActivityCheck: PropTypes.func.isRequired,
     handleFacilityCheck: PropTypes.func.isRequired
   }),

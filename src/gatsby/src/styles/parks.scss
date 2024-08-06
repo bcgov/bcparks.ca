@@ -3,22 +3,32 @@
 // @import url("https://governmentofbc.maps.arcgis.com/apps/webappviewer/jimu.js/css/jimu-theme.css");
 
 .parks-container {
-  max-width: 1350px !important;
-  &.main-container {
-    max-width: 1000px !important;
-    padding: 0 16px;
-    @media (min-width: $smBreakpoint) {
-      padding: 0 20px;
+  max-width: none;
+  width: 100%;
+  padding: 0;
+  .park-info-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    @media (min-width: $mdBreakpoint) {
+      padding-left: 32px;
+      padding-right: 32px;
     }
-    .park-info-container {
-      padding: 0;
+    @media (min-width: $xlBreakpoint) {
+      padding-left: 0;
+      padding-right: 0;
     }
+  }
+  .breadcrumb-container {
+    padding-top: 32px;
   }
   .page-content {
     max-width: 640px;
-    padding: 0 16px;
+    padding: 0;
     @media (min-width: $mdBreakpoint) {
       max-width: 66.66667%;
+      padding: 0 16px;
     }
     a:not(.btn) {
       color: $colorBlueMed;
@@ -33,28 +43,43 @@
         outline: $colorBlueMed solid 2px;
         outline-offset: 0px;
       }
-      &.park-overview-link {
-        display: inline-block;
-        text-decoration: none;
-        margin-top: 24px;
-        &:hover, &:focus-visible {
-          color: $colorBlue;
-          text-decoration: underline;
-        }
-      }
     }
     & > div.w-100:last-of-type {
       min-height: calc(100vh - 380px);
+      padding-bottom: 64px;
+    }
+    &.has-nearby-parks--true {
+      & > div.w-100:last-of-type {
+        min-height: auto;
+      }
     }
   }
 }
 
 .gallery-container {
+  position: relative;
   padding-left: 0;
   padding-right: 0;
-  @media (min-width: $mediumBreakpoint) {
-    padding-left: 15px;
-    padding-right: 15px;
+  &.has-photo--true {
+    padding-bottom: 100px;
+    @media (min-width: $smBreakpoint) {
+      padding-bottom: 200px;
+    }
+    @media (min-width: $lgBreakpoint) {
+      padding-bottom: 300px;
+    }
+  }
+  .background-container {
+    height: 100px;
+  }
+  .park-info-container {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    @media (min-width: 1100px) {
+      left: calc(50% - 550px);
+    }
   }
 }
 
@@ -82,6 +107,9 @@
 .grey-background {
   background-color: $colorBackgroundGrey !important;
 }
+.bg-brown {
+  background-color: $colorBrownLight;  
+}
 
 #park-menu-mobile {
   position: sticky;
@@ -99,21 +127,13 @@
   background: $colorWhite;
 }
 
-#mapDiv {
-  padding: 0;
-  margin: 0;
-  height: 500px;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
 // Breadcrumbs
 .breadcrumb-text {
   color: $colorGrey !important;
 }
 
 // Unsure if this is ever used
-#park-about-container {
+#about-this-park {
   .ecological-list {
     ul {
       display: inline-block;
@@ -149,18 +169,18 @@
 }
 
 .park-photo {
-  height: 150px;
+  height: 200px;
   @media (min-width: $smBreakpoint) {
-    height: 200px;
-  }
-  @media (min-width: $mdBreakpoint) {
     height: 300px;
   }
   @media (min-width: $lgBreakpoint) {
     height: 400px;
   }
   &--small {
-    height: 196px;
+    height: 146px;
+    @media (min-width: $lgBreakpoint) {
+      height: 196px;
+    }
   }
   img {
     width: 100%;
@@ -267,6 +287,64 @@ h2.section-heading {
 
 // Park header
 #park-header-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  .park-header {
+    width: 670px;
+    &-child {
+      display: flex;
+      margin-bottom: 24px;
+      .access-status-icon {
+        a {
+          display: inline;
+        }
+      }
+    }
+    &--left {
+      width: 670px;
+      p {
+        margin-bottom: 0;
+        & + p {
+          margin-top: 4px;
+        }
+      }
+      a:not(.btn) {
+        text-decoration: underline;
+      }
+      svg, img {
+        width: 24px;
+        height: 24px;
+        margin-right: 12px;
+        margin-bottom: 0;
+      }
+      svg {
+        color: $colorBlue;
+        &.fa-ban {
+          color: $colorRed;
+        }
+      }
+    }
+    &--right {
+      width: 430px;
+      display: none;
+      justify-content: flex-end;
+      img {
+        width: 250px;
+      }
+      @media (min-width: $mdBreakpoint) {
+        display: flex;;
+      }
+    }
+    .btn.btn-secondary {
+      margin-top: 8px;
+      &:first-of-type {
+        margin-right: 16px;
+      }
+    }
+  }
+
   .card-parent {
     .card-child {
       font-size: 0.875rem;
@@ -318,6 +396,66 @@ h2.section-heading {
   &.expanded {
     max-height: none;
   }
+  hr {
+    color: transparent;
+    border: none;
+    margin: 0;
+  }
+}
+
+// near by parks section
+#nearby-parks-container {
+  background-color: $colorBrownMed;
+  padding: 32px 0;
+  h2 {
+    margin-bottom: 16px;
+  }
+  .container {
+    max-width: 1000px;
+    padding: 0 32px;
+    @media (min-width: $mdBreakpoint) {
+      padding: 0 20px;
+    }
+    .row {
+      .col {
+        margin-bottom: 16px;
+        @media (min-width: $lgBreakpoint) {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  .park-card {
+    background-color: $colorWhite;
+    border-radius: 10px;
+    overflow: hidden;
+
+    .park-image-div-mobile {
+      height: 220px !important;
+    }
+    .park-content-mobile {
+      height: 180px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: space-between;
+      padding: 16px;
+      h2.park-heading-text {
+        position: relative;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
+        line-height: 28px;
+        margin-bottom: 0;
+        padding-right: 24px;
+        svg {
+          position: absolute;
+          bottom: 6px;
+          right: 0;
+        }
+      }
+    }
+  }
 }
 
 // page section
@@ -326,14 +464,35 @@ h2.section-heading {
 }
 
 .access-status-icon {
-  line-height: 2rem;
   img {
     float: left;
+    margin-right: 8px;
     margin-bottom: 8px;
   }
   a {
     display: block;
     white-space: nowrap;
     text-decoration: underline;
+  }
+}
+
+// visitor guidelines
+.guideline {
+  margin-bottom: 16px;
+  &--left {
+    svg {
+      width: 36px;
+      height: 36px;
+      color: $colorBlue;
+      padding: 6px;
+    }
+  }
+  &--right {
+    h4 {
+      margin-bottom: 8px;
+    }
+    p {
+      margin-bottom: 0;
+    }
   }
 }

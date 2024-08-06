@@ -3,10 +3,9 @@ import PropTypes from "prop-types"
 import { graphql, useStaticQuery, Link } from "gatsby"
 import { format } from "date-fns"
 
-import blueStatusIcon from "../../images/park/blue-status-64.png"
-import redStatusIcon from "../../images/park/red-status-64.png"
-import yellowStatusIcon from "../../images/park/yellow-status-64.png"
-
+import blueStatusIcon from "../../images/park/blue-status.svg"
+import redStatusIcon from "../../images/park/red-status.svg"
+import yellowStatusIcon from "../../images/park/yellow-status.svg"
 
 const ICONS = {
   blue: blueStatusIcon,
@@ -135,7 +134,15 @@ function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, stat
   }
 }
 
-export default function ParkAccessStatus({ advisories, slug, subAreas, operationDates, onStatusCalculated, punctuation, hideLink }) {
+export default function ParkAccessStatus({
+  advisories,
+  slug,
+  subAreas,
+  operationDates,
+  onStatusCalculated,
+  punctuation,
+  hideComma
+}) {
 
   const staticData = useStaticQuery(
     graphql`
@@ -179,22 +186,23 @@ export default function ParkAccessStatus({ advisories, slug, subAreas, operation
       {accessStatus && (<>
         {accessStatus.parkStatusText === "Open" ? (
           <>
-            <img src={accessStatus.parkStatusIcon} alt="" className="mr-2" />
+            <img
+              src={accessStatus.parkStatusIcon}
+              alt={accessStatus.parkStatusText}
+            />
             {accessStatus.parkStatusText}{punctuation}
           </>
         ) : (
           <>
-            <img src={accessStatus.parkStatusIcon} alt="" className="mr-2" />
-            {accessStatus.parkStatusText}
-            {!hideLink && (
-              <>
-                {", "}
-                <Link to={`/${slug}/#park-advisory-details-container`}>
-                  check advisories
-                </Link>
-                {punctuation}
-              </>
-            )}
+            <img
+              src={accessStatus.parkStatusIcon}
+              alt={accessStatus.parkStatusText}
+            />
+            {accessStatus.parkStatusText}{!hideComma && ", "}
+            <Link to={`/${slug}/#advisories`}>
+              {hideComma ? "C": "c"}heck advisories {`(${advisories.length})`}
+            </Link>
+            {punctuation}
           </>
         )}
       </>)}

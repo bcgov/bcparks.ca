@@ -133,13 +133,18 @@ nav {
       }
       .menu-button__arr {
         float: right;
-        line-height: 40px;
+        &.fa-chevron-right {
+          padding-top: 12px;
+        }
       }
     }
     .menu-button.menu-back {
       .menu-button__arr {
         float: left;
         margin-right: 8px;
+        &.fa-chevron-left {
+          padding-top: 12px;
+        }
       }
     }
     .menu-button-list {
@@ -429,8 +434,9 @@ nav {
 
         .menu-button__arr {
           float: right;
-          line-height: 22px;
-          height: 22px;
+          &.fa-chevron-right {
+            padding-top: 4px;
+          }
         }
       }
       &.menu-header {

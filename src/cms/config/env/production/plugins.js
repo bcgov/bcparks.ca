@@ -3,10 +3,13 @@ module.exports = ({ env }) => ({
     config: {
       provider: "aws-s3",
       providerOptions: {
-        accessKeyId: env("S3_ACCESS_KEY_ID"),
-        secretAccessKey: env("S3_ACCESS_SECRET"),
-        endpoint: env("S3_ENDPOINT"),
-        s3ForcePathStyle: true,
+        credentials: {
+          accessKeyId: env("S3_ACCESS_KEY_ID"),
+          secretAccessKey: env("S3_ACCESS_SECRET"),
+        },
+        region: "cannot-be-blank",
+        endpoint: `https://${env("S3_ENDPOINT")}`,
+        forcePathStyle: true,
         params: {
           Bucket: env("S3_BUCKET"),
         },

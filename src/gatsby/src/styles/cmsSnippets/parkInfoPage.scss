@@ -41,27 +41,14 @@
     outline: $colorBlueMed solid 2px;
     outline-offset: 0px;
   }
-  i {
-    color: inherit;
-    font-size: 1rem;
-    opacity: 1;
-    margin-left: 6px;
+  svg {
+    width: 16px;
+    height: 16px;
   }
 }
 
-.park-details {
-  background-color: white;
-  color: $colorBlue;
-  border-radius: 4px;
-  border: 1px solid $colorBlue;
-
-  &:hover {
-    border: 1px solid $colorGold;
-  }
-}
-
-.accordion-toggle {
-  cursor: pointer;
+.park-overview-link.expand-icon {
+  margin-top: 16px;
 }
 
 .discpver-parks {

@@ -2,43 +2,46 @@ import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
-import loadable from '@loadable/component'
 
 import useScrollSpy from "react-use-scrollspy"
 
-import { capitalizeFirstLetter, isNullOrWhiteSpace } from "../utils/helpers";
+import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from '../utils/advisoryHelper';
 
 import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import PageMenu from "../components/pageContent/pageMenu"
-import About from "../components/park/about"
+import Contact from "../components/park/contact"
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import CampingDetails from "../components/park/campingDetails"
-import NatureAndCulture from "../components/park/natureAndCulture"
+import About from "../components/park/about"
 import Reconciliation from "../components/park/reconciliation"
 import ParkActivity from "../components/park/parkActivity"
 import ParkDates from "../components/park/parkDates"
 import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
-import ParkMapDetails from "../components/park/parkMapDetails"
 import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
+import MapLocation from "../components/park/mapLocation"
 import SafetyInfo from "../components/park/safetyInfo"
 import SpecialNote from "../components/park/specialNote"
+import NearbyParks from "../components/park/nearbyParks"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
 import parksLogo from "../images/park-card.png"
 import "../styles/parks.scss"
-
-const AsyncMapLocation = loadable(() => import("../components/park/mapLocation"));
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import VisitResponsibly from "../components/park/visitResponsibly"
+import ReservationsRequired from "../components/park/reservationsRequired"
+import VisitorGuidelines from "../components/park/visitorGuidelines"
 
 export default function ParkTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
   const park = data.strapiProtectedArea
-  const parkType = park.type ?? "park"
+  const parkType = park.type.toLowerCase() ?? "park"
   const operations = park.parkOperation || {}
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
 
@@ -49,6 +52,12 @@ export default function ParkTemplate({ data }) {
   const natureAndCulture = park.natureAndCulture.data.natureAndCulture
   const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes
   const maps = park.maps.data.maps
+  const contact = park.parkContact.data.parkContact
+  const hasNearbyParks = park.nearbyParks?.length > 0
+  const nearbyParks = park.nearbyParks
+  const hasParkGuidelines = park.parkGuidelines?.length > 0
+  const managementAreas = park.managementAreas || []
+  const searchArea = managementAreas[0]?.searchArea || {}
 
   const activeActivities = sortBy(
     park.parkActivities.filter(
@@ -64,32 +73,20 @@ export default function ParkTemplate({ data }) {
     ["facilityType.rank", "facilityType.facilityName"],
     ["asc"]
   )
+  const activeCampings = sortBy(
+    park.parkCampingTypes.filter(
+      campingType => campingType.isActive && campingType.campingType?.isActive
+    ),
+    ["campingType.rank", "campingType.campingTypeName"],
+    ["asc"]
+  )
 
-  const campingActivities =
-    activeActivities.filter(
-      activity => activity.activityType.isCamping
-    )
-  const campingFacilities =
-    activeFacilities.filter(
-      facility => facility.facilityType.isCamping
-    )
   const nonCampingActivities =
-    activeActivities.filter(
-      activity => !activity.activityType.isCamping
-    )
+    activeActivities
+      .sort((a, b) => a.activityType.activityName.localeCompare(b.activityType.activityName))
   const nonCampingFacilities =
-    activeFacilities.filter(
-      facility => !facility.facilityType.isCamping
-    )
-  const activeCampings = campingActivities.concat(campingFacilities).sort((a, b) => {
-    if ((a.activityType?.activityName || a.facilityType?.facilityName) < (b.activityType?.activityName || b.facilityType?.facilityName)) {
-      return -1;
-    }
-    if ((a.activityType?.activityName || a.facilityType?.facilityName) > (b.activityType?.activityName || b.facilityType?.facilityName)) {
-      return 1;
-    }
-    return 0
-  })
+    activeFacilities
+      .sort((a, b) => a.facilityType.facilityName.localeCompare(b.facilityType.facilityName))
 
   const hasReservations = operations.hasReservations
   const hasDayUsePass = operations.hasDayUsePass
@@ -151,33 +148,27 @@ export default function ParkTemplate({ data }) {
   };
 
   const parkOverviewRef = useRef("")
-  const advisoryRef = useRef("")
-  const parkDatesRef = useRef("")
-  const safetyRef = useRef("")
-  const specialRef = useRef("")
-  const campingRef = useRef("")
-  const facilityRef = useRef("")
-  const activityRef = useRef("")
+  const knowBeforeRef = useRef("")
   const mapLocationRef = useRef("")
-  const activityMapRef = useRef("")
+  const parkDatesRef = useRef("")
+  const campingRef = useRef("")
+  const activityRef = useRef("")
+  const facilityRef = useRef("")
   const aboutRef = useRef("")
-  const natureAndCultureRef = useRef("")
   const reconciliationRef = useRef("")
+  const contactRef = useRef("")
 
   const sectionRefs = [
     parkOverviewRef,
-    advisoryRef,
-    parkDatesRef,
-    safetyRef,
-    specialRef,
-    campingRef,
-    facilityRef,
-    activityRef,
+    knowBeforeRef,
     mapLocationRef,
-    activityMapRef,
+    parkDatesRef,
+    campingRef,
+    activityRef,
+    facilityRef,
     aboutRef,
-    natureAndCultureRef,
     reconciliationRef,
+    contactRef,
   ]
 
   const activeSection = useScrollSpy({
@@ -189,96 +180,66 @@ export default function ParkTemplate({ data }) {
   const menuItems = [
     {
       sectionIndex: 0,
-      display: capitalizeFirstLetter(`${parkType} overview`),
-      link: "#park-overview-container",
+      display: `Highlights in this ${parkType}`,
+      link: "#highlights",
       visible: !isNullOrWhiteSpace(description),
     },
     {
       sectionIndex: 1,
-      display:
-        !isLoadingAdvisories && !advisoryLoadError
-          ? `Advisories (${advisories.length})`
-          : "Advisories",
-      link: "#park-advisory-details-container",
+      display: "Know before you go",
+      link: "#know-before-you-go",
       visible: true,
     },
     {
       sectionIndex: 2,
+      display: "Maps and location",
+      link: "#maps-and-location",
+      visible: !isNullOrWhiteSpace(maps) || !isNullOrWhiteSpace(locationNotes)
+    },
+    {
+      sectionIndex: 3,
       display: "Dates of operation",
+      // leave this link as is since the section won't exist in the future
       link: "#park-dates-container",
       visible: park.parkOperation,
     },
     {
-      sectionIndex: 3,
-      display: "Safety info",
-      link: "#park-safety-info-container",
-      visible: !isNullOrWhiteSpace(safetyInfo),
-    },
-    {
       sectionIndex: 4,
-      display: "Special notes",
-      link: "#park-special-notes-container",
-      visible: !isNullOrWhiteSpace(specialNotes),
+      display: "Camping",
+      link: "#camping",
+      visible: activeCampings.length > 0,
     },
     {
       sectionIndex: 5,
-      display: "Camping",
-      link: "#park-camping-details-container",
-      visible: activeCampings.length > 0,
+      display: "Things to do",
+      link: "#things-to-do",
+      visible: nonCampingActivities.length > 0,
     },
     {
       sectionIndex: 6,
       display: "Facilities",
-      link: "#park-facility-container",
+      link: "#facilities",
       visible: nonCampingFacilities.length > 0,
     },
     {
       sectionIndex: 7,
-      display: "Activities",
-      link: "#park-activity-container",
-      visible: nonCampingActivities.length > 0,
-    },
-    {
-      sectionIndex: 8,
-      display: "Location",
-      link: "#park-maps-location-container",
-      visible: (park.latitude && park.longitude) || !isNullOrWhiteSpace(locationNotes),
-    },
-    {
-      sectionIndex: 9,
-      display: capitalizeFirstLetter(`${parkType} and activity maps`),
-      link: "#park-map-details-container",
-      visible: !isNullOrWhiteSpace(maps),
-    },
-    {
-      sectionIndex: 10,
-      display: capitalizeFirstLetter(`Learn about this ${parkType}`),
-      link: "#park-about-container",
-      visible:
-        park.totalArea ||
-        park.establishedDate ||
-        !isNullOrWhiteSpace(park.parkContact.data.parkContact)
-    },
-    {
-      sectionIndex: 11,
-      display: "Nature and culture",
-      link: "#park-nature-and-culture-container",
+      display: `About this ${parkType}`,
+      link: "#about-this-park",
       visible: !isNullOrWhiteSpace(natureAndCulture),
     },
     {
-      sectionIndex: 12,
+      sectionIndex: 8,
       display: "Reconciliation with Indigenous Peoples",
-      link: "#park-reconciliation-container",
+      link: "#reconciliation",
       visible: !isNullOrWhiteSpace(reconciliationNotes),
     },
+    {
+      sectionIndex: 9,
+      display: `Contact`,
+      link: "#contact",
+      visible: !isNullOrWhiteSpace(contact)
+    }
   ]
-
-  const mapData = {
-    latitude: park.latitude,
-    longitude: park.longitude,
-    mapZoom: park.mapZoom,
-    parkOrcs: park.orcs
-  }
 
   const parkName = park.protectedAreaName;
 
@@ -325,45 +286,55 @@ export default function ParkTemplate({ data }) {
   ]
 
   return (
-    <div className="grey-background">
+    <div>
       <Header mode="internal" content={menuContent} />
-      <div className="park-header-container d-flex flex-wrap d-md-block pb-4 pb-lg-0">
-        <div className="container parks-container order-2">
-          <div id="main-content" tabIndex={-1} className="park-info-container pt-5">
-            <Breadcrumbs breadcrumbs={breadcrumbs} />
-          </div>
-          {!isLoadingProtectedArea && !protectedAreaLoadError && (
-            <div>
-              <ParkHeader
-                slug={park.slug}
-                parkName={parkName}
-                hasReservations={hasReservations}
-                hasDayUsePass={hasDayUsePass}
-                hasCampfireBan={hasCampfireBan}
-                isLoadingAdvisories={isLoadingAdvisories}
-                advisoryLoadError={advisoryLoadError}
-                advisories={advisories}
-                subAreas={park.parkOperationSubAreas}
-                operationDates={park.parkOperationDates}
-                onStatusCalculated={handleAccessStatus}
-              />
+      {!isLoadingProtectedArea && !protectedAreaLoadError && (
+        <div className="park-header-container d-flex flex-wrap d-md-block">
+          <div className="parks-container bg-brown">
+            <div id="main-content" tabIndex={-1} className="park-info-container breadcrumb-container">
+              <Breadcrumbs breadcrumbs={breadcrumbs} />
             </div>
-          )}
+            <ParkHeader
+              orcs={park.orcs}
+              slug={park.slug}
+              parkName={parkName}
+              parkType={parkType}
+              mapZoom={park.mapZoom}
+              latitude={park.latitude}
+              longitude={park.longitude}
+              campings={activeCampings}
+              facilities={nonCampingFacilities}
+              hasCampfireBan={hasCampfireBan}
+              hasDayUsePass={hasDayUsePass}
+              hasReservations={hasReservations}
+              advisories={advisories}
+              advisoryLoadError={advisoryLoadError}
+              isLoadingAdvisories={isLoadingAdvisories}
+              searchArea={searchArea}
+              parkOperation={park.parkOperation}
+              operationDates={park.parkOperationDates}
+              subAreas={park.parkOperationSubAreas}
+              onStatusCalculated={handleAccessStatus}
+            />
+          </div>
+          <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
+            {photos.length > 0 && (
+              <div className="background-container bg-brown"></div>
+            )}
+            <div className="park-info-container">
+              <ParkPhotoGallery photos={photos} />
+            </div>
+          </div>
         </div>
-        <div className="page-menu--mobile d-block d-md-none order-3">
+      )}
+      <div className="parks-container main-container">
+        <div className="page-menu--mobile d-block d-md-none">
           <PageMenu
             pageSections={menuItems}
             activeSection={activeSection}
             menuStyle="select"
           />
         </div>
-        <div className="container parks-container gallery-container order-1">
-          <div className="park-info-container">
-            <ParkPhotoGallery photos={photos} />
-          </div>
-        </div>
-      </div>
-      <div className="container parks-container main-container">
         <div className="row no-gutters park-info-container">
           <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
             <PageMenu
@@ -372,36 +343,78 @@ export default function ParkTemplate({ data }) {
               menuStyle="nav"
             />
           </div>
-          <div className="page-content col-12 col-md-8">
+          <div className={`page-content has-nearby-parks--${hasNearbyParks} col-12 col-md-8`}>
             {menuItems[0].visible && (
               <div ref={parkOverviewRef} className="w-100">
                 <ParkOverview data={description} type={parkType} />
               </div>
             )}
             {menuItems[1].visible && (
-              <div ref={advisoryRef} className="w-100">
-                {isLoadingAdvisories && (
-                  <div className="mb-5">
-                    <h2 className="section-heading">{`Advisories`}</h2>
-                    <div className="spinner-border" role="status">
-                      <span className="sr-only">Loading...</span>
+              <div ref={knowBeforeRef} className="w-100">
+                <div id="know-before-you-go" className="anchor-link">
+                  <h2 className="section-heading">Know before you go</h2>
+                  {isLoadingAdvisories && (
+                    <div className="mb-5">
+                      <h2 className="section-heading">{`Advisories`}</h2>
+                      <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                      </div>
                     </div>
-                  </div>
-                )}
-                {!isLoadingAdvisories && advisoryLoadError && (
-                  <div className="mb-5">
-                    <div className="alert alert-danger" role="alert">
-                      An error occurred while loading current public
-                      advisories.
+                  )}
+                  {!isLoadingAdvisories && advisoryLoadError && (
+                    <div className="mb-5">
+                      <div className="alert alert-danger" role="alert">
+                        An error occurred while loading current public
+                        advisories.
+                      </div>
                     </div>
-                  </div>
-                )}
-                {!isLoadingAdvisories && !advisoryLoadError && (
-                  <AdvisoryDetails advisories={advisories} parkType={parkType} />
-                )}
+                  )}
+                  {!isLoadingAdvisories && !advisoryLoadError && (
+                    <AdvisoryDetails advisories={advisories} parkType={parkType} />
+                  )}
+                  {hasParkGuidelines &&
+                    <Row>
+                      <Col>
+                        <VisitorGuidelines
+                          guidelines={park.parkGuidelines}
+                          trailReports={park.trailReports}
+                        />
+                      </Col>
+                    </Row>
+                  }
+                  {(!isNullOrWhiteSpace(safetyInfo) && !hasParkGuidelines) &&
+                    <SafetyInfo safetyInfo={safetyInfo} />
+                  }
+                  {(!isNullOrWhiteSpace(specialNotes) && !hasParkGuidelines) &&
+                    <SpecialNote specialNotes={specialNotes} />
+                  }
+                  <blockquote className="callout-box mb-4">
+                    <p>
+                      Review the detailed guides under visit responsibly for more information
+                      on staying safe and preserving our natural spaces.
+                    </p>
+                  </blockquote>
+                  <Row>
+                    <Col xs={12} md={6}>
+                      <VisitResponsibly
+                        campings={activeCampings}
+                        activities={nonCampingActivities}
+                        marineProtectedArea={park.marineProtectedArea}
+                      />
+                    </Col>
+                    <Col xs={12} md={6}>
+                      <ReservationsRequired operations={operations} />
+                    </Col>
+                  </Row>
+                </div>
               </div>
             )}
             {menuItems[2].visible && (
+              <div ref={mapLocationRef} className="w-100">
+                <MapLocation maps={maps} locationNotes={locationNotes} />
+              </div>
+            )}
+            {menuItems[3].visible && (
               <div ref={parkDatesRef} className="w-100">
                 <ParkDates
                   data={{
@@ -415,17 +428,7 @@ export default function ParkTemplate({ data }) {
                 />
               </div>
             )}
-            {menuItems[3].visible && (
-              <div ref={safetyRef} className="w-100">
-                <SafetyInfo safetyInfo={safetyInfo} />
-              </div>
-            )}
             {menuItems[4].visible && (
-              <div ref={specialRef} className="w-100">
-                <SpecialNote specialNotes={specialNotes} />
-              </div>
-            )}
-            {menuItems[5].visible && (
               <div ref={campingRef} className="w-100">
                 <CampingDetails
                   data={{
@@ -439,12 +442,7 @@ export default function ParkTemplate({ data }) {
                 />
               </div>
             )}
-            {menuItems[6].visible && (
-              <div ref={facilityRef} className="w-100">
-                <ParkFacility data={nonCampingFacilities} />
-              </div>
-            )}
-            {menuItems[7].visible && (
+            {menuItems[5].visible && (
               <div ref={activityRef} className="w-100">
                 <ParkActivity
                   data={nonCampingActivities}
@@ -453,42 +451,38 @@ export default function ParkTemplate({ data }) {
                 />
               </div>
             )}
+            {menuItems[6].visible && (
+              <div ref={facilityRef} className="w-100">
+                <ParkFacility data={nonCampingFacilities} />
+              </div>
+            )}
+            {menuItems[7].visible && (
+              <div ref={aboutRef} className="w-100">
+                <About
+                  parkType={parkType}
+                  natureAndCulture={natureAndCulture}
+                  biogeoclimaticZones={park.biogeoclimaticZones}
+                  terrestrialEcosections={park.terrestrialEcosections}
+                  marineEcosections={park.marineEcosections}
+                />
+              </div>
+            )}
             {menuItems[8].visible && (
-              <div ref={mapLocationRef} className="w-100">
-                <AsyncMapLocation data={mapData} />
-                {locationNotes && (
-                  <div id="park-location-notes-container"
-                    dangerouslySetInnerHTML={{
-                      __html: locationNotes,
-                    }}
-                  >
-                  </div>
-                )}
+              <div ref={reconciliationRef} className="w-100">
+                <Reconciliation data={reconciliationNotes} />
               </div>
             )}
             {menuItems[9].visible && (
-              <div ref={activityMapRef} className="w-100">
-                <ParkMapDetails data={maps} type={parkType} />
-              </div>
-            )}
-            {menuItems[10].visible && (
-              <div ref={aboutRef} className="w-100">
-                <About park={park} />
-              </div>
-            )}
-            {menuItems[11].visible && (
-              <div ref={natureAndCultureRef} className="w-100">
-                <NatureAndCulture data={natureAndCulture} />
-              </div>
-            )}
-            {menuItems[12].visible && (
-              <div ref={reconciliationRef} className="w-100">
-                <Reconciliation data={reconciliationNotes} />
+              <div ref={contactRef} className="w-100">
+                <Contact contact={contact} />
               </div>
             )}
           </div>
         </div>
       </div>
+      {hasNearbyParks &&
+        <NearbyParks parks={nearbyParks} />
+      }
       <ScrollToTop />
       <Footer />
     </div>
@@ -595,7 +589,6 @@ export const query = graphql`
           activityName
           activityCode
           isActive
-          isCamping
           icon
           iconNA
           rank
@@ -618,7 +611,6 @@ export const query = graphql`
           facilityName
           facilityCode
           isActive
-          isCamping
           icon
           iconNA
           rank
@@ -627,6 +619,48 @@ export const query = graphql`
           }
           appendStandardCalloutText {
             data
+          }
+        }
+      }
+      parkCampingTypes {
+        isActive
+        isCampingOpen
+        hideStandardCallout
+        description {
+          data
+        }
+        campingType {
+          campingTypeName
+          campingTypeCode
+          isActive
+          icon
+          iconNA
+          rank
+          defaultDescription {
+            data
+          }
+          appendStandardCalloutText {
+            data
+          }
+        }
+      }
+      parkGuidelines {
+        isActive
+        rank
+        title
+        description {
+          data {
+            description
+          }
+        }
+        guidelineType {
+          icon
+          defaultRank
+          defaultTitle
+          defaultDescription {
+            data {
+              defaultDescription 
+            }
           }
         }
       }
@@ -673,6 +707,23 @@ export const query = graphql`
         offSeasonNote
         generalNote
         adminNote
+        gateOpenTime
+        gateCloseTime
+        hasPicnicShelterReservations
+        hasCanoeCircuitReservations
+        hasFrontcountryReservations
+        hasFrontcountryGroupReservations
+        hasFrontcountryCabinReservations
+        hasBackcountryGroupReservations
+        hasBackcountryShelterReservations
+        hasBackcountryWildernessReservations
+        customReservationLinks {
+          content {
+            data {
+              content
+            }
+          }
+        }
       }
       parkOperationSubAreas {
         parkSubArea
@@ -729,19 +780,17 @@ export const query = graphql`
           offSeasonEndDate
         }
         parkSubAreaType {
-          isActive
           subAreaType
           subAreaTypeCode
-          iconUrl
           closureAffectsAccessStatus
-        }
-        facilityType {
-          facilityName
-          facilityNumber
-          isActive
-          icon
-          rank
-          isCamping
+          facilityType {
+            facilityName
+            icon
+          }
+          campingType {
+            campingTypeName
+            icon
+          }
         }
       }
       parkOperationDates {
@@ -757,6 +806,51 @@ export const query = graphql`
       }
       terrestrialEcosections {
         terrestrialEcosection
+      }
+      nearbyParks {
+        orcs
+        slug
+        protectedAreaName
+        parkPhotos {
+          isActive
+          isFeatured
+          sortOrder
+          imageUrl
+        }
+        parkActivities {
+          isActive
+          activityType {
+            activityNumber
+            activityCode
+            isActive
+          }
+        }
+        parkFacilities {
+          isActive
+          facilityType {
+            facilityNumber
+            facilityCode
+            isActive
+          }
+        }
+        parkCampingTypes {
+          isActive
+          campingType {
+            campingTypeNumber
+            campingTypeCode
+            isActive
+          }
+        }
+      }
+      managementAreas {
+        searchArea {
+          searchAreaName
+        }
+      }
+      trailReports {
+        title
+        reportUrl
+        reportDate
       }
     }
     featuredPhotos: allStrapiParkPhoto(
@@ -811,11 +905,13 @@ export const query = graphql`
         url
         order
         id
+        show
         strapi_children {
           id
           title
           url
           order
+          show
         }
         strapi_parent {
           id

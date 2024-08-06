@@ -21,6 +21,9 @@
     "hasReservations": {
       "type": "boolean"
     },
+    "hasFrontcountryReservations": {
+      "type": "boolean"
+    },
     "isDateRangeAnnual": {
       "type": "boolean"
     },
@@ -35,6 +38,15 @@
     },
     "hasDayUsePass": {
       "type": "boolean"
+    },
+    "hasPicnicShelterReservations": {
+      "type": "boolean"
+    },
+    "customReservationLinks": {
+      "displayName": "Additional Bullet List Items",
+      "type": "component",
+      "repeatable": true,
+      "component": "parks.rte-list"
     },
     "reservationUrl": {
       "type": "string"
@@ -159,12 +171,6 @@
       "target": "api::site.site",
       "inversedBy": "parkOperation"
     },
-    "camisResourceLocationId": {
-      "type": "biginteger"
-    },
-    "camisMapId": {
-      "type": "biginteger"
-    },
     "gateOpenTime": {
       "type": "time"
     },
@@ -178,6 +184,51 @@
       "type": "boolean"
     },
     "gateClosesAtDusk": {
+      "type": "boolean"
+    },
+    "frontcountryReservationUrl": {
+      "type": "string"
+    },
+    "frontcountryGroupReservationUrl": {
+      "type": "string"
+    },
+    "hasFrontcountryGroupReservations": {
+      "type": "boolean"
+    },
+    "frontcountryCabinReservationUrl": {
+      "type": "string"
+    },
+    "hasFrontcountryCabinReservations": {
+      "type": "boolean"
+    },
+    "backcountryGroupReservationUrl": {
+      "type": "string"
+    },
+    "hasBackcountryGroupReservations": {
+      "type": "boolean"
+    },
+    "backcountryWildernessReservationUrl": {
+      "type": "string"
+    },
+    "hasBackcountryWildernessReservations": {
+      "type": "boolean"
+    },
+    "backcountryShelterReservationUrl": {
+      "type": "string"
+    },
+    "hasBackcountryShelterReservations": {
+      "type": "boolean"
+    },
+    "canoeCircuitReservationUrl": {
+      "type": "string"
+    },
+    "hasCanoeCircuitReservations": {
+      "type": "boolean"
+    },
+    "groupPicnicReservationUrl": {
+      "type": "string"
+    },
+    "hasGroupPicnicReservations": {
       "type": "boolean"
     }
   }

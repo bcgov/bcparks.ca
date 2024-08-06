@@ -52,7 +52,6 @@ export const query = graphql`
       sort: {facilityName: ASC},
       filter: {
         isActive: {eq: true},
-        facilityCode: {ne: "wilderness-camping"}
       }
     ) {
       totalCount
@@ -60,7 +59,20 @@ export const query = graphql`
         facilityName
         facilityCode
         facilityNumber
-        isCamping
+      }
+    }
+    allStrapiCampingType(
+      sort: {campingTypeName: ASC},
+      filter: {
+        isActive: {eq: true},
+        campingTypeCode: {ne: "wilderness-camping"}
+      }
+    ) {
+      totalCount
+      nodes {
+        campingTypeName
+        campingTypeCode
+        campingTypeNumber
       }
     }
     allStrapiSearchCity(
@@ -85,11 +97,13 @@ export const query = graphql`
         url
         order
         id
+        show
         strapi_children {
           id
           title
           url
           order
+          show
         }
         strapi_parent {
           id
@@ -126,14 +140,14 @@ export default function FindAPark({ location, data }) {
       count: filterCount
     }
   })
-  const campingFacilityItems = data.allStrapiFacilityType.nodes
-    .filter(facility => facility.isCamping).map(camping => {
+  const campingTypeItems = data.allStrapiCampingType.nodes
+    .map(camping => {
       const filterCount = campingsCount?.find(
-        campingCount => campingCount.key === camping.facilityNumber
+        campingCount => campingCount.key === camping.campingTypeNumber
       )?.doc_count || 0
       return {
-        label: camping.facilityName,
-        value: camping.facilityNumber,
+        label: camping.campingTypeName,
+        value: camping.campingTypeNumber,
         count: filterCount
       }
     })
@@ -148,7 +162,7 @@ export default function FindAPark({ location, data }) {
     }
   })
   const facilityItems = data.allStrapiFacilityType.nodes
-    .filter(facility => !facility.isCamping).map(facility => {
+    .map(facility => {
       const filterCount = facilitiesCount?.find(
         facilityCount => facilityCount.key === facility.facilityNumber
       )?.doc_count || 0
@@ -170,7 +184,7 @@ export default function FindAPark({ location, data }) {
 
   // useState - selected filter items state
   const [qsAreas, setQsAreas, qsAreasInitialized] = useQueryParamString("sa", "")
-  const [qsCampingFacilities, setQsCampingFacilities, qsCampingsInitialized] = useQueryParamString("c", "")
+  const [qsParkCampingTypes, setQsParkCampingTypes, qsCampingsInitialized] = useQueryParamString("c", "")
   const [qsActivities, setQsActivities, qsActivitiesInitialized] = useQueryParamString("a", "")
   const [qsFacilities, setQsFacilities, qsFacilitiesInitialized] = useQueryParamString("f", "")
   const [qsLocation, setQsLocation, qsLocationInitialized] = useQueryParamString("l", "")
@@ -178,7 +192,7 @@ export default function FindAPark({ location, data }) {
     "q", location.state?.searchText ? location.state.searchText : ""
   )
   const [selectedAreas, setSelectedAreas] = useState([])
-  const [selectedCampingFacilities, setSelectedCampingFacilities] = useState([])
+  const [selectedParkCampingTypes, setSelectedParkCampingTypes] = useState([])
   const [selectedActivities, setSelectedActivities] = useState([])
   const [selectedFacilities, setSelectedFacilities] = useState([])
   const [selectedCity, setSelectedCity] = useState(location.state?.selectedCity ? location.state.selectedCity : [])
@@ -220,13 +234,13 @@ export default function FindAPark({ location, data }) {
       ])
     }
   }
-  const handleCampingFacilityCheck = (camping, event) => {
+  const handleCampingTypeCheck = (camping, event) => {
     setCurrentPage(1)
     if (event.target.checked) {
-      setSelectedCampingFacilities([...selectedCampingFacilities, camping])
+      setSelectedParkCampingTypes([...selectedParkCampingTypes, camping])
     } else {
-      setSelectedCampingFacilities([
-        ...selectedCampingFacilities.filter(c => c.value !== camping.value),
+      setSelectedParkCampingTypes([
+        ...selectedParkCampingTypes.filter(c => c.value !== camping.value),
       ])
     }
   }
@@ -256,9 +270,9 @@ export default function FindAPark({ location, data }) {
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
   }
-  const handleCampingFacilityDelete = chipToDelete => {
+  const handleCampingTypeDelete = chipToDelete => {
     setCurrentPage(1)
-    setSelectedCampingFacilities(chips =>
+    setSelectedParkCampingTypes(chips =>
       chips.filter(chip => chip.value !== chipToDelete.value)
     )
   }
@@ -277,8 +291,8 @@ export default function FindAPark({ location, data }) {
   const handleFilterDelete = chipToDelete => () => {
     if (chipToDelete.type === "area") {
       handleAreaDelete(chipToDelete)
-    } else if (chipToDelete.type === "campingFacility") {
-      handleCampingFacilityDelete(chipToDelete)
+    } else if (chipToDelete.type === "campingType") {
+      handleCampingTypeDelete(chipToDelete)
     } else if (chipToDelete.type === "activity") {
       handleActivityDelete(chipToDelete)
     } else if (chipToDelete.type === "facility") {
@@ -290,7 +304,7 @@ export default function FindAPark({ location, data }) {
   const handleClearFilter = () => {
     setFilterSelections([])
     setSelectedAreas([])
-    setSelectedCampingFacilities([])
+    setSelectedParkCampingTypes([])
     setSelectedActivities([])
     setSelectedFacilities([])
   }
@@ -424,8 +438,8 @@ export default function FindAPark({ location, data }) {
     selectedAreas.forEach(r => {
       filters.push({ ...r, type: "area" })
     })
-    selectedCampingFacilities.forEach(c => {
-      filters.push({ ...c, type: "campingFacility" })
+    selectedParkCampingTypes.forEach(c => {
+      filters.push({ ...c, type: "campingType" })
     })
     selectedActivities.forEach(a => {
       filters.push({ ...a, type: "activity" })
@@ -436,7 +450,7 @@ export default function FindAPark({ location, data }) {
     setFilterSelections([...filters])
   }, [
     selectedAreas,
-    selectedCampingFacilities,
+    selectedParkCampingTypes,
     selectedActivities,
     selectedFacilities,
   ])
@@ -457,8 +471,8 @@ export default function FindAPark({ location, data }) {
     if (selectedAreas.length > 0) {
       params.areas = selectedAreas.map(area => area.value)
     }
-    if (selectedCampingFacilities.length > 0) {
-      params.campings = selectedCampingFacilities.map(camping => camping.value)
+    if (selectedParkCampingTypes.length > 0) {
+      params.campings = selectedParkCampingTypes.map(camping => camping.value)
     }
     if (selectedActivities.length > 0) {
       params.activities = selectedActivities.map(activity => activity.value)
@@ -471,7 +485,7 @@ export default function FindAPark({ location, data }) {
     searchText,
     selectedCity,
     selectedAreas,
-    selectedCampingFacilities,
+    selectedParkCampingTypes,
     selectedActivities,
     selectedFacilities,
   ])
@@ -486,7 +500,7 @@ export default function FindAPark({ location, data }) {
       && qsAreasInitialized
       && qsFacilitiesInitialized
       && (hasCity || !qsLocation)
-      && Math.sign(qsCampingFacilities.length) === Math.sign(selectedCampingFacilities.length)
+      && Math.sign(qsParkCampingTypes.length) === Math.sign(selectedParkCampingTypes.length)
       && Math.sign(qsActivities.length) === Math.sign(selectedActivities.length)
       && Math.sign(qsAreas.length) === Math.sign(selectedAreas.length)
       && Math.sign(qsFacilities.length) === Math.sign(selectedFacilities.length);
@@ -539,7 +553,7 @@ export default function FindAPark({ location, data }) {
   }, [
     params,
     qsActivities,
-    qsCampingFacilities,
+    qsParkCampingTypes,
     qsFacilities,
     qsAreas,
     qsLocation,
@@ -555,8 +569,8 @@ export default function FindAPark({ location, data }) {
     if (selectedActivities.length === 0 && qsActivities.length > 0) {
       setSelectedActivities(activityItems.filter(x => arr(qsActivities).includes(x.value)));
     }
-    if (selectedCampingFacilities.length === 0 && qsCampingFacilities.length > 0) {
-      setSelectedCampingFacilities(campingFacilityItems.filter(x => arr(qsCampingFacilities).includes(x.value)));
+    if (selectedParkCampingTypes.length === 0 && qsParkCampingTypes.length > 0) {
+      setSelectedParkCampingTypes(campingTypeItems.filter(x => arr(qsParkCampingTypes).includes(x.value)));
     }
     if (selectedFacilities.length === 0 && qsFacilities.length > 0) {
       setSelectedFacilities(facilityItems.filter(x => arr(qsFacilities).includes(x.value)));
@@ -587,7 +601,7 @@ export default function FindAPark({ location, data }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     qsActivities,
-    qsCampingFacilities,
+    qsParkCampingTypes,
     qsFacilities,
     qsAreas,
     qsLocation
@@ -602,9 +616,9 @@ export default function FindAPark({ location, data }) {
     if (qsActivities !== activities) {
       setQsActivities(activities);
     }
-    const campingFacilities = qs(selectedCampingFacilities);
-    if (qsCampingFacilities !== campingFacilities) {
-      setQsCampingFacilities(campingFacilities);
+    const parkCampingTypes = qs(selectedParkCampingTypes);
+    if (qsParkCampingTypes !== parkCampingTypes) {
+      setQsParkCampingTypes(parkCampingTypes);
     }
     const facilities = qs(selectedFacilities);
     if (qsFacilities !== facilities) {
@@ -621,7 +635,7 @@ export default function FindAPark({ location, data }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     selectedActivities,
-    selectedCampingFacilities,
+    selectedParkCampingTypes,
     selectedFacilities,
     selectedAreas,
     searchText,
@@ -751,13 +765,13 @@ export default function FindAPark({ location, data }) {
                 <DesktopFilters
                   data={{
                     areaItems,
-                    campingFacilityItems,
+                    campingTypeItems,
                     activityItems,
                     facilityItems,
                     selectedAreas,
                     setSelectedAreas,
-                    selectedCampingFacilities,
-                    setSelectedCampingFacilities,
+                    selectedParkCampingTypes,
+                    setSelectedParkCampingTypes,
                     selectedActivities,
                     setSelectedActivities,
                     selectedFacilities,
@@ -766,7 +780,7 @@ export default function FindAPark({ location, data }) {
                     setCurrentPage,
                     setFilters,
                     handleAreaCheck,
-                    handleCampingFacilityCheck,
+                    handleCampingTypeCheck,
                     handleActivityCheck,
                     handleFacilityCheck
                   }}
@@ -824,7 +838,6 @@ export default function FindAPark({ location, data }) {
                     <button
                       key={index}
                       onClick={handleFilterDelete(f)}
-                      onDelete={handleFilterDelete(f)}
                       className="btn btn-primary park-filter-chip"
                     >
                       {shortenFilterLabel(f.label)}
@@ -847,7 +860,6 @@ export default function FindAPark({ location, data }) {
                     <button
                       key={index}
                       onClick={handleFilterDelete(f)}
-                      onDelete={handleFilterDelete(f)}
                       className="btn btn-primary park-filter-chip"
                     >
                       {shortenFilterLabel(f.label)}
@@ -936,15 +948,15 @@ export default function FindAPark({ location, data }) {
         data={{
           totalResults,
           areaItems,
-          campingFacilityItems,
+          campingTypeItems,
           activityItems,
           facilityItems,
           openFilter,
           setOpenFilter,
           selectedAreas,
           setSelectedAreas,
-          selectedCampingFacilities,
-          setSelectedCampingFacilities,
+          selectedParkCampingTypes,
+          setSelectedParkCampingTypes,
           selectedActivities,
           setSelectedActivities,
           selectedFacilities,
@@ -953,7 +965,7 @@ export default function FindAPark({ location, data }) {
           setCurrentPage,
           setFilters,
           handleAreaCheck,
-          handleCampingFacilityCheck,
+          handleCampingTypeCheck,
           handleActivityCheck,
           handleFacilityCheck,
           handleClearFilter

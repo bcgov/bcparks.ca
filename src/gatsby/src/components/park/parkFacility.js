@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react"
+import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import Accordion from "react-bootstrap/Accordion"
-import Container from "react-bootstrap/Container"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
-
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
@@ -19,37 +19,34 @@ export const AccordionList = ({ eventKey, facility, open }) => {
 
   return (
     <Accordion
-      className="park-details mb-2"
       activeKey={isShow ? eventKey : ''}
+      className={`is-open--${isShow}`}
     >
       <Accordion.Toggle
-        as={Container}
+        as={"div"}
         aria-controls={facility.facilityType.facilityName}
         eventKey={eventKey}
         onClick={() => setIsShow(!isShow)}
       >
         <div
           id={facility.facilityType.facilityCode}
-          className="d-flex justify-content-between p-3 accordion-toggle"
+          className="d-flex justify-content-between accordion-toggle"
         >
-          <div className="d-flex justify-content-left align-items-center pl-2">
-            <StaticIcon name={facility.facilityType.icon} size={48} />
-            <HtmlContent className="pl-3 accordion-header">
+          <div className="d-flex align-items-center">
+            <StaticIcon name={facility.facilityType.icon} size={36} />
+            <HtmlContent className="accordion-header">
               {facility.facilityType.facilityName}
             </HtmlContent>
           </div>
-          <div className="d-flex align-items-center expand-icon">
-            <i
-              className={
-                (isShow ? "open " : "close ") +
-                "fa fa-angle-down mx-3"
-              }
-            ></i>
+          <div className="d-flex align-items-center">
+            {isShow ?
+              <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+            }
           </div>
         </div>
       </Accordion.Toggle>
       <Accordion.Collapse eventKey={eventKey}>
-        <div className="p-4">
+        <div className="accordion-content">
           <HtmlContent>
             {!isNullOrWhiteSpace(facility.description.data) ?
               facility.description.data : facility.facilityType.defaultDescription.data
@@ -113,15 +110,21 @@ export default function ParkFacility({ data }) {
     checkHash()
   }, [facilityData, checkHash])
 
+  useEffect(() => {
+    if (facilityData.length === 1) {
+      setOpen(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [facilityData.length])
+
   if (facilityData.length === 0) return null
 
   return (
-    <div id="park-facility-container" className="anchor-link">
-      <Row>
-        <Col>
-          <h2 className="section-heading">Facilities</h2>
-        </Col>
-      </Row>
+    <div id="facilities" className="anchor-link">
+      {/* id="park-facility-container" should be removed once it's removed from the contents */}
+      <h2 id="park-facility-container" className="section-heading">
+        Facilities
+      </h2>
       <Row>
         <Col>
           {facilityData.length > 1 && (
@@ -135,8 +138,11 @@ export default function ParkFacility({ data }) {
               }}
               className="btn btn-link expand-link expand-icon"
             >
-              {open ? "Collapse all" : "Expand all"}
-              <i className={`fa fa-angle-down ${open ? "open" : "close"}`}></i>
+              {open ?
+                <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                :
+                <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+              }
             </button>
           )}
           {facilityData.map((facility, index) => (

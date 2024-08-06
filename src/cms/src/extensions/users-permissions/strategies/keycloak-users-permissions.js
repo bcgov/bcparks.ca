@@ -2,11 +2,11 @@
 
 const { map } = require('lodash/fp');
 const { UnauthorizedError } = require('@strapi/utils').errors;
-const { getService } = require('@strapi/plugin-users-permissions/server/utils');
+const { getService } = require('../../../../node_modules/@strapi/plugin-users-permissions/server/utils');
 const {
   authenticate: baseAuthenticate,
   verify: baseVerify
-} = require('@strapi/plugin-users-permissions/server/strategies/users-permissions');
+} = require('../../../../node_modules/@strapi/plugin-users-permissions/server/strategies/users-permissions');
 
 const AUTH_URL =
   process.env.STRAPI_SSO_AUTH_URL || "https://dev.loginproxy.gov.bc.ca/auth";

@@ -525,3 +525,104 @@ nav.breadcrumbs {
     }
   }
 }
+
+// carousel
+.carousel {
+  height: 100%;
+  &:hover {
+    a.carousel-control-prev,
+    a.carousel-control-next{
+      display: flex;
+    }
+  }
+  &.tab-focus-true {
+    a.carousel-control-prev,
+    a.carousel-control-next {
+      display: flex;
+    }
+  }
+  a.carousel-control-prev,
+  a.carousel-control-next {
+    display: flex;
+    &:focus {
+      color: $colorWhite;
+    }
+    @media screen and (min-width: $mdBreakpoint) {
+      display: none;
+    }
+    svg {
+      font-size: 1.5rem;
+    }
+  }
+  ol.carousel-indicators {
+    li {
+      height: 6px;
+      width: 6px;
+      border-radius: 6px;
+      border: none;
+    }
+  }
+  .carousel-inner {
+    height: 100%;
+    .carousel-item {
+      height: 100%;
+      &:focus-visible{
+        outline: none;
+      }
+    }
+  }
+}
+
+// accordion
+.accordion {
+  border-top: 1px solid $colorGrey;
+  border-bottom: 1px solid $colorGrey;
+  padding: 8px 16px;
+  & + .accordion {
+    border-top: none;
+  }
+  &.is-open {
+    &--true {
+      background-color: $colorBrownLight;
+    }
+  }
+  &-content {
+    padding-top: 32px;
+  }
+  &-toggle {
+    cursor: pointer;    
+    .accordion-header {
+      font-weight: 700;
+      color: $colorBlue;
+      line-height: 1.5rem;
+      margin-left: 16px;
+    }
+  }
+  &.advisory-accordion {
+    padding: 8px 16px;
+    @media screen and (min-width: $smBreakpoint) {
+      padding: 14px 16px;
+    }
+    &.is-open {
+      &--true {
+        padding: 8px 16px;
+        @media screen and (min-width: $smBreakpoint) {
+          padding: 14px 16px;
+        }
+      }
+    }
+    .accordion-toggle {
+      .accordion-header {
+        color: $colorGrey;
+      }
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+    img.advisory-status-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Modal, Collapse } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faChevronUp, faChevronDown, faXmark } from "@fortawesome/free-solid-svg-icons"
 import Filter from "./filter"
 
 import "../../styles/search.scss"
@@ -11,20 +11,20 @@ const MobileFilters = ({
   data: {
     totalResults,
     areaItems,
-    campingFacilityItems,
+    campingTypeItems,
     activityItems,
     facilityItems,
     openFilter,
     setOpenFilter,
     selectedAreas,
-    selectedCampingFacilities,
+    selectedParkCampingTypes,
     selectedActivities,
     selectedFacilities,
     searchText,
     setCurrentPage,
     setFilters,
     handleAreaCheck,
-    handleCampingFacilityCheck,
+    handleCampingTypeCheck,
     handleActivityCheck,
     handleFacilityCheck,
     handleClearFilter
@@ -64,7 +64,7 @@ const MobileFilters = ({
   }, [
     searchText,
     selectedAreas,
-    selectedCampingFacilities,
+    selectedParkCampingTypes,
     selectedActivities,
     selectedFacilities,
     setFilters
@@ -95,9 +95,9 @@ const MobileFilters = ({
         >
           {expandAll ? "Collapse" : "Expand"} all
           {expandAll ? (
-            <i className="fa fa-angle-up"></i>
+            <FontAwesomeIcon icon={faChevronUp} />
           ) : (
-            <i className="fa fa-angle-down"></i>
+            <FontAwesomeIcon icon={faChevronDown} />
           )}
         </button>
         <div className="park-filter-options">
@@ -116,9 +116,9 @@ const MobileFilters = ({
               Popular
             </div>
             {showFilters[0] ? (
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             ) : (
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
           <Collapse
@@ -127,11 +127,11 @@ const MobileFilters = ({
           >
             <div>
               <Filter
-                filterItems={campingFacilityItems.filter(
+                filterItems={campingTypeItems.filter(
                   c => c.value === 36
                 )}
-                selectedFilterItems={selectedCampingFacilities}
-                handleFilterCheck={handleCampingFacilityCheck}
+                selectedFilterItems={selectedParkCampingTypes}
+                handleFilterCheck={handleCampingTypeCheck}
                 filterType="popular"
               />
               <Filter
@@ -157,11 +157,11 @@ const MobileFilters = ({
                 filterType="popular"
               />
               <Filter
-                filterItems={campingFacilityItems.filter(
+                filterItems={campingTypeItems.filter(
                   c => c.value === 1
                 )}
-                selectedFilterItems={selectedCampingFacilities}
-                handleFilterCheck={handleCampingFacilityCheck}
+                selectedFilterItems={selectedParkCampingTypes}
+                handleFilterCheck={handleCampingTypeCheck}
                 filterType="popular"
               />
             </div>
@@ -183,9 +183,9 @@ const MobileFilters = ({
               Area
             </div>
             {showFilters[1] ? (
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             ) : (
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
           <Collapse
@@ -218,9 +218,9 @@ const MobileFilters = ({
               Camping
             </div>
             {showFilters[2] ? (
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             ) : (
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
           <Collapse
@@ -229,9 +229,9 @@ const MobileFilters = ({
           >
             <div>
               <Filter
-                filterItems={campingFacilityItems}
-                selectedFilterItems={selectedCampingFacilities}
-                handleFilterCheck={handleCampingFacilityCheck}
+                filterItems={campingTypeItems}
+                selectedFilterItems={selectedParkCampingTypes}
+                handleFilterCheck={handleCampingTypeCheck}
                 filterType="camping"
               />
             </div>
@@ -250,12 +250,12 @@ const MobileFilters = ({
             }}
           >
             <div className="park-select-label">
-              Activities
+              Things to do
             </div>
             {showFilters[3] ? (
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             ) : (
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
           <Collapse
@@ -288,9 +288,9 @@ const MobileFilters = ({
               Facilities
             </div>
             {showFilters[4] ? (
-              <i className="fa fa-angle-up"></i>
+              <FontAwesomeIcon icon={faChevronUp} />
             ) : (
-              <i className="fa fa-angle-down"></i>
+              <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
           <Collapse
@@ -333,20 +333,20 @@ MobileFilters.propTypes = {
   data: PropTypes.shape({
     totalResults: PropTypes.number.isRequired,
     areaItems: PropTypes.array.isRequired,
-    campingFacilityItems: PropTypes.array.isRequired,
+    campingTypeItems: PropTypes.array.isRequired,
     activityItems: PropTypes.array.isRequired,
     facilityItems: PropTypes.array.isRequired,
     openFilter: PropTypes.bool.isRequired,
     setOpenFilter: PropTypes.func.isRequired,
     selectedAreas: PropTypes.array.isRequired,
-    selectedCampingFacilities: PropTypes.array.isRequired,
+    selectedParkCampingTypes: PropTypes.array.isRequired,
     selectedActivities: PropTypes.array.isRequired,
     selectedFacilities: PropTypes.array.isRequired,
     searchText: PropTypes.string.isRequired,
     setCurrentPage: PropTypes.func.isRequired,
     setFilters: PropTypes.func.isRequired,
     handleAreaCheck: PropTypes.func.isRequired,
-    handleCampingFacilityCheck: PropTypes.func.isRequired,
+    handleCampingTypeCheck: PropTypes.func.isRequired,
     handleActivityCheck: PropTypes.func.isRequired,
     handleFacilityCheck: PropTypes.func.isRequired,
     handleClearFilter: PropTypes.func.isRequired

@@ -159,17 +159,8 @@
     "parkAccessUnitId": {
       "type": "integer"
     },
-    "facilityType": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::facility-type.facility-type",
-      "inversedBy": "parkOperationSubAreas"
-    },
     "closureAffectsAccessStatus": {
       "type": "boolean"
-    },
-    "reservationOverrideUrl": {
-      "type": "text"
     },
     "hasGate": {
       "type": "boolean"

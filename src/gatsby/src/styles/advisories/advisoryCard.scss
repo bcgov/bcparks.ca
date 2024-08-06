@@ -42,9 +42,6 @@
   padding-top: 1.15rem;
   border-radius: 50%;
   text-align: center;
-  &.yellowAlert {
-    color: $colorGrey;
-  }
 }
 
 .dateDate {
@@ -63,7 +60,7 @@
 }
 
 .blueAlert {
-  background: $colorBlueMed;
+  background: $colorBlue;
 }
 
 .redAlert {
@@ -71,7 +68,7 @@
 }
 
 .yellowAlert {
-  background: $colorGold;
+  background: $colorGoldDark;
 }
 
 .contentArea {

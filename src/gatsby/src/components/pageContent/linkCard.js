@@ -1,5 +1,7 @@
 import React from "react"
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
 
 import "../../styles/pageContent/linkCard.scss"
 
@@ -47,7 +49,7 @@ export default function LinkCard({ url, title, subTitle, imageUrl, imageAltText,
           <h2 className="card-body-header">{title}</h2>
           {subTitle && <div className="card-body-subtitle">{subTitle}</div>}
           {buttonText && <div className="card-button">
-            {buttonText} <i className="fa fa-chevron-circle-right"></i>
+            {buttonText} <FontAwesomeIcon icon={faCircleChevronRight} />
           </div>}
       </div>
       </a>

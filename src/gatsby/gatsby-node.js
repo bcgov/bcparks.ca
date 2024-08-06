@@ -60,6 +60,11 @@ exports.createSchemaCustomization = ({ actions }) => {
     appendStandardCalloutText: DATA
   }
 
+  type STRAPI_CAMPING_TYPE implements Node {
+    appendStandardCalloutText: DATA
+    defaultDescription: DATA
+  }
+
   type STRAPI_PARK_ACTIVITY implements Node {
     activityType: STRAPI_ACTIVITY_TYPE
     hideStandardCallout: Boolean
@@ -69,7 +74,51 @@ exports.createSchemaCustomization = ({ actions }) => {
     facilityType: STRAPI_FACILITY_TYPE
     hideStandardCallout: Boolean
   }
+
+  type STRAPI_PARK_CAMPING_TYPE implements Node {
+    campingType: STRAPI_CAMPING_TYPE
+    hideStandardCallout: Boolean
+  }
   
+  type STRAPI_GUIDELINE_TYPE_DEFAULTDESCRIPTION_TEXTNODE implements Node @dontInfer {
+    defaultDescription: String
+  }
+
+  type STRAPI_GUIDELINE_TYPEDefaultDescription {
+    data: STRAPI_GUIDELINE_TYPE_DEFAULTDESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_GUIDELINE_TYPE implements Node @derivedTypes @dontInfer {
+    guidelineName: String
+    icon: String
+    defaultRank: Int
+    defaultTitle: String
+    defaultDescription: STRAPI_GUIDELINE_TYPEDefaultDescription
+  }
+
+  type STRAPI_PARK_GUIDELINE_DESCRIPTION_TEXTNODE implements Node @dontInfer {
+    description: String
+  }
+
+  type STRAPI_PARK_GUIDELINEDescription {
+    data: STRAPI_PARK_GUIDELINE_DESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PARK_GUIDELINE implements Node @derivedTypes @dontInfer {
+    name: String
+    isActive: Boolean
+    rank: Int
+    title: String
+    description: STRAPI_PARK_GUIDELINEDescription
+    guidelineType: STRAPI_GUIDELINE_TYPE @link(by: "id", from: "guidelineType___NODE")
+  }
+
+  type STRAPI_TRAIL_REPORT implements Node @dontInfer {
+    title: String
+    reportUrl: String
+    reportDate: Date
+  }
+
   type STRAPI_PROTECTED_AREA implements Node {
     managementDocuments:[STRAPI_MANAGEMENT_DOCUMENT] @link(by: "id", from: "managementDocuments___NODE")
     biogeoclimaticZones: [STRAPI_BIOGEOCLIMATIC_ZONE] @link(by: "id", from: "biogeoclimaticZones___NODE")
@@ -77,12 +126,41 @@ exports.createSchemaCustomization = ({ actions }) => {
     terrestrialEcosections: [STRAPI_TERRESTRIAL_ECOSECTION] @link(by: "id", from: "terrestrialEcosections___NODE")
     parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
+    parkCampingTypes: [STRAPI_PARK_CAMPING_TYPE] @link(by: "id", from: "parkCampingTypes___NODE")
+    parkGuidelines: [STRAPI_PARK_GUIDELINE] @link(by: "id", from: "parkGuidelines___NODE")
     seo: STRAPI__COMPONENT_PARKS_SEO
     hasDiscoverParksLink: Boolean
+    nearbyParks: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "nearbyParks___NODE")
+    trailReports: [STRAPI_TRAIL_REPORT] @link(by: "id", from: "trailReports___NODE")
+  }
+  
+  type STRAPI__COMPONENT_PARKS_RTE_LIST_CONTENT_TEXTNODE implements Node @dontInfer {
+    content: String
+  }
+
+  type STRAPI__COMPONENT_PARKS_RTE_LISTContent {
+    data: STRAPI__COMPONENT_PARKS_RTE_LIST_CONTENT_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI__COMPONENT_PARKS_RTE_LIST implements Node @derivedTypes @dontInfer {
+    description: String
+    content: STRAPI__COMPONENT_PARKS_RTE_LISTContent
   }
 
   type STRAPI_PARK_OPERATION implements Node {
     totalCapacity: String
+    gateOpenTime: String
+    gateCloseTime: String
+    hasCanoeCircuitReservations: Boolean
+    hasFrontcountryReservations: Boolean
+    hasFrontcountryGroupReservations: Boolean
+    hasFrontcountryCabinReservations: Boolean
+    hasBackcountryGroupReservations: Boolean
+    hasBackcountryShelterReservations: Boolean
+    hasBackcountryWildernessReservations: Boolean
+    hasGroupPicnicReservations: Boolean
+    hasPicnicShelterReservations: Boolean
+    customReservationLinks: [STRAPI__COMPONENT_PARKS_RTE_LIST] @link(by: "id", from: "customReservationLinks___NODE")
   }
 
   type STRAPI_PARK_OPERATION_SUB_AREA implements Node {
@@ -189,6 +267,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkOperation: STRAPI_PARK_OPERATION
     parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
+    parkCampingTypes: [STRAPI_PARK_CAMPING_TYPE] @link(by: "id", from: "parkCampingTypes___NODE")
   }
 
   type STRAPI_MANAGEMENT_DOCUMENT_TYPE implements Node {

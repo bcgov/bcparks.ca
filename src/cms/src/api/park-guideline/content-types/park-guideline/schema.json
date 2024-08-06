@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_guidelines",
+  "info": {
+    "singularName": "park-guideline",
+    "pluralName": "park-guidelines",
+    "displayName": "Park-guideline",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "rank": {
+      "type": "integer",
+      "min": 1,
+      "default": 1
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "guidelineType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::guideline-type.guideline-type"
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkGuidelines"
+    }
+  }
+}
