@@ -2,8 +2,8 @@ import React from "react"
 import { parseISO, format } from "date-fns"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import HtmlContent from "./htmlContent"
+import FontAwesome from "../fontAwesome"
 
 // Helper function to format date
 const formatDate = (str) => {
@@ -17,7 +17,7 @@ export const Guideline = ({ guide, reports }) => {
   return (
     <Row className="guideline">
       <Col xs="auto" className="guideline--left">
-        <FontAwesomeIcon icon={`fa-regular fa-${guidelineType.icon}`} />
+        <FontAwesome icon={guidelineType.icon} />
       </Col>
       <Col className="guideline--right">
         <h4>{guide.title ? guide.title : guidelineType.defaultTitle}</h4>

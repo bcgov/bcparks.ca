@@ -1,6 +1,7 @@
 import React from "react"
 import ParkAccessStatus from "./parkAccessStatus"
 import CampfireBan from "../campfireBan"
+import FontAwesome from "../fontAwesome"
 import { datePhrase } from "../../utils/parkDatesHelper"
 
 import PropTypes from "prop-types"
@@ -91,7 +92,7 @@ export default function ParkHeader({
           <>
             {searchArea?.searchAreaName && (
               <div className="park-header-child">
-                <FontAwesomeIcon icon="fa-regular fa-location-dot" />
+                <FontAwesome icon="location-dot" />
                 {searchArea.searchAreaName}.&nbsp;
                 {latitude && longitude && (
                   <><a href={externalLink}>View detailed map</a>.</>
