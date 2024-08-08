@@ -386,6 +386,13 @@ h2.section-heading {
   }
 }
 
+// Know before you go
+#know-before-you-go {
+  #advisories {
+    margin-bottom: 40px;
+  }
+}
+
 .park-overview {
   &.collapsed {
     max-height: 260px;
@@ -478,7 +485,7 @@ h2.section-heading {
 
 // visitor guidelines
 .guideline {
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   &--left {
     svg {
       width: 36px;
@@ -490,9 +497,6 @@ h2.section-heading {
   &--right {
     h4 {
       margin-bottom: 8px;
-    }
-    p {
-      margin-bottom: 0;
     }
   }
 }

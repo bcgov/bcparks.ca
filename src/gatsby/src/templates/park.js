@@ -646,6 +646,7 @@ export const query = graphql`
       }
       parkGuidelines {
         isActive
+        hasTrailReport
         rank
         title
         description {

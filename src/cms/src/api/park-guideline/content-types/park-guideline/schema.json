@@ -16,8 +16,12 @@
     },
     "isActive": {
       "type": "boolean",
-      "default": false,
+      "default": true,
       "required": true
+    },
+    "hasTrailReport": {
+      "type": "boolean",
+      "default": false
     },
     "rank": {
       "type": "integer",
