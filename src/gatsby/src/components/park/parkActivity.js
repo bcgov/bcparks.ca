@@ -11,7 +11,7 @@ import DiscoverParksLogo from "../../images/discover-parks-instagram-dark-green-
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const AccordionList = ({ eventKey, activity, open }) => {
+export const AccordionList = ({ eventKey, activity, open, toggleAccordion }) => {
   const [isShow, setIsShow] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,10 @@ export const AccordionList = ({ eventKey, activity, open }) => {
         as={"div"}
         aria-controls={activity.activityType.activityName}
         eventKey={eventKey}
-        onClick={() => setIsShow(!isShow)}
+        onClick={() => {
+          setIsShow(!isShow)
+          toggleAccordion(eventKey)
+        }}
       >
         <div
           id={activity.activityType.activityCode}
@@ -82,6 +85,13 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
     },
     [expanded]
   )
+  const toggleAccordion = (index) => {
+    setExpanded(prevStates => {
+      const newStates = [...prevStates]
+      newStates[index] = !newStates[index]
+      return newStates
+    })
+  }
 
   const checkHash = useCallback(() => {
     // Check hash in url
@@ -110,6 +120,10 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
     })
     checkHash()
   }, [activityData, checkHash])
+
+  useEffect(() => {
+    setOpen(expanded.every(state => state))
+  }, [expanded])
 
   useEffect(() => {
     if (activityData.length === 1) {
@@ -152,6 +166,7 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
               eventKey={index.toString()}
               activity={activity}
               open={open}
+              toggleAccordion={toggleAccordion}
             />
           ))}
         </Col>

@@ -12,7 +12,7 @@ import { countsList } from "../../utils/constants"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const AccordionList = ({ eventKey, camping, open, hasReservation, reservations }) => {
+export const AccordionList = ({ eventKey, camping, open, hasReservation, reservations, toggleAccordion }) => {
   const [isShow, setIsShow] = useState(false)
 
   useEffect(() => {
@@ -29,7 +29,10 @@ export const AccordionList = ({ eventKey, camping, open, hasReservation, reserva
           as={"div"}
           aria-controls="reservations"
           eventKey={eventKey}
-          onClick={() => setIsShow(!isShow)}
+          onClick={() => {
+            setIsShow(!isShow)
+            toggleAccordion(eventKey)
+          }}
         >
           <div
             id="reservations"
@@ -63,7 +66,10 @@ export const AccordionList = ({ eventKey, camping, open, hasReservation, reserva
           as={"div"}
           aria-controls={camping?.campingType?.campingTypeName}
           eventKey={eventKey}
-          onClick={() => setIsShow(!isShow)}
+          onClick={() => {
+            setIsShow(!isShow)
+            toggleAccordion(eventKey)
+          }}
         >
           <div
             id={camping?.campingType?.campingTypeCode}
@@ -102,22 +108,24 @@ export default function CampingDetails({ data }) {
   const reservations = data.reservations.data.reservations
   const subAreas = data.subAreas || []
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
+  const hasReservations = !isNullOrWhiteSpace(reservations) 
+
+  const [expanded, setExpanded] = useState(Array(activeCampings.length + (hasReservations ? 1 : 0)).fill(false))
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    if (activeCampings.length === 1 && isNullOrWhiteSpace(reservations)) {
-      setOpen(true)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeCampings.length, reservations])
-
-  if (activeCampings.length === 0) return null
 
   const isShown = (count, countGroup) => {
     return countGroup[count.countVar] &&
       countGroup[count.countVar] !== "0" &&
       countGroup[count.countVar] !== "*" &&
       count.isActive;
+  }
+
+  const toggleAccordion = (index) => {
+    setExpanded(prevStates => {
+      const newStates = [...prevStates]
+      newStates[index] = !newStates[index]
+      return newStates
+    })
   }
 
   const checkCountDisplay = (text) => {
@@ -130,6 +138,19 @@ export default function CampingDetails({ data }) {
     const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
     navigate(parkReservationsURL)
   }
+
+  useEffect(() => {
+    setOpen(expanded.every(state => state))
+  }, [expanded])
+
+  useEffect(() => {
+    if (activeCampings.length === 1 && !hasReservations) {
+      setOpen(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeCampings.length, reservations])
+
+  if (activeCampings.length === 0) return null
 
   return (
     <div id="camping" className="anchor-link">
@@ -198,22 +219,23 @@ export default function CampingDetails({ data }) {
               }
             </button>
           )}
-          {activeCampings.length > 0 &&
-            !isNullOrWhiteSpace(reservations) && (
+          {(activeCampings.length > 0 && hasReservations) && (
               <AccordionList
                 eventKey="0"
                 open={open}
                 hasReservation={true}
                 reservations={reservations}
+                toggleAccordion={toggleAccordion}
               />
             )
           }
           {activeCampings.map((camping, index) => (
             <AccordionList
               key={index}
-              eventKey={index.toString()}
+              eventKey={(hasReservations ? index + 1 : index).toString()}
               camping={camping}
               open={open}
+              toggleAccordion={toggleAccordion}
             />
           ))}
         </Col>

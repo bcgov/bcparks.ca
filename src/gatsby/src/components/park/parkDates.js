@@ -12,7 +12,7 @@ import StaticIcon from "./staticIcon"
 import { countsList } from "../../utils/constants"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 
-export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesList }) => {
+export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesList, toggleAccordion }) => {
   const [isShow, setIsShow] = useState(false)
 
   useEffect(() => {
@@ -28,7 +28,10 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
         as={"div"}
         aria-controls={subArea.parkSubArea}
         eventKey={eventKey}
-        onClick={() => setIsShow(!isShow)}
+        onClick={() => {
+          setIsShow(!isShow)
+          toggleAccordion(eventKey)
+        }}
       >
         <div className="d-flex justify-content-between accordion-toggle">
           <div className="d-flex align-items-center">
@@ -145,8 +148,9 @@ export default function ParkDates({ data }) {
   const parkOperation = dataCopy.parkOperation || {}
   const parkType = dataCopy.parkType
   const subAreas = dataCopy.subAreas || []
-  subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
+  subAreas.filter(subArea => subArea.isActive).sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
 
+  const [expanded, setExpanded] = useState(Array(subAreas.length).fill(false))
   const [open, setOpen] = useState(false)
 
   // Operations record is required, even if subarea records are present
@@ -222,6 +226,18 @@ export default function ParkDates({ data }) {
       count.isActive;
   }
 
+  const toggleAccordion = (index) => {
+    setExpanded(prevStates => {
+      const newStates = [...prevStates]
+      newStates[index] = !newStates[index]
+      return newStates
+    })
+  }
+
+  useEffect(() => {
+    setOpen(expanded.every(state => state))
+  }, [expanded])
+
   useEffect(() => {
     if (subAreas.length === 1) {
       setOpen(true)
@@ -281,7 +297,6 @@ export default function ParkDates({ data }) {
                 </button>
               )}
               {subAreas
-                .filter(subArea => subArea.isActive)
                 .map((subArea, index) => (
                   <AccordionList
                     key={index}
@@ -290,6 +305,7 @@ export default function ParkDates({ data }) {
                     open={open}
                     isShown={isShown}
                     subAreasNotesList={subAreasNotesList}
+                    toggleAccordion={toggleAccordion}
                   />
                 ))}
             </>

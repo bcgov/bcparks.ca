@@ -77,6 +77,10 @@ export default function AdvisoryDetails({ advisories, parkType }) {
   })
 
   useEffect(() => {
+    setAllExpanded(expandeds.every(state => state))
+  }, [expandeds])
+
+  useEffect(() => {
     if (advisories.length === 1) {
       expandAll(true)
     }
