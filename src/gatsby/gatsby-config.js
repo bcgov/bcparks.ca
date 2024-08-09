@@ -48,6 +48,8 @@ module.exports = {
           "park-operation-sub-area",
           "park-operation-sub-area-date",
           "park-operation-sub-area-type",
+          "park-contact",
+          "park-operator-contact",
           "park-photo",
           "park-sub-page",
           "public-advisory",
@@ -150,8 +152,11 @@ module.exports = {
                     populate: ["isActive", {
                       campingType: ["campingTypeNumber", "campingTypeCode", "isActive"]
                     }]
-                  },                  
+                  },
                 },
+                parkContacts: {
+                  populate: ["parkOperatorContact"]
+                }
               }
             },
             queryLimit: 100

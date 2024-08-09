@@ -213,7 +213,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 8,
       display: `Contact`,
       link: "#contact",
-      visible: !isNullOrWhiteSpace(contact)
+      visible: park.parkContacts.length > 0 || !isNullOrWhiteSpace(contact)
     }
   ]
 
@@ -436,7 +436,11 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[8].visible && (
               <div ref={contactRef} className="w-100">
-                <Contact contact={contact} />
+                <Contact
+                  contact={contact}
+                  parkContacts={park.parkContacts}
+                  operations={operations}
+                />
               </div>
             )}
           </div>
@@ -764,6 +768,35 @@ export const query = graphql`
         title
         reportUrl
         reportDate
+      }
+      parkContacts {
+        rank
+        isActive
+        title
+        description {
+          data {
+            description
+          }
+        }
+        contactInformation {
+          contactType
+          contactText
+          contactText
+        }
+        parkOperatorContact {
+          facilityOperatorName
+          defaultTitle
+          defaultDescription {
+            data {
+              defaultDescription
+            }
+          }
+          defaultContactInformation {
+            contactType
+            contactText
+            contactUrl
+          }
+        }
       }
     }
     featuredPhotos: allStrapiParkPhoto(

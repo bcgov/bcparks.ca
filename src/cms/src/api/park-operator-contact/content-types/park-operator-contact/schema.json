@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_operator_contact",
+  "info": {
+    "singularName": "park-operator-contact",
+    "pluralName": "park-operator-contacts",
+    "displayName": "Park-operator-contact",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "parkOperatorName": {
+      "type": "string",
+      "required": true
+    },
+    "defaultTitle": {
+      "type": "string",
+      "required": true
+    },
+    "defaultDescription": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "defaultContactInformation": {
+      "type": "component",
+      "repeatable": true,
+      "component": "contact.link"
+    }
+  }
+}
