@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCalendar } from "@fortawesome/free-regular-svg-icons"
 
 import HTMLArea from "../HTMLArea"
-import FontAwesome from "../FontAwesome"
+import FontAwesome from "../fontAwesome"
 import { countsList } from "../../utils/constants"
 
 export default function SubArea({ data, showHeading }) {
