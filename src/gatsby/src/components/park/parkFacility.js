@@ -10,7 +10,7 @@ import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const AccordionList = ({ eventKey, facility, open }) => {
+export const AccordionList = ({ eventKey, facility, open, toggleAccordion }) => {
   const [isShow, setIsShow] = useState(false);
 
   useEffect(() => {
@@ -26,7 +26,10 @@ export const AccordionList = ({ eventKey, facility, open }) => {
         as={"div"}
         aria-controls={facility.facilityType.facilityName}
         eventKey={eventKey}
-        onClick={() => setIsShow(!isShow)}
+        onClick={() => {
+          setIsShow(!isShow)
+          toggleAccordion(eventKey)
+        }}
       >
         <div
           id={facility.facilityType.facilityCode}
@@ -81,6 +84,13 @@ export default function ParkFacility({ data }) {
     },
     [expanded]
   )
+  const toggleAccordion = (index) => {
+    setExpanded(prevStates => {
+      const newStates = [...prevStates]
+      newStates[index] = !newStates[index]
+      return newStates
+    })
+  }
 
   const checkHash = useCallback(() => {
     // Check hash in url
@@ -109,6 +119,10 @@ export default function ParkFacility({ data }) {
     })
     checkHash()
   }, [facilityData, checkHash])
+
+  useEffect(() => {
+    setOpen(expanded.every(state => state))
+  }, [expanded])
 
   useEffect(() => {
     if (facilityData.length === 1) {
@@ -151,6 +165,7 @@ export default function ParkFacility({ data }) {
               eventKey={index.toString()}
               facility={facility}
               open={open}
+              toggleAccordion={toggleAccordion}
             />
           ))}
         </Col>
