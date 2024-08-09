@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCalendar } from "@fortawesome/free-regular-svg-icons"
 
 import HTMLArea from "../HTMLArea"
+import FontAwesome from "../FontAwesome"
 import { countsList } from "../../utils/constants"
 
 export default function SubArea({ data, showHeading }) {
@@ -76,7 +77,7 @@ export default function SubArea({ data, showHeading }) {
           .filter(count => isShown(count, data)).length > 0 && (
             <Col className="subarea-container--right" xs={12} sm={6}>
               <div className="subarea-icon">
-                <FontAwesomeIcon icon="fa-regular fa-campground" />
+                <FontAwesome icon="campground" />
               </div>
               <div className="subarea-list">
                 <h4>Number of campsites</h4>
