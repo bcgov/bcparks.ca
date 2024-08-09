@@ -25,7 +25,7 @@ export const Guideline = ({ guide, reports }) => {
           {guide.description.data.description ?
             guide.description.data.description : guidelineType.defaultDescription.data.defaultDescription}
         </HtmlContent>
-        {(guide.hasTrailReport && reports?.length > 0) &&
+        {(guidelineType.hasTrailReport && reports?.length > 0) &&
           reports.map((report, index) => (
             <p key={index}>
               View the <a href={report.reportUrl}>{report.title} [PDF]</a>

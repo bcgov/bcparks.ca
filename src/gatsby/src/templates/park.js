@@ -646,7 +646,6 @@ export const query = graphql`
       }
       parkGuidelines {
         isActive
-        hasTrailReport
         rank
         title
         description {
@@ -656,6 +655,7 @@ export const query = graphql`
         }
         guidelineType {
           icon
+          hasTrailReport
           defaultRank
           defaultTitle
           defaultDescription {

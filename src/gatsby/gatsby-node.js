@@ -91,6 +91,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   type STRAPI_GUIDELINE_TYPE implements Node @derivedTypes @dontInfer {
     guidelineName: String
     icon: String
+    hasTrailReport: Boolean
     defaultRank: Int
     defaultTitle: String
     defaultDescription: STRAPI_GUIDELINE_TYPEDefaultDescription
@@ -107,7 +108,6 @@ exports.createSchemaCustomization = ({ actions }) => {
   type STRAPI_PARK_GUIDELINE implements Node @derivedTypes @dontInfer {
     name: String
     isActive: Boolean
-    hasTrailReport: Boolean
     rank: Int
     title: String
     description: STRAPI_PARK_GUIDELINEDescription
