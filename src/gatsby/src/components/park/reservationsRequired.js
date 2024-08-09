@@ -5,7 +5,7 @@ export default function ReservationsRequired({ operations }) {
   const hasDayUsePass = operations.hasDayUsePass
   const hasFirstComeFirstServed = operations.hasFirstComeFirstServed
   const hasCanoeCircuitReservations = operations.hasCanoeCircuitReservations
-  const hasPicnicShelterReservations = operations.hasPicnicShelterReservations
+  const hasGroupPicnicReservations = operations.hasGroupPicnicReservations
   const hasFrontcountryReservations = operations.hasFrontcountryReservations
   const hasFrontcountryGroupReservations = operations.hasFrontcountryGroupReservations
   const hasFrontcountryCabinReservations = operations.hasFrontcountryCabinReservations
@@ -19,7 +19,7 @@ export default function ReservationsRequired({ operations }) {
   const hasAnyReservations =
     (hasFrontcountryReservations || hasFirstComeFirstServed || hasFrontcountryCabinReservations) ||
     (hasFrontcountryGroupReservations || hasBackcountryGroupReservations) ||
-    hasPicnicShelterReservations ||
+    hasGroupPicnicReservations ||
     (hasBackcountryReservations || hasBackcountryShelterReservations ||
       hasBackcountryWildernessReservations || hasCanoeCircuitReservations) ||
     hasBackcountryPermits ||
@@ -47,7 +47,7 @@ export default function ReservationsRequired({ operations }) {
             </Link>
           </li>
         }
-        {hasPicnicShelterReservations &&
+        {hasGroupPicnicReservations &&
           <li>
             <Link to="/reservations/picnic-shelters">
               Picnic shelters

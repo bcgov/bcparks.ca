@@ -710,7 +710,7 @@ export const query = graphql`
         adminNote
         gateOpenTime
         gateCloseTime
-        hasPicnicShelterReservations
+        hasGroupPicnicReservations
         hasCanoeCircuitReservations
         hasFrontcountryReservations
         hasFrontcountryGroupReservations
