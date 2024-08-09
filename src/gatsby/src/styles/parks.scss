@@ -480,10 +480,9 @@ h2.section-heading {
 .guideline {
   margin-bottom: 16px;
   &--left {
-    svg {
-      width: 36px;
-      height: 36px;
-      color: $colorBlue;
+    svg, img {
+      width: 48px;
+      height: 48px;
       padding: 6px;
     }
   }
