@@ -213,7 +213,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 8,
       display: `Contact`,
       link: "#contact",
-      visible: park.parkContacts.length > 0 || !isNullOrWhiteSpace(contact)
+      visible: park.parkContacts?.length > 0 || !isNullOrWhiteSpace(contact)
     }
   ]
 
