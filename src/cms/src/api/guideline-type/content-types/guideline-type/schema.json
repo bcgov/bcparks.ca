@@ -26,6 +26,10 @@
       ],
       "required": true
     },
+    "hasTrailReport": {
+      "type": "boolean",
+      "default": false
+    },
     "defaultRank": {
       "type": "integer",
       "min": 1,

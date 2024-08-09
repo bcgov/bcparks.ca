@@ -84,7 +84,7 @@ export default function AdvisoryDetails({ advisories, parkType }) {
   }, [advisories.length])
 
   return (
-    <div id="advisories" className="mb-4">
+    <div id="advisories">
       {/* id="park-advisory-details-container" should be removed once it's removed from the contents */}
       <h3 id="park-advisory-details-container">
         {`Advisories (${advisories.length})`}

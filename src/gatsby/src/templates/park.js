@@ -655,6 +655,7 @@ export const query = graphql`
         }
         guidelineType {
           icon
+          hasTrailReport
           defaultRank
           defaultTitle
           defaultDescription {

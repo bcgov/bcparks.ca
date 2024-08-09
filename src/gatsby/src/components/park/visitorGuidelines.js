@@ -25,7 +25,7 @@ export const Guideline = ({ guide, reports }) => {
           {guide.description.data.description ?
             guide.description.data.description : guidelineType.defaultDescription.data.defaultDescription}
         </HtmlContent>
-        {(guidelineType.icon === "list-check" && reports?.length > 0) &&
+        {(guidelineType.hasTrailReport && reports?.length > 0) &&
           reports.map((report, index) => (
             <p key={index}>
               View the <a href={report.reportUrl}>{report.title} [PDF]</a>
@@ -46,11 +46,11 @@ export default function VisitorGuidelines({ guidelines, trailReports }) {
       return rankA - rankB
     })
   return (
-    <>
+    <div id="visitor-guidelines">
       <h3>Visitor guidelines</h3>
       {sortedGuidelines.map((guide, index) => (
         <Guideline key={index} guide={guide} reports={trailReports} />
       ))}
-    </>
+    </div>
   )
 }
