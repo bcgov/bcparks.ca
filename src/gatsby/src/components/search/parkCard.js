@@ -59,7 +59,7 @@ const ParkCard = ({ r }) => {
                   alt="park"
                   className={`${errorStates[0] ? "search-result-logo-image" : "search-result-image"}`}
                   src={errorStates[0] ? parksLogo : addSmallImagePrefix(r.parkPhotos[0])}
-                  onError={() => handleImgError(errorStates, setErrorStates, 0)}
+                  onError={() => handleImgError(setErrorStates, 0)}
                 />
               </div>
             )}
@@ -90,7 +90,7 @@ const ParkCard = ({ r }) => {
                             key={index}
                             className={`${errorStates[index] ? "search-result-logo-image" : "search-result-image"}`}
                             src={errorStates[index] ? parksLogo : addSmallImagePrefix(item)}
-                            onError={() => handleImgError(errorStates, setErrorStates, index)}
+                            onError={() => handleImgError(setErrorStates, index)}
                           />
                         </Carousel.Item>
                       )
@@ -162,7 +162,7 @@ const ParkCard = ({ r }) => {
                 alt="park"
                 className={`${errorStates[0] ? "search-result-logo-image" : "search-result-image"}`}
                 src={errorStates[0] ? parksLogo : addSmallImagePrefix(r.parkPhotos[0])}
-                onError={() => { handleImgError(errorStates, setErrorStates, 0) }}
+                onError={() => handleImgError(setErrorStates, 0)}
               />
             </div>
           )}
@@ -185,7 +185,7 @@ const ParkCard = ({ r }) => {
                           key={index}
                           className={`${errorStates[index] ? "search-result-logo-image" : "search-result-image"}`}
                           src={errorStates[index] ? parksLogo : addSmallImagePrefix(item)}
-                          onError={() => { handleImgError(errorStates, setErrorStates, index) }}
+                          onError={() => handleImgError(setErrorStates, index)}
                         />
                       </Carousel.Item>
                     )

@@ -599,6 +599,7 @@ export const query = graphql`
         }
         guidelineType {
           icon
+          hasTrailReport
           defaultRank
           defaultTitle
           defaultDescription {
@@ -628,7 +629,7 @@ export const query = graphql`
         adminNote
         gateOpenTime
         gateCloseTime
-        hasPicnicShelterReservations
+        hasGroupPicnicReservations
         hasCanoeCircuitReservations
         hasFrontcountryReservations
         hasFrontcountryGroupReservations

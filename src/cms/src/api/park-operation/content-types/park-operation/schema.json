@@ -39,9 +39,6 @@
     "hasDayUsePass": {
       "type": "boolean"
     },
-    "hasPicnicShelterReservations": {
-      "type": "boolean"
-    },
     "customReservationLinks": {
       "displayName": "Additional Bullet List Items",
       "type": "component",

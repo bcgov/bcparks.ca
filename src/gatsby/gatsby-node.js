@@ -128,6 +128,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   type STRAPI_GUIDELINE_TYPE implements Node @derivedTypes @dontInfer {
     guidelineName: String
     icon: String
+    hasTrailReport: Boolean
     defaultRank: Int
     defaultTitle: String
     defaultDescription: STRAPI_GUIDELINE_TYPEDefaultDescription
@@ -197,7 +198,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     hasBackcountryShelterReservations: Boolean
     hasBackcountryWildernessReservations: Boolean
     hasGroupPicnicReservations: Boolean
-    hasPicnicShelterReservations: Boolean
     customReservationLinks: [STRAPI__COMPONENT_PARKS_RTE_LIST] @link(by: "id", from: "customReservationLinks___NODE")
   }
 
