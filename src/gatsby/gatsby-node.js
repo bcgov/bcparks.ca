@@ -160,7 +160,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     hasBackcountryShelterReservations: Boolean
     hasBackcountryWildernessReservations: Boolean
     hasGroupPicnicReservations: Boolean
-    hasPicnicShelterReservations: Boolean
     customReservationLinks: [STRAPI__COMPONENT_PARKS_RTE_LIST] @link(by: "id", from: "customReservationLinks___NODE")
   }
 
