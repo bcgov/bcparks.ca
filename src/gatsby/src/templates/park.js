@@ -79,7 +79,7 @@ export default function ParkTemplate({ data }) {
     ),
     ["campingType.rank", "campingType.campingTypeName"],
     ["asc"]
-  )
+  ).sort((a, b) => a.campingType.campingTypeName.localeCompare(b.campingType.campingTypeName))
 
   const nonCampingActivities =
     activeActivities
