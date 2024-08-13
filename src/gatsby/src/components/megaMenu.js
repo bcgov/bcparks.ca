@@ -181,7 +181,7 @@ const MegaMenu = ({ content, menuMode }) => {
 
   const isExternalUrl = (url) => {
     // a URL is considered external if it begins with "http://" or "https://"
-    return /^(http:\/\/|https:\/\/)/.test(url);
+    return /^https?:\/\//.test(url)
   }
 
   useEffect(() => {
