@@ -45,8 +45,8 @@
       }
     }
     div:not(.accordion-content) {
-      & > .raw-html-content {
-        & > p, & > ul {
+      & > .raw-html-content:not(.accordion-header) {
+        & > :not(blockquote) {
           max-width: 600px;
         }
       }
