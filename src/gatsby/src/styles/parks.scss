@@ -44,6 +44,13 @@
         outline-offset: 0px;
       }
     }
+    div:not(.accordion-content) {
+      & > .raw-html-content {
+        & > p, & > ul {
+          max-width: 600px;
+        }
+      }
+    }
     & > div.w-100:last-of-type {
       min-height: calc(100vh - 380px);
       padding-bottom: 64px;
