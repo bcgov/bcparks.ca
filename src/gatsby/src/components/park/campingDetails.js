@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import { navigate } from "gatsby"
 import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
@@ -12,27 +12,17 @@ import { countsList } from "../../utils/constants"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const AccordionList = ({ eventKey, camping, open, hasReservation, reservations, toggleAccordion }) => {
-  const [isShow, setIsShow] = useState(false)
-
-  useEffect(() => {
-    setIsShow(open)
-  }, [open])
-
+export const AccordionList = ({ eventKey, camping, openAccordions, hasReservation, reservations, toggleAccordion }) => {
   return (
     hasReservation ? (
       <Accordion
-        activeKey={isShow ? eventKey : ''}
-        className={`is-open--${isShow}`}
+        className={`is-open--${openAccordions[eventKey]}`}
       >
         <Accordion.Toggle
           as={"div"}
           aria-controls="reservations"
           eventKey={eventKey}
-          onClick={() => {
-            setIsShow(!isShow)
-            toggleAccordion(eventKey)
-          }}
+          onClick={() => toggleAccordion(eventKey)}
         >
           <div
             id="reservations"
@@ -45,13 +35,13 @@ export const AccordionList = ({ eventKey, camping, open, hasReservation, reserva
               </div>
             </div>
             <div className="d-flex align-items-center">
-              {isShow ?
+              {openAccordions[eventKey] ?
                 <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
               }
             </div>
           </div>
         </Accordion.Toggle>
-        <Accordion.Collapse eventKey={eventKey}>
+        <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
           <div className="accordion-content">
             <HtmlContent>{reservations}</HtmlContent>
           </div>
@@ -59,17 +49,13 @@ export const AccordionList = ({ eventKey, camping, open, hasReservation, reserva
       </Accordion>
     ) : (
       <Accordion
-        activeKey={isShow ? eventKey : ''}
-        className={`is-open--${isShow}`}
+        className={`is-open--${openAccordions[eventKey]}`}
       >
         <Accordion.Toggle
           as={"div"}
           aria-controls={camping?.campingType?.campingTypeName}
           eventKey={eventKey}
-          onClick={() => {
-            setIsShow(!isShow)
-            toggleAccordion(eventKey)
-          }}
+          onClick={() => toggleAccordion(eventKey)}
         >
           <div
             id={camping?.campingType?.campingTypeCode}
@@ -82,13 +68,13 @@ export const AccordionList = ({ eventKey, camping, open, hasReservation, reserva
               </HtmlContent>
             </div>
             <div className="d-flex align-items-center">
-              {isShow ?
+              {openAccordions[eventKey] ?
                 <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
               }
             </div>
           </div>
         </Accordion.Toggle>
-        <Accordion.Collapse eventKey={eventKey}>
+        <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
           <div className="accordion-content">
             <HtmlContent>
               {!isNullOrWhiteSpace(camping.description.data) ?
@@ -108,10 +94,9 @@ export default function CampingDetails({ data }) {
   const reservations = data.reservations.data.reservations
   const subAreas = data.subAreas || []
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
-  const hasReservations = !isNullOrWhiteSpace(reservations) 
+  const hasReservations = !isNullOrWhiteSpace(reservations)
 
-  const [expanded, setExpanded] = useState(Array(activeCampings.length + (hasReservations ? 1 : 0)).fill(false))
-  const [open, setOpen] = useState(false)
+  const [openAccordions, setOpenAccordions] = useState({})
 
   const isShown = (count, countGroup) => {
     return countGroup[count.countVar] &&
@@ -121,12 +106,30 @@ export default function CampingDetails({ data }) {
   }
 
   const toggleAccordion = (index) => {
-    setExpanded(prevStates => {
-      const newStates = [...prevStates]
-      newStates[index] = !newStates[index]
-      return newStates
-    })
+    setOpenAccordions((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }))
   }
+
+  const toggleExpandAll = () => {
+    const newExpandAll = !expandAll
+    const newOpenAccordions = activeCampings.reduce((acc, _, index) => {
+      acc[index] = newExpandAll
+      return acc
+    }, {})
+    if (hasReservations) {
+      newOpenAccordions[activeCampings.length] = newExpandAll
+    }
+    setOpenAccordions(newOpenAccordions)
+  }
+
+  const expandAll = useMemo(() => {
+    const totalAccordions = activeCampings.length + (hasReservations ? 1 : 0)
+    return activeCampings.length > 0 &&
+      Object.keys(openAccordions).length === totalAccordions &&
+      Object.values(openAccordions).every((isOpen) => isOpen)
+  }, [openAccordions, activeCampings.length, hasReservations])
 
   const checkCountDisplay = (text) => {
     const newText = text.replace("rv-accessible", "RV-accessible")
@@ -140,15 +143,10 @@ export default function CampingDetails({ data }) {
   }
 
   useEffect(() => {
-    setOpen(expanded.every(state => state))
-  }, [expanded])
-
-  useEffect(() => {
     if (activeCampings.length === 1 && !hasReservations) {
-      setOpen(true)
+      setOpenAccordions({ 0: true })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeCampings.length, reservations])
+  }, [activeCampings.length, hasReservations])
 
   if (activeCampings.length === 0) return null
 
@@ -203,16 +201,16 @@ export default function CampingDetails({ data }) {
         <Col>
           {activeCampings.length > 1 && (
             <button
-              onClick={() => setOpen(!open)}
+              onClick={toggleExpandAll}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault()
-                  setOpen(!open)
+                  toggleExpandAll()
                 }
               }}
               className="btn btn-link expand-link expand-icon"
             >
-              {open ?
+              {expandAll ?
                 <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
                 :
                 <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
@@ -220,21 +218,21 @@ export default function CampingDetails({ data }) {
             </button>
           )}
           {(activeCampings.length > 0 && hasReservations) && (
-              <AccordionList
-                eventKey="0"
-                open={open}
-                hasReservation={true}
-                reservations={reservations}
-                toggleAccordion={toggleAccordion}
-              />
-            )
+            <AccordionList
+              eventKey="0"
+              openAccordions={openAccordions}
+              hasReservation={true}
+              reservations={reservations}
+              toggleAccordion={toggleAccordion}
+            />
+          )
           }
           {activeCampings.map((camping, index) => (
             <AccordionList
               key={index}
               eventKey={(hasReservations ? index + 1 : index).toString()}
               camping={camping}
-              open={open}
+              openAccordions={openAccordions}
               toggleAccordion={toggleAccordion}
             />
           ))}
