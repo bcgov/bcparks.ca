@@ -113,7 +113,7 @@ export default function CampingDetails({ data }) {
   }
 
   const toggleExpandAll = () => {
-    const newExpandAll = !expandAll
+    const newExpandAll = !allExpanded
     const newOpenAccordions = activeCampings.reduce((acc, _, index) => {
       acc[index] = newExpandAll
       return acc
@@ -124,7 +124,7 @@ export default function CampingDetails({ data }) {
     setOpenAccordions(newOpenAccordions)
   }
 
-  const expandAll = useMemo(() => {
+  const allExpanded = useMemo(() => {
     const totalAccordions = activeCampings.length + (hasReservations ? 1 : 0)
     return activeCampings.length > 0 &&
       Object.keys(openAccordions).length === totalAccordions &&
@@ -210,7 +210,7 @@ export default function CampingDetails({ data }) {
               }}
               className="btn btn-link expand-link expand-icon"
             >
-              {expandAll ?
+              {allExpanded ?
                 <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
                 :
                 <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>

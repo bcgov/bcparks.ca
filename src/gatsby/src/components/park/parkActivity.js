@@ -75,7 +75,7 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
   }
 
   const toggleExpandAll = () => {
-    const newExpandAll = !expandAll
+    const newExpandAll = !allExpanded
     const newOpenAccordions = activityData.reduce((acc, _, index) => {
       acc[index] = newExpandAll
       return acc
@@ -83,7 +83,7 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
     setOpenAccordions(newOpenAccordions)
   }
 
-  const expandAll = useMemo(() => {
+  const allExpanded = useMemo(() => {
     return activityData.length > 0 &&
       Object.keys(openAccordions).length === activityData.length &&
       Object.values(openAccordions).every((isOpen) => isOpen)
@@ -147,7 +147,7 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
               }}
               className="btn btn-link expand-link expand-icon"
             >
-              {expandAll ?
+              {allExpanded ?
                 <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
                 :
                 <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>

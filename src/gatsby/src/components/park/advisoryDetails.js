@@ -35,7 +35,7 @@ export default function AdvisoryDetails({ advisories, parkType }) {
   }
 
   const toggleExpandAll = () => {
-    const newExpandAll = !expandAll
+    const newExpandAll = !allExpanded
     const newOpenAccordions = advisories.reduce((acc, _, index) => {
       acc[index] = newExpandAll
       return acc
@@ -43,7 +43,7 @@ export default function AdvisoryDetails({ advisories, parkType }) {
     setOpenAccordions(newOpenAccordions)
   }
 
-  const expandAll = useMemo(() => {
+  const allExpanded = useMemo(() => {
     return advisories.length > 0 &&
       Object.keys(openAccordions).length === advisories.length &&
       Object.values(openAccordions).every((isOpen) => isOpen)
@@ -114,7 +114,7 @@ export default function AdvisoryDetails({ advisories, parkType }) {
                 }}
                 className="btn btn-link expand-link expand-icon"
               >
-                {expandAll ?
+                {allExpanded ?
                   <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
                   :
                   <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>

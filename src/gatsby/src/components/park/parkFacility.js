@@ -74,7 +74,7 @@ export default function ParkFacility({ data }) {
   }
 
   const toggleExpandAll = () => {
-    const newExpandAll = !expandAll
+    const newExpandAll = !allExpanded
     const newOpenAccordions = facilityData.reduce((acc, _, index) => {
       acc[index] = newExpandAll
       return acc
@@ -82,7 +82,7 @@ export default function ParkFacility({ data }) {
     setOpenAccordions(newOpenAccordions)
   }
 
-  const expandAll = useMemo(() => {
+  const allExpanded = useMemo(() => {
     return facilityData.length > 0 &&
       Object.keys(openAccordions).length === facilityData.length &&
       Object.values(openAccordions).every((isOpen) => isOpen)
@@ -146,7 +146,7 @@ export default function ParkFacility({ data }) {
               }}
               className="btn btn-link expand-link expand-icon"
             >
-              {expandAll ?
+              {allExpanded ?
                 <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
                 :
                 <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
