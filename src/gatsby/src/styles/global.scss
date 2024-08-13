@@ -126,7 +126,7 @@ figure.table {
   table {
     width: 100%;
     th {
-      background: $colorBackgroundGrey;
+      background: $colorBrownLight;
       border-top: 1px solid $colorGreyLight;
     }
     td {
@@ -623,6 +623,13 @@ nav.breadcrumbs {
     img.advisory-status-icon {
       width: 24px;
       height: 24px;
+    }
+  }
+  figure.table {
+    table {
+      th {
+        background: $colorBrownMed;
+      }
     }
   }
 }
