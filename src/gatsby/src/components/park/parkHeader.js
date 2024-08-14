@@ -114,11 +114,13 @@ export default function ParkHeader({
                 <FontAwesomeIcon icon={faCalendar} />
                 <div>
                   <p>
-                    The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}.
-                    {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) && (
-                      ` Gates are open from ${formattedTime(parkOperation.gateOpenTime)}
-                       – ${formattedTime(parkOperation.gateCloseTime)}.`
-                    )}
+                    The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}
+                    {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) ? (
+                      <>
+                        , from <span className="no-wrap">{formattedTime(parkOperation.gateOpenTime)}</span>{" "}
+                        to <span className="no-wrap">{formattedTime(parkOperation.gateCloseTime)}</span>, daily.
+                      </>
+                    ) : "."}
                   </p>
                   {(campings.length > 0 || facilities.length > 0) && (
                     <p>
