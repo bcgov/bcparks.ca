@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
-import HTMLArea from "../HTMLArea"
 import StaticIcon from "./staticIcon"
 import { countsList } from "../../utils/constants"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
@@ -120,9 +119,9 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, isShown, subA
                     </dt>
                   )}
                   <dd>
-                    <HTMLArea isVisible={true}>
+                    <HtmlContent>
                       {subArea[note.noteVar]}
-                    </HTMLArea>
+                    </HtmlContent>
                   </dd>
                 </div>
               ))}
@@ -270,9 +269,9 @@ export default function ParkDates({ data }) {
                 )}
                 {parkOperation.openNote && (
                   <div className="dates-open-note">
-                    <HTMLArea isVisible={true}>
+                    <HtmlContent>
                       {parkOperation.openNote}
-                    </HTMLArea>
+                    </HtmlContent>
                   </div>
                 )}
               </div>
@@ -319,9 +318,9 @@ export default function ParkDates({ data }) {
                     </dt>
                   )}
                   <dd>
-                    <HTMLArea isVisible={true}>
+                    <HtmlContent>
                       {parkOperation[note.noteVar]}
-                    </HTMLArea>
+                    </HtmlContent>
                   </dd>
                 </div>
               ))}
