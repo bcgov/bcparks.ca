@@ -64,7 +64,7 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, isShown, subA
                   </dd>
                 </>
               )}
-            {subArea.serviceDates.length > 0 && (
+            {subArea.serviceDates?.length > 0 && (
               <>
                 <dt className="mt-3">
                   Main operating season
@@ -81,14 +81,14 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, isShown, subA
             <>
               <dt className="mt-3">Winter season</dt>
               <dd>
-                {subArea.offSeasonDates.length > 0 ? (
+                {subArea.offSeasonDates?.length > 0 ? (
                   <ul className="pl-4">
                     {subArea.offSeasonDates.map((dateRange, index) =>
                       <li key={index}>{dateRange}</li>
                     )}
                   </ul>
                 ) : (
-                  subArea.operationDates.length > 0 ? (
+                  subArea.operationDates?.length > 0 ? (
                     <>
                       {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
                     </>
@@ -98,7 +98,7 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, isShown, subA
                 )}
               </dd>
             </>
-            {subArea.resDates.length > 0 && (
+            {subArea.resDates?.length > 0 && (
               <>
                 <dt className="mt-3">Booking required</dt>
                 <dd>
