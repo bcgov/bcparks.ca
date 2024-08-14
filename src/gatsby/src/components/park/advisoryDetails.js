@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { parseJSON, format } from "date-fns"
 import Accordion from "react-bootstrap/Accordion"
@@ -19,30 +19,35 @@ const formatDate = isoDate => {
 }
 
 export default function AdvisoryDetails({ advisories, parkType }) {
-  let expandedsInitial = []
   advisories.sort((a, b) => {
     return b.listingRank - a.listingRank
       || b?.urgency?.sequence - a?.urgency?.sequence
       || new Date(b.advisoryDate) - new Date(a.advisoryDate)
-  }).forEach((advisory, index) => {
-    expandedsInitial[index] = false
   })
 
-  const [allExpanded, setAllExpanded] = useState(false)
-  const [expandeds, setExpandeds] = useState(expandedsInitial)
+  const [openAccordions, setOpenAccordions] = useState({})
 
-  const handleChange = id => {
-    expandeds[id] = !expandeds[id]
-    setExpandeds([...expandeds])
+  const toggleAccordion = (index) => {
+    setOpenAccordions((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }))
   }
 
-  const expandAll = isAllExpanded => {
-    let expandeds = []
-    advisories.forEach((advisory, index) => {
-      expandeds[index] = isAllExpanded
-    })
-    setExpandeds(expandeds)
+  const toggleExpandAll = () => {
+    const newExpandAll = !allExpanded
+    const newOpenAccordions = advisories.reduce((acc, _, index) => {
+      acc[index] = newExpandAll
+      return acc
+    }, {})
+    setOpenAccordions(newOpenAccordions)
   }
+
+  const allExpanded = useMemo(() => {
+    return advisories.length > 0 &&
+      Object.keys(openAccordions).length === advisories.length &&
+      Object.values(openAccordions).every((isOpen) => isOpen)
+  }, [openAccordions, advisories.length])
 
   const advisoriesWithFormatting = advisories.map(advisory => {
     let alertIcon
@@ -78,9 +83,8 @@ export default function AdvisoryDetails({ advisories, parkType }) {
 
   useEffect(() => {
     if (advisories.length === 1) {
-      expandAll(true)
+      setOpenAccordions({ 0: true })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [advisories.length])
 
   return (
@@ -101,15 +105,11 @@ export default function AdvisoryDetails({ advisories, parkType }) {
           <Col>
             {advisories.length > 1 && (
               <button
-                onClick={() => {
-                  expandAll(!allExpanded)
-                  setAllExpanded(!allExpanded)
-                }}
+                onClick={toggleExpandAll}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault()
-                    expandAll(!allExpanded)
-                    setAllExpanded(!allExpanded)
+                    toggleExpandAll()
                   }
                 }}
                 className="btn btn-link expand-link expand-icon"
@@ -123,21 +123,14 @@ export default function AdvisoryDetails({ advisories, parkType }) {
             )}
             {advisoriesWithFormatting.map((advisory, index) => (
               <Accordion
-                // React bootstrap accordions are designed to only have 1 item open at a time.
-                // To allow multiple open at the same time, each item must be in its own accordion with only 1 element in it.
-                // The following assigns each item its own activeKey IFF the item accordion is 'open'.
-                // Otherwise the activeKey is set to null, effectively removing the 'open' state from the accordion.
-                // This is a cheeky way to programmatically open one, some, or all items simultaneously.
-                key={advisory.id}
-                aria-controls={advisory.title}
-                activeKey={expandeds[index] ? advisory.id : null}
-                className={`advisory-accordion is-open--${expandeds[index]}`}
+                key={index}
+                className={`advisory-accordion is-open--${openAccordions[index]}`}
               >
                 <Accordion.Toggle
                   as={"div"}
                   className="accordion-toggle"
-                  eventKey={advisory.id}
-                  onClick={() => handleChange(index)}
+                  eventKey={index.toString()}
+                  onClick={() => toggleAccordion(index)}
                 >
                   <div className="d-flex justify-content-between">
                     <div className="d-flex align-items-center">
@@ -149,13 +142,13 @@ export default function AdvisoryDetails({ advisories, parkType }) {
                       <HtmlContent className="accordion-header">{advisory.title}</HtmlContent>
                     </div>
                     <div className="d-flex align-items-center">
-                      {expandeds[index] ?
+                      {openAccordions[index] ?
                         <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
                       }
                     </div>
                   </div>
                 </Accordion.Toggle>
-                <Accordion.Collapse eventKey={advisory.id}>
+                <Accordion.Collapse eventKey={index.toString()} in={openAccordions[index]}>
                   <div className="accordion-content">
                     {advisory.description && (
                       <HtmlContent className="mb-2">

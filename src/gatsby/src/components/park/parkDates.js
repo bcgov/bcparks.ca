@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import { Link as GatsbyLink } from "gatsby"
 import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
@@ -12,23 +12,16 @@ import StaticIcon from "./staticIcon"
 import { countsList } from "../../utils/constants"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 
-export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesList }) => {
-  const [isShow, setIsShow] = useState(false)
-
-  useEffect(() => {
-    setIsShow(open)
-  }, [open])
-
+export const AccordionList = ({ eventKey, subArea, openAccordions, isShown, subAreasNotesList, toggleAccordion }) => {
   return (
     <Accordion
-      activeKey={isShow ? eventKey : ''}
-      className={`is-open--${isShow}`}
+      className={`is-open--${openAccordions[eventKey]}`}
     >
       <Accordion.Toggle
         as={"div"}
         aria-controls={subArea.parkSubArea}
         eventKey={eventKey}
-        onClick={() => setIsShow(!isShow)}
+        onClick={() => toggleAccordion(eventKey)}
       >
         <div className="d-flex justify-content-between accordion-toggle">
           <div className="d-flex align-items-center">
@@ -38,13 +31,13 @@ export const AccordionList = ({ eventKey, subArea, open, isShown, subAreasNotesL
             </HtmlContent>
           </div>
           <div className="d-flex align-items-center">
-            {isShow ?
+            {openAccordions[eventKey] ?
               <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
             }
           </div>
         </div>
       </Accordion.Toggle>
-      <Accordion.Collapse eventKey={eventKey}>
+      <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
         <div className="accordion-content">
           <dl>
             {subArea.typeName && (
@@ -145,9 +138,9 @@ export default function ParkDates({ data }) {
   const parkOperation = dataCopy.parkOperation || {}
   const parkType = dataCopy.parkType
   const subAreas = dataCopy.subAreas || []
-  subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
+  subAreas.filter(subArea => subArea.isActive).sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
 
-  const [open, setOpen] = useState(false)
+  const [openAccordions, setOpenAccordions] = useState({})
 
   // Operations record is required, even if subarea records are present
   // If no operations record, show "not available" message
@@ -222,11 +215,32 @@ export default function ParkDates({ data }) {
       count.isActive;
   }
 
+  const toggleAccordion = (index) => {
+    setOpenAccordions((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }))
+  }
+
+  const toggleExpandAll = () => {
+    const newExpandAll = !allExpanded
+    const newOpenAccordions = subAreas.reduce((acc, _, index) => {
+      acc[index] = newExpandAll
+      return acc
+    }, {})
+    setOpenAccordions(newOpenAccordions)
+  }
+
+  const allExpanded = useMemo(() => {
+    return subAreas.length > 0 &&
+      Object.keys(openAccordions).length === subAreas.length &&
+      Object.values(openAccordions).every((isOpen) => isOpen)
+  }, [openAccordions, subAreas.length])
+
   useEffect(() => {
     if (subAreas.length === 1) {
-      setOpen(true)
+      setOpenAccordions({ 0: true })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subAreas.length])
 
   return (
@@ -264,16 +278,16 @@ export default function ParkDates({ data }) {
               </div>
               {subAreas.length > 1 && (
                 <button
-                  onClick={() => setOpen(!open)}
+                  onClick={toggleExpandAll}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault()
-                      setOpen(!open)
+                      toggleExpandAll()
                     }
                   }}
                   className="btn btn-link expand-link expand-icon"
                 >
-                  {open ?
+                  {allExpanded ?
                     <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
                     :
                     <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
@@ -281,15 +295,15 @@ export default function ParkDates({ data }) {
                 </button>
               )}
               {subAreas
-                .filter(subArea => subArea.isActive)
                 .map((subArea, index) => (
                   <AccordionList
                     key={index}
                     eventKey={index.toString()}
                     subArea={subArea}
-                    open={open}
+                    openAccordions={openAccordions}
                     isShown={isShown}
                     subAreasNotesList={subAreasNotesList}
+                    toggleAccordion={toggleAccordion}
                   />
                 ))}
             </>
