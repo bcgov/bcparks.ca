@@ -103,7 +103,7 @@ const NearbyPark = ({ park }) => {
               alt="park"
               className={`${errorStates[0] ? "search-result-logo-image" : "search-result-image"}`}
               src={errorStates[0] ? parksLogo : addSmallImagePrefix(photos[0].imageUrl)}
-              onError={() => handleImgError(setErrorStates, 0, addSmallImagePrefix(photos[0].imageUrl))}
+              onError={() => handleImgError(setErrorStates, 0)}
             />
           </div>
         )}
@@ -133,7 +133,7 @@ const NearbyPark = ({ park }) => {
                         alt="park carousel"
                         className={`${errorStates[index] ? "search-result-logo-image" : "search-result-image"}`}
                         src={errorStates[index] ? parksLogo : addSmallImagePrefix(item.imageUrl)}
-                        onError={() => handleImgError(setErrorStates, index, addSmallImagePrefix(item.imageUrl))}
+                        onError={() => handleImgError(setErrorStates, index)}
                       />
                     </Carousel.Item>
                   )
