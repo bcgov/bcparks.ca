@@ -33,7 +33,6 @@ export const renderBreadcrumbs = (menuContent, pageContext) => {
 }
 export const addSmallImagePrefix = (str) => {
   if (!str) {
-    console.log("> addSmallImagePrefix: str is null")
     return parksLogo
   }
   let url = str
@@ -46,19 +45,15 @@ export const addSmallImagePrefix = (str) => {
     }
   }
   const i = url.lastIndexOf("/")
-  const thumbnailUrl =
-    url.substring(0, i + 1) + "small_" + url.substring(i + 1, url.length)
-  console.log(`> addSmallImagePrefix: ${str} -> ${thumbnailUrl}`)
-  return thumbnailUrl
+  return url.substring(0, i + 1) + "small_" + url.substring(i + 1, url.length)
 }
-export const handleImgError = (setErrorStates, index, url) => {
+export const handleImgError = (setErrorStates, index) => {
   setErrorStates(prevErrorStates => {
     const newErrorStates = [...prevErrorStates]
     newErrorStates[index] = true
-    console.log("image error:", url)
-
     return newErrorStates
   })
+  console.clear()
 }
 export const useScreenSize = () => {
   const [screenSize, setScreenSize] = useState({
