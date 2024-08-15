@@ -50,7 +50,7 @@ const mapImages = {
 const formattedTime = (time) => {
   // prepend a dummy date to the time string to parse it
   const dateTime = parseISO(`1970-01-01T${time}`)
-  return format(dateTime, 'h aa').toLowerCase()
+  return format(dateTime, 'h:mm aa').toLowerCase()
 }
 
 export default function ParkHeader({
