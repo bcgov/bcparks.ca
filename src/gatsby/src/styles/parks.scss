@@ -503,9 +503,31 @@ h2.section-heading {
   }
 }
 
-.park-camping-type-description {
-  h3 {
-    font-size: 1rem;
+// camping
+#camping {
+  .park-camping {
+    & + .park-camping {
+      margin-top: 32px;
+    }
+    &--collapsed {
+      max-height: 260px;
+      overflow: hidden;
+      display: block;
+      text-overflow: ellipsis;
+    }
+    &--expanded {
+      max-height: none;
+    }
+    &-description {
+      h3 {
+        font-size: 1rem;
+      }
+    }
+    hr {
+      color: transparent;
+      border: none;
+      margin: 0;
+    }
   }
 }
 

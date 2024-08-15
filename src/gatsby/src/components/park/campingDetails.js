@@ -1,7 +1,10 @@
-import React from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { navigate } from "gatsby"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import * as cheerio from "cheerio"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import ParkDates from "./parkDates"
 import HtmlContent from "./htmlContent"
@@ -10,21 +13,80 @@ import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 export const CampingType = ({ camping }) => {
+  const [expanded, setExpanded] = useState(false)
+  const [height, setHeight] = useState(0)
+  const [sectionHeight, setSectionHeight] = useState(0)
+  const ref = useRef(null)
+  const isLong = height > 259
+  const campingDescription = !isNullOrWhiteSpace(camping.description?.data) ?
+    camping.description.data : camping?.campingType?.defaultDescription.data
+
+  const $ = cheerio.load(campingDescription)
+  $('a').attr('tabindex', '-1')
+  const collapsedDescription = $.html()
+  const hasHr = $('hr').length > 0
+
+  useEffect(() => {
+    setHeight(ref.current.clientHeight)
+  }, [expanded])
+
+  useEffect(() => {
+    if (ref.current) {
+      const h3 = ref.current.querySelector('h3.park-camping-title');
+      const hr = ref.current.querySelector('hr');
+      if (h3 && hr) {
+        // height from the <h3> to the <hr>
+        const height = hr?.getBoundingClientRect().top - h3.getBoundingClientRect().top
+        setSectionHeight(height)
+      }
+    }
+  }, [])
+
   return (
-    <>
-      <div className="d-flex align-items-center mb-4">
-        <StaticIcon name={camping?.campingType?.icon || "information"} size={36} />
-        <h3 className="ml-3 mb-0">
-          {camping?.campingType?.campingTypeName}
-        </h3>
+    <div className="park-camping">
+      <div
+        ref={ref}
+        className={`park-camping--${expanded ? "expanded" : "collapsed"}`}
+        style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : 260}px` }}
+      >
+        <div className="d-flex align-items-center mb-4">
+          <StaticIcon name={camping?.campingType?.icon || "information"} size={36} />
+          <h3 className="park-camping-title ml-3 mb-0">
+            {camping?.campingType?.campingTypeName}
+          </h3>
+        </div>
+        <HtmlContent className="park-camping-description">
+          {expanded ? campingDescription : collapsedDescription}
+        </HtmlContent>
+        <ParkDates data={camping} />
       </div>
-      <HtmlContent className="park-camping-type-description">
-        {!isNullOrWhiteSpace(camping.description?.data) ?
-          camping.description.data : (camping?.campingType?.defaultDescription.data)
-        }
-      </HtmlContent>
-      <ParkDates data={camping}  />
-    </>
+      {(hasHr || isLong) &&
+        <button
+          className="btn btn-link expand-icon park-camping-link"
+          onClick={() => {
+            setExpanded(!expanded)
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
+              setExpanded(!expanded)
+            }
+          }}
+        >
+          {expanded ?
+            <>
+              Show less about {camping?.campingType?.campingTypeName.toLowerCase()}
+              <FontAwesomeIcon icon={faChevronUp} className="ml-1" />
+            </>
+            :
+            <>
+              Show more about {camping?.campingType?.campingTypeName.toLowerCase()}
+              <FontAwesomeIcon icon={faChevronDown} className="ml-1" />
+            </>
+          }
+        </button>
+      }
+    </div>
   )
 }
 
