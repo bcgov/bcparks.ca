@@ -27,28 +27,6 @@ export default function AdvisoryDetails({ advisories, parkType }) {
 
   const [openAccordions, setOpenAccordions] = useState({})
 
-  const toggleAccordion = (index) => {
-    setOpenAccordions((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }))
-  }
-
-  const toggleExpandAll = () => {
-    const newExpandAll = !allExpanded
-    const newOpenAccordions = advisories.reduce((acc, _, index) => {
-      acc[index] = newExpandAll
-      return acc
-    }, {})
-    setOpenAccordions(newOpenAccordions)
-  }
-
-  const allExpanded = useMemo(() => {
-    return advisories.length > 0 &&
-      Object.keys(openAccordions).length === advisories.length &&
-      Object.values(openAccordions).every((isOpen) => isOpen)
-  }, [openAccordions, advisories.length])
-
   const advisoriesWithFormatting = advisories.map(advisory => {
     let alertIcon
     let alertColorCss
@@ -81,11 +59,33 @@ export default function AdvisoryDetails({ advisories, parkType }) {
     }
   })
 
+  const toggleAccordion = (index) => {
+    setOpenAccordions((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }))
+  }
+
+  const toggleExpandAll = () => {
+    const newExpandAll = !allExpanded
+    const newOpenAccordions = advisoriesWithFormatting.reduce((acc, _, index) => {
+      acc[index] = newExpandAll
+      return acc
+    }, {})
+    setOpenAccordions(newOpenAccordions)
+  }
+
+  const allExpanded = useMemo(() => {
+    return advisoriesWithFormatting.length > 0 &&
+      Object.keys(openAccordions).length === advisoriesWithFormatting.length &&
+      Object.values(openAccordions).every((isOpen) => isOpen)
+  }, [openAccordions, advisoriesWithFormatting.length])
+
   useEffect(() => {
-    if (advisories.length === 1) {
+    if (advisoriesWithFormatting.length === 1) {
       setOpenAccordions({ 0: true })
     }
-  }, [advisories.length])
+  }, [advisoriesWithFormatting.length])
 
   return (
     <div id="advisories">
@@ -94,16 +94,16 @@ export default function AdvisoryDetails({ advisories, parkType }) {
         {`Advisories (${advisories.length})`}
       </h3>
       <Row>
-        {advisories.length === 0 && (
+        {advisoriesWithFormatting.length === 0 && (
           <Col>
             <p>
               There are no reported advisories for this {parkType}
             </p>
           </Col>
         )}
-        {advisories.length > 0 && (
+        {advisoriesWithFormatting.length > 0 && (
           <Col>
-            {advisories.length > 1 && (
+            {advisoriesWithFormatting.length > 1 && (
               <button
                 onClick={toggleExpandAll}
                 onKeyDown={(e) => {
