@@ -199,7 +199,7 @@ export default function CampingDetails({ data }) {
       }
       <Row>
         <Col>
-          {activeCampings.length > 1 && (
+          {!(activeCampings.length === 1 && !hasReservations) && (
             <button
               onClick={toggleExpandAll}
               onKeyDown={(e) => {
