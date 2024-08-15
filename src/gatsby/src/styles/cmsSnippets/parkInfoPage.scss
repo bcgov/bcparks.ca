@@ -25,15 +25,14 @@
 }
 
 .expand-link.expand-icon,
-.park-overview-link.expand-icon {
+.park-overview-link.expand-icon,
+.park-camping-link.expand-icon {
   display: inline-block;
   color: $colorBlueMed !important;
-  text-decoration: none !important;
   cursor: pointer;
   margin-bottom: 16px;
   &:hover, &:focus-visible {
     color: $colorBlue !important;
-    text-decoration: underline !important;
   }
   &:focus-visible {
     border-radius: 4px;
@@ -47,7 +46,15 @@
   }
 }
 
-.park-overview-link.expand-icon {
+.expand-link.expand-icon {
+  text-decoration: none !important;
+  &:hover, &:focus-visible {
+    text-decoration: underline !important;
+  }
+}
+
+.park-overview-link.expand-icon,
+.park-camping-link.expand-icon{
   margin-top: 16px;
 }
 
