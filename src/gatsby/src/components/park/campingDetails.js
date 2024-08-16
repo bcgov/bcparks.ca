@@ -19,7 +19,9 @@ export const CampingType = ({ camping }) => {
   const ref = useRef(null)
   const isLong = height > 259
   const campingDescription = !isNullOrWhiteSpace(camping.description?.data) ?
-    camping.description.data : camping?.campingType?.defaultDescription.data
+    camping.description.data :
+    !isNullOrWhiteSpace(camping?.campingType?.defaultDescription?.data) ?
+      camping.campingType.defaultDescription.data : ""
 
   const $ = cheerio.load(campingDescription)
   $('a').attr('tabindex', '-1')
@@ -28,7 +30,7 @@ export const CampingType = ({ camping }) => {
 
   useEffect(() => {
     setHeight(ref.current.clientHeight)
-  }, [expanded])
+  }, [expanded, camping])
 
   useEffect(() => {
     if (ref.current) {
