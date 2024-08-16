@@ -635,8 +635,12 @@ nav.breadcrumbs {
   }
   figure.table {
     table {
-      th {
-        background: $colorBrownMed;
+      tbody {
+        tr {
+          & > :first-child {
+            background: $colorBrownMed !important
+          }
+        }
       }
     }
   }
