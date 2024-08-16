@@ -370,7 +370,7 @@ export default function ParkTemplate({ data }) {
                     </div>
                   )}
                   {!isLoadingAdvisories && !advisoryLoadError && (
-                    <AdvisoryDetails advisories={advisories} parkType={parkType} />
+                    <AdvisoryDetails advisories={advisories} parkType={parkType} parkAccessStatus={parkAccessStatus} />
                   )}
                   {hasParkGuidelines &&
                     <Row>
