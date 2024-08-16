@@ -18,7 +18,7 @@ const formatDate = isoDate => {
   return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
 }
 
-export default function AdvisoryDetails({ advisories, parkType }) {
+export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus }) {
   advisories.sort((a, b) => {
     return b.listingRank - a.listingRank
       || b?.urgency?.sequence - a?.urgency?.sequence
@@ -82,10 +82,10 @@ export default function AdvisoryDetails({ advisories, parkType }) {
   }, [openAccordions, advisoriesWithFormatting.length])
 
   useEffect(() => {
-    if (advisoriesWithFormatting.length === 1) {
+    if (advisoriesWithFormatting.length === 1 && parkAccessStatus !== null) {
       setOpenAccordions({ 0: true })
     }
-  }, [advisoriesWithFormatting.length])
+  }, [advisoriesWithFormatting.length, parkAccessStatus])
 
   return (
     <div id="advisories">
