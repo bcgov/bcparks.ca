@@ -50,7 +50,12 @@ const mapImages = {
 const formattedTime = (time) => {
   // prepend a dummy date to the time string to parse it
   const dateTime = parseISO(`1970-01-01T${time}`)
-  return format(dateTime, 'h aa').toLowerCase()
+  const minutes = format(dateTime, 'mm');
+  if (minutes === '00') {
+    return format(dateTime, 'h aa').toLowerCase()
+  } else {
+    return format(dateTime, 'h:mm aa').toLowerCase()
+  }
 }
 
 export default function ParkHeader({
@@ -114,11 +119,13 @@ export default function ParkHeader({
                 <FontAwesomeIcon icon={faCalendar} />
                 <div>
                   <p>
-                    The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}.
-                    {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) && (
-                      ` Gates are open from ${formattedTime(parkOperation.gateOpenTime)}
-                       – ${formattedTime(parkOperation.gateCloseTime)}.`
-                    )}
+                    The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}
+                    {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) ? (
+                      <>
+                        , from <span className="no-wrap">{formattedTime(parkOperation.gateOpenTime)}</span>{" "}
+                        to <span className="no-wrap">{formattedTime(parkOperation.gateCloseTime)}</span>, daily.
+                      </>
+                    ) : "."}
                   </p>
                   {(campings.length > 0 || facilities.length > 0) && (
                     <p>

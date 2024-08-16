@@ -103,6 +103,8 @@ blockquote {
 }
 
 .callout-box {
+  display: flex;
+  justify-content: center;
   color: $colorBlue;
   background-color: $colorBlueLight;
   font-size: 1rem;
@@ -111,6 +113,9 @@ blockquote {
   border-radius: 4px;
   margin: 16px 0;
   padding: 20px;
+  p {
+    max-width: 600px;
+  }
 }
 
 figure.media div[data-oembed-url] {
@@ -601,6 +606,9 @@ nav.breadcrumbs {
   }
   &-content {
     padding-top: 32px;
+    & > * {
+      max-width: 600px !important;
+    }
   }
   &-toggle {
     cursor: pointer;    
@@ -651,6 +659,13 @@ nav.breadcrumbs {
     .accordion-toggle {
       .accordion-header {
         margin-left: 0;
+      }
+    }
+  }
+  figure.table {
+    table {
+      th {
+        background: $colorBrownMed;
       }
     }
   }

@@ -44,6 +44,13 @@
         outline-offset: 0px;
       }
     }
+    div:not(.accordion-content) {
+      & > .raw-html-content:not(.accordion-header) {
+        & > :not(blockquote) {
+          max-width: 600px;
+        }
+      }
+    }
     & > div.w-100:last-of-type {
       min-height: calc(100vh - 380px);
       padding-bottom: 64px;
@@ -496,9 +503,6 @@ h2.section-heading {
   &--right {
     h4 {
       margin-bottom: 8px;
-    }
-    p {
-      font-size: 0.875rem;
     }
   }
 }

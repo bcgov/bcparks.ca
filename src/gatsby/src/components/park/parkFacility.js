@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useMemo } from "react"
 import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -11,23 +11,16 @@ import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 import SubArea from "./subArea"
 
-export const AccordionList = ({ eventKey, facility, open }) => {
-  const [isShow, setIsShow] = useState(false);
-
-  useEffect(() => {
-    setIsShow(open)
-  }, [open])
-
+export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccordion }) => {
   return (
     <Accordion
-      activeKey={isShow ? eventKey : ''}
-      className={`is-open--${isShow}`}
+      className={`is-open--${openAccordions[eventKey]}`}
     >
       <Accordion.Toggle
         as={"div"}
         aria-controls={facility.facilityType.facilityName}
         eventKey={eventKey}
-        onClick={() => setIsShow(!isShow)}
+        onClick={() => toggleAccordion(eventKey)}
       >
         <div
           id={facility.facilityType.facilityCode}
@@ -40,32 +33,32 @@ export const AccordionList = ({ eventKey, facility, open }) => {
             </HtmlContent>
           </div>
           <div className="d-flex align-items-center">
-            {isShow ?
+            {openAccordions[eventKey] ?
               <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
             }
           </div>
         </div>
       </Accordion.Toggle>
-      <Accordion.Collapse eventKey={eventKey}>
+      <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
         <>
           {facility.subAreas.map((subArea) => (
             <SubArea data={subArea} showHeading={true} />
           ))}
-        <div className="accordion-content">
-          <HtmlContent>
-            {!isNullOrWhiteSpace(facility.description?.data) ?
-              facility.description.data : facility.facilityType.defaultDescription.data
-            }
-          </HtmlContent>
-          {!facility.hideStandardCallout &&
-            !isNullOrWhiteSpace(facility.facilityType?.appendStandardCalloutText?.data) && (
-              <blockquote className="callout-box">
-                <HtmlContent>
-                  {facility.facilityType.appendStandardCalloutText.data}
-                </HtmlContent>
-              </blockquote>
-            )}
-        </div>
+          <div className="accordion-content">
+            <HtmlContent>
+              {!isNullOrWhiteSpace(facility.description?.data) ?
+                facility.description.data : facility.facilityType.defaultDescription.data
+              }
+            </HtmlContent>
+            {!facility.hideStandardCallout &&
+              !isNullOrWhiteSpace(facility.facilityType?.appendStandardCalloutText?.data) && (
+                <blockquote className="callout-box">
+                  <HtmlContent>
+                    {facility.facilityType.appendStandardCalloutText.data}
+                  </HtmlContent>
+                </blockquote>
+              )}
+          </div>
         </>
       </Accordion.Collapse>
     </Accordion>
@@ -76,17 +69,30 @@ export default function ParkFacility({ data }) {
   const [facilityData] = useState(
     JSON.parse(JSON.stringify(data)) // deep copy
   )
-  const [expanded, setExpanded] = useState(Array(data.length).fill(false))
   const [hash, setHash] = useState("")
-  const [open, setOpen] = useState(false)
+  const [openAccordions, setOpenAccordions] = useState({})
 
-  const toggleExpand = useCallback(
-    index => {
-      expanded[index] = !expanded[index]
-      setExpanded([...expanded])
-    },
-    [expanded]
-  )
+  const toggleAccordion = (index) => {
+    setOpenAccordions((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }))
+  }
+
+  const toggleExpandAll = () => {
+    const newExpandAll = !allExpanded
+    const newOpenAccordions = facilityData.reduce((acc, _, index) => {
+      acc[index] = newExpandAll
+      return acc
+    }, {})
+    setOpenAccordions(newOpenAccordions)
+  }
+
+  const allExpanded = useMemo(() => {
+    return facilityData.length > 0 &&
+      Object.keys(openAccordions).length === facilityData.length &&
+      Object.values(openAccordions).every((isOpen) => isOpen)
+  }, [openAccordions, facilityData.length])
 
   const checkHash = useCallback(() => {
     // Check hash in url
@@ -98,8 +104,11 @@ export default function ParkFacility({ data }) {
       if (h !== undefined && h !== hash) {
         facilityData.forEach(facility => {
           if (h === "#" + facility.facilityType.facilityCode) {
-            if (!expanded[idx]) {
-              toggleExpand(idx)
+            if (!openAccordions[idx]) {
+              setOpenAccordions((prev) => ({
+                ...prev,
+                [idx]: true,
+              }))
             }
           }
           idx++
@@ -107,7 +116,7 @@ export default function ParkFacility({ data }) {
         setHash(h)
       }
     }
-  }, [expanded, facilityData, hash, toggleExpand])
+  }, [facilityData, hash, openAccordions])
 
   useEffect(() => {
     window.addEventListener("hashchange", function (e) {
@@ -118,9 +127,8 @@ export default function ParkFacility({ data }) {
 
   useEffect(() => {
     if (facilityData.length === 1) {
-      setOpen(true)
+      setOpenAccordions({ 0: true })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [facilityData.length])
 
   if (facilityData.length === 0) return null
@@ -135,16 +143,16 @@ export default function ParkFacility({ data }) {
         <Col>
           {facilityData.length > 1 && (
             <button
-              onClick={() => setOpen(!open)}
+              onClick={toggleExpandAll}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault()
-                  setOpen(!open)
+                  toggleExpandAll()
                 }
               }}
               className="btn btn-link expand-link expand-icon"
             >
-              {open ?
+              {allExpanded ?
                 <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
                 :
                 <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
@@ -156,7 +164,8 @@ export default function ParkFacility({ data }) {
               key={index}
               eventKey={index.toString()}
               facility={facility}
-              open={open}
+              openAccordions={openAccordions}
+              toggleAccordion={toggleAccordion}
             />
           ))}
         </Col>

@@ -106,6 +106,8 @@ export default function CampingDetails({ data }) {
     navigate(parkReservationsURL)
   }
 
+  if (activeCampings.length === 0) return null
+
   return (
     <div id="camping" className="anchor-link">
       <Row>
