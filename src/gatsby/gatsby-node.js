@@ -198,6 +198,16 @@ exports.createSchemaCustomization = ({ actions }) => {
     hasBackcountryShelterReservations: Boolean
     hasBackcountryWildernessReservations: Boolean
     hasGroupPicnicReservations: Boolean
+    frontcountryReservationUrl: String
+    frontcountryGroupReservationUrl: String
+    frontcountryCabinReservationUrl: String
+    backcountryReservationUrl: String
+    backcountryPermitUrl: String
+    backcountryGroupReservationUrl: String
+    backcountryWildernessReservationUrl: String
+    backcountryShelterReservationUrl: String
+    canoeCircuitReservationUrl: String
+    groupPicnicReservationUrl: String
     customReservationLinks: [STRAPI__COMPONENT_PARKS_RTE_LIST] @link(by: "id", from: "customReservationLinks___NODE")
   }
 

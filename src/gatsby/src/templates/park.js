@@ -615,8 +615,17 @@ export const query = graphql`
         hasDayUsePass
         hasFirstComeFirstServed
         reservationUrl
-        backcountryPermitUrl
         dayUsePassUrl
+        frontcountryReservationUrl
+        frontcountryGroupReservationUrl
+        frontcountryCabinReservationUrl
+        backcountryReservationUrl
+        backcountryPermitUrl
+        backcountryGroupReservationUrl
+        backcountryWildernessReservationUrl
+        backcountryShelterReservationUrl
+        canoeCircuitReservationUrl
+        groupPicnicReservationUrl
         hasParkGate
         offSeasonUse
         openNote

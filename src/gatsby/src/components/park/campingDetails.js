@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react"
-import { navigate } from "gatsby"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import * as cheerio from "cheerio"
@@ -12,7 +11,7 @@ import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const CampingType = ({ camping }) => {
+export const CampingType = ({ camping, parkOperation }) => {
   const [expanded, setExpanded] = useState(false)
   const [height, setHeight] = useState(0)
   const [sectionHeight, setSectionHeight] = useState(0)
@@ -60,7 +59,7 @@ export const CampingType = ({ camping }) => {
         <HtmlContent className="park-camping-description">
           {expanded ? campingDescription : collapsedDescription}
         </HtmlContent>
-        <ParkDates data={camping} />
+        <ParkDates data={camping} parkOperation={parkOperation} />
       </div>
       {(hasHr || isLong) &&
         <button
@@ -98,16 +97,6 @@ export default function CampingDetails({ data }) {
   const subAreas = data.subAreas || []
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
 
-  if (activeCampings.length === 0) return null
-
-  const toFrontCountryReservations = () => {
-    const reservationsURL = "https://camping.bcparks.ca"
-    const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
-    navigate(parkReservationsURL)
-  }
-
-  if (activeCampings.length === 0) return null
-
   return (
     <div id="camping" className="anchor-link">
       <Row>
@@ -117,17 +106,6 @@ export default function CampingDetails({ data }) {
             Camping
           </h2>
         </Col>
-        {data.hasReservations && (
-          <Col className="mb-3" xs="auto">
-            <button
-              aria-label="Book camping"
-              className="btn btn-secondary"
-              onClick={() => toFrontCountryReservations()}
-            >
-              Book camping
-            </button>
-          </Col>
-        )}
       </Row>
       <Row>
         <Col>
@@ -136,6 +114,7 @@ export default function CampingDetails({ data }) {
               key={index}
               eventKey={index.toString()}
               camping={camping}
+              parkOperation={parkOperation}
             />
           ))}
         </Col>
