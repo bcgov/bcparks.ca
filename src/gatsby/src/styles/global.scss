@@ -129,9 +129,14 @@ figure.table {
   color: $colorGrey;
   table {
     width: 100%;
-    tr:first-of-type {
-      th, td {
-        border-top: 1px solid $colorGreyLight;
+    tr {
+      &:first-of-type {
+        th, td {
+          border-top: 1px solid $colorGreyLight;
+        }
+      }
+      & > :first-child {
+        background: $colorBrownLight !important;
       }
     }
     th, td {
@@ -664,8 +669,12 @@ nav.breadcrumbs {
   }
   figure.table {
     table {
-      th {
-        background: $colorBrownMed;
+      tbody {
+        tr {
+          & > :first-child {
+            background: $colorBrownMed !important;
+          }
+        }
       }
     }
   }
