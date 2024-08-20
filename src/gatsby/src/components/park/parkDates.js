@@ -294,6 +294,7 @@ export default function ParkDates({ data }) {
                 </button>
               )}
               {subAreas
+                .filter(subArea => subArea.isActive)
                 .map((subArea, index) => (
                   <AccordionList
                     key={index}
