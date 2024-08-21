@@ -103,8 +103,6 @@ blockquote {
 }
 
 .callout-box {
-  display: flex;
-  justify-content: center;
   color: $colorBlue;
   background-color: $colorBlueLight;
   font-size: 1rem;
@@ -113,7 +111,7 @@ blockquote {
   border-radius: 4px;
   margin: 16px 0;
   padding: 20px;
-  p {
+  & > * {
     max-width: 600px;
   }
 }
