@@ -133,7 +133,6 @@ export default function ParkTemplate({ data }) {
   const parkOverviewRef = useRef("")
   const knowBeforeRef = useRef("")
   const mapLocationRef = useRef("")
-  const parkDatesRef = useRef("")
   const campingRef = useRef("")
   const activityRef = useRef("")
   const facilityRef = useRef("")
@@ -145,7 +144,6 @@ export default function ParkTemplate({ data }) {
     parkOverviewRef,
     knowBeforeRef,
     mapLocationRef,
-    parkDatesRef,
     campingRef,
     activityRef,
     facilityRef,
