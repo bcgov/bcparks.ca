@@ -4,13 +4,6 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import HtmlContent from "./htmlContent"
 import * as cheerio from 'cheerio';
 
-const PREFIX = 'park-overview';
-
-const classes = {
-  collapsed: `${PREFIX} collapsed`,
-  expanded: `${PREFIX} expanded`
-};
-
 export default function ParkOverview({ data: parkOverview, type }) {
   const [expanded, setExpanded] = useState(false)
   const [height, setHeight] = useState(0)
@@ -39,7 +32,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
     <div id="highlights" className="anchor-link">
       <div
         ref={ref}
-        className={expanded ? classes.expanded : classes.collapsed}
+        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${(hasHr || isLong) && "gradient"}`}
         style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : 260}px` }}
       >
         {/* id="park-overview-container" should be removed once it's removed from the contents */}

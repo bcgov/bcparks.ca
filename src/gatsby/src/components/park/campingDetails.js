@@ -48,7 +48,7 @@ export const CampingType = ({ camping }) => {
     <div className="park-camping">
       <div
         ref={ref}
-        className={`park-camping--${expanded ? "expanded" : "collapsed"}`}
+        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${(hasHr || isLong) && "gradient"}`}
         style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : 260}px` }}
       >
         <div className="d-flex align-items-center mb-4">
