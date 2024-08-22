@@ -48,7 +48,7 @@ export const CampingType = ({ camping }) => {
     <div className="park-camping">
       <div
         ref={ref}
-        className={`expandable-description ${expanded ? "expanded" : "collapsed"}`}
+        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${(hasHr || isLong) && "gradient"}`}
         style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : 260}px` }}
       >
         <div className="d-flex align-items-center mb-4">
@@ -61,7 +61,6 @@ export const CampingType = ({ camping }) => {
           {expanded ? campingDescription : collapsedDescription}
         </HtmlContent>
         <ParkDates data={camping} />
-        {(hasHr || isLong) && <div class="gradient" aria-hidden="true"></div>}
       </div>
       {(hasHr || isLong) &&
         <button

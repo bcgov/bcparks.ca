@@ -401,23 +401,24 @@ h2.section-heading {
 // expandable description with gradient
 .expandable-description {
   position: relative;
-  .gradient {
-    width: 100%;
-    height: 100px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(180deg, rgba($colorWhite, 0) 0%, $colorWhite 100%);
-  }
   &.collapsed {
     max-height: 260px;
     overflow: hidden;
     display: block;
     text-overflow: ellipsis;
+    &.gradient::after {
+      content: "";
+      width: 100%;
+      height: 100px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(180deg, rgba($colorWhite, 0) 0%, $colorWhite 100%);
+    }
   }
   &.expanded {
     max-height: none;
-    .gradient {
+    &.gradient::after {
       display: none;
     }
   }

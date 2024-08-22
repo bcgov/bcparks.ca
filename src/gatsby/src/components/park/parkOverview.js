@@ -32,7 +32,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
     <div id="highlights" className="anchor-link">
       <div
         ref={ref}
-        className={`expandable-description ${expanded ? "expanded" : "collapsed"}`}
+        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${(hasHr || isLong) && "gradient"}`}
         style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : 260}px` }}
       >
         {/* id="park-overview-container" should be removed once it's removed from the contents */}
@@ -42,7 +42,6 @@ export default function ParkOverview({ data: parkOverview, type }) {
         <HtmlContent className="park-overview-html">
           {expanded ? parkOverview : collapsedParkOverview}
         </HtmlContent>
-        {(hasHr || isLong) && <div class="gradient" aria-hidden="true"></div>}
       </div>
       {(hasHr || isLong) &&
         <button
