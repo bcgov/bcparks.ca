@@ -398,7 +398,20 @@ h2.section-heading {
   }
 }
 
-.park-overview {
+// expandable description with gradient
+.expandable-description {
+  position: relative;
+  z-index: 1;
+  .gradient {
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(180deg, rgba($colorWhite, 0) 0%, $colorWhite 100%);
+    opacity: 1;
+    z-index: 10;
+  }
   &.collapsed {
     max-height: 260px;
     overflow: hidden;
@@ -407,6 +420,10 @@ h2.section-heading {
   }
   &.expanded {
     max-height: none;
+    .gradient {
+      opacity: 0;
+      z-index: -1;
+    }
   }
   hr {
     color: transparent;
@@ -511,24 +528,10 @@ h2.section-heading {
     & + .park-camping {
       margin-top: 32px;
     }
-    &--collapsed {
-      max-height: 260px;
-      overflow: hidden;
-      display: block;
-      text-overflow: ellipsis;
-    }
-    &--expanded {
-      max-height: none;
-    }
     &-description {
       h3 {
         font-size: 1rem;
       }
-    }
-    hr {
-      color: transparent;
-      border: none;
-      margin: 0;
     }
   }
 }
