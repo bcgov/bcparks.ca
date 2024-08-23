@@ -28,27 +28,6 @@ export default function ParkSubPage({ data }) {
     Boolean(c.strapi_component !== "parks.seo")
   ) || []
 
-  let pageSections = []
-  if (hasSections) {
-    let sectionIndex = 0
-    for (const section of sections) {
-      sectionIndex += 1
-      section.sectionIndex = sectionIndex
-      // if pageSection doesn't have a sectionTitle, display page title
-      if (!section.sectionTitle) {
-        section.sectionTitle = page.title
-      }
-      const titleId = slugify(section.sectionTitle).toLowerCase()
-      pageSections.push({
-        display: section.sectionTitle,
-        sectionIndex: sectionIndex,
-        id: section.id,
-        link: "#" + titleId,
-        visible: true
-      })
-    }
-  }
-
   let sectionRefs = [
     useRef(null),
     useRef(null),
@@ -64,6 +43,24 @@ export default function ParkSubPage({ data }) {
     useRef(null),
     useRef(null),
   ]
+
+  let pageSections = []
+  if (hasSections) {
+    let sectionIndex = 0
+    for (const s of sections) {
+      sectionIndex += 1
+      s.sectionIndex = sectionIndex
+      // each section needs an index to be used for in-page navigation
+      // and scrollspy highlighting
+      const titleId = slugify(s.sectionTitle).toLowerCase()
+      pageSections.push({
+        sectionIndex: sectionIndex,
+        display: s.sectionTitle,
+        link: "#" + titleId,
+        visible: true
+      })
+    }
+  }
 
   const activeSection = useScrollSpy({
     sectionElementRefs: sectionRefs,
