@@ -28,9 +28,9 @@ export default function ReservationsRequired({ operations }) {
 
   return hasAnyReservations && (
     <>
-      <h3 id="reservations-required">Reservations required</h3>
+      <h3 id="reservations-required">Reservation policies</h3>
       <p>
-        Review general guidelines for
+        Get information on:
       </p>
       <ul>
         {(hasFrontcountryReservations || hasFirstComeFirstServed || hasFrontcountryCabinReservations) &&
