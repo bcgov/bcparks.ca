@@ -85,31 +85,32 @@ export default function StaticContent1({ pageContext }) {
   ]
 
   let pageSections = []
-  let firstSectionTitle = page.Title
-  if (!firstSectionTitle) {
-    const slug = page?.Slug
-    const current = menuContents.find(c => c.url === slug)
-    firstSectionTitle = current.title
-  }
-  pageSections = [
-    { sectionIndex: 0, display: firstSectionTitle, link: "#", visible: false },
-  ]
+  if (hasSections) {
+    let firstSectionTitle = page.Title
+    if (!firstSectionTitle) {
+      const slug = page?.Slug
+      const current = menuContents.find(c => c.url === slug)
+      firstSectionTitle = current.title
+    }
+    pageSections = [
+      { sectionIndex: 0, display: firstSectionTitle, link: "#", visible: false },
+    ]
 
-  pageSections = pageSections.concat(
-    sectionContents.map((section, sectionIndex) => {
+    let sectionIndex = 0
+    for (const s of sectionContents) {
       sectionIndex += 1
-      section.sectionIndex = sectionIndex
+      s.sectionIndex = sectionIndex
       // each section needs an index to be used for in-page navigation
       // and scrollspy highlighting
-      const titleId = slugify(section.sectionTitle).toLowerCase()
-      return {
+      const titleId = slugify(s.sectionTitle).toLowerCase()
+      pageSections.push({
         sectionIndex: sectionIndex,
-        display: section.sectionTitle,
+        display: s.sectionTitle,
         link: "#" + titleId,
         visible: true
-      }
-    })
-  )
+      })
+    }
+  }
 
   // activeSection will be the index of the on-screen section
   // this is setup whether or not there are sections,

@@ -44,19 +44,23 @@ export default function ParkSubPage({ data }) {
     useRef(null),
   ]
 
-  const pageSections = sections.map((section, sectionIndex) => {
-    sectionIndex += 1
-    section.sectionIndex = sectionIndex
-    const titleId = slugify(section.sectionTitle).toLowerCase()
-    return {
+  let pageSections = []
+  if (hasSections) {
+    let sectionIndex = 0
+    for (const s of sections) {
+      sectionIndex += 1
+      s.sectionIndex = sectionIndex
       // each section needs an index to be used for in-page navigation
       // and scrollspy highlighting
-      sectionIndex: sectionIndex,
-      display: section.sectionTitle,
-      link: "#" + titleId,
-      visible: true
+      const titleId = slugify(s.sectionTitle).toLowerCase()
+      pageSections.push({
+        sectionIndex: sectionIndex,
+        display: s.sectionTitle,
+        link: "#" + titleId,
+        visible: true
+      })
     }
-  })
+  }
 
   const activeSection = useScrollSpy({
     sectionElementRefs: sectionRefs,
