@@ -13,19 +13,23 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
     "backcountry-camping": {
       buttons: [
         {
-          label: "Get a backcountry reservation",
-          fieldName: "backcountryReservationUrl"
-        },
-        {
-          label: "Get a backcountry permit",
+          label: "Get permit",
           fieldName: "backcountryPermitUrl"
         },
         {
-          label: "Book a backcountry groupsite",
+          label: "Make a reservation",
+          fieldName: "backcountryReservationUrl"
+        },
+        {
+          label: "Reserve canoe circuit",
+          fieldName: "canoeCircuitReservationUrl"
+        },
+        {
+          label: "Book groupsite",
           fieldName: "backcountryGroupReservationUrl"
         },
         {
-          label: "Book a backcountry shelter",
+          label: "Book shelter",
           fieldName: "backcountryShelterReservationUrl"
         }
       ]
@@ -33,7 +37,7 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
     "wilderness-camping": {
       buttons: [
         {
-          label: "Get a wilderness reservation",
+          label: "Book wilderness area",
           fieldName: "backcountryWildernessReservationUrl"
         }
       ]
@@ -49,7 +53,7 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
     "group-camping": {
       buttons: [
         {
-          label: "Book a frontcountry groupsite",
+          label: "Book groupsite",
           fieldName: "frontcountryGroupReservationUrl"
         }
       ]
@@ -57,7 +61,7 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
     "cabins-huts": {
       buttons: [
         {
-          label: "Book a cabin",
+          label: "Book cabin",
           fieldName: "frontcountryCabinReservationUrl"
         }
       ]
@@ -170,7 +174,7 @@ export default function ParkDates({ data, parkOperation }) {
                 {data.campingType.pluralName}
               </h4>
             </Col>
-            <Col className="" xs="auto">
+            <Col className="reservation-button-container" xs="12" sm="auto">
               <ReservationButtons campingTypeCode={data.campingType.campingTypeCode} parkOperation={parkOperation} />
             </Col>
           </Row>

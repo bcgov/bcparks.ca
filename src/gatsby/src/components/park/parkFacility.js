@@ -11,7 +11,10 @@ import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 import SubArea from "./subArea"
 
-export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccordion }) => {
+export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccordion, groupPicnicReservationUrl }) => {
+  const isPicnicFacility =
+    ["picnic-shelters", "picnic-areas"].includes(facility.facilityType.facilityCode)
+
   return (
     <Accordion
       className={`is-open--${openAccordions[eventKey]}`}
@@ -58,6 +61,12 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
                   </HtmlContent>
                 </blockquote>
               )}
+            {/* picnic shelter reservation button */}
+            {isPicnicFacility && groupPicnicReservationUrl && (
+              <a href={groupPicnicReservationUrl} className="btn btn-secondary my-4">
+                Book picnic shelter
+              </a>
+            )}
           </div>
         </>
       </Accordion.Collapse>
@@ -65,7 +74,7 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
   )
 }
 
-export default function ParkFacility({ data }) {
+export default function ParkFacility({ data, groupPicnicReservationUrl }) {
   const [facilityData] = useState(
     JSON.parse(JSON.stringify(data)) // deep copy
   )
@@ -166,6 +175,7 @@ export default function ParkFacility({ data }) {
               facility={facility}
               openAccordions={openAccordions}
               toggleAccordion={toggleAccordion}
+              groupPicnicReservationUrl={groupPicnicReservationUrl}
             />
           ))}
         </Col>
