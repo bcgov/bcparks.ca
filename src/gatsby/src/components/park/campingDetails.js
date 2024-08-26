@@ -27,6 +27,7 @@ export const CampingType = ({ camping }) => {
   $('a').attr('tabindex', '-1')
   const collapsedDescription = $.html()
   const hasHr = $('hr').length > 0
+  const hrAtEnd = campingDescription.trim().endsWith('<hr>')
 
   useEffect(() => {
     setHeight(ref.current.clientHeight)
@@ -48,7 +49,7 @@ export const CampingType = ({ camping }) => {
     <div className="park-camping">
       <div
         ref={ref}
-        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${(hasHr || isLong) && "gradient"}`}
+        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${((hasHr || isLong) && !hrAtEnd) && "gradient"}`}
         style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : 260}px` }}
       >
         <div className="d-flex align-items-center mb-4">
@@ -62,7 +63,7 @@ export const CampingType = ({ camping }) => {
         </HtmlContent>
         <ParkDates data={camping} />
       </div>
-      {(hasHr || isLong) &&
+      {(hasHr || isLong) && !hrAtEnd &&
         <button
           className="btn btn-link expand-icon park-camping-link"
           onClick={() => {

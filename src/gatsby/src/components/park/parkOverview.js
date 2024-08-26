@@ -15,6 +15,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
   $('a').attr('tabindex', '-1')
   const collapsedParkOverview = $.html()
   const hasHr = $('hr').length > 0
+  const hrAtEnd = parkOverview.trim().endsWith('<hr>')
 
   useEffect(() => {
     setHeight(ref.current.clientHeight)
@@ -32,7 +33,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
     <div id="highlights" className="anchor-link">
       <div
         ref={ref}
-        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${(hasHr || isLong) && "gradient"}`}
+        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${((hasHr || isLong) && !hrAtEnd) && "gradient"}`}
         style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : 260}px` }}
       >
         {/* id="park-overview-container" should be removed once it's removed from the contents */}
@@ -43,7 +44,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
           {expanded ? parkOverview : collapsedParkOverview}
         </HtmlContent>
       </div>
-      {(hasHr || isLong) &&
+      {(hasHr || isLong) && !hrAtEnd &&
         <button
           className="btn btn-link park-overview-link expand-icon"
           onClick={() => {
