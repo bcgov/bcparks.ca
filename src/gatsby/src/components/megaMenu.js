@@ -260,7 +260,7 @@ const MegaMenu = ({ content, menuMode }) => {
               </li>
               <li className="menu-button menu-header">
                 {isExternalUrl(item.url) ?
-                  <a className="menu-button__title" href={item.url || ROOT_MENU_URL} role="menuitem">
+                  <a className="menu-button__title external-link" href={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
                     <FontAwesome icon="arrow-up-right-from-square" size="16" className="ml-1" />
                     <FontAwesomeIcon icon={faCircleChevronRight} className="menu-button__title--icon" />
@@ -287,7 +287,7 @@ const MegaMenu = ({ content, menuMode }) => {
                   >
                     {isExternalUrl(page.url) ?
                       <a
-                        className="menu-button__title"
+                        className="menu-button__title external-link"
                         href={page.url}
                         role="menuitem"
                       >
@@ -334,7 +334,7 @@ const MegaMenu = ({ content, menuMode }) => {
             <ul role="presentation">
               <li className="menu-button menu-header">
                 {isExternalUrl(item.url) ?
-                  <a className="menu-button__title" href={item.url || ROOT_MENU_URL} role="menuitem">
+                  <a className="menu-button__title external-link" href={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
                     <FontAwesome icon="arrow-up-right-from-square" size="16" className="ml-1" />
                   </a> :
