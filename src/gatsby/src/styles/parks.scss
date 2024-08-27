@@ -137,20 +137,13 @@
   color: $colorGrey !important;
 }
 
-// Unsure if this is ever used
+// About this park
 #about-this-park {
   .ecological-list {
-    ul {
-      display: inline-block;
-      padding-left: 0;
-    } 
-    li {
-      display: inline-block;
-      list-style: none;
-      margin-left: 8px;
-    }
     a {
+      font-weight: bold;
       text-decoration: none;
+      margin-right: 4px;
       &:hover {
         color: $colorBlue;
         text-decoration: underline;
