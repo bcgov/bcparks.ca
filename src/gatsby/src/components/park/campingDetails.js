@@ -17,7 +17,8 @@ export const CampingType = ({ camping }) => {
   const [height, setHeight] = useState(0)
   const [sectionHeight, setSectionHeight] = useState(0)
   const ref = useRef(null)
-  const isLong = height > 259
+  const isLong = height >= 300
+  const isMedium = height > 260 && height < 300
   const campingDescription = !isNullOrWhiteSpace(camping.description?.data) ?
     camping.description.data :
     !isNullOrWhiteSpace(camping?.campingType?.defaultDescription?.data) ?
@@ -28,10 +29,13 @@ export const CampingType = ({ camping }) => {
   const collapsedDescription = $.html()
   const hasHr = $('hr').length > 0
   const hrAtEnd = campingDescription.trim().endsWith('<hr>')
+  const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
 
   useEffect(() => {
-    setHeight(ref.current.clientHeight)
-  }, [expanded, camping])
+    if (ref.current.clientHeight > 260) {
+      setHeight(ref.current.clientHeight)
+    }
+  }, [expanded])
 
   useEffect(() => {
     if (ref.current) {
@@ -49,8 +53,8 @@ export const CampingType = ({ camping }) => {
     <div className="park-camping">
       <div
         ref={ref}
-        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${((hasHr || isLong) && !hrAtEnd) && "gradient"}`}
-        style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : 260}px` }}
+        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${hasExpandCondition && "gradient"}`}
+        style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : (isLong ? 260 : 300)}px` }}
       >
         <div className="d-flex align-items-center mb-4">
           <StaticIcon name={camping?.campingType?.icon || "information"} size={36} />
@@ -63,7 +67,7 @@ export const CampingType = ({ camping }) => {
         </HtmlContent>
         <ParkDates data={camping} />
       </div>
-      {(hasHr || isLong) && !hrAtEnd &&
+      {hasExpandCondition &&
         <button
           className="btn btn-link expand-icon park-camping-link"
           onClick={() => {
