@@ -525,9 +525,16 @@ h2.section-heading {
     & + .park-camping {
       margin-top: 32px;
     }
-    &-description {
-      h3 {
-        font-size: 1rem;
+    .reservation-button-container {
+      padding-top: 16px;
+      @media (min-width: $smBreakpoint) {
+        padding-top: 0;
+      }
+      a.btn {
+        margin-top: 4px;
+        & + a.btn {
+          margin-left: 8px;
+        }
       }
     }
   }

@@ -413,7 +413,10 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[5].visible && (
               <div ref={facilityRef} className="w-100">
-                <ParkFacility data={activeFacilities} />
+                <ParkFacility
+                  data={activeFacilities}
+                  groupPicnicReservationUrl={park.parkOperation?.groupPicnicReservationUrl}
+                />
               </div>
             )}
             {menuItems[6].visible && (
@@ -615,8 +618,17 @@ export const query = graphql`
         hasDayUsePass
         hasFirstComeFirstServed
         reservationUrl
-        backcountryPermitUrl
         dayUsePassUrl
+        frontcountryReservationUrl
+        frontcountryGroupReservationUrl
+        frontcountryCabinReservationUrl
+        backcountryReservationUrl
+        backcountryPermitUrl
+        backcountryGroupReservationUrl
+        backcountryWildernessReservationUrl
+        backcountryShelterReservationUrl
+        canoeCircuitReservationUrl
+        groupPicnicReservationUrl
         hasParkGate
         offSeasonUse
         openNote
