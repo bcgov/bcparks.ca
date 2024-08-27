@@ -50,6 +50,10 @@ export default function ParkTemplate({ data }) {
   const specialNotes = park.specialNotes.data.specialNotes
   const locationNotes = park.locationNotes.data.locationNotes
   const natureAndCulture = park.natureAndCulture.data.natureAndCulture
+  const conservation = park.conservation.data.conservation
+  const culturalHeritage = park.culturalHeritage.data.culturalHeritage
+  const history = park.history.data.history
+  const wildlife = park.wildlife.data.wildlife
   const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes
   const maps = park.maps.data.maps
   const contact = park.parkContact.data.parkContact
@@ -199,7 +203,9 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 6,
       display: `About this ${parkType}`,
       link: "#about-this-park",
-      visible: !isNullOrWhiteSpace(natureAndCulture),
+      visible: !isNullOrWhiteSpace(natureAndCulture) ||
+        !isNullOrWhiteSpace(conservation) || !isNullOrWhiteSpace(culturalHeritage) ||
+        !isNullOrWhiteSpace(history) || !isNullOrWhiteSpace(wildlife)
     },
     {
       sectionIndex: 7,
@@ -424,6 +430,10 @@ export default function ParkTemplate({ data }) {
                 <About
                   parkType={parkType}
                   natureAndCulture={natureAndCulture}
+                  conservation={conservation}
+                  culturalHeritage={culturalHeritage}
+                  history={history}
+                  wildlife={wildlife}
                   biogeoclimaticZones={park.biogeoclimaticZones}
                   terrestrialEcosections={park.terrestrialEcosections}
                   marineEcosections={park.marineEcosections}
@@ -520,6 +530,26 @@ export const query = graphql`
       natureAndCulture {
         data {
           natureAndCulture
+        }
+      }
+      conservation {
+        data {
+          conservation
+        }
+      }
+      culturalHeritage {
+        data {
+          culturalHeritage
+        }
+      }
+      history {
+        data {
+          history
+        }
+      }
+      wildlife {
+        data {
+          wildlife
         }
       }
       reservations {
