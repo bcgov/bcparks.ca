@@ -59,7 +59,6 @@ export const CampingType = ({ camping, parkOperation }) => {
         <HtmlContent className="park-camping-description">
           {expanded ? campingDescription : collapsedDescription}
         </HtmlContent>
-        <ParkDates data={camping} parkOperation={parkOperation} />
       </div>
       {(hasHr || isLong) &&
         <button
@@ -87,6 +86,7 @@ export const CampingType = ({ camping, parkOperation }) => {
           }
         </button>
       }
+      <ParkDates data={camping} parkOperation={parkOperation} />
     </div>
   )
 }

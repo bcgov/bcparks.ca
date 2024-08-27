@@ -168,7 +168,7 @@ export default function ParkDates({ data, parkOperation }) {
     <>
       {subAreas.length > 0 && (
         <>
-          <Row className="align-items-center mt-5 mb-4">
+          <Row className="align-items-center my-4">
             <Col>
               <h4 className="mb-0">
                 {data.campingType.pluralName}
