@@ -9,15 +9,20 @@ export default function ParkOverview({ data: parkOverview, type }) {
   const [height, setHeight] = useState(0)
   const [sectionHeight, setSectionHeight] = useState(0)
   const ref = useRef(null)
-  const isLong = height > 259
+  const isLong = height >= 300
+  const isMedium = height > 260 && height < 300
 
   const $ = cheerio.load(parkOverview);
   $('a').attr('tabindex', '-1')
   const collapsedParkOverview = $.html()
   const hasHr = $('hr').length > 0
+  const hrAtEnd = parkOverview.trim().endsWith('<hr>')
+  const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
 
   useEffect(() => {
-    setHeight(ref.current.clientHeight)
+    if (ref.current.clientHeight > 260) {
+      setHeight(ref.current.clientHeight)
+    }
   }, [expanded])
 
   useEffect(() => {
@@ -32,8 +37,8 @@ export default function ParkOverview({ data: parkOverview, type }) {
     <div id="highlights" className="anchor-link">
       <div
         ref={ref}
-        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${(hasHr || isLong) && "gradient"}`}
-        style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : 260}px` }}
+        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${hasExpandCondition && "gradient"}`}
+        style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : (isLong ? 260 : 300)}px` }}
       >
         {/* id="park-overview-container" should be removed once it's removed from the contents */}
         <h2 id="park-overview-container" className="section-heading">
@@ -43,7 +48,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
           {expanded ? parkOverview : collapsedParkOverview}
         </HtmlContent>
       </div>
-      {(hasHr || isLong) &&
+      {hasExpandCondition &&
         <button
           className="btn btn-link park-overview-link expand-icon"
           onClick={() => {

@@ -402,7 +402,6 @@ h2.section-heading {
 .expandable-description {
   position: relative;
   &.collapsed {
-    max-height: 260px;
     overflow: hidden;
     display: block;
     text-overflow: ellipsis;
