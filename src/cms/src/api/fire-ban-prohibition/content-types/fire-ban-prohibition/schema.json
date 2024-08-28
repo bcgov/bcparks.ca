@@ -22,6 +22,9 @@
     "effectiveDate": {
       "type": "datetime"
     },
+    "rescindedDate": {
+      "type": "datetime"
+    },
     "bulletinURL": {
       "type": "string"
     },
