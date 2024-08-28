@@ -28,6 +28,12 @@
       "relation": "manyToOne",
       "target": "api::protected-area.protected-area",
       "inversedBy": "trailReports"
+    },
+    "site": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::site.site",
+      "inversedBy": "trailReports"
     }
   }
 }

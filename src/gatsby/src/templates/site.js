@@ -2,29 +2,32 @@ import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
-
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
 import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories } from '../utils/advisoryHelper';
 import { preProcessSubAreas, combineCampingTypes, combineFacilities } from '../utils/subAreaHelper';
 
+import AdvisoryDetails from "../components/park/advisoryDetails"
 import Breadcrumbs from "../components/breadcrumbs"
+import CampingDetails from "../components/park/campingDetails"
 import Footer from "../components/footer"
 import Header from "../components/header"
+import MapLocation from "../components/park/mapLocation"
 import PageMenu from "../components/pageContent/pageMenu"
-
-import AdvisoryDetails from "../components/park/advisoryDetails"
-import CampingDetails from "../components/park/campingDetails"
 import ParkActivity from "../components/park/parkActivity"
 import ParkFacility from "../components/park/parkFacility"
 import ParkHeader from "../components/park/parkHeader"
 import ParkOverview from "../components/park/parkOverview"
 import ParkPhotoGallery from "../components/park/parkPhotoGallery"
-import MapLocation from "../components/park/mapLocation"
+import ReservationsRequired from "../components/park/reservationsRequired"
 import SafetyInfo from "../components/park/safetyInfo"
 import ScrollToTop from "../components/scrollToTop"
 import Seo from "../components/seo"
+import VisitResponsibly from "../components/park/visitResponsibly"
+import VisitorGuidelines from "../components/park/visitorGuidelines"
 
 import "../styles/parks.scss"
 
@@ -39,6 +42,7 @@ export default function SiteTemplate({ data }) {
   const description = site.description.data.description
   const safetyInfo = site.safetyInfo?.data?.safetyInfo
   const locationNotes = site.locationNotes.data.locationNotes
+  const hasSiteGuidelines = site.parkGuidelines?.length > 0
   const managementAreas = park.managementAreas || []
   const searchArea = managementAreas[0]?.searchArea || {}
 
@@ -144,7 +148,7 @@ export default function SiteTemplate({ data }) {
     },
     {
       sectionIndex: 2,
-      display: "Maps and Location",
+      display: "Maps and location",
       link: "#maps-and-location",
       visible: !isNullOrWhiteSpace(locationNotes),
     },
@@ -221,7 +225,7 @@ export default function SiteTemplate({ data }) {
               advisoryLoadError={advisoryLoadError}
               isLoadingAdvisories={isLoadingAdvisories}
               searchArea={searchArea}
-              parkOperation={site.parkOperation}
+              parkOperation={operations}
               operationDates={park.parkOperationDates}
               subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
             />
@@ -281,9 +285,36 @@ export default function SiteTemplate({ data }) {
                   {!isLoadingAdvisories && !advisoryLoadError && (
                     <AdvisoryDetails advisories={advisories} parkType="site" />
                   )}
-                  {!isNullOrWhiteSpace(safetyInfo) &&
+                  {hasSiteGuidelines &&
+                    <Row>
+                      <Col>
+                        <VisitorGuidelines
+                          guidelines={site.parkGuidelines}
+                          trailReports={site.trailReports}
+                        />
+                      </Col>
+                    </Row>
+                  }
+                  {(!isNullOrWhiteSpace(safetyInfo) && !hasSiteGuidelines) &&
                     <SafetyInfo safetyInfo={safetyInfo} />
                   }
+                  <blockquote className="callout-box mb-4">
+                    <p>
+                      Review the detailed guides under visit responsibly for more information
+                      on staying safe and preserving our natural spaces.
+                    </p>
+                  </blockquote>
+                  <Row>
+                    <Col xs={12} md={6}>
+                      <VisitResponsibly
+                        campings={activeCampings}
+                        activities={activeActivities}
+                      />
+                    </Col>
+                    <Col xs={12} md={6}>
+                      <ReservationsRequired operations={operations} />
+                    </Col>
+                  </Row>
                 </div>
               </div>
             )}
@@ -300,18 +331,25 @@ export default function SiteTemplate({ data }) {
                     reservations: site.reservations,
                     hasDayUsePass: hasDayUsePass,
                     hasReservations: hasReservations,
+                    parkOperation: operations,
+                    subAreas: park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)
                   }}
                 />
               </div>
             )}
             {menuItems[4].visible && (
               <div ref={activityRef} className="w-100">
-                <ParkActivity data={activeActivities} />
+                <ParkActivity
+                  data={activeActivities}
+                />
               </div>
             )}
             {menuItems[5].visible && (
               <div ref={facilityRef} className="w-100">
-                <ParkFacility data={activeFacilities} />
+                <ParkFacility
+                  data={activeFacilities}
+                  groupPicnicReservationUrl={operations?.groupPicnicReservationUrl}
+                />
               </div>
             )}
           </div>
@@ -500,9 +538,76 @@ export const query = graphql`
           campingTypeCode
         }
       }
+      parkGuidelines {
+        isActive
+        rank
+        title
+        description {
+          data {
+            description
+          }
+        }
+        guidelineType {
+          icon
+          hasTrailReport
+          defaultRank
+          defaultTitle
+          defaultDescription {
+            data {
+              defaultDescription 
+            }
+          }
+        }
+      }
       parkOperation {
+        isActive
         hasReservations
+        hasBackcountryReservations
+        hasBackcountryPermits
         hasDayUsePass
+        hasFirstComeFirstServed
+        reservationUrl
+        dayUsePassUrl
+        frontcountryReservationUrl
+        frontcountryGroupReservationUrl
+        frontcountryCabinReservationUrl
+        backcountryReservationUrl
+        backcountryPermitUrl
+        backcountryGroupReservationUrl
+        backcountryWildernessReservationUrl
+        backcountryShelterReservationUrl
+        canoeCircuitReservationUrl
+        groupPicnicReservationUrl
+        hasParkGate
+        offSeasonUse
+        openNote
+        serviceNote
+        reservationsNote
+        offSeasonNote
+        generalNote
+        adminNote
+        gateOpenTime
+        gateCloseTime
+        hasGroupPicnicReservations
+        hasCanoeCircuitReservations
+        hasFrontcountryReservations
+        hasFrontcountryGroupReservations
+        hasFrontcountryCabinReservations
+        hasBackcountryGroupReservations
+        hasBackcountryShelterReservations
+        hasBackcountryWildernessReservations
+        customReservationLinks {
+          content {
+            data {
+              content
+            }
+          }
+        }
+      }
+      trailReports {
+        title
+        reportUrl
+        reportDate
       }
     }
     featuredPhotos: allStrapiParkPhoto(
