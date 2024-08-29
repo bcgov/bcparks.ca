@@ -170,37 +170,42 @@ export default function About({
       </div>
       {/* display conservation/culturalHeritage/history/wildlife accordion, otherwise display natureAndCulture */}
       {dataList.length > 0 ? (
-        <Row>
-          <Col>
-            {dataList.length > 1 && (
-              <button
-                onClick={toggleExpandAll}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault()
-                    toggleExpandAll()
+        // if parkType is ecological reserve, display conservation description without accordion
+        parkType === "ecological reserve" ? (
+          <HtmlContent>{dataList[0].description}</HtmlContent>
+        ) : (
+          <Row>
+            <Col>
+              {dataList.length > 1 && (
+                <button
+                  onClick={toggleExpandAll}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault()
+                      toggleExpandAll()
+                    }
+                  }}
+                  className="btn btn-link expand-link expand-icon"
+                >
+                  {allExpanded ?
+                    <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                    :
+                    <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
                   }
-                }}
-                className="btn btn-link expand-link expand-icon"
-              >
-                {allExpanded ?
-                  <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
-                  :
-                  <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
-                }
-              </button>
-            )}
-            {dataList.map((data, index) => (
-              <AccordionList
-                key={index}
-                eventKey={index.toString()}
-                data={data}
-                openAccordions={openAccordions}
-                toggleAccordion={toggleAccordion}
-              />
-            ))}
-          </Col>
-        </Row>
+                </button>
+              )}
+              {dataList.map((data, index) => (
+                <AccordionList
+                  key={index}
+                  eventKey={index.toString()}
+                  data={data}
+                  openAccordions={openAccordions}
+                  toggleAccordion={toggleAccordion}
+                />
+              ))}
+            </Col>
+          </Row>
+        )
       ) : (
         <HtmlContent>{natureAndCulture}</HtmlContent>
       )}
