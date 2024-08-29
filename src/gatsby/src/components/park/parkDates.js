@@ -27,10 +27,6 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
         {
           label: "Book groupsite",
           fieldName: "backcountryGroupReservationUrl"
-        },
-        {
-          label: "Book shelter",
-          fieldName: "backcountryShelterReservationUrl"
         }
       ]
     },
@@ -63,6 +59,10 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
         {
           label: "Book cabin",
           fieldName: "frontcountryCabinReservationUrl"
+        },
+        {
+          label: "Book shelter",
+          fieldName: "backcountryShelterReservationUrl"
         }
       ]
     }
@@ -95,8 +95,8 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
     <Accordion
       className={`dates-accordion is-open--${openAccordions[eventKey]}`}
     >
-      {itemCount > 1 ?
-        (<Accordion.Toggle
+      {itemCount > 1 ? (
+        <Accordion.Toggle
           as={"div"}
           aria-controls={subArea.parkSubArea}
           eventKey={eventKey}
@@ -114,15 +114,14 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
               }
             </div>
           </div>
-        </Accordion.Toggle>) :
-        (
-          <div className="accordion-toggle">
-            <HtmlContent className="accordion-header">
-              {subArea.parkSubArea}
-            </HtmlContent>
-          </div>
-        )
-      }
+        </Accordion.Toggle>
+      ) : (
+        <div className="accordion-toggle">
+          <HtmlContent className="accordion-header">
+            {subArea.parkSubArea}
+          </HtmlContent>
+        </div>
+      )}
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
         <SubArea data={subArea} />
       </Accordion.Collapse>
