@@ -49,7 +49,7 @@ export const CampingType = ({ camping, parkOperation }) => {
   }, [])
 
   return (
-    <div className="park-camping">
+    <div id={camping?.campingType.campingTypeCode} className="park-camping">
       <div
         ref={ref}
         className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${hasExpandCondition && "gradient"}`}
