@@ -7,11 +7,15 @@ const updateName = async (data, where) => {
 			"api::park-guideline.park-guideline", id, { populate: '*' }
 		)
 		const protectedArea = parkGuideline.protectedArea
+		const site = parkGuideline.site
 		const guidelineType = parkGuideline.guidelineType
 
 		data.name = ""
 		if (protectedArea) {
 			data.name = protectedArea.orcs
+		}
+		if (site) {
+			data.name = site.orcsSiteNumber
 		}
 		if (guidelineType) {
 			data.name += ":"
