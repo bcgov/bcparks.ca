@@ -207,29 +207,29 @@ export default function SiteTemplate({ data }) {
           <div id="main-content" tabIndex={-1} className="park-info-container breadcrumb-container">
             <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
-          {!isLoadingProtectedArea && !protectedAreaLoadError && (
-            <ParkHeader
-              orcs={site.orcsSiteNumber}
-              slug={`${park.slug}/${site.slug}`}
-              parkName={`${park?.protectedAreaName}: ${site.siteName}`}
-              parkType="site"
-              mapZoom={site.mapZoom}
-              latitude={site.latitude}
-              longitude={site.longitude}
-              campings={activeCampings}
-              facilities={activeFacilities}
-              hasCampfireBan={hasCampfireBan}
-              hasDayUsePass={hasDayUsePass}
-              hasReservations={hasReservations}
-              advisories={advisories}
-              advisoryLoadError={advisoryLoadError}
-              isLoadingAdvisories={isLoadingAdvisories}
-              searchArea={searchArea}
-              parkOperation={operations}
-              operationDates={park.parkOperationDates}
-              subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
-            />
-          )}
+          <ParkHeader
+            orcs={site.orcsSiteNumber}
+            slug={`${park.slug}/${site.slug}`}
+            parkName={`${park?.protectedAreaName}: ${site.siteName}`}
+            parkType="site"
+            mapZoom={site.mapZoom}
+            latitude={site.latitude}
+            longitude={site.longitude}
+            campings={activeCampings}
+            facilities={activeFacilities}
+            hasCampfireBan={hasCampfireBan}
+            hasDayUsePass={hasDayUsePass}
+            hasReservations={hasReservations}
+            advisories={advisories}
+            advisoryLoadError={advisoryLoadError}
+            isLoadingAdvisories={isLoadingAdvisories}
+            protectedAreaLoadError={protectedAreaLoadError}
+            isLoadingProtectedArea={isLoadingProtectedArea}
+            searchArea={searchArea}
+            parkOperation={operations}
+            operationDates={park.parkOperationDates}
+            subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
+          />
         </div>
         <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
           {photos.length > 0 && (

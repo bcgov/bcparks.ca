@@ -626,16 +626,11 @@ async function createRedirects(parkQuery, redirectQuery, { graphql, actions, rep
   })
 }
 
-exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
+exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   if (stage === "build-html" || stage === "develop-html") {
     actions.setWebpackConfig({
       module: {
-        rules: [
-          {
-            test: /@arcgis/,
-            use: loaders.null(),
-          },
-        ],
+        rules: [],
       },
       plugins: [new NodePolyfillPlugin()],
     })
