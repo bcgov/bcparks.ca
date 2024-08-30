@@ -116,7 +116,7 @@ export default function ParkHeader({
             />
             :
             // display a space if it's loading advisories
-            <></>
+            <>&nbsp;</>
           }
         </div>
         {parkDates && (
