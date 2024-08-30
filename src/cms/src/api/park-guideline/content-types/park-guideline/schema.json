@@ -44,6 +44,12 @@
       "relation": "manyToOne",
       "target": "api::protected-area.protected-area",
       "inversedBy": "parkGuidelines"
+    },
+    "site": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::site.site",
+      "inversedBy": "parkGuidelines"
     }
   }
 }

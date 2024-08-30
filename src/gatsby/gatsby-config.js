@@ -177,7 +177,13 @@ module.exports = {
                 parkCampingTypes: {
                   populate: ["campingType"]
                 },
+                parkGuidelines: {
+                  populate: ["guidelineType"]
+                },
                 parkOperation: {
+                  fields: "*"
+                },
+                trailReports: {
                   fields: "*"
                 }
               }

@@ -130,6 +130,18 @@
       "relation": "oneToMany",
       "target": "api::park-photo.park-photo",
       "mappedBy": "site"
+    },
+    "parkGuidelines": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-guideline.park-guideline",
+      "mappedBy": "site"
+    },
+    "trailReports": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::trail-report.trail-report",
+      "mappedBy": "site"
     }
   }
 }
