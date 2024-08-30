@@ -57,11 +57,13 @@ const EmergencyAlert = () => {
 
   return (
     alerts.length > 0 && show && (
-      <div className={`emergency-alert alert-bg-${alert.colour.toLowerCase()}`}>
+      <div
+        className={`emergency-alert alert-bg-${alert.colour.toLowerCase()}`}
+        role="alert"
+        aria-live="assertive"
+      >
         <div className={`alert-container has-more-characters--${characterCount > 110}`}>
-          <div className="icon">
-            <FontAwesomeIcon icon={faCircleExclamation} className="warning-icon" />
-          </div>
+          <FontAwesomeIcon icon={faCircleExclamation} className="warning-icon" aria-hidden="true"/>
           <p>
             {alert.description}
             {alert.links.map((l, index) => (
@@ -71,15 +73,15 @@ const EmergencyAlert = () => {
               </span>
             ))}
           </p>
-          <div
-            role="button"
+          <button
             tabIndex={0}
             onClick={handleClick}
             onKeyDown={handleKeyDown}
-            className="button"
+            className="btn btn-link"
+            aria-label="Close urgent alert"
           >
-            <FontAwesomeIcon icon={faXmark} />
-          </div>
+            <FontAwesomeIcon icon={faXmark} className="close-icon" />
+          </button>
         </div>
       </div>
     )
