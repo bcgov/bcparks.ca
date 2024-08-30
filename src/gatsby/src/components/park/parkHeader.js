@@ -74,6 +74,8 @@ export default function ParkHeader({
   advisories,
   advisoryLoadError,
   isLoadingAdvisories,
+  protectedAreaLoadError,
+  isLoadingProtectedArea,
   searchArea,
   parkOperation,
   operationDates,
@@ -93,65 +95,68 @@ export default function ParkHeader({
     <div id="park-header-container" className="d-flex park-info-container">
       <div className="park-header park-header--left">
         <h1>{parkName}</h1>
-        {!isLoadingAdvisories && !advisoryLoadError && (
-          <>
-            {searchArea?.searchAreaName && (
-              <div className="park-header-child">
-                <FontAwesome icon="location-dot" />
-                {searchArea.searchAreaName}.&nbsp;
-                {latitude && longitude && (
-                  <><a href={externalLink}>View detailed map</a>.</>
-                )}
-              </div>
+        {searchArea?.searchAreaName && (
+          <div className="park-header-child">
+            <FontAwesome icon="location-dot" />
+            {searchArea.searchAreaName}.&nbsp;
+            {latitude && longitude && (
+              <><a href={externalLink}>View detailed map</a>.</>
             )}
-            <div className="park-header-child">
-              <ParkAccessStatus
-                advisories={advisories}
-                slug={slug}
-                subAreas={subAreas}
-                operationDates={operationDates}
-                onStatusCalculated={onStatusCalculated}
-                punctuation="."
-              />
-            </div>
-            {parkDates && (
-              <div className="park-header-child">
-                <FontAwesomeIcon icon={faCalendar} />
-                <div>
-                  <p>
-                    The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}
-                    {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) ? (
-                      <>
-                        , from <span className="no-wrap">{formattedTime(parkOperation.gateOpenTime)}</span>{" "}
-                        to <span className="no-wrap">{formattedTime(parkOperation.gateCloseTime)}</span>, daily.
-                      </>
-                    ) : "."}
-                  </p>
-                  {(campings.length > 0 || facilities.length > 0) && (
-                    <p>
-                      {campings.length > 0 && "Check campgrounds"}
-                      {facilities.length > 0 && (campings.length > 0 ? " and facilities " : "Check facilities ")}
-                      for <a href="#park-dates-container">additional dates</a>.
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-            {hasCampfireBan &&
-              <div className="park-header-child">
-                <CampfireBan />
-              </div>
-            }
-          </>
+          </div>
         )}
-        <div>
-          {hasReservations && (
-            <a href={parkReservationsURL} className="btn btn-secondary">Book camping</a>
-          )}
-          {hasDayUsePass && (
-            <a href={parkDayUsePassURL} className="btn btn-secondary">Get a day-use pass</a>
-          )}
+        <div className="park-header-child">
+          {(!isLoadingAdvisories && !advisoryLoadError) ?
+            <ParkAccessStatus
+              advisories={advisories}
+              slug={slug}
+              subAreas={subAreas}
+              operationDates={operationDates}
+              onStatusCalculated={onStatusCalculated}
+              punctuation="."
+            />
+            :
+            // display a space if it's loading advisories
+            <></>
+          }
         </div>
+        {parkDates && (
+          <div className="park-header-child">
+            <FontAwesomeIcon icon={faCalendar} />
+            <div>
+              <p>
+                The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}
+                {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) ? (
+                  <>
+                    , from <span className="no-wrap">{formattedTime(parkOperation.gateOpenTime)}</span>{" "}
+                    to <span className="no-wrap">{formattedTime(parkOperation.gateCloseTime)}</span>, daily.
+                  </>
+                ) : "."}
+              </p>
+              {(campings.length > 0 || facilities.length > 0) && (
+                <p>
+                  {campings.length > 0 && "Check campgrounds"}
+                  {facilities.length > 0 && (campings.length > 0 ? " and facilities " : "Check facilities ")}
+                  for <a href="#park-dates-container">additional dates</a>.
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+        {(!isLoadingProtectedArea && !protectedAreaLoadError && hasCampfireBan) &&
+          <div className="park-header-child">
+            <CampfireBan />
+          </div>
+        }
+        {(hasReservations || hasDayUsePass) &&
+          <div>
+            {hasReservations && (
+              <a href={parkReservationsURL} className="btn btn-secondary">Book camping</a>
+            )}
+            {hasDayUsePass && (
+              <a href={parkDayUsePassURL} className="btn btn-secondary">Get a day-use pass</a>
+            )}
+          </div>
+        }
       </div>
       <div className="park-header--right">
         {searchArea?.searchAreaName && (
@@ -184,6 +189,8 @@ ParkHeader.propTypes = {
   advisories: PropTypes.array,
   advisoryLoadError: PropTypes.any,
   isLoadingAdvisories: PropTypes.bool.isRequired,
+  protectedAreaLoadError: PropTypes.any,
+  isLoadingProtectedArea: PropTypes.bool.isRequired,
   searchArea: PropTypes.object.isRequired,
   parkOperation: PropTypes.object,
   operationDates: PropTypes.array.isRequired,
