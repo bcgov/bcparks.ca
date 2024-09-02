@@ -139,9 +139,9 @@
     },
     "trailReports": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::trail-report.trail-report",
-      "mappedBy": "site"
+      "mappedBy": "sites"
     }
   }
 }
