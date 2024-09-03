@@ -238,9 +238,7 @@ const MegaMenu = ({ content, menuMode }) => {
               "menu-level menu-level--" + item.treeLevel +
               " has-clicked-twice--" + hasClickedTwice
             }
-            aria-labelledby="mainmenulabel"
           >
-            <h2 id="mainmenulabel" className="sr-only">Main Menu</h2>
             <ul className="menu-button-list" role="presentation">
               <li className="menu-button menu-back">
                 <a
