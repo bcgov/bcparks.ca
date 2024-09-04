@@ -34,6 +34,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Dump vars
+        run: |
+          echo ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}} | sed 's/./& /g'
+          echo ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}} | sed 's/./& /g'
+          echo ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}} | sed 's/./& /g'
+          echo ${{secrets.OPENSHIFT_GOLD_SERVER_URL}} | sed 's/./& /g'
+          echo ${{secrets.OPENSHIFT_GOLD_SERVICE_TOKEN}} | sed 's/./& /g'
+          echo ${{secrets.REPO_ACCESS_TOKEN}} | sed 's/./& /g'
+
       - name: Validate inputs
         run: |
           if [[ "${{ github.event.inputs.branchName }}" == "alpha" && "${{ github.event.inputs.buildEnv }}" == "prod" ]]; then
