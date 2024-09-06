@@ -90,7 +90,7 @@ export default function Contact({ contact, parkContacts, operations }) {
   return (
     <div id="contact" className="anchor-link">
       <h2 className="section-heading">Contact</h2>
-      {sortedContacts.length > 0 ? (
+      {contact === "" ? (
         <figure class="table">
           <table>
             <tbody>
@@ -124,7 +124,7 @@ export default function Contact({ contact, parkContacts, operations }) {
                   </td>
                 </tr>
               )}
-              {sortedContacts.map((contact, index) => (
+              {sortedContacts.length > 0 && sortedContacts.map((contact, index) => (
                 <ParkContact key={index} contact={contact} />
               ))}
               {/* display it always */}
