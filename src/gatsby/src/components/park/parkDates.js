@@ -23,10 +23,6 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
         {
           label: "Reserve canoe circuit",
           fieldName: "canoeCircuitReservationUrl"
-        },
-        {
-          label: "Book groupsite",
-          fieldName: "backcountryGroupReservationUrl"
         }
       ]
     },
@@ -51,6 +47,10 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
         {
           label: "Book groupsite",
           fieldName: "frontcountryGroupReservationUrl"
+        },
+        {
+          label: "Book groupsite",
+          fieldName: "backcountryGroupReservationUrl"
         }
       ]
     },
