@@ -609,7 +609,7 @@ nav.breadcrumbs {
   }
   &-content {
     padding-top: 32px;
-    & > * {
+    & > :not(.subarea-container) {
       max-width: 600px !important;
     }
   }
