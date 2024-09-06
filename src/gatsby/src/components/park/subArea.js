@@ -28,7 +28,7 @@ export default function SubArea({ data, showHeading }) {
     <div className="accordion-content">
       {showHeading && (<h4>{data.parkSubArea}</h4>)}
       <Row className="subarea-container">
-        <Col className="subarea-container--left" xs={12} sm={6}>
+        <Col className="subarea-container--left" xs={12} lg={6}>
           <div className="subarea-icon">
             <FontAwesomeIcon icon={faCalendar} />
           </div>
@@ -75,7 +75,7 @@ export default function SubArea({ data, showHeading }) {
         </Col>
         {countsList
           .filter(count => isShown(count, data)).length > 0 && (
-            <Col className="subarea-container--right" xs={12} sm={6}>
+            <Col className="subarea-container--right" xs={12} lg={6}>
               <div className="subarea-icon">
                 <FontAwesome icon="campground" />
               </div>

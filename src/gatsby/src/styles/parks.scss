@@ -561,7 +561,7 @@ h2.section-heading {
   }
   &--right {
     margin-top: 32px;
-    @media (min-width: $smBreakpoint) {
+    @media (min-width: $lgBreakpoint) {
       margin-top: 0;
     }
     .subarea-list {
