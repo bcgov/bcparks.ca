@@ -43,16 +43,18 @@ export default function SubArea({ data, showHeading }) {
                 </ul>
               </div>
             )}
-            {data.resDates.length > 0 && (
-              <div className="subarea-list">
-                <h4 className="mt-3">Booking required</h4>
+            <div className="subarea-list">
+              <h4 className="mt-3">Booking required</h4>
+              {data.resDates.length > 0 ? (
                 <ul>
                   {data.resDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
-              </div>
-            )}
+              ) : (
+                <>No {"("}first come, first served{")"}</>
+              )}
+            </div>
             <div className="subarea-list">
               <h4 className="mt-3">Winter season</h4>
               {data.offSeasonDates.length > 0 ? (
