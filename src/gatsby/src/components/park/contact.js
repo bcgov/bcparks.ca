@@ -81,7 +81,6 @@ export default function Contact({ contact, parkContacts, operations }) {
     operations.hasPicnicShelterReservations ||
     operations.hasFrontcountryReservations ||
     operations.hasFrontcountryCabinReservations ||
-    operations.hasBackcountryPermits ||
     operations.hasBackcountryReservations ||
     operations.hasBackcountryGroupReservations ||
     operations.hasBackcountryShelterReservations ||
@@ -91,7 +90,7 @@ export default function Contact({ contact, parkContacts, operations }) {
     <div id="contact" className="anchor-link">
       <h2 className="section-heading">Contact</h2>
       {contact === "" ? (
-        <figure class="table">
+        <figure className="table">
           <table>
             <tbody>
               {/* display it if hasAnyReservations is true  */}
