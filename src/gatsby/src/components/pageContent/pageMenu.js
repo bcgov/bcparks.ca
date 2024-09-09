@@ -41,7 +41,7 @@ export default function PageMenu({ pageSections, activeSection, menuStyle }) {
           onChange={handleSectionChange}
           title="mobile-navigation"
         >
-          <option value="label" disabled>Table of Contents</option>
+          <option value="" disabled>Table of Contents</option>
           {pageSections.filter(s => s.visible).map(
             section =>
               <option key={section.sectionIndex} value={section.sectionIndex}>
