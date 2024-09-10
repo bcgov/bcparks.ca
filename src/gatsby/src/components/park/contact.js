@@ -80,6 +80,7 @@ export default function Contact({ contact, parkContacts, operations }) {
     operations.hasCanoeCircuitReservations ||
     operations.hasGroupPicnicReservations ||
     operations.hasFrontcountryReservations ||
+    operations.hasFrontcountryGroupReservation ||
     operations.hasFrontcountryCabinReservations ||
     operations.hasBackcountryReservations ||
     operations.hasBackcountryGroupReservations ||
