@@ -64,7 +64,8 @@ export default function SubArea({ data, showHeading }) {
               ) : (
                 data.operationDates.length > 0 ? (
                   <>
-                    {data.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
+                    {data.operationDates[0].toLowerCase().includes("year-round") ?
+                      "Limited services" : "No services"}
                   </>
                 ) : (
                   <>Not known</>
