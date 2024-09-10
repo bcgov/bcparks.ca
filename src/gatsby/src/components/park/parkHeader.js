@@ -134,7 +134,7 @@ export default function ParkHeader({
               </p>
               {(campings.length > 0 || facilities.length > 0) && (
                 <p>
-                  {campings.length > 0 && <>Check <a href="#camping">campgrounds</a></>}
+                  {campings.length > 0 && <>Check <a href="#camping">camping</a></>}
                   {facilities.length > 0 &&
                     <>
                       {campings.length > 0 ? " and " : "Check "}

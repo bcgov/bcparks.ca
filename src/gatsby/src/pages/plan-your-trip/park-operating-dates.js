@@ -122,7 +122,8 @@ const ParkLink = ({ park, advisories }) => {
                 ) : (
                   subArea.operationDates.length > 0 ? (
                     <>
-                      {subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
+                      {subArea.operationDates[0].toLowerCase().includes("year-round") ?
+                        "Limited services" : "No services"}
                     </>
                   ) : (
                     <>Not known</>
