@@ -98,8 +98,8 @@ export default function SubArea({ data, showHeading }) {
       {subAreasNotesList
         .filter(note => data[note.noteVar])
         .map((note, index) => (
-          <Row className="subarea-container">
-            <Col key={index} xs={12}>
+          <Row key={index} className="subarea-container">
+            <Col xs={12}>
               <div className="subarea-list">
                 {note.display && (
                   <h4 className="mt-3">
