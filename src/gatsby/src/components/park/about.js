@@ -51,9 +51,9 @@ export default function About({
   parkType, natureAndCulture, conservation, culturalHeritage, history, wildlife, biogeoclimaticZones, terrestrialEcosections, marineEcosections
 }) {
   const dataList = [
-    { "title": "Conservation", "code": "conservation", "description": conservation },
     { "title": "Cultural Heritage", "code": "cultural-heritage", "description": culturalHeritage },
     { "title": "History", "code": "history", "description": history },
+    { "title": "Conservation", "code": "conservation", "description": conservation },
     { "title": "Wildlife", "code": "wildlife", "description": wildlife }
   ].filter(data => data.description)
 
