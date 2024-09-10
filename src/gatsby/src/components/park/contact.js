@@ -78,7 +78,7 @@ export default function Contact({ contact, parkContacts, operations }) {
     })
   const hasAnyReservations =
     operations.hasCanoeCircuitReservations ||
-    operations.hasPicnicShelterReservations ||
+    operations.hasGroupPicnicReservations ||
     operations.hasFrontcountryReservations ||
     operations.hasFrontcountryCabinReservations ||
     operations.hasBackcountryReservations ||
