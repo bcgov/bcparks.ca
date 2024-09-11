@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import ParkAccessStatus from "./parkAccessStatus"
 import CampfireBan from "../campfireBan"
 import FontAwesome from "../fontAwesome"
@@ -90,6 +90,8 @@ export default function ParkHeader({
   const parkDates = getParkOperationDates(operationDates, thisYear)
   const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
   const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
+  // Check if park access status is "Closed"
+  const [isParkOpen, setIsParkOpen] = useState(null)
 
   return (
     <div id="park-header-container" className="d-flex park-info-container">
@@ -113,6 +115,7 @@ export default function ParkHeader({
               operationDates={operationDates}
               onStatusCalculated={onStatusCalculated}
               punctuation="."
+              setIsParkOpen={setIsParkOpen}
             />
             :
             // display a space if it's loading advisories
@@ -123,15 +126,18 @@ export default function ParkHeader({
           <div className="park-header-child">
             <FontAwesomeIcon icon={faCalendar} />
             <div>
-              <p>
-                The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}
-                {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) ? (
-                  <>
-                    , from <span className="no-wrap">{formattedTime(parkOperation.gateOpenTime)}</span>{" "}
-                    to <span className="no-wrap">{formattedTime(parkOperation.gateCloseTime)}</span>, daily.
-                  </>
-                ) : "."}
-              </p>
+              {/* Hide here if park access status is "Closed" */}
+              {isParkOpen !== false &&
+                <p>
+                  The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}
+                  {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) ? (
+                    <>
+                      , from <span className="no-wrap">{formattedTime(parkOperation.gateOpenTime)}</span>{" "}
+                      to <span className="no-wrap">{formattedTime(parkOperation.gateCloseTime)}</span>, daily.
+                    </>
+                  ) : "."}
+                </p>
+              }
               {(campings.length > 0 || facilities.length > 0) && (
                 <p>
                   {campings.length > 0 && <>Check <a href="#camping">camping</a></>}
