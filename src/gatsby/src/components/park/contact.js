@@ -38,7 +38,7 @@ const getIcon = (contactType) => {
 export const ParkContact = ({ contact }) => {
   const parkOperatorContact = contact.parkOperatorContact
   const links = contact.contactInformation.length > 0 ? contact.contactInformation :
-    parkOperatorContact.defaultContactInformation.length > 0 ? parkOperatorContact.defaultContactInformation : []
+    parkOperatorContact?.defaultContactInformation?.length > 0 ? parkOperatorContact.defaultContactInformation : []
 
   return (
     <tr>
