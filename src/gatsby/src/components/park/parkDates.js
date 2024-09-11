@@ -13,7 +13,7 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
     "backcountry-camping": {
       buttons: [
         {
-          label: "Get permit",
+          label: "Register for permit",
           fieldName: "backcountryPermitUrl"
         },
         {
@@ -37,7 +37,7 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
     "frontcountry-camping": {
       buttons: [
         {
-          label: "Book camping",
+          label: "Book campsite",
           fieldName: "frontcountryReservationUrl"
         }
       ]
@@ -46,11 +46,7 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
       buttons: [
         {
           label: "Book groupsite",
-          fieldName: "frontcountryGroupReservationUrl"
-        },
-        {
-          label: "Book groupsite",
-          fieldName: "backcountryGroupReservationUrl"
+          fieldName: "frontcountryGroupReservationUrl" || "backcountryGroupReservationUrl"
         }
       ]
     },
