@@ -17,7 +17,7 @@ export const Guideline = ({ guide, reports }) => {
   return (
     <Row className="guideline">
       <Col xs="auto" className="guideline--left">
-        <FontAwesome icon={guidelineType.icon} />
+        {guidelineType?.icon && <FontAwesome icon={guidelineType.icon} />}
       </Col>
       <Col className="guideline--right">
         <h4>{guide.title ? guide.title : guidelineType.defaultTitle}</h4>
