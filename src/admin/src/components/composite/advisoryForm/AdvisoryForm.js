@@ -593,7 +593,7 @@ export default function AdvisoryForm({
                         onBlur={() => validateLink(l, idx, "type", setLinkTypeErrors)}
                       />
                       <FormHelperText>
-                        {linkTypeErrors[idx] && "Please enter link type too"}
+                        {linkTypeErrors[idx] && "Please provide a link type"}
                       </FormHelperText>
                     </FormControl>
                     <div
@@ -627,7 +627,7 @@ export default function AdvisoryForm({
                       inputProps={{ maxLength: 255 }}
                       InputProps={{ ...linkTitleInput }}
                       error={linkTitleErrors[idx]}
-                      helperText={linkTitleErrors[idx] && "Please enter link title too"}
+                      helperText={linkTitleErrors[idx] && "Please provide a link title"}
                       onBlur={() => validateLink(l, idx, "title", setLinkTitleErrors)}
                     />
                   </div>
@@ -646,7 +646,7 @@ export default function AdvisoryForm({
                         className="bcgov-input"
                         variant="outlined"
                         error={linkUrlErrors[idx]}
-                        helperText={linkUrlErrors[idx] && "Please enter URL too"}
+                        helperText={linkUrlErrors[idx] && "Please provide a URL"}
                         onBlur={() => validateLink(l, idx, "url", setLinkUrlErrors)}
                         inputProps={{ maxLength: 255 }}
                         InputProps={{
@@ -1110,7 +1110,7 @@ export default function AdvisoryForm({
                   inputProps={{ maxLength: 255 }}
                   InputProps={{ ...submitterInput }}
                   error={submittedByError !== ""}
-                  helperText={submittedByError}
+                  helperText={submittedByError && "Please enter a name"}
                   onBlur={() => {
                     validateRequiredText(advisoryData.submittedBy);
                   }}

@@ -130,6 +130,10 @@ nav {
           font-size: 1rem;
           margin: 0 0 2px 8px;
         }
+        &.external-link {
+          display: flex;
+          align-items: baseline;
+        }
       }
       .menu-button__arr {
         float: right;
@@ -430,6 +434,10 @@ nav {
           outline: $colorBlueMed solid 2px;
           outline-offset: 0px;
           border-radius: 4px;
+        }
+        &.external-link {
+          display: flex;
+          align-items: baseline;
         }
 
         .menu-button__arr {

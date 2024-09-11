@@ -9,8 +9,12 @@ import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
+import SubArea from "./subArea"
 
-export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccordion }) => {
+export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccordion, groupPicnicReservationUrl }) => {
+  const isPicnicFacility =
+    ["picnic-shelters", "picnic-areas"].includes(facility.facilityType.facilityCode)
+
   return (
     <Accordion
       className={`is-open--${openAccordions[eventKey]}`}
@@ -26,7 +30,7 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
           className="d-flex justify-content-between accordion-toggle"
         >
           <div className="d-flex align-items-center">
-            <StaticIcon name={facility.facilityType.icon} size={36} />
+            <StaticIcon name={facility.facilityType.icon || "information"} size={36} />
             <HtmlContent className="accordion-header">
               {facility.facilityType.facilityName}
             </HtmlContent>
@@ -39,27 +43,38 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
         </div>
       </Accordion.Toggle>
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
-        <div className="accordion-content">
-          <HtmlContent>
-            {!isNullOrWhiteSpace(facility.description.data) ?
-              facility.description.data : facility.facilityType.defaultDescription.data
-            }
-          </HtmlContent>
-          {!facility.hideStandardCallout &&
-            !isNullOrWhiteSpace(facility.facilityType.appendStandardCalloutText.data) && (
-              <blockquote className="callout-box">
-                <HtmlContent>
-                  {facility.facilityType.appendStandardCalloutText.data}
-                </HtmlContent>
-              </blockquote>
+        <>
+          {facility.subAreas.map((subArea, index) => (
+            <SubArea key={index} data={subArea} showHeading={true} />
+          ))}
+          <div className="accordion-content">
+            <HtmlContent>
+              {!isNullOrWhiteSpace(facility.description?.data) ?
+                facility.description.data : facility.facilityType.defaultDescription.data
+              }
+            </HtmlContent>
+            {!facility.hideStandardCallout &&
+              !isNullOrWhiteSpace(facility.facilityType?.appendStandardCalloutText?.data) && (
+                <blockquote className="callout-box">
+                  <HtmlContent>
+                    {facility.facilityType.appendStandardCalloutText.data}
+                  </HtmlContent>
+                </blockquote>
+              )}
+            {/* picnic shelter reservation button */}
+            {isPicnicFacility && groupPicnicReservationUrl && (
+              <a href={groupPicnicReservationUrl} className="btn btn-secondary my-4">
+                Book picnic shelter
+              </a>
             )}
-        </div>
+          </div>
+        </>
       </Accordion.Collapse>
     </Accordion>
   )
 }
 
-export default function ParkFacility({ data }) {
+export default function ParkFacility({ data, groupPicnicReservationUrl }) {
   const [facilityData] = useState(
     JSON.parse(JSON.stringify(data)) // deep copy
   )
@@ -160,6 +175,7 @@ export default function ParkFacility({ data }) {
               facility={facility}
               openAccordions={openAccordions}
               toggleAccordion={toggleAccordion}
+              groupPicnicReservationUrl={groupPicnicReservationUrl}
             />
           ))}
         </Col>

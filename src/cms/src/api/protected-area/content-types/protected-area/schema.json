@@ -334,6 +334,40 @@
       "relation": "oneToMany",
       "target": "api::trail-report.trail-report",
       "mappedBy": "protectedArea"
+    },
+    "parkContacts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-contact.park-contact",
+      "mappedBy": "protectedArea"
+    },
+    "conservation": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "culturalHeritage": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "history": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "wildlife": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
     }
   }
 }

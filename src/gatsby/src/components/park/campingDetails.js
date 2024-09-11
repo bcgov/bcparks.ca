@@ -1,154 +1,106 @@
-import React, { useState, useEffect, useMemo } from "react"
-import { navigate } from "gatsby"
-import Accordion from "react-bootstrap/Accordion"
+import React, { useState, useEffect, useRef } from "react"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import * as cheerio from "cheerio"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
+import ParkDates from "./parkDates"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
-import { countsList } from "../../utils/constants"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const AccordionList = ({ eventKey, camping, openAccordions, hasReservation, reservations, toggleAccordion }) => {
+export const CampingType = ({ camping, parkOperation }) => {
+  const [expanded, setExpanded] = useState(false)
+  const [height, setHeight] = useState(0)
+  const [sectionHeight, setSectionHeight] = useState(0)
+  const ref = useRef(null)
+  const isLong = height >= 300
+  const isMedium = height > 260 && height < 300
+  const campingDescription = !isNullOrWhiteSpace(camping.description?.data) ?
+    camping.description.data :
+    !isNullOrWhiteSpace(camping?.campingType?.defaultDescription?.data) ?
+      camping.campingType.defaultDescription.data : ""
+
+  const $ = cheerio.load(campingDescription)
+  $('a').attr('tabindex', '-1')
+  const collapsedDescription = $.html()
+  const hasHr = $('hr').length > 0
+  const hrAtEnd = campingDescription.trim().endsWith('<hr>')
+  const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
+
+  useEffect(() => {
+    if (ref.current.clientHeight > 260) {
+      setHeight(ref.current.clientHeight)
+    }
+  }, [expanded])
+
+  useEffect(() => {
+    if (ref.current) {
+      const h3 = ref.current.querySelector('h3.park-camping-title');
+      const hr = ref.current.querySelector('hr');
+      if (h3 && hr) {
+        // height from the <h3> to the <hr>
+        const height = hr?.getBoundingClientRect().top - h3.getBoundingClientRect().top
+        setSectionHeight(height)
+      }
+    }
+  }, [])
+
   return (
-    hasReservation ? (
-      <Accordion
-        className={`is-open--${openAccordions[eventKey]}`}
+    <div id={camping?.campingType.campingTypeCode} className="park-camping">
+      <div
+        ref={ref}
+        className={`expandable-description ${expanded ? "expanded" : "collapsed"} ${hasExpandCondition && "gradient"}`}
+        style={{ maxHeight: expanded ? "none" : `${hasHr ? sectionHeight : (isLong ? 260 : 300)}px` }}
       >
-        <Accordion.Toggle
-          as={"div"}
-          aria-controls="reservations"
-          eventKey={eventKey}
-          onClick={() => toggleAccordion(eventKey)}
+        <div className="d-flex align-items-center mb-4">
+          <StaticIcon name={camping?.campingType?.icon || "information"} size={36} />
+          <h3 className="park-camping-title ml-3 mb-0">
+            {camping?.campingType?.campingTypeName}
+          </h3>
+        </div>
+        <HtmlContent className="park-camping-description">
+          {expanded ? campingDescription : collapsedDescription}
+        </HtmlContent>
+      </div>
+      {hasExpandCondition &&
+        <button
+          className="btn btn-link expand-icon park-camping-link"
+          onClick={() => {
+            setExpanded(!expanded)
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
+              setExpanded(!expanded)
+            }
+          }}
         >
-          <div
-            id="reservations"
-            className="d-flex justify-content-between accordion-toggle"
-          >
-            <div className="d-flex align-items-center">
-              <StaticIcon name="reservations" size={36} />
-              <div className="accordion-header">
-                Reservations
-              </div>
-            </div>
-            <div className="d-flex align-items-center">
-              {openAccordions[eventKey] ?
-                <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-              }
-            </div>
-          </div>
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
-          <div className="accordion-content">
-            <HtmlContent>{reservations}</HtmlContent>
-          </div>
-        </Accordion.Collapse>
-      </Accordion>
-    ) : (
-      <Accordion
-        className={`is-open--${openAccordions[eventKey]}`}
-      >
-        <Accordion.Toggle
-          as={"div"}
-          aria-controls={camping?.campingType?.campingTypeName}
-          eventKey={eventKey}
-          onClick={() => toggleAccordion(eventKey)}
-        >
-          <div
-            id={camping?.campingType?.campingTypeCode}
-            className="d-flex justify-content-between accordion-toggle"
-          >
-            <div className="d-flex align-items-center">
-              <StaticIcon name={camping?.campingType?.icon} size={36} />
-              <HtmlContent className="accordion-header">
-                {camping?.campingType?.campingTypeName}
-              </HtmlContent>
-            </div>
-            <div className="d-flex align-items-center">
-              {openAccordions[eventKey] ?
-                <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-              }
-            </div>
-          </div>
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
-          <div className="accordion-content">
-            <HtmlContent>
-              {!isNullOrWhiteSpace(camping.description.data) ?
-                camping.description.data : (camping?.campingType?.defaultDescription.data)
-              }
-            </HtmlContent>
-          </div>
-        </Accordion.Collapse>
-      </Accordion>
-    )
+          {expanded ?
+            <>
+              Show less about {camping?.campingType?.campingTypeName.toLowerCase()}
+              <FontAwesomeIcon icon={faChevronUp} className="ml-1" />
+            </>
+            :
+            <>
+              Show more about {camping?.campingType?.campingTypeName.toLowerCase()}
+              <FontAwesomeIcon icon={faChevronDown} className="ml-1" />
+            </>
+          }
+        </button>
+      }
+      <ParkDates data={camping} parkOperation={parkOperation} />
+    </div>
   )
 }
 
 export default function CampingDetails({ data }) {
   const activeCampings = data.activeCampings
   const parkOperation = data.parkOperation
-  const reservations = data.reservations.data.reservations
   const subAreas = data.subAreas || []
   subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
-  const hasReservations = !isNullOrWhiteSpace(reservations)
-
-  const [openAccordions, setOpenAccordions] = useState({})
-
-  const isShown = (count, countGroup) => {
-    return countGroup[count.countVar] &&
-      countGroup[count.countVar] !== "0" &&
-      countGroup[count.countVar] !== "*" &&
-      count.isActive;
-  }
-
-  const toggleAccordion = (index) => {
-    setOpenAccordions((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }))
-  }
-
-  const toggleExpandAll = () => {
-    const newExpandAll = !allExpanded
-    const newOpenAccordions = activeCampings.reduce((acc, _, index) => {
-      acc[index] = newExpandAll
-      return acc
-    }, {})
-    if (hasReservations) {
-      newOpenAccordions[activeCampings.length] = newExpandAll
-    }
-    setOpenAccordions(newOpenAccordions)
-  }
-
-  const allExpanded = useMemo(() => {
-    const totalAccordions = activeCampings.length + (hasReservations ? 1 : 0)
-    return activeCampings.length > 0 &&
-      Object.keys(openAccordions).length === totalAccordions &&
-      Object.values(openAccordions).every((isOpen) => isOpen)
-  }, [openAccordions, activeCampings.length, hasReservations])
-
-  const checkCountDisplay = (text) => {
-    const newText = text.replace("rv-accessible", "RV-accessible")
-    return newText
-  }
-
-  const toFrontCountryReservations = () => {
-    const reservationsURL = "https://camping.bcparks.ca"
-    const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
-    navigate(parkReservationsURL)
-  }
-
-  useEffect(() => {
-    if (activeCampings.length === 1 && !hasReservations) {
-      setOpenAccordions({ 0: true })
-    }
-  }, [activeCampings.length, hasReservations])
-
-  if (activeCampings.length === 0) return null
 
   return (
     <div id="camping" className="anchor-link">
@@ -159,81 +111,15 @@ export default function CampingDetails({ data }) {
             Camping
           </h2>
         </Col>
-        {data.hasReservations && (
-          <Col className="mb-3" xs="auto">
-            <button
-              aria-label="Book camping"
-              className="btn btn-secondary"
-              onClick={() => toFrontCountryReservations()}
-            >
-              Book camping
-            </button>
-          </Col>
-        )}
       </Row>
-      {parkOperation &&
-        <Row>
-          <Col>
-            <dl>
-              {countsList
-                .filter(
-                  count =>
-                    isShown(count, parkOperation)).length > 0
-                && subAreas
-                  .filter(subArea => subArea.isActive).length !== 1
-                && (<>
-                  <dt>Total number of campsites</dt>
-                  {countsList
-                    .filter(count => isShown(count, parkOperation))
-                    .map((count, index) => (
-                      <dd key={index} className="mb-0">
-                        Total {checkCountDisplay(count.display.toLowerCase())}:{" "}
-                        {parkOperation[count.countVar]}
-                      </dd>
-                    ))}
-                </>
-                )}
-            </dl>
-          </Col>
-        </Row>
-      }
       <Row>
         <Col>
-          {!(activeCampings.length === 1 && !hasReservations) && (
-            <button
-              onClick={toggleExpandAll}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault()
-                  toggleExpandAll()
-                }
-              }}
-              className="btn btn-link expand-link expand-icon"
-            >
-              {allExpanded ?
-                <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
-                :
-                <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
-              }
-            </button>
-          )}
-          {(activeCampings.length > 0 && hasReservations) && (
-            <AccordionList
-              eventKey="0"
-              openAccordions={openAccordions}
-              hasReservation={true}
-              reservations={reservations}
-              toggleAccordion={toggleAccordion}
-            />
-          )
-          }
           {activeCampings.map((camping, index) => (
-            <AccordionList
+            <CampingType
               key={index}
-              eventKey={(hasReservations ? index + 1 : index).toString()}
+              eventKey={index.toString()}
               camping={camping}
-              openAccordions={openAccordions}
-              toggleAccordion={toggleAccordion}
+              parkOperation={parkOperation}
             />
           ))}
         </Col>

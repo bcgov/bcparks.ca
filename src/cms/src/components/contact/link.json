@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_contact_links",
+  "info": {
+    "displayName": "Link",
+    "icon": "link",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "contactType": {
+      "type": "enumeration",
+      "enum": [
+        "Email",
+        "Phone",
+        "Website",
+        "Chat",
+        "Facebook",
+        "Instagram",
+        "X-twitter"
+      ],
+      "required": true
+    },
+    "contactText": {
+      "type": "string",
+      "required": true
+    },
+    "contactUrl": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

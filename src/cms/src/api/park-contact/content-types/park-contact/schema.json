@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_contacts",
+  "info": {
+    "singularName": "park-contact",
+    "pluralName": "park-contacts",
+    "displayName": "Park-contact",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "rank": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "min": 1
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "contactInformation": {
+      "displayName": "Link",
+      "type": "component",
+      "repeatable": true,
+      "component": "contact.link"
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkContacts"
+    },
+    "parkOperatorContact": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::park-operator-contact.park-operator-contact"
+    }
+  }
+}

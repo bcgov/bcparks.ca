@@ -1,12 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import "react-lazy-load-image-component/src/effects/blur.css"
 
-/* Simple image wrapper - essentially GatsbyImage for remote images */
 export default function ParkPhoto({ type, src, alt }) {
-
   return (
     <div className={`park-photo park-photo--${type}`}>
-      <img src={src} alt={alt ?? ""} />
+      <LazyLoadImage src={src} alt={alt ?? ""} effect="opacity" />
     </div>
   )
 }

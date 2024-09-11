@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { Link, navigate } from "gatsby"
 import Logo from "../images/logo/BCParks_Primary_Reversed-cropped.svg"
 import LogoVertical from "../images/logo/BCParks_Primary_Reversed_Vertical.svg"
+import FontAwesome from "../components/fontAwesome"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars, faXmark, faChevronLeft, faChevronRight, faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
 
@@ -178,6 +179,11 @@ const MegaMenu = ({ content, menuMode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuElements])
 
+  const isExternalUrl = (url) => {
+    // a URL is considered external if it begins with "http://" or "https://"
+    return /^https?:\/\//.test(url)
+  }
+
   useEffect(() => {
     // create sorted + structured menuTree from menuContent
 
@@ -253,9 +259,10 @@ const MegaMenu = ({ content, menuMode }) => {
                 </a>
               </li>
               <li className="menu-button menu-header">
-                {item.url.toLowerCase().startsWith('http') ?
-                  <a className="menu-button__title" href={item.url || ROOT_MENU_URL} role="menuitem">
+                {isExternalUrl(item.url) ?
+                  <a className="menu-button__title external-link" href={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
+                    <FontAwesome icon="arrow-up-right-from-square" size="16" className="ml-1" />
                     <FontAwesomeIcon icon={faCircleChevronRight} className="menu-button__title--icon" />
                   </a> :
                   <Link
@@ -278,13 +285,14 @@ const MegaMenu = ({ content, menuMode }) => {
                       : "unselected")
                   }
                   >
-                    {page.url.toLowerCase().startsWith('http') ?
+                    {isExternalUrl(page.url) ?
                       <a
-                        className="menu-button__title"
+                        className="menu-button__title external-link"
                         href={page.url}
                         role="menuitem"
                       >
                         {page.title}
+                        <FontAwesome icon="arrow-up-right-from-square" size="16" className="ml-1" />
                       </a>
                       :
                       <Link
@@ -325,9 +333,10 @@ const MegaMenu = ({ content, menuMode }) => {
           <nav>
             <ul role="presentation">
               <li className="menu-button menu-header">
-                {item.url.toLowerCase().startsWith('http') ?
-                  <a className="menu-button__title" href={item.url || ROOT_MENU_URL} role="menuitem">
+                {isExternalUrl(item.url) ?
+                  <a className="menu-button__title external-link" href={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}
+                    <FontAwesome icon="arrow-up-right-from-square" size="16" className="ml-1" />
                   </a> :
                   <Link className="menu-button__title" to={item.url || ROOT_MENU_URL} role="menuitem">
                     {item.title}

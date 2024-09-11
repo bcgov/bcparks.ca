@@ -93,22 +93,21 @@ export default function StaticContent1({ pageContext }) {
       firstSectionTitle = current.title
     }
     pageSections = [
-      { display: firstSectionTitle, sectionIndex: 0, id: 0, link: "#" },
+      { sectionIndex: 0, display: firstSectionTitle, link: "#", visible: false },
     ]
 
     let sectionIndex = 0
     for (const s of sectionContents) {
       sectionIndex += 1
+      s.sectionIndex = sectionIndex
       // each section needs an index to be used for in-page navigation
       // and scrollspy highlighting
       const titleId = slugify(s.sectionTitle).toLowerCase()
-      s.sectionIndex = sectionIndex
       pageSections.push({
-        display: s.sectionTitle,
         sectionIndex: sectionIndex,
-        id: s.id,
+        display: s.sectionTitle,
         link: "#" + titleId,
-        visible: true // Default
+        visible: true
       })
     }
   }

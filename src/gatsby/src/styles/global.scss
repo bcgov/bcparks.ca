@@ -103,8 +103,6 @@ blockquote {
 }
 
 .callout-box {
-  display: flex;
-  justify-content: center;
   color: $colorBlue;
   background-color: $colorBlueLight;
   font-size: 1rem;
@@ -113,7 +111,7 @@ blockquote {
   border-radius: 4px;
   margin: 16px 0;
   padding: 20px;
-  p {
+  & > * {
     max-width: 600px;
   }
 }
@@ -125,17 +123,35 @@ figure.media div[data-oembed-url] {
 img { max-width: 100%; }
 
 // table
-// This is temp as we should be rendering <table class="table"> through CKEditor
-// so that tables pick up standard boostrap styles
 figure.table {
+  color: $colorGrey;
   table {
     width: 100%;
+    tr {
+      &:first-of-type {
+        th, td {
+          border-top: 1px solid $colorGreyLight;
+        }
+      }
+      & > :first-child {
+        background: $colorBrownLight !important;
+      }
+    }
+    th, td {
+      border-bottom: 1px solid $colorGreyLight;
+    }
     th {
       background: $colorBrownLight;
-      border-top: 1px solid $colorGreyLight;
     }
     td {
-      border-top: 1px solid $colorGreyLight;
+      & > p:last-of-type {
+        margin-bottom: 0;
+      }
+      svg {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+      }
     }
   }
 
@@ -593,7 +609,7 @@ nav.breadcrumbs {
   }
   &-content {
     padding-top: 32px;
-    & > * {
+    & > :not(.subarea-container) {
       max-width: 600px !important;
     }
   }
@@ -633,10 +649,31 @@ nav.breadcrumbs {
       height: 24px;
     }
   }
+  &.about-accordion,
+  &.dates-accordion {
+    padding: 14px 16px;
+    &.is-open {
+      &--true {
+        padding: 8px 16px;
+        @media screen and (min-width: $smBreakpoint) {
+          padding: 14px 16px;
+        }
+      }
+    }
+    .accordion-toggle {
+      .accordion-header {
+        margin-left: 0;
+      }
+    }
+  }
   figure.table {
     table {
-      th {
-        background: $colorBrownMed;
+      tbody {
+        tr {
+          & > :first-child {
+            background: $colorBrownMed !important;
+          }
+        }
       }
     }
   }

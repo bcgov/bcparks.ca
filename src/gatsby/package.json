@@ -4,7 +4,6 @@
   "description": "BC Parks - public site",
   "version": "0.1.0",
   "dependencies": {
-    "@arcgis/core": "^4.30.3",
     "@bcgov/bc-sans": "^2.1.0",
     "@bcgov/bootstrap-theme": "https://github.com/bcgov/bootstrap-theme/releases/download/v1.1.1/bcgov-bootstrap-theme-1.1.1.tgz",
     "@emotion/react": "^11.11.4",
@@ -46,6 +45,7 @@
     "react-bootstrap-typeahead": "^6.3.2",
     "react-device-detect": "^2.0.1",
     "react-dom": "^18.3.1",
+    "react-lazy-load-image-component": "^1.6.2",
     "react-select": "^5.8.0",
     "react-typography": "^0.16.19",
     "react-use-query-param-string": "^2.1.5",

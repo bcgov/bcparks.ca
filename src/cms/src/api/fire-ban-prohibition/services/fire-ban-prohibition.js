@@ -56,8 +56,19 @@ module.exports = createCoreService(
       });
 
       let rowsUpdated = 0;
+      let banCount = 0;
 
       for (const ban of campfireBans) {
+
+        // skip bans where the effectiveDate is in the future
+        if (ban.effectiveDate > new Date().toISOString()) {
+          continue;
+        }
+
+        // skip bans where the rescindedDate is in the past
+        if (ban.rescindedDate < new Date().toISOString()) {
+          continue;
+        }
 
         if (ban.naturalResourceDistrict) {
           // get a list of protectedAreaIds to have firebans added.
@@ -93,9 +104,11 @@ module.exports = createCoreService(
           const count = await addProtectedAreaFireBans(protectedAreaIds, ban.effectiveDate);
           rowsUpdated += count;
         }
+
+        banCount++;
       }
       return {
-        campfireBanCount: campfireBans.length,
+        campfireBanCount: banCount,
         parkCount: rowsUpdated
       };
     },

@@ -23,6 +23,43 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   const typeDefs = `
+  type STRAPI_PARK_OPERATOR_CONTACT_DEFAULTDESCRIPTION_TEXTNODE implements Node @dontInfer {
+    defaultDescription: String
+  }
+
+  type STRAPI_PARK_OPERATOR_CONTACTDefaultDescription {
+    data: STRAPI_PARK_OPERATOR_CONTACT_DEFAULTDESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PARK_OPERATOR_CONTACT implements Node @derivedTypes @dontInfer {
+    facilityOperatorName: String
+    defaultTitle: String
+    defaultDescription: STRAPI_PARK_OPERATOR_CONTACTDefaultDescription
+    defaultContactInformation: [STRAPI__COMPONENT_CONTACT_LINK] @link(by: "id", from: "defaultContactInformation___NODE")
+  }
+  type STRAPI_PARK_CONTACT_DESCRIPTION_TEXTNODE implements Node @dontInfer {
+    description: String
+  }
+
+  type STRAPI_PARK_CONTACTDescription {
+    data: STRAPI_PARK_CONTACT_DESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI__COMPONENT_CONTACT_LINK implements Node @dontInfer {
+    contactType: String
+    contactText: String
+    contactUrl: String
+  }
+
+  type STRAPI_PARK_CONTACT implements Node @dontInfer {
+    title: String
+    description: STRAPI_PARK_CONTACTDescription
+    rank: Int
+    isActive: Boolean
+    contactInformation: [STRAPI__COMPONENT_CONTACT_LINK] @link(by: "id", from: "contactInformation___NODE")
+    parkOperatorContact: STRAPI_PARK_OPERATOR_CONTACT @link(by: "id", from: "parkOperatorContact___NODE")
+  }
+
   type STRAPI_ACCESS_STATUS implements Node {
     groupLabel: String
   }
@@ -133,6 +170,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     hasDiscoverParksLink: Boolean
     nearbyParks: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "nearbyParks___NODE")
     trailReports: [STRAPI_TRAIL_REPORT] @link(by: "id", from: "trailReports___NODE")
+    parkContacts: [STRAPI_PARK_CONTACT] @link(by: "id", from: "parkContacts___NODE")
   }
   
   type STRAPI__COMPONENT_PARKS_RTE_LIST_CONTENT_TEXTNODE implements Node @dontInfer {
@@ -160,6 +198,16 @@ exports.createSchemaCustomization = ({ actions }) => {
     hasBackcountryShelterReservations: Boolean
     hasBackcountryWildernessReservations: Boolean
     hasGroupPicnicReservations: Boolean
+    frontcountryReservationUrl: String
+    frontcountryGroupReservationUrl: String
+    frontcountryCabinReservationUrl: String
+    backcountryReservationUrl: String
+    backcountryPermitUrl: String
+    backcountryGroupReservationUrl: String
+    backcountryWildernessReservationUrl: String
+    backcountryShelterReservationUrl: String
+    canoeCircuitReservationUrl: String
+    groupPicnicReservationUrl: String
     customReservationLinks: [STRAPI__COMPONENT_PARKS_RTE_LIST] @link(by: "id", from: "customReservationLinks___NODE")
   }
 
@@ -264,10 +312,12 @@ exports.createSchemaCustomization = ({ actions }) => {
 
   type STRAPI_SITE implements Node {
     safetyInfo: STRAPI_SITE_SAFETYINFO
-    parkOperation: STRAPI_PARK_OPERATION
+    parkOperation: STRAPI_PARK_OPERATION @link(by: "id", from: "parkOperation___NODE")
     parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
     parkCampingTypes: [STRAPI_PARK_CAMPING_TYPE] @link(by: "id", from: "parkCampingTypes___NODE")
+    parkGuidelines: [STRAPI_PARK_GUIDELINE] @link(by: "id", from: "parkGuidelines___NODE")
+    trailReports: [STRAPI_TRAIL_REPORT] @link(by: "id", from: "trailReports___NODE")
   }
 
   type STRAPI_MANAGEMENT_DOCUMENT_TYPE implements Node {
@@ -576,16 +626,11 @@ async function createRedirects(parkQuery, redirectQuery, { graphql, actions, rep
   })
 }
 
-exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
+exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   if (stage === "build-html" || stage === "develop-html") {
     actions.setWebpackConfig({
       module: {
-        rules: [
-          {
-            test: /@arcgis/,
-            use: loaders.null(),
-          },
-        ],
+        rules: [],
       },
       plugins: [new NodePolyfillPlugin()],
     })

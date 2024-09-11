@@ -1,6 +1,4 @@
 @import "variables.scss";
-@import url("https://js.arcgis.com/4.10/esri/css/main.css");
-// @import url("https://governmentofbc.maps.arcgis.com/apps/webappviewer/jimu.js/css/jimu-theme.css");
 
 .parks-container {
   max-width: none;
@@ -139,20 +137,16 @@
   color: $colorGrey !important;
 }
 
-// Unsure if this is ever used
+// About this park
 #about-this-park {
   .ecological-list {
-    ul {
-      display: inline-block;
-      padding-left: 0;
-    } 
-    li {
-      display: inline-block;
-      list-style: none;
-      margin-left: 8px;
+    margin-bottom: 0;
+    &:last-of-type {
+      margin-bottom: 16px;
     }
     a {
-      text-decoration: none;
+      font-weight: bold;
+      margin-right: 4px;
       &:hover {
         color: $colorBlue;
         text-decoration: underline;
@@ -188,6 +182,10 @@
     @media (min-width: $lgBreakpoint) {
       height: 196px;
     }
+  }
+  .lazy-load-image-loaded {
+    width: 100%;
+    height: 100%;
   }
   img {
     width: 100%;
@@ -400,15 +398,28 @@ h2.section-heading {
   }
 }
 
-.park-overview {
+// expandable description with gradient
+.expandable-description {
+  position: relative;
   &.collapsed {
-    max-height: 260px;
     overflow: hidden;
     display: block;
     text-overflow: ellipsis;
+    &.gradient::after {
+      content: "";
+      width: 100%;
+      height: 100px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(180deg, rgba($colorWhite, 0) 0%, $colorWhite 100%);
+    }
   }
   &.expanded {
     max-height: none;
+    &.gradient::after {
+      display: none;
+    }
   }
   hr {
     color: transparent;
@@ -504,5 +515,73 @@ h2.section-heading {
     h4 {
       margin-bottom: 8px;
     }
+  }
+}
+
+// camping
+#camping {
+  .park-camping {
+    & + .park-camping {
+      margin-top: 32px;
+    }
+    .reservation-button-container {
+      padding-top: 16px;
+      @media (min-width: $smBreakpoint) {
+        padding-top: 0;
+      }
+      a.btn {
+        margin-top: 4px;
+        & + a.btn {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+}
+
+// camping (subarea)
+.subarea-container {
+  &--left, &--right {
+    display: flex;
+    .subarea-icon {
+      padding-right: 16px;
+      svg, img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+  &--left {
+    .subarea-list {
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+    }
+  }
+  &--right {
+    margin-top: 32px;
+    @media (min-width: $lgBreakpoint) {
+      margin-top: 0;
+    }
+    .subarea-list {
+      ul {
+        padding-left: 24px;
+      }
+    }
+  }
+  .subarea-list {
+    h4 {
+      margin-bottom: 4px;
+    }
+  }
+}
+
+// contact
+#contact {
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
   }
 }
