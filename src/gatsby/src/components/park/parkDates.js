@@ -46,7 +46,11 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
       buttons: [
         {
           label: "Book groupsite",
-          fieldName: "frontcountryGroupReservationUrl" || "backcountryGroupReservationUrl"
+          fieldName: "frontcountryGroupReservationUrl"
+        },
+        {
+          label: "Book groupsite",
+          fieldName: "backcountryGroupReservationUrl"
         }
       ]
     },
@@ -66,8 +70,17 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
 
   const getReservationButtons = (code) => {
     if (reservationUrlRules[code]) {
-      return reservationUrlRules[code].buttons
+      let buttons = reservationUrlRules[code].buttons
+      if (code === "group-camping" && parkOperation) {
+        const hasFrontcountry = parkOperation.frontcountryGroupReservationUrl
+        // Remove backcountry group button if frontcountry group url exists
+        if (hasFrontcountry) {
+          buttons = buttons.filter(button => button.fieldName !== "backcountryGroupReservationUrl")
+        }
+      }
+      return buttons
     }
+    return []
   }
 
   return (
