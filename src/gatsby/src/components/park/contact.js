@@ -43,14 +43,14 @@ export const ParkContact = ({ contact }) => {
   return (
     <tr>
       <th>
-        {contact.title ? contact.title : parkOperatorContact.defaultTitle}
+        {contact.title ? contact.title : parkOperatorContact?.defaultTitle}
       </th>
       <td>
         {(contact.description.data.description ||
-          parkOperatorContact?.defaultDescription.data.defaultDescription) &&
+          parkOperatorContact?.defaultDescription?.data?.defaultDescription) &&
           <HtmlContent>
             {contact.description.data.description ||
-              parkOperatorContact.defaultDescription.data.defaultDescription}
+              parkOperatorContact?.defaultDescription?.data?.defaultDescription}
           </HtmlContent>
         }
         {links.length > 0 && links.map((link, index) => (
