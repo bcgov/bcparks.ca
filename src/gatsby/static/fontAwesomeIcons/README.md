@@ -1,4 +1,4 @@
-# FontAwesome Icons
+# Font Awesome Icons
 
 This document provides a list of Font Awesome icons used in the project, along with their details.
 
@@ -9,11 +9,6 @@ This document provides a list of Font Awesome icons used in the project, along w
 3. **File Name**: The file name of the icon.
 4. **Where We Get the Icon**: The source URL where the icon can be found.
 5. **Where We Use the Icon**: The part of the project where the icon is used.
-
-
-# FontAwesome Icons
-
-This document provides a list of Font Awesome icons used in the project, along with their details.
 
 | #  | Icon | Icon Name | File Name | Where We Get the Icon | Where We Use the Icon |
 |----|------|-----------|-----------|-----------------------|-----------------------|
