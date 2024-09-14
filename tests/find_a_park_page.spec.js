@@ -32,7 +32,7 @@ test.describe('Find a park page tests', async ()=>{
         await expect(page.getByText('Popular')).toBeVisible();
         await expect(page.getByText('Area', { exact: true })).toBeVisible();
         await expect(page.getByRole('group', { name: 'Camping' }).locator('legend')).toBeVisible();
-        await expect(page.getByText('Activities', { exact: true })).toBeVisible();
+        await expect(page.getByRole('group', { name: 'Things to do' }).locator('legend')).toBeVisible();
         await expect(page.getByText('Facilities')).toBeVisible();
         await expect(page.getByRole('heading', { name: 'More ways to find a park' })).toBeVisible();
     });

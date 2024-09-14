@@ -15,7 +15,7 @@ test.describe('Approved management plan tests', ()=>{
         await expect(page.locator('#home div').filter({ hasText: 'Main Menu BackAboutOur' }).nth(4)).toBeVisible();
         await expect(page.getByRole('menuitem', { name: 'About', exact: true })).toBeVisible();
         await page.getByRole('menuitem', { name: 'Management plans' }).click();
-        await expect(page.getByRole('menuitem', { name: 'Management plans', exact: true })).toBeVisible();
+        await expect(page.getByRole('menuitem', { name: 'Management plans' }).nth(1)).toBeVisible();
         await page.getByRole('menuitem', { name: 'Approved management plans' }).click();
         await expect(page).toHaveURL(baseURL + 'about/management-plans/approved/');
         await expect(page).toHaveTitle('Approved management plans | BC Parks');
