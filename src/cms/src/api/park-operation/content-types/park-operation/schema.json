@@ -18,9 +18,6 @@
     "isActive": {
       "type": "boolean"
     },
-    "hasReservations": {
-      "type": "boolean"
-    },
     "hasFrontcountryReservations": {
       "type": "boolean"
     },
