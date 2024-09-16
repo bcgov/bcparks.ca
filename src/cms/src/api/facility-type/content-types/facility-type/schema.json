@@ -38,9 +38,6 @@
     "isActive": {
       "type": "boolean"
     },
-    "isCamping": {
-      "type": "boolean"
-    },
     "defaultDescription": {
       "type": "customField",
       "options": {
