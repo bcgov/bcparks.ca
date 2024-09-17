@@ -253,7 +253,7 @@ export const Head = ({ pageContext }) => {
     // Display new non-repeatable seo/pageHeader component if exists
     // Otherwise, display old repeatable seo/pageHeader component
     <Seo
-      title={seo?.metaTitle || meta?.metaTitle}
+      title={seo?.metaTitle || meta?.metaTitle || pageHeader?.pageTitle || headerContent?.pageTitle || page?.Title}
       description={seo?.metaDescription || meta?.metaDescription}
       keywords={seo?.metaKeywords || meta?.metaKeywords}
       image={pageHeader?.imageUrl || headerContent?.imageUrl}
