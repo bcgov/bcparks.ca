@@ -72,6 +72,18 @@ export default function SubArea({ data, showHeading }) {
                 )
               )}
             </div>
+            {subAreasNotesList
+              .filter(note => data[note.noteVar])
+              .map((note, index) => (
+                <div key={index} className="subarea-list">
+                  {note.display && (
+                    <h4 className="mt-3">{note.display}</h4>
+                  )}
+                  <HTMLArea isVisible={true}>
+                    {data[note.noteVar]}
+                  </HTMLArea>
+                </div>
+              ))}
           </div>
         </Col>
         {countsList
@@ -96,24 +108,6 @@ export default function SubArea({ data, showHeading }) {
             </Col>
           )}
       </Row>
-      {subAreasNotesList
-        .filter(note => data[note.noteVar])
-        .map((note, index) => (
-          <Row key={index} className="subarea-container">
-            <Col xs={12}>
-              <div className="subarea-list">
-                {note.display && (
-                  <h4 className="mt-3">
-                    {note.display}
-                  </h4>
-                )}
-                <HTMLArea isVisible={true}>
-                  {data[note.noteVar]}
-                </HTMLArea>
-              </div>
-            </Col>
-          </Row>
-        ))}
     </div>
   )
 }
