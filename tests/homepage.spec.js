@@ -146,4 +146,48 @@ test.describe('Home page tests', ()=>{
         await page.getByLabel('scroll to top').click();
         await expect(page.getByRole('link', { name: 'BC Parks Logo' })).toBeInViewport();
     });
+
+    test("Check the suggestion box is displayed when search by park has been selected", async ({page})=>{
+        const dropdownOption = page.getByRole('option', { name: 'Type to search...' });
+        await page.waitForLoadState('networkidle');
+        await page.getByLabel('By park name').click();
+        await expect(page.getByLabel('menu-options')).toBeVisible();
+        await expect(dropdownOption).toBeVisible
+    })
+
+    test("Check the suggestion box is displayed when search by city has been selected", async ({page})=>{
+        const dropdownOption = page.getByRole('option', { name: 'Current location' });
+        await page.waitForLoadState('networkidle');
+        await page.getByLabel('Near a city').click();
+        await expect(page.getByLabel('menu-options')).toBeVisible();
+        await expect(dropdownOption).toBeVisible();
+    })
+
+    test('Check the suggestion box in search is displayed for park search', async ({page})=>{
+        await page.waitForLoadState('networkidle');
+        await page.getByLabel('By park name').fill("b")
+        await expect(page.getByLabel('menu-options')).toBeVisible();
+        await expect(page.getByLabel('menu-options')).toContainText("Babine Lake Marine Park");
+        await expect(page.getByLabel('menu-options')).toContainText("Babine Mountains Park");
+        await expect(page.getByLabel('menu-options')).toContainText("Babine River Corridor Park");
+        await expect(page.getByLabel('menu-options')).toContainText("Bamberton Park");
+        await expect(page.getByLabel('menu-options')).toContainText("Banana Island Park");
+        await expect(page.getByLabel('menu-options')).toContainText("Bear Creek Park");
+        await expect(page.getByLabel('menu-options')).toContainText("Bear Glacier Park");
+    })
+
+    test('Check the suggestion box in search is displayed for city search', async ({page})=>{
+        await page.waitForLoadState('networkidle');
+        await page.getByLabel('Near a city').fill("v");
+        await expect(page.getByLabel('menu-options')).toBeVisible();
+        await expect(page.getByLabel('menu-options')).toContainText("Vancouver");
+        await expect(page.getByLabel('menu-options')).toContainText("Victoria");
+        await expect(page.getByLabel('menu-options')).toContainText("Valemount");
+        await expect(page.getByLabel('menu-options')).toContainText("Vanderhoof");
+        await expect(page.getByLabel('menu-options')).toContainText("Vernon");
+        await expect(page.getByLabel('menu-options')).toContainText("View Royal");
+        await expect(page.getByLabel('menu-options')).toContainText("NorthVancouver");
+        await expect(page.getByLabel('menu-options')).toContainText("Current location");
+    });
+
 });
