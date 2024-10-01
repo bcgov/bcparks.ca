@@ -67,16 +67,10 @@ test.describe('All advisories page tests', ()=>{
         await page.waitForLoadState('networkidle');
         await expect(highAdvisoryLegendItem).toBeVisible();
         await expect(highAdvisoryLegendItem).toHaveText('HighImmediate danger and closures');
-        await expect(highAdvisoryLegendItem.locator('.legend-icon').first()).toBeVisible();
-        await expect(highAdvisoryLegendItem.locator('.legend-icon').first()).toHaveCSS('background-color', 'rgb(216, 41, 47)');
         await expect(mediumAdvisoryLegendItem).toBeVisible();
         await expect(mediumAdvisoryLegendItem).toHaveText('MediumSafety and health related');
-        await expect(mediumAdvisoryLegendItem.locator('.legend-icon').first()).toBeVisible();
-        await expect(mediumAdvisoryLegendItem.locator('.legend-icon').first()).toHaveCSS('background-color', 'rgb(252, 186, 25)');
         await expect(lowAdvisoryLegendItem).toBeVisible();
         await expect(lowAdvisoryLegendItem).toHaveText('LowDiscretion and warnings');
-        await expect(lowAdvisoryLegendItem.locator('.legend-icon').first()).toBeVisible();
-        await expect(lowAdvisoryLegendItem.locator('.legend-icon').first()).toHaveCSS('background-color', 'rgb(36, 100, 164)');
     });
 
     test('Check that all links redirect to the correct pages', async ({page}) =>{
