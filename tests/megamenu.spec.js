@@ -187,6 +187,7 @@ test.describe('Check the level 1 menu items are displayed, active & clickable', 
         await expect(page.getByRole('menuitem', { name: 'Contact' })).toBeVisible();
         await page.getByRole('menuitem', {name: 'Contact'}).click();
         await expect(page).toHaveURL(baseURL + 'contact/');
+        ////latest code////
     })
      
 });
