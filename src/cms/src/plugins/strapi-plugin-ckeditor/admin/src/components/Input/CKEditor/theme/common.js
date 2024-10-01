@@ -309,6 +309,10 @@ export const common = css`
       padding: 12px 20px;
     }
 
+    blockquote.callout-box a {
+      text-decoration: underline;
+    }
+
     .legacy-link {
       background-color: #FFFF00;
     }
