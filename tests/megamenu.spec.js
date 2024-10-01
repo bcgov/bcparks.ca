@@ -50,14 +50,14 @@ test('Check the Plan your trip menu item' , async ({page})=>{
 })
 
 test('Check the Reservations menu item' , async ({page})=>{
-    await expect(page.getByRole('menuitem', { name: 'Reservations' })).toBeVisible();
-    await page.getByRole('menuitem', { name: 'Reservations' }).click();
+    await expect(page.getByRole('menuitem', { name: 'Reservations ' })).toBeVisible();
+    await page.getByRole('menuitem', { name: 'Reservations ' }).click();
     await expect(page.locator('#home div').filter({ hasText: 'Main Menu BackReservationsCamping feesMain Menu BackCamping feesBC Senior' }).nth(4)).toBeVisible();
     await expect(page.getByRole('menuitem', { name: 'Reservations', exact: true })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Reservations');
     await expect(page.getByRole('menuitem', { name: 'Camping fees' })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Camping fees');
-    await page.getByRole('menuitem', { name: 'Camping fees' }).click();
+    await page.getByRole('menuitem', { name: 'Camping fees ' }).click();
     await expect(page.getByText('BackCamping feesBC Senior')).toBeVisible();
     await expect(page.getByRole('menuitem', { name: 'Camping fees', exact: true })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Camping fees');
@@ -65,7 +65,7 @@ test('Check the Reservations menu item' , async ({page})=>{
     await expect(page.getByRole('menu')).toContainText('BC Senior Camping Discount');
     await expect(page.getByRole('menuitem', { name: 'Social Services Camping Fee' })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Social Services Camping Fee Exemption');
-    await page.getByRole('menuitem', { name: 'Camping fees' }).click();
+    await page.getByRole('menuitem', { name: 'Camping fees ' }).click();
     await expect(page.locator('#home div').filter({ hasText: 'Main Menu BackReservationsCamping feesMain Menu BackCamping feesBC Senior' }).nth(4)).toBeVisible();
     await expect(page.getByRole('menuitem', { name: 'Frontcountry camping' })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Frontcountry camping');
@@ -73,9 +73,9 @@ test('Check the Reservations menu item' , async ({page})=>{
     await expect(page.getByRole('menu')).toContainText('Group camping');
     await expect(page.getByRole('menuitem', { name: 'Picnic shelters' })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Picnic shelters');
-    await expect(page.getByRole('menuitem', { name: 'Backcountry camping' })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Backcountry camping ' })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Backcountry camping');
-    await page.getByRole('menuitem', { name: 'Backcountry camping' }).click();
+    await page.getByRole('menuitem', { name: 'Backcountry camping ' }).click();
     await expect(page.getByText('BackBackcountry')).toBeVisible();
     await expect(page.getByRole('menuitem', { name: 'Backcountry camping', exact: true })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Backcountry camping');
@@ -95,19 +95,19 @@ test('Check the Reservations menu item' , async ({page})=>{
     await expect(page.getByRole('menu')).toContainText('Mount Assiniboine');
     await expect(page.getByRole('menuitem', { name: 'E.C. Manning' })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('E.C. Manning');
-    await page.getByRole('menuitem', { name: 'Backcountry camping' }).click();
+    await page.getByRole('menuitem', { name: 'Backcountry camping ' }).click();
     await expect(page.locator('#home div').filter({ hasText: 'Main Menu BackReservationsCamping feesMain Menu BackCamping feesBC Senior' }).nth(4)).toBeVisible();
     await expect(page.getByRole('menuitem', { name: 'Day-use passes' })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Day-use passes');
-    await expect(page.getByRole('menuitem', { name: 'Cancellations and refunds' })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Cancellations and refunds ' })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Cancellations and refunds');
-    await page.getByRole('menuitem', { name: 'Cancellations and refunds' }).click();
+    await page.getByRole('menuitem', { name: 'Cancellations and refunds ' }).click();
     await expect(page.getByText('BackCancellations and')).toBeVisible();
     await expect(page.getByRole('menuitem', { name: 'Cancellations and refunds', exact: true })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Cancellations and refunds');
     await expect(page.getByRole('menuitem', { name: 'Cancellation windows' })).toBeVisible();
     await expect(page.getByRole('menu')).toContainText('Cancellation windows');
-    await page.getByRole('menuitem', { name: 'Cancellations and refunds' }).click();
+    await page.getByRole('menuitem', { name: 'Cancellations and refunds ' }).click();
     await expect(page.locator('#home div').filter({ hasText: 'Main Menu BackReservationsCamping feesMain Menu BackCamping feesBC Senior' }).nth(4)).toBeVisible();
     await page.getByRole('menuitem', { name: 'Reservations ' }).click();
     await page.getByRole('menuitem', { name: 'Reservations', exact: true }).click();

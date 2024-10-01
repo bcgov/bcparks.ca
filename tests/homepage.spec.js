@@ -186,7 +186,7 @@ test.describe('Home page tests', ()=>{
         await expect(page.getByLabel('menu-options')).toContainText("Vanderhoof");
         await expect(page.getByLabel('menu-options')).toContainText("Vernon");
         await expect(page.getByLabel('menu-options')).toContainText("View Royal");
-        await expect(page.getByLabel('menu-options')).toContainText("NorthVancouver");
+        await expect(page.getByLabel('menu-options')).toContainText("North Vancouver");
         await expect(page.getByLabel('menu-options')).toContainText("Current location");
     });
 
