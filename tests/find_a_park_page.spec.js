@@ -182,4 +182,11 @@ test.describe('Find a park page tests', async ()=>{
         await page.getByRole('button', { name: 'Load more results' }).click();
         await expect(page.getByText('Arctic Pacific Lakes ParkOminecasee allOpen').first()).toBeVisible();
     });
+<<<<<<< HEAD
 });
+=======
+
+    // Adrianne testing at 4:07PM PST
+});
+
+>>>>>>> upstream/automated-tests-manuji
