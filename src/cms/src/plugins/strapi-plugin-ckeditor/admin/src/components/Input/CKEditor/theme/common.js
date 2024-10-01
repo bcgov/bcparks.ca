@@ -295,10 +295,9 @@ export const common = css`
     }
 
     blockquote {
-      color: #003366;
-      font-style: normal;
-      font-size: 1.125rem;
-      border-left: solid 3px #fcba19;
+      border-left: solid 8px #e6e1d7;
+      margin: 16px 0 16px 24px;
+      padding: 16px 32px;
     }
 
     blockquote.callout-box {

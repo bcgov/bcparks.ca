@@ -89,17 +89,12 @@ h1, h2 {
 }
 
 blockquote {
-  color: $colorBlue;
-  font-size: 1.125rem;
-  border-left: solid 3px $colorGold;
-  margin: 64px 0 64px 64px;
-  padding-left: 24px;
-    :last-child {
-      margin-bottom: 0;
-    }
-    h3 {
-      font-size: 1.25rem;
-    }
+  border-left: solid 8px $colorBrownMed;
+  margin: 16px 0 16px 24px;
+  padding: 16px 32px;
+  :last-child {
+    margin-bottom: 0;
+  }
 }
 
 .callout-box {
