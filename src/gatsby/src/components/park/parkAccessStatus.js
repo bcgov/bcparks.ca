@@ -141,7 +141,8 @@ export default function ParkAccessStatus({
   operationDates,
   onStatusCalculated,
   punctuation,
-  hideComma
+  hideComma,
+  setIsParkOpen
 }) {
 
   const staticData = useStaticQuery(
@@ -180,6 +181,13 @@ export default function ParkAccessStatus({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [operationDates, subAreas, advisories]);
+
+  useEffect(() => {
+    if (accessStatus && accessStatus.parkStatusText === "Closed") {
+      setIsParkOpen(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accessStatus])
 
   return (
     <div className="access-status-icon">
