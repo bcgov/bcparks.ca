@@ -3,14 +3,8 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Home page tests', ()=>{
 
-
-test.describe('Home page tests', ()=>{
-
     const baseURL = 'https://bcparks.ca/';
 
-    test.beforeEach(async ({page})=>{
-        await page.goto(baseURL, { timeout: 90000 });
-    })
     test.beforeEach(async ({page})=>{
         await page.goto(baseURL, { timeout: 90000 });
     })
@@ -194,4 +188,4 @@ test.describe('Home page tests', ()=>{
         await expect(page.getByLabel('menu-options')).toContainText("View Royal");
         await expect(page.getByLabel('menu-options')).toContainText("North Vancouver");
         await expect(page.getByLabel('menu-options')).toContainText("Current location");
-    })})});
+    })});
