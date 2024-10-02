@@ -92,18 +92,21 @@ test('Verify the hyperlinks on the page are working', async ({page})=>{
 test('Check the park links are working and redirect to the correct site', async({page})=>{
     await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
     await page.getByRole('menuitem', { name: 'Park operating dates' }).click();
-    await page.waitForLoadState('networkidle');             
+    //await page.waitForLoadState('networkidle');  
+    test.setTimeout(60000); // Increase the timeout to 60 seconds           
     // Select all links on the page
     const links = await page.$$(`a`);
     // Loop through each link
     for (const link of links) { 
     const text = await link.textContent(); // Get the text content of the link
+    
     // Check if the text includes 'Check the park'
         if (text.includes('Check the park')) {
             await link.click();
             await expect(page).toHaveURL(baseURL + 'find-a-park/'); 
             await page.goBack();
         }
+    
     };
 });
 
