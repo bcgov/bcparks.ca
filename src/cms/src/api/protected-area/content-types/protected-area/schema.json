@@ -329,12 +329,6 @@
       "relation": "oneToMany",
       "target": "api::protected-area.protected-area"
     },
-    "trailReports": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::trail-report.trail-report",
-      "mappedBy": "protectedArea"
-    },
     "parkContacts": {
       "type": "relation",
       "relation": "oneToMany",
@@ -368,6 +362,12 @@
         "preset": "toolbar"
       },
       "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "trailReports": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::trail-report.trail-report",
+      "mappedBy": "protectedAreas"
     }
   }
 }

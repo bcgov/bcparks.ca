@@ -23,15 +23,15 @@
       "type": "date",
       "required": true
     },
-    "protectedArea": {
+    "protectedAreas": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::protected-area.protected-area",
       "inversedBy": "trailReports"
     },
-    "site": {
+    "sites": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::site.site",
       "inversedBy": "trailReports"
     }
