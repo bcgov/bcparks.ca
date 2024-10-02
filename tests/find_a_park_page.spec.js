@@ -192,5 +192,4 @@ test.describe('Find a park page tests', async ()=>{
     // adrianne testing at 3:20PM PST
 });
 
-});
 
