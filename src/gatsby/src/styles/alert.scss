@@ -4,6 +4,7 @@
   .alert-container {
     min-height: 55px;
     display: flex;
+    align-items: center;
     justify-content: center;
     margin: 0 auto;
     padding: 16px;
@@ -26,17 +27,20 @@
     }
 
     svg {
-      font-size: 1rem;
+      height: 16px;
+      width: 16px;
+      vertical-align: baseline;
     }
 
-    .icon {
+    .warning-icon {
       margin-right: 24px;
     }
 
-    .button {
-      height: 16px;
-      cursor: pointer;
+    button {
+      height: 24px;
+      width: 24px;
       margin-left: 24px;
+      margin-bottom: 0;
 
       &:focus-visible {
         outline: $colorBlueMed auto 1px;
@@ -53,7 +57,7 @@
       color: $colorWhite;
     }
 
-    .button {
+    button {
       color: $colorWhite;
     }
   }
