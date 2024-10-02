@@ -188,4 +188,16 @@ test.describe('Home page tests', ()=>{
         await expect(page.getByLabel('menu-options')).toContainText("View Royal");
         await expect(page.getByLabel('menu-options')).toContainText("North Vancouver");
         await expect(page.getByLabel('menu-options')).toContainText("Current location");
-    })});
+    })
+
+    test('Check the book camping button is visible and redirects to correct page', async ({page})=>{
+        await page.waitForLoadState('networkidle');
+        await expect(page.getByLabel('Book camping button')).toBeVisible();
+        await page.getByLabel('Book camping button').click();
+        await expect(page).toHaveURL('https://camping.bcparks.ca/');
+        
+    });
+
+});
+
+
