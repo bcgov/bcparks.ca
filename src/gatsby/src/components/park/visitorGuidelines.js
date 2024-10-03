@@ -1,5 +1,6 @@
 import React from "react"
 import { parseISO, format } from "date-fns"
+import _ from "lodash"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import HtmlContent from "./htmlContent"
@@ -13,16 +14,17 @@ const formatDate = (str) => {
 
 export const Guideline = ({ guide, reports }) => {
   const guidelineType = guide.guidelineType
+  const guidelineTypeIcon = guidelineType?.icon ? _.kebabCase(guidelineType.icon) : ""
 
   return (
     <Row className="guideline">
       <Col xs="auto" className="guideline--left">
-        <FontAwesome icon={guidelineType.icon} />
+        {guidelineTypeIcon && <FontAwesome icon={guidelineTypeIcon} />}
       </Col>
       <Col className="guideline--right">
         <h4>{guide.title ? guide.title : guidelineType.defaultTitle}</h4>
         <HtmlContent>
-          {guide.description.data.description ?
+          {guide.description?.data?.description ?
             guide.description.data.description : guidelineType.defaultDescription.data.defaultDescription}
         </HtmlContent>
         {(guidelineType.hasTrailReport && reports?.length > 0) &&
