@@ -39,7 +39,7 @@ const WINTER_FULL_PARK_ADVISORY = {
   title: "Limited access to this park during winter season",
   description: `<p>Vehicle access to the park is not available during the winter season. Visitors 
                 can still access the park on foot, but parking may not be available. Check 
-                <a href="#park-dates-container">dates of operation</a> for details and
+                <a href="#camping">camping</a> and <a href="#facilities">facilities</a> for details and
                 opening dates.</p>`,
   urgency: { sequence: 1, color: "blue" },
   eventType: { eventType: "Winter access" }
@@ -50,7 +50,7 @@ const WINTER_SUB_AREA_ADVISORY = {
   title: "Limited access to some areas during the winter season",
   description: `<p>Vehicle access to some areas of the park is not available during the winter season. 
                 Visitors can still access them on foot, but parking may not be available. Check 
-                <a href="#park-dates-container">dates of operation</a> for details and opening 
+                <a href="#camping">camping</a> and <a href="#facilities">facilities</a> for details and opening 
                 dates.</p>`,
   urgency: { sequence: 1, color: "blue" },
   eventType: { eventType: "Winter access" }
