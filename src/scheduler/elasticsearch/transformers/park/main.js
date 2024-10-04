@@ -64,7 +64,7 @@ exports.createElasticPark = async function (park, photos) {
   if (park?.parkCampingTypes?.length) {
     const parkCampingTypes = park.parkCampingTypes
       .filter(ct => {
-        return ct.isActive && ct.campingType?.isActive;
+        return ct.isActive && ct.campingType?.isActive && ct.publishedAt !== null;
       })
       .map(ct => {
         park.hasCamping = true;
@@ -86,7 +86,7 @@ exports.createElasticPark = async function (park, photos) {
   if (park?.parkFacilities?.length) {
     park.parkFacilities = park.parkFacilities
       .filter(f => {
-        return f.isActive && f.facilityType?.isActive;
+        return f.isActive && f.facilityType?.isActive && f.publishedAt !== null;
       })
       .map(f => {
         return {
@@ -100,7 +100,7 @@ exports.createElasticPark = async function (park, photos) {
   if (park?.parkActivities?.length) {
     park.parkActivities = park.parkActivities
       .filter(a => {
-        return a.isActive && a.activityType?.isActive;
+        return a.isActive && a.activityType?.isActive && a.publishedAt !== null;
       })
       .map(a => {
         return {
