@@ -23,8 +23,7 @@ test('Verify the navigation to the Day-use passes page', async ({ page }) => {
 
 
 test('Verify the page content', async ({ page }) => {
-    await page.getByRole('menuitem', { name: 'Reservations' }).click();
-    await page.getByRole('menuitem', { name: 'Day-use passes' }).click();
+    await page.goto(baseURL + 'reservations/day-use-passes/');
     test.setTimeout(60000);
     await expect(page.getByText('Home›Reservations›Day-use')).toBeVisible();
     await expect(page.getByLabel('breadcrumb').locator('div')).toContainText('Day-use passes');
