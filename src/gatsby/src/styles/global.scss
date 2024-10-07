@@ -83,6 +83,11 @@ h1, h2 {
   color: $colorBlue;
 }
 
+h5 {
+  font-size: 1rem;
+  line-height: normal;
+}
+
 /** Overrides CKEditor <p> wrapper element that has margin bottom */
 .no-mb {
   margin-bottom: 0px !important;
