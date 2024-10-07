@@ -225,5 +225,6 @@ ParkAccessStatus.propTypes = {
   subAreas: PropTypes.array.isRequired,
   operationDates: PropTypes.array.isRequired,
   onStatusCalculated: PropTypes.func,
-  punctuation: PropTypes.string
+  punctuation: PropTypes.string,
+  setIsParkOpen: PropTypes.func.isRequired
 }
