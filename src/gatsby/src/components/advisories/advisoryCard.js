@@ -4,6 +4,9 @@ import Row from "react-bootstrap/Row"
 import { Link } from "gatsby"
 
 import HTMLArea from "../HTMLArea"
+import redAlertIcon from "../../images/park/red-alert.svg"
+import yellowAlertIcon from "../../images/park/yellow-alert.svg"
+import blueAlertIcon from "../../images/park/blue-alert.svg"
 
 import "../../styles/advisories/advisoryCard.scss"
 
@@ -50,7 +53,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
     const parkCameFromNaturalResourceDistrict = (paKey) => {
       const parkNaturalResourceDistricts = parkInfoHash[paKey]?.naturalResourceDistricts || [];
       return parkNaturalResourceDistricts.some(x => advisoryNaturalResourceDistricts.includes(x))
-    }    
+    }
 
     for (const pa of advisory.protectedAreas) {
       const paKey = pa.id.toString();
@@ -81,6 +84,12 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
     return areaName.replace(upperCaseWord, lowerCaseWord)
   }
 
+  const icons = [
+    { alert: "redAlert", icon: redAlertIcon },
+    { alert: "yellowAlert", icon: yellowAlertIcon },
+    { alert: "blueAlert", icon: blueAlertIcon }
+  ]
+
   return (
     <>
       <Row
@@ -89,16 +98,6 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
         thing={advisory.isFirstInYear.toString()}
       >
         <Col>
-          <div
-            className={
-              (advisory.isFirstInYear || index === 0) &&
-                !advisory.advisoryDateObj.dateUnknown
-                ? "yearHeader mt-1"
-                : "hidden"
-            }
-          >
-            {advisory.advisoryDateObj.yearStr}
-          </div>
           <div
             className={"dateBanner d-md-none p-2 " + advisory.alertClass}
             aria-label={advisory.alertMsg}
@@ -123,32 +122,11 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
           <Row className="advisoryCard no-gutters p-2">
             <div className="d-none d-md-block p-2">
               <div className="dateArea" aria-label={advisory.alertMsg}>
-                <div className={"dateCircle " + advisory.alertClass}>
-                  <div className="dateDate">
-                    {advisory.advisoryDateObj.dateStr}
-                  </div>
-                  <div className="dateMonth">
-                    {advisory.advisoryDateObj.monthStr}
-                  </div>
-                  <div
-                    className={
-                      advisory.advisoryDateObj.dateUnknown
-                        ? "hidden"
-                        : "d-md-none"
-                    }
-                  >
-                    {advisory.advisoryDateObj.str}
-                  </div>
-                  <div
-                    className={
-                      advisory.advisoryDateObj.dateUnknown
-                        ? "dateUnknown d-md-none"
-                        : "hidden"
-                    }
-                  >
-                    Ongoing
-                  </div>
-                </div>
+                <img
+                  src={icons.find(icon => icon.alert === advisory.alertClass).icon}
+                  alt="advisory status icon"
+                  className="advisory-status-icon"
+                />
               </div>
             </div>
             <Col>
@@ -325,6 +303,11 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                     </div>
                   </>
                 )}
+              </div>
+              <div>
+                {!advisory.advisoryDateObj.dateUnknown &&
+                  <>Posted {advisory.advisoryDateObj.str}</>
+                }
               </div>
             </Col>
           </Row>
