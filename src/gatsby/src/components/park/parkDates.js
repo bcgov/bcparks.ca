@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect, useMemo, useCallback } from "react"
+import _ from "lodash"
 import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -100,6 +101,8 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
 }
 
 export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordion, itemCount }) => {
+  const parkSubAreaId = _.kebabCase(subArea.parkSubArea)
+
   return (
     <Accordion
       className={`dates-accordion is-open--${openAccordions[eventKey]}`}
@@ -111,7 +114,10 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
           eventKey={eventKey}
           onClick={() => toggleAccordion(eventKey)}
         >
-          <div className="d-flex justify-content-between accordion-toggle">
+          <div
+            id={parkSubAreaId}
+            className="d-flex justify-content-between accordion-toggle"
+          >
             <div className="d-flex align-items-center">
               <HtmlContent className="accordion-header">
                 {subArea.parkSubArea}
@@ -140,6 +146,7 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
 
 export default function ParkDates({ data, parkOperation }) {
   const subAreas = data.subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
+  const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
 
   const toggleAccordion = (index) => {
@@ -163,6 +170,38 @@ export default function ParkDates({ data, parkOperation }) {
       Object.keys(openAccordions).length === subAreas.length &&
       Object.values(openAccordions).every((isOpen) => isOpen)
   }, [openAccordions, subAreas.length])
+
+  const checkHash = useCallback(() => {
+    // Check hash in url
+    // if we find a matching parkSubArea, open that subArea accordion
+    let h = ""
+    let idx = 0
+    if (typeof window !== "undefined") {
+      h = window.location.hash
+      if (h !== undefined && h !== hash) {
+        subAreas.forEach(subArea => {
+          if (h === "#" + _.kebabCase(subArea.parkSubArea)) {
+            if (!openAccordions[idx]) {
+              setOpenAccordions((prev) => ({
+                ...prev,
+                [idx]: true,
+              }))
+            }
+          }
+          idx++
+        })
+        setHash(h)
+      }
+    }
+  }, [subAreas, hash, openAccordions])
+
+  useEffect(() => {
+    window.addEventListener("hashchange", function (e) {
+      checkHash()
+    })
+    checkHash()
+  }, [checkHash])
+
 
   useEffect(() => {
     if (subAreas.length === 1) {
