@@ -202,7 +202,6 @@ export default function ParkDates({ data, parkOperation }) {
     checkHash()
   }, [checkHash])
 
-
   useEffect(() => {
     if (subAreas.length === 1) {
       setOpenAccordions({ 0: true })
