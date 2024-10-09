@@ -1,16 +1,30 @@
 @import "../variables.scss";
 
-.advisoryCard {
+.advisory-card {
   color: $colorGrey;
   background: $colorBrownLight;
-  border-radius: 4px !important;
-}
+  margin-bottom: 16px;
+  padding: 16px;
+  @media (min-width: $smBreakpoint) {
+    padding: 32px;
+  }
 
-.cardTitle {
-  font-size: 1.3rem;
-  font-weight: bold;
-  display: flex;
-  margin-bottom: 8px;
+  &--left {
+    img.icon {
+      height: 36px;
+      width: 36px;
+    }
+  }
+  &--right {
+    padding-left: 16px !important;
+    @media (min-width: $smBreakpoint) {
+      padding-left: 32px !important;
+    }
+
+    h3.title {
+      max-width: 600px;
+    }
+  }
 }
 
 .parkLink {
@@ -29,59 +43,13 @@
   color: #fff
 }
 
-.dateArea {
-  padding-left: 1.15rem;
-  display: inline-flex;
-}
-
-.dateCircle {
-  background: $colorGreyMed;
-  color: #fff;
-  width: 7.5rem;
-  height: 7.5rem;
-  padding-top: 1.15rem;
-  border-radius: 50%;
-  text-align: center;
-}
-
-.dateDate {
-    font-size: 2.5rem;
-    line-height: 3.2rem;
-}
-
-.dateMonth {
-    font-size: 1.25rem;
-    line-height: 1.05rem;
-}
-
 .dateUnknown {
     font-size: 1.25rem;
     line-height: 5rem;
 }
 
-.blueAlert {
-  background: $colorBlue;
-}
-
-.redAlert {
-  background: $colorRed;
-}
-
-.yellowAlert {
-  background: $colorGoldDark;
-}
-
 .contentArea {
   flex-direction: column;
-}
-
-.detailsArea {
-  border: solid transparent !important;
-  background: $colorBackgroundGrey !important;
-  a {
-    color: $colorBlue;
-    margin-top: 8px;
-  }
 }
 
 .yearHeader{
