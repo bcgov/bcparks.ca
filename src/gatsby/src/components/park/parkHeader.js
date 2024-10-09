@@ -138,6 +138,9 @@ export default function ParkHeader({
                   ) : "."}
                 </p>
               }
+              {parkOperation?.openNote && 
+                <p>{parkOperation.openNote}</p>
+              }
               {(campings.length > 0 || facilities.length > 0) && (
                 <p>
                   {campings.length > 0 && <>Check <a href="#camping">camping</a></>}
