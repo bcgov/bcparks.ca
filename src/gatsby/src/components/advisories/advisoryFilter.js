@@ -87,7 +87,7 @@ const AdvisoryFilter = ({
           </div>
         </div>
         <div className="col-12 col-sm-7 col-md-4 mt-4 mt-md-0">
-          <Form.Label><b>Event</b></Form.Label>
+          <Form.Label><b>Advisory type</b></Form.Label>
           <Typeahead
             id="event-search-typeahead"
             minLength={0}
@@ -108,7 +108,7 @@ const AdvisoryFilter = ({
               <Form.Group controlId="event-search-typeahead">
                 <Form.Control ref={ref} {...props} />
                 <label htmlFor="event-search-typeahead">
-                  Select an event
+                  Select a type
                 </label>
               </Form.Group>
             )}
