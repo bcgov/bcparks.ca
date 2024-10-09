@@ -27,7 +27,7 @@ module.exports = ({ strapi }) => ({
         populate: { "parkNameType": { fields: ["nameTypeId"] } }
       },
       parkFacilities: {
-        fields: ["isFacilityOpen", "isActive"],
+        fields: ["isFacilityOpen", "isActive", "publishedAt"],
         populate: {
           "facilityType": {
             fields: ["facilityCode", "isActive", "facilityNumber"]
@@ -35,7 +35,7 @@ module.exports = ({ strapi }) => ({
         }
       },
       parkActivities: {
-        fields: ["isActivityOpen", "isActive"],
+        fields: ["isActivityOpen", "isActive", "publishedAt"],
         populate: {
           "activityType": {
             fields: ["activityCode", "isActive", "activityNumber"]
@@ -43,7 +43,7 @@ module.exports = ({ strapi }) => ({
         }
       },
       parkCampingTypes: {
-        fields: ["isCampingOpen", "isActive"],
+        fields: ["isCampingOpen", "isActive", "publishedAt"],
         populate: {
           "campingType": {
             fields: ["campingTypeCode", "isActive", "campingTypeNumber"]
