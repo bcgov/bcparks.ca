@@ -102,6 +102,7 @@ lastrun.txt
 
 **/testApp
 **/coverage
+myenv/lib
 
 ############################
 # Strapi
