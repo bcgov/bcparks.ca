@@ -107,7 +107,8 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
       <Col className="advisory-card--right">
         {/* advisory title */}
         {advisory.title && <h3 className="title">{advisory.title}</h3>}
-        <div>
+        {/* advisory content */}
+        <div className="card-content">
           {showFireCentres && advisory.fireCentres.map(
             (fireCentre, index) => (
               <Badge
@@ -224,28 +225,35 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
               }
             </div>
           )}
+          {/* advisory description */}
+          {advisory.description &&
+            <HTMLArea isVisible>{advisory.description}</HTMLArea>
+          }
+          {/* advisory links */}
+          {advisory.links?.map(({ title, url, id }) => (
+            <a
+              href={url}
+              style={{ display: 'block' }}
+              target="_blank"
+              rel="noopener noreferrer"
+              key={id}
+            >
+              {title}
+            </a>
+          ))}
+          <div className="card-content--bottom">
+            {/* advisory date */}
+            {!advisory.advisoryDateObj.dateUnknown &&
+              <small>
+                Posted<b>{advisory.advisoryDateObj.str}</b>
+              </small>
+            }
+            {/* advisory type */}
+            <small>
+              Advisory type<b>{advisory.eventType.eventType}</b>
+            </small>
+          </div>
         </div>
-        {/* advisory description */}
-        {advisory.description &&
-          <HTMLArea isVisible>{advisory.description}</HTMLArea>
-        }
-        {advisory.links?.map(({ title, url, id }) => (
-          <a
-            href={url}
-            style={{ display: 'block' }}
-            target="_blank"
-            rel="noopener noreferrer"
-            key={id}
-          >
-            {title}
-          </a>
-        ))}
-        {!advisory.advisoryDateObj.dateUnknown &&
-          <small>
-            Posted {advisory.advisoryDateObj.str}
-          </small>
-        }
-        <small>Advisory type  {advisory.eventType.eventType}</small>
       </Col>
     </Row>
   )

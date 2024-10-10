@@ -15,6 +15,7 @@
       width: 36px;
     }
   }
+
   &--right {
     padding-left: 16px !important;
     @media (min-width: $smBreakpoint) {
@@ -23,6 +24,37 @@
 
     h3.title {
       max-width: 600px;
+    }
+
+    small {
+      display: block;
+      color: $colorGreyMed;
+      @media (min-width: $smBreakpoint) {
+        display: inline-block;
+      }
+
+      + small {
+        margin-left: 0;
+        @media (min-width: $smBreakpoint) {
+          margin-left: 16px;
+        }
+      }
+
+      b {
+        margin-left: 8px;
+      }
+    }
+
+    .card-content {
+      max-width: 600px;
+      margin-left: -48px;
+      @media (min-width: $smBreakpoint) {
+        margin-left: 0;
+      }
+
+      &--bottom {
+        margin-top: 8px;
+      }
     }
   }
 }
@@ -35,25 +67,6 @@
   font-weight: 400;
   white-space: pre-line;
   border: solid 1px $colorBlue;
-}
-
-.dateBanner {
-  border: transparent;
-  border-radius: 4px 4px 0px 0px;
-  color: #fff
-}
-
-.dateUnknown {
-    font-size: 1.25rem;
-    line-height: 5rem;
-}
-
-.contentArea {
-  flex-direction: column;
-}
-
-.yearHeader{
-  font-size: 2rem;
 }
 
 .badge-secondary-light {

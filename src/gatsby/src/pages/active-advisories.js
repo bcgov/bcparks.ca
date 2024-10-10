@@ -23,8 +23,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const [isNewFilter, setIsNewFilter] = useState(true) // true when any part of filter changes
   const [isDataOld, setIsDataOld] = useState(true) // true when new adivsories needed
 
-  const [pageTitle, setPageTitle] = useState("Active advisories")
-
   // state of filter checkboxes:
   const [isParksFilter, setIsParksFilter] = useState(false)
   const [isKeywordFilter, setIsKeywordFilter] = useState(false)
@@ -78,15 +76,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     let eventType = getAdvisoryTypeFromUrl();
     setAdvisoryType(eventType);
   }, [defaultAdvisoryEventType, apiUrl]);
-
-  // Get advisory type from url params ---------------
-  const updatePageTitle = (aType) => {
-    if (aType !== 'all') {
-      setPageTitle(`Active advisories | ${capitalizeFirstLetter(aType)}`)
-    } else {
-      setPageTitle("Active advisories")
-    }
-  }
 
   // Filter getters and setters --------------------
   const getSearchText = () => {
@@ -298,7 +287,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   useEffect(() => {
     if (isNewFilter) {
       const aType = getAdvisoryTypeFromUrl()
-      updatePageTitle(aType)
       setAdvisoryType(aType)
       setIsDataOld(true)
 
@@ -320,7 +308,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   useEffect(() => {
     if (!isNewFilter) {
       let q = getApiQuery(advisoryType)
-      updatePageTitle(advisoryType)
       setIsDataOld(true)
       getAdvisories(q)
     }
@@ -351,7 +338,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="static-content-container">
-        <h1>{pageTitle}</h1>
+        <h1>Active advisories</h1>
         <div className="mb-2">
           <AdvisoryFilter
             defaultEventType={defaultAdvisoryEventType}
