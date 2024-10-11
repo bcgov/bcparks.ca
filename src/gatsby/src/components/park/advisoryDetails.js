@@ -29,28 +29,22 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
 
   const advisoriesWithFormatting = advisories.map(advisory => {
     let alertIcon
-    let alertColorCss
     switch (advisory.urgency.color) {
       case "blue":
         alertIcon = blueAlertIcon
-        alertColorCss = "blue-alert"
         break
       case "red":
         alertIcon = redAlertIcon
-        alertColorCss = "red-alert"
         break
       case "yellow":
         alertIcon = yellowAlertIcon
-        alertColorCss = "yellow-alert"
         break
       default:
         alertIcon = blueAlertIcon
-        alertColorCss = "blue-alert"
     }
 
     return {
       alertIcon,
-      alertColorCss,
       formattedAdvisoryDate: formatDate(advisory.advisoryDate),
       formattedEffectiveDate: formatDate(advisory.effectiveDate),
       formattedEndDate: formatDate(advisory.endDate),
@@ -169,24 +163,31 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                     ))}
                     {advisory.isEffectiveDateDisplayed &&
                       advisory.formattedEffectiveDate && (
-                        <p>
-                          In effect {advisory.formattedEffectiveDate}
-                          {advisory.isEndDateDisplayed &&
-                            advisory.formattedEndDate && (
-                              <>
-                                {" to "}
-                                {advisory.formattedEndDate}
-                              </>
-                            )}
-                        </p>
+                        <div className="date">
+                          <small>In effect</small>
+                          <small>
+                            <b>
+                              {advisory.formattedEffectiveDate}
+                              {advisory.isEndDateDisplayed && advisory.formattedEndDate && (
+                                <> to {advisory.formattedEndDate}</>
+                              )}
+                            </b>
+                          </small>
+                        </div>
                       )}
                     {advisory.isAdvisoryDateDisplayed &&
                       advisory.formattedAdvisoryDate && (
-                        <p>Posted {advisory.formattedAdvisoryDate}</p>
+                        <div className="date">
+                          <small>Posted</small>
+                          <small><b>{advisory.formattedAdvisoryDate}</b></small>
+                        </div>
                       )}
                     {advisory.isUpdatedDateDisplayed &&
                       advisory.formattedUpdatedDate && (
-                        <p>Updated {advisory.formattedUpdatedDate}</p>
+                        <div className="date">
+                          <small>Updated</small>
+                          <small><b>{advisory.formattedUpdatedDate}</b></small>
+                        </div>
                       )}
                   </div>
                 </Accordion.Collapse>

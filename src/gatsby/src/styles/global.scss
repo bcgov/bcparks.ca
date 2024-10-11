@@ -609,8 +609,25 @@ nav.breadcrumbs {
   }
   &-content {
     padding-top: 32px;
+    padding-left: 0;
+    @media screen and (min-width: $smBreakpoint) {
+      padding-left: 40px;
+    }
     & > :not(.subarea-container) {
       max-width: 600px !important;
+    }
+    .date {
+      display: flex;
+      margin-top: 8px;
+      small {
+        color: $colorGreyMed;
+        &:first-of-type {
+          text-wrap: nowrap;
+        }
+        + small {
+          margin-left: 8px;
+        }
+      }
     }
   }
   &-toggle {
