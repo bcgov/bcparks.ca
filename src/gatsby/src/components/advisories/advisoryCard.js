@@ -1,8 +1,9 @@
 import React, { useState } from "react"
+import { Link } from "gatsby"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Badge from "react-bootstrap/Badge"
-import { Link } from "gatsby"
+import { parseJSON, format } from "date-fns"
 
 import HTMLArea from "../HTMLArea"
 import redAlertIcon from "../../images/park/red-alert.svg"
@@ -10,6 +11,10 @@ import yellowAlertIcon from "../../images/park/yellow-alert.svg"
 import blueAlertIcon from "../../images/park/blue-alert.svg"
 
 import "../../styles/advisories/advisoryCard.scss"
+
+const formatDate = isoDate => {
+  return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
+}
 
 const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
   const [open, setOpen] = useState(false)
@@ -80,11 +85,6 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
 
   const hasAdditionalParks = checkAdditionalParks();
 
-  const sentenceCase = (areaName, upperCaseWord) => {
-    const lowerCaseWord = upperCaseWord.toLowerCase()
-    return areaName.replace(upperCaseWord, lowerCaseWord)
-  }
-
   const icons = [
     { alert: "redAlert", icon: redAlertIcon },
     { alert: "yellowAlert", icon: yellowAlertIcon },
@@ -116,7 +116,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                 key={index}
                 className="parkLink badge badge-pill badge-primary mb-2 mr-2"
               >
-                {sentenceCase(fireCentre.fireCentreName, "Fire Centre")}
+                {fireCentre.fireCentreName}
               </Badge>
             ))}
           {showFireZones && advisory.fireZones.map(
@@ -126,7 +126,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                 key={index}
                 className="parkLink badge badge-pill badge-primary mb-2 mr-2"
               >
-                {sentenceCase(fireZone.fireZoneName, "Fire Zone")}
+                {fireZone.fireZoneName}
               </Badge>
             ))}
           {showRegions && advisory.regions.map(
@@ -156,7 +156,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                 key={index}
                 className="parkLink badge badge-pill badge-primary mb-2 mr-2"
               >
-                {sentenceCase(naturalResourceDistrict.naturalResourceDistrictName, "Natural Resource District")}
+                {naturalResourceDistrict.naturalResourceDistrictName}
               </Badge>
             ))}
           {hasAdditionalParks &&
@@ -243,15 +243,39 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
           ))}
           <div className="card-content--bottom">
             {/* advisory date */}
-            {!advisory.advisoryDateObj.dateUnknown &&
-              <small>
-                Posted<b>{advisory.advisoryDateObj.str}</b>
-              </small>
-            }
+            {advisory.isEffectiveDateDisplayed &&
+              formatDate(advisory.effectiveDate) && (
+                <div className="date">
+                  <small>In effect</small>
+                  <small>
+                    <b>
+                      {formatDate(advisory.effectiveDate)}
+                      {advisory.isEndDateDisplayed && formatDate(advisory.endDate) && (
+                        <> to {formatDate(advisory.endDate)}</>
+                      )}
+                    </b>
+                  </small>
+                </div>
+              )}
+            {advisory.isAdvisoryDateDisplayed &&
+              formatDate(advisory.advisoryDate) && (
+                <div className="date">
+                  <small>Posted</small>
+                  <small><b>{formatDate(advisory.advisoryDate)}</b></small>
+                </div>
+              )}
+            {advisory.isUpdatedDateDisplayed &&
+              formatDate(advisory.updatedDate) && (
+                <div className="date">
+                  <small>Updated</small>
+                  <small><b>{formatDate(advisory.updatedDate)}</b></small>
+                </div>
+              )}
             {/* advisory type */}
-            <small>
-              Advisory type<b>{advisory.eventType.eventType}</b>
-            </small>
+            <div className="type">
+              <small>Advisory type</small>
+              <small><b>{advisory.eventType.eventType}</b></small>
+            </div>
           </div>
         </div>
       </Col>

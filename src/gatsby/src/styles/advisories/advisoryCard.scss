@@ -26,25 +26,6 @@
       max-width: 600px;
     }
 
-    small {
-      display: block;
-      color: $colorGreyMed;
-      @media (min-width: $smBreakpoint) {
-        display: inline-block;
-      }
-
-      + small {
-        margin-left: 0;
-        @media (min-width: $smBreakpoint) {
-          margin-left: 16px;
-        }
-      }
-
-      b {
-        margin-left: 8px;
-      }
-    }
-
     .card-content {
       max-width: 600px;
       margin-left: -48px;
@@ -53,7 +34,30 @@
       }
 
       &--bottom {
+        display: block;
         margin-top: 8px;
+        @media (min-width: $smBreakpoint) {
+          display: flex;
+        }
+
+        .date, .type {
+          display: flex;
+          small {
+            color: $colorGreyMed;
+            &:first-of-type {
+              text-wrap: nowrap;
+            }
+            + small {
+              margin-left: 8px;
+            }
+          }
+        }
+        .type {
+          margin-left: 0;
+          @media (min-width: $smBreakpoint) {
+            margin-left: 16px;
+          }
+        }
       }
     }
   }

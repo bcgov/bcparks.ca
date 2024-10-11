@@ -12,7 +12,6 @@ import AdvisoryList from "../components/advisories/advisoryList"
 import AdvisoryPageNav from "../components/advisories/advisoryPageNav"
 import AdvisoryLegend from "../components/advisories/advisoryLegend"
 import ScrollToTop from "../components/scrollToTop"
-import { capitalizeFirstLetter } from "../utils/helpers"
 import { getAdvisoryTypeFromUrl } from "../utils/advisoryHelper"
 
 import "../styles/home.scss"

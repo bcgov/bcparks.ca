@@ -67,7 +67,6 @@ const AdvisoryFilter = ({
           >
             <Form.Group controlId="advisory-search">
               <Form.Control
-                id="advisory-search"
                 placeholder=" "
                 value={filterText}
                 onChange={e =>
@@ -104,9 +103,9 @@ const AdvisoryFilter = ({
               e.length ? e[0].value : defaultEventType.value
             )}
             onInputChange={e => handleInputChange(e)}
-            renderInput={({ ref, ...props }) => (
+            renderInput={({ inputRef, referenceElementRef, ...props }) => (
               <Form.Group controlId="event-search-typeahead">
-                <Form.Control ref={ref} {...props} />
+                <Form.Control ref={inputRef} {...props} />
                 <label htmlFor="event-search-typeahead">
                   Select a type
                 </label>
