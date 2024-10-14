@@ -53,11 +53,6 @@
       min-height: calc(100vh - 380px);
       padding-bottom: 64px;
     }
-    &.has-nearby-parks--true {
-      & > div.w-100:last-of-type {
-        min-height: auto;
-      }
-    }
   }
 }
 
