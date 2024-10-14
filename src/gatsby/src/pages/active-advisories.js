@@ -335,11 +335,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     </div>
   ]
 
-  console.log("pageIndex", pageIndex)
-  console.log("pageCount", pageCount)
-  console.log("advisoryType", advisoryType)
-  console.log("isNewFilter", isNewFilter)
-
   return (
     <div>
       <Header mode="internal" content={menuContent} />
