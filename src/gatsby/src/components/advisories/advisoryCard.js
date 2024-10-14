@@ -22,11 +22,11 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
     return orcsSite?.includes(orcs?.toString())
   }
 
-  const showFireCentres = advisory.fireCentres?.length > 0; // 1st priority
-  const showFireZones = advisory.fireZones?.length > 0 && !showFireCentres; // 2nd priority
-  const showRegions = advisory.regions?.length > 0 && !showFireCentres && !showFireZones; // 3rd priority
-  const showSections = advisory.sections?.length > 0 && !showFireCentres && !showFireZones && !showRegions;  // 4th priority
-  const showNaturalResourceDistricts = advisory.naturalResourceDistricts?.length > 0 && !showFireCentres && !showFireZones && !showRegions && !showSections;  // 5th priority
+  const showFireCentres = advisory.fireCentres?.length > 0;
+  const showFireZones = advisory.fireZones?.length > 0;
+  const showRegions = advisory.regions?.length > 0;
+  const showSections = advisory.sections?.length > 0;
+  const showNaturalResourceDistricts = advisory.naturalResourceDistricts?.length > 0;
 
   const checkAdditionalParks = () => {
 
@@ -85,6 +85,17 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
 
   const hasAdditionalParks = checkAdditionalParks();
 
+  // Combine all the arrays into a single array
+  const combinedArray = [
+    ...(showFireCentres ? advisory.fireCentres.map(item => ({ ...item, type: 'fireCentre', name: item.fireCentreName })) : []),
+    ...(showFireZones ? advisory.fireZones.map(item => ({ ...item, type: 'fireZone', name: item.fireZoneName })) : []),
+    ...(showRegions ? advisory.regions.map(item => ({ ...item, type: 'region', name: item.regionName })) : []),
+    ...(showSections ? advisory.sections.map(item => ({ ...item, type: 'section', name: item.sectionName })) : []),
+    ...(showNaturalResourceDistricts ? advisory.naturalResourceDistricts.map(item => ({ ...item, type: 'naturalResourceDistrict', name: item.naturalResourceDistrictName })) : [])
+  ];
+  // Sort the combined array alphabetically by name
+  combinedArray.sort((a, b) => a.name.localeCompare(b.name));
+
   const icons = [
     { alert: "redAlert", icon: redAlertIcon },
     { alert: "yellowAlert", icon: yellowAlertIcon },
@@ -109,56 +120,16 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
         {advisory.title && <h3 className="title">{advisory.title}</h3>}
         {/* advisory content */}
         <div className="card-content">
-          {showFireCentres && advisory.fireCentres.map(
-            (fireCentre, index) => (
-              <Badge
-                pill
-                key={index}
-                className="parkLink badge badge-pill badge-primary mb-2 mr-2"
-              >
-                {fireCentre.fireCentreName}
-              </Badge>
-            ))}
-          {showFireZones && advisory.fireZones.map(
-            (fireZone, index) => (
-              <Badge
-                pill
-                key={index}
-                className="parkLink badge badge-pill badge-primary mb-2 mr-2"
-              >
-                {fireZone.fireZoneName}
-              </Badge>
-            ))}
-          {showRegions && advisory.regions.map(
-            (region, index) => (
-              <Badge
-                pill
-                key={index}
-                className="parkLink badge badge-pill badge-primary mb-2 mr-2"
-              >
-                {region.regionName} region
-              </Badge>
-            ))}
-          {showSections && advisory.sections.map(
-            (section, index) => (
-              <Badge
-                pill
-                key={index}
-                className="parkLink badge badge-pill badge-primary mb-2 mr-2"
-              >
-                {section.sectionName} section
-              </Badge>
-            ))}
-          {showNaturalResourceDistricts && advisory.naturalResourceDistricts.map(
-            (naturalResourceDistrict, index) => (
-              <Badge
-                pill
-                key={index}
-                className="parkLink badge badge-pill badge-primary mb-2 mr-2"
-              >
-                {naturalResourceDistrict.naturalResourceDistrictName}
-              </Badge>
-            ))}
+          {combinedArray.map((item, index) => (
+            <Badge
+              pill
+              key={index}
+              className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+            >
+              {item.name}
+              {item.type === "region" ? " Region" : item.type === "section" ? " Section" : ""}
+            </Badge>
+          ))}
           {hasAdditionalParks &&
             <Badge
               className="parkLink badge-pill badge-secondary-light mb-2 mr-2"
