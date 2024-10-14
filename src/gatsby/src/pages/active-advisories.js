@@ -312,6 +312,11 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     }
   }, [pageIndex, advisoryType, isNewFilter, getApiQuery, getAdvisories])
 
+    // Reset pageIndex to 1 when advisoryType or searchText changes
+    useEffect(() => {
+      setPageIndex(1)
+    }, [advisoryType, searchText])
+
   // Get total advisory count of this type
   // only has to happen once, when type changes, page reloads
   useEffect(() => {
@@ -329,6 +334,11 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       Active advisories
     </div>
   ]
+
+  console.log("pageIndex", pageIndex)
+  console.log("pageCount", pageCount)
+  console.log("advisoryType", advisoryType)
+  console.log("isNewFilter", isNewFilter)
 
   return (
     <div>

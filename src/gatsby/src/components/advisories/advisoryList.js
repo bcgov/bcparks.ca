@@ -11,8 +11,8 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
   let haveAdvisories = false;
 
   const processDate = (date) => {
-      // dates come in as strings, need processing for display purposes
-      // several dates per advisory need processing, which is why this is a separate fn
+    // dates come in as strings, need processing for display purposes
+    // several dates per advisory need processing, which is why this is a separate fn
     var pd = {
       dateStr: "",
       monthStr: "",
@@ -31,7 +31,7 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
       pd.yearStr = d.getFullYear().toString();
       pd.str = pd.monthStr + " " + pd.dateStr + ", " + pd.yearStr;
       pd.dateUnknown = false;
-    } 
+    }
 
     return pd
   }
@@ -39,12 +39,12 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
   const processAlertLevel = (advisory) => {
     // Determine color for alert
     var color = advisory.urgency.color
-    
+
     advisory.alertClass = color + "Alert";
-    
+
     let capColor = "";
     let level = "";
-    
+
     switch (color) {
       case "red":
         capColor = "Red";
@@ -75,40 +75,41 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
   }
 
   const processAdvisories = (a) => {
-    
+    // Sort advisories by advisoryDate in descending order (most recent first)
+    a.sort((a, b) => new Date(b.advisoryDate) - new Date(a.advisoryDate));
     // determine properties not found from api call or need processing
-      
-    if(a.length > 0){ // otherwise no advisories yet
 
-        a.forEach((advisory) => {
+    if (a.length > 0) { // otherwise no advisories yet
 
-          processAlertLevel(advisory);
+      a.forEach((advisory) => {
 
-          // Determine if card has details
-          advisory.detailsClass = (advisory.description || advisory.isEffectiveDateDisplayed) ? "details" : "noDetails";
+        processAlertLevel(advisory);
 
-          // Process date strings
-          advisory.advisoryDateObj = processDate(advisory.advisoryDate);
-          advisory.effectiveDateObj = processDate(advisory.effectiveDate);
-          advisory.endDateObj = processDate(advisory.endDate);
+        // Determine if card has details
+        advisory.detailsClass = (advisory.description || advisory.isEffectiveDateDisplayed) ? "details" : "noDetails";
 
-          advisory.isFirstInYear = false; // assume this, check below
+        // Process date strings
+        advisory.advisoryDateObj = processDate(advisory.advisoryDate);
+        advisory.effectiveDateObj = processDate(advisory.effectiveDate);
+        advisory.endDateObj = processDate(advisory.endDate);
 
-        })
+        advisory.isFirstInYear = false; // assume this, check below
 
-        // mark advisories that are first in that year
-        // when true, year displayed above card
+      })
 
-        var y = ""; // placeholder year
-        for (let idx in a) {
-        let ai = a[idx];     
-        if (y !== ai.advisoryDateObj.yearStr) {   
-            ai.isFirstInYear = true; 
-            y = ai.advisoryDateObj.yearStr;
-        } 
+      // mark advisories that are first in that year
+      // when true, year displayed above card
+
+      var y = ""; // placeholder year
+      for (let idx in a) {
+        let ai = a[idx];
+        if (y !== ai.advisoryDateObj.yearStr) {
+          ai.isFirstInYear = true;
+          y = ai.advisoryDateObj.yearStr;
+        }
       }
     }
-    
+
     haveAdvisories = true;
     return (a);
   }
