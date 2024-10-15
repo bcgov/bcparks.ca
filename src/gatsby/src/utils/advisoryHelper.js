@@ -2,17 +2,17 @@ import axios from "axios"
 const qs = require('qs');
 
 const getAdvisoryTypeFromUrl = () => {
-    let aType = "all", thisUrl = "", params
-  
-    if (typeof window !== "undefined" && window.document) {
-      thisUrl = new URLSearchParams(window.location.search)
-      params = Object.fromEntries(thisUrl.entries())
-    }
-  
-    if (params && params.type) {
-      aType = params.type
-    }
-    return aType
+  let aType = "all", thisUrl = "", params
+
+  if (typeof window !== "undefined" && window.document) {
+    thisUrl = new URLSearchParams(window.location.search)
+    params = Object.fromEntries(thisUrl.entries())
+  }
+
+  if (params && params.type) {
+    aType = params.type
+  }
+  return aType
 }
 
 const loadAdvisories = (apiBaseUrl, orcsId) => {
@@ -39,7 +39,7 @@ const WINTER_FULL_PARK_ADVISORY = {
   title: "Limited access to this park during winter season",
   description: `<p>Vehicle access to the park is not available during the winter season. Visitors 
                 can still access the park on foot, but parking may not be available. Check 
-                <a href="#camping">camping</a> and <a href="#facilities">facilities</a> for details and
+                <a href="#main-content">park opening dates</a>, <a href="#camping">camping</a>, and <a href="#facilities">facilities</a> for details and
                 opening dates.</p>`,
   urgency: { sequence: 1, color: "blue" },
   eventType: { eventType: "Winter access" }
