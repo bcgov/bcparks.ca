@@ -58,6 +58,8 @@
 
   .section-select-container {
     position: relative;
+    border-top: 1px solid $colorGrey;
+    border-bottom: 1px solid $colorGrey;
     &::after {
       position: absolute;
       content: "\f078";
@@ -77,8 +79,7 @@
     .section-select {
       width: 100%;
       height: 68px !important;
-      border-left: none;
-      border-right: none;
+      border: none;
       padding: 0px 20px;
       color: $colorBlue;
       background: #fff;
