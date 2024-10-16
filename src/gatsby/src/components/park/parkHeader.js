@@ -131,14 +131,18 @@ export default function ParkHeader({
                 <p>
                   The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}
                   {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) ? (
-                    <>
-                      , from <span className="no-wrap">{formattedTime(parkOperation.gateOpenTime)}</span>{" "}
-                      to <span className="no-wrap">{formattedTime(parkOperation.gateCloseTime)}</span>, daily.
-                    </>
+                    parkOperation.gateOpenTime === "00:00:00" && parkOperation.gateCloseTime === "23:59:00" ? (
+                      <>, 24 hours a day.</>
+                    ) : (
+                      <>
+                        , from <span className="no-wrap">{formattedTime(parkOperation.gateOpenTime)}</span>{" "}
+                        to <span className="no-wrap">{formattedTime(parkOperation.gateCloseTime)}</span>, daily.
+                      </>
+                    )
                   ) : "."}
                 </p>
               }
-              {parkOperation?.openNote && 
+              {parkOperation?.openNote &&
                 <p>{parkOperation.openNote}</p>
               }
               {(campings.length > 0 || facilities.length > 0) && (
