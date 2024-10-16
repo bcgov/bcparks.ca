@@ -12,7 +12,6 @@ import AdvisoryList from "../components/advisories/advisoryList"
 import AdvisoryPageNav from "../components/advisories/advisoryPageNav"
 import AdvisoryLegend from "../components/advisories/advisoryLegend"
 import ScrollToTop from "../components/scrollToTop"
-import { capitalizeFirstLetter } from "../utils/helpers"
 import { getAdvisoryTypeFromUrl } from "../utils/advisoryHelper"
 
 import "../styles/home.scss"
@@ -22,8 +21,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
   const [isNewFilter, setIsNewFilter] = useState(true) // true when any part of filter changes
   const [isDataOld, setIsDataOld] = useState(true) // true when new adivsories needed
-
-  const [pageTitle, setPageTitle] = useState("Active advisories")
 
   // state of filter checkboxes:
   const [isParksFilter, setIsParksFilter] = useState(false)
@@ -56,37 +53,28 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     const fetchEvenType = async () => {
       try {
         const response = await axios.get(`${apiUrl}/event-types`);
-  
+
         const formattedEventTypes = response.data.data.map((obj) => ({
           label: obj.eventType,
           value: obj.eventType,
         }));
-  
+
         formattedEventTypes.splice(0, 0, defaultAdvisoryEventType);
         const localeSortEvent = formattedEventTypes?.sort((a, b) =>
           a.value.localeCompare(b.value, "en", { sensitivity: "base" })
         );
-  
+
         setEventTypes(localeSortEvent);
       } catch (err) {
         console.error("Fetch Even Type error:", err);
       }
     };
-  
+
     fetchEvenType();
-  
+
     let eventType = getAdvisoryTypeFromUrl();
     setAdvisoryType(eventType);
   }, [defaultAdvisoryEventType, apiUrl]);
-  
-  // Get advisory type from url params ---------------
-  const updatePageTitle = (aType) => {
-    if (aType !== 'all') {
-      setPageTitle(`Active advisories | ${capitalizeFirstLetter(aType)}`)
-    } else {
-      setPageTitle("Active advisories")
-    }
-  }
 
   // Filter getters and setters --------------------
   const getSearchText = () => {
@@ -238,9 +226,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
             // Get count
             let apiCount = apiUrl + "/public-advisories/count" + q
             if (q === "?queryText") {
-             apiCount = apiUrl + "/public-advisories/count"
+              apiCount = apiUrl + "/public-advisories/count"
             }
-            
+
             axios
               .get(apiCount)
               .then(function (data) {
@@ -298,7 +286,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   useEffect(() => {
     if (isNewFilter) {
       const aType = getAdvisoryTypeFromUrl()
-      updatePageTitle(aType)
       setAdvisoryType(aType)
       setIsDataOld(true)
 
@@ -320,11 +307,15 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   useEffect(() => {
     if (!isNewFilter) {
       let q = getApiQuery(advisoryType)
-      updatePageTitle(advisoryType)
       setIsDataOld(true)
       getAdvisories(q)
     }
   }, [pageIndex, advisoryType, isNewFilter, getApiQuery, getAdvisories])
+
+    // Reset pageIndex to 1 when advisoryType or searchText changes
+    useEffect(() => {
+      setPageIndex(1)
+    }, [advisoryType, searchText])
 
   // Get total advisory count of this type
   // only has to happen once, when type changes, page reloads
@@ -351,19 +342,17 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="static-content-container">
-        <h1>{pageTitle}</h1>
+        <h1>Active advisories</h1>
         <div className="mb-2">
-          <div className="mb-2">
-            {filterCount} active advisories in BC Parks
-          </div>
           <AdvisoryFilter
             defaultEventType={defaultAdvisoryEventType}
             eventTypes={eventTypes}
-            filterFunctions={filterFunctions}></AdvisoryFilter>
+            filterFunctions={filterFunctions}
+          />
         </div>
 
         <div className={isDataOld ? "my-2" : "hidden"}>
-            <ProgressBar animated now={100} />
+          <ProgressBar animated now={100} />
         </div>
 
         <div className={isDataOld ? "hidden" : undefined}>
@@ -376,16 +365,18 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           </div>
 
           <AdvisoryLegend />
+          <div className="mb-2">
+            <b>{filterCount}</b> active advisories
+          </div>
           <AdvisoryList
             advisories={advisories}
             parkInfoHash={parkInfoHash}
-          ></AdvisoryList>
-
+          />
           <AdvisoryPageNav
             pageIndex={pageIndex}
             pageCount={pageCount}
             setPage={setPage}
-          ></AdvisoryPageNav>
+          />
         </div>
       </div>
       <ScrollToTop />

@@ -67,7 +67,6 @@ const AdvisoryFilter = ({
           >
             <Form.Group controlId="advisory-search">
               <Form.Control
-                id="advisory-search"
                 placeholder=" "
                 value={filterText}
                 onChange={e =>
@@ -87,7 +86,7 @@ const AdvisoryFilter = ({
           </div>
         </div>
         <div className="col-12 col-sm-7 col-md-4 mt-4 mt-md-0">
-          <Form.Label><b>Event</b></Form.Label>
+          <Form.Label><b>Advisory type</b></Form.Label>
           <Typeahead
             id="event-search-typeahead"
             minLength={0}
@@ -104,11 +103,11 @@ const AdvisoryFilter = ({
               e.length ? e[0].value : defaultEventType.value
             )}
             onInputChange={e => handleInputChange(e)}
-            renderInput={({ ref, ...props }) => (
+            renderInput={({ inputRef, referenceElementRef, ...props }) => (
               <Form.Group controlId="event-search-typeahead">
-                <Form.Control ref={ref} {...props} />
+                <Form.Control ref={inputRef} {...props} />
                 <label htmlFor="event-search-typeahead">
-                  Select an event
+                  Select a type
                 </label>
               </Form.Group>
             )}

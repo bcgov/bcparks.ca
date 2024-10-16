@@ -1,16 +1,66 @@
 @import "../variables.scss";
 
-.advisoryCard {
+.advisory-card {
   color: $colorGrey;
-  background: $colorBackgroundGrey;
-  border-radius: 4px !important;
-}
+  background: $colorBrownLight;
+  margin-bottom: 16px;
+  padding: 16px;
+  @media (min-width: $smBreakpoint) {
+    padding: 32px;
+  }
 
-.cardTitle {
-  font-size: 1.3rem;
-  font-weight: bold;
-  display: flex;
-  margin-bottom: 8px;
+  &--left {
+    img.icon {
+      height: 36px;
+      width: 36px;
+    }
+  }
+
+  &--right {
+    padding-left: 16px !important;
+    @media (min-width: $smBreakpoint) {
+      padding-left: 32px !important;
+    }
+
+    h3.title {
+      max-width: 600px;
+    }
+
+    .card-content {
+      max-width: 600px;
+      margin-left: -48px;
+      @media (min-width: $smBreakpoint) {
+        margin-left: 0;
+      }
+
+      &--bottom {
+        display: block;
+        margin-top: 8px;
+        @media (min-width: $smBreakpoint) {
+          display: flex;
+        }
+
+        .date, .type {
+          display: flex;
+          small {
+            color: $colorGreyMed;
+            &:first-of-type {
+              text-wrap: nowrap;
+            }
+            + small {
+              margin-left: 8px;
+            }
+          }
+        }
+        .type {
+          margin-left: 0;
+          @media (min-width: $smBreakpoint) {
+            margin-left: 16px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .parkLink {
@@ -21,71 +71,6 @@
   font-weight: 400;
   white-space: pre-line;
   border: solid 1px $colorBlue;
-}
-
-.dateBanner {
-  border: transparent;
-  border-radius: 4px 4px 0px 0px;
-  color: #fff
-}
-
-.dateArea {
-  padding-left: 1.15rem;
-  display: inline-flex;
-}
-
-.dateCircle {
-  background: $colorGreyMed;
-  color: #fff;
-  width: 7.5rem;
-  height: 7.5rem;
-  padding-top: 1.15rem;
-  border-radius: 50%;
-  text-align: center;
-}
-
-.dateDate {
-    font-size: 2.5rem;
-    line-height: 3.2rem;
-}
-
-.dateMonth {
-    font-size: 1.25rem;
-    line-height: 1.05rem;
-}
-
-.dateUnknown {
-    font-size: 1.25rem;
-    line-height: 5rem;
-}
-
-.blueAlert {
-  background: $colorBlue;
-}
-
-.redAlert {
-  background: $colorRed;
-}
-
-.yellowAlert {
-  background: $colorGoldDark;
-}
-
-.contentArea {
-  flex-direction: column;
-}
-
-.detailsArea {
-  border: solid transparent !important;
-  background: $colorBackgroundGrey !important;
-  a {
-    color: $colorBlue;
-    margin-top: 8px;
-  }
-}
-
-.yearHeader{
-  font-size: 2rem;
 }
 
 .badge-secondary-light {
@@ -111,7 +96,6 @@
 }
 
 .btn-link {
-  color: $colorBlue;
   margin-bottom: 8px;
   padding: 0;
   &:hover, &:focus {
