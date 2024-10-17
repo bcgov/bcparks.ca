@@ -179,15 +179,15 @@ export default function ParkAccessStatus({
       // return the accessStatus to the parent component if a function prop was passed in
       onStatusCalculated(status);
     }
+    // set the park open state for park header
+    if (status && status.parkStatusText === "Closed") {
+      if (typeof setIsParkOpen === "function") {
+        setIsParkOpen(false)
+      }
+    } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [operationDates, subAreas, advisories]);
 
-  useEffect(() => {
-    if (accessStatus && accessStatus.parkStatusText === "Closed") {
-      setIsParkOpen(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessStatus])
 
   return (
     <div className="access-status-icon">
@@ -226,5 +226,5 @@ ParkAccessStatus.propTypes = {
   operationDates: PropTypes.array.isRequired,
   onStatusCalculated: PropTypes.func,
   punctuation: PropTypes.string,
-  setIsParkOpen: PropTypes.func.isRequired
+  setIsParkOpen: PropTypes.func
 }
