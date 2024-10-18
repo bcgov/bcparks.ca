@@ -133,9 +133,6 @@ figure.table {
           border-top: 1px solid $colorGreyLight;
         }
       }
-      & > :first-child {
-        background: $colorBrownLight !important;
-      }
     }
     th, td {
       border-bottom: 1px solid $colorGreyLight;

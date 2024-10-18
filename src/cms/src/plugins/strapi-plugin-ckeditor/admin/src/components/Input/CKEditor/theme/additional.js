@@ -210,4 +210,8 @@ export const additional = css`
 	color: #222;
 }
 
+.ck-content .table table th {
+  background: #f2f0eb;
+}
+
 `;
