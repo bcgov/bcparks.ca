@@ -111,33 +111,37 @@ const ParkCard = ({ r }) => {
                   <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
                 </Link>
               </h2>
-              <p className="mb-0">{locationLabel(r.parkLocations)}</p>
             </div>
             <div className="park-content-bottom">
               <div className="park-content-bottom--left">
-                <FeatureIcons
-                  page="find a park"
-                  slug={r.slug}
-                  iconSize={32}
-                  parkFacilities={r.parkFacilities}
-                  parkActivities={r.parkActivities}
-                  parkCampingTypes={r.parkCampingTypes}
-                />
+                <p className="mb-0">{locationLabel(r.parkLocations)}</p>
+                <div className="park-icons">
+                  <FeatureIcons
+                    page="find a park"
+                    slug={r.slug}
+                    iconSize={32}
+                    parkFacilities={r.parkFacilities}
+                    parkActivities={r.parkActivities}
+                    parkCampingTypes={r.parkCampingTypes}
+                  />
+                </div>
               </div>
               <div className="park-content-bottom--right">
-                <ParkAccessStatus
-                  advisories={r.advisories}
-                  slug={r.slug}
-                  subAreas={r.parkOperationSubAreas}
-                  operationDates={r.parkOperationDates}
-                  hideComma={true}
-                />
-                {r.hasCampfireBan &&
-                  <div className="campfire-ban-icon">
-                    <FontAwesomeIcon icon={faBan} />
-                    No campfires
-                  </div>
-                }
+                <div>
+                  <ParkAccessStatus
+                    advisories={r.advisories}
+                    slug={r.slug}
+                    subAreas={r.parkOperationSubAreas}
+                    operationDates={r.parkOperationDates}
+                    hideComma={true}
+                  />
+                  {r.hasCampfireBan &&
+                    <div className="campfire-ban-icon">
+                      <FontAwesomeIcon icon={faBan} />
+                      No campfires
+                    </div>
+                  }
+                </div>
               </div>
             </div>
           </div>
