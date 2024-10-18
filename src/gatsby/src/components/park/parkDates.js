@@ -175,23 +175,19 @@ export default function ParkDates({ data, parkOperation }) {
     // Check hash in url
     // if we find a matching parkSubArea, open that subArea accordion
     if (typeof window !== "undefined") {
-      if (window.location.hash !== undefined && window.location.hash !== hash) {
-        const matchingSubArea = subAreas.find((subArea, idx) => {
-          if (window.location.hash === "#" + _.kebabCase(subArea.parkSubArea)) {
-            if (!openAccordions[idx]) {
-              setOpenAccordions((prev) => ({
-                ...prev,
-                [idx]: true,
-              }))
-            }
-            return true
-          }
-          return false
-        })
-        if (matchingSubArea) {
-          setHash(window.location.hash)
-        }
+      const windowHash = window?.location?.hash
+      if (!windowHash || windowHash === hash) return
+      const matchingSubAreaIndex = subAreas.findIndex(
+        (subArea) => windowHash === "#" + _.kebabCase(subArea.parkSubArea)
+      )
+      if (matchingSubAreaIndex === -1) return
+      if (!openAccordions[matchingSubAreaIndex]) {
+        setOpenAccordions((prev) => ({
+          ...prev,
+          [matchingSubAreaIndex]: true,
+        }))
       }
+      setHash(windowHash)
     }
   }, [subAreas, hash, openAccordions])
 
