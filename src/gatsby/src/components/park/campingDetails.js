@@ -30,6 +30,14 @@ export const CampingType = ({ camping, parkOperation }) => {
   const hrAtEnd = campingDescription.trim().endsWith('<hr>')
   const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
 
+  const handleExpandClick = () => {
+    setExpanded(!expanded)
+    const element = document.getElementById(`${camping?.campingType.campingTypeCode}`)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }
+
   useEffect(() => {
     if (ref.current.clientHeight > 260) {
       setHeight(ref.current.clientHeight)
@@ -68,13 +76,11 @@ export const CampingType = ({ camping, parkOperation }) => {
       {hasExpandCondition &&
         <button
           className="btn btn-link expand-icon park-camping-link"
-          onClick={() => {
-            setExpanded(!expanded)
-          }}
+          onClick={handleExpandClick}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault()
-              setExpanded(!expanded)
+              handleExpandClick()
             }
           }}
         >
