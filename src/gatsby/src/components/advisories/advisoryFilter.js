@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { navigate } from "gatsby"
+import React, { useState, useEffect } from "react"
 import Form from "react-bootstrap/Form"
 import { Typeahead } from "react-bootstrap-typeahead"
 
@@ -10,19 +11,14 @@ const AdvisoryFilter = ({
   defaultEventType = { label: getAdvisoryTypeFromUrl() },
   filterFunctions
 }) => {
-
   // Get parent's filter functions
-  const getSearchText = filterFunctions.getSearchText
-  const setSearchText = filterFunctions.setSearchText
-  const setFilter = filterFunctions.setFilter
-  const getFilter = filterFunctions.getFilter
-  const getType = filterFunctions.getType
-  const setType = filterFunctions.setType
-
+  const { getSearchText, setSearchText, setFilter, getFilter, setType } = filterFunctions
+  // useState
   const [filterText, setFilterText] = useState(getSearchText())
   const [isParksFilter, setIsParksFilter] = useState(getFilter("parks"))
   const [isKeywordFilter, setIsKeywordsFilter] = useState(getFilter("keyword"))
   const [eventText, setEventText] = useState("")
+  const [selectedEventType, setSelectedEventType] = useState([defaultEventType])
 
   // Local handlers, calls to parent methods
   // will trigger useEffect functions in parent
@@ -32,15 +28,17 @@ const AdvisoryFilter = ({
   const handleSearch = () => {
     setSearchText(filterText)
   }
-
-  const handleTypeFilterChange = advisoryType => {
-    // This changes the URL query str and causes the page to
-    // rerender with the type changed
-    setType(advisoryType)
-    // navigate(`/active-advisories/?type=${advisoryType}`)
+  const handleOnChange = selected => {
+    if (selected.length > 0) {
+      setSelectedEventType(selected)
+      setType(selected[0].value)
+      navigate(`/active-advisories/?type=${selected[0].value}`)
+    } else {
+      setSelectedEventType([])
+      setType("all")
+      navigate(`/active-advisories`)
+    }
   }
-
-  // Checkboxes
   const handleParksFilterChange = () => {
     setIsParksFilter(!isParksFilter)
     setFilter("parks", !isParksFilter)
@@ -49,13 +47,29 @@ const AdvisoryFilter = ({
     setIsKeywordsFilter(!isKeywordFilter)
     setFilter("keywords", !isKeywordFilter)
   }
-  const handleInputChange = (text) => {
+  const handleInputChange = text => {
     setEventText(text)
+    if (text === "") {
+      setSelectedEventType([])
+      setType("all")
+      navigate("/active-advisories")
+    }
   }
 
-  const getEventType = () => {
-    return eventTypes.find((o) => o.value === getType()) || defaultEventType
-  }
+  // useEffect
+  useEffect(() => {
+    const advisoryTypeFromUrl = getAdvisoryTypeFromUrl()
+    if (advisoryTypeFromUrl) {
+      const eventType = eventTypes.find((o) => o.value === advisoryTypeFromUrl) || defaultEventType
+      setSelectedEventType([eventType])
+      setType(advisoryTypeFromUrl)
+    }
+  }, [eventTypes, defaultEventType, setType])
+  useEffect(() => {
+    if (selectedEventType.length > 0 && eventText !== selectedEventType[0].value) {
+      setEventText(selectedEventType[0].value)
+    }
+  }, [selectedEventType, eventText])
 
   return (
     <div className="advisory-filter-container">
@@ -91,21 +105,27 @@ const AdvisoryFilter = ({
             id="event-search-typeahead"
             minLength={0}
             labelKey="label"
+            filterBy={() => true}
+            options={eventTypes}
+            selected={selectedEventType}
+            onChange={(selected) => handleOnChange(selected)}
+            onInputChange={e => handleInputChange(e)}
             placeholder=" "
-            className={`event-search-typeahead has-text--${
-              (eventText.length > 0 || getType() !== "") ? 'true' : 'false'}`
+            className={`has-text--${(selectedEventType.length > 0 || eventText.length > 0) ? 'true' : 'false'
+              } event-search-typeahead`
             }
             clearButton
-            options={eventTypes}
-            value={getEventType()}
-            defaultValue={defaultEventType}
-            onChange={e => handleTypeFilterChange(
-              e.length ? e[0].value : defaultEventType.value
-            )}
-            onInputChange={e => handleInputChange(e)}
             renderInput={({ inputRef, referenceElementRef, ...props }) => (
               <Form.Group controlId="event-search-typeahead">
-                <Form.Control ref={inputRef} {...props} />
+                <Form.Control
+                  {...props}
+                  value={selectedEventType.length > 0 ? selectedEventType[0].label : eventText}
+                  ref={(node) => {
+                    inputRef(node)
+                    referenceElementRef(node)
+                  }}
+                  enterKeyHint="search"
+                />
                 <label htmlFor="event-search-typeahead">
                   Select a type
                 </label>
