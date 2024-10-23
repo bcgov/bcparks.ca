@@ -114,6 +114,9 @@ blockquote {
   & > * {
     max-width: 600px;
   }
+  a {
+    color: $colorBlue !important;
+  }
 }
 
 figure.media div[data-oembed-url] {

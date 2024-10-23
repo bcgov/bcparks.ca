@@ -148,12 +148,12 @@ export const common = css`
     .table {
       margin: 0;
       width: 100%; // Custom Styles BCParks
-      table { 
+      table {
         width: 100%; // Custom Styles BCParks
         td, th {
           vertical-align: middle; // Custom Styles BCParks
         }
-      } 
+      }
     }
 
     ul.todo-list {
@@ -272,7 +272,7 @@ export const common = css`
       }
     }
   }
-  
+
   // Custom Styles BC Parks (Start)
 
   .ck-editor__main {
@@ -301,15 +301,18 @@ export const common = css`
     }
 
     blockquote.callout-box {
+      color: #003366 !important;
       background-color: #c7e3fd;
       font-size: 1rem;
       font-weight: 700;
+      font-style: normal;
       border-radius: 4px;
       border-left: none;
       padding: 12px 20px;
     }
 
     blockquote.callout-box a {
+      color: $colorBlue !important;
       text-decoration: underline;
     }
 
@@ -327,7 +330,7 @@ export const common = css`
       text-decoration: none;
       border-radius: 4px;
       padding: 0 16px;
-    
+
       &.btn-primary {
         color: #fff;
         background-color: #003366;
@@ -338,7 +341,7 @@ export const common = css`
           border: #2464a4 2px solid;
         }
       }
-    
+
       &.btn-yellow,
       &.btn-warning {
         color: #003366;
@@ -401,7 +404,7 @@ export const common = css`
   }
 
   // autoGrow onStartup
-  .ck.ck-content:not(.ck-comment__input *) { 
+  .ck.ck-content:not(.ck-comment__input *) {
     max-height: 700px !important;
   }
 
