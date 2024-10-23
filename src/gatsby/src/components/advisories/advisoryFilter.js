@@ -28,7 +28,7 @@ const AdvisoryFilter = ({
   const handleSearch = () => {
     setSearchText(filterText)
   }
-  const handleOnChange = selected => {
+  const handleTypeaheadChange = selected => {
     if (selected.length > 0) {
       setSelectedEventType(selected)
       setType(selected[0].value)
@@ -108,7 +108,7 @@ const AdvisoryFilter = ({
             filterBy={() => true}
             options={eventTypes}
             selected={selectedEventType}
-            onChange={(selected) => handleOnChange(selected)}
+            onChange={(selected) => handleTypeaheadChange(selected)}
             onInputChange={e => handleInputChange(e)}
             placeholder=" "
             className={`has-text--${(selectedEventType.length > 0 || eventText.length > 0) ? 'true' : 'false'
