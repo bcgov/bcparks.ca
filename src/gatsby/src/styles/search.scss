@@ -318,11 +318,18 @@ div[class$="-singleValue"] {
   font-size: 1.25rem;
   line-height: 2rem;
   margin-bottom: 4px;
-  svg.park-heading-icon {
-    width: 1rem;
-    height: 1rem;
-    font-size: 1rem;
-    margin: 0 0 2px 8px;
+  a.desktop-park-link,
+  a.mobile-park-link {
+    position: relative;
+    padding-right: 24px;
+    svg.park-heading-icon {
+      position: absolute;
+      bottom: 6px;
+      right: 0;
+      width: 1rem;
+      height: 1rem;
+      font-size: 1rem;
+    }
   }
 }
 
@@ -435,13 +442,14 @@ div[class$="-singleValue"] {
       justify-content: space-between;
       &--left {
         display: flex;
-        flex-wrap: wrap;
-        align-content: space-between;
+        flex-direction: column;
+        justify-content: space-between;
         margin-right: 8px;
         .park-icons {
           width: 100%;
           display: flex;
           align-items: flex-end;
+          flex-wrap: wrap;
         }
         a {
           text-decoration: underline;
@@ -460,7 +468,7 @@ div[class$="-singleValue"] {
         }
       }
       &--right {
-        min-width: 165px;
+        min-width: 171px;
         align-content: flex-end;
       }
     }
@@ -489,9 +497,6 @@ div[class$="-singleValue"] {
       width: 24px;
       height: 24px;
     }
-  }
-  .access-status-icon {
-    margin-bottom: 8px;
   }
   .campfire-ban-icon {
     display: flex;
