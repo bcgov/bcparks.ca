@@ -62,9 +62,9 @@ export default function ParkOverview({ data: parkOverview, type }) {
           }}
         >
           {expanded ?
-            <>Show less highlights <FontAwesomeIcon icon={faChevronUp} /></>
+            <>Show less <FontAwesomeIcon icon={faChevronUp} /></>
             :
-            <>Show more highlights <FontAwesomeIcon icon={faChevronDown} /></>
+            <>Show more <FontAwesomeIcon icon={faChevronDown} /></>
           }
         </button>
       }

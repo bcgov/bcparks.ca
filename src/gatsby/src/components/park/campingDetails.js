@@ -85,15 +85,9 @@ export const CampingType = ({ camping, parkOperation }) => {
           }}
         >
           {expanded ?
-            <>
-              Show less about {camping?.campingType?.campingTypeName.toLowerCase()}
-              <FontAwesomeIcon icon={faChevronUp} className="ml-1" />
-            </>
+            <>Show less <FontAwesomeIcon icon={faChevronUp} /></>
             :
-            <>
-              Show more about {camping?.campingType?.campingTypeName.toLowerCase()}
-              <FontAwesomeIcon icon={faChevronDown} className="ml-1" />
-            </>
+            <>Show more <FontAwesomeIcon icon={faChevronDown} /></>
           }
         </button>
       }
