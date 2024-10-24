@@ -8,6 +8,8 @@ import "./src/styles/style.scss"
 export const onRouteUpdate = ({ location, prevLocation }) => {
   if (typeof window.snowplow === 'function') {
     window.snowplow("trackPageView");
+    // refresh snowplow link click tracking to pick up new links
+    window.snowplow("refreshLinkClickTracking");
   }
   sessionStorage.setItem("prevPath", prevLocation ? prevLocation.pathname : null);
 };
