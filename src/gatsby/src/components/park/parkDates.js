@@ -131,7 +131,7 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
           </div>
         </Accordion.Toggle>
       ) : (
-        <div className="accordion-toggle">
+        <div id={parkSubAreaId} className="accordion-toggle">
           <HtmlContent className="accordion-header">
             {subArea.parkSubArea}
           </HtmlContent>
