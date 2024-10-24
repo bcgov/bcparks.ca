@@ -127,7 +127,6 @@ const ParkCard = ({ r }) => {
                 </div>
               </div>
               <div className="park-content-bottom--right">
-                <div>
                   <ParkAccessStatus
                     advisories={r.advisories}
                     slug={r.slug}
@@ -141,7 +140,6 @@ const ParkCard = ({ r }) => {
                       No campfires
                     </div>
                   }
-                </div>
               </div>
             </div>
           </div>
