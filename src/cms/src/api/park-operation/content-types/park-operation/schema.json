@@ -224,6 +224,9 @@
     },
     "hasGroupPicnicReservations": {
       "type": "boolean"
+    },
+    "inReservationSystem": {
+      "type": "boolean"
     }
   }
 }
