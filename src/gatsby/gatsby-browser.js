@@ -5,14 +5,17 @@ import "bootstrap/dist/js/bootstrap.bundle"
 import "@fortawesome/fontawesome-free/css/all.min.css"
 import "./src/styles/style.scss"
 
-export const onRouteUpdate = ({ location, prevLocation }) => {
-  if (typeof window.snowplow === 'function') {
-    window.snowplow("trackPageView");
-    // refresh snowplow link click tracking to pick up new links
-    window.snowplow("refreshLinkClickTracking");
-  }
-  sessionStorage.setItem("prevPath", prevLocation ? prevLocation.pathname : null);
-};
+import React from "react"
+import useSnowplowTracking from "./src/utils/useSnowplowTracking"
+
+const SnowplowWrapper = ({ element }) => {
+  useSnowplowTracking()
+  return element
+}
+
+export const wrapPageElement = ({ element }) => {
+  return <SnowplowWrapper element={element} />
+}
 
 // work-around for gatsby issue -- fix scroll restoration
 // see https://github.com/gatsbyjs/gatsby/issues/38201#issuecomment-1658071105
