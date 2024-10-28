@@ -8,6 +8,10 @@ import "./src/styles/style.scss"
 import React from "react"
 import useSnowplowTracking from "./src/utils/useSnowplowTracking"
 
+export const onRouteUpdate = ({ location, prevLocation }) => {
+  sessionStorage.setItem("prevPath", prevLocation ? prevLocation.pathname : null);
+}
+
 const SnowplowWrapper = ({ element }) => {
   useSnowplowTracking()
   return element
