@@ -135,8 +135,12 @@ export default function ParkHeader({
                       <>, 24 hours a day.</>
                     ) : (
                       <>
-                        , from <span className="no-wrap">{formattedTime(parkOperation.gateOpenTime)}</span>{" "}
-                        to <span className="no-wrap">{formattedTime(parkOperation.gateCloseTime)}</span>, daily.
+                        , from <span className="no-wrap">
+                          {parkOperation?.gateOpensAtDawn ? "dawn" : formattedTime(parkOperation.gateOpenTime)}
+                        </span>{" "}
+                        to <span className="no-wrap">
+                          {parkOperation?.gateClosesAtDusk ? "dusk" : formattedTime(parkOperation.gateCloseTime)}
+                        </span>, daily.
                       </>
                     )
                   ) : "."}
