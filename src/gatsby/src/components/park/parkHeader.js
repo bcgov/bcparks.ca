@@ -93,6 +93,8 @@ export default function ParkHeader({
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
 
+  console.log('parkOperation', parkOperation)
+
   return (
     <div id="park-header-container" className="d-flex park-info-container">
       <div className="park-header park-header--left">
@@ -135,8 +137,12 @@ export default function ParkHeader({
                       <>, 24 hours a day.</>
                     ) : (
                       <>
-                        , from <span className="no-wrap">{formattedTime(parkOperation.gateOpenTime)}</span>{" "}
-                        to <span className="no-wrap">{formattedTime(parkOperation.gateCloseTime)}</span>, daily.
+                        , from <span className="no-wrap">
+                          {parkOperation?.gateOpensAtDawn ? "dawn" : formattedTime(parkOperation.gateOpenTime)}
+                        </span>{" "}
+                        to <span className="no-wrap">
+                          {parkOperation?.gateClosesAtDusk ? "dusk" : formattedTime(parkOperation.gateCloseTime)}
+                        </span>, daily.
                       </>
                     )
                   ) : "."}
