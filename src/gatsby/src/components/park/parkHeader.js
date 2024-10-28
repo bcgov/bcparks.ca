@@ -93,8 +93,6 @@ export default function ParkHeader({
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
 
-  console.log('parkOperation', parkOperation)
-
   return (
     <div id="park-header-container" className="d-flex park-info-container">
       <div className="park-header park-header--left">
