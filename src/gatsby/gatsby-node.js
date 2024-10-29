@@ -23,6 +23,28 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   const typeDefs = `
+  type STRAPI_PARK_PHOTO_CAPTION_TEXTNODE implements Node @dontInfer {
+    caption: String
+  }
+
+  type STRAPI_PARK_PHOTOCaption {
+    data: STRAPI_PARK_PHOTO_CAPTION_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PARK_PHOTO implements Node @dontInfer {
+    strapi_id: Int
+    orcs: Int
+    orcsSiteNumber: String
+    sortOrder: Int
+    isActive: Boolean
+    isFeatured: Boolean
+    dateTaken: Date
+    imageUrl: String
+    caption: STRAPI_PARK_PHOTOCaption
+    photographer: String
+    showPhotoCredit: Boolean
+  }
+
   type STRAPI_PARK_OPERATOR_CONTACT_DEFAULTDESCRIPTION_TEXTNODE implements Node @dontInfer {
     defaultDescription: String
   }

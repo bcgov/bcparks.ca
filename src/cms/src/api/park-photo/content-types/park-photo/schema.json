@@ -66,6 +66,12 @@
       "relation": "manyToOne",
       "target": "api::site.site",
       "inversedBy": "parkPhotos"
+    },
+    "resourceSpaceId": {
+      "type": "integer"
+    },
+    "showPhotoCredit": {
+      "type": "boolean"
     }
   }
 }

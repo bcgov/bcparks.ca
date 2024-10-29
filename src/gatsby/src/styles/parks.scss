@@ -237,6 +237,9 @@
     width: 900px;
     max-width: calc(100% - 32px);
     margin: 0 auto;
+    .photo-credit {
+      color: rgba($colorWhite, .72);
+    }
   }
 }
 .yarl__thumbnails_thumbnail {

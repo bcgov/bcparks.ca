@@ -860,6 +860,8 @@ export const query = graphql`
             caption
           }
         }
+        photographer
+        showPhotoCredit
       }
     }
     regularPhotos: allStrapiParkPhoto(
@@ -881,6 +883,8 @@ export const query = graphql`
             caption
           }
         }
+        photographer
+        showPhotoCredit
       }
     }
     allStrapiCampingType {

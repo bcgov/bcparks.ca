@@ -36,7 +36,13 @@ export default function ParkPhotoGallery({ photos }) {
   const [open, setOpen] = useState(false)
   const photoSlides = []
   const parkPhotos = photos.map((photo, index) => {
-    const captionText = photo.caption.data?.caption || "";
+    const getCaptionText = (photo) => {
+      const caption = photo.caption.data?.caption || "";
+      const showCredit = (photo?.showPhotoCredit && photo?.photographer) ?
+        `<span class="photo-credit"> | ${photo.photographer}</span>` : ""
+      return `${caption}${showCredit}`
+    }
+    const captionText = getCaptionText(photo)
     return {
       index: index,
       caption: captionText,
