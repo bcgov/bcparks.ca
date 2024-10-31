@@ -312,7 +312,7 @@ export const common = css`
     }
 
     blockquote.callout-box a {
-      color: $colorBlue !important;
+      color: #003366 !important;
       text-decoration: underline;
     }
 
