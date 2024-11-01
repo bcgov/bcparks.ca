@@ -9,6 +9,10 @@ import React from "react"
 import useSnowplowTracking from "./src/utils/useSnowplowTracking"
 
 export const onRouteUpdate = ({ location, prevLocation }) => {
+  if (typeof window.snowplow === "function") {
+    window.snowplow("trackPageView")
+    window.snowplow("refreshLinkClickTracking")
+  }
   sessionStorage.setItem("prevPath", prevLocation ? prevLocation.pathname : null);
 }
 
