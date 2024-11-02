@@ -196,6 +196,17 @@ export default function AdvisoryForm({
     formError: setFormError,
   };
 
+  const linkErrorsStatus = {
+    linkTypeErrors: linkTypeErrors,
+    linkTitleErrors: linkTitleErrors,
+    linkUrlErrors: linkUrlErrors,
+    linkFileErrors: linkFileErrors,
+    setLinkTypeErrors: setLinkTypeErrors,
+    setLinkTitleErrors: setLinkTitleErrors,
+    setLinkUrlErrors: setLinkUrlErrors,
+    setLinkFileErrors: setLinkFileErrors,
+  };
+
   const headlineInput = {
     id: "headline",
     required: false,
@@ -891,8 +902,8 @@ export default function AdvisoryForm({
               variant="outlined"
               className={`bcgov-select-form ${displayedDateError !== "" ?
                 "bcgov-select-error" : ""}`}
-                error
-                >
+              error
+            >
               <Select
                 options={displayedDateOptions}
                 defaultValue={getDisplayedDate()}
@@ -1229,7 +1240,7 @@ export default function AdvisoryForm({
                       label={(isStatHoliday || isAfterHours) ? "Submit" : "Submit for approval"}
                       styling="bcgov-normal-blue btn"
                       onClick={() => {
-                        if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
+                        if (validAdvisoryData(advisoryData, linksRef, false, mode, linkErrorsStatus)) {
                           saveAdvisory("submit");
                         }
                       }}
@@ -1239,7 +1250,7 @@ export default function AdvisoryForm({
                       label="Save draft"
                       styling="bcgov-normal-white btn"
                       onClick={() => {
-                        if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
+                        if (validAdvisoryData(advisoryData, linksRef, false, mode, linkErrorsStatus)) {
                           saveAdvisory("draft");
                         }
                       }}
@@ -1253,7 +1264,7 @@ export default function AdvisoryForm({
                       label={(isStatHoliday || isAfterHours) ? "Submit" : "Submit for approval"}
                       styling="bcgov-normal-blue btn"
                       onClick={() => {
-                        if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
+                        if (validAdvisoryData(advisoryData, linksRef, false, mode, linkErrorsStatus)) {
                           updateAdvisory("submit");
                         }
                       }}
@@ -1263,7 +1274,7 @@ export default function AdvisoryForm({
                       label="Save draft"
                       styling="bcgov-normal-white btn"
                       onClick={() => {
-                        if (validAdvisoryData(advisoryData, linksRef, false, mode)) {
+                        if (validAdvisoryData(advisoryData, linksRef, false, mode, linkErrorsStatus)) {
                           updateAdvisory("draft");
                         }
                       }}
@@ -1280,7 +1291,7 @@ export default function AdvisoryForm({
                     label="Create advisory"
                     styling="bcgov-normal-blue btn"
                     onClick={() => {
-                      if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
+                      if (validAdvisoryData(advisoryData, linksRef, true, mode, linkErrorsStatus)) {
                         saveAdvisory();
                       }
                     }}
@@ -1292,7 +1303,7 @@ export default function AdvisoryForm({
                     label="Update advisory"
                     styling="bcgov-normal-blue btn"
                     onClick={() => {
-                      if (validAdvisoryData(advisoryData, linksRef, true, mode)) {
+                      if (validAdvisoryData(advisoryData, linksRef, true, mode, linkErrorsStatus)) {
                         updateAdvisory();
                       }
                     }}

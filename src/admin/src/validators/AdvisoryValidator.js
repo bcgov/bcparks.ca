@@ -76,14 +76,40 @@ export function validateDate(field) {
   return true;
 }
 
-export function validateLinks(links) {
-  const checkLinks = links.map((link) => {
-    if (link.type && link.title && (link.file || link.url)) {
-      return true;
+export function validateLinks(links, linkErrorsStatus) {
+  let isValid = true;
+  const newLinkTypeErrors = [...linkErrorsStatus.linkTypeErrors]
+  const newLinkTitleErrors = [...linkErrorsStatus.linkTitleErrors]
+  const newLinkUrlErrors = [...linkErrorsStatus.linkUrlErrors]
+  const newLinkFileErrors = [...linkErrorsStatus.linkFileErrors]
+
+  links.forEach((link, idx) => {
+    if (!link.type) {
+      newLinkTypeErrors[idx] = true
+      isValid = false
+    } else {
+      newLinkTypeErrors[idx] = false
     }
-    return false;
+    if (!link.title) {
+      newLinkTitleErrors[idx] = true
+      isValid = false
+    } else {
+      newLinkTitleErrors[idx] = false
+    }
+    if (!link.url && !link.file) {
+      newLinkUrlErrors[idx] = true
+      newLinkFileErrors[idx] = true
+      isValid = false
+    } else {
+      newLinkUrlErrors[idx] = false
+      newLinkFileErrors[idx] = false
+    }
   })
-  return checkLinks.every(Boolean);
+  linkErrorsStatus.setLinkTypeErrors(newLinkTypeErrors)
+  linkErrorsStatus.setLinkTitleErrors(newLinkTitleErrors)
+  linkErrorsStatus.setLinkUrlErrors(newLinkUrlErrors)
+  linkErrorsStatus.setLinkFileErrors(newLinkFileErrors)
+  return isValid
 }
 
 export function validateLink(link, index, field, setErrors) {
@@ -124,7 +150,7 @@ export function validateDisplayedDate(field) {
   }
 }
 
-export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) {
+export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode, linkErrorsStatus) {
   advisoryData.formError("");
   const validListingRankNumber = validateOptionalNumber(advisoryData.listingRank);
   const validHeadline = validateRequiredText(advisoryData.headline);
@@ -135,7 +161,7 @@ export function validAdvisoryData(advisoryData, linksRef, validateStatus, mode) 
   const validStartDate = validateOptionalDate(advisoryData.startDate);
   const validEndDate = validateOptionalDate(advisoryData.endDate);
   const validExpiryDate = validateOptionalDate(advisoryData.expiryDate);
-  const validLinks = validateLinks(linksRef.current);
+  const validLinks = validateLinks(linksRef.current, linkErrorsStatus);
   const validDisplayedDate = validateDisplayedDate(advisoryData.displayedDate);
   let validData =
     validListingRankNumber &&
