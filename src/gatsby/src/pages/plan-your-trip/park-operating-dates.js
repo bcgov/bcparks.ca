@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import axios from "axios"
 import { graphql, useStaticQuery, Link } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
@@ -12,13 +11,19 @@ import ScrollToTop from "../../components/scrollToTop"
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import StaticIcon from "../../components/park/staticIcon"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
+import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
 
-const ParkLink = ({ park, advisories }) => {
+const ParkLink = ({ park, apiBaseUrl }) => {
   const thisYear = new Date().getFullYear()
   const parkOperation = park.parkOperation
   const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
   const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
+  const [advisories, setAdvisories] = useState([])
+  const [parkAccessStatus, setParkAccessStatus] = useState({})
+  const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
+  const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
+  const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
 
   // Overall operating dates for parks, to display above subareas
   let fmt = "MMM D, yyyy"
@@ -54,6 +59,42 @@ const ParkLink = ({ park, advisories }) => {
     }
   }
 
+  // get advisories
+  const getAccessStatus = (status) => {
+    setParkAccessStatus(status)
+  }
+
+  useEffect(() => {
+    setIsLoadingAdvisories(true)
+    loadAdvisories(apiBaseUrl, park.orcs)
+      .then(response => {
+        if (response.status === 200) {
+          setAdvisories(response.data.data)
+          setAdvisoryLoadError(false)
+        } else {
+          setAdvisories([])
+          setAdvisoryLoadError(true)
+        }
+      })
+      .finally(() => {
+        setIsLoadingAdvisories(false)
+      })
+  }, [apiBaseUrl, park.orcs])
+
+  if (!addedSeasonalAdvisory) {
+    if (advisories.some(a => a.accessStatus?.hidesSeasonalAdvisory)) {
+      setAddedSeasonalAdvisory(true)
+    }
+    if (parkAccessStatus?.mainGateClosure) {
+      advisories.push(WINTER_FULL_PARK_ADVISORY)
+      setAddedSeasonalAdvisory(true)
+    }
+    else if (parkAccessStatus?.areaClosure) {
+      advisories.push(WINTER_SUB_AREA_ADVISORY)
+      setAddedSeasonalAdvisory(true)
+    }
+  }
+
   return (
     <div className="park-list operating-dates-list">
       <div className="d-md-flex justify-content-between mb-2">
@@ -67,13 +108,16 @@ const ParkLink = ({ park, advisories }) => {
       <div className="mb-3">
         <>
           <span className="mr-1">
-            <ParkAccessStatus
-              advisories={advisories}
-              slug={park.slug}
-              subAreas={park.parkOperationSubAreas}
-              operationDates={park.parkOperationDates}
-              punctuation="."
-            />
+            {(!isLoadingAdvisories && !advisoryLoadError) &&
+              <ParkAccessStatus
+                advisories={advisories}
+                slug={park.slug}
+                subAreas={park.parkOperationSubAreas}
+                operationDates={park.parkOperationDates}
+                onStatusCalculated={getAccessStatus}
+                punctuation="."
+              />
+            }
           </span>
           {parkDates && (
             <span className="gate-text">The {park.type.toLowerCase()} {parkOperation.hasParkGate !== false && "gate"} is open {parkDates}.</span>
@@ -223,7 +267,7 @@ const ParkOperatingDatesPage = () => {
         }
       ) {
         nodes {
-          strapi_id
+          orcs
           slug
           protectedAreaName
           marineProtectedArea
@@ -300,22 +344,9 @@ const ParkOperatingDatesPage = () => {
 
   const apiBaseUrl = `${queryData.site.siteMetadata.apiURL}/api`
   const menuContent = queryData?.allStrapiMenu?.nodes || []
-  const protectedAreas = queryData?.allStrapiProtectedArea?.nodes || []
+  const parks = queryData?.allStrapiProtectedArea?.nodes || []
 
   const [currentFilter, setCurrentFilter] = useState("All")
-  const [parks, setParks] = useState([])
-  const [accessStatuses, setAccessStatuses] = useState({})
-
-  useEffect(() => {
-    setParks(protectedAreas)
-    axios.get(`${apiBaseUrl}/public-advisories/access-statuses`)
-      .then(response => {
-        if (response.status === 200) {
-          setAccessStatuses(response.data);
-        }
-      })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const handleClick = (e) => {
     setCurrentFilter(e.target.value)
@@ -410,14 +441,14 @@ const ParkOperatingDatesPage = () => {
               filters.map((filter, index) => (
                 <div key={index} className="list">
                   {filtering(filter).map((park, index) => (
-                    <ParkLink park={park} advisories={accessStatuses[park.strapi_id] || []} key={index} />
+                    <ParkLink park={park} apiBaseUrl={apiBaseUrl} key={index} />
                   ))}
                 </div>
               ))
             ) : (
               <div className="list">
                 {filtering(currentFilter).map((park, index) => (
-                  <ParkLink park={park} advisories={accessStatuses[park.strapi_id] || []} key={index} />
+                  <ParkLink park={park} apiBaseUrl={apiBaseUrl} key={index} />
                 ))}
               </div>
             )}
