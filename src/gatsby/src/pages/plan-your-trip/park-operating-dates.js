@@ -60,10 +60,6 @@ const ParkLink = ({ park, apiBaseUrl }) => {
   }
 
   // get advisories
-  const getAccessStatus = (status) => {
-    setParkAccessStatus(status)
-  }
-
   useEffect(() => {
     setIsLoadingAdvisories(true)
     loadAdvisories(apiBaseUrl, park.orcs)
@@ -71,10 +67,12 @@ const ParkLink = ({ park, apiBaseUrl }) => {
         if (response.status === 200) {
           setAdvisories(response.data.data)
           setAdvisoryLoadError(false)
-        } else {
-          setAdvisories([])
-          setAdvisoryLoadError(true)
         }
+      })
+      .catch(error => {
+        setAdvisories([])
+        setAdvisoryLoadError(true)
+        console.error("Error fetching advisories:", error)
       })
       .finally(() => {
         setIsLoadingAdvisories(false)
@@ -114,7 +112,7 @@ const ParkLink = ({ park, apiBaseUrl }) => {
                 slug={park.slug}
                 subAreas={park.parkOperationSubAreas}
                 operationDates={park.parkOperationDates}
-                onStatusCalculated={getAccessStatus}
+                onStatusCalculated={setParkAccessStatus}
                 punctuation="."
               />
             }
