@@ -64,10 +64,8 @@ const ParkLink = ({ park, apiBaseUrl }) => {
     setIsLoadingAdvisories(true)
     loadAdvisories(apiBaseUrl, park.orcs)
       .then(response => {
-        if (response.status === 200) {
-          setAdvisories(response.data.data)
-          setAdvisoryLoadError(false)
-        }
+        setAdvisories(response.data.data)
+        setAdvisoryLoadError(false)
       })
       .catch(error => {
         setAdvisories([])
