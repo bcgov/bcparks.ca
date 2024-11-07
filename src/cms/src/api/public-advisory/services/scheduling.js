@@ -181,6 +181,54 @@ module.exports = ({ strapi }) => ({
     return 0;
   },
 
+  publishingSoon: async (advisoryStatusMap) => {
+    if (Object.keys(advisoryStatusMap).length > 0) {;
+      let totalPublishingSoon = 0;
+      const reminders = [
+        { daysBefore: 5, message: "This advisory will go live in 5 days" },
+        { daysBefore: 2, message: "This advisory will go live in 2 days" }
+      ];
+      for (const reminder of reminders) {
+        const today = new Date();
+        const reminderDate = new Date(today.setTime(today.getTime() + reminder.daysBefore * 24 * 60 * 60 * 1000));
+        const rangeStart = new Date(reminderDate.setTime(reminderDate.getTime() - 60 * 1000)).toISOString();
+        const rangeEnd = new Date(reminderDate.setTime(reminderDate.getTime() + 120 * 1000)).toISOString();
+        const publishingSoon = await strapi.entityService.findMany(
+          "api::public-advisory-audit.public-advisory-audit", {
+          filters: {
+            $and: [
+              {
+                isLatestRevision: true
+              },
+              {
+                advisoryDate: { $gte: rangeStart }
+              },
+              {
+                advisoryDate: { $lte: rangeEnd }
+              },
+              {
+                advisoryStatus: advisoryStatusMap["PUB"].id
+              }
+            ]
+          },
+          publicationState: "live"
+        });
+        publishingSoon.forEach(async (advisory) => {
+          strapi.log.info(`advisory going live soon [advisoryNumber:${advisory.advisoryNumber}]`);
+          await queueAdvisoryEmail(
+            "Advisory going live soon",
+            reminder.message,
+            advisory.advisoryNumber,
+            "public-advisory-audit::services::scheduling::publishingSoon()"
+          );
+        });
+        totalPublishingSoon += publishingSoon.length;
+      }
+      return totalPublishingSoon;
+    }
+    return 0;
+  },
+
   getAdvisoryStatusMap: async () => {
     // fetch advisory statuses
     const advisoryStatus = await strapi.entityService.findMany(
