@@ -822,7 +822,7 @@ export const query = graphql`
         contactInformation {
           contactType
           contactText
-          contactText
+          contactUrl
         }
         parkOperatorContact {
           facilityOperatorName
