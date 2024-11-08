@@ -130,16 +130,16 @@ export default function ParkHeader({
               {isParkOpen !== false &&
                 <p>
                   The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}
-                  {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) ? (
-                    parkOperation.gateOpenTime === "00:00:00" && parkOperation.gateCloseTime === "23:59:00" ? (
+                  {(parkOperation?.gateOpenTime || parkOperation?.gateCloseTime || parkOperation?.gateOpensAtDawn || parkOperation?.gateClosesAtDusk) ? (
+                    parkOperation?.gateOpenTime === "00:00:00" && parkOperation?.gateCloseTime === "23:59:00" ? (
                       <>, 24 hours a day.</>
                     ) : (
                       <>
                         , from <span className="no-wrap">
-                          {parkOperation?.gateOpensAtDawn ? "dawn" : formattedTime(parkOperation.gateOpenTime)}
+                          {parkOperation?.gateOpensAtDawn ? "dawn" : formattedTime(parkOperation?.gateOpenTime)}
                         </span>{" "}
                         to <span className="no-wrap">
-                          {parkOperation?.gateClosesAtDusk ? "dusk" : formattedTime(parkOperation.gateCloseTime)}
+                          {parkOperation?.gateClosesAtDusk ? "dusk" : formattedTime(parkOperation?.gateCloseTime)}
                         </span>, daily.
                       </>
                     )
