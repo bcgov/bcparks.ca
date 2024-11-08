@@ -63,7 +63,7 @@
   }
 }
 
-.parkLink {
+.park-link {
   min-height: 32px;
   display: inline-flex;
   align-items: center;
@@ -71,6 +71,7 @@
   font-weight: 400;
   white-space: pre-line;
   border: solid 1px $colorBlue;
+  margin: 0 16px 16px 0;
 }
 
 .badge-secondary-light {

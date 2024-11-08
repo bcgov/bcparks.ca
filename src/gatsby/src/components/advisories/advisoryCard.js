@@ -124,7 +124,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
             <Badge
               pill
               key={index}
-              className="parkLink badge badge-pill badge-primary mb-2 mr-2"
+              className="park-link badge badge-pill badge-primary"
             >
               {item.name}
               {item.type === "region" ? " Region" : item.type === "section" ? " Section" : ""}
@@ -132,7 +132,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
           ))}
           {hasAdditionalParks &&
             <Badge
-              className="parkLink badge-pill badge-secondary-light mb-2 mr-2"
+              className="park-link badge-pill badge-secondary-light"
             >
               Additional parks
             </Badge>
@@ -144,7 +144,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                   .filter(park => park.publishedAt && park.isDisplayed)
                   .map((par, index) => (
                     <Link
-                      className="parkLink badge badge-pill badge-light mb-2 mr-2"
+                      className="park-link badge badge-pill badge-light"
                       to={`/${par.slug}`}
                       key={index}
                     >
@@ -170,7 +170,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                   .filter(park => park.publishedAt && park.isDisplayed)
                   .map((par, index) => (
                     <Link
-                      className="parkLink badge badge-pill badge-light mb-2 mr-2"
+                      className="park-link badge badge-pill badge-light"
                       to={`/${par.slug}`}
                       key={index}
                     >
@@ -185,7 +185,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                     advisory.protectedAreas.map((park, index) => (
                       checkRelation(park.orcs, site.orcsSiteNumber) &&
                       <Link
-                        className="parkLink badge badge-pill badge-light mb-2 mr-2"
+                        className="park-link badge badge-pill badge-light"
                         to={`/${park.slug}/${site.slug}`}
                         key={index}
                       >
