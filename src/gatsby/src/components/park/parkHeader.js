@@ -48,13 +48,36 @@ const mapImages = {
 }
 // Helper function to format gate open/close time e.g. "08:00:00" to "8 am"
 const formattedTime = (time) => {
-  // prepend a dummy date to the time string to parse it
+  // Prepend a dummy date to the time string to parse it
   const dateTime = parseISO(`1970-01-01T${time}`)
   const minutes = format(dateTime, 'mm');
   if (minutes === '00') {
     return format(dateTime, 'h aa').toLowerCase()
   } else {
     return format(dateTime, 'h:mm aa').toLowerCase()
+  }
+}
+// Helper function to render the gate open/close times
+const renderGateTimes = (parkOperation) => {
+  if (!parkOperation) return null
+  const { gateOpenTime, gateCloseTime, gateOpensAtDawn, gateClosesAtDusk } = parkOperation
+
+  if (gateOpenTime === "00:00:00" && gateCloseTime === "23:59:00") {
+    return <>24 hours a day.</>
+    // Either gateOpenTime or gateOpensAtDawn is available, then either gateCloseTime or gateClosesAtDusk must also be available
+  } else if ((gateOpenTime || gateOpensAtDawn) && (gateCloseTime || gateClosesAtDusk)) {
+    return (
+      <>
+        , from <span className="no-wrap">
+          {gateOpensAtDawn ? "dawn" : formattedTime(gateOpenTime)}
+        </span>{" "}
+        to <span className="no-wrap">
+          {gateClosesAtDusk ? "dusk" : formattedTime(gateCloseTime)}
+        </span>, daily.
+      </>
+    )
+  } else {
+    return <>.</>
   }
 }
 
@@ -118,7 +141,7 @@ export default function ParkHeader({
               setIsParkOpen={setIsParkOpen}
             />
             :
-            // display a space if it's loading advisories
+            // Display a space if it's loading advisories
             <>&nbsp;</>
           }
         </div>
@@ -130,20 +153,7 @@ export default function ParkHeader({
               {isParkOpen !== false &&
                 <p>
                   The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}
-                  {(parkOperation?.gateOpenTime && parkOperation?.gateCloseTime) ? (
-                    parkOperation.gateOpenTime === "00:00:00" && parkOperation.gateCloseTime === "23:59:00" ? (
-                      <>, 24 hours a day.</>
-                    ) : (
-                      <>
-                        , from <span className="no-wrap">
-                          {parkOperation?.gateOpensAtDawn ? "dawn" : formattedTime(parkOperation.gateOpenTime)}
-                        </span>{" "}
-                        to <span className="no-wrap">
-                          {parkOperation?.gateClosesAtDusk ? "dusk" : formattedTime(parkOperation.gateCloseTime)}
-                        </span>, daily.
-                      </>
-                    )
-                  ) : "."}
+                  {renderGateTimes(parkOperation)}
                 </p>
               }
               {parkOperation?.openNote &&
