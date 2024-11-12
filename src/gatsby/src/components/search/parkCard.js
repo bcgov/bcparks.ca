@@ -108,8 +108,8 @@ const ParkCard = ({ r }) => {
                   className="underline-hover desktop-park-link"
                 >
                   {r.protectedAreaName}
-                  <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
                 </Link>
+                <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
               </h2>
             </div>
             <div className="park-content-bottom">
@@ -127,21 +127,19 @@ const ParkCard = ({ r }) => {
                 </div>
               </div>
               <div className="park-content-bottom--right">
-                <div>
-                  <ParkAccessStatus
-                    advisories={r.advisories}
-                    slug={r.slug}
-                    subAreas={r.parkOperationSubAreas}
-                    operationDates={r.parkOperationDates}
-                    hideComma={true}
-                  />
-                  {r.hasCampfireBan &&
-                    <div className="campfire-ban-icon">
-                      <FontAwesomeIcon icon={faBan} />
-                      No campfires
-                    </div>
-                  }
-                </div>
+                <ParkAccessStatus
+                  advisories={r.advisories}
+                  slug={r.slug}
+                  subAreas={r.parkOperationSubAreas}
+                  operationDates={r.parkOperationDates}
+                  hideComma={true}
+                />
+                {r.hasCampfireBan &&
+                  <div className="campfire-ban-icon">
+                    <FontAwesomeIcon icon={faBan} />
+                    No campfires
+                  </div>
+                }
               </div>
             </div>
           </div>
@@ -206,8 +204,8 @@ const ParkCard = ({ r }) => {
               className="underline-hover mobile-park-link"
             >
               {r.protectedAreaName}
-              <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
             </Link>
+            <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
           </h2>
           <p>{locationLabel(r.parkLocations)}</p>
           <div>
