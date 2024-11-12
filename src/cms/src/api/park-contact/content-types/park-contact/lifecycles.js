@@ -18,7 +18,7 @@ const updateName = async (data, where) => {
             data.name += parkOperatorContact.defaultTitle
         } else {
             data.name += ":"
-            data.name += parkContact.title
+            data.name += data.title || parkContact.title
         }
     }
     return data
