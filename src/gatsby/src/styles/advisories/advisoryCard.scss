@@ -3,6 +3,7 @@
 .advisory-card {
   color: $colorGrey;
   background: $colorBrownLight;
+  flex-wrap: nowrap;
   margin-bottom: 16px;
   padding: 16px;
   @media (min-width: $smBreakpoint) {
@@ -64,14 +65,20 @@
 }
 
 .park-link {
-  min-height: 32px;
-  display: inline-flex;
-  align-items: center;
+  min-width: fit-content;
+  width: fit-content;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
   font-size: 1rem;
   font-weight: 400;
-  white-space: pre-line;
+  line-height: 1.5;
+  text-align: left;
+  white-space: normal;
   border: solid 1px $colorBlue;
   margin: 0 16px 16px 0;
+  padding: 3px 8px;
 }
 
 .badge-secondary-light {

@@ -138,7 +138,7 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
             </Badge>
           }
           {advisory.protectedAreas.length > 5 ? (
-            <>
+            <div className="d-flex flex-wrap">
               {open && (
                 advisory.protectedAreas
                   .filter(park => park.publishedAt && park.isDisplayed)
@@ -162,9 +162,9 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
                   : `Show all ${advisory.protectedAreas.length} parks affected`
                 }
               </button>
-            </>
+            </div>
           ) : (
-            <div>
+            <div className="d-flex flex-wrap">
               {advisory.protectedAreas.length > 0 &&
                 advisory.protectedAreas
                   .filter(park => park.publishedAt && park.isDisplayed)
