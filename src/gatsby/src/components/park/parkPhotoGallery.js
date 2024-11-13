@@ -39,7 +39,7 @@ export default function ParkPhotoGallery({ photos }) {
     const getCaptionText = (photo) => {
       const caption = photo.caption.data?.caption || "";
       const showCredit = (photo?.showPhotoCredit && photo?.photographer) ?
-        `<span class="photo-credit"> | ${photo.photographer}</span>` : ""
+        `<span class="photo-credit"> | Photo by ${photo.photographer}</span>` : ""
       return `${caption}${showCredit}`
     }
     const captionText = getCaptionText(photo)
