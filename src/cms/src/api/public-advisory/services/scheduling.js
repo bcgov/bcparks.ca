@@ -207,7 +207,7 @@ module.exports = ({ strapi }) => ({
                 advisoryDate: { $lte: rangeEnd }
               },
               {
-                advisoryStatus: advisoryStatusMap["PUB"].id
+                advisoryStatus: advisoryStatusMap["APR"].id
               }
             ]
           },
