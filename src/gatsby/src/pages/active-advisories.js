@@ -59,7 +59,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           value: obj.eventType,
         }));
 
-        formattedEventTypes.splice(0, 0, defaultAdvisoryEventType);
+        formattedEventTypes.splice(0, 0);
         const localeSortEvent = formattedEventTypes?.sort((a, b) =>
           a.value.localeCompare(b.value, "en", { sensitivity: "base" })
         );
@@ -127,6 +127,26 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     getFilter: getAdvistoryFilter,
     setType: setAdvisoryType,
     getType: getAdvisoryType,
+  }
+
+  const compareAdvisories = (a, b) => {
+    const getDate = (advisory) => {
+      if (advisory.isAdvisoryDateDisplayed) {
+        return new Date(advisory.advisoryDate)
+      }
+      if (advisory.isEffectiveDateDisplayed) {
+        return new Date(advisory.effectiveDate)
+      }
+      if (advisory.isUpdatedDateDisplayed) {
+        return new Date(advisory.updatedDate);
+      }
+      // Default to epoch if no date is displayed
+      return new Date(0)
+    }
+    const dateA = getDate(a)
+    const dateB = getDate(b)
+    // Sort in descending order (latest date first)
+    return dateB - dateA
   }
 
   // API calls to get advisories and total count
@@ -217,8 +237,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           .get(newApiCall)
           .then(function (data) {
             let results = data.data.data
-
-            setAdvisories(results) // This will pass advisories to the AdvisoryList
+            results.sort(compareAdvisories)
+            // Append new advisories to the existing list
+            setAdvisories(prevAdvisories => [...prevAdvisories, ...results]) 
             setIsDataOld(false) // Flag that advisories are updated
             setIsNewFilter(false)
             setIsSearchError(false)
