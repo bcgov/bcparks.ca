@@ -60,7 +60,7 @@ const AdvisoryFilter = ({
     if (input === "all") {
       return true
     } else {
-    return option.label.toLowerCase().includes(input)
+      return option.label.toLowerCase().includes(input)
     }
   }
 

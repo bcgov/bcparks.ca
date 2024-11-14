@@ -59,7 +59,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           value: obj.eventType,
         }));
 
-        formattedEventTypes.splice(0, 0);
         const localeSortEvent = formattedEventTypes?.sort((a, b) =>
           a.value.localeCompare(b.value, "en", { sensitivity: "base" })
         );
@@ -129,22 +128,24 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     getType: getAdvisoryType,
   }
 
-  const compareAdvisories = (a, b) => {
-    const getDate = (advisory) => {
-      if (advisory.isAdvisoryDateDisplayed) {
-        return new Date(advisory.advisoryDate)
-      }
-      if (advisory.isEffectiveDateDisplayed) {
-        return new Date(advisory.effectiveDate)
-      }
-      if (advisory.isUpdatedDateDisplayed) {
-        return new Date(advisory.updatedDate)
-      }
-      // Default to epoch if no date is displayed
-      return new Date(0)
+  // Get advisory displayed date
+  const getAdvisoryDate = (advisory) => {
+    if (advisory.isAdvisoryDateDisplayed) {
+      return new Date(advisory.advisoryDate)
     }
-    const dateA = getDate(a)
-    const dateB = getDate(b)
+    if (advisory.isEffectiveDateDisplayed) {
+      return new Date(advisory.effectiveDate)
+    }
+    if (advisory.isUpdatedDateDisplayed) {
+      return new Date(advisory.updatedDate)
+    }
+    // Default to epoch if no date is displayed
+    return new Date(0)
+  }
+  // Compare advisories by date
+  const compareAdvisories = (a, b) => {
+    const dateA = getAdvisoryDate(a)
+    const dateB = getAdvisoryDate(b)
     // Sort in descending order (latest date first)
     return dateB - dateA
   }
@@ -275,6 +276,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         setIsDataOld(false) // Data is still updated
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [pageIndex, apiCall, apiUrl]
   )
 
