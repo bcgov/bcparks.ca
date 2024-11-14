@@ -55,6 +55,14 @@ const AdvisoryFilter = ({
       navigate("/active-advisories")
     }
   }
+  const filterBy = (option, props) => {
+    const input = props.text.toLowerCase()
+    if (input === "all") {
+      return true
+    } else {
+      return option.label.toLowerCase().includes(input)
+    }
+  }
 
   // useEffect
   useEffect(() => {
@@ -105,7 +113,7 @@ const AdvisoryFilter = ({
             id="event-search-typeahead"
             minLength={0}
             labelKey="label"
-            filterBy={() => true}
+            filterBy={filterBy}
             options={eventTypes}
             selected={selectedEventType}
             onChange={(selected) => handleTypeaheadChange(selected)}
@@ -119,7 +127,9 @@ const AdvisoryFilter = ({
               <Form.Group controlId="event-search-typeahead">
                 <Form.Control
                   {...props}
-                  value={selectedEventType.length > 0 ? selectedEventType[0].label : eventText}
+                  value={selectedEventType.length > 0 ?
+                    (selectedEventType[0].label === "All" ? "" : selectedEventType[0].label)
+                    : eventText}
                   ref={(node) => {
                     inputRef(node)
                     referenceElementRef(node)

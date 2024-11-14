@@ -75,8 +75,6 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
   }
 
   const processAdvisories = (a) => {
-    // Sort advisories by advisoryDate in descending order (most recent first)
-    a.sort((a, b) => new Date(b.advisoryDate) - new Date(a.advisoryDate));
     // determine properties not found from api call or need processing
 
     if (a.length > 0) { // otherwise no advisories yet
