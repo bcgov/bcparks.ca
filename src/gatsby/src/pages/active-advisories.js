@@ -138,7 +138,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         return new Date(advisory.effectiveDate)
       }
       if (advisory.isUpdatedDateDisplayed) {
-        return new Date(advisory.updatedDate);
+        return new Date(advisory.updatedDate)
       }
       // Default to epoch if no date is displayed
       return new Date(0)
