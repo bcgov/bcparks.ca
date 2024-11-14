@@ -237,8 +237,12 @@
     width: 900px;
     max-width: calc(100% - 32px);
     margin: 0 auto;
+    & > div > * {
+      display: inline-flex;
+    } 
     .photo-credit {
       color: rgba($colorWhite, .72);
+      margin-left: 6px;
     }
   }
 }
