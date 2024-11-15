@@ -121,7 +121,6 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
           {advisories.map((advisory, index) => (
             <AdvisoryCard key={index}
               advisory={advisory}
-              index={index}
               parkInfoHash={parkInfoHash}>
             </AdvisoryCard>
           ))}
