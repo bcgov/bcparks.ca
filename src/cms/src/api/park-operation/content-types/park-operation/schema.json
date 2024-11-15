@@ -144,6 +144,9 @@
     "reservationsNote": {
       "type": "text"
     },
+    "reservationNote": {
+      "type": "text"
+    },
     "offSeasonNote": {
       "type": "text"
     },
