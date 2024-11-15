@@ -16,11 +16,12 @@ const formatDate = isoDate => {
   return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
 }
 
-const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
+const AdvisoryCard = ({ advisory, parkInfoHash }) => {
   const [open, setOpen] = useState(false)
   const checkRelation = (orcs, orcsSite) => {
     return orcsSite?.includes(orcs?.toString())
   }
+  const hasEffectiveDateRange = formatDate(advisory.effectiveDate) !== formatDate(advisory.endDate)
 
   const showFireCentres = advisory.fireCentres?.length > 0;
   const showFireZones = advisory.fireZones?.length > 0;
@@ -216,17 +217,22 @@ const AdvisoryCard = ({ advisory, index, parkInfoHash }) => {
             {/* advisory date */}
             {advisory.isEffectiveDateDisplayed &&
               formatDate(advisory.effectiveDate) && (
-                <div className="date">
-                  <small>In effect</small>
-                  <small>
-                    <b>
-                      {formatDate(advisory.effectiveDate)}
-                      {advisory.isEndDateDisplayed && formatDate(advisory.endDate) && (
-                        <> to {formatDate(advisory.endDate)}</>
-                      )}
-                    </b>
-                  </small>
-                </div>
+                advisory.isEndDateDisplayed && formatDate(advisory.endDate) ? (
+                  <div className="date">
+                    <small>In effect</small>
+                    <small>
+                      <b>
+                        {formatDate(advisory.effectiveDate)} 
+                        {hasEffectiveDateRange && ` to ${formatDate(advisory.endDate)}`}
+                      </b>
+                    </small>
+                  </div>
+                ) : (
+                  <div className="date">
+                    <small>Starts</small>
+                    <small><b>{formatDate(advisory.effectiveDate)}</b></small>
+                  </div>
+                )
               )}
             {advisory.isAdvisoryDateDisplayed &&
               formatDate(advisory.advisoryDate) && (

@@ -640,18 +640,7 @@ nav.breadcrumbs {
     }
   }
   &.advisory-accordion {
-    padding: 8px 16px;
-    @media screen and (min-width: $smBreakpoint) {
-      padding: 14px 16px;
-    }
-    &.is-open {
-      &--true {
-        padding: 8px 16px;
-        @media screen and (min-width: $smBreakpoint) {
-          padding: 14px 16px;
-        }
-      }
-    }
+    padding: 14px 16px;
     .accordion-toggle {
       .accordion-header {
         color: $colorGrey;
@@ -669,14 +658,6 @@ nav.breadcrumbs {
   &.about-accordion,
   &.dates-accordion {
     padding: 14px 16px;
-    &.is-open {
-      &--true {
-        padding: 8px 16px;
-        @media screen and (min-width: $smBreakpoint) {
-          padding: 14px 16px;
-        }
-      }
-    }
     .accordion-toggle {
       .accordion-header {
         margin-left: 0;
