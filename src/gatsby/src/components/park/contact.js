@@ -108,11 +108,11 @@ export default function Contact({ contact, parkContacts, operations }) {
                     </p>
                     <p>
                       <FontAwesome icon="phone" aria-hidden="true" />
-                      <a href="tel:1-800-689-9025" aria-label="Phone number: 1-800-689-9025">1-800-689-9025</a> (toll-free from Canada or the US)
+                      <a href="tel:+18006899025" aria-label="Phone number: 1-800-689-9025">1-800-689-9025</a> (toll-free from Canada or the US)
                     </p>
                     <p>
                       <FontAwesome icon="phone" aria-hidden="true" />
-                      <a href="tel:1-519-858-6161" aria-label="Phone number: 1-519-858-6161">1-519-858-6161</a> (international)
+                      <a href="tel:+15198586161" aria-label="Phone number: 1-519-858-6161">1-519-858-6161</a> (international)
                     </p>
                     <p>
                       <FontAwesome icon="laptop" aria-hidden="true" />
