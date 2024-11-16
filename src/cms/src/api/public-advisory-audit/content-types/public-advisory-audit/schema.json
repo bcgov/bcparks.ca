@@ -167,9 +167,6 @@
       "relation": "oneToMany",
       "target": "api::standard-message.standard-message"
     },
-    "publishedRevisionNumber": {
-      "type": "integer"
-    },
     "createdByName": {
       "type": "string"
     },
