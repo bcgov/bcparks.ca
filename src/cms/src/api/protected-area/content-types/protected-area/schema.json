@@ -114,9 +114,6 @@
     "hasCampfireBan": {
       "type": "boolean"
     },
-    "hasSmokingBan": {
-      "type": "boolean"
-    },
     "fireZones": {
       "type": "relation",
       "relation": "manyToMany",
@@ -136,9 +133,6 @@
       "mappedBy": "protectedAreas"
     },
     "hasCampfireBanOverride": {
-      "type": "boolean"
-    },
-    "hasSmokingBanOverride": {
       "type": "boolean"
     },
     "campfireBanEffectiveDate": {

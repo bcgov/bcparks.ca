@@ -104,7 +104,7 @@ const getProtectedAreaStatus = async (ctx) => {
   } = ctx.query;
 
   const protectedAreaPopulateSettings = {
-    fireZones: {  
+    fireZones: {
       fields: ["fireZoneName"],
       populate: {
         fireCentre: { fields: ["id"]}
@@ -119,17 +119,17 @@ const getProtectedAreaStatus = async (ctx) => {
         region: { fields: ["id"]},
         section: { fields: ["id"]},
         searchArea: { fields: ["id"]}
-      }            
+      }
     },
     parkActivities: {
       fields: ["id"],
-      populate: { 
+      populate: {
         activityType: { fields: ["activityName", "activityCode"] }
       }
     },
     parkFacilities: {
       fields: ["id"],
-      populate: { 
+      populate: {
         facilityType: { fields: ["facilityName", "facilityCode"] }
       }
     },
@@ -346,9 +346,7 @@ const getProtectedAreaStatus = async (ctx) => {
       ),
 
       hasCampfireBan: boolToYN(protectedArea.hasCampfireBan),
-      hasSmokingBan: boolToYN(protectedArea.hasCampfireBan),
       hasCampfireBanOverride: boolToYN(protectedArea.hasCampfireBanOverride),
-      hasSmokingBanOverride: boolToYN(protectedArea.hasSmokingBanOverride),
       campfireBanEffectiveDate: protectedArea.campfireBanEffectiveDate,
       campfireBanRescindedDate: protectedArea.campfireBanRescindedDate,
       campfireBanNote: campfireBanNote,
