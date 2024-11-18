@@ -200,6 +200,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     gateOpenTime: String
     gateCloseTime: String
     gateOpen24Hours: Boolean
+    reservationNote: String
     hasCanoeCircuitReservations: Boolean
     hasFrontcountryReservations: Boolean
     hasFrontcountryGroupReservations: Boolean
