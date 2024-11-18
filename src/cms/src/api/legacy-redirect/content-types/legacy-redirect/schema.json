@@ -5,11 +5,10 @@
     "singularName": "legacy-redirect",
     "pluralName": "legacy-redirects",
     "displayName": "Legacy-redirect",
-    "name": "legacy-redirect"
+    "name": "legacy-redirect",
+    "description": ""
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": true
   },
   "attributes": {
@@ -17,6 +16,9 @@
       "type": "string"
     },
     "toPath": {
+      "type": "string"
+    },
+    "note": {
       "type": "string"
     }
   }
