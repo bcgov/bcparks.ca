@@ -5,11 +5,10 @@
     "singularName": "event-type",
     "pluralName": "event-types",
     "displayName": "Event-type",
-    "name": "event-type"
+    "name": "event-type",
+    "description": ""
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": true
   },
   "attributes": {
@@ -18,6 +17,9 @@
     },
     "precedence": {
       "type": "integer"
+    },
+    "description": {
+      "type": "string"
     }
   }
 }
