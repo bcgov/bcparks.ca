@@ -191,31 +191,20 @@ export default function ParkAccessStatus({
 
   return (
     <div className="access-status-icon">
-      {accessStatus && (<>
-        {accessStatus.parkStatusText === "Open" ? (
-          <>
-            <img
-              src={accessStatus.parkStatusIcon}
-              alt={accessStatus.parkStatusText}
-            />
-            {accessStatus.parkStatusText}{punctuation}
-          </>
-        ) : (
-          <>
-            <img
-              src={accessStatus.parkStatusIcon}
-              alt={accessStatus.parkStatusText}
-            />
-            {accessStatus.parkStatusText}{!hideComma && ", "}
-            <Link to={`/${slug}/#advisories`}>
-              {hideComma ? "C": "c"}heck advisories {`(${advisories.length})`}
-            </Link>
-            {punctuation}
-          </>
-        )}
-      </>)}
+      {accessStatus &&
+        <>
+          <img
+            src={accessStatus.parkStatusIcon}
+            alt={accessStatus.parkStatusText}
+          />
+          {accessStatus.parkStatusText}{!hideComma && ", "}
+          <Link to={`/${slug}/#advisories`}>
+            {hideComma ? "C": "c"}heck advisories {`(${advisories.length})`}
+          </Link>
+          {punctuation}
+        </>
+      }
     </div>
-
   )
 }
 
