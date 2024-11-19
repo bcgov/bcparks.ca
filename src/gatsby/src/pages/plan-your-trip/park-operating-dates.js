@@ -125,9 +125,9 @@ const ParkLink = ({ park, apiBaseUrl }) => {
         <thead className="thead-light">
           <tr>
             <th scope="col">Facility</th>
-            <th scope="col">Main operating season</th>
+            <th scope="col">Operating season</th>
             <th scope="col">Winter season</th>
-            <th scope="col">Booking required</th>
+            <th scope="col">Booking available</th>
           </tr>
         </thead>
         <tbody>
@@ -201,7 +201,7 @@ const ParkLink = ({ park, apiBaseUrl }) => {
             <ul className="list-group list-group-flush">
               <li className="list-group-item">
                 <div className="list-group-item--container">
-                  <b>Main operating season</b>
+                  <b>Operating season</b>
                   <ul>
                     {subArea.serviceDates.map((dateRange, index) =>
                       <li key={index}>{dateRange}</li>
@@ -229,7 +229,7 @@ const ParkLink = ({ park, apiBaseUrl }) => {
                   )}
                 </div>
                 <div className="list-group-item--container">
-                  <b>Booking required</b>
+                  <b>Booking available</b>
                   {subArea.resDates.length > 0 ? (
                     <ul>
                       {subArea.resDates.map((dateRange, index) =>
@@ -388,21 +388,21 @@ const ParkOperatingDatesPage = () => {
           </p>
           <ul>
             <li>
-              <b>Main operating season: </b>
-              During these dates, the facility is open, and operates with full services.
-              Any fees are charged at the regular rate. Parks may have different services and fees,
+              <b>Operating season: </b>
+              During these dates, the facility is open, services are provided, and fees may be charged.
+              Outside of these dates, there are no services provided, there are no fees, and access may not be available.
+              Each park has different services, fees, and access,
               so <Link to="/find-a-park">check the park</Link> page for details.
             </li>
             <li>
               <b>Winter season: </b>
-              During these dates, the facility is open, but may offer limited services and charge a reduced winter camping fee.
-              {" "}<Link to="/find-a-park">Check the park</Link> page for details.
-              When a facility is not operating, there are no fees and no services provided.
+              These dates indicate when a frontcountry campground offers camping with reduced fees and services in their shoulder season.
+              {" "}<Link to="/find-a-park">Check the park</Link> page for winter rates and details. 
             </li>
             <li>
-              <b>Booking required: </b>
-              During these dates, <Link to="/reservations">reservations</Link> are available,
-              or you must purchase a <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit</Link>.
+              <b>Booking available: </b>
+              During these dates, either <Link to="/reservations">reservations</Link> are available,
+              or <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit</Link> registration is required.
               To find out which booking you need, <Link to="/find-a-park">check the park</Link> page.
               If a reservable campground is open outside of these dates, sites are available on a first come, first served basis.
             </li>
