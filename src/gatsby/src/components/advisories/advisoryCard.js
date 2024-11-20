@@ -248,6 +248,22 @@ const AdvisoryCard = ({ advisory, parkInfoHash }) => {
                   <small><b>{formatDate(advisory.updatedDate)}</b></small>
                 </div>
               )}
+            {/* if "No date" is selected */}
+            {!advisory.isEffectiveDateDisplayed && !advisory.isAdvisoryDateDisplayed && !advisory.isUpdatedDateDisplayed && (
+              formatDate(advisory.updatedDate) ? (
+                <div className="date">
+                  <small>Updated</small>
+                  <small><b>{formatDate(advisory.updatedDate)}</b></small>
+                </div>
+              ) : (
+                formatDate(advisory.advisoryDate) && (
+                  <div className="date">
+                    <small>Posted</small>
+                    <small><b>{formatDate(advisory.advisoryDate)}</b></small>
+                  </div>
+                )
+              )
+            )}
             {/* advisory type */}
             <div className="type">
               <small>Advisory type</small>
