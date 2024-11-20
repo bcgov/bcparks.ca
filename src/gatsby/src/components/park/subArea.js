@@ -45,7 +45,7 @@ export default function SubArea({ data, showHeading }) {
             )}
             {data.resDates.length > 0 && (
               <div className="subarea-list">
-                <h4 className="mt-3">Booking required</h4>
+                <h4 className="mt-3">Booking available</h4>
                 <ul>
                   {data.resDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
