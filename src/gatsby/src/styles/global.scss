@@ -616,19 +616,6 @@ nav.breadcrumbs {
     & > :not(.subarea-container) {
       max-width: 600px !important;
     }
-    .date {
-      display: flex;
-      margin-top: 8px;
-      small {
-        color: $colorGreyMed;
-        &:first-of-type {
-          text-wrap: nowrap;
-        }
-        + small {
-          margin-left: 8px;
-        }
-      }
-    }
   }
   &-toggle {
     cursor: pointer;    

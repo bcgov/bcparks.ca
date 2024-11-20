@@ -139,8 +139,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     if (advisory.isUpdatedDateDisplayed) {
       return new Date(advisory.updatedDate)
     }
-    // Default to epoch if no date is displayed
-    return new Date(0)
+    // If none of the above conditions are met
+    // return updatedDate if available, otherwise return advisoryDate
+    return advisory.updatedDate ? new Date(advisory.updatedDate) : new Date(advisory.advisoryDate)
   }
   // Compare advisories by date
   const compareAdvisories = (a, b) => {
