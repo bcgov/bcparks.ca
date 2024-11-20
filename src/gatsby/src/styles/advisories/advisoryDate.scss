@@ -2,19 +2,19 @@
 
 .date, .type {
   display: flex;
-	small {
-		color: $colorGreyMed;
-		&:first-of-type {
-			text-wrap: nowrap;
-		}
-		+ small {
-			margin-left: 8px;
-		}
-	}
+  small {
+    color: $colorGreyMed;
+    &:first-of-type {
+      text-wrap: nowrap;
+    }
+    + small {
+      margin-left: 8px;
+    }
+  }
 }
 .type {
-	margin-left: 0;
-	@media (min-width: $smBreakpoint) {
-		margin-left: 16px;
-	}
+  margin-left: 0;
+  @media (min-width: $smBreakpoint) {
+    margin-left: 16px;
+  }
 }
