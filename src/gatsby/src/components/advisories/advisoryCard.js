@@ -21,7 +21,20 @@ const AdvisoryCard = ({ advisory, parkInfoHash }) => {
   const checkRelation = (orcs, orcsSite) => {
     return orcsSite?.includes(orcs?.toString())
   }
-  const hasEffectiveDateRange = formatDate(advisory.effectiveDate) !== formatDate(advisory.endDate)
+
+  // Displayed dates
+  const advisoryDate = formatDate(advisory.advisoryDate)
+  const updatedDate = formatDate(advisory.updatedDate)
+  const effectiveDate = formatDate(advisory.effectiveDate)
+  const endDate = formatDate(advisory.endDate)
+  const hasAdvisoryDateDisplay = advisory.isAdvisoryDateDisplayed && advisoryDate
+  const hasUpdatedDateDisplay = advisory.isUpdatedDateDisplayed && updatedDate
+  const hasEffectiveDateDisplay = advisory.isEffectiveDateDisplayed && effectiveDate
+  const hasEndDateDisplay = advisory.isEndDateDisplayed && endDate
+  const hasEffectiveDateRange = effectiveDate !== endDate
+  const hasDisplayedDate = 
+    advisory.isAdvisoryDateDisplayed ||  advisory.isUpdatedDateDisplayed || 
+    advisory.isEffectiveDateDisplayed || advisory.isEndDateDisplayed
 
   const showFireCentres = advisory.fireCentres?.length > 0;
   const showFireZones = advisory.fireZones?.length > 0;
@@ -121,16 +134,18 @@ const AdvisoryCard = ({ advisory, parkInfoHash }) => {
         {advisory.title && <h3 className="title">{advisory.title}</h3>}
         {/* advisory content */}
         <div className="card-content">
-          {combinedArray.map((item, index) => (
-            <Badge
-              pill
-              key={index}
-              className="park-link badge badge-pill badge-primary"
-            >
-              {item.name}
-              {item.type === "region" ? " Region" : item.type === "section" ? " Section" : ""}
-            </Badge>
-          ))}
+          <div className="d-flex flex-wrap">
+            {combinedArray.map((item, index) => (
+              <Badge
+                pill
+                key={index}
+                className="park-link badge badge-pill badge-primary"
+              >
+                {item.name}
+                {item.type === "region" ? " Region" : item.type === "section" ? " Section" : ""}
+              </Badge>
+            ))}
+          </div>
           {hasAdditionalParks &&
             <Badge
               className="park-link badge-pill badge-secondary-light"
@@ -215,51 +230,48 @@ const AdvisoryCard = ({ advisory, parkInfoHash }) => {
           ))}
           <div className="card-content--bottom">
             {/* advisory date */}
-            {advisory.isEffectiveDateDisplayed &&
-              formatDate(advisory.effectiveDate) && (
-                advisory.isEndDateDisplayed && formatDate(advisory.endDate) ? (
-                  <div className="date">
-                    <small>In effect</small>
-                    <small>
-                      <b>
-                        {formatDate(advisory.effectiveDate)} 
-                        {hasEffectiveDateRange && ` to ${formatDate(advisory.endDate)}`}
-                      </b>
-                    </small>
-                  </div>
-                ) : (
-                  <div className="date">
-                    <small>Starts</small>
-                    <small><b>{formatDate(advisory.effectiveDate)}</b></small>
-                  </div>
-                )
-              )}
-            {advisory.isAdvisoryDateDisplayed &&
-              formatDate(advisory.advisoryDate) && (
+            {hasEffectiveDateDisplay && (
+              hasEndDateDisplay ? (
                 <div className="date">
-                  <small>Posted</small>
-                  <small><b>{formatDate(advisory.advisoryDate)}</b></small>
-                </div>
-              )}
-            {advisory.isUpdatedDateDisplayed &&
-              formatDate(advisory.updatedDate) && (
-                <div className="date">
-                  <small>Updated</small>
-                  <small><b>{formatDate(advisory.updatedDate)}</b></small>
-                </div>
-              )}
-            {/* if "No date" is selected */}
-            {!advisory.isEffectiveDateDisplayed && !advisory.isAdvisoryDateDisplayed && !advisory.isUpdatedDateDisplayed && (
-              formatDate(advisory.updatedDate) ? (
-                <div className="date">
-                  <small>Updated</small>
-                  <small><b>{formatDate(advisory.updatedDate)}</b></small>
+                  <small>In effect</small>
+                  <small>
+                    <b>
+                      {effectiveDate} 
+                      {hasEffectiveDateRange && ` to ${endDate}`}
+                    </b>
+                  </small>
                 </div>
               ) : (
-                formatDate(advisory.advisoryDate) && (
+                <div className="date">
+                  <small>Starts</small>
+                  <small><b>{effectiveDate}</b></small>
+                </div>
+              )
+            )}
+            {hasAdvisoryDateDisplay && (
+              <div className="date">
+                <small>Posted</small>
+                <small><b>{advisoryDate}</b></small>
+              </div>
+            )}
+            {hasUpdatedDateDisplay && (
+              <div className="date">
+                <small>Updated</small>
+                <small><b>{updatedDate}</b></small>
+              </div>
+            )}
+            {/* if "No date" is selected */}
+            {!hasDisplayedDate && (
+              updatedDate ? (
+                <div className="date">
+                  <small>Updated</small>
+                  <small><b>{updatedDate}</b></small>
+                </div>
+              ) : (
+                advisoryDate && (
                   <div className="date">
                     <small>Posted</small>
-                    <small><b>{formatDate(advisory.advisoryDate)}</b></small>
+                    <small><b>{advisoryDate}</b></small>
                   </div>
                 )
               )
