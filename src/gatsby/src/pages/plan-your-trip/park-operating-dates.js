@@ -402,7 +402,7 @@ const ParkOperatingDatesPage = () => {
             <li>
               <b>Booking available: </b>
               During these dates, either <Link to="/reservations">reservations</Link> are available,
-              or <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit</Link> registration is required.
+              or <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit registration</Link> is required.
               To find out which booking you need, <Link to="/find-a-park">check the park</Link> page.
               If a reservable campground is open outside of these dates, sites are available on a first come, first served basis.
             </li>
