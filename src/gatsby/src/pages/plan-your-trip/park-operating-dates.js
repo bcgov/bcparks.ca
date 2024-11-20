@@ -383,8 +383,8 @@ const ParkOperatingDatesPage = () => {
         <div className="intro-text-container">
           <p>
             This page provides a list of planned operating dates for BC Parks and their facilities.
-            All dates are subject to change without notice. Be sure to <Link to="/find-a-park">check the park</Link> page
-            or the <Link to="/active-advisories">active advisories</Link> page for warnings and closures.
+            All dates are subject to change without notice. Be sure to <Link to="/find-a-park">check the park page</Link>
+            {" "}or the <Link to="/active-advisories">active advisories page</Link> for warnings and closures.
           </p>
           <ul>
             <li>
@@ -392,18 +392,18 @@ const ParkOperatingDatesPage = () => {
               During these dates, the facility is open, services are provided, and fees may be charged.
               Outside of these dates, there are no services provided, there are no fees, and access may not be available.
               Each park has different services, fees, and access,
-              so <Link to="/find-a-park">check the park</Link> page for details.
+              so <Link to="/find-a-park">check the park page</Link> for details.
             </li>
             <li>
               <b>Winter season: </b>
               These dates indicate when a frontcountry campground offers camping with reduced fees and services in their shoulder season.
-              {" "}<Link to="/find-a-park">Check the park</Link> page for winter rates and details. 
+              {" "}<Link to="/find-a-park">Check the park page</Link> for winter rates and details. 
             </li>
             <li>
               <b>Booking available: </b>
               During these dates, either <Link to="/reservations">reservations</Link> are available,
               or <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit registration</Link> is required.
-              To find out which booking you need, <Link to="/find-a-park">check the park</Link> page.
+              To find out which booking you need, <Link to="/find-a-park">check the park page</Link>.
               If a reservable campground is open outside of these dates, sites are available on a first come, first served basis.
             </li>
           </ul>
