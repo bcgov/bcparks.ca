@@ -6,6 +6,7 @@ import Badge from "react-bootstrap/Badge"
 import { parseJSON, format } from "date-fns"
 
 import HTMLArea from "../HTMLArea"
+import AdvisoryDate from "./advisoryDate"
 import redAlertIcon from "../../images/park/red-alert.svg"
 import yellowAlertIcon from "../../images/park/yellow-alert.svg"
 import blueAlertIcon from "../../images/park/blue-alert.svg"
@@ -230,52 +231,18 @@ const AdvisoryCard = ({ advisory, parkInfoHash }) => {
           ))}
           <div className="card-content--bottom">
             {/* advisory date */}
-            {hasEffectiveDateDisplay && (
-              hasEndDateDisplay ? (
-                <div className="date">
-                  <small>In effect</small>
-                  <small>
-                    <b>
-                      {effectiveDate} 
-                      {hasEffectiveDateRange && ` to ${endDate}`}
-                    </b>
-                  </small>
-                </div>
-              ) : (
-                <div className="date">
-                  <small>Starts</small>
-                  <small><b>{effectiveDate}</b></small>
-                </div>
-              )
-            )}
-            {hasAdvisoryDateDisplay && (
-              <div className="date">
-                <small>Posted</small>
-                <small><b>{advisoryDate}</b></small>
-              </div>
-            )}
-            {hasUpdatedDateDisplay && (
-              <div className="date">
-                <small>Updated</small>
-                <small><b>{updatedDate}</b></small>
-              </div>
-            )}
-            {/* if "No date" is selected */}
-            {!hasDisplayedDate && (
-              updatedDate ? (
-                <div className="date">
-                  <small>Updated</small>
-                  <small><b>{updatedDate}</b></small>
-                </div>
-              ) : (
-                advisoryDate && (
-                  <div className="date">
-                    <small>Posted</small>
-                    <small><b>{advisoryDate}</b></small>
-                  </div>
-                )
-              )
-            )}
+            <AdvisoryDate
+              hasEffectiveDateDisplay={hasEffectiveDateDisplay}
+              hasEndDateDisplay={hasEndDateDisplay}
+              effectiveDate={effectiveDate}
+              hasEffectiveDateRange={hasEffectiveDateRange}
+              endDate={endDate}
+              hasAdvisoryDateDisplay={hasAdvisoryDateDisplay}
+              advisoryDate={advisoryDate}
+              hasUpdatedDateDisplay={hasUpdatedDateDisplay}
+              updatedDate={updatedDate}
+              hasDisplayedDate={hasDisplayedDate}
+            />
             {/* advisory type */}
             <div className="type">
               <small>Advisory type</small>

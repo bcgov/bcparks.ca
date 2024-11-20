@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
+import AdvisoryDate from "../advisories/advisoryDate"
 import blueAlertIcon from "../../images/park/blue-alert.svg"
 import redAlertIcon from "../../images/park/red-alert.svg"
 import yellowAlertIcon from "../../images/park/yellow-alert.svg"
@@ -161,34 +162,21 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                         </a>
                       </p>
                     ))}
-                    {advisory.isEffectiveDateDisplayed &&
-                      advisory.formattedEffectiveDate && (
-                        <div className="date">
-                          <small>In effect</small>
-                          <small>
-                            <b>
-                              {advisory.formattedEffectiveDate}
-                              {advisory.isEndDateDisplayed && advisory.formattedEndDate && (
-                                <> to {advisory.formattedEndDate}</>
-                              )}
-                            </b>
-                          </small>
-                        </div>
-                      )}
-                    {advisory.isAdvisoryDateDisplayed &&
-                      advisory.formattedAdvisoryDate && (
-                        <div className="date">
-                          <small>Posted</small>
-                          <small><b>{advisory.formattedAdvisoryDate}</b></small>
-                        </div>
-                      )}
-                    {advisory.isUpdatedDateDisplayed &&
-                      advisory.formattedUpdatedDate && (
-                        <div className="date">
-                          <small>Updated</small>
-                          <small><b>{advisory.formattedUpdatedDate}</b></small>
-                        </div>
-                      )}
+                    <div className="mt-2">
+                      <AdvisoryDate
+                        hasEffectiveDateDisplay={advisory.isEffectiveDateDisplayed && advisory.formattedEffectiveDate}
+                        hasEndDateDisplay={advisory.isEndDateDisplayed && advisory.formattedEndDate}
+                        effectiveDate={advisory.formattedEffectiveDate}
+                        hasEffectiveDateRange={advisory.formattedEffectiveDate !== advisory.formattedEndDate}
+                        endDate={advisory.formattedEndDate}
+                        hasAdvisoryDateDisplay={advisory.isAdvisoryDateDisplayed && advisory.formattedAdvisoryDate}
+                        advisoryDate={advisory.formattedAdvisoryDate}
+                        hasUpdatedDateDisplay={advisory.isUpdatedDateDisplayed && advisory.formattedUpdatedDate}
+                        updatedDate={advisory.formattedUpdatedDate}
+                        hasDisplayedDate={advisory.isAdvisoryDateDisplayed || advisory.isUpdatedDateDisplayed || 
+                          advisory.isEffectiveDateDisplayed || advisory.isEndDateDisplayed}
+                      />
+                    </div>
                   </div>
                 </Accordion.Collapse>
               </Accordion>
