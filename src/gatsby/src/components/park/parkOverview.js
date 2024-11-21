@@ -20,10 +20,10 @@ export default function ParkOverview({ data: parkOverview, type }) {
   const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
 
   useEffect(() => {
-    if (ref.current.clientHeight > 260) {
+    if (!hasHr && ref.current.clientHeight > 260) {
       setHeight(ref.current.clientHeight)
     }
-  }, [expanded])
+  }, [hasHr, expanded])
 
   useEffect(() => {
     const h2 = document.querySelector('h2.section-heading');
