@@ -1,5 +1,5 @@
 import { navigate } from "gatsby"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Form from "react-bootstrap/Form"
 import { Typeahead, ClearButton, Menu, MenuItem } from "react-bootstrap-typeahead"
 
@@ -25,8 +25,18 @@ const AdvisoryFilter = ({
   const [isKeywordFilter, setIsKeywordsFilter] = useState(getFilter("keyword"))
   const [eventText, setEventText] = useState("")
   const [selectedEventType, setSelectedEventType] = useState([defaultEventType])
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const typeaheadRef = useRef(null)
+  const hasDefaultEventType = selectedEventType[0]?.label === "All"
 
   // functions
+  const hasResult = (text) => {
+    const eventTextLower = text.toLowerCase()
+    const results = eventTypes.filter(type =>
+      type.label.toLowerCase().startsWith(eventTextLower) || type.label.toLowerCase().includes(eventTextLower)
+    )
+    return results.length > 0
+  }
   const updateAdvisoriesSearchText = str => {
     setSearchText(str)
   }
@@ -43,7 +53,7 @@ const AdvisoryFilter = ({
       return option.label.toLowerCase().includes(input)
     }
   }
-  // even handlers
+  // event handlers
   const handleSearch = () => {
     setSearchText(filterText)
   }
@@ -78,8 +88,39 @@ const AdvisoryFilter = ({
     setFilterText("")
     updateAdvisoriesSearchText("")
   }
+  const handleKeyDownInput = (e) => {
+    if (e.key === 'Enter') {
+      if (!hasResult(eventText)) {
+        setIsDropdownOpen(false)
+      }
+    }
+  }
 
   // useEffect
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (typeaheadRef.current && !typeaheadRef.current.inputNode.contains(e.target)) {
+        setIsDropdownOpen(false)
+      }
+    }
+    document.body.addEventListener("click", handleClickOutside)
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside)
+    }
+  }, [])
+  useEffect(() => {
+    // clear input field if text does not exist in options
+    if (!isDropdownOpen && eventText.length > 0 && !hasResult(eventText)) {
+      setEventText("")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDropdownOpen, eventText])
+  useEffect(() => {
+    if (eventText && !selectedEventType.length) {
+      setIsDropdownOpen(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventText, selectedEventType])
   useEffect(() => {
     const advisoryTypeFromUrl = getAdvisoryTypeFromUrl()
     if (advisoryTypeFromUrl) {
@@ -89,10 +130,10 @@ const AdvisoryFilter = ({
     }
   }, [eventTypes, defaultEventType, setType])
   useEffect(() => {
-    if (selectedEventType.length > 0 && eventText !== selectedEventType[0].value) {
+    if (selectedEventType.length > 0 && !hasDefaultEventType && eventText !== selectedEventType[0].value) {
       setEventText(selectedEventType[0].value)
     }
-  }, [selectedEventType, eventText])
+  }, [selectedEventType, hasDefaultEventType, eventText])
 
   return (
     <div className="advisory-filter-container">
@@ -136,6 +177,7 @@ const AdvisoryFilter = ({
         <div className="col-12 col-sm-7 col-md-4 mt-4 mt-md-0">
           <Form.Label><b>Advisory type</b></Form.Label>
           <Typeahead
+            ref={typeaheadRef}
             id="event-search-typeahead"
             minLength={0}
             labelKey="label"
@@ -144,6 +186,7 @@ const AdvisoryFilter = ({
             selected={selectedEventType}
             onChange={(selected) => handleTypeaheadChange(selected)}
             onInputChange={e => handleInputChange(e)}
+            open={isDropdownOpen}
             placeholder=" "
             className={`has-text--${(selectedEventType.length > 0 || eventText.length > 0) ? 'true' : 'false'
               } event-search-typeahead`
@@ -153,12 +196,13 @@ const AdvisoryFilter = ({
                 <Form.Control
                   {...props}
                   value={selectedEventType.length > 0 ?
-                    (selectedEventType[0].label === "All" ? "" : selectedEventType[0].label)
+                    (hasDefaultEventType ? "" : selectedEventType[0].label)
                     : eventText}
                   ref={(node) => {
                     inputRef(node)
                     referenceElementRef(node)
                   }}
+                  onKeyDown={handleKeyDownInput}
                   enterKeyHint="search"
                 />
                 <label htmlFor="event-search-typeahead">
