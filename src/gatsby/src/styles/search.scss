@@ -709,7 +709,7 @@ a.mobile-park-link {
       }
       &.no-suggestion-text {
         cursor: default;
-        text-decoration: none;
+        text-decoration: none !important;
       }
       &.current-location-text {
         svg.location-icon {
