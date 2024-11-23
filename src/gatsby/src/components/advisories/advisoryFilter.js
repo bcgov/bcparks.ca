@@ -33,7 +33,7 @@ const AdvisoryFilter = ({
   const hasResult = (text) => {
     const eventTextLower = text.toLowerCase()
     const results = eventTypes.filter(type =>
-      type.label.toLowerCase().startsWith(eventTextLower) || type.label.toLowerCase().includes(eventTextLower)
+      type.label.toLowerCase().includes(eventTextLower)
     )
     return results.length > 0
   }
