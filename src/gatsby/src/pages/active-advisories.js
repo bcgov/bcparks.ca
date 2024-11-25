@@ -240,8 +240,12 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           .then(function (data) {
             let results = data.data.data
             results.sort(compareAdvisories)
-            // Append new advisories to the existing list
-            setAdvisories(prevAdvisories => [...prevAdvisories, ...results]) 
+            // Append new advisories to the existing list if 'Load more' button is clicked
+            if (pageIndex > 1) {
+             setAdvisories(prevAdvisories => [...prevAdvisories, ...results]) 
+            } else {
+              setAdvisories(results)
+            }
             setIsDataOld(false) // Flag that advisories are updated
             setIsNewFilter(false)
             setIsSearchError(false)
