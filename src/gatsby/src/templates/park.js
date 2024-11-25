@@ -125,7 +125,9 @@ export default function ParkTemplate({ data }) {
       const id = window.location.hash.replace("#", "")
       const element = document.getElementById(id) || document.querySelector(window.location.hash)
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 100)
       }
     }
   }, [isLoadingProtectedArea, isLoadingAdvisories])
