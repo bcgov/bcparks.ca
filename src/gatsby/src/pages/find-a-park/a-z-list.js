@@ -140,7 +140,7 @@ const ParksPage = () => {
                   filtering(currentFilter).map((park, index) => (
                   <ParkLink park={park} key={index} />
                   ))
-                : <NoSearchResults page="a-z-list" />
+                  : <NoSearchResults page="a-z-list" />
                 }
               </div>
             )}
