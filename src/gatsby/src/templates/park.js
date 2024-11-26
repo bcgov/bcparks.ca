@@ -892,10 +892,14 @@ export const query = graphql`
     allStrapiCampingType {
       nodes {
         appendStandardCalloutText {
-          data
+          data {
+            appendStandardCalloutText
+          }
         }
         defaultDescription {
-          data
+          data {
+            defaultDescription
+          }
         }
         campingTypeCode
         campingTypeName
@@ -908,10 +912,14 @@ export const query = graphql`
     allStrapiFacilityType {
       nodes {
         appendStandardCalloutText {
-          data
+          data {
+            appendStandardCalloutText
+          }
         }
         defaultDescription {
-          data
+          data {
+            defaultDescription
+          }
         }
         facilityCode
         facilityName

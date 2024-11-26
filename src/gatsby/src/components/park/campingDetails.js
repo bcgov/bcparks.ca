@@ -20,8 +20,8 @@ export const CampingType = ({ camping, parkOperation }) => {
   const isMedium = height > 260 && height < 300
   const campingDescription = !isNullOrWhiteSpace(camping.description?.data) ?
     camping.description.data :
-    !isNullOrWhiteSpace(camping?.campingType?.defaultDescription?.data) ?
-      camping.campingType.defaultDescription.data : ""
+    !isNullOrWhiteSpace(camping?.campingType?.defaultDescription?.data?.defaultDescription) ?
+      camping.campingType.defaultDescription.data.defaultDescription : ""
 
   const $ = cheerio.load(campingDescription)
   $('a').attr('tabindex', '-1')
@@ -72,6 +72,14 @@ export const CampingType = ({ camping, parkOperation }) => {
         <HtmlContent className="park-camping-description">
           {expanded ? campingDescription : collapsedDescription}
         </HtmlContent>
+        {!camping.hideStandardCallout &&
+          !isNullOrWhiteSpace(camping.campingType?.appendStandardCalloutText?.data?.appendStandardCalloutText) && (
+            <blockquote className="callout-box">
+              <HtmlContent>
+                {camping.campingType.appendStandardCalloutText.data.appendStandardCalloutText}
+              </HtmlContent>
+            </blockquote>
+          )}
       </div>
       {hasExpandCondition &&
         <button

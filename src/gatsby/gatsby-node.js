@@ -111,31 +111,18 @@ exports.createSchemaCustomization = ({ actions }) => {
     data: String
   }
 
-  type STRAPI_ACTIVITY_TYPE implements Node {
-    appendStandardCalloutText: DATA
-  }
 
-  type STRAPI_FACILITY_TYPE implements Node {
-    appendStandardCalloutText: DATA
-  }
 
-  type STRAPI_CAMPING_TYPE implements Node {
-    appendStandardCalloutText: DATA
-    defaultDescription: DATA
-  }
 
   type STRAPI_PARK_ACTIVITY implements Node {
-    activityType: STRAPI_ACTIVITY_TYPE
     hideStandardCallout: Boolean
   }
   
   type STRAPI_PARK_FACILITY implements Node {
-    facilityType: STRAPI_FACILITY_TYPE
     hideStandardCallout: Boolean
   }
 
   type STRAPI_PARK_CAMPING_TYPE implements Node {
-    campingType: STRAPI_CAMPING_TYPE
     hideStandardCallout: Boolean
   }
   

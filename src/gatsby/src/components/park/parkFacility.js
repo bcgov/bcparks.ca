@@ -50,14 +50,14 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
           <div className="accordion-content">
             <HtmlContent>
               {!isNullOrWhiteSpace(facility.description?.data) ?
-                facility.description.data : facility.facilityType.defaultDescription.data
+                facility.description.data : facility.facilityType.defaultDescription.data.defaultDescription
               }
             </HtmlContent>
             {!facility.hideStandardCallout &&
-              !isNullOrWhiteSpace(facility.facilityType?.appendStandardCalloutText?.data) && (
+              !isNullOrWhiteSpace(facility.facilityType?.appendStandardCalloutText?.data?.appendStandardCalloutText) && (
                 <blockquote className="callout-box">
                   <HtmlContent>
-                    {facility.facilityType.appendStandardCalloutText.data}
+                    {facility.facilityType.appendStandardCalloutText.data.appendStandardCalloutText}
                   </HtmlContent>
                 </blockquote>
               )}
