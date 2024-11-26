@@ -125,7 +125,9 @@ export default function ParkTemplate({ data }) {
       const id = window.location.hash.replace("#", "")
       const element = document.getElementById(id) || document.querySelector(window.location.hash)
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 100)
       }
     }
   }, [isLoadingProtectedArea, isLoadingAdvisories])
@@ -134,15 +136,15 @@ export default function ParkTemplate({ data }) {
     setParkAccessStatus(statusObj);
   };
 
-  const parkOverviewRef = useRef("")
-  const knowBeforeRef = useRef("")
-  const mapLocationRef = useRef("")
-  const campingRef = useRef("")
-  const activityRef = useRef("")
-  const facilityRef = useRef("")
-  const aboutRef = useRef("")
-  const reconciliationRef = useRef("")
-  const contactRef = useRef("")
+  const parkOverviewRef = useRef(null)
+  const knowBeforeRef = useRef(null)
+  const mapLocationRef = useRef(null)
+  const campingRef = useRef(null)
+  const activityRef = useRef(null)
+  const facilityRef = useRef(null)
+  const aboutRef = useRef(null)
+  const reconciliationRef = useRef(null)
+  const contactRef = useRef(null)
 
   const sectionRefs = [
     parkOverviewRef,
