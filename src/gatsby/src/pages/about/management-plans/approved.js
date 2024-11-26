@@ -6,6 +6,7 @@ import Header from "../../../components/header"
 import Footer from "../../../components/footer"
 import Seo from "../../../components/seo"
 import ScrollToTop from "../../../components/scrollToTop"
+import NoSearchResults from "../../../components/search/noSearchResults"
 
 import "../../../styles/listPage.scss"
 
@@ -115,7 +116,7 @@ const ApprovedListPage = () => {
   }
   const filtering = (char) =>
     parks.filter(park => park.slug.charAt(0).toUpperCase() === char)
-
+  const hasResult = filtering(currentFilter).length > 0 
   const filters = [
     "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
@@ -198,9 +199,12 @@ const ApprovedListPage = () => {
             ) : (
               <div className="list">
                 <h3>{currentFilter}</h3>
-                {filtering(currentFilter).map((park, index) => (
-                  <DocumentLink park={park} key={index} />
-                ))}
+                {hasResult ? 
+                  filtering(currentFilter).map((park, index) => (
+                    <DocumentLink park={park} key={index} />
+                  ))
+                  : <NoSearchResults page="approved" />
+                }
               </div>
             )}
           </div>

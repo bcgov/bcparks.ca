@@ -10,6 +10,7 @@ import Seo from "../../components/seo"
 import ScrollToTop from "../../components/scrollToTop"
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import StaticIcon from "../../components/park/staticIcon"
+import NoSearchResults from "../../components/search/noSearchResults"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
@@ -349,7 +350,7 @@ const ParkOperatingDatesPage = () => {
   }
   const filtering = (char) =>
     parks.filter(park => park.slug.charAt(0).toUpperCase() === char)
-
+  const hasResult = filtering(currentFilter).length > 0 
   const filters = [
     "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
@@ -443,9 +444,12 @@ const ParkOperatingDatesPage = () => {
               ))
             ) : (
               <div className="list">
-                {filtering(currentFilter).map((park, index) => (
-                  <ParkLink park={park} apiBaseUrl={apiBaseUrl} key={index} />
-                ))}
+                {hasResult ? 
+                  filtering(currentFilter).map((park, index) => (
+                    <ParkLink park={park} apiBaseUrl={apiBaseUrl} key={index} />
+                  ))
+                  : <NoSearchResults page="park-operating-dates" />
+                }
               </div>
             )}
           </div>
