@@ -206,6 +206,9 @@
     },
     "inReservationSystem": {
       "type": "boolean"
+    },
+    "gateOpen24Hours": {
+      "type": "boolean"
     }
   }
 }
