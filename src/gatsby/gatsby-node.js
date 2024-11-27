@@ -212,6 +212,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     totalCapacity: String
     gateOpenTime: String
     gateCloseTime: String
+    gateOpen24Hours: Boolean
     hasCanoeCircuitReservations: Boolean
     hasFrontcountryReservations: Boolean
     hasFrontcountryGroupReservations: Boolean

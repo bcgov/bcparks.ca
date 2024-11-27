@@ -589,6 +589,7 @@ export const query = graphql`
         gateCloseTime
         gateOpensAtDawn
         gateClosesAtDusk
+        gateOpen24Hours
         hasGroupPicnicReservations
         hasCanoeCircuitReservations
         hasFrontcountryReservations

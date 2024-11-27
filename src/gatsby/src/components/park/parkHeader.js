@@ -60,9 +60,9 @@ const formattedTime = (time) => {
 // Helper function to render the gate open/close times
 const renderGateTimes = (parkOperation) => {
   if (!parkOperation) return null
-  const { gateOpenTime, gateCloseTime, gateOpensAtDawn, gateClosesAtDusk } = parkOperation
+  const { gateOpenTime, gateCloseTime, gateOpensAtDawn, gateClosesAtDusk, gateOpen24Hours } = parkOperation
 
-  if (gateOpenTime === "00:00:00" && gateCloseTime === "23:59:00") {
+  if (gateOpen24Hours) {
     return <>, 24 hours a day.</>
     // Either gateOpenTime or gateOpensAtDawn is available, then either gateCloseTime or gateClosesAtDusk must also be available
   } else if ((gateOpenTime || gateOpensAtDawn) && (gateCloseTime || gateClosesAtDusk)) {
