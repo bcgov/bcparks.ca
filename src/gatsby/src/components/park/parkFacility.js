@@ -19,8 +19,7 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
     <Accordion
       className={`is-open--${openAccordions[eventKey]}`}
     >
-      <Accordion.Toggle
-        as={"div"}
+      <div
         aria-controls={facility.facilityType.facilityName}
         eventKey={eventKey}
         onClick={() => toggleAccordion(eventKey)}
@@ -41,7 +40,7 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
             }
           </div>
         </div>
-      </Accordion.Toggle>
+      </div>
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
         <>
           {facility.subAreas.map((subArea, index) => (

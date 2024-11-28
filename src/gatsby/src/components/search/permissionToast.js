@@ -13,7 +13,7 @@ const PermissionToast = ({ isToastOpen, setIsToastOpen, permissionDeniedCount })
     >
       <Toast show={isToastOpen} onClose={toggleShow}>
         <Toast.Header>
-          <strong className="mr-auto">
+          <strong className="me-auto">
             Location permission blocked
           </strong>
         </Toast.Header>

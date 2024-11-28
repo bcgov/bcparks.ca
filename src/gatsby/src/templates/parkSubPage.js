@@ -125,7 +125,7 @@ export default function ParkSubPage({ data }) {
       <div className="static-content-container">
         <div className="page-content-wrapper">
           {hasSections ? (
-            <div className="row no-gutters">
+            <div className="row g-0">
               <div className="page-menu--desktop col-md-4 col-12 d-none d-md-block">
                 <PageMenu
                   pageSections={pageSections}

@@ -121,8 +121,7 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                 key={index}
                 className={`advisory-accordion is-open--${openAccordions[index]}`}
               >
-                <Accordion.Toggle
-                  as={"div"}
+                <div
                   className="accordion-toggle"
                   eventKey={index.toString()}
                   onClick={() => toggleAccordion(index)}
@@ -142,7 +141,7 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                       }
                     </div>
                   </div>
-                </Accordion.Toggle>
+                </div>
                 <Accordion.Collapse eventKey={index.toString()} in={openAccordions[index]}>
                   <div className="accordion-content">
                     {advisory.description && (

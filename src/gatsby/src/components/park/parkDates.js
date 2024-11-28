@@ -108,8 +108,7 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
       className={`dates-accordion is-open--${openAccordions[eventKey]}`}
     >
       {itemCount > 1 ? (
-        <Accordion.Toggle
-          as={"div"}
+        <div
           aria-controls={subArea.parkSubArea}
           eventKey={eventKey}
           onClick={() => toggleAccordion(eventKey)}
@@ -129,7 +128,7 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
               }
             </div>
           </div>
-        </Accordion.Toggle>
+        </div>
       ) : (
         <div id={parkSubAreaId} className="accordion-toggle">
           <HtmlContent className="accordion-header">

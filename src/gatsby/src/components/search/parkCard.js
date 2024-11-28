@@ -41,7 +41,7 @@ const ParkCard = ({ r }) => {
     <div className="m20t">
       {/* card for pc */}
       <div className="d-none d-lg-block park-card park-card-desktop">
-        <div className="row no-gutters">
+        <div className="row g-0">
           {r.parkPhotos &&
             r.parkPhotos.length === 0 && (
               <div className="col-lg-auto park-image-div">

@@ -25,12 +25,12 @@ const AdvisoryLegend = () => {
 
   return (
     <div className="advisory-legend">
-      <div className="row no-gutters">
+      <div className="row g-0">
         {legendItems.map((legendItem, index) => {
           return (
             <div key={index} className="col col-12 col-md-4">
               <div className="advisory-legend-item">
-                <div className="d-flex align-items-center mr-3">
+                <div className="d-flex align-items-center me-3">
                   <img
                     src={legendItem.icon}
                     alt="advisory status icon"

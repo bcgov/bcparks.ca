@@ -138,7 +138,9 @@ figure.table {
       }
     }
     th, td {
+      vertical-align: top;
       border-bottom: 1px solid $colorGreyLight;
+      padding: 12px;
     }
     th {
       background: $colorBrownLight;
@@ -575,8 +577,8 @@ nav.breadcrumbs {
       font-size: 1.5rem;
     }
   }
-  ol.carousel-indicators {
-    li {
+  .carousel-indicators {
+    button {
       height: 6px;
       width: 6px;
       border-radius: 6px;

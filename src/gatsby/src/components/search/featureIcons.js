@@ -17,7 +17,7 @@ const Icon = ({ src, label, size }) => {
       aria-label={label}
       width={size}
       height={size}
-      className="mt-2 mr-2"
+      className="mt-2 me-2"
     />
   )
 }

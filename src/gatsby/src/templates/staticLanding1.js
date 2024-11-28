@@ -122,7 +122,7 @@ const LandingPage = ({ pageContext }) => {
       )}
       <div className="bcp-landing-park-search d-none d-lg-block">
         <div className="container">
-          <div className="row no-gutters">
+          <div className="row g-0">
             <div className="col">
               <StaticImage
                 src="../images/landing/footer-find-your-next-adventure.png"

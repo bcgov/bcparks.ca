@@ -65,7 +65,7 @@ export const CampingType = ({ camping, parkOperation }) => {
       >
         <div className="d-flex align-items-center mb-4">
           <StaticIcon name={camping?.campingType?.icon || "information"} size={36} />
-          <h3 className="park-camping-title ml-3 mb-0">
+          <h3 className="park-camping-title ms-3 mb-0">
             {camping?.campingType?.campingTypeName}
           </h3>
         </div>
