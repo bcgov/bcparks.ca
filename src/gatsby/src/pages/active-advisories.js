@@ -384,13 +384,11 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         </div>
 
         <div className={isDataOld ? "hidden" : undefined}>
-          <div className={isAnySearch ? "my-2" : "hidden"}>
-            {!isSearchError && (
-              <>Advisories that match your search: {filterCount}</>
-            )}
-            {isSearchError &&
-              "There was an error in your search. Tip: avoid using punctuation"}
-          </div>
+          {(isSearchError && isAnySearch) &&
+            <div className="my-2">
+              There was an error in your search. Tip: avoid using punctuation
+            </div>
+          }
 
           <AdvisoryLegend />
           <div className="mb-2">
