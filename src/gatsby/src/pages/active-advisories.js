@@ -384,8 +384,8 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         </div>
 
         <div className={isDataOld ? "hidden" : undefined}>
-          {isSearchError &&
-            <div className={isAnySearch ? "my-2" : "hidden"}>
+          {(isSearchError && isAnySearch) &&
+            <div className="my-2">
               There was an error in your search. Tip: avoid using punctuation
             </div>
           }
