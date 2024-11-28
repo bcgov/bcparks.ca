@@ -54,6 +54,9 @@ const AdvisoryFilter = ({
     }
   }
   // event handlers
+  const handleFocusInput = () => {
+    setIsDropdownOpen(true)
+  }
   const handleSearch = () => {
     setSearchText(filterText)
   }
@@ -186,6 +189,7 @@ const AdvisoryFilter = ({
             selected={selectedEventType}
             onChange={(selected) => handleTypeaheadChange(selected)}
             onInputChange={e => handleInputChange(e)}
+            onFocus={handleFocusInput}
             open={isDropdownOpen}
             placeholder=" "
             className={`has-text--${(selectedEventType.length > 0 || eventText.length > 0) ? 'true' : 'false'
