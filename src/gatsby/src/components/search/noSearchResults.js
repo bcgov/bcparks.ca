@@ -43,12 +43,6 @@ const NoSearchResults = ({
     handleClickClearPark()
     handleClickClearFilter()
   }
-  const handleKeyDownClearAll = e => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault()
-      handleClearAll()
-    }
-  }
 
   return (
     <div className="no-results-container">
@@ -70,7 +64,6 @@ const NoSearchResults = ({
                 className="btn btn-link"
                 aria-label="Clear all"
                 onClick={handleClearAll}
-                onKeyDown={handleKeyDownClearAll}
               >
                 Go back to the full list
               </button>
@@ -95,7 +88,7 @@ const NoSearchResults = ({
           <p><b>Or search using the:</b></p>
           <ul>
             <li>
-              <Link to="/find-a-park">Find a park</Link> page
+              <Link to="/find-a-park">Find a park page</Link>
             </li>
             <li>
               <MapLink />
