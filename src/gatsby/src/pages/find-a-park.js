@@ -366,18 +366,6 @@ export default function FindAPark({ location, data }) {
     setSelectedCity([])
     setQsLocation(undefined)
   }
-  const handleKeyDownClearPark = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault()
-      handleClickClearPark()
-    }
-  }
-  const handleKeyDownClearCity = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault()
-      handleClickClearCity()
-    }
-  }
   // event handlers - for loading
   const handleLoadMore = () => {
     const newPage = +currentPage + 1
@@ -887,15 +875,10 @@ export default function FindAPark({ location, data }) {
                   <>
                     {!searchResults || searchResults.length === 0 ? (
                       <NoSearchResults
-                        hasPark={inputText.length > 0}
-                        hasCity={selectedCity.length > 0}
-                        hasFilter={filterSelections.length > 0}
                         handleClickClearCity={handleClickClearCity}
-                        handleKeyDownClearCity={handleKeyDownClearCity}
                         handleClickClearPark={handleClickClearPark}
-                        handleKeyDownClearPark={handleKeyDownClearPark}
                         handleClickClearFilter={handleClearFilter}
-                        handleKeyDownClearFilter={handleKeyDownClearFilter}
+                        page="find-a-park"
                       />
                     ) : (
                       // park results cards
