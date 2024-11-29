@@ -102,6 +102,12 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
 
 export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordion, itemCount }) => {
   const parkSubAreaId = _.kebabCase(subArea.parkSubArea)
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault()
+      toggleAccordion(eventKey)
+    }
+  }
 
   return (
     <Accordion
@@ -109,9 +115,12 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
     >
       {itemCount > 1 ? (
         <div
-          aria-controls={subArea.parkSubArea}
+          tabIndex={0}
+          role="button"
           eventKey={eventKey}
+          aria-controls={subArea.parkSubArea}
           onClick={() => toggleAccordion(eventKey)}
+          onKeyDown={handleKeyDown}
         >
           <div
             id={parkSubAreaId}

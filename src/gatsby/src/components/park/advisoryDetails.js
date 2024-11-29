@@ -70,6 +70,13 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
     setOpenAccordions(newOpenAccordions)
   }
 
+  const handleKeyDown = (event, index) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault()
+      toggleAccordion(index)
+    }
+  }
+
   const allExpanded = useMemo(() => {
     return advisoriesWithFormatting.length > 0 &&
       Object.keys(openAccordions).length === advisoriesWithFormatting.length &&
@@ -122,9 +129,13 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                 className={`advisory-accordion is-open--${openAccordions[index]}`}
               >
                 <div
-                  className="accordion-toggle"
+                  tabIndex={0}
+                  role="button"
                   eventKey={index.toString()}
+                  aria-controls={advisory.title}
                   onClick={() => toggleAccordion(index)}
+                  onKeyDown={(event) => handleKeyDown(event, index)}
+                  className="accordion-toggle"
                 >
                   <div className="d-flex justify-content-between">
                     <div className="d-flex align-items-center">

@@ -10,14 +10,24 @@ import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion }) => {
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault()
+      toggleAccordion(eventKey)
+    }
+  }
+
   return (
     <Accordion
       className={`about-accordion is-open--${openAccordions[eventKey]}`}
     >
       <div
-        aria-controls={data.title}
+        tabIndex={0}
+        role="button"
         eventKey={eventKey}
+        aria-controls={data.title}
         onClick={() => toggleAccordion(eventKey)}
+        onKeyDown={handleKeyDown}
       >
         <div
           id={data.code}

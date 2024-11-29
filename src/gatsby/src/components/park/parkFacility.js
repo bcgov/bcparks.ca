@@ -15,14 +15,24 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
   const isPicnicFacility =
     ["picnic-shelters", "picnic-areas"].includes(facility.facilityType.facilityCode)
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault()
+      toggleAccordion(eventKey)
+    }
+  }
+
   return (
     <Accordion
       className={`is-open--${openAccordions[eventKey]}`}
     >
       <div
-        aria-controls={facility.facilityType.facilityName}
+        tabIndex={0}
+        role="button"
         eventKey={eventKey}
+        aria-controls={facility.facilityType.facilityName}
         onClick={() => toggleAccordion(eventKey)}
+        onKeyDown={handleKeyDown}
       >
         <div
           id={facility.facilityType.facilityCode}
