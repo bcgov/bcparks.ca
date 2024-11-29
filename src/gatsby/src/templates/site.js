@@ -582,6 +582,7 @@ export const query = graphql`
         openNote
         serviceNote
         reservationsNote
+        reservationNote
         offSeasonNote
         generalNote
         adminNote
