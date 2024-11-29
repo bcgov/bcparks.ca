@@ -197,10 +197,12 @@ export default function ParkAccessStatus({
             src={accessStatus.parkStatusIcon}
             alt={accessStatus.parkStatusText}
           />
-          {accessStatus.parkStatusText}{!hideComma && ", "}
-          <Link to={`/${slug}/#advisories`}>
-            {hideComma ? "C": "c"}heck advisories {`(${advisories.length})`}
-          </Link>
+          {accessStatus.parkStatusText}{(!hideComma && advisories.length > 0) && ", "}
+          {advisories.length > 0 &&
+            <Link to={`/${slug}/#advisories`}>
+              {hideComma ? "C": "c"}heck advisories {`(${advisories.length})`}
+            </Link>
+          } 
           {punctuation}
         </>
       }
