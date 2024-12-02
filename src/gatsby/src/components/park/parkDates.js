@@ -8,6 +8,7 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
 import SubArea from "./subArea"
+import CustomToggle from "./customToggle"
 
 export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
   const reservationUrlRules = {
@@ -102,42 +103,29 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
 
 export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordion, itemCount }) => {
   const parkSubAreaId = _.kebabCase(subArea.parkSubArea)
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault()
-      toggleAccordion(eventKey)
-    }
-  }
 
   return (
     <Accordion
       className={`dates-accordion is-open--${openAccordions[eventKey]}`}
     >
       {itemCount > 1 ? (
-        <div
-          tabIndex={0}
-          role="button"
+        <CustomToggle
           eventKey={eventKey}
-          aria-controls={subArea.parkSubArea}
-          onClick={() => toggleAccordion(eventKey)}
-          onKeyDown={handleKeyDown}
+          toggleId={parkSubAreaId}
+          ariaControls={subArea.parkSubArea}
+          handleClick={toggleAccordion}
         >
-          <div
-            id={parkSubAreaId}
-            className="d-flex justify-content-between accordion-toggle"
-          >
-            <div className="d-flex align-items-center">
-              <HtmlContent className="accordion-header">
-                {subArea.parkSubArea}
-              </HtmlContent>
-            </div>
-            <div className="d-flex align-items-center">
-              {openAccordions[eventKey] ?
-                <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-              }
-            </div>
+          <div className="d-flex align-items-center">
+            <HtmlContent className="accordion-header">
+              {subArea.parkSubArea}
+            </HtmlContent>
           </div>
-        </div>
+          <div className="d-flex align-items-center">
+            {openAccordions[eventKey] ?
+              <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+            }
+            </div>
+        </CustomToggle>
       ) : (
         <div id={parkSubAreaId} className="accordion-toggle">
           <HtmlContent className="accordion-header">

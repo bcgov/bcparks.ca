@@ -83,7 +83,7 @@ h3.subtitle {
   }
   .modal-dialog-scrollable {
     height: 100vh;
-    align-items: center;
+    align-content: center;
   }
   .modal-content {
     background-color: $colorBackgroundGrey;
@@ -676,7 +676,7 @@ a.mobile-park-link {
   .dropdown-menu {
     width: 100%;
     max-height: 360px !important;
-    top: 45px !important;
+    top: 44px !important;
     transform: none !important;
     border-width: 3px;
     border-color: $colorGreyMed;
@@ -720,6 +720,7 @@ a.mobile-park-link {
     button.close {
       width: 40px;
       height: 40px;
+      font-size: 1.5rem;
       color: $colorGreyMed;
       background: none;
       border-radius: 4px;
@@ -729,8 +730,9 @@ a.mobile-park-link {
       &:hover {
         opacity: 1;
       }
-      span.rbt-close-content {
-        font-size: 1.5rem;
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px $colorBlueMed;
       }
     }
     .spinner-border {

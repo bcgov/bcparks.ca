@@ -7,47 +7,34 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
+import CustomToggle from "./customToggle"
 import DiscoverParksLogo from "../../images/discover-parks-instagram-dark-green-icon-with-text.png"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 export const AccordionList = ({ eventKey, activity, openAccordions, toggleAccordion }) => {
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault()
-      toggleAccordion(eventKey)
-    }
-  }
-
   return (
     <Accordion
       className={`is-open--${openAccordions[eventKey]}`}
     >
-      <div
-        tabIndex={0}
-        role="button"
+      <CustomToggle
         eventKey={eventKey}
-        aria-controls={activity.activityType.activityName}
-        onClick={() => toggleAccordion(eventKey)}
-        onKeyDown={handleKeyDown}
+        toggleId={activity.activityType.activityCode}
+        ariaControls={activity.activityType.activityName}
+        handleClick={toggleAccordion}
       >
-        <div
-          id={activity.activityType.activityCode}
-          className="d-flex justify-content-between accordion-toggle"
-        >
-          <div className="d-flex align-items-center">
-            <StaticIcon name={activity.activityType.icon || "information"} size={36} />
-            <HtmlContent className="accordion-header">
-              {activity.activityType.activityName}
-            </HtmlContent>
-          </div>
-          <div className="d-flex align-items-center">
-            {openAccordions[eventKey] ?
-              <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-            }
-          </div>
+        <div className="d-flex align-items-center">
+          <StaticIcon name={activity.activityType.icon || "information"} size={36} />
+          <HtmlContent className="accordion-header">
+            {activity.activityType.activityName}
+          </HtmlContent>
         </div>
-      </div>
+        <div className="d-flex align-items-center">
+          {openAccordions[eventKey] ?
+            <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+          }
+        </div>
+      </CustomToggle>
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
         <div className="accordion-content">
           <HtmlContent>

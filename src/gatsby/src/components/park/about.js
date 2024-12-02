@@ -6,45 +6,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
+import CustomToggle from "./customToggle"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion }) => {
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault()
-      toggleAccordion(eventKey)
-    }
-  }
-
   return (
     <Accordion
       className={`about-accordion is-open--${openAccordions[eventKey]}`}
     >
-      <div
-        tabIndex={0}
-        role="button"
+      <CustomToggle
         eventKey={eventKey}
-        aria-controls={data.title}
-        onClick={() => toggleAccordion(eventKey)}
-        onKeyDown={handleKeyDown}
+        toggleId={data.code}
+        ariaControls={data.title}
+        handleClick={toggleAccordion}
       >
-        <div
-          id={data.code}
-          className="d-flex justify-content-between accordion-toggle"
-        >
-          <div className="d-flex align-items-center">
-            <HtmlContent className="accordion-header">
-              {data.title}
-            </HtmlContent>
-          </div>
-          <div className="d-flex align-items-center">
-            {openAccordions[eventKey] ?
-              <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-            }
-          </div>
+        <div className="d-flex align-items-center">
+          <HtmlContent className="accordion-header">
+            {data.title}
+          </HtmlContent>
         </div>
-      </div>
+        <div className="d-flex align-items-center">
+          {openAccordions[eventKey] ?
+            <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+          }
+        </div>
+      </CustomToggle>
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
         <div className="accordion-content">
           <HtmlContent>
