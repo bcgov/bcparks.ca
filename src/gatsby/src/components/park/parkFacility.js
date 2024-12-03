@@ -10,6 +10,7 @@ import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 import SubArea from "./subArea"
+import CustomToggle from "./customToggle"
 
 export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccordion, groupPicnicReservationUrl }) => {
   const isPicnicFacility =
@@ -19,29 +20,24 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
     <Accordion
       className={`is-open--${openAccordions[eventKey]}`}
     >
-      <Accordion.Toggle
-        as={"div"}
-        aria-controls={facility.facilityType.facilityName}
+      <CustomToggle
         eventKey={eventKey}
-        onClick={() => toggleAccordion(eventKey)}
+        toggleId={facility.facilityType.facilityCode}
+        ariaControls={facility.facilityType.facilityName}
+        handleClick={toggleAccordion}
       >
-        <div
-          id={facility.facilityType.facilityCode}
-          className="d-flex justify-content-between accordion-toggle"
-        >
-          <div className="d-flex align-items-center">
-            <StaticIcon name={facility.facilityType.icon || "information"} size={36} />
-            <HtmlContent className="accordion-header">
-              {facility.facilityType.facilityName}
-            </HtmlContent>
-          </div>
-          <div className="d-flex align-items-center">
-            {openAccordions[eventKey] ?
-              <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-            }
-          </div>
+        <div className="d-flex align-items-center">
+          <StaticIcon name={facility.facilityType.icon || "information"} size={36} />
+          <HtmlContent className="accordion-header">
+            {facility.facilityType.facilityName}
+          </HtmlContent>
         </div>
-      </Accordion.Toggle>
+        <div className="d-flex align-items-center">
+          {openAccordions[eventKey] ?
+            <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+          }
+        </div>
+      </CustomToggle>
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
         <>
           {facility.subAreas.map((subArea, index) => (

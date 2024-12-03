@@ -248,7 +248,7 @@ export default function SiteTemplate({ data }) {
             menuStyle="select"
           />
         </div>
-        <div className="row no-gutters park-info-container">
+        <div className="row g-0 park-info-container">
           <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
             <PageMenu
               pageSections={menuItems}

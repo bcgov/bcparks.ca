@@ -83,6 +83,10 @@ h1, h2 {
   color: $colorBlue;
 }
 
+h1 {
+  font-size: 2rem;;
+}
+
 h5 {
   font-size: 1rem;
   line-height: 1.6;
@@ -138,7 +142,9 @@ figure.table {
       }
     }
     th, td {
+      vertical-align: top;
       border-bottom: 1px solid $colorGreyLight;
+      padding: 12px;
     }
     th {
       background: $colorBrownLight;
@@ -575,8 +581,8 @@ nav.breadcrumbs {
       font-size: 1.5rem;
     }
   }
-  ol.carousel-indicators {
-    li {
+  .carousel-indicators {
+    button {
       height: 6px;
       width: 6px;
       border-radius: 6px;

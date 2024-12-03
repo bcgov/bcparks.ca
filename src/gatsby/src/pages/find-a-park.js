@@ -678,7 +678,7 @@ export default function FindAPark({ location, data }) {
       {/* new search header section */}
       <div id="main-content" className="search-header">
         <div className="container">
-          <div className="row no-gutters w-100">
+          <div className="row g-0 w-100">
             <div className="search-header-container--left col-12 col-lg-3">
               <h1>Find a park</h1>
             </div>
@@ -745,9 +745,9 @@ export default function FindAPark({ location, data }) {
               </div>
             </div>
           </div>
-          <div className="row no-gutters">
+          <div className="row g-0">
             {/* filter checkbox for desktop */}
-            <div className="search-results-quick-filter col-12 col-lg-3 d-none d-lg-block pr-3">
+            <div className="search-results-quick-filter col-12 col-lg-3 d-none d-lg-block pe-3">
               <div className="mb-4">
                 <h3 className="subtitle mb-2">Filter</h3>
                 <DesktopFilters

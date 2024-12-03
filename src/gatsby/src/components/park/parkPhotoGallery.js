@@ -88,7 +88,7 @@ export default function ParkPhotoGallery({ photos }) {
             }}
           >
             {parkPhotos.length === 1 && (
-              <Row noGutters onClick={() => setOpen(true)}>
+              <Row onClick={() => setOpen(true)} className="g-0">
                 <Col className="px-0">
                   <ParkPhoto
                     type="big"
@@ -108,15 +108,15 @@ export default function ParkPhotoGallery({ photos }) {
             {(parkPhotos.length === 2 ||
               parkPhotos.length === 3 ||
               parkPhotos.length === 4) && (
-                <Row noGutters onClick={() => setOpen(true)}>
-                  <Col xs={12} md={6} className="pl-0 pr-1">
+                <Row onClick={() => setOpen(true)} className="g-0">
+                  <Col xs={12} md={6} className="ps-0 pe-1">
                     <ParkPhoto
                       type="big"
                       src={parkPhotos[0].imageUrl}
                       alt={parkPhotos[0].altText}
                     />
                   </Col>
-                  <Col xs={12} md={6} className="pl-1 pr-0">
+                  <Col xs={12} md={6} className="ps-1 pe-0">
                     <ParkPhoto
                       type="big"
                       src={parkPhotos[1].imageUrl}
@@ -134,8 +134,8 @@ export default function ParkPhotoGallery({ photos }) {
                 </Row>
               )}
             {parkPhotos.length > 4 && (
-              <Row noGutters onClick={() => setOpen(true)}>
-                <Col xs={12} md={6} className="pl-0 pr-1">
+              <Row onClick={() => setOpen(true)} className="g-0">
+                <Col xs={12} md={6} className="ps-0 pe-1">
                   {parkPhotos
                     .filter(f => f.index === 0)
                     .map((photo, index) => (
@@ -148,13 +148,13 @@ export default function ParkPhotoGallery({ photos }) {
                     ))}
                 </Col>
                 <Col xs={12} md={6} className="px-0">
-                  <Row noGutters className="position-relative">
+                  <Row className="position-relative g-0">
                     {parkPhotos
                       .filter(
                         photo => photo.index > 0 && photo.index <= 4
                       )
                       .map((photo, index) => (
-                        <Col xs={6} key={index} className="pl-2 pb-2">
+                        <Col xs={6} key={index} className="ps-2 pb-2">
                           <ParkPhoto
                             type="small"
                             src={photo.imageUrl}
@@ -196,7 +196,7 @@ export default function ParkPhotoGallery({ photos }) {
               }
             }}
           >
-            <Row noGutters onClick={() => setOpen(true)}>
+            <Row onClick={() => setOpen(true)} className="g-0">
               <Col className="px-0">
                 <ParkPhoto
                   type="big"

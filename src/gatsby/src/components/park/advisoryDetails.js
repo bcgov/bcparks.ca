@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
+import CustomToggle from "./customToggle"
 import AdvisoryDate from "../advisories/advisoryDate"
 import blueAlertIcon from "../../images/park/blue-alert.svg"
 import redAlertIcon from "../../images/park/red-alert.svg"
@@ -121,28 +122,25 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                 key={index}
                 className={`advisory-accordion is-open--${openAccordions[index]}`}
               >
-                <Accordion.Toggle
-                  as={"div"}
-                  className="accordion-toggle"
+                <CustomToggle
                   eventKey={index.toString()}
-                  onClick={() => toggleAccordion(index)}
+                  ariaControls={advisory.title}
+                  handleClick={toggleAccordion}
                 >
-                  <div className="d-flex justify-content-between">
-                    <div className="d-flex align-items-center">
-                      <img
-                        src={advisory.alertIcon}
-                        alt="advisory status icon"
-                        className="advisory-status-icon"
-                      ></img>
-                      <HtmlContent className="accordion-header">{advisory.title}</HtmlContent>
-                    </div>
-                    <div className="d-flex align-items-center">
-                      {openAccordions[index] ?
-                        <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-                      }
-                    </div>
+                  <div className="d-flex align-items-center">
+                    <img
+                      src={advisory.alertIcon}
+                      alt="advisory status icon"
+                      className="advisory-status-icon"
+                    ></img>
+                    <HtmlContent className="accordion-header">{advisory.title}</HtmlContent>
                   </div>
-                </Accordion.Toggle>
+                  <div className="d-flex align-items-center">
+                    {openAccordions[index] ?
+                      <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+                    }
+                  </div>
+                </CustomToggle>
                 <Accordion.Collapse eventKey={index.toString()} in={openAccordions[index]}>
                   <div className="accordion-content">
                     {advisory.description && (

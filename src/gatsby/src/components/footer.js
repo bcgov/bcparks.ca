@@ -15,7 +15,7 @@ function FooterMenu({ item }) {
       <div className="col col-12 col-sm-4 footer-menu-container">
         <ul className="footer-menu-list list-unstyled text-white">
           <li>
-            <div className="font-weight-bold">{item.title}</div>
+            <div><b>{item.title}</b></div>
             <div className="footer-menu-divider"></div>
           </li>
           {sortedChildren.map((child, index) => (
@@ -38,7 +38,7 @@ function FooterMenu({ item }) {
                   />
                 </a>
               </div>
-              <div className="d-inline-block mt-3 ml-3">
+              <div className="d-inline-block mt-3 ms-3">
                 <a className="d-inline-block" href="https://www.instagram.com/yourbcparks/">
                   <StaticImage
                     src="../images/Instagram_Negative.svg"
@@ -86,7 +86,7 @@ export default function Footer() {
   return (
     <footer id="footer">
       <div className="home-footer" id="home-footer">
-        <div className="row no-gutters">
+        <div className="row g-0">
           <div className="col col-12 col-md-4">
             <div className="mb-5">
               <a className="d-inline-block" href="/">
@@ -101,14 +101,14 @@ export default function Footer() {
             </div>
           </div>
           <div className="col col-12 col-md-8">
-            <div className="row no-gutters">
+            <div className="row g-0">
               {footerMenu.map((item, index) => (
                 <FooterMenu item={item} key={index} />
               ))}
             </div>
           </div>
         </div>
-        <div className="text-left text-sm-center pt-4 mt-5 border-top border-white">
+        <div className="text-start text-sm-center pt-4 mt-5 border-top border-white">
           {utilityMenu.map((item, index) => (
             <div
               className="footer-utility-link d-inline-block"

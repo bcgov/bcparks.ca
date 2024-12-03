@@ -83,7 +83,7 @@ h3.subtitle {
   }
   .modal-dialog-scrollable {
     height: 100vh;
-    align-items: center;
+    align-content: center;
   }
   .modal-content {
     background-color: $colorBackgroundGrey;
@@ -239,10 +239,6 @@ div[class$="-singleValue"] {
 .flex-display,
 .flex-display-list {
   display: flex !important;
-}
-
-.ml-auto {
-  margin-left: auto !important;
 }
 
 .pointer {
@@ -631,43 +627,40 @@ a.mobile-park-link {
 .park-search-typeahead,
 .city-search-typeahead {
   width: 100%;
-  .form-group {
+  input.form-control {
+    height: 48px;
+    color: $colorGrey;
+    font-size: 1rem;
+    box-shadow: none;
+    border-color: $colorGreyMed;
+    padding: 8px 16px;
+    &:hover {
+      border-width: 2px;
+    }
+    &:focus, &:focus-visible {
+      border-width: 3px;
+      box-shadow: 0px 0px 0px 2px $colorWhite, 0px 0px 0px 4px $colorBlueMed;
+      padding: 18px 48px 0 16px;
+    }
+    &:focus~label, 
+    &:not(:placeholder-shown)~label {
+      font-size: 0.75rem;
+      opacity: .65;
+      transform: translateY(-0.5rem) translateX(0.15rem);
+    }
+  }
+  label {
+    height: auto;
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    color: $colorGreyMed;
+    border: none;
     margin: 0;
-    input.form-control {
-      height: 48px;
-      color: $colorGrey;
-      font-size: 1rem;
-      box-shadow: none;
-      border-color: $colorGreyMed;
-      padding: 8px 16px;
-      &:hover {
-        border-width: 2px;
-      }
-      &:focus, &:focus-visible {
-        border-width: 3px;
-        box-shadow: 0px 0px 0px 2px $colorWhite, 0px 0px 0px 4px $colorBlueMed;
-        padding: 18px 48px 0 16px;
-      }
-      &:focus~label, 
-      &:not(:placeholder-shown)~label {
-        font-size: 0.75rem;
-        opacity: .65;
-        transform: translateY(-0.5rem) translateX(0.15rem);
-      }
-    }
-    label {
-      height: auto;
-      position: absolute;
-      top: 12px;
-      left: 16px;
-      color: $colorGreyMed;
-      border: none;
-      margin: 0;
-      padding: 0;
-      pointer-events: none;
-      transform-origin: 0 0;
-      transition: opacity .1s ease-in-out,transform .1s ease-in-out;
-    }
+    padding: 0;
+    pointer-events: none;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out,transform .1s ease-in-out;
   }
   &.has-text--true, &.is-dropdown-open--true {
     input.form-control {
@@ -683,7 +676,7 @@ a.mobile-park-link {
   .dropdown-menu {
     width: 100%;
     max-height: 360px !important;
-    top: 45px !important;
+    top: 44px !important;
     transform: none !important;
     border-width: 3px;
     border-color: $colorGreyMed;
@@ -727,12 +720,19 @@ a.mobile-park-link {
     button.close {
       width: 40px;
       height: 40px;
+      font-size: 1.5rem;
       color: $colorGreyMed;
-      background-color: $colorWhite;
+      background: none;
+      border-radius: 4px;
       opacity: 1;
       margin: 0;
+      padding: 0;
       &:hover {
         opacity: 1;
+      }
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px $colorBlueMed;
       }
     }
     .spinner-border {

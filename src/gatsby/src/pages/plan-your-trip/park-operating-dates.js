@@ -104,7 +104,7 @@ const ParkLink = ({ park, apiBaseUrl }) => {
       </div>
       <div className="mb-3">
         <>
-          <span className="mr-1">
+          <span className="me-1">
             {(!isLoadingAdvisories && !advisoryLoadError) &&
               <ParkAccessStatus
                 advisories={advisories}

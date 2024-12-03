@@ -22,6 +22,7 @@
 
   .home-advisory-button {
     a.btn {
+      width: 100%;
       &.btn-primary {
         &:hover, &:focus-visible {
           color: $colorBlue !important;

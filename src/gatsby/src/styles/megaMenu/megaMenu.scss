@@ -12,18 +12,17 @@
 
   .header-nav {
     height: 96px;
+    max-width: 1060px;
     position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    margin: 0px auto;
+    padding: 0px 16px;
 
-    @include media-breakpoint-up(lg) {
-      max-width: 1060px;
-      margin: 0px auto;
-      padding: 0px 16px;
-    }
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
+      max-width: none;
       margin: 0px;
       padding: 0px 30px;
     }
@@ -45,7 +44,7 @@ a.btn.book-campsite-btn {
   &:hover {
     border: $colorGold solid 2px;
   }
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(lg) {
     margin-right: 40px;
   }
 }
@@ -66,7 +65,7 @@ nav {
 }
 
 /* -------------------- START MOBILE STYLING ----------------- */
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(lg) {
   .menu-toggle {
     position: absolute;
     top: 30px;

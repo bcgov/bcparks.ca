@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
+import CustomToggle from "./customToggle"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
@@ -14,28 +15,23 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion 
     <Accordion
       className={`about-accordion is-open--${openAccordions[eventKey]}`}
     >
-      <Accordion.Toggle
-        as={"div"}
-        aria-controls={data.title}
+      <CustomToggle
         eventKey={eventKey}
-        onClick={() => toggleAccordion(eventKey)}
+        toggleId={data.code}
+        ariaControls={data.title}
+        handleClick={toggleAccordion}
       >
-        <div
-          id={data.code}
-          className="d-flex justify-content-between accordion-toggle"
-        >
-          <div className="d-flex align-items-center">
-            <HtmlContent className="accordion-header">
-              {data.title}
-            </HtmlContent>
-          </div>
-          <div className="d-flex align-items-center">
-            {openAccordions[eventKey] ?
-              <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-            }
-          </div>
+        <div className="d-flex align-items-center">
+          <HtmlContent className="accordion-header">
+            {data.title}
+          </HtmlContent>
         </div>
-      </Accordion.Toggle>
+        <div className="d-flex align-items-center">
+          {openAccordions[eventKey] ?
+            <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
+          }
+        </div>
+      </CustomToggle>
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
         <div className="accordion-content">
           <HtmlContent>
