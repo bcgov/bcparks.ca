@@ -15,7 +15,7 @@ function FooterMenu({ item }) {
       <div className="col col-12 col-sm-4 footer-menu-container">
         <ul className="footer-menu-list list-unstyled text-white">
           <li>
-            <b>{item.title}</b>
+            <div><b>{item.title}</b></div>
             <div className="footer-menu-divider"></div>
           </li>
           {sortedChildren.map((child, index) => (
