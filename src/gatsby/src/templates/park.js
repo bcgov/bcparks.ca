@@ -49,7 +49,6 @@ export default function ParkTemplate({ data }) {
   const safetyInfo = park.safetyInfo.data.safetyInfo
   const specialNotes = park.specialNotes.data.specialNotes
   const locationNotes = park.locationNotes.data.locationNotes
-  const natureAndCulture = park.natureAndCulture.data.natureAndCulture
   const conservation = park.conservation.data.conservation
   const culturalHeritage = park.culturalHeritage.data.culturalHeritage
   const history = park.history.data.history
@@ -205,8 +204,8 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 6,
       display: `About this ${parkType}`,
       link: "#about-this-park",
-      visible: !isNullOrWhiteSpace(natureAndCulture) ||
-        !isNullOrWhiteSpace(conservation) || !isNullOrWhiteSpace(culturalHeritage) ||
+      visible: !isNullOrWhiteSpace(conservation) || 
+        !isNullOrWhiteSpace(culturalHeritage) ||
         !isNullOrWhiteSpace(history) || !isNullOrWhiteSpace(wildlife)
     },
     {
@@ -431,7 +430,6 @@ export default function ParkTemplate({ data }) {
               <div ref={aboutRef} className="w-100">
                 <About
                   parkType={parkType}
-                  natureAndCulture={natureAndCulture}
                   conservation={conservation}
                   culturalHeritage={culturalHeritage}
                   history={history}
@@ -527,11 +525,6 @@ export const query = graphql`
       parkContact {
         data {
           parkContact
-        }
-      }
-      natureAndCulture {
-        data {
-          natureAndCulture
         }
       }
       conservation {
