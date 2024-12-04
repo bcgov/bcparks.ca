@@ -14,6 +14,42 @@ module.exports = {
       throw new ApplicationError('Please add protectedArea relation.');
     }
   },
+  // saving without a activityType relation is not allowed
+  activityTypeConnectValidator: function (activityType) {
+    if (activityType?.connect?.length === 0) {
+      throw new ApplicationError('Please add activityType relation.');
+    }
+  },
+  // removing a protectedArea relation is not allowed
+  activityTypeDisconnectValidator: function (activityType) {
+    if (activityType?.disconnect?.length > 0 && activityType?.connect?.length === 0) {
+      throw new ApplicationError('Please add activityType relation.');
+    }
+  },
+  // saving without a facilityType relation is not allowed
+  facilityTypeConnectValidator: function (facilityType) {
+    if (facilityType?.connect?.length === 0) {
+      throw new ApplicationError('Please add facilityType relation.');
+    }
+  },
+  // removing a facilityType relation is not allowed
+  facilityTypeDisconnectValidator: function (facilityType) {
+    if (facilityType?.disconnect?.length > 0 && facilityType?.connect?.length === 0) {
+      throw new ApplicationError('Please add facilityType relation.');
+    }
+  },
+  // saving without a campingType relation is not allowed
+  campingTypeConnectValidator: function (campingType) {
+    if (campingType?.connect?.length === 0) {
+      throw new ApplicationError('Please add campingType relation.');
+    }
+  },
+  // removing a campingType relation is not allowed
+  campingTypeDisconnectValidator: function (campingType) {
+    if (campingType?.disconnect?.length > 0 && campingType?.connect?.length === 0) {
+      throw new ApplicationError('Please add campingType relation.');
+    }
+  },
   // saving without a documentType relation is not allowed
   documentTypeConnectValidator: function (documentType) {
     if (documentType?.connect?.length === 0) {

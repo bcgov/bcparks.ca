@@ -49,7 +49,8 @@
     "activityType": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::activity-type.activity-type"
+      "target": "api::activity-type.activity-type",
+      "required": true
     },
     "modifiedBy": {
       "type": "string"

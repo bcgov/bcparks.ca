@@ -46,7 +46,8 @@
     "campingType": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::camping-type.camping-type"
+      "target": "api::camping-type.camping-type",
+      "required": true
     },
     "modifiedBy": {
       "type": "string"
