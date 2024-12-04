@@ -43,6 +43,7 @@ function checkSubAreaClosure(subAreas, staticData) {
       if (subArea.closureAffectsAccessStatus === null) {
         subArea.closureAffectsAccessStatus = subArea.parkSubAreaType.closureAffectsAccessStatus;
       }
+    // this subArea.subAreaTypeId is a custom field from elasticsearch - used on the find a park page
     } else if (subArea.subAreaTypeId) {
       let subAreaType = subAreaTypeList.find(type => {
         return type.strapi_id === subArea.subAreaTypeId

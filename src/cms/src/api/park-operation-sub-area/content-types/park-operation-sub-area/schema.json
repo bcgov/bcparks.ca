@@ -15,9 +15,6 @@
     "parkSubAreaId": {
       "type": "integer"
     },
-    "parkSubAreaTypeId": {
-      "type": "integer"
-    },
     "parkSubArea": {
       "type": "string"
     },
