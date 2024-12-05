@@ -12,9 +12,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "parkSubAreaId": {
-      "type": "integer"
-    },
     "parkSubArea": {
       "type": "string"
     },
