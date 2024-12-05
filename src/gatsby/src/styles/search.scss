@@ -582,6 +582,12 @@ div[class$="-singleValue"] {
       outline: $colorBlueMed auto 1px;
     }
   }
+  ul {
+    padding-left: 32px !important;
+    li {
+      list-style-type: disc !important;
+    }
+  }
 }
 
 
