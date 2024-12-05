@@ -65,7 +65,7 @@
 
 .badge-secondary-light {
   color: $colorBlue !important;
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 .badge-light {
@@ -79,7 +79,7 @@
 
 .badge-primary {
   color: $colorWhite !important;
-  background-color: $colorBlue;
+  background-color: $colorBlue !important;
   &:hover {
     background-color: $colorBlue !important;
   }
