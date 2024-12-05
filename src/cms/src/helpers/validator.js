@@ -14,13 +14,13 @@ module.exports = {
       throw new ApplicationError('Please add protectedArea relation.');
     }
   },
-  // saving without a activityType relation is not allowed
+  // saving without an activityType relation is not allowed
   activityTypeConnectValidator: function (activityType) {
     if (activityType?.connect?.length === 0) {
       throw new ApplicationError('Please add activityType relation.');
     }
   },
-  // removing a protectedArea relation is not allowed
+  // removing an activityType relation is not allowed
   activityTypeDisconnectValidator: function (activityType) {
     if (activityType?.disconnect?.length > 0 && activityType?.connect?.length === 0) {
       throw new ApplicationError('Please add activityType relation.');
