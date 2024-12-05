@@ -1,6 +1,7 @@
 "use strict";
 
 const { indexPark } = require("../../../../helpers/taskQueue.js");
+const validator = require("../../../../helpers/validator.js");
 
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
@@ -36,10 +37,12 @@ module.exports = {
   async beforeCreate(event) {
     let { data, where } = event.params;
     data = await updateName(data, where);
+    validator.activityTypeConnectValidator(data.activityType)
   },
   async beforeUpdate(event) {
     let { data, where } = event.params;
     data = await updateName(data, where);
+    validator.activityTypeDisconnectValidator(data.activityType)
     for (const park of event.params.data?.protectedArea?.disconnect || []) {
       await indexPark(park.id)
     }

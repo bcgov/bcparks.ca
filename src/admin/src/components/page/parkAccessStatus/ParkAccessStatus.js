@@ -115,7 +115,6 @@ export default function ParkAccessStatus() {
                 title: "Campfire Ban",
                 field: "hasCampfireBan",
               },
-              { title: "Smoking Ban", field: "hasSmokingBan" },
               {
                 title: "Campfire Ban Effective Date",
                 field: "campfireBanEffectiveDate",

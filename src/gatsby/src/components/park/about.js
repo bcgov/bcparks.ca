@@ -44,7 +44,7 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion 
 }
 
 export default function About({
-  parkType, natureAndCulture, conservation, culturalHeritage, history, wildlife, biogeoclimaticZones, terrestrialEcosections, marineEcosections
+  parkType, conservation, culturalHeritage, history, wildlife, biogeoclimaticZones, terrestrialEcosections, marineEcosections
 }) {
   const dataList = [
     { "title": "Cultural heritage", "code": "cultural-heritage", "description": culturalHeritage },
@@ -164,8 +164,7 @@ export default function About({
           </p>
         )}
       </div>
-      {/* display conservation/culturalHeritage/history/wildlife accordion, otherwise display natureAndCulture */}
-      {dataList.length > 0 ? (
+      {dataList.length > 0 && (
         // if parkType is ecological reserve, display conservation description without accordion
         parkType === "ecological reserve" ? (
           <HtmlContent>{dataList[0].description}</HtmlContent>
@@ -202,8 +201,6 @@ export default function About({
             </Col>
           </Row>
         )
-      ) : (
-        <HtmlContent>{natureAndCulture}</HtmlContent>
       )}
     </div>
   )

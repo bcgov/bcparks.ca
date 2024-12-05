@@ -197,13 +197,6 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
-    "natureAndCulture": {
-      "type": "customField",
-      "options": {
-        "preset": "toolbar"
-      },
-      "customField": "plugin::ckeditor5.CKEditor"
-    },
     "partnerships": {
       "type": "customField",
       "options": {
