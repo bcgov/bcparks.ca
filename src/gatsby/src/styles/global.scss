@@ -373,6 +373,8 @@ button.btn:not(.btn-link) {
   justify-content: center;
   font-weight: 700;
   line-height: 1.5;
+  text-decoration: none !important;
+  box-shadow: none !important;
   border-radius: 4px;
   padding: 0 16px;
 
