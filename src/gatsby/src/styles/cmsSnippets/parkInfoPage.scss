@@ -29,10 +29,12 @@
 .park-camping-link.expand-icon {
   display: inline-block;
   color: $colorBlueMed !important;
+  text-decoration: none;
   cursor: pointer;
   margin-bottom: 16px;
   &:hover, &:focus-visible {
     color: $colorBlue !important;
+    text-decoration: underline;
   }
   &:focus-visible {
     border-radius: 4px;

@@ -20,6 +20,21 @@ a {
   &:not(.btn):focus {
     color: $colorBlue;
   }
+  &:focus-visible {
+    box-shadow: none;
+  }
+}
+
+.btn, .nav-link {
+  &:focus-visible {
+    box-shadow: none;
+  }
+}
+
+.btn {
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .btn-primary:not(:disabled):not(.disabled):active {
