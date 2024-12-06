@@ -323,7 +323,6 @@ div[class$="-singleValue"] {
   svg.park-heading-icon {
     width: 1rem;
     height: 1rem;
-    font-size: 1rem;
   }
 }
 
@@ -377,7 +376,8 @@ div[class$="-singleValue"] {
         border-radius: 4px;
       }
       svg {
-        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
         margin-left: 6px;
       }
     }
