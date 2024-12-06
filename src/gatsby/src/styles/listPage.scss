@@ -13,7 +13,8 @@
         text-decoration: underline !important;
       }
       svg.park-heading-icon {
-        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
         margin: 0 0 2px 8px;
       }
     }
@@ -31,10 +32,6 @@
     color: $colorBlue;
     font-size: 1rem;
     margin-bottom: 0;
-    svg.ban-icon {
-      font-size: 0.875rem;
-      color: $colorRed;
-    }
   }
   ul {
     margin: 0;
@@ -90,11 +87,6 @@
             border-bottom: 1px solid $colorGreyLight;
           }
         }
-      }
-      svg.ban-icon {
-        font-size: 1.25rem;
-        color: $colorRed;
-        vertical-align: -0.25rem;
       }
     }
   }
