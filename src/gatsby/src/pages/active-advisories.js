@@ -282,12 +282,30 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pageIndex, apiCall, apiUrl]
+    [apiCall, apiUrl]
   )
 
-  // Page setter exposed to AdvisortyPageNav
-  const setPage = p => {
-    setPageIndex(p)
+  // Load more advisories when 'Load more' button is clicked
+  const handleLoadMore = () => {
+    const newIndex = pageIndex + 1
+    setPageIndex(newIndex)
+    const pageStart = (newIndex - 1) * pageLen
+
+    const aType = getAdvisoryTypeFromUrl()
+    let q = getApiQuery(aType)
+
+    let newApiCall = apiUrl + `/public-advisories` + q
+    newApiCall += "&limit=" + pageLen
+    newApiCall += "&start=" + pageStart
+    axios.get(newApiCall).then(resultResponse => {
+      if (resultResponse.status === 200) {
+        const newResults = resultResponse.data.data;
+        setAdvisories(prevResults => [...prevResults, ...newResults])
+      }
+    }).catch(error => {
+      console.log(error)
+      setIsSearchError(true)
+    })
   }
 
   // This hashset is used by the advisoryCard.js component to quiclky 
@@ -401,7 +419,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           <AdvisoryPageNav
             pageIndex={pageIndex}
             pageCount={pageCount}
-            setPage={setPage}
+            handleClick={handleLoadMore}
           />
         </div>
       </div>
