@@ -60,8 +60,7 @@ const ParkLink = ({ park, apiBaseUrl }) => {
     }
   }
 
-  // get advisories
-  useEffect(() => {
+  const fetchAdvisoriesWithRetry = (retries = 3, delay = 1000) => {
     setIsLoadingAdvisories(true)
     loadAdvisories(apiBaseUrl, park.orcs)
       .then(response => {
@@ -69,13 +68,25 @@ const ParkLink = ({ park, apiBaseUrl }) => {
         setAdvisoryLoadError(false)
       })
       .catch(error => {
-        setAdvisories([])
-        setAdvisoryLoadError(true)
-        console.error("Error fetching advisories:", error)
+        if (error.response && error.response.status === 429 && retries > 0) {
+          // retry with exponential backoff
+          setTimeout(() => {
+            fetchAdvisoriesWithRetry(retries - 1, delay * 2)
+          }, delay)
+        } else {
+          setAdvisories([])
+          setAdvisoryLoadError(true)
+          console.error("Error fetching advisories:", error)
+        }
       })
       .finally(() => {
         setIsLoadingAdvisories(false)
       })
+  }
+
+  // get advisories
+  useEffect(() => {
+    fetchAdvisoriesWithRetry()
   }, [apiBaseUrl, park.orcs])
 
   if (!addedSeasonalAdvisory) {
