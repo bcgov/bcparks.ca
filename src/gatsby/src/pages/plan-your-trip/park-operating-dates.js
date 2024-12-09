@@ -87,6 +87,7 @@ const ParkLink = ({ park, apiBaseUrl }) => {
   // get advisories
   useEffect(() => {
     fetchAdvisoriesWithRetry()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiBaseUrl, park.orcs])
 
   if (!addedSeasonalAdvisory) {
