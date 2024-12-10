@@ -255,14 +255,14 @@ const CityNameSearch = ({
           )
         }}
         renderMenu={results => (
-          <Menu id="city-search-typeahead">
+          <Menu id="city-search-typeahead-menu">
             {(results.length === 1 && cityText) &&
               <MenuItem
                 tabIndex={-1}
                 key={results.length}
                 className="no-suggestion-text"
               >
-                No suggestions, please check your spelling or try a larger city in B.C.
+                No match. Please check your spelling or try a larger city in B.C.
               </MenuItem>
             }
             {results.map((city, index) => {
