@@ -224,11 +224,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const getAdvisories = useCallback(
     q => {
       // q = api query
-
-      let newApiCall = apiUrl + `/public-advisories` + q
-
-      newApiCall += "&limit=" + pageLen // use -1 for unlimited
-      newApiCall += "&start=" + pageLen * (pageIndex - 1)
+      const params = new URLSearchParams(q)
+      params.append("limit", pageLen)
+      params.append("start", pageLen * (pageIndex - 1))
+      const newApiCall = `${apiUrl}/public-advisories?${params.toString()}`
 
       if (apiCall !== newApiCall) {
         // Don't repeat the same call
@@ -251,10 +250,8 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
             setIsSearchError(false)
 
             // Get count
-            let apiCount = apiUrl + "/public-advisories/count" + q
-            if (q === "?queryText") {
-              apiCount = apiUrl + "/public-advisories/count"
-            }
+            const countParams = new URLSearchParams(q)
+            const apiCount = `${apiUrl}/public-advisories/count?${countParams.toString()}`
 
             axios
               .get(apiCount)
@@ -282,12 +279,32 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pageIndex, apiCall, apiUrl]
+    [apiCall, apiUrl]
   )
 
-  // Page setter exposed to AdvisortyPageNav
-  const setPage = p => {
-    setPageIndex(p)
+  // Load more advisories when 'Load more' button is clicked
+  const handleLoadMore = () => {
+    const newIndex = pageIndex + 1
+    setPageIndex(newIndex)
+    const pageStart = (newIndex - 1) * pageLen
+
+    const aType = getAdvisoryTypeFromUrl()
+    let q = getApiQuery(aType)
+
+    const params = new URLSearchParams(q)
+    params.append("limit", pageLen)
+    params.append("start", pageStart)
+    const newApiCall = `${apiUrl}/public-advisories?${params.toString()}`
+
+    axios.get(newApiCall).then(resultResponse => {
+      if (resultResponse.status === 200) {
+        const newResults = resultResponse.data.data;
+        setAdvisories(prevResults => [...prevResults, ...newResults])
+      }
+    }).catch(error => {
+      console.log(error)
+      setIsSearchError(true)
+    })
   }
 
   // This hashset is used by the advisoryCard.js component to quiclky 
@@ -401,7 +418,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           <AdvisoryPageNav
             pageIndex={pageIndex}
             pageCount={pageCount}
-            setPage={setPage}
+            handleClick={handleLoadMore}
           />
         </div>
       </div>
