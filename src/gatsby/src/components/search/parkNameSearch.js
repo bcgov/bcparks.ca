@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react"
 import axios from "axios"
 import { graphql, useStaticQuery } from "gatsby"
-import { AsyncTypeahead, ClearButton } from "react-bootstrap-typeahead"
+import { AsyncTypeahead, ClearButton, Menu, MenuItem } from "react-bootstrap-typeahead"
 import { Form } from "react-bootstrap"
 import "react-bootstrap-typeahead/css/Typeahead.css"
 
@@ -38,9 +38,6 @@ const ParkNameSearch = ({
   const typeaheadRef = useRef(null)
 
   // event handlers
-  const handleFocusInput = () => {
-    setIsDropdownOpen(true)
-  }
   const SEARCH_NAME_URI =
     `${data.site.siteMetadata.apiURL}/api/protected-areas/searchnames`
   const handleSearchName = useCallback(async (query) => {
@@ -114,6 +111,8 @@ const ParkNameSearch = ({
   useEffect(() => {
     if (searchText === "") {
       setIsDropdownOpen(false)
+    } else {
+      setIsDropdownOpen(true)
     }
   }, [searchText])
 
@@ -130,7 +129,6 @@ const ParkNameSearch = ({
       onChange={handleChange}
       onInputChange={handleInputChange}
       onKeyDown={handleKeyDownSearch}
-      onFocus={handleFocusInput}
       open={isDropdownOpen}
       onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
       placeholder=" "
@@ -156,11 +154,25 @@ const ParkNameSearch = ({
           </Form.Group>
         )
       }}
-      renderMenuItemChildren={option => (
-        <HighlightText
-          park={option.protectedAreaName}
-          input={searchText}
-        />
+      renderMenu={results=> (
+        <Menu id="park-search-typehead-menu">
+          {(results.length === 0 && searchText) && 
+            <MenuItem
+              tabIndex={-1}
+              className="no-suggestion-text"
+            >
+              No match. Please check your spelling.
+            </MenuItem>
+          }
+          {results.map((result, index) => (
+            <MenuItem option={result} position={index} key={index}>
+              <HighlightText
+                park={result.protectedAreaName}
+                input={searchText}
+              />
+            </MenuItem>
+          ))}
+        </Menu>
       )}
     >
       {({ onClear, selected }) =>
