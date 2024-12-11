@@ -146,14 +146,10 @@ const AdvisoryCard = ({ advisory, parkInfoHash }) => {
                 {item.type === "region" ? " Region" : item.type === "section" ? " Section" : ""}
               </Badge>
             ))}
+            {hasAdditionalParks &&
+              <p className="d-inline-flex">and more parks</p>
+            }
           </div>
-          {hasAdditionalParks &&
-            <Badge
-              className="park-link rounded-pill badge-secondary-light"
-            >
-              Additional parks
-            </Badge>
-          }
           {advisory.protectedAreas.length > 5 ? (
             <div className="d-flex flex-wrap">
               {open && (
