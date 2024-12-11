@@ -1,9 +1,12 @@
 "use strict";
 
+const format = require('date-fns/format')
+
 const formatDateToPacificTime = (dateString) => {
-  const date = new Date(dateString)
-  const localDate = date.toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' })
-  return new Date(localDate).toISOString().split('T')[0]
+  // Strapi returns the date in ISO format e.g. 2025-01-01T00:00:00.000Z
+  // Format the date in YYYY-MM-DD e.g. 2025-01-01
+  const formattedDate = format(dateString, 'yyyy-MM-dd', { timeZone: 'America/Los_Angeles' })
+  return formattedDate
 }
 
 module.exports = {
