@@ -148,11 +148,7 @@ const AdvisoryCard = ({ advisory, parkInfoHash }) => {
             ))}
           </div>
           {hasAdditionalParks &&
-            <Badge
-              className="park-link rounded-pill badge-secondary-light"
-            >
-              Additional parks
-            </Badge>
+            <p className="mb-2">and more parks</p>
           }
           {advisory.protectedAreas.length > 5 ? (
             <div className="d-flex flex-wrap">
