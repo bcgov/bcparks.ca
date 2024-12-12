@@ -1,18 +1,27 @@
 "use strict";
 
+const format = require('date-fns/format')
+const utcToZonedTime = require('date-fns-tz/utcToZonedTime')
+
+const formatDateToPacificTime = (dateString) => {
+  // Strapi returns the date in ISO format e.g. 2025-01-01T00:00:00.000Z
+  // Convert dateString to Pacific Time
+  const pacificTime = utcToZonedTime(dateString, 'America/Los_Angeles')
+  // Format the date in YYYY-MM-DD e.g. 2025-01-01
+  return format(pacificTime, 'yyyy-MM-dd')
+}
+
 module.exports = {
     beforeCreate(event) {
         const { data } = event.params
-        const date = new Date(data.createdAt)
-        const createdDate = date.toISOString().split('T')[0]
+        const createdDate = formatDateToPacificTime(data.createdAt)
         if (data.isActive === true) {
             data.activeDate = createdDate
         }
     },
     beforeUpdate(event) {
         const { data } = event.params
-        const date = new Date(data.updatedAt)
-        const updatedDate = date.toISOString().split('T')[0]
+        const updatedDate = formatDateToPacificTime(data.updatedAt)
         if (data.isActive === true) {
             data.activeDate = updatedDate
         }
