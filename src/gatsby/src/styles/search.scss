@@ -590,14 +590,6 @@ div[class$="-singleValue"] {
   }
 }
 
-
-@media (min-width: 1350px) {
-  .search-results-main {
-    // Added 30px extra to compensate padding
-    max-width: 1350px !important;
-  }
-}
-
 @media (max-width: 575.98px) {
   .flex-display-list {
     display: block !important;
@@ -778,9 +770,6 @@ a.mobile-park-link {
     }
     @media screen and (min-width: $lgBreakpoint) {
       flex-wrap: nowrap;
-    }
-    @media (min-width: 1350px) {
-      max-width: 1350px;
     }
     .search-header-container {
       &--left {
