@@ -13,7 +13,7 @@ import AdvisoryDate from "../advisories/advisoryDate"
 import blueAlertIcon from "../../images/park/blue-alert.svg"
 import redAlertIcon from "../../images/park/red-alert.svg"
 import yellowAlertIcon from "../../images/park/yellow-alert.svg"
-
+import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/advisories/advisoryDetails.scss"
 
 const formatDate = isoDate => {
@@ -55,11 +55,20 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
     }
   })
 
-  const toggleAccordion = (index) => {
+  const toggleAccordion = (index, advisoryName) => {
     setOpenAccordions((prev) => ({
       ...prev,
       [index]: !prev[index],
     }))
+    trackSnowplowEvent(
+      openAccordions[index] ? "accordion_close" : "accordion_open",
+      null,
+      null,
+      null,
+      `${advisoryName} accordion`,
+      null,
+      null
+    )
   }
 
   const toggleExpandAll = () => {
@@ -125,7 +134,7 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                 <CustomToggle
                   eventKey={index.toString()}
                   ariaControls={advisory.title}
-                  handleClick={toggleAccordion}
+                  handleClick={() => toggleAccordion(index.toString(), advisory.title)}
                 >
                   <div className="d-flex align-items-center">
                     <img

@@ -8,6 +8,7 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import HtmlContent from "./htmlContent"
 import CustomToggle from "./customToggle"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
+import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion }) => {
@@ -19,7 +20,7 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion 
         eventKey={eventKey}
         toggleId={data.code}
         ariaControls={data.title}
-        handleClick={toggleAccordion}
+        handleClick={() => toggleAccordion(eventKey, data.title)}
       >
         <div className="d-flex align-items-center">
           <HtmlContent className="accordion-header">
@@ -56,11 +57,20 @@ export default function About({
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
 
-  const toggleAccordion = (index) => {
+  const toggleAccordion = (index, accordionName) => {
     setOpenAccordions((prev) => ({
       ...prev,
       [index]: !prev[index],
     }))
+    trackSnowplowEvent(
+      openAccordions[index] ? "accordion_close" : "accordion_open",
+      null,
+      null,
+      null,
+      `${accordionName} accordion`,
+      null,
+      null
+    )
   }
 
   const toggleExpandAll = () => {
