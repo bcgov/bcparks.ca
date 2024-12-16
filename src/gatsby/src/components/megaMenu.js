@@ -7,6 +7,7 @@ import FontAwesome from "../components/fontAwesome"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars, faXmark, faChevronLeft, faChevronRight, faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
 
+import { trackSnowplowEvent } from "../utils/snowplowHelper"
 import "../styles/megaMenu/megaMenu.scss"
 
 const MegaMenu = ({ content, menuMode }) => {
@@ -86,6 +87,7 @@ const MegaMenu = ({ content, menuMode }) => {
       if (currentPath.includes(section.url)) {
         setIsMenuOpen(false)
       }
+      handleClickSnowplowEvent(section.title)
     }
 
     if (menuMode !== "sitemap") {
@@ -179,6 +181,18 @@ const MegaMenu = ({ content, menuMode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuElements])
 
+  const handleClickSnowplowEvent = (name) => {
+    trackSnowplowEvent(
+      "link_click",
+      null,
+      null,
+      null,
+      `${name} link`,
+      null,
+      null
+    )
+  }
+
   const isExternalUrl = (url) => {
     // a URL is considered external if it begins with "http://" or "https://"
     return /^https?:\/\//.test(url)
@@ -256,9 +270,18 @@ const MegaMenu = ({ content, menuMode }) => {
                   <FontAwesomeIcon icon={faChevronLeft} className="menu-button__arr" /> Back
                 </a>
               </li>
+              {/* 1st level menu item that has child menu items e.g. Reservations */}
               <li className="menu-button menu-header">
                 {isExternalUrl(item.url) ?
-                  <a className="menu-button__title external-link" href={item.url || ROOT_MENU_URL} role="menuitem">
+                  <a 
+                    className="menu-button__title external-link"
+                    href={item.url || ROOT_MENU_URL}
+                    role="menuitem"
+                    onClick={() => {
+                      setIsMenuOpen(false) 
+                      handleClickSnowplowEvent(item.title)
+                    }}
+                  >
                     {item.title}
                     <FontAwesome icon="arrow-up-right-from-square" size="16" className="ms-1" />
                     <FontAwesomeIcon icon={faCircleChevronRight} className="menu-button__title--icon" />
@@ -267,13 +290,17 @@ const MegaMenu = ({ content, menuMode }) => {
                     className="menu-button__title"
                     to={item.url || ROOT_MENU_URL}
                     role="menuitem"
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={() => {
+                      setIsMenuOpen(false) 
+                      handleClickSnowplowEvent(item.title)
+                    }}
                   >
                     {item.title}
                     <FontAwesomeIcon icon={faCircleChevronRight} className="menu-button__title--icon" />
                   </Link>
                 }
               </li>
+              {/* 1st level menu item in the navbar and 2nd level menu items e.g. Reservations > Campig fees */}
               {item.strapi_children.filter((page) => page.show).map((page, index) => (
                 <React.Fragment key={index}>
                   <li className={
@@ -288,6 +315,7 @@ const MegaMenu = ({ content, menuMode }) => {
                         className="menu-button__title external-link"
                         href={page.url}
                         role="menuitem"
+                        onClick={() => handleClickSnowplowEvent(page.title)}
                       >
                         {page.title}
                         <FontAwesome icon="arrow-up-right-from-square" size="16" className="ms-1" />
@@ -327,16 +355,27 @@ const MegaMenu = ({ content, menuMode }) => {
             </ul>
           </nav>
         )}
+        {/* for site map page */}
         {!item.hasChildren && (
           <nav>
             <ul role="presentation">
               <li className="menu-button menu-header">
                 {isExternalUrl(item.url) ?
-                  <a className="menu-button__title external-link" href={item.url || ROOT_MENU_URL} role="menuitem">
+                  <a
+                    className="menu-button__title external-link"
+                    href={item.url || ROOT_MENU_URL}
+                    role="menuitem"
+                    onClick={() => handleClickSnowplowEvent(item.title)}
+                  >
                     {item.title}
                     <FontAwesome icon="arrow-up-right-from-square" size="16" className="ms-1" />
                   </a> :
-                  <Link className="menu-button__title" to={item.url || ROOT_MENU_URL} role="menuitem">
+                  <Link
+                    className="menu-button__title"
+                    to={item.url || ROOT_MENU_URL}
+                    role="menuitem"
+                    onClick={() => handleClickSnowplowEvent(item.title)}
+                  >
                     {item.title}
                   </Link>
                 }

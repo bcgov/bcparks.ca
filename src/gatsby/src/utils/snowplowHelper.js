@@ -16,7 +16,7 @@ export const trackSnowplowEvent = (
       schema: "iglu:ca.bc.gov.bcparks/action/jsonschema/1-0-0",
       data: {
         // Required field: the name of the action
-        // Possible values: 'search', 'update_search', 'clear_filters', 'button_click', 'accordion_open', 'accordion_close'
+        // Possible values: 'search', 'update_search', 'clear_filters', 'button_click', 'link_click', 'accordion_open', 'accordion_close'
         action: action,
         // Optional field: the number of search results
         result_count: resultCount,
