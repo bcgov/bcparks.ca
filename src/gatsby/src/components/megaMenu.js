@@ -271,7 +271,7 @@ const MegaMenu = ({ content, menuMode }) => {
                 </a>
               </li>
               {/* 1st level menu item that has child menu items e.g. Reservations */}
-              <li className="menu-button menu-header">
+              <li className="menu-button menu-header" role="menu">
                 {isExternalUrl(item.url) ?
                   <a 
                     className="menu-button__title external-link"
@@ -303,12 +303,12 @@ const MegaMenu = ({ content, menuMode }) => {
               {/* 1st level menu item in the navbar and 2nd level menu items e.g. Reservations > Campig fees */}
               {item.strapi_children.filter((page) => page.show).map((page, index) => (
                 <React.Fragment key={index}>
-                  <li className={
-                    "menu-button menu-button--" +
-                    (page === selections[page.treeLevel]
-                      ? "selected"
-                      : "unselected")
-                  }
+                  <li 
+                    className={
+                      "menu-button menu-button--" +
+                      (page === selections[page.treeLevel] ? "selected" : "unselected")
+                    }
+                    role="menu"
                   >
                     {isExternalUrl(page.url) ?
                       <a
@@ -359,7 +359,7 @@ const MegaMenu = ({ content, menuMode }) => {
         {!item.hasChildren && (
           <nav>
             <ul role="presentation">
-              <li className="menu-button menu-header">
+              <li className="menu-button menu-header" role="menu">
                 {isExternalUrl(item.url) ?
                   <a
                     className="menu-button__title external-link"
@@ -453,7 +453,7 @@ const MegaMenu = ({ content, menuMode }) => {
           <div
             className="menu-wrapper"
             tabIndex={0}
-            role="menu"
+            role="menubar"
             onFocus={e => menuFocus(e)}
           >
             {menuTree.map((page, index) => (
