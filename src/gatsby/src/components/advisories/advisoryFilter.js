@@ -92,10 +92,33 @@ const AdvisoryFilter = ({
     updateAdvisoriesSearchText("")
   }
   const handleKeyDownInput = (e) => {
-    if (e.key === 'Enter') {
-      if (!hasResult(eventText)) {
-        setIsDropdownOpen(false)
+    const optionsLength = typeaheadRef.current.items.length
+    let activeIndex = typeaheadRef.current.state.activeIndex
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault()
+      if (e.key === 'ArrowUp') {
+        activeIndex = activeIndex - 1
+      } else if (e.key === 'ArrowDown') {
+        activeIndex = activeIndex + 1
       }
+      if (activeIndex > optionsLength) {
+        activeIndex = -1 // go to the text input
+      }
+      if (activeIndex < -1) {
+        activeIndex = optionsLength - 1 // go to the last item
+      }
+      typeaheadRef.current.setState({ activeIndex })
+    } else if (e.key === 'Enter') {
+      e.preventDefault()
+      const activeOption = typeaheadRef.current.items[activeIndex]
+      if (activeOption !== undefined) {
+        handleTypeaheadChange([activeOption])
+      } else {
+        handleSearch()
+      }
+      setIsDropdownOpen(false)
+    } else if (e.key === 'Tab') {
+      setIsDropdownOpen(false)
     }
   }
 
