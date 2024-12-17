@@ -253,8 +253,8 @@ const MegaMenu = ({ content, menuMode }) => {
               " has-clicked-twice--" + hasClickedTwice
             }
           >
-            <ul className="menu-button-list" role="presentation">
-              <li className="menu-button menu-back">
+            <div className="menu-button-list" role="menu">
+              <div className="menu-button menu-back">
                 <a
                   className="menu-button__title"
                   href="back"
@@ -269,9 +269,9 @@ const MegaMenu = ({ content, menuMode }) => {
                 >
                   <FontAwesomeIcon icon={faChevronLeft} className="menu-button__arr" /> Back
                 </a>
-              </li>
+              </div>
               {/* 1st level menu item that has child menu items e.g. Reservations */}
-              <li className="menu-button menu-header" role="menu">
+              <div className="menu-button menu-header">
                 {isExternalUrl(item.url) ?
                   <a 
                     className="menu-button__title external-link"
@@ -299,16 +299,15 @@ const MegaMenu = ({ content, menuMode }) => {
                     <FontAwesomeIcon icon={faCircleChevronRight} className="menu-button__title--icon" />
                   </Link>
                 }
-              </li>
+              </div>
               {/* 1st level menu item in the navbar and 2nd level menu items e.g. Reservations > Campig fees */}
               {item.strapi_children.filter((page) => page.show).map((page, index) => (
                 <React.Fragment key={index}>
-                  <li 
+                  <div 
                     className={
                       "menu-button menu-button--" +
                       (page === selections[page.treeLevel] ? "selected" : "unselected")
                     }
-                    role="menu"
                   >
                     {isExternalUrl(page.url) ?
                       <a
@@ -336,7 +335,7 @@ const MegaMenu = ({ content, menuMode }) => {
                         )}
                       </Link>
                     }
-                  </li>
+                  </div>
                   <div className={
                     "menu-children menu-children-exist--" +
                     page.hasChildren +
@@ -352,14 +351,14 @@ const MegaMenu = ({ content, menuMode }) => {
                   </div>
                 </React.Fragment>
               ))}
-            </ul>
+            </div>
           </nav>
         )}
         {/* for site map page */}
         {!item.hasChildren && (
           <nav>
-            <ul role="presentation">
-              <li className="menu-button menu-header" role="menu">
+            <div role="menu">
+              <div className="menu-button menu-header">
                 {isExternalUrl(item.url) ?
                   <a
                     className="menu-button__title external-link"
@@ -379,8 +378,8 @@ const MegaMenu = ({ content, menuMode }) => {
                     {item.title}
                   </Link>
                 }
-              </li>
-            </ul>
+              </div>
+            </div>
           </nav>
         )}
       </>
