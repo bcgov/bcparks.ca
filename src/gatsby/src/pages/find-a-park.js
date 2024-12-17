@@ -19,6 +19,7 @@ import ParkCard from "../components/search/parkCard"
 import ParkNameSearch from "../components/search/parkNameSearch"
 import CityNameSearch from "../components/search/cityNameSearch"
 import { useScreenSize } from "../utils/helpers"
+import { trackSnowplowEvent } from "../utils/snowplowHelper"
 
 import "../styles/search.scss"
 
@@ -300,6 +301,15 @@ export default function FindAPark({ location, data }) {
     } else {
       setCurrentPage(1)
     }
+    trackSnowplowEvent(
+      "clear_filters",
+      totalResults,
+      null,
+      null,
+      null,
+      chipToDelete.type,
+      chipToDelete.label
+    )
   }
   const handleClearFilter = () => {
     setFilterSelections([])
@@ -307,6 +317,15 @@ export default function FindAPark({ location, data }) {
     setSelectedParkCampingTypes([])
     setSelectedActivities([])
     setSelectedFacilities([])
+    trackSnowplowEvent(
+      "clear_filters",
+      totalResults,
+      null,
+      null,
+      "Clear filter button",
+      null,
+      null
+    )
   }
   const handleKeyDownClearFilter = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -319,9 +338,29 @@ export default function FindAPark({ location, data }) {
     setCurrentPage(1)
     if (searchText === "" || (inputText && (searchText !== inputText))) {
       setSearchText(inputText)
+      trackSnowplowEvent(
+        "search",
+        totalResults,
+        inputText,
+        null,
+        "Search button",
+        null,
+        null
+      )
     }
     if (clickedCity?.length > 0) {
       setSelectedCity(clickedCity)
+      if (!isLoading && !acquiringGeolocation) {
+        trackSnowplowEvent(
+          "search",
+          totalResults,
+          null,
+          clickedCity[0].cityName,
+          "Search button",
+          null,
+          null
+        )
+      }
     } else if (cityText.length > 0) {
       const enteredCity = searchCities.filter(city =>
         city.cityName.toLowerCase() === cityText.toLowerCase())
@@ -340,6 +379,15 @@ export default function FindAPark({ location, data }) {
     if (selected.length) {
       setSearchText(selected[0]?.protectedAreaName)
       setInputText(selected[0]?.protectedAreaName)
+      trackSnowplowEvent(
+        "search",
+        1,
+        selected[0].protectedAreaName,
+        null,
+        "Search button",
+        null,
+        null
+      )
     }
   }
   const handleSearchNameInputChange = (text) => {

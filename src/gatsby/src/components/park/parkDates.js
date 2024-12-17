@@ -9,6 +9,7 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import HtmlContent from "./htmlContent"
 import SubArea from "./subArea"
 import CustomToggle from "./customToggle"
+import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 
 export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
   const reservationUrlRules = {
@@ -113,7 +114,7 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
           eventKey={eventKey}
           toggleId={parkSubAreaId}
           ariaControls={subArea.parkSubArea}
-          handleClick={toggleAccordion}
+          handleClick={() => toggleAccordion(eventKey, subArea.parkSubArea)}
         >
           <div className="d-flex align-items-center">
             <HtmlContent className="accordion-header">
@@ -145,11 +146,20 @@ export default function ParkDates({ data, parkOperation }) {
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
 
-  const toggleAccordion = (index) => {
+  const toggleAccordion = (index, subAreaName) => {
     setOpenAccordions((prev) => ({
       ...prev,
       [index]: !prev[index],
     }))
+    trackSnowplowEvent(
+      openAccordions[index] ? "accordion_close" : "accordion_open",
+      null,
+      null,
+      null,
+      `${subAreaName} accordion`,
+      null,
+      null
+    )
   }
 
   const toggleExpandAll = () => {

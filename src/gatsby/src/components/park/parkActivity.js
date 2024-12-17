@@ -10,6 +10,7 @@ import StaticIcon from "./staticIcon"
 import CustomToggle from "./customToggle"
 import DiscoverParksLogo from "../../images/discover-parks-instagram-dark-green-icon-with-text.png"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
+import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 export const AccordionList = ({ eventKey, activity, openAccordions, toggleAccordion }) => {
@@ -21,7 +22,7 @@ export const AccordionList = ({ eventKey, activity, openAccordions, toggleAccord
         eventKey={eventKey}
         toggleId={activity.activityType.activityCode}
         ariaControls={activity.activityType.activityName}
-        handleClick={toggleAccordion}
+        handleClick={() => toggleAccordion(eventKey, activity.activityType.activityName)}
       >
         <div className="d-flex align-items-center">
           <StaticIcon name={activity.activityType.icon || "information"} size={36} />
@@ -63,11 +64,20 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
 
-  const toggleAccordion = (index) => {
+  const toggleAccordion = (index, activityName) => {
     setOpenAccordions((prev) => ({
       ...prev,
       [index]: !prev[index],
     }))
+    trackSnowplowEvent(
+      openAccordions[index] ? "accordion_close" : "accordion_open",
+      null,
+      null,
+      null,
+      `${activityName} accordion`,
+      null,
+      null
+    )
   }
 
   const toggleExpandAll = () => {

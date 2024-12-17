@@ -8,6 +8,7 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import HtmlContent from "./htmlContent"
 import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
+import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 import SubArea from "./subArea"
 import CustomToggle from "./customToggle"
@@ -24,7 +25,7 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
         eventKey={eventKey}
         toggleId={facility.facilityType.facilityCode}
         ariaControls={facility.facilityType.facilityName}
-        handleClick={toggleAccordion}
+        handleClick={() => toggleAccordion(eventKey, facility.facilityType.facilityName)}
       >
         <div className="d-flex align-items-center">
           <StaticIcon name={facility.facilityType.icon || "information"} size={36} />
@@ -77,11 +78,20 @@ export default function ParkFacility({ data, groupPicnicReservationUrl }) {
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
 
-  const toggleAccordion = (index) => {
+  const toggleAccordion = (index, facilityName) => {
     setOpenAccordions((prev) => ({
       ...prev,
       [index]: !prev[index],
     }))
+    trackSnowplowEvent(
+      openAccordions[index] ? "accordion_close" : "accordion_open",
+      null,
+      null,
+      null,
+      `${facilityName} accordion`,
+      null,
+      null
+    )
   }
 
   const toggleExpandAll = () => {
