@@ -449,12 +449,7 @@ const MegaMenu = ({ content, menuMode }) => {
             (isMenuOpen ? "open" : "closed")
           }
         >
-          <div
-            className="menu-wrapper"
-            tabIndex={0}
-            role="menubar"
-            onFocus={e => menuFocus(e)}
-          >
+          <div className="menu-wrapper">
             {menuTree.map((page, index) => (
               <div key={index}>{generateMenus(page, menuMode)}</div>
             ))}
