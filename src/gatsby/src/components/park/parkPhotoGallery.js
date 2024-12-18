@@ -15,15 +15,12 @@ import "yet-another-react-lightbox/plugins/thumbnails.css"
 
 import ParkPhoto from "./parkPhoto"
 
-const ShowPhotos = ({ text, setShowPhotos, setOpen }) => {
+const ShowPhotos = ({ text, setPhotoIndex }) => {
   return (
     <button
       aria-label="Show photos"
       className="btn show-photo-button"
-      onClick={() => {
-        setShowPhotos(true)
-        setOpen(true)
-      }}
+      onClick={() => setPhotoIndex(0)}
     >
       <FontAwesomeIcon icon={faImages} className="photo-icon" />
       {text}
@@ -32,8 +29,7 @@ const ShowPhotos = ({ text, setShowPhotos, setOpen }) => {
 }
 
 export default function ParkPhotoGallery({ photos }) {
-  const [showPhoto, setShowPhoto] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [photoIndex, setPhotoIndex] = useState(-1)
   const photoSlides = []
   const parkPhotos = photos.map((photo, index) => {
     const getCaptionText = (photo) => {
@@ -60,8 +56,9 @@ export default function ParkPhotoGallery({ photos }) {
   return (
     <>
       <Lightbox
-        open={open}
-        close={() => setOpen(false)}
+        index={photoIndex}
+        open={photoIndex >= 0}
+        close={() => setPhotoIndex(-1)}
         slides={photoSlides}
         carousel={{ finite: "false" }}
         captions={{ descriptionTextAlign: "center", descriptionMaxLines: 5 }}
@@ -73,33 +70,22 @@ export default function ParkPhotoGallery({ photos }) {
         {parkPhotos.length > 0 && (
           <div
             id="park-photo-gallery-container"
-            role="button"
-            tabIndex={0}
             className="park-photo-gallery-container"
-            onClick={() => {
-              if (!showPhoto) {
-                setShowPhoto(true)
-              }
-            }}
-            onKeyDown={(e) => {
-              if (!showPhoto && (e.key === "Enter" || e.key === " ")) {
-                setShowPhoto(true)
-              }
-            }}
           >
             {parkPhotos.length === 1 && (
-              <Row onClick={() => setOpen(true)} className="g-0">
+              <Row className="g-0">
                 <Col className="px-0">
                   <ParkPhoto
                     type="big"
+                    photoIndex={0}
+                    setPhotoIndex={setPhotoIndex}
                     src={parkPhotos[0].imageUrl}
                     alt={parkPhotos[0].altText}
                   />
                   <div className="show-photos">
                     <ShowPhotos
                       text="Show photo"
-                      setShowPhotos={setShowPhoto}
-                      setOpen={setOpen}
+                      setPhotoIndex={setPhotoIndex}
                     />
                   </div>
                 </Col>
@@ -108,10 +94,12 @@ export default function ParkPhotoGallery({ photos }) {
             {(parkPhotos.length === 2 ||
               parkPhotos.length === 3 ||
               parkPhotos.length === 4) && (
-                <Row onClick={() => setOpen(true)} className="g-0">
+                <Row className="g-0">
                   <Col xs={12} md={6} className="ps-0 pe-1">
                     <ParkPhoto
                       type="big"
+                      photoIndex={0}
+                      setPhotoIndex={setPhotoIndex}
                       src={parkPhotos[0].imageUrl}
                       alt={parkPhotos[0].altText}
                     />
@@ -119,6 +107,8 @@ export default function ParkPhotoGallery({ photos }) {
                   <Col xs={12} md={6} className="ps-1 pe-0">
                     <ParkPhoto
                       type="big"
+                      photoIndex={1}
+                      setPhotoIndex={setPhotoIndex}
                       src={parkPhotos[1].imageUrl}
                       alt={parkPhotos[1].altText}
                     />
@@ -126,21 +116,22 @@ export default function ParkPhotoGallery({ photos }) {
                     <div className="show-photos">
                       <ShowPhotos
                         text="Show photos"
-                        setShowPhotos={setShowPhoto}
-                        setOpen={setOpen}
+                        setPhotoIndex={setPhotoIndex}
                       />
                     </div>
                   </Col>
                 </Row>
               )}
             {parkPhotos.length > 4 && (
-              <Row onClick={() => setOpen(true)} className="g-0">
+              <Row className="g-0">
                 <Col xs={12} md={6} className="ps-0 pe-1">
                   {parkPhotos
                     .filter(f => f.index === 0)
                     .map((photo, index) => (
                       <ParkPhoto
                         type="big"
+                        photoIndex={0}
+                        setPhotoIndex={setPhotoIndex}
                         src={photo.imageUrl}
                         alt={photo.altText}
                         key={index}
@@ -157,6 +148,8 @@ export default function ParkPhotoGallery({ photos }) {
                         <Col xs={6} key={index} className="ps-2 pb-2">
                           <ParkPhoto
                             type="small"
+                            photoIndex={index + 1}
+                            setPhotoIndex={setPhotoIndex}
                             src={photo.imageUrl}
                             alt={photo.altText}
                             key={index}
@@ -166,8 +159,7 @@ export default function ParkPhotoGallery({ photos }) {
                     <div className="show-photos">
                       <ShowPhotos
                         text="Show photos"
-                        setShowPhotos={setShowPhoto}
-                        setOpen={setOpen}
+                        setPhotoIndex={setPhotoIndex}
                       />
                     </div>
                   </Row>
@@ -182,32 +174,21 @@ export default function ParkPhotoGallery({ photos }) {
         {parkPhotos.length > 0 && (
           <div
             id="park-photo-gallery-container"
-            role="button"
-            tabIndex={0}
             className="park-photo-gallery-container"
-            onClick={() => {
-              if (!showPhoto) {
-                setShowPhoto(true)
-              }
-            }}
-            onKeyDown={(e) => {
-              if (!showPhoto && (e.key === "Enter" || e.key === " ")) {
-                setShowPhoto(true)
-              }
-            }}
           >
-            <Row onClick={() => setOpen(true)} className="g-0">
+            <Row className="g-0">
               <Col className="px-0">
                 <ParkPhoto
                   type="big"
+                  photoIndex={0}
+                  setPhotoIndex={setPhotoIndex}
                   src={parkPhotos[0].imageUrl}
                   alt={parkPhotos[0].altText}
                 />
                 <div className="show-photos">
                   <ShowPhotos
                     text={parkPhotos.length}
-                    setOpen={setOpen}
-                    setShowPhotos={setShowPhoto}
+                    setPhotoIndex={setPhotoIndex}
                   />
                 </div>
               </Col>
