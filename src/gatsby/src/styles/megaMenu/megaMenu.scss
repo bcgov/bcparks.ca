@@ -49,21 +49,6 @@ a.btn.book-campsite-btn {
   }
 }
 
-/* TODO scope these properly: */
-
-nav {
-  ul,
-  li {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  a {
-    display: block;
-    text-decoration: none;
-  }
-}
-
 /* -------------------- START MOBILE STYLING ----------------- */
 @include media-breakpoint-down(lg) {
   .menu-toggle {
@@ -154,7 +139,7 @@ nav {
       width: 100%;
     }
 
-    .menu-level--0 > ul.menu-button-list {
+    .menu-level--0 > .menu-button-list {
       & > .menu-back {
         display: none;
       }
@@ -254,7 +239,7 @@ nav {
         height: 65px;
         margin: 0 auto;
 
-        > li.menu-button {
+        > .menu-button {
           display: flex;
           align-items: center;
           &.menu-back {
@@ -299,7 +284,7 @@ nav {
             }
           }
         }
-        li.menu-button--selected {
+        .menu-button--selected {
           background: $colorWhite;
           border-bottom: 1px solid $colorGold;
 
@@ -505,8 +490,8 @@ nav {
 .mega-menu.menu-mode--sitemap {
   margin: 40px 0;
   .menu-level--0 {
-    & > ul.menu-button-list {
-      & > li.menu-button {
+    & > .menu-button-list {
+      & > .menu-button {
         &.menu-back,
         &.menu-header {
           display: none;
@@ -516,7 +501,7 @@ nav {
         }
       }
       .menu-level-0-children {
-        & > nav > ul > li.menu-header {
+        & > nav > .menu-button-list > .menu-header {
           font-size: 1.5rem;
           font-weight: bold;
           margin-bottom: 16px;
@@ -534,8 +519,8 @@ nav {
     .menu-button.menu-header {
       display: block;
     }
-    & > ul.menu-button-list {
-      & > li.menu-header {
+    & > .menu-button-list {
+      & > .menu-header {
         font-size: 1.5rem;
         font-weight: bold;
         a {
@@ -543,7 +528,7 @@ nav {
         }
       }
       .menu-level-1-children {
-        & > nav > ul > li.menu-button {
+        & > nav > .menu-button-list > .menu-button {
           &.menu-header {
             font-size: 1.25rem;
             font-weight: bold;
