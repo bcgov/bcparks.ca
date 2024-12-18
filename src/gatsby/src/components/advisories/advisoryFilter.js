@@ -289,6 +289,8 @@ const AdvisoryFilter = ({
         </div>
         <div className="col-auto">
           <Form.Check
+            id="keywords"
+            aria-controls="keywords"
             type="checkbox"
             label="Keywords"
             checked={isKeywordFilter}
@@ -297,6 +299,8 @@ const AdvisoryFilter = ({
         </div>
         <div className="col-auto">
           <Form.Check
+            id="park-names"
+            aria-controls="park-names"
             type="checkbox"
             label="Park names"
             checked={isParksFilter}
