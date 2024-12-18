@@ -235,6 +235,9 @@ const CityNameSearch = ({
         className={`has-text--${(selectedItems.length > 0 || cityText.length > 0) ? 'true' : 'false'
           } is-dropdown-open--${isDropdownOpen ? 'true' : 'false'
           } city-search-typeahead`}
+          inputProps={{
+            'aria-controls': 'city-search-typehead'
+          }}
         renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
           return (
             <Form.Group controlId="city-search-typeahead">
