@@ -3,11 +3,14 @@ import PropTypes from "prop-types"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import "react-lazy-load-image-component/src/effects/blur.css"
 
-export default function ParkPhoto({ type, src, alt }) {
+export default function ParkPhoto({ type, photoIndex, setPhotoIndex, src, alt }) {
   return (
-    <div className={`park-photo park-photo--${type}`}>
+    <button
+      className={`park-photo park-photo--${type}`}
+      onClick={() => setPhotoIndex(photoIndex)}
+    >
       <LazyLoadImage src={src} alt={alt ?? ""} effect="opacity" />
-    </div>
+    </button>
   )
 }
 
