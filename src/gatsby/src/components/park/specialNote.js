@@ -1,5 +1,5 @@
 import React from "react"
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 
 export default function SpecialNote({ specialNotes }) {
   return (

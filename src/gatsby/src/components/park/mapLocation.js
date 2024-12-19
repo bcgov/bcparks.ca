@@ -1,5 +1,5 @@
 import React from "react"
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 
 export default function MapLocation({ maps, locationNotes }) {
   return (
@@ -8,9 +8,7 @@ export default function MapLocation({ maps, locationNotes }) {
       <h2 id="park-map-details-container" className="section-heading">
         Maps and location
       </h2>
-      {maps && (
-        <HtmlContent>{maps}</HtmlContent>
-      )}
+      {maps && <HtmlContent>{maps}</HtmlContent>}
       {locationNotes && (
         <>
           <h3>Getting there</h3>

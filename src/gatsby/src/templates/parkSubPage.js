@@ -5,7 +5,7 @@ import useScrollSpy from "react-use-scrollspy"
 import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
-import HTMLArea from "../components/HTMLArea"
+import HtmlContent from "../components/htmlContent"
 import Seo from "../components/seo"
 import PageContent from "../components/pageContent/pageContent"
 import PageMenu from "../components/pageContent/pageMenu"
@@ -137,7 +137,7 @@ export default function ParkSubPage({ data }) {
                 {header && (
                   <div className="header-content">
                     {header.introHtml.data.introHtml &&
-                      <HTMLArea isVisible>{header.introHtml.data.introHtml}</HTMLArea>
+                      <HtmlContent>{header.introHtml.data.introHtml}</HtmlContent>
                     }
                   </div>
                 )}
@@ -158,7 +158,7 @@ export default function ParkSubPage({ data }) {
             <div>
               {header && header.introHtml.data.introHtml && (
                 <div className="header-content">
-                  <HTMLArea isVisible>{header.introHtml.data.introHtml}</HTMLArea>
+                  <HtmlContent>{header.introHtml.data.introHtml}</HtmlContent>
                 </div>
               )}
               {filteredContent.map(content => (

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import ParkDates from "./parkDates"
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
