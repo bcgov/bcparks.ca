@@ -1,6 +1,6 @@
 import React from "react"
 import FontAwesome from "../fontAwesome"
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 
 // Helper function to get href prefix based on the contactType
 const getPrefix = (contactType) => {

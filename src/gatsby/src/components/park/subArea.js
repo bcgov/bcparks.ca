@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCalendar } from "@fortawesome/free-regular-svg-icons"
 
-import HTMLArea from "../HTMLArea"
+import HtmlContent from "../htmlContent"
 import FontAwesome from "../fontAwesome"
 import { countsList } from "../../utils/constants"
 
@@ -78,9 +78,9 @@ export default function SubArea({ data, showHeading }) {
                   {note.display && (
                     <h4 className="mt-3">{note.display}</h4>
                   )}
-                  <HTMLArea isVisible={true}>
+                  <HtmlContent>
                     {data[note.noteVar].data[note.noteVar]}
-                  </HTMLArea>
+                  </HtmlContent>
                 </div>
               ))}
           </div>

@@ -203,7 +203,7 @@ export default function ParkHeader({
 }
 
 ParkHeader.propTypes = {
-  orcs: PropTypes.number.isRequired,
+  orcs: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   slug: PropTypes.string.isRequired,
   parkName: PropTypes.oneOfType([
     PropTypes.object.isRequired,

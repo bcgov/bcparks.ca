@@ -5,7 +5,7 @@ import useScrollSpy from "react-use-scrollspy"
 import Breadcrumbs from "../components/breadcrumbs"
 import Header from "../components/header"
 import Footer from "../components/footer"
-import HTMLArea from "../components/HTMLArea"
+import HtmlContent from "../components/htmlContent"
 import Seo from "../components/seo"
 import PageContent from "../components/pageContent/pageContent"
 import PageMenu from "../components/pageContent/pageMenu"
@@ -188,9 +188,9 @@ export default function StaticContent1({ pageContext }) {
                 {hasPageHeaderIntro && (
                   <div className="header-content">
                     {(hasPageHeader && hasPageHeader !== null) ? (
-                      <HTMLArea isVisible>{pageHeader.introHtml.data.introHtml}</HTMLArea>
+                      <HtmlContent>{pageHeader.introHtml.data.introHtml}</HtmlContent>
                     ) : (
-                      <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
+                      <HtmlContent>{headerContent.introHtml.data.introHtml}</HtmlContent>
                     )}
                   </div>
                 )}
@@ -214,9 +214,9 @@ export default function StaticContent1({ pageContext }) {
               {hasPageHeaderIntro && (
                 <div className="header-content">
                   {(hasPageHeader && hasPageHeader !== null) ? (
-                    <HTMLArea isVisible>{pageHeader.introHtml.data.introHtml}</HTMLArea>
+                    <HtmlContent>{pageHeader.introHtml.data.introHtml}</HtmlContent>
                   ) : (
-                    <HTMLArea isVisible>{headerContent.introHtml.data.introHtml}</HTMLArea>
+                    <HtmlContent>{headerContent.introHtml.data.introHtml}</HtmlContent>
                   )}
                 </div>
               )}

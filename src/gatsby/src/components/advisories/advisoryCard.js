@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col"
 import Badge from "react-bootstrap/Badge"
 import { parseJSON, format } from "date-fns"
 
-import HTMLArea from "../HTMLArea"
+import HtmlContent from "../htmlContent"
 import AdvisoryDate from "./advisoryDate"
 import redAlertIcon from "../../images/park/red-alert.svg"
 import yellowAlertIcon from "../../images/park/yellow-alert.svg"
@@ -211,7 +211,7 @@ const AdvisoryCard = ({ advisory, parkInfoHash }) => {
           )}
           {/* advisory description */}
           {advisory.description &&
-            <HTMLArea isVisible>{advisory.description}</HTMLArea>
+            <HtmlContent>{advisory.description}</HtmlContent>
           }
           {/* advisory links */}
           {advisory.links?.map(({ title, url, id }) => (

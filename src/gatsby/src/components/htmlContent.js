@@ -1,5 +1,5 @@
 import React from "react"
-import { usePreRenderVideo } from "../../utils/usePreRenderVideo"
+import { usePreRenderVideo } from "../utils/usePreRenderVideo"
 
 export default function HtmlContent(props) {
   const { htmlContent } = usePreRenderVideo(props.children)

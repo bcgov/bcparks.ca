@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import * as cheerio from 'cheerio';
 
 export default function ParkOverview({ data: parkOverview, type }) {

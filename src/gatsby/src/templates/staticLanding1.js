@@ -5,7 +5,7 @@ import { StaticImage } from "gatsby-plugin-image"
 import Breadcrumbs from "../components/breadcrumbs"
 import Header from "../components/header"
 import Footer from "../components/footer"
-import HTMLArea from "../components/HTMLArea"
+import HtmlContent from "../components/htmlContent"
 import Seo from "../components/seo"
 import MainSearch from "../components/search/mainSearch"
 import PageContent from "../components/pageContent/pageContent"
@@ -88,9 +88,9 @@ const LandingPage = ({ pageContext }) => {
                 </div>
                 <div className="row">
                   <div className="col">
-                    <HTMLArea isVisible>
+                    <HtmlContent>
                       {pageHeader.introHtml.data.introHtml}
-                    </HTMLArea>
+                    </HtmlContent>
                   </div>
                 </div>
               </div>
