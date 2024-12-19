@@ -30,8 +30,9 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterTyp
         ).length === 1 ? true : false
         return (
           <Form.Check
-            id={item.label}
-            key={item.label}
+            id={item.code}
+            key={item.code}
+            aria-controls={item.code}
             type="checkbox"
             checked={checked}
             onChange={event => {

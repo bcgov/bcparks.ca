@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import * as cheerio from "cheerio";
 
 const slugify = require("slugify");
@@ -6,22 +6,16 @@ const slugify = require("slugify");
 export const usePreRenderVideo = (content) => {
   const [list, setList] = useState([]);
   const [htmlContent, setHtmlContent] = useState('');
-  let $;
-
-  useEffect(() => {
-    if (content) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      $ = cheerio.load(content);
-    }
-  }, [])
+  const $ref = useRef(null);
 
   const fetchData = useCallback(() => {
     if (content) {
-      const media = $("figure.media");
+      $ref.current = cheerio.load(content);
+      const media = $ref.current("figure.media");
 
       return media?.map(async (index, el) => {
-        const $ = cheerio.load(el);
-        const getIframe = $("iframe").attr("src")?.split("/");
+        const $el = cheerio.load(el);
+        const getIframe = $el("iframe").attr("src")?.split("/");
         const url = getIframe && getIframe[getIframe?.length - 1];
         const fetchVideo = await fetch(
           `https://noembed.com/embed?dataType=json&url=https://www.youtube.com/watch?v=${url}`
