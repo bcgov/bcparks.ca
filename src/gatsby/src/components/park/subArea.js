@@ -73,14 +73,14 @@ export default function SubArea({ data, showHeading }) {
               )}
             </div>
             {subAreasNotesList
-              .filter(note => data[note.noteVar])
+              .filter(note => data[note.noteVar]?.data[note.noteVar])
               .map((note, index) => (
                 <div key={index} className="subarea-list">
                   {note.display && (
                     <h4 className="mt-3">{note.display}</h4>
                   )}
                   <HTMLArea isVisible={true}>
-                    {data[note.noteVar]}
+                    {data[note.noteVar].data[note.noteVar]}
                   </HTMLArea>
                 </div>
               ))}

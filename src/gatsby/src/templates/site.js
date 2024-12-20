@@ -458,11 +458,31 @@ export const query = graphql`
           yurts
           shelters
           boatLaunches
-          openNote
-          serviceNote
-          reservationNote
-          offSeasonNote
-          adminNote
+          openNote {
+            data {
+              openNote
+            }
+          }
+          serviceNote {
+            data {
+              serviceNote
+            }
+          }
+          reservationNote {
+            data {
+              reservationNote
+            }
+          }
+          offSeasonNote {
+            data {
+              offSeasonNote
+            }
+          }
+          adminNote {
+            data {
+              adminNote
+            }
+          }
           closureAffectsAccessStatus
           parkOperationSubAreaDates {
             isActive
@@ -579,13 +599,41 @@ export const query = graphql`
         groupPicnicReservationUrl
         hasParkGate
         offSeasonUse
-        openNote
-        serviceNote
-        reservationsNote
-        reservationNote
-        offSeasonNote
-        generalNote
-        adminNote
+        openNote {
+          data {
+            openNote
+          }
+        }
+        serviceNote {
+          data {
+            serviceNote
+          }
+        }
+        reservationsNote {
+          data {
+            reservationsNote
+          }
+        }
+        reservationNote {
+          data {
+            reservationNote
+          }
+        }
+        offSeasonNote {
+          data {
+            offSeasonNote
+          }
+        }
+        generalNote {
+          data {
+            generalNote
+          }
+        }
+        adminNote {
+          data {
+            adminNote
+          }
+        }
         gateOpenTime
         gateCloseTime
         gateOpensAtDawn
