@@ -344,6 +344,7 @@ div[class$="-singleValue"] {
 
   .park-links {
     a {
+      text-decoration: underline;
       &:focus-visible {
         color: $colorBlue;
         text-decoration: underline;
