@@ -447,6 +447,7 @@ div[class$="-singleValue"] {
           flex-wrap: wrap;
         }
         a {
+          font-size: 0.875rem;
           text-decoration: underline;
           margin-left: 4px;
           &:focus-visible {
@@ -455,10 +456,6 @@ div[class$="-singleValue"] {
             outline: $colorBlueMed solid 2px;
             outline-offset: 0px;
             border-radius: 4px; 
-          }
-          p {
-            font-size: 0.875rem;
-            margin-bottom: 0;
           }
         }
       }
