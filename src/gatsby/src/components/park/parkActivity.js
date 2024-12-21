@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import StaticIcon from "./staticIcon"
 import CustomToggle from "./customToggle"
 import DiscoverParksLogo from "../../images/discover-parks-instagram-dark-green-icon-with-text.png"

@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import SubArea from "./subArea"
 import CustomToggle from "./customToggle"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"

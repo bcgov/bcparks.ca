@@ -135,6 +135,9 @@ const ParkNameSearch = ({
       className={`has-text--${searchText.length > 0 ? 'true' : 'false'
         } is-dropdown-open--${isDropdownOpen ? 'true' : 'false'
         } park-search-typeahead`}
+      inputProps={{
+        'aria-controls': 'park-search-typehead'
+      }}
       renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
         return (
           <Form.Group controlId="park-search-typeahead">

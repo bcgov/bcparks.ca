@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import CustomToggle from "./customToggle"
 import AdvisoryDate from "../advisories/advisoryDate"
 import blueAlertIcon from "../../images/park/blue-alert.svg"

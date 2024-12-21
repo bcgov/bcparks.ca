@@ -3,7 +3,7 @@ import { parseISO, format } from "date-fns"
 import _ from "lodash"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import FontAwesome from "../fontAwesome"
 
 // Helper function to format date

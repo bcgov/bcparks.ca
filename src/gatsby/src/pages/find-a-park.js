@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { graphql, Link as GatsbyLink } from "gatsby"
 import axios from "axios"
-import { orderBy } from "lodash"
+import { orderBy, kebabCase } from "lodash"
 import ProgressBar from "react-bootstrap/ProgressBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleXmark, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
@@ -136,6 +136,7 @@ export default function FindAPark({ location, data }) {
       areaCount => areaCount.key === area.strapi_id
     )?.doc_count || 0
     return {
+      code: kebabCase(area.searchAreaName),
       label: area.searchAreaName,
       value: area.strapi_id,
       count: filterCount
@@ -147,6 +148,7 @@ export default function FindAPark({ location, data }) {
         campingCount => campingCount.key === camping.campingTypeNumber
       )?.doc_count || 0
       return {
+        code: camping.campingTypeCode,
         label: camping.campingTypeName,
         value: camping.campingTypeNumber,
         count: filterCount
@@ -157,6 +159,7 @@ export default function FindAPark({ location, data }) {
       activityCount => activityCount.key === activity.activityNumber
     )?.doc_count || 0
     return {
+      code: activity.activityCode,
       label: activity.activityName,
       value: activity.activityNumber,
       count: filterCount
@@ -168,6 +171,7 @@ export default function FindAPark({ location, data }) {
         facilityCount => facilityCount.key === facility.facilityNumber
       )?.doc_count || 0
       return {
+        code: facility.facilityCode,
         label: facility.facilityName,
         value: facility.facilityNumber,
         count: filterCount
