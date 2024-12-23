@@ -6,6 +6,7 @@ export default function HtmlContent(props) {
   if (!props) return null
   return (
     <div
+      lang="en"
       className={`raw-html-content ${props.className ? props.className : ""}`}
       dangerouslySetInnerHTML={{ __html: htmlContent || props.children }}
     />
