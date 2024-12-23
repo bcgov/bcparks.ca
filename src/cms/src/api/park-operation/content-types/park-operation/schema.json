@@ -206,7 +206,11 @@
       "type": "time"
     },
     "gateNote": {
-      "type": "text"
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
     },
     "gateOpensAtDawn": {
       "type": "boolean"
