@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import HtmlContent from "./htmlContent"
 import ParkAccessStatus from "./parkAccessStatus"
 import CampfireBan from "../campfireBan"
 import FontAwesome from "../fontAwesome"
@@ -156,8 +157,8 @@ export default function ParkHeader({
                   {renderGateTimes(parkOperation)}
                 </p>
               }
-              {parkOperation?.openNote &&
-                <p>{parkOperation.openNote}</p>
+              {parkOperation?.openNote?.data?.openNote &&
+                <HtmlContent>{parkOperation.openNote.data.openNote}</HtmlContent>
               }
               {(campings.length > 0 || facilities.length > 0) && (
                 <p>
