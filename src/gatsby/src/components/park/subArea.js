@@ -11,7 +11,6 @@ import { countsList } from "../../utils/constants"
 export default function SubArea({ data, showHeading }) {
 
   const subAreasNotesList = [
-    { noteVar: "generalNote", display: "Note" },
     { noteVar: "serviceNote", display: "Service note" },
     { noteVar: "reservationNote", display: "Booking note" },
     { noteVar: "offSeasonNote", display: "Winter season note" },

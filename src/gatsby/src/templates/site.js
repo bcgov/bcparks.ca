@@ -458,11 +458,6 @@ export const query = graphql`
           yurts
           shelters
           boatLaunches
-          openNote {
-            data {
-              openNote
-            }
-          }
           serviceNote {
             data {
               serviceNote
@@ -476,11 +471,6 @@ export const query = graphql`
           offSeasonNote {
             data {
               offSeasonNote
-            }
-          }
-          adminNote {
-            data {
-              adminNote
             }
           }
           closureAffectsAccessStatus
@@ -602,36 +592,6 @@ export const query = graphql`
         openNote {
           data {
             openNote
-          }
-        }
-        serviceNote {
-          data {
-            serviceNote
-          }
-        }
-        reservationsNote {
-          data {
-            reservationsNote
-          }
-        }
-        reservationNote {
-          data {
-            reservationNote
-          }
-        }
-        offSeasonNote {
-          data {
-            offSeasonNote
-          }
-        }
-        generalNote {
-          data {
-            generalNote
-          }
-        }
-        adminNote {
-          data {
-            adminNote
           }
         }
         gateOpenTime
