@@ -357,7 +357,7 @@ const MegaMenu = ({ content, menuMode }) => {
         {/* for site map page */}
         {!item.hasChildren && (
           <nav>
-            <div role="menu">
+            <div className="menu-button-list" role="menu">
               <div className="menu-button menu-header">
                 {isExternalUrl(item.url) ?
                   <a

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import ParkAccessStatus from "./parkAccessStatus"
 import CampfireBan from "../campfireBan"
 import FontAwesome from "../fontAwesome"
