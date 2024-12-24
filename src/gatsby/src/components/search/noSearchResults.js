@@ -60,9 +60,8 @@ const NoSearchResults = ({
             <li>Try a different search term</li>
             <li>
               <button
-                tabIndex={0}
                 className="btn btn-link"
-                aria-label="Clear all"
+                aria-label="Go back to the full list"
                 onClick={handleClearAll}
               >
                 Go back to the full list
