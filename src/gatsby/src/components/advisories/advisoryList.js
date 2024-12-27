@@ -52,7 +52,7 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
         break;
       case "yellow":
         capColor = "Yellow";
-        level = "Moderate";
+        level = "Medium";
         break;
       case "blue":
         capColor = "Blue";
@@ -64,14 +64,12 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
         break;
     }
 
-    // alertMsg to use for aria-label on date circle, for screen readers
+    // alertMsg to use for aria-label on urgency level icon, for screen readers
     if (capColor === "Grey") {
       advisory.alertMsg = "Grey Advisory - Informational Advisory"
     } else {
-      advisory.alertMsg = capColor + " Advisory - " + level + " Urgency"; // eg Red alert - high urgency
+      advisory.alertMsg = level + " urgency"; // eg High urgency
     }
-
-
   }
 
   const processAdvisories = (a) => {

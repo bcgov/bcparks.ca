@@ -33,7 +33,7 @@ const AdvisoryLegend = () => {
                 <div className="d-flex align-items-center me-3">
                   <img
                     src={legendItem.icon}
-                    alt="advisory status icon"
+                    alt={`${legendItem.label} urgency`}
                     className="advisory-status-icon"
                   />
                 </div>
