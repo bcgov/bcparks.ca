@@ -801,7 +801,7 @@ export default function FindAPark({ location, data }) {
             {/* filter checkbox for desktop */}
             <div className="search-results-quick-filter col-12 col-lg-3 d-none d-lg-block pe-3">
               <div className="mb-4">
-                <h3 className="subtitle mb-2">Filter</h3>
+                <p className="subtitle mb-2"><b>Filter</b></p>
                 <DesktopFilters
                   data={{
                     areaItems,
@@ -827,7 +827,7 @@ export default function FindAPark({ location, data }) {
                 />
               </div>
               <div className="park-links">
-                <h3 className="subtitle mb-2">More ways to find a park</h3>
+                <p className="subtitle mb-2"><b>More ways to find a park</b></p>
                 <div>
                   <GatsbyLink to="/find-a-park/a-z-list">A–Z park list</GatsbyLink>
                   <br />
