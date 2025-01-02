@@ -3,6 +3,7 @@ import { navigate, graphql, useStaticQuery } from "gatsby"
 import ParkNameSearch from "./parkNameSearch"
 import CityNameSearch from "./cityNameSearch"
 import { useScreenSize } from "../../utils/helpers"
+import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/search.scss"
 const qs = require('qs');
 
@@ -58,6 +59,29 @@ const MainSearch = ({ hasCityNameSearch }) => {
         "selectedCity": clickedCity || selectedCity
       },
     })
+    
+    // snowplow tracking
+    let eventParams = {
+      action: "search",
+      resultCount: null,
+      parkName: queryText.length ? queryText : null,
+      cityName: null,
+      label: "Search button",
+      filters: null
+    }
+    if (clickedCity?.length > 0) {
+      eventParams.cityName = clickedCity[0].cityName
+    } else if (selectedCity?.length > 0) {
+      eventParams.cityName = selectedCity[0].cityName
+    }
+    trackSnowplowEvent(
+      eventParams.action,
+      eventParams.resultCount,
+      eventParams.parkName,
+      eventParams.cityName,
+      eventParams.label,
+      eventParams.filters
+    )
   }
   const showPosition = (position) => {
     setHasPermission(true)

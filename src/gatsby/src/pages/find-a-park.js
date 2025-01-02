@@ -336,38 +336,44 @@ export default function FindAPark({ location, data }) {
   // event handlers - for searching
   const handleSearch = (clickedCity) => {
     setCurrentPage(1)
+    let eventParams = {
+      action: "search",
+      resultCount: totalResults,
+      parkName: null,
+      cityName: null,
+      label: "Search button",
+      filters: null
+    }
+
     if (searchText === "" || (inputText && (searchText !== inputText))) {
       setSearchText(inputText)
-      trackSnowplowEvent(
-        "search",
-        totalResults,
-        inputText,
-        null,
-        "Search button",
-        null,
-        null
-      )
+      // track entered park name
+      eventParams.parkName = inputText
     }
     if (clickedCity?.length > 0) {
       setSelectedCity(clickedCity)
+      // track selected city name
       if (!isLoading && !acquiringGeolocation) {
-        trackSnowplowEvent(
-          "search",
-          totalResults,
-          null,
-          clickedCity[0].cityName,
-          "Search button",
-          null,
-          null
-        )
+        eventParams.cityName = clickedCity[0].cityName
       }
     } else if (cityText.length > 0) {
       const enteredCity = searchCities.filter(city =>
         city.cityName.toLowerCase() === cityText.toLowerCase())
       if (enteredCity.length > 0) {
         setSelectedCity(enteredCity)
+        // track entered city name
+        eventParams.cityName = enteredCity[0].cityName
       }
     }
+
+    trackSnowplowEvent(
+      eventParams.action,
+      eventParams.resultCount,
+      eventParams.parkName,
+      eventParams.cityName,
+      eventParams.label,
+      eventParams.filters
+    )
   }
   const handleKeyDownSearchPark = (e) => {
     if (e.key === "Enter") {
@@ -690,13 +696,6 @@ export default function FindAPark({ location, data }) {
       setIsKeyDownLoadingMore(false)
     }
   }, [isKeyDownLoadingMore, searchResults])
-
-  useEffect(() => {
-    if (searchText) {
-      handleSearch()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText])
 
   useEffect(() => {
     if (selectedCity.length > 0) {
