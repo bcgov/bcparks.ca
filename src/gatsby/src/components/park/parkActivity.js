@@ -145,18 +145,13 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
           {activityData.length > 1 && (
             <button
               onClick={toggleExpandAll}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault()
-                  toggleExpandAll()
-                }
-              }}
+              aria-label={allExpanded ? "Collapse all things to do" : "Expand all things to do"}
               className="btn btn-link expand-link expand-icon"
             >
               {allExpanded ?
-                <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                <>Collapse all things to do <FontAwesomeIcon icon={faChevronUp} /></>
                 :
-                <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+                <>Expand all things to do <FontAwesomeIcon icon={faChevronDown} /></>
               }
             </button>
           )}

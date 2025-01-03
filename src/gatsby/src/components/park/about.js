@@ -184,18 +184,13 @@ export default function About({
               {dataList.length > 1 && (
                 <button
                   onClick={toggleExpandAll}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault()
-                      toggleExpandAll()
-                    }
-                  }}
+                  aria-label={allExpanded ? "Collapse all about this park" : "Expand all about this park"}
                   className="btn btn-link expand-link expand-icon"
                 >
                   {allExpanded ?
-                    <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                    <>Collapse all about this park <FontAwesomeIcon icon={faChevronUp} /></>
                     :
-                    <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+                    <>Expand all about this park <FontAwesomeIcon icon={faChevronDown} /></>
                   }
                 </button>
               )}

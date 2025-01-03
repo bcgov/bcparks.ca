@@ -117,14 +117,10 @@ const DesktopFilters = ({
         />
         <button
           className="btn btn-link show-all-link"
+          aria-label={showMoreAreas ?
+            `Show all ${areaItems.length} areas` : "Show less areas"}
           onClick={() => {
             setMoreAreas(!showMoreAreas)
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault()
-              setMoreAreas(!showMoreAreas)
-            }
           }}
         >
           {showMoreAreas ? (
@@ -159,14 +155,10 @@ const DesktopFilters = ({
         />
         <button
           className="btn btn-link show-all-link"
+          aria-label={showMoreActivities ? 
+            `Show all ${activityItems.length} things to do` : "Show less things to do"}
           onClick={() => {
             setMoreActivites(!showMoreActivities)
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault()
-              setMoreActivites(!showMoreActivities)
-            }
           }}
         >
           {showMoreActivities ? (
@@ -192,14 +184,10 @@ const DesktopFilters = ({
         />
         <button
           className="btn btn-link show-all-link"
+          aria-label={showMoreFacilities ? 
+            `Show all ${facilityItems.length} facilities` : "Show less facilities"}
           onClick={() => {
             setMoreFacilities(!showMoreFacilities)
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault()
-              setMoreFacilities(!showMoreFacilities)
-            }
           }}
         >
           {showMoreFacilities ? (

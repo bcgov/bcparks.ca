@@ -111,18 +111,13 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
             {advisoriesWithFormatting.length > 1 && (
               <button
                 onClick={toggleExpandAll}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault()
-                    toggleExpandAll()
-                  }
-                }}
+                aria-label={allExpanded ? "Collapse all advisories" : "Expand all advisories"}
                 className="btn btn-link expand-link expand-icon"
               >
                 {allExpanded ?
-                  <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                  <>Collapse all advisories <FontAwesomeIcon icon={faChevronUp} /></>
                   :
-                  <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+                  <>Expand all advisories <FontAwesomeIcon icon={faChevronDown} /></>
                 }
               </button>
             )}

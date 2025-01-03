@@ -159,18 +159,13 @@ export default function ParkFacility({ data, groupPicnicReservationUrl }) {
           {facilityData.length > 1 && (
             <button
               onClick={toggleExpandAll}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault()
-                  toggleExpandAll()
-                }
-              }}
+              aria-label={allExpanded ? "Collapse all facilities" : "Expand all facilities"}
               className="btn btn-link expand-link expand-icon"
             >
               {allExpanded ?
-                <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                <>Collapse all facilities <FontAwesomeIcon icon={faChevronUp} /></>
                 :
-                <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+                <>Expand all facilities <FontAwesomeIcon icon={faChevronDown} /></>
               }
             </button>
           )}

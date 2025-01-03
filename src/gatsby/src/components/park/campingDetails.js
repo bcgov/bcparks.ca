@@ -37,6 +37,10 @@ export const CampingType = ({ camping, parkOperation }) => {
       element.scrollIntoView({ behavior: "smooth" })
     }
   }
+  const expandLabel = (campingName) => {
+    return expanded ?
+      `Show less about ${campingName.toLowerCase()}` : `Show more about ${campingName.toLowerCase()}`
+  }
 
   useEffect(() => {
     if (ref.current.clientHeight > 260) {
@@ -84,18 +88,12 @@ export const CampingType = ({ camping, parkOperation }) => {
       {hasExpandCondition &&
         <button
           className="btn btn-link expand-icon park-camping-link"
+          aria-label={expandLabel(camping?.campingType?.campingTypeName)}
           onClick={handleExpandClick}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault()
-              handleExpandClick()
-            }
-          }}
         >
+          {expandLabel(camping?.campingType?.campingTypeName)}{" "}
           {expanded ?
-            <>Show less <FontAwesomeIcon icon={faChevronUp} /></>
-            :
-            <>Show more <FontAwesomeIcon icon={faChevronDown} /></>
+            <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
           }
         </button>
       }
