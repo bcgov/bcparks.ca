@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import HtmlContent from "../htmlContent"
+import AudioButton from "../audioButton"
 import * as cheerio from 'cheerio';
 
-export default function ParkOverview({ data: parkOverview, type }) {
+export default function ParkOverview({ description, type, audio }) {
   const [expanded, setExpanded] = useState(false)
   const [height, setHeight] = useState(0)
   const [sectionHeight, setSectionHeight] = useState(0)
@@ -12,11 +13,11 @@ export default function ParkOverview({ data: parkOverview, type }) {
   const isLong = height >= 300
   const isMedium = height > 260 && height < 300
 
-  const $ = cheerio.load(parkOverview);
+  const $ = cheerio.load(description);
   $('a').attr('tabindex', '-1')
-  const collapsedParkOverview = $.html()
+  const collapsedDescription = $.html()
   const hasHr = $('hr').length > 0
-  const hrAtEnd = parkOverview.trim().endsWith('<hr>')
+  const hrAtEnd = description.trim().endsWith('<hr>')
   const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
 
   useEffect(() => {
@@ -46,8 +47,9 @@ export default function ParkOverview({ data: parkOverview, type }) {
         </h2>
         {/* let voiceover skip reading content if it is not expanded */}
         <HtmlContent ariaHidden={hasExpandCondition && !expanded} className="park-overview-html">
-          {hasExpandCondition ? (expanded ? parkOverview : collapsedParkOverview) : parkOverview }
+          {hasExpandCondition ? (expanded ? description : collapsedDescription) : description}
         </HtmlContent>
+        <AudioButton audio={audio} />
       </div>
       {hasExpandCondition &&
         <button
