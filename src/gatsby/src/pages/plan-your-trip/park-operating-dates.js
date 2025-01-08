@@ -12,18 +12,15 @@ import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import StaticIcon from "../../components/park/staticIcon"
 import NoSearchResults from "../../components/search/noSearchResults"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
-import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
+import { loadAllAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
 
-const ParkLink = ({ park, apiBaseUrl }) => {
+const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) => {
   const thisYear = new Date().getFullYear()
   const parkOperation = park.parkOperation
   const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
   const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
-  const [advisories, setAdvisories] = useState([])
   const [parkAccessStatus, setParkAccessStatus] = useState({})
-  const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
-  const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
   const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
 
   // Overall operating dates for parks, to display above subareas
@@ -59,36 +56,6 @@ const ParkLink = ({ park, apiBaseUrl }) => {
       subArea.serviceDates.push(`${new Date().getFullYear()}: Dates unavailable`)
     }
   }
-
-  const fetchAdvisoriesWithRetry = (retries = 3, delay = 1000) => {
-    setIsLoadingAdvisories(true)
-    loadAdvisories(apiBaseUrl, park.orcs)
-      .then(response => {
-        setAdvisories(response.data.data)
-        setAdvisoryLoadError(false)
-      })
-      .catch(error => {
-        if (error.response && error.response.status === 429 && retries > 0) {
-          // retry with exponential backoff
-          setTimeout(() => {
-            fetchAdvisoriesWithRetry(retries - 1, delay * 2)
-          }, delay)
-        } else {
-          setAdvisories([])
-          setAdvisoryLoadError(true)
-          console.error("Error fetching advisories:", error)
-        }
-      })
-      .finally(() => {
-        setIsLoadingAdvisories(false)
-      })
-  }
-
-  // get advisories
-  useEffect(() => {
-    fetchAdvisoriesWithRetry()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiBaseUrl, park.orcs])
 
   if (!addedSeasonalAdvisory) {
     if (advisories.some(a => a.accessStatus?.hidesSeasonalAdvisory)) {
@@ -351,22 +318,57 @@ const ParkOperatingDatesPage = () => {
     }
   `)
 
+  // constants
   const apiBaseUrl = `${queryData.site.siteMetadata.apiURL}/api`
   const menuContent = queryData?.allStrapiMenu?.nodes || []
   const parks = queryData?.allStrapiProtectedArea?.nodes || []
+  const filters = [
+    "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+    "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+  ]
 
+  // states
+  const [advisories, setAdvisories] = useState([])
+  const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
+  const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
   const [currentFilter, setCurrentFilter] = useState("All")
 
+  // functions
   const handleClick = (e) => {
     setCurrentFilter(e.target.value)
   }
   const filtering = (char) =>
     parks.filter(park => park.slug.charAt(0).toUpperCase() === char)
   const hasResult = filtering(currentFilter).length > 0 
-  const filters = [
-    "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-    "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
-  ]
+  const filterAdvisoriesByOrcs = (orcs) => {
+    return advisories.filter(advisory => 
+      advisory.protectedAreas.some(protectedArea => protectedArea.orcs === orcs)
+    )
+  }
+  const fetchAdvisories = () => {
+    setIsLoadingAdvisories(true)
+    loadAllAdvisories(apiBaseUrl)
+      .then(response => {
+        setAdvisories(response.data.data)
+        setAdvisoryLoadError(false)
+      })
+      .catch(error => {
+        setAdvisories([])
+        setAdvisoryLoadError(true)
+        console.error("Error fetching advisories:", error)
+      })
+      .finally(() => {
+        setIsLoadingAdvisories(false)
+      })
+  }
+
+  // effects
+  useEffect(() => {
+    fetchAdvisories()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiBaseUrl])
+
+  // components
   const breadcrumbs = [
     <Link key="1" to="/">
       Home
@@ -450,7 +452,13 @@ const ParkOperatingDatesPage = () => {
               filters.map((filter, index) => (
                 <div key={index} className="list">
                   {filtering(filter).map((park, index) => (
-                    <ParkLink park={park} apiBaseUrl={apiBaseUrl} key={index} />
+                    <ParkLink 
+                      key={index}
+                      park={park}
+                      advisories={filterAdvisoriesByOrcs(park.orcs)}
+                      advisoryLoadError={advisoryLoadError}
+                      isLoadingAdvisories={isLoadingAdvisories}
+                    />
                   ))}
                 </div>
               ))
@@ -458,7 +466,13 @@ const ParkOperatingDatesPage = () => {
               <div className="list">
                 {hasResult ? 
                   filtering(currentFilter).map((park, index) => (
-                    <ParkLink park={park} apiBaseUrl={apiBaseUrl} key={index} />
+                    <ParkLink
+                      key={index}
+                      park={park}
+                      advisories={filterAdvisoriesByOrcs(park.orcs)}
+                      advisoryLoadError={advisoryLoadError}
+                      isLoadingAdvisories={isLoadingAdvisories}
+                    />
                   ))
                   : <NoSearchResults page="park-operating-dates" />
                 }
