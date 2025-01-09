@@ -29,6 +29,12 @@
     },
     "adminNote": {
       "type": "text"
+    },
+    "site": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::site.site",
+      "inversedBy": "parkOperationDates"
     }
   }
 }

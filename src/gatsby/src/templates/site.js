@@ -227,7 +227,7 @@ export default function SiteTemplate({ data }) {
             isLoadingProtectedArea={isLoadingProtectedArea}
             searchArea={searchArea}
             parkOperation={operations}
-            operationDates={park.parkOperationDates}
+            operationDates={site?.parkOperationDates || park.parkOperationDates}
             subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
           />
         </div>
@@ -619,6 +619,11 @@ export const query = graphql`
         title
         reportUrl
         reportDate
+      }
+      parkOperationDates {
+        operatingYear
+        gateOpenDate
+        gateCloseDate
       }
     }
     featuredPhotos: allStrapiParkPhoto(
