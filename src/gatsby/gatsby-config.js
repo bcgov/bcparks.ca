@@ -183,6 +183,9 @@ module.exports = {
                 parkOperation: {
                   fields: "*"
                 },
+                parkOperationDates: {
+                  fields: "*"
+                },
                 trailReports: {
                   fields: "*"
                 }

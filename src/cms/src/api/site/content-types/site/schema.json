@@ -5,11 +5,10 @@
     "singularName": "site",
     "pluralName": "sites",
     "displayName": "Site",
-    "name": "site"
+    "name": "site",
+    "description": ""
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": true
   },
   "attributes": {
@@ -142,6 +141,12 @@
       "relation": "manyToMany",
       "target": "api::trail-report.trail-report",
       "mappedBy": "sites"
+    },
+    "parkOperationDates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-operation-date.park-operation-date",
+      "mappedBy": "site"
     }
   }
 }
