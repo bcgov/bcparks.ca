@@ -221,6 +221,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     customReservationLinks: [STRAPI__COMPONENT_PARKS_RTE_LIST] @link(by: "id", from: "customReservationLinks___NODE")
   }
 
+  type STRAPI_PARK_OPERATION_DATE implements Node {
+    operatingYear: Int
+    gateOpenDate: Date
+    gateCloseDate: Date
+  }
+
   type STRAPI_PARK_OPERATION_SUB_AREA implements Node {
     nonReservableSites: String
     vehicleSitesReservable: String
@@ -323,6 +329,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   type STRAPI_SITE implements Node {
     safetyInfo: STRAPI_SITE_SAFETYINFO
     parkOperation: STRAPI_PARK_OPERATION @link(by: "id", from: "parkOperation___NODE")
+    parkOperationDates: [STRAPI_PARK_OPERATION_DATE] @link(by: "id", from: "parkOperationDates___NODE")
     parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
     parkCampingTypes: [STRAPI_PARK_CAMPING_TYPE] @link(by: "id", from: "parkCampingTypes___NODE")
