@@ -193,10 +193,7 @@ export default function ParkAccessStatus({
     <div className="access-status-icon">
       {accessStatus &&
         <>
-          <img
-            src={accessStatus.parkStatusIcon}
-            alt={accessStatus.parkStatusText}
-          />
+          <img src={accessStatus.parkStatusIcon} alt="" />
           {accessStatus.parkStatusText}{(!hideComma && advisories.length > 0) && ", "}
           {advisories.length > 0 &&
             <Link to={`/${slug}/#advisories`}>
