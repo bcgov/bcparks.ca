@@ -34,6 +34,30 @@ const loadAdvisories = (apiBaseUrl, orcsId) => {
   return axios.get(`${apiBaseUrl}/public-advisories/items?${params}`)
 }
 
+const loadAllAdvisories = (apiBaseUrl) => {
+  const params = qs.stringify({
+    filters: {
+      advisoryStatus: {
+        code: {
+          $eq: "PUB"
+        }
+      }
+    },
+    fields: ["advisoryNumber"],
+    populate: {
+      accessStatus: { fields: ["accessStatus", "precedence", "color", "groupLabel"] },
+      protectedAreas: { fields: ["orcs"] }
+    },
+    pagination: {
+      limit: 1000,
+    }
+  }, {
+    encodeValuesOnly: true,
+  })
+
+  return axios.get(`${apiBaseUrl}/public-advisories/?${params}`)
+}
+
 const WINTER_FULL_PARK_ADVISORY = {
   id: -1,
   title: "Limited access to this park during winter season",
@@ -58,6 +82,7 @@ const WINTER_SUB_AREA_ADVISORY = {
 
 export {
   loadAdvisories,
+  loadAllAdvisories,
   getAdvisoryTypeFromUrl,
   WINTER_FULL_PARK_ADVISORY,
   WINTER_SUB_AREA_ADVISORY
