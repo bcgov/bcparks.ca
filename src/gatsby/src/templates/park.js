@@ -74,7 +74,7 @@ export default function ParkTemplate({ data }) {
   const activeFacilities = combineFacilities(park.parkFacilities, data.allStrapiFacilityType.nodes, subAreas);
   const activeCampings = combineCampingTypes(park.parkCampingTypes, data.allStrapiCampingType.nodes, subAreas);
 
-  const hasReservations = operations.hasFrontcountryReservations
+  const hasReservations = operations.hasReservations
   const hasDayUsePass = operations.hasDayUsePass
 
   const menuContent = data?.allStrapiMenu?.nodes || []
@@ -637,6 +637,7 @@ export const query = graphql`
       }
       parkOperation {
         isActive
+        hasReservations
         hasBackcountryReservations
         hasBackcountryPermits
         hasDayUsePass
