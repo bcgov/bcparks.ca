@@ -685,8 +685,8 @@ export default function FindAPark({ location, data }) {
   useEffect(() => {
     if (isKeyDownLoadingMore) {
       const parkLinks = document.getElementsByClassName('desktop-park-link');
-      if (parkLinks.length > itemsPerPage) {
-        let firstNewIndex = Math.floor((parkLinks.length - 1) / itemsPerPage) * itemsPerPage;
+      if (parkLinks.length >= itemsPerPage) {
+        let firstNewIndex = parkLinks.length - 1;
         parkLinks[firstNewIndex].contentEditable = true;
         parkLinks[firstNewIndex].focus();
         parkLinks[firstNewIndex].contentEditable = false;

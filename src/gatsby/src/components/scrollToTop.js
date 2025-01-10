@@ -7,6 +7,7 @@ export default function ScrollToTop() {
 
   const handleClick = () => {
     window[`scrollTo`]({ top: 0, behavior: `smooth` })
+    document.getElementById('gatsby-focus-wrapper').focus()
   }
 
   useEffect(() => {

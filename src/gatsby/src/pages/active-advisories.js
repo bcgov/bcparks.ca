@@ -43,6 +43,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const [pageIndex, setPageIndex] = useState(1) // current page of results, 1-based
   const pageLen = 10 // num items per page
   const [pageCount, setPageCount] = useState(1) // num pages in current search
+  const [isKeyDownLoadingMore, setIsKeyDownLoadingMore] = useState(false)
 
   /* Advisory Event Types */
   const defaultAdvisoryEventType = useMemo(() => ({ label: 'All', value: 'all' }), [])
@@ -307,6 +308,14 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     })
   }
 
+  const handleKeyDownLoadMore = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      setIsKeyDownLoadingMore(true);
+      e.preventDefault()
+      handleLoadMore()
+    }
+  }
+
   // This hashset is used by the advisoryCard.js component to quiclky 
   // determine if the advisoriy is associated with any parks in addition 
   // to the specified  Fire Centres, Fire Zones, Regions, or Sections.
@@ -368,6 +377,20 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     getAdvisoryTotalCount()
   }, [getAdvisoryTotalCount])
 
+  // Focus on the last advisory card when 'Load more' button is clicked by keyboard
+  useEffect(() => {
+    if (isKeyDownLoadingMore) {
+      const advisoryCards = document.querySelectorAll('.advisory-card')
+      if (advisoryCards.length >= pageLen) {
+        let firstNewIndex = advisoryCards.length - 1
+        advisoryCards[firstNewIndex].contentEditable = true
+        advisoryCards[firstNewIndex].focus()
+        advisoryCards[firstNewIndex].contentEditable = false
+      }
+      setIsKeyDownLoadingMore(false)
+    }
+  }, [isKeyDownLoadingMore, advisories])
+
   const menuContent = data?.allStrapiMenu?.nodes || []
   const parkInfoHash = buildParkInfoHash();
 
@@ -419,6 +442,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
             pageIndex={pageIndex}
             pageCount={pageCount}
             handleClick={handleLoadMore}
+            handleKeyDownLoadMore={handleKeyDownLoadMore}
           />
         </div>
       </div>
