@@ -245,7 +245,9 @@ const AdvisoryFilter = ({
                     key={0}
                     className="no-suggestion-text"
                   >
-                    No match. Please check your spelling or select from the list.
+                    <span role="alert" aria-live="assertive">
+                      No match. Please check your spelling or select from the list.
+                    </span>
                   </MenuItem>
                 }
                 {results.map((event, index) => 

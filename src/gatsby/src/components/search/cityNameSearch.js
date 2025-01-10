@@ -265,7 +265,9 @@ const CityNameSearch = ({
                 key={results.length}
                 className="no-suggestion-text"
               >
-                No match. Please check your spelling or try a larger city in B.C.
+                <span role="alert" aria-live="assertive">
+                  No match. Please check your spelling or try a larger city in B.C.
+                </span>
               </MenuItem>
             }
             {results.map((city, index) => {

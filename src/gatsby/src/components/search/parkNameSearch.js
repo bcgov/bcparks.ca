@@ -162,9 +162,12 @@ const ParkNameSearch = ({
           {(results.length === 0 && searchText) && 
             <MenuItem
               tabIndex={-1}
+              key={0}
               className="no-suggestion-text"
             >
-              No match. Please check your spelling.
+              <span role="alert" aria-live="assertive">
+                No match. Please check your spelling.
+              </span>
             </MenuItem>
           }
           {results.map((result, index) => (
