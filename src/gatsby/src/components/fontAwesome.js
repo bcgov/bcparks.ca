@@ -13,7 +13,7 @@ const FontAwesome = ({ icon, size, className }) => {
 	}
 
 	return (
-		<img src={iconSrc} alt={icon} width={size} height={size} className={className} />
+		<img src={iconSrc} alt="" width={size} height={size} className={className} />
 	)
 }
 

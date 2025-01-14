@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import StaticIcon from "./staticIcon"
 import CustomToggle from "./customToggle"
 import DiscoverParksLogo from "../../images/discover-parks-instagram-dark-green-icon-with-text.png"
@@ -145,18 +145,13 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
           {activityData.length > 1 && (
             <button
               onClick={toggleExpandAll}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault()
-                  toggleExpandAll()
-                }
-              }}
+              aria-label={allExpanded ? "Collapse all things to do" : "Expand all things to do"}
               className="btn btn-link expand-link expand-icon"
             >
               {allExpanded ?
-                <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                <>Collapse all things to do <FontAwesomeIcon icon={faChevronUp} /></>
                 :
-                <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+                <>Expand all things to do <FontAwesomeIcon icon={faChevronDown} /></>
               }
             </button>
           )}

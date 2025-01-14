@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import ParkDates from "./parkDates"
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
@@ -36,6 +36,10 @@ export const CampingType = ({ camping, parkOperation }) => {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
     }
+  }
+  const expandLabel = (campingName) => {
+    return expanded ?
+      `Show less about ${campingName.toLowerCase()}` : `Show more about ${campingName.toLowerCase()}`
   }
 
   useEffect(() => {
@@ -84,18 +88,12 @@ export const CampingType = ({ camping, parkOperation }) => {
       {hasExpandCondition &&
         <button
           className="btn btn-link expand-icon park-camping-link"
+          aria-label={expandLabel(camping?.campingType?.campingTypeName)}
           onClick={handleExpandClick}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault()
-              handleExpandClick()
-            }
-          }}
         >
+          {expandLabel(camping?.campingType?.campingTypeName)}{" "}
           {expanded ?
-            <>Show less <FontAwesomeIcon icon={faChevronUp} /></>
-            :
-            <>Show more <FontAwesomeIcon icon={faChevronDown} /></>
+            <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
           }
         </button>
       }

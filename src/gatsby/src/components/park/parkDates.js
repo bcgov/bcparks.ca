@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import SubArea from "./subArea"
 import CustomToggle from "./customToggle"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"
@@ -146,6 +146,11 @@ export default function ParkDates({ data, parkOperation }) {
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
 
+  const expandLabel = (campingType) => {
+    return allExpanded ?
+      `Collapse all ${campingType.toLowerCase()}` : `Expand all ${campingType.toLowerCase()}`
+  }
+
   const toggleAccordion = (index, subAreaName) => {
     setOpenAccordions((prev) => ({
       ...prev,
@@ -232,18 +237,12 @@ export default function ParkDates({ data, parkOperation }) {
                 {subAreas.length > 1 && (
                   <button
                     onClick={toggleExpandAll}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault()
-                        toggleExpandAll()
-                      }
-                    }}
+                    aria-label={expandLabel(data.campingType.pluralName)}
                     className="btn btn-link expand-link expand-icon"
                   >
+                    {expandLabel(data.campingType.pluralName)}{" "}
                     {allExpanded ?
-                      <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
-                      :
-                      <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+                      <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
                     }
                   </button>
                 )}

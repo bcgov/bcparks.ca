@@ -20,6 +20,14 @@ const shortenFilterLabel = (label, filterType) => {
   }
 }
 
+const uniqueId = (id, filterType) => {
+  if (filterType === "popular") {
+    return `popular-${id}`
+  } else {
+    return id
+  }
+}
+
 const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterType }) => {
   return (
     <Form.Group className="filter-options-container">
@@ -30,8 +38,9 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterTyp
         ).length === 1 ? true : false
         return (
           <Form.Check
-            id={item.label}
-            key={item.label}
+            id={uniqueId(item.code, filterType)}
+            key={uniqueId(item.code, filterType)}
+            aria-controls={uniqueId(item.code, filterType)}
             type="checkbox"
             checked={checked}
             onChange={event => {

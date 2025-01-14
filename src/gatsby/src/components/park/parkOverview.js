@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import * as cheerio from 'cheerio';
 
 export default function ParkOverview({ data: parkOverview, type }) {
@@ -51,14 +51,9 @@ export default function ParkOverview({ data: parkOverview, type }) {
       {hasExpandCondition &&
         <button
           className="btn btn-link park-overview-link expand-icon"
+          aria-label={expanded ? "Show fewer highlights" : "Show more highlights"}
           onClick={() => {
             setExpanded(!expanded)
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault()
-              setExpanded(!expanded)
-            }
           }}
         >
           {expanded ?

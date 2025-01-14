@@ -166,6 +166,9 @@
 
 .park-photo {
   height: 200px;
+  width: 100%;
+  border: none;
+  padding: 0;
   @media (min-width: $smBreakpoint) {
     height: 300px;
   }

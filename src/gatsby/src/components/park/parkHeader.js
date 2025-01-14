@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import ParkAccessStatus from "./parkAccessStatus"
 import CampfireBan from "../campfireBan"
 import FontAwesome from "../fontAwesome"
@@ -203,7 +203,7 @@ export default function ParkHeader({
 }
 
 ParkHeader.propTypes = {
-  orcs: PropTypes.number.isRequired,
+  orcs: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   slug: PropTypes.string.isRequired,
   parkName: PropTypes.oneOfType([
     PropTypes.object.isRequired,

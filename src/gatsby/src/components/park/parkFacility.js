@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"
@@ -159,18 +159,13 @@ export default function ParkFacility({ data, groupPicnicReservationUrl }) {
           {facilityData.length > 1 && (
             <button
               onClick={toggleExpandAll}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault()
-                  toggleExpandAll()
-                }
-              }}
+              aria-label={allExpanded ? "Collapse all facilities" : "Expand all facilities"}
               className="btn btn-link expand-link expand-icon"
             >
               {allExpanded ?
-                <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                <>Collapse all facilities <FontAwesomeIcon icon={faChevronUp} /></>
                 :
-                <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+                <>Expand all facilities <FontAwesomeIcon icon={faChevronDown} /></>
               }
             </button>
           )}

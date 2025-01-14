@@ -1,7 +1,7 @@
 
 import React from "react"
 
-import HTMLArea from "../HTMLArea"
+import HtmlContent from "../htmlContent"
 import LinkCard from "./linkCard"
 import PageSection from "../pageContent/pageSection"
 
@@ -49,7 +49,7 @@ export default function PageContent({ contentType, content }) {
     )
   }
     if (contentType === "parks.html-area") {
-        return <HTMLArea isVisible={true}>{content.HTML.data.HTML}</HTMLArea>
+        return <HtmlContent>{content.HTML.data.HTML}</HtmlContent>
     }
     if (contentType === "parks.page-section") {
         return (

@@ -135,6 +135,9 @@ const ParkNameSearch = ({
       className={`has-text--${searchText.length > 0 ? 'true' : 'false'
         } is-dropdown-open--${isDropdownOpen ? 'true' : 'false'
         } park-search-typeahead`}
+      inputProps={{
+        'aria-controls': 'park-search-typehead'
+      }}
       renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
         return (
           <Form.Group controlId="park-search-typeahead">
@@ -159,9 +162,12 @@ const ParkNameSearch = ({
           {(results.length === 0 && searchText) && 
             <MenuItem
               tabIndex={-1}
+              key={0}
               className="no-suggestion-text"
             >
-              No match. Please check your spelling.
+              <span role="alert" aria-live="assertive">
+                No match. Please check your spelling.
+              </span>
             </MenuItem>
           }
           {results.map((result, index) => (

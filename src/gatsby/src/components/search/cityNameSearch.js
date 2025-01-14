@@ -235,6 +235,9 @@ const CityNameSearch = ({
         className={`has-text--${(selectedItems.length > 0 || cityText.length > 0) ? 'true' : 'false'
           } is-dropdown-open--${isDropdownOpen ? 'true' : 'false'
           } city-search-typeahead`}
+          inputProps={{
+            'aria-controls': 'city-search-typehead'
+          }}
         renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
           return (
             <Form.Group controlId="city-search-typeahead">
@@ -262,7 +265,9 @@ const CityNameSearch = ({
                 key={results.length}
                 className="no-suggestion-text"
               >
-                No match. Please check your spelling or try a larger city in B.C.
+                <span role="alert" aria-live="assertive">
+                  No match. Please check your spelling or try a larger city in B.C.
+                </span>
               </MenuItem>
             }
             {results.map((city, index) => {

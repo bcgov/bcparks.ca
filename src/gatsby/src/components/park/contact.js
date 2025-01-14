@@ -1,6 +1,6 @@
 import React from "react"
 import FontAwesome from "../fontAwesome"
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 
 // Helper function to get href prefix based on the contactType
 const getPrefix = (contactType) => {
@@ -55,7 +55,7 @@ export const ParkContact = ({ contact }) => {
         }
         {links.length > 0 && links.map((link, index) => (
           <p key={index}>
-            <FontAwesome icon={getIcon(link.contactType)} aria-hidden="true" />
+            <FontAwesome icon={getIcon(link.contactType)} />
             {link.contactUrl !== null ?
               <a
                 href={`${getPrefix(link.contactType)}${link.contactUrl}`}
@@ -107,19 +107,19 @@ export default function Contact({ contact, parkContacts, operations }) {
                       There is a $5 fee for reservations, changes, or cancellations made by phone.
                     </p>
                     <p>
-                      <FontAwesome icon="phone" aria-hidden="true" />
+                      <FontAwesome icon="phone" />
                       <a href="tel:+18006899025" aria-label="Phone number: 1-800-689-9025">1-800-689-9025</a> (toll-free from Canada or the US)
                     </p>
                     <p>
-                      <FontAwesome icon="phone" aria-hidden="true" />
+                      <FontAwesome icon="phone" />
                       <a href="tel:+15198586161" aria-label="Phone number: 1-519-858-6161">1-519-858-6161</a> (international)
                     </p>
                     <p>
-                      <FontAwesome icon="laptop" aria-hidden="true" />
+                      <FontAwesome icon="laptop" />
                       <a href="https://camping.bcparks.ca/contact" aria-label="Contact form">Contact form</a>
                     </p>
                     <p>
-                      <FontAwesome icon="messages" aria-hidden="true" />
+                      <FontAwesome icon="messages" />
                       <a
                         href="https://apps.cac1.pure.cloud/webchat/popup/#?locale=en-CA&webchatAppUrl=https%3A%2F%2Fapps.cac1.pure.cloud%2Fwebchat&webchatServiceUrl=https%3A%2F%2Frealtime.cac1.pure.cloud%3A443&logLevel=DEBUG&orgId=353&orgGuid=0b006318-4527-4b99-bcd7-c3b033bb5a7b&orgName=camis-caprod&queueName=BC_CHAT&waitForAllCandidates=true&forceRelayCandidates=false&cssClass=webchat-frame&css.width=100%25&css.height=100%25&companyLogo.url=https%3A%2F%2Fcamping.bcparks.ca%2Fimages%2Ffed25851-bc9a-4c9e-9d77-eef7d657e372.png&companyLogo.width=600&companyLogo.height=149&companyLogoSmall.url=https%3A%2F%2Fcamping.bcparks.ca%2Fimages%2Fc707917e-06eb-43b7-9037-167631c8075d.png&companyLogoSmall.width=25&companyLogoSmall.height=25&welcomeMessage=Welcome%20to%20the%20BC%20Parks%20Reservation%20Service%20chat.%20Agents%20are%20available%207%3A00%20am%20to%207%3A00%20pm%20PT.%20How%20may%20we%20help%20you%3F&agentAvatar.url=https%3A%2F%2Fcamping.bcparks.ca%2Fimages%2F530f022d-e797-4932-91c3-daca5905c3b8.png&agentAvatar.width=462&agentAvatar.height=462&onlineSchedules=%5Bobject%20Object%5D&chatNowElement=liveHelpContainer&widgetType=POPUP&webchatDeploymentKey=cd42d8bf-a796-41f3-8b20-be574ee3cdde&webchatApi=xmpp.v1"
                         aria-label="Live chat"
@@ -141,7 +141,7 @@ export default function Contact({ contact, parkContacts, operations }) {
                     We answer emails weekdays from 9 am to 5 pm Pacific Time.
                   </p>
                   <p>
-                    <FontAwesome icon="envelope" aria-hidden="true" />
+                    <FontAwesome icon="envelope" />
                     <a href="mailto:parkinfo@gov.bc.ca" aria-label="Email: parkinfo@gov.bc.ca">parkinfo@gov.bc.ca</a>
                   </p>
                 </td>

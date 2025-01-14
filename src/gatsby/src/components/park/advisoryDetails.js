@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
-import HtmlContent from "./htmlContent"
+import HtmlContent from "../htmlContent"
 import CustomToggle from "./customToggle"
 import AdvisoryDate from "../advisories/advisoryDate"
 import blueAlertIcon from "../../images/park/blue-alert.svg"
@@ -111,18 +111,13 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
             {advisoriesWithFormatting.length > 1 && (
               <button
                 onClick={toggleExpandAll}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault()
-                    toggleExpandAll()
-                  }
-                }}
+                aria-label={allExpanded ? "Collapse all advisories" : "Expand all advisories"}
                 className="btn btn-link expand-link expand-icon"
               >
                 {allExpanded ?
-                  <>Collapse all <FontAwesomeIcon icon={faChevronUp} /></>
+                  <>Collapse all advisories <FontAwesomeIcon icon={faChevronUp} /></>
                   :
-                  <>Expand all <FontAwesomeIcon icon={faChevronDown} /></>
+                  <>Expand all advisories <FontAwesomeIcon icon={faChevronDown} /></>
                 }
               </button>
             )}
@@ -139,7 +134,7 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                   <div className="d-flex align-items-center">
                     <img
                       src={advisory.alertIcon}
-                      alt="advisory status icon"
+                      alt={`${advisory.urgency.urgency} urgency`}
                       className="advisory-status-icon"
                     ></img>
                     <HtmlContent className="accordion-header">{advisory.title}</HtmlContent>

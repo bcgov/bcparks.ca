@@ -1,6 +1,6 @@
 import React from "react"
 
-import HTMLArea from "../HTMLArea"
+import HtmlContent from "../htmlContent"
 
 import "../../styles/pageContent/pageSection.scss"
 
@@ -15,9 +15,9 @@ export default function PageSection({ sectionTitle, sectionId, sectionStrapiId, 
             <span id={`page-section-${sectionStrapiId}`}></span>
             <div className="page-section" id={titleId}>
                 <h2 className="page-section-title">{sectionTitle}</h2>
-                <HTMLArea className="page-section-html" isVisible={true}>
+                <HtmlContent className="page-section-html">
                     {sectionHtml.data.sectionHTML}
-                </HTMLArea>     
+                </HtmlContent>     
             </div>
         </>
   )
