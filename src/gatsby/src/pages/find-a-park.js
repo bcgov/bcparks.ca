@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react"
-import { graphql, Link as GatsbyLink } from "gatsby"
+import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 import axios from "axios"
 import { orderBy, kebabCase } from "lodash"
 import ProgressBar from "react-bootstrap/ProgressBar";
@@ -723,6 +723,13 @@ export default function FindAPark({ location, data }) {
       setSelectedCity([currentLocation])
     }
   }, [currentLocation])
+
+  // redirect to the park page if there is only one search result that exactly matches the input text
+  useEffect(() => {
+    if (searchResults.length === 1 && searchResults[0].protectedAreaName.toLowerCase() === inputText.toLowerCase()) {
+      navigate(`/${searchResults[0].slug}`)
+    }
+  }, [searchResults, inputText])
 
   return (
     <>
