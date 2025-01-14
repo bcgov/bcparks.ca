@@ -51,7 +51,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
       {hasExpandCondition &&
         <button
           className="btn btn-link park-overview-link expand-icon"
-          aria-label={expanded ? "Show less highlights" : "Show more highlights"}
+          aria-label={expanded ? "Show fewer highlights" : "Show more highlights"}
           onClick={() => {
             setExpanded(!expanded)
           }}

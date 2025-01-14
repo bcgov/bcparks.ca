@@ -118,7 +118,7 @@ const DesktopFilters = ({
         <button
           className="btn btn-link show-all-link"
           aria-label={showMoreAreas ?
-            `Show all ${areaItems.length} areas` : "Show less areas"}
+            `Show all ${areaItems.length} areas` : "Show fewer areas"}
           onClick={() => {
             setMoreAreas(!showMoreAreas)
           }}
@@ -156,7 +156,7 @@ const DesktopFilters = ({
         <button
           className="btn btn-link show-all-link"
           aria-label={showMoreActivities ? 
-            `Show all ${activityItems.length} things to do` : "Show less things to do"}
+            `Show all ${activityItems.length} things to do` : "Show fewer things to do"}
           onClick={() => {
             setMoreActivites(!showMoreActivities)
           }}
@@ -185,7 +185,7 @@ const DesktopFilters = ({
         <button
           className="btn btn-link show-all-link"
           aria-label={showMoreFacilities ? 
-            `Show all ${facilityItems.length} facilities` : "Show less facilities"}
+            `Show all ${facilityItems.length} facilities` : "Show fewer facilities"}
           onClick={() => {
             setMoreFacilities(!showMoreFacilities)
           }}
