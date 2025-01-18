@@ -264,7 +264,7 @@ const CityNameSearch = ({
                   aria-atomic="true"
                   className="visually-hidden"
                 >
-                  No match. Please check your spelling.
+                  No match. Please check your spelling or try a larger city in B.C.
                 </span>
               }
             </Form.Group>
