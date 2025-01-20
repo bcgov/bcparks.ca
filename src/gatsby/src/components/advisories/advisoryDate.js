@@ -45,22 +45,6 @@ const AdvisoryDate = ({
           <small><b>{updatedDate}</b></small>
         </div>
       )}
-      {/* if "No date" is selected */}
-      {!hasDisplayedDate && (
-        updatedDate ? (
-          <div className="date">
-            <small>Updated</small>
-            <small><b>{updatedDate}</b></small>
-          </div>
-        ) : (
-          advisoryDate && (
-            <div className="date">
-              <small>Posted</small>
-              <small><b>{advisoryDate}</b></small>
-            </div>
-          )
-        )
-      )}
     </>
   );
 };
