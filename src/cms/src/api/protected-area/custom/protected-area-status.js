@@ -65,7 +65,7 @@ const getPublishedPublicAdvisories = async () => {
       filters: {
         accessStatus: {
           precedence: {
-            $lt: 99,
+            $lt: 120,
           },
         },
       },
