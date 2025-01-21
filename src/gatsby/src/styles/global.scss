@@ -463,12 +463,13 @@ button.btn:not(.btn-link) {
   background-color: $colorWhite;
   margin: 24px 0 0 0 !important;
   padding: 0 !important;
-  &:hover, &:focus-visible {
-    color: $colorBlue;
-    background-color: $colorGold;
+  &:hover, &:active, &:focus-visible {
+    color: $colorBlue !important;
+    background-color: $colorGold !important;
+    border-color: $colorGold !important;
   }
   &:focus-visible {
-    border: $colorWhite solid 2px;
+    border: $colorWhite solid 2px !important;
     outline: $colorBlueMed solid 2px;
     outline-offset: 0px;
   }

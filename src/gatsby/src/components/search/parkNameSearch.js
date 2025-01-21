@@ -38,12 +38,17 @@ const ParkNameSearch = ({
   const typeaheadRef = useRef(null)
 
   // event handlers
+  const handleFocusInput = () => {
+    if (searchText) {
+      handleSearchName(searchText)
+      setIsDropdownOpen(true)
+    }
+  }
   const SEARCH_NAME_URI =
     `${data.site.siteMetadata.apiURL}/api/protected-areas/searchnames`
   const handleSearchName = useCallback(async (query) => {
     if (query.length > 0) {
       setIsSearchNameLoading(true)
-      setIsDropdownOpen(true)
       try {
         const response = await axios.get(`
         ${SEARCH_NAME_URI}?queryText=${query}
@@ -109,12 +114,10 @@ const ParkNameSearch = ({
     }
   }, [])
   useEffect(() => {
-    if (searchText === "") {
-      setIsDropdownOpen(false)
-    } else {
+    if (searchText && options.length > 0) {
       setIsDropdownOpen(true)
     }
-  }, [searchText])
+  }, [searchText, options.length])
 
   return (
     <AsyncTypeahead
@@ -129,6 +132,7 @@ const ParkNameSearch = ({
       onChange={handleChange}
       onInputChange={handleInputChange}
       onKeyDown={handleKeyDownSearch}
+      onFocus={handleFocusInput}
       open={isDropdownOpen}
       onToggle={(isOpen) => setIsDropdownOpen(isOpen)}
       placeholder=" "
