@@ -14,8 +14,7 @@ import SubArea from "./subArea"
 import CustomToggle from "./customToggle"
 
 export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccordion, groupPicnicReservationUrl }) => {
-  const isPicnicFacility =
-    ["picnic-shelters", "picnic-areas"].includes(facility.facilityType.facilityCode)
+  const isPicnicFacility = facility.facilityType.facilityCode === "picnic-shelters"
 
   return (
     <Accordion
