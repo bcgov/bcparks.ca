@@ -724,8 +724,14 @@ export default function FindAPark({ location, data }) {
   }, [currentLocation])
 
   // redirect to the park page if there is only one search result that exactly matches the input text
+  // check previous path to prevent infinite redirects when breadcrumb is clicked
   useEffect(() => {
-    if (searchResults.length === 1 && searchResults[0].protectedAreaName.toLowerCase() === inputText.toLowerCase()) {
+    const pastPath = sessionStorage.getItem("prevPath")
+    const shouldRedirect = searchResults.length === 1 &&
+      searchResults[0].protectedAreaName.toLowerCase() === inputText.toLowerCase() &&
+      !pastPath.includes(searchResults[0].slug)
+
+    if (shouldRedirect) {
       navigate(`/${searchResults[0].slug}`)
     }
   }, [searchResults, inputText])
