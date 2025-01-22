@@ -110,6 +110,7 @@ const CityNameSearch = ({
       console.log("Geolocation is not supported by your browser")
     }
   }
+  const hasNoMatch = cityOptions(optionLimit).length === 1 && cityText
 
   // event handlers
   const handleFocusInput = () => {
@@ -236,7 +237,8 @@ const CityNameSearch = ({
           } is-dropdown-open--${isDropdownOpen ? 'true' : 'false'
           } city-search-typeahead`}
           inputProps={{
-            'aria-controls': 'city-search-typehead'
+            'aria-controls': 'city-search-typehead',
+            'aria-describedby': hasNoMatch ? "city-search-error-message" : undefined
           }}
         renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
           return (
@@ -250,12 +252,11 @@ const CityNameSearch = ({
                 }}
                 onKeyDown={handleKeyDownInput}
                 enterKeyHint="search"
-                aria-describedby="city-search-error-message"
               />
               <label htmlFor="city-search-typeahead">
                 Near a city
               </label>
-              {(cityOptions(optionLimit).length === 1 && cityText) && 
+              {hasNoMatch && 
                 <span
                   key={cityText}
                   id="city-search-error-message"

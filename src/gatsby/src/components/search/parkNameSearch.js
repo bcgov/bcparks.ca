@@ -36,6 +36,7 @@ const ParkNameSearch = ({
   const [isSearchNameLoading, setIsSearchNameLoading] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const typeaheadRef = useRef(null)
+  const hasNoMatch = options.length === 0 && searchText
 
   // event handlers
   const handleFocusInput = () => {
@@ -140,7 +141,8 @@ const ParkNameSearch = ({
         } is-dropdown-open--${isDropdownOpen ? 'true' : 'false'
         } park-search-typeahead`}
       inputProps={{
-        'aria-controls': 'park-search-typehead'
+        'aria-controls': 'park-search-typehead',
+        'aria-describedby': hasNoMatch ? "park-search-error-message" : undefined
       }}
       renderInput={({ inputRef, referenceElementRef, ...inputProps }) => {
         return (
@@ -154,12 +156,11 @@ const ParkNameSearch = ({
               }}
               onKeyDown={handleKeyDownInput}
               enterKeyHint="search"
-              aria-describedby="park-search-error-message"
             />
             <label htmlFor="park-search-typeahead">
               By park name
             </label>
-            {(options.length === 0 && searchText) && 
+            {hasNoMatch && 
               <span
                 key={searchText}
                 id="park-search-error-message"
