@@ -425,6 +425,7 @@ const MegaMenu = ({ content, menuMode }) => {
           }
           role="button"
           tabIndex={0}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           onKeyDown={e => {
             if (e.key === "Enter" || e.key === " ") {
               toggleMenu(e)
