@@ -7,6 +7,7 @@ import FontAwesome from "../components/fontAwesome"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars, faXmark, faChevronLeft, faChevronRight, faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
 
+import { useScreenSize } from "../utils/helpers"
 import { trackSnowplowEvent } from "../utils/snowplowHelper"
 import "../styles/megaMenu/megaMenu.scss"
 
@@ -19,6 +20,7 @@ const MegaMenu = ({ content, menuMode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false) // currently only used for mobile - menu closed at first
   const [hasClickedTwice, setHasClickedTwice] = useState(false)
   const [currentPath, setCurrentPath] = useState("")
+  const screenSize = useScreenSize()
   const ROOT_MENU_URL = '/'
   let sectionImages = {}
   let menuCollection
@@ -241,6 +243,10 @@ const MegaMenu = ({ content, menuMode }) => {
     }
   }, [])
 
+  useEffect(() => {
+      setIsMenuOpen(screenSize.width > 992)
+  }, [screenSize])
+
   // recursive menu generator which makes single version of DOM
   // that can be used for desktop, mobile and sitemap views of megamenu
   const generateMenus = (item, menuMode) => {
@@ -314,6 +320,8 @@ const MegaMenu = ({ content, menuMode }) => {
                         className="menu-button__title external-link"
                         href={page.url}
                         role="menuitem"
+                        // skip focusing if menu is closed
+                        tabIndex={isMenuOpen ? 0 : -1}
                         onClick={() => handleClickSnowplowEvent(page.title)}
                       >
                         {page.title}
@@ -326,6 +334,8 @@ const MegaMenu = ({ content, menuMode }) => {
                         }`}
                         to={page.url}
                         role="menuitem"
+                        // skip focusing if menu is closed
+                        tabIndex={isMenuOpen ? 0 : -1}
                         onFocus={e => menuFocus(e, page)}
                         onClick={e => sectionClick(e, page, menuMode)}
                       >
