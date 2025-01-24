@@ -247,7 +247,7 @@ const MegaMenu = ({ content, menuMode }) => {
     return (
       <>
         {item.hasChildren && (
-          <nav
+          <div
             className={
               "menu-level menu-level--" + item.treeLevel +
               " has-clicked-twice--" + hasClickedTwice
@@ -352,36 +352,34 @@ const MegaMenu = ({ content, menuMode }) => {
                 </React.Fragment>
               ))}
             </div>
-          </nav>
+          </div>
         )}
         {/* for site map page */}
         {!item.hasChildren && (
-          <nav>
-            <div className="menu-button-list" role="menu">
-              <div className="menu-button menu-header">
-                {isExternalUrl(item.url) ?
-                  <a
-                    className="menu-button__title external-link"
-                    href={item.url || ROOT_MENU_URL}
-                    role="menuitem"
-                    onClick={() => handleClickSnowplowEvent(item.title)}
-                  >
-                    {item.title}
-                    <FontAwesome icon="arrow-up-right-from-square" size="16" className="ms-1" />
-                  </a> :
-                  <Link
-                    className="menu-button__title"
-                    to={item.url || ROOT_MENU_URL}
-                    role="menuitem"
-                    onClick={() => handleClickSnowplowEvent(item.title)}
-                  >
-                    {item.title}
-                  </Link>
-                }
-              </div>
+          <div className="menu-button-list" role="menu">
+            <div className="menu-button menu-header">
+              {isExternalUrl(item.url) ?
+                <a
+                  className="menu-button__title external-link"
+                  href={item.url || ROOT_MENU_URL}
+                  role="menuitem"
+                  onClick={() => handleClickSnowplowEvent(item.title)}
+                >
+                  {item.title}
+                  <FontAwesome icon="arrow-up-right-from-square" size="16" className="ms-1" />
+                </a> :
+                <Link
+                  className="menu-button__title"
+                  to={item.url || ROOT_MENU_URL}
+                  role="menuitem"
+                  onClick={() => handleClickSnowplowEvent(item.title)}
+                >
+                  {item.title}
+                </Link>
+              }
             </div>
-          </nav>
-        )}
+          </div>
+      )}
       </>
     )
   }
@@ -433,12 +431,12 @@ const MegaMenu = ({ content, menuMode }) => {
           }}
           onClick={e => toggleMenu(e)}
         >
-          <nav className="menu-open">
+          <div className="menu-open">
             <FontAwesomeIcon icon={faBars} />
-          </nav>
-          <nav className="menu-close">
+          </div>
+          <div className="menu-close">
             <FontAwesomeIcon icon={faXmark} />
-          </nav>
+          </div>
         </div>
         <nav
           className={
