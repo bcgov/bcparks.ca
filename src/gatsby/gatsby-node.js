@@ -23,11 +23,34 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
   const typeDefs = `
-  type STRAPI_PARK_NAME_AUDIO implements Node @dontInfer {
+  type STRAPI_AUDIO_CLIP_DESCRIPTION_TEXTNODE implements Node @dontInfer {
+    description: String
+  }
+
+  type STRAPI_AUDIO_CLIPDescription {
+    data: STRAPI_AUDIO_CLIP_DESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_AUDIO_CLIP_TRANSCRIPT_TEXTNODE implements Node @dontInfer {
+    transcript: String
+  }
+
+  type STRAPI_AUDIO_CLIPTranscript {
+    data: STRAPI_AUDIO_CLIP_TRANSCRIPT_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_AUDIO_CLIP implements Node @dontInfer {
     title: String
     url: String
-    credit: String
-    transcript: String
+    speakerTitle: String
+    speakerName: String
+    languageName: String
+    firstNationName: String
+    phoneticSpelling: String
+    recordingDate: Date
+    audioClipType: String
+    description: STRAPI_AUDIO_CLIPDescription
+    transcript: STRAPI_AUDIO_CLIPTranscript
   }
 
   type STRAPI_PARK_PHOTO_CAPTION_TEXTNODE implements Node @dontInfer {
@@ -187,7 +210,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     nearbyParks: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "nearbyParks___NODE")
     trailReports: [STRAPI_TRAIL_REPORT] @link(by: "id", from: "trailReports___NODE")
     parkContacts: [STRAPI_PARK_CONTACT] @link(by: "id", from: "parkContacts___NODE")
-    parkNameAudio: STRAPI_PARK_NAME_AUDIO @link(by: "id", from: "parkNameAudio___NODE")
+    audioClips: [STRAPI_AUDIO_CLIP] @link(by: "id", from: "audioClips___NODE")
   }
   
   type STRAPI__COMPONENT_PARKS_RTE_LIST_CONTENT_TEXTNODE implements Node @dontInfer {
@@ -329,6 +352,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkCampingTypes: [STRAPI_PARK_CAMPING_TYPE] @link(by: "id", from: "parkCampingTypes___NODE")
     parkGuidelines: [STRAPI_PARK_GUIDELINE] @link(by: "id", from: "parkGuidelines___NODE")
     trailReports: [STRAPI_TRAIL_REPORT] @link(by: "id", from: "trailReports___NODE")
+    audioClips: [STRAPI_AUDIO_CLIP] @link(by: "id", from: "audioClips___NODE")
   }
 
   type STRAPI_MANAGEMENT_DOCUMENT_TYPE implements Node {
