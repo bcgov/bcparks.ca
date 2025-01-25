@@ -153,6 +153,12 @@
       "relation": "oneToMany",
       "target": "api::park-operation-sub-area.park-operation-sub-area",
       "mappedBy": "site"
+    },
+    "audioClips": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::audio-clip.audio-clip",
+      "mappedBy": "site"
     }
   }
 }
