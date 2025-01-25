@@ -130,7 +130,7 @@ module.exports = {
                 parkPhotos: {
                   fields: "*"
                 },
-                parkNameAudio: {
+                audioClips: {
                   fields: "*"
                 },
                 trailReports: {
@@ -187,6 +187,9 @@ module.exports = {
                   fields: "*"
                 },
                 parkOperationDates: {
+                  fields: "*"
+                },
+                audioClips: {
                   fields: "*"
                 },
                 trailReports: {

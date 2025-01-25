@@ -356,10 +356,10 @@
       "target": "api::trail-report.trail-report",
       "mappedBy": "protectedAreas"
     },
-    "parkNameAudio": {
+    "audioClips": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::park-name-audio.park-name-audio",
+      "relation": "oneToMany",
+      "target": "api::audio-clip.audio-clip",
       "mappedBy": "protectedArea"
     }
   }

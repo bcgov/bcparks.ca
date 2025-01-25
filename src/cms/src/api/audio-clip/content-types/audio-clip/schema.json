@@ -1,0 +1,79 @@
+{
+  "kind": "collectionType",
+  "collectionName": "audio_clips",
+  "info": {
+    "singularName": "audio-clip",
+    "pluralName": "audio-clips",
+    "displayName": "Audio-clip",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "speakerTitle": {
+      "type": "string"
+    },
+    "speakerName": {
+      "type": "string"
+    },
+    "languageName": {
+      "type": "string"
+    },
+    "firstNationName": {
+      "type": "string"
+    },
+    "phoneticSpelling": {
+      "type": "string"
+    },
+    "recordingDate": {
+      "type": "date"
+    },
+    "audioClipType": {
+      "type": "enumeration",
+      "enum": [
+        "Place name",
+        "Welcome message"
+      ]
+    },
+    "description": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "transcript": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "audioClips"
+    },
+    "site": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::site.site",
+      "inversedBy": "audioClips"
+    },
+    "file": {
+      "allowedTypes": [
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

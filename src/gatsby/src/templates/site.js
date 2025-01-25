@@ -626,6 +626,25 @@ export const query = graphql`
         gateOpenDate
         gateCloseDate
       }
+      audioClips {
+        title
+        url
+        speakerTitle
+        speakerName
+        languageName
+        firstNationName
+        phoneticSpelling
+        description {
+          data {
+            description
+          }
+        }
+        transcript {
+          data {
+            transcript
+          }
+        }
+      }
     }
     featuredPhotos: allStrapiParkPhoto(
       filter: {
