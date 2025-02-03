@@ -38,6 +38,7 @@
     "audioClipType": {
       "type": "enumeration",
       "enum": [
+        "Park name",
         "Place name",
         "Welcome message"
       ]
