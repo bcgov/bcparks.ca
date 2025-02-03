@@ -6,4 +6,35 @@
   &--left {
     margin-right: 16px;
   }
+  &.park-name {
+    margin-left: 32px;
+    .btn-audio {
+      svg {
+        margin-right: 0 !important;
+      }
+    }
+  }
+}
+
+.audio-player {
+  height: 125px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $colorGrey;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 101;
+  &-container {
+    width: 1100px;
+    display: flex;
+    justify-content: space-between;
+    &--left {
+      color: $colorWhite;
+    }
+    &--right {
+    }
+  }
 }

@@ -314,6 +314,9 @@ h2.section-heading {
     }
     &--left {
       width: 670px;
+      h1 {
+        line-height: 1.5;
+      }
       p {
         margin-bottom: 0;
         & + p {

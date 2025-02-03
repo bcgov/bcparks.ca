@@ -332,6 +332,7 @@ export default function ParkTemplate({ data }) {
             isLoadingSubAreas={isLoadingSubAreas}
             subAreasLoadError={subAreasLoadError}
             onStatusCalculated={handleAccessStatus}
+            audioClips={park.audioClips}
           />
         </div>
         <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
@@ -361,7 +362,7 @@ export default function ParkTemplate({ data }) {
           <div className={`page-content has-nearby-parks--${hasNearbyParks} col-12 col-md-8`}>
             {menuItems[0].visible && (
               <div ref={parkOverviewRef} className="w-100">
-                <ParkOverview description={description} type={parkType} audio={park.audioClips} />
+                <ParkOverview description={description} type={parkType} audioClips={park.audioClips} />
               </div>
             )}
             {menuItems[1].visible && (
@@ -812,6 +813,7 @@ export const query = graphql`
         languageName
         firstNationName
         phoneticSpelling
+        audioClipType
         description {
           data {
             description

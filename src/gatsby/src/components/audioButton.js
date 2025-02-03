@@ -12,6 +12,7 @@ export default function AudioButton({ audio }) {
   const audioRef = useRef(null)
   const [trackSrc, setTrackSrc] = useState("")
   const [expanded, setExpanded] = useState(false)
+  const [isPlayerVisible, setIsPlayerVisible] = useState(false)
 
   // functions
   const createVttContent = transcript => {
@@ -22,6 +23,7 @@ export default function AudioButton({ audio }) {
     return URL.createObjectURL(blob)
   }
   const handlePlay = () => {
+    setIsPlayerVisible(true)
     if (audioRef.current) {
       audioRef.current.play()
     }
@@ -29,67 +31,110 @@ export default function AudioButton({ audio }) {
 
   // effects
   useEffect(() => {
-    if (audio?.transcript.length) {
-      const vttContent = createVttContent(audio.transcript)
+    if (audio?.transcript.data?.transcript.length) {
+      const vttContent = createVttContent(audio.transcript.data.transcript)
       const url = createBlobUrl(vttContent)
       setTrackSrc(url)
       return () => {
         URL.revokeObjectURL(url)
       }
     }
-  }, [audio?.transcript])
+  }, [audio?.transcript.data?.transcript])
 
   return (
-    <div className="audio-container">
-      <div className="audio-container--left">
-        <button
-          aria-label="Play park name audio"
-          onClick={handlePlay}
-          className="btn-audio"
-        >
-          <FontAwesomeIcon icon={faVolumeHigh} />
-        </button>
-        <audio ref={audioRef} src={audio.url}>
-          <track kind="captions" srcLang="en" src={trackSrc} />
-        </audio>
-      </div>
-      <div className="audio-container--right">
-        <p>
-          <b>{audio.title}</b>
-        </p>
-        <p>
-          <small>
-            Spoken in {audio.credit} pronounced by {audio.credit}
-          </small>
-        </p>
-        {expanded && (
-          <div className="mb-3">
+    <>
+      {audio.audioClipType === "Park name" && (
+        <div className="audio-container park-name">
+          <button
+            aria-label="Play park name audio"
+            onClick={handlePlay}
+            className="btn-audio"
+          >
+            <FontAwesomeIcon icon={faVolumeHigh} />
+          </button>
+          {/* <audio ref={audioRef} src={audio.url}>
+              <track kind="captions" srcLang="en" src={trackSrc} />
+            </audio> */}
+        </div>
+      )}
+      {audio.audioClipType === "Place name" && (
+        <div className="audio-container">
+          <div className="audio-container--left">
+            <button
+              aria-label="Play park name audio"
+              onClick={handlePlay}
+              className="btn-audio"
+            >
+              <FontAwesomeIcon icon={faVolumeHigh} />
+            </button>
+            <audio ref={audioRef} src={audio.url}>
+              <track kind="captions" srcLang="en" src={trackSrc} />
+            </audio>
+          </div>
+          <div className="audio-container--right">
+            <p>
+              <b>{audio.title}</b>
+            </p>
             <p>
               <small>
-                <b>Transcript</b>
+                Spoken in the {audio.languageName} language, by{" "}
+                {audio.speakerName}, {audio.speakerTitle}, of the{" "}
+                {audio.firstNationName}
               </small>
             </p>
-            <small>{audio.transcript}</small>
-          </div>
-        )}
-        {audio.transcript && (
-          <button
-            aria-label={expanded ? "Hide transcript" : "Show transcript"}
-            onClick={() => setExpanded(!expanded)}
-            className="btn btn-link expand-icon transcript-link"
-          >
-            {expanded ? (
-              <>
-                Hide transcript <FontAwesomeIcon icon={faChevronUp} />
-              </>
-            ) : (
-              <>
-                Show transcript <FontAwesomeIcon icon={faChevronDown} />
-              </>
+            {expanded && (
+              <div className="mb-3">
+                <p>
+                  <small>
+                    <b>Transcript</b>
+                  </small>
+                </p>
+                <small>{audio.transcript.data.transcript}</small>
+              </div>
             )}
-          </button>
-        )}
-      </div>
-    </div>
+            {audio.transcript && (
+              <button
+                aria-label={expanded ? "Hide transcript" : "Show transcript"}
+                onClick={() => setExpanded(!expanded)}
+                className="btn btn-link expand-icon transcript-link"
+              >
+                {expanded ? (
+                  <>
+                    Hide transcript <FontAwesomeIcon icon={faChevronUp} />
+                  </>
+                ) : (
+                  <>
+                    Show transcript <FontAwesomeIcon icon={faChevronDown} />
+                  </>
+                )}
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+      {isPlayerVisible && (
+        <div className="audio-player">
+          <div className="audio-player-container">
+            <div className="audio-player-container--left">
+              <p>
+                <b>{audio.title}</b>
+              </p>
+              <p>
+                <small>
+                  Spoken in the {audio.languageName} language, by{" "}
+                  {audio.speakerName}, {audio.speakerTitle}, of the{" "}
+                  {audio.firstNationName}
+                </small>
+              </p>
+            </div>
+            <div className="audio-player-container--right">
+              <audio controls src={audio.url}>
+                <track kind="captions" srcLang="en" src={trackSrc} />
+              </audio>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }

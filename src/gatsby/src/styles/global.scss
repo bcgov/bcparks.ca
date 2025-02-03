@@ -540,11 +540,8 @@ button.btn:not(.btn-link):not(.btn-tooltip) {
     background-color: $colorBlue;
     border: $colorBlue solid 1px;
     svg {
-      color: $colorWhite;
+      color: $colorWhite !important;
     }
-  }
-  &:focus {
-    box-shadow: 0px 0px 4px 0px $colorBlack;
   }
   &:focus-visible {
     border: $colorWhite solid 2px;
