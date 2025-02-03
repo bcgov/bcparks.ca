@@ -12,6 +12,10 @@
     "draftAndPublish": true
   },
   "attributes": {
+    "featureId": {
+      "type": "integer",
+      "unique": true
+    },
     "parkSubArea": {
       "type": "string"
     },
