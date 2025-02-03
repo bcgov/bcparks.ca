@@ -5,7 +5,7 @@ import HtmlContent from "../htmlContent"
 import AudioButton from "../audioButton"
 import * as cheerio from 'cheerio';
 
-export default function ParkOverview({ description, type, audio }) {
+export default function ParkOverview({ description, type, audioClips }) {
   const [expanded, setExpanded] = useState(false)
   const [height, setHeight] = useState(0)
   const [sectionHeight, setSectionHeight] = useState(0)
@@ -19,7 +19,7 @@ export default function ParkOverview({ description, type, audio }) {
   const hasHr = $('hr').length > 0
   const hrAtEnd = description.trim().endsWith('<hr>')
   const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
-  // const hasAudio = audio?.title && audio?.url && audio?.credit
+  const audioClip = audioClips.filter(audio => audio.audioClipType === "Place name")
 
   useEffect(() => {
     if (!hasHr && ref.current.clientHeight > 260) {
@@ -49,7 +49,7 @@ export default function ParkOverview({ description, type, audio }) {
         <HtmlContent ariaHidden={!expanded} className="park-overview-html">
           {expanded ? description : collapsedDescription}
         </HtmlContent>
-        {/* {hasAudio && <AudioButton audio={audio} />} */}
+        {audioClip.length && <AudioButton audio={audioClip[0]} />}
       </div>
       {hasExpandCondition &&
         <button

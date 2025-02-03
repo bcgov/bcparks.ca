@@ -634,6 +634,7 @@ export const query = graphql`
         languageName
         firstNationName
         phoneticSpelling
+        audioClipType
         description {
           data {
             description
