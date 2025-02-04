@@ -12,6 +12,9 @@
     "draftAndPublish": true
   },
   "attributes": {
+    "featureId": {
+      "type": "string"
+    },
     "parkSubArea": {
       "type": "string"
     },
