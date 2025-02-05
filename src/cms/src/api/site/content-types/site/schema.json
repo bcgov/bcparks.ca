@@ -156,9 +156,9 @@
     },
     "audioClips": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::audio-clip.audio-clip",
-      "mappedBy": "site"
+      "mappedBy": "sites"
     }
   }
 }

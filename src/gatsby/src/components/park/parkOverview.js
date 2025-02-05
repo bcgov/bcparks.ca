@@ -19,7 +19,7 @@ export default function ParkOverview({ description, type, audioClips }) {
   const hasHr = $('hr').length > 0
   const hrAtEnd = description.trim().endsWith('<hr>')
   const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
-  const audioClip = audioClips.filter(audio => audio.audioClipType === "Place name")
+  const audioClip = audioClips?.filter(audio => audio.audioClipType !== "Park name") || []
 
   useEffect(() => {
     if (!hasHr && ref.current.clientHeight > 260) {
@@ -50,7 +50,7 @@ export default function ParkOverview({ description, type, audioClips }) {
         <HtmlContent ariaHidden={hasExpandCondition && !expanded} className="park-overview-html">
           {hasExpandCondition ? (expanded ? description : collapsedDescription) : description}
         </HtmlContent>
-        {audioClip.length && <AudioButton audio={audioClip[0]} />}
+        {audioClip.length ? <AudioButton audio={audioClip[0]} /> : ""}
       </div>
       {hasExpandCondition &&
         <button
