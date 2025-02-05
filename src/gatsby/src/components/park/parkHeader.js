@@ -106,7 +106,7 @@ export default function ParkHeader({
   const parkDates = getParkOperationDates(operationDates, thisYear)
   const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
   const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
-  const audioClip = audioClips.filter(audio => audio.audioClipType === "Park name")
+  const audioClip = audioClips?.filter(audio => audio.audioClipType === "Park name") || []
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
 
@@ -115,7 +115,7 @@ export default function ParkHeader({
       <div className="park-header park-header--left">
         <div className="d-flex">
           <h1>{parkName}</h1>
-          {audioClip.length && <AudioButton audio={audioClip[0]} />}
+          {audioClip.length ? <AudioButton audio={audioClip[0]} /> : ""}
         </div>
         {searchArea?.searchAreaName && (
           <div className="park-header-child">

@@ -6,6 +6,11 @@
   &--left {
     margin-right: 16px;
   }
+  &--right {
+    .description {
+      font-weight: bold;
+    }
+  }
   &.park-name {
     margin-left: 32px;
     .btn-audio {
@@ -35,6 +40,21 @@
       color: $colorWhite;
     }
     &--right {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  // close button
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-bottom: 0;
+    padding: 16px;
+    svg {
+      color: $colorWhite !important;
+      margin-right: 0 !important;
     }
   }
 }

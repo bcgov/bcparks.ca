@@ -4,7 +4,10 @@ import {
   faVolumeHigh,
   faChevronUp,
   faChevronDown,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons"
+
+import HtmlContent from "./htmlContent"
 import "../styles/audioButton.scss"
 
 export default function AudioButton({ audio }) {
@@ -52,13 +55,10 @@ export default function AudioButton({ audio }) {
           >
             <FontAwesomeIcon icon={faVolumeHigh} />
           </button>
-          {/* <audio ref={audioRef} src={audio.url}>
-              <track kind="captions" srcLang="en" src={trackSrc} />
-            </audio> */}
         </div>
       )}
       {audio.audioClipType === "Place name" && (
-        <div className="audio-container">
+        <div className="audio-container place-name">
           <div className="audio-container--left">
             <button
               aria-label="Play park name audio"
@@ -67,9 +67,6 @@ export default function AudioButton({ audio }) {
             >
               <FontAwesomeIcon icon={faVolumeHigh} />
             </button>
-            <audio ref={audioRef} src={audio.url}>
-              <track kind="captions" srcLang="en" src={trackSrc} />
-            </audio>
           </div>
           <div className="audio-container--right">
             <p>
@@ -89,23 +86,29 @@ export default function AudioButton({ audio }) {
                     <b>Transcript</b>
                   </small>
                 </p>
-                <small>{audio.transcript.data.transcript}</small>
+                <small>
+                  <HtmlContent>{audio.transcript.data.transcript}</HtmlContent>
+                </small>
               </div>
             )}
             {audio.transcript && (
               <button
-                aria-label={expanded ? "Hide transcript" : "Show transcript"}
+                aria-label={
+                  expanded
+                    ? `Hide transcript for ${audio.title}`
+                    : `Show transcript for ${audio.title}`
+                }
                 onClick={() => setExpanded(!expanded)}
                 className="btn btn-link expand-icon transcript-link"
               >
                 {expanded ? (
-                  <>
+                  <small>
                     Hide transcript <FontAwesomeIcon icon={faChevronUp} />
-                  </>
+                  </small>
                 ) : (
-                  <>
+                  <small>
                     Show transcript <FontAwesomeIcon icon={faChevronDown} />
-                  </>
+                  </small>
                 )}
               </button>
             )}
@@ -128,11 +131,23 @@ export default function AudioButton({ audio }) {
               </p>
             </div>
             <div className="audio-player-container--right">
-              <audio controls src={audio.url}>
+              <audio
+                controls
+                controlsList="nodownload"
+                src={audio.url}
+                ref={audioRef}
+              >
                 <track kind="captions" srcLang="en" src={trackSrc} />
               </audio>
             </div>
           </div>
+          <button
+            aria-label="Close audio player"
+            className="btn btn-link"
+            onClick={() => setIsPlayerVisible(false)}
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
         </div>
       )}
     </>
