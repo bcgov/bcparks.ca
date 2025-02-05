@@ -57,24 +57,25 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
-    "protectedArea": {
+    "protectedAreas": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::protected-area.protected-area",
       "inversedBy": "audioClips"
     },
-    "site": {
+    "sites": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::site.site",
       "inversedBy": "audioClips"
     },
     "file": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }

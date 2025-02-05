@@ -57,6 +57,7 @@ module.exports = {
           "search-city",
           "management-document",
           "emergency-alert",
+          "audio-clip",
           {
             singularName: "page",
             queryParams: {
