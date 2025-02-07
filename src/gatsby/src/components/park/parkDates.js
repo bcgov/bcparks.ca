@@ -156,7 +156,7 @@ export default function ParkDates({ data, parkOperation }) {
       null,
       null,
       null,
-      `${subAreaName} accordion`,
+      subAreaName,
       null,
       null
     )

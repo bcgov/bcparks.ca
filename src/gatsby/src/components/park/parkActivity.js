@@ -74,7 +74,7 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
       null,
       null,
       null,
-      `${activityName} accordion`,
+      activityName,
       null,
       null
     )

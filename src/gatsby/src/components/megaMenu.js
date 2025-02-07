@@ -87,7 +87,7 @@ const MegaMenu = ({ content, menuMode }) => {
       if (currentPath.includes(section.url)) {
         setIsMenuOpen(false)
       }
-      handleClickSnowplowEvent(section.title)
+      handleClickSnowplowEvent(section.url)
     }
 
     if (menuMode !== "sitemap") {
@@ -181,14 +181,14 @@ const MegaMenu = ({ content, menuMode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuElements])
 
-  const handleClickSnowplowEvent = (name) => {
+  const handleClickSnowplowEvent = (url) => {
     trackSnowplowEvent(
       "link_click",
       null,
       null,
       null,
-      `${name} link`,
       null,
+      url,
       null
     )
   }
@@ -279,7 +279,7 @@ const MegaMenu = ({ content, menuMode }) => {
                     role="menuitem"
                     onClick={() => {
                       setIsMenuOpen(false) 
-                      handleClickSnowplowEvent(item.title)
+                      handleClickSnowplowEvent(item.url)
                     }}
                   >
                     {item.title}
@@ -292,7 +292,7 @@ const MegaMenu = ({ content, menuMode }) => {
                     role="menuitem"
                     onClick={() => {
                       setIsMenuOpen(false) 
-                      handleClickSnowplowEvent(item.title)
+                      handleClickSnowplowEvent(item.url)
                     }}
                   >
                     {item.title}
@@ -315,7 +315,7 @@ const MegaMenu = ({ content, menuMode }) => {
                         className="menu-button__title external-link"
                         href={page.url}
                         role="menuitem"
-                        onClick={() => handleClickSnowplowEvent(page.title)}
+                        onClick={() => handleClickSnowplowEvent(page.url)}
                       >
                         {page.title}
                         <FontAwesome icon="arrow-up-right-from-square" size="16" className="ms-1" />
@@ -365,7 +365,7 @@ const MegaMenu = ({ content, menuMode }) => {
                     className="menu-button__title external-link"
                     href={item.url || ROOT_MENU_URL}
                     role="menuitem"
-                    onClick={() => handleClickSnowplowEvent(item.title)}
+                    onClick={() => handleClickSnowplowEvent(item.url)}
                   >
                     {item.title}
                     <FontAwesome icon="arrow-up-right-from-square" size="16" className="ms-1" />
@@ -374,7 +374,7 @@ const MegaMenu = ({ content, menuMode }) => {
                     className="menu-button__title"
                     to={item.url || ROOT_MENU_URL}
                     role="menuitem"
-                    onClick={() => handleClickSnowplowEvent(item.title)}
+                    onClick={() => handleClickSnowplowEvent(item.url)}
                   >
                     {item.title}
                   </Link>
