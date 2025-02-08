@@ -708,14 +708,16 @@ export default function FindAPark({ location, data }) {
   }, [currentLocation])
 
   // calc park results count to display
-  useEffect(() => {
-    const value = 
-      selectedCity.length > 0 &&
+  const finalResultsMemo = useMemo(() => {
+    return selectedCity.length > 0 &&
       (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) &&
       hasParksWithinFifty(searchResults) ? 
         totalResultsWithinFifty : totalResults
-    setFinalResults(value)
   }, [selectedCity, searchResults, totalResultsWithinFifty, totalResults])
+  
+  useEffect(() => {
+    setFinalResults(finalResultsMemo)
+  }, [finalResultsMemo])
 
   // store prev finalResults state
   const prevFinalResultsRef = useRef()
