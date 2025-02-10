@@ -259,7 +259,7 @@ const MegaMenu = ({ content, menuMode }) => {
               " has-clicked-twice--" + hasClickedTwice
             }
           >
-            <div className="menu-button-list" role="menu">
+            <div className="menu-button-list">
               <div className="menu-button menu-back">
                 <a
                   className="menu-button__title"
@@ -366,7 +366,7 @@ const MegaMenu = ({ content, menuMode }) => {
         )}
         {/* for site map page */}
         {!item.hasChildren && (
-          <div className="menu-button-list" role="menu">
+          <div className="menu-button-list">
             <div className="menu-button menu-header">
               {isExternalUrl(item.url) ?
                 <a
@@ -460,7 +460,7 @@ const MegaMenu = ({ content, menuMode }) => {
         >
           <div className="menu-wrapper">
             {menuTree.map((page, index) => (
-              <div key={index}>{generateMenus(page, menuMode)}</div>
+              <div key={index} role="menu">{generateMenus(page, menuMode)}</div>
             ))}
           </div>
         </nav>
