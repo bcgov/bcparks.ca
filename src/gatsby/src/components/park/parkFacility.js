@@ -88,7 +88,7 @@ export default function ParkFacility({ data, groupPicnicReservationUrl }) {
       null,
       null,
       null,
-      `${facilityName} accordion`,
+      facilityName,
       null,
       null
     )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react"
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { graphql, Link as GatsbyLink } from "gatsby"
 import axios from "axios"
 import { orderBy } from "lodash"
@@ -19,7 +19,7 @@ import ParkCard from "../components/search/parkCard"
 import ParkNameSearch from "../components/search/parkNameSearch"
 import CityNameSearch from "../components/search/cityNameSearch"
 import { useScreenSize } from "../utils/helpers"
-import { trackSnowplowEvent } from "../utils/snowplowHelper"
+import { trackSnowplowEvent, transformFilters } from "../utils/snowplowHelper"
 
 import "../styles/search.scss"
 
@@ -204,6 +204,7 @@ export default function FindAPark({ location, data }) {
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [totalResultsWithinFifty, setTotalResultsWithinFifty] = useState(0)
+  const [finalResults, setFinalResults] = useState(totalResults)
 
   const itemsPerPage = 10
   const [currentPage, setCurrentPage, currentPageInitialized] = useQueryParamString("p", 1)
@@ -222,6 +223,9 @@ export default function FindAPark({ location, data }) {
     longitude: 0,
     rank: 1
   })
+
+  // snowplow event params
+  const [eventParams, setEventParams] = useState(null)
 
   // event handlers
   // event handlers - for filters
@@ -290,26 +294,21 @@ export default function FindAPark({ location, data }) {
     )
   }
   const handleFilterDelete = chipToDelete => () => {
-    if (chipToDelete.type === "area") {
+    if (chipToDelete.type === "Area") {
       handleAreaDelete(chipToDelete)
-    } else if (chipToDelete.type === "campingType") {
+    } else if (chipToDelete.type === "Camping") {
       handleCampingTypeDelete(chipToDelete)
-    } else if (chipToDelete.type === "activity") {
+    } else if (chipToDelete.type === "Things to do") {
       handleActivityDelete(chipToDelete)
-    } else if (chipToDelete.type === "facility") {
+    } else if (chipToDelete.type === "Facilities") {
       handleFacilityDelete(chipToDelete)
     } else {
       setCurrentPage(1)
     }
-    trackSnowplowEvent(
-      "clear_filters",
-      totalResults,
-      null,
-      null,
-      null,
-      chipToDelete.type,
-      chipToDelete.label
-    )
+    setEventParams(prevEventParams => ({
+      ...prevEventParams,
+      action: "clear_filters",
+    }))
   }
   const handleClearFilter = () => {
     setFilterSelections([])
@@ -317,15 +316,11 @@ export default function FindAPark({ location, data }) {
     setSelectedParkCampingTypes([])
     setSelectedActivities([])
     setSelectedFacilities([])
-    trackSnowplowEvent(
-      "clear_filters",
-      totalResults,
-      null,
-      null,
-      "Clear filter button",
-      null,
-      null
-    )
+    setEventParams(prevEventParams => ({
+      ...prevEventParams,
+      action: "clear_filters",
+      label: "Clear filter button",
+    }))
   }
   const handleKeyDownClearFilter = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -338,17 +333,18 @@ export default function FindAPark({ location, data }) {
     setCurrentPage(1)
     let eventParams = {
       action: "search",
-      resultCount: totalResults,
+      resultCount: null,
       parkName: null,
       cityName: null,
-      label: "Search button",
+      label: null,
+      url: null,
       filters: null
     }
 
     if (searchText === "" || (inputText && (searchText !== inputText))) {
       setSearchText(inputText)
       // track entered park name
-      eventParams.parkName = inputText
+      eventParams.parkName = inputText.length ? inputText : null
     }
     if (clickedCity?.length > 0) {
       setSelectedCity(clickedCity)
@@ -365,15 +361,7 @@ export default function FindAPark({ location, data }) {
         eventParams.cityName = enteredCity[0].cityName
       }
     }
-
-    trackSnowplowEvent(
-      eventParams.action,
-      eventParams.resultCount,
-      eventParams.parkName,
-      eventParams.cityName,
-      eventParams.label,
-      eventParams.filters
-    )
+    setEventParams(eventParams)
   }
   const handleKeyDownSearchPark = (e) => {
     if (e.key === "Enter") {
@@ -390,7 +378,7 @@ export default function FindAPark({ location, data }) {
         1,
         selected[0].protectedAreaName,
         null,
-        "Search button",
+        null,
         null,
         null
       )
@@ -478,16 +466,16 @@ export default function FindAPark({ location, data }) {
   const setFilters = useCallback(() => {
     const filters = []
     selectedAreas.forEach(r => {
-      filters.push({ ...r, type: "area" })
+      filters.push({ ...r, type: "Area" })
     })
     selectedParkCampingTypes.forEach(c => {
-      filters.push({ ...c, type: "campingType" })
+      filters.push({ ...c, type: "Camping" })
     })
     selectedActivities.forEach(a => {
-      filters.push({ ...a, type: "activity" })
+      filters.push({ ...a, type: "Things to do" })
     })
     selectedFacilities.forEach(f => {
-      filters.push({ ...f, type: "facility" })
+      filters.push({ ...f, type: "Facilities" })
     })
     setFilterSelections([...filters])
   }, [
@@ -719,6 +707,57 @@ export default function FindAPark({ location, data }) {
     }
   }, [currentLocation])
 
+  // calc park results count to display
+  const finalResultsMemo = useMemo(() => {
+    return selectedCity.length > 0 &&
+      (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) &&
+      hasParksWithinFifty(searchResults) ? 
+        totalResultsWithinFifty : totalResults
+  }, [selectedCity, searchResults, totalResultsWithinFifty, totalResults])
+  
+  useEffect(() => {
+    setFinalResults(finalResultsMemo)
+  }, [finalResultsMemo])
+
+  // store prev finalResults state
+  const prevFinalResultsRef = useRef()
+  useEffect(() => {
+    prevFinalResultsRef.current = finalResults
+  }, [finalResults])
+  const prevFinalResults = prevFinalResultsRef.current
+
+  // update eventParams when filterSelections have been updated
+  const hasSearched = 
+    searchText || selectedCity.length > 0 || filterSelections.length > 1
+  useEffect(() => {
+    if (filterSelections.length > 0) {
+      setEventParams(prevEventParams => ({
+        ...prevEventParams,
+        action: hasSearched ? "update_search" : "search",
+      }))
+    }
+  }, [filterSelections, hasSearched])
+
+  // fire trackSnowplowEvent when eventParams have been updated
+  useEffect(() => {
+    if (eventParams  && finalResults !== prevFinalResults) {
+      const updatedEventParams = { 
+        ...eventParams,
+        resultCount: finalResults, 
+        filters: transformFilters(filterSelections)
+      }
+      trackSnowplowEvent(
+        updatedEventParams.action,
+        updatedEventParams.resultCount,
+        updatedEventParams.parkName,
+        updatedEventParams.cityName,
+        updatedEventParams.label,
+        updatedEventParams.url,
+        updatedEventParams.filters
+      )
+    }
+  }, [eventParams, finalResults, prevFinalResults, filterSelections])
+
   return (
     <>
       <Header content={menuContent} />
@@ -845,13 +884,7 @@ export default function FindAPark({ location, data }) {
                   {(isLoading && !acquiringGeolocation) && <>Searching...</>}
                   {(!isLoading && !acquiringGeolocation) && (
                     <>
-                      <b>
-                        {selectedCity.length > 0 &&
-                          (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) &&
-                          hasParksWithinFifty(searchResults) ?
-                          totalResultsWithinFifty : totalResults
-                        }
-                      </b>
+                      <b>{finalResults}</b>
                       {totalResults === 1 ? " result" : " results"}
                       {searchText &&
                         <> containing <b>‘{searchText}’</b></>

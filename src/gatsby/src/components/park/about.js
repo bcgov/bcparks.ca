@@ -67,7 +67,7 @@ export default function About({
       null,
       null,
       null,
-      `${accordionName} accordion`,
+      accordionName,
       null,
       null
     )

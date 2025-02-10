@@ -1,6 +1,5 @@
 import React from "react"
 import { Form } from "react-bootstrap"
-import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 
 const shortenFilterLabel = (label, filterType) => {
   if (filterType === "popular") {
@@ -36,15 +35,6 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterTyp
             checked={checked}
             onChange={event => {
               handleFilterCheck(item, event)
-              trackSnowplowEvent(
-                event.target.checked ? "update_search" : "clear_filters",
-                item.count,
-                null,
-                null,
-                null,
-                filterType,
-                item.label
-              )
             }}
             label={`${shortenFilterLabel(item.label, filterType)} (${item.count})`}
             className={

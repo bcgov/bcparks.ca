@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql, useStaticQuery } from "gatsby"
+import { Link, graphql, useStaticQuery } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
 import { trackSnowplowEvent } from "../utils/snowplowHelper"
@@ -9,6 +9,11 @@ function FooterMenu({ item, handleClick }) {
   // Sort children by order
   const sortedChildren = item.strapi_children && item.strapi_children.length > 0
     ? [...item.strapi_children].sort((a, b) => a.order - b.order) : []
+
+  // URL is considered external if it begins with "http://" or "https://"
+  const isExternalUrl = (url) => {
+    return /^https?:\/\//.test(url)
+  }
 
   return (
     // Do not render menu items with order > 3
@@ -21,9 +26,14 @@ function FooterMenu({ item, handleClick }) {
           </li>
           {sortedChildren.map((child, index) => (
             <li key={index} className="mt-2">
-              <a href={child.url} onClick={() => handleClick(child.title)}>
-                {child.title}
-              </a>
+              {isExternalUrl(child.url) ?
+                <a href={child.url} onClick={() => handleClick(child.url)} className="footer-menu-link">
+                  {child.title}
+                </a> : 
+                <Link to={child.url} onClick={() => handleClick(child.url)} className="footer-menu-link">
+                  {child.title}
+                </Link>
+              }
             </li>
           ))}
           {/* Add social media links if it's menu3 */}
@@ -33,7 +43,7 @@ function FooterMenu({ item, handleClick }) {
                 <a 
                   className="d-inline-block"
                   href="https://www.facebook.com/YourBCParks/"
-                  onClick={() => handleClick("Facebook")}
+                  onClick={() => handleClick("https://www.facebook.com/YourBCParks/")}
                 >
                   <StaticImage
                     src="../images/Facebook_Negative.svg"
@@ -47,7 +57,7 @@ function FooterMenu({ item, handleClick }) {
                 <a
                   className="d-inline-block"
                   href="https://www.instagram.com/yourbcparks/"
-                  onClick={() => handleClick("Instagram")}
+                  onClick={() => handleClick("https://www.instagram.com/yourbcparks/")}
                 >
                   <StaticImage
                     src="../images/Instagram_Negative.svg"
@@ -92,14 +102,14 @@ export default function Footer() {
     { title: "Copyright", url: "https://www2.gov.bc.ca/gov/content/home/copyright" },
   ]
 
-  const handleClick = (title) => {
+  const handleClick = (url) => {
     trackSnowplowEvent(
       "link_click",
       null,
       null,
       null,
-      `${title} link`,
       null,
+      url,
       null
     )
   }
@@ -110,7 +120,7 @@ export default function Footer() {
         <div className="row g-0">
           <div className="col col-12 col-md-4">
             <div className="mb-5">
-              <a className="d-inline-block" href="/" onClick={() => handleClick("Home")}>
+              <Link className="d-inline-block" to="/" onClick={() => handleClick("/")}>
                 <StaticImage
                   src="../images/BCParks_Wordmark_White-cropped.svg"
                   placeholder="none"
@@ -118,7 +128,7 @@ export default function Footer() {
                   height={48}
                   alt="BC Parks Wordmark"
                 />
-              </a>
+              </Link>
             </div>
           </div>
           <div className="col col-12 col-md-8">
@@ -135,7 +145,7 @@ export default function Footer() {
               className="footer-utility-link d-inline-block"
               key={index}
             >
-              <a href={item.url} onClick={() => handleClick(item.title)}>
+              <a href={item.url} onClick={() => handleClick(item.url)}>
                 {item.title}
               </a>
             </div>
