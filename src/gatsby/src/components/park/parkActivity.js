@@ -183,7 +183,7 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
             </div>
             <div>
               For more events and activities happening at this park,
-              visit <a href={`https://www.discoverparks.ca/parks/${slug}`}>
+              visit <a href={`https://www.discoverparks.ca/locations/${slug}`}>
                 discoverparks.ca</a>. Discover Parks is developed
               by <a href="https://bcparksfoundation.ca">
                 BC Parks Foundation</a>, our official charitable partner.
