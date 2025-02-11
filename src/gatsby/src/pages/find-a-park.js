@@ -204,7 +204,6 @@ export default function FindAPark({ location, data }) {
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [totalResultsWithinFifty, setTotalResultsWithinFifty] = useState(0)
-  const [finalResults, setFinalResults] = useState(totalResults)
 
   const itemsPerPage = 10
   const [currentPage, setCurrentPage, currentPageInitialized] = useQueryParamString("p", 1)
@@ -708,16 +707,12 @@ export default function FindAPark({ location, data }) {
   }, [currentLocation])
 
   // calc park results count to display
-  const finalResultsMemo = useMemo(() => {
+  const finalResults = useMemo(() => {
     return selectedCity.length > 0 &&
       (selectedCity[0].latitude !== 0 && selectedCity[0].longitude !== 0) &&
       hasParksWithinFifty(searchResults) ? 
         totalResultsWithinFifty : totalResults
   }, [selectedCity, searchResults, totalResultsWithinFifty, totalResults])
-  
-  useEffect(() => {
-    setFinalResults(finalResultsMemo)
-  }, [finalResultsMemo])
 
   // store prev finalResults state
   const prevFinalResultsRef = useRef()
@@ -744,6 +739,8 @@ export default function FindAPark({ location, data }) {
       const updatedEventParams = { 
         ...eventParams,
         resultCount: finalResults, 
+        parkName: searchText ? searchText : null,
+        cityName: selectedCity.length > 0 ? selectedCity[0].cityName : null,
         filters: transformFilters(filterSelections)
       }
       trackSnowplowEvent(
@@ -756,7 +753,7 @@ export default function FindAPark({ location, data }) {
         updatedEventParams.filters
       )
     }
-  }, [eventParams, finalResults, prevFinalResults, filterSelections])
+  }, [eventParams, finalResults, searchText,  selectedCity, prevFinalResults, filterSelections])
 
   return (
     <>
