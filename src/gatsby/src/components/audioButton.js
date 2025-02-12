@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "./htmlContent"
+import AudioPlayer from "./audioPlayer"
 import "../styles/audioButton.scss"
 
 export default function AudioButton({ audio }) {
@@ -131,19 +132,12 @@ export default function AudioButton({ audio }) {
               </p>
             </div>
             <div className="audio-player-container--right">
-              <audio
-                controls
-                controlsList="nodownload"
-                src={audio.url}
-                ref={audioRef}
-              >
-                <track kind="captions" srcLang="en" src={trackSrc} />
-              </audio>
+              <AudioPlayer src={audio.url} />
             </div>
           </div>
           <button
             aria-label="Close audio player"
-            className="btn btn-link"
+            className="btn btn-x"
             onClick={() => setIsPlayerVisible(false)}
           >
             <FontAwesomeIcon icon={faXmark} />
