@@ -1,52 +1,131 @@
 @import "variables.scss";
 
+// audio button
 .audio-container {
   max-width: 600px;
   display: flex;
   &--left {
     margin-right: 16px;
   }
-  &--right {
-    .description {
-      font-weight: bold;
-    }
-  }
   &.park-name {
     margin-left: 32px;
-    .btn-audio {
-      svg {
-        margin-right: 0 !important;
-      }
-    }
   }
 }
 
+// audio player
 .audio-player {
-  height: 125px;
+  height: auto;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: $colorWhite;
   background-color: $colorGrey;
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 101;
+  z-index: 1025;
+  padding: 32px;
+  @media (min-width: $lgBreakpoint) {
+    height: 125px;
+  }
   &-container {
     width: 1100px;
-    display: flex;
-    justify-content: space-between;
+    display: block;
+    @media (min-width: $lgBreakpoint) {
+      display: flex;
+      justify-content: space-between;
+    }
     &--left {
-      color: $colorWhite;
+      width: auto;
+      margin-bottom: 32px;
+      @media (min-width: $lgBreakpoint) {
+        width: 400px;
+        margin-bottom: 0;
+      }
     }
     &--right {
+      width: auto;
       display: flex;
       align-items: center;
+      @media (min-width: $lgBreakpoint) {
+        width: 600px;
+      }
+      .audio-player-controls {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        button.btn {
+          width: 36px;
+          height: 36px;
+          svg {
+            color: $colorWhite !important;
+          }
+        }
+        .time {
+          font-size: 0.875rem;
+          margin-left: 8px;
+          @media (min-width: $lgBreakpoint) {
+            font-size: 1.25rem;
+            margin-left: 16px;
+          }
+        }
+        .progress {
+          height: 8px;
+          margin: 0 16px;
+          @media (min-width: $lgBreakpoint) {
+            margin: 0 32px;
+          }
+          &.show-volume {
+            &--true {
+              width: calc(100% - 270px);
+              @media (min-width: $smBreakpoint) {
+                width: calc(100% - 350px);
+              }
+              @media (min-width: $mdBreakpoint) {
+                width: calc(100% - 450px);
+              }
+            }
+            &--false {
+              width: calc(100% - 220px);
+              @media (min-width: $smBreakpoint) {
+                width: calc(100% - 250px);
+              }
+              @media (min-width: $mdBreakpoint) {
+                width: calc(100% - 300px);
+              }
+            }
+          }
+          .progress-bar {
+            background-color: $colorGreyMed;
+          }
+        }
+        .volume {
+          display: flex;
+          input {
+            width: 50px;
+            @media (min-width: $smBreakpoint) {
+              width: 100px;
+            }
+            @media (min-width: $mdBreakpoint) {
+              width: 150px;
+            }
+          }
+        }
+        .dropdown {
+          &-item {
+            &:active, &.active {
+              color: $colorWhite;
+              background-color: $colorGreyMed;
+            }
+          }
+        }
+      }
     }
   }
-
   // close button
-  button {
+  button.btn-x {
     position: absolute;
     top: 0;
     right: 0;
@@ -54,7 +133,12 @@
     padding: 16px;
     svg {
       color: $colorWhite !important;
-      margin-right: 0 !important;
     }
+  }
+}
+
+button {
+  svg {
+    margin-right: 0 !important;
   }
 }
