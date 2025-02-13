@@ -38,10 +38,18 @@
     }
     &--left {
       width: auto;
+      display: flex;
+      align-items: center;
       margin-bottom: 32px;
       @media (min-width: $lgBreakpoint) {
         width: 400px;
         margin-bottom: 0;
+      }
+      p {
+        margin-bottom: 0;
+        & + p {
+          margin-top: 4px;
+        }
       }
     }
     &--right {
@@ -60,6 +68,8 @@
           width: 36px;
           height: 36px;
           svg {
+            height: 24px;
+            width: 24px;
             color: $colorWhite !important;
           }
         }
@@ -115,8 +125,9 @@
         }
         .dropdown {
           &-item {
+            color: $colorGrey !important;
             &:active, &.active {
-              color: $colorWhite;
+              color: $colorWhite !important;
               background-color: $colorGreyMed;
             }
           }
@@ -132,6 +143,8 @@
     margin-bottom: 0;
     padding: 16px;
     svg {
+      height: 24px;
+      width: 24px;
       color: $colorWhite !important;
     }
   }
