@@ -68,8 +68,7 @@ export default function About({
       null,
       null,
       accordionName,
-      null,
-      null
+      {}
     )
   }
 

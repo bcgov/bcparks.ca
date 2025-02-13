@@ -108,9 +108,8 @@ export default function Footer() {
       null,
       null,
       null,
-      null,
       url,
-      null
+      {}
     )
   }
 

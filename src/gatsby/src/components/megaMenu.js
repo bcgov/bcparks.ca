@@ -187,9 +187,8 @@ const MegaMenu = ({ content, menuMode }) => {
       null,
       null,
       null,
-      null,
       url,
-      null
+      {}
     )
   }
 

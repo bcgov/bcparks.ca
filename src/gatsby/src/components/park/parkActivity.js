@@ -75,8 +75,7 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
       null,
       null,
       activityName,
-      null,
-      null
+      {}
     )
   }
 

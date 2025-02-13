@@ -336,8 +336,7 @@ export default function FindAPark({ location, data }) {
       parkName: null,
       cityName: null,
       label: null,
-      url: null,
-      filters: null
+      filters: {}
     }
 
     if (searchText === "" || (inputText && (searchText !== inputText))) {
@@ -378,8 +377,7 @@ export default function FindAPark({ location, data }) {
         selected[0].protectedAreaName,
         null,
         null,
-        null,
-        null
+        {}
       )
     }
   }
@@ -749,7 +747,6 @@ export default function FindAPark({ location, data }) {
         updatedEventParams.parkName,
         updatedEventParams.cityName,
         updatedEventParams.label,
-        updatedEventParams.url,
         updatedEventParams.filters
       )
     }

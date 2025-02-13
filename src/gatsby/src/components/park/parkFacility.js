@@ -89,8 +89,7 @@ export default function ParkFacility({ data, groupPicnicReservationUrl }) {
       null,
       null,
       facilityName,
-      null,
-      null
+      {}
     )
   }
 
