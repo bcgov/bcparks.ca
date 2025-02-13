@@ -70,7 +70,7 @@ export default function AudioButton({ audio }) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [audio?.transcript.data?.transcript])
+  }, [hasTranscript])
 
   return (
     <>

@@ -20,7 +20,8 @@ export default function ParkOverview({ description, type, audioClips }) {
   const hasHr = $("hr").length > 0
   const hrAtEnd = description.trim().endsWith("<hr>")
   const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
-  const hasAudioClip = $(".audio-clip").length > 0
+  const hasAudioClipPlaceholder = $(".audio-clip").length > 0
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const audioClip =
     audioClips?.filter(audio => audio.audioClipType !== "Park name") || []
 
@@ -39,7 +40,7 @@ export default function ParkOverview({ description, type, audioClips }) {
     setSectionHeight(height)
   }, [])
 
-  // inject audio button
+  // inject audio button into the placeholder
   useEffect(() => {
     if (typeof window === "undefined") return
     let root = null
@@ -47,7 +48,7 @@ export default function ParkOverview({ description, type, audioClips }) {
 
     const setupAudio = () => {
       if (isUnmounting) return
-      if (hasAudioClip && audioClip.length > 0) {
+      if (hasAudioClipPlaceholder && audioClip.length > 0) {
         const placeholder = document.getElementsByClassName("audio-clip")[0]
         if (placeholder) {
           placeholder.innerHTML = ""
@@ -74,7 +75,7 @@ export default function ParkOverview({ description, type, audioClips }) {
         }
       })
     }
-  }, [hasAudioClip, audioClip])
+  }, [hasAudioClipPlaceholder, audioClip])
 
   return (
     <div id="highlights" className="anchor-link">
@@ -97,7 +98,8 @@ export default function ParkOverview({ description, type, audioClips }) {
         <HtmlContent ariaHidden={hasExpandCondition && !expanded} className="park-overview-html">
           {hasExpandCondition ? (expanded ? description : collapsedDescription) : description}
         </HtmlContent>
-        {!hasAudioClip && audioClip.length ? (
+        {/* display audio button at the bottom if it doesn't have the placeholder */}
+        {!hasAudioClipPlaceholder && audioClip.length > 0 ? (
           <AudioButton audio={audioClip[0]} />
         ) : (
           ""

@@ -263,6 +263,7 @@ export default function SiteTemplate({ data }) {
             subAreas={subAreas}
             isLoadingSubAreas={isLoadingSubAreas}
             subAreasLoadError={subAreasLoadError}
+            audioClips={site.audioClips}
           />
         </div>
         <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
@@ -292,7 +293,7 @@ export default function SiteTemplate({ data }) {
           <div className="page-content col-12 col-md-8">
             {menuItems[0].visible && (
               <div ref={parkOverviewRef} className="w-100">
-                <ParkOverview description={description} type="site" />
+                <ParkOverview description={description} type="site" audioClips={site.audioClips} />
               </div>
             )}
             {menuItems[1].visible && (
