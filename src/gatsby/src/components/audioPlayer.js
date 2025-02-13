@@ -12,6 +12,7 @@ import {
 const CustomToggle = React.forwardRef(({ onClick }, ref) => (
   <button
     ref={ref}
+    aria-label="Change playback Speed"
     onClick={e => {
       e.preventDefault()
       onClick(e)
@@ -22,7 +23,7 @@ const CustomToggle = React.forwardRef(({ onClick }, ref) => (
   </button>
 ))
 
-const AudioPlayer = ({ src }) => {
+const AudioPlayer = ({ src, trackSrc }) => {
   // refs and states
   const audioRef = useRef(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -47,11 +48,6 @@ const AudioPlayer = ({ src }) => {
     audio.volume = e.target.value
     setVolume(audio.volume)
   }
-  // const handlePlaybackRateChange = rate => {
-  //   const audio = audioRef.current
-  //   audio.playbackRate = rate
-  //   setPlaybackRate(rate)
-  // }
   const formatTime = time => {
     const minutes = Math.floor(time / 60)
     const seconds = Math.floor(time % 60)
@@ -77,9 +73,14 @@ const AudioPlayer = ({ src }) => {
 
   return (
     <div className="audio-player-controls">
-      <audio ref={audioRef} src={src} />
-      {/* <div className="controls"> */}
-      <button onClick={togglePlayPause} className="btn btn-play">
+      <audio aria-label="Audio player" ref={audioRef} src={src}>
+        <track kind="captions" srcLang="en" src={trackSrc} />
+      </audio>
+      <button
+        aria-label={isPlaying ? "Pause audio" : "Play audio"}
+        onClick={togglePlayPause}
+        className="btn btn-play"
+      >
         <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
       </button>
       <div className="time">
@@ -91,8 +92,9 @@ const AudioPlayer = ({ src }) => {
       />
       <div className="volume">
         <button
-          className="btn btn-volume"
+          aria-label={`${showVolumeControl ? "Show" : "Hide"} volume control`}
           onClick={() => setShowVolumeControl(!showVolumeControl)}
+          className="btn btn-volume"
         >
           <FontAwesomeIcon icon={volume > 0 ? faVolumeHigh : faVolumeMute} />
         </button>
