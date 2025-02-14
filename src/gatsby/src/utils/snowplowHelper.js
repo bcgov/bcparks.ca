@@ -4,8 +4,7 @@ export const trackSnowplowEvent = (
   parkName = null,
   cityName = null,
   label = null,
-  url = null,
-  filters = null
+  filters = {}
 ) => {
   if (typeof window.snowplow === "function") {
     window.snowplow("trackSelfDescribingEvent", {
@@ -22,8 +21,6 @@ export const trackSnowplowEvent = (
         city_name: cityName,
         // Optional field: the label for the button or accordion
         label: label,
-        // Optional field: the url for the link
-        url: url,
         // Optional field: filters for the search
         // Possible filters: 'popular', 'area', 'camping', 'activities', 'facilities'
         filters: filters,

@@ -157,8 +157,7 @@ export default function ParkDates({ data, parkOperation }) {
       null,
       null,
       subAreaName,
-      null,
-      null
+      {}
     )
   }
 
