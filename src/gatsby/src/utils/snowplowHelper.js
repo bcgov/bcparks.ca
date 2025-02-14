@@ -4,13 +4,8 @@ export const trackSnowplowEvent = (
   parkName = null,
   cityName = null,
   label = null,
-  filterType = null,
-  filterValue = null
+  filters = {}
 ) => {
-  const filters = {}
-  if (filterType && filterValue) {
-    filters[filterType] = filterValue
-  }
   if (typeof window.snowplow === "function") {
     window.snowplow("trackSelfDescribingEvent", {
       schema: "iglu:ca.bc.gov.bcparks/action/jsonschema/1-0-0",
@@ -28,8 +23,31 @@ export const trackSnowplowEvent = (
         label: label,
         // Optional field: filters for the search
         // Possible filters: 'popular', 'area', 'camping', 'activities', 'facilities'
-        filters: { ...filters }
+        filters: filters,
       },
     })
   }
+}
+
+// convert filter array to object
+export const transformFilters = filters => {
+  return filters.reduce((acc, filter) => {
+    if (!acc[filter.type]) {
+      acc[filter.type] = []
+    }
+    acc[filter.type].push(filter.label)
+
+    // check for "Popular" filters
+    if (
+      (filter.type === "Camping" && [1, 36].includes(filter.value)) ||
+      (filter.type === "Things to do" && [1, 3, 8, 9].includes(filter.value)) ||
+      (filter.type === "Facilities" && filter.value === 6)
+    ) {
+      if (!acc["Popular"]) {
+        acc["Popular"] = []
+      }
+      acc["Popular"].push(filter.label)
+    }
+    return acc
+  }, {})
 }

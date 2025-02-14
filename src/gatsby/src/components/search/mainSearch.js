@@ -66,8 +66,8 @@ const MainSearch = ({ hasCityNameSearch }) => {
       resultCount: null,
       parkName: queryText.length ? queryText : null,
       cityName: null,
-      label: "Search button",
-      filters: null
+      label: null,
+      filters: {}
     }
     if (clickedCity?.length > 0) {
       eventParams.cityName = clickedCity[0].cityName

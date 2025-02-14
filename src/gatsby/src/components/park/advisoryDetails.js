@@ -65,9 +65,8 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
       null,
       null,
       null,
-      `${advisoryName} accordion`,
-      null,
-      null
+      advisoryName,
+      {}
     )
   }
 
