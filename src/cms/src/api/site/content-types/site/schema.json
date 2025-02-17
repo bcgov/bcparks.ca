@@ -147,6 +147,12 @@
       "relation": "oneToMany",
       "target": "api::park-operation-date.park-operation-date",
       "mappedBy": "site"
+    },
+    "parkOperationSubAreas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-operation-sub-area.park-operation-sub-area",
+      "mappedBy": "site"
     }
   }
 }

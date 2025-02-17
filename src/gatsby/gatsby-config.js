@@ -168,6 +168,14 @@ module.exports = {
                 protectedArea: {
                   fields: "*"
                 },
+                parkOperationSubAreas: {
+                  fields: "*",
+                  populate: {
+                    parkOperationSubAreaType: {
+                      fields: "*"
+                    }
+                  }
+                },
                 parkActivities: {
                   populate: ["activityType"]
                 },
