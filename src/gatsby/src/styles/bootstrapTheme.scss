@@ -46,3 +46,7 @@ a {
   background-color: $colorWhite;
   border-color: $colorBlue;
 }
+
+.visually-hidden-focusable:not(:focus):not(:focus-within):not(caption):focus-visible {
+  position: static !important;
+}

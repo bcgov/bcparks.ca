@@ -456,6 +456,7 @@ const MegaMenu = ({ content, menuMode }) => {
             " menu-" +
             (isMenuOpen ? "open" : "closed")
           }
+          aria-hidden={!isMenuOpen}
         >
           <div className="menu-wrapper">
             {menuTree.map((page, index) => (
