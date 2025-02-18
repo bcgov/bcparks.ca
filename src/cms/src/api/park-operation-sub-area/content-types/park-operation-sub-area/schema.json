@@ -30,6 +30,12 @@
       "target": "api::protected-area.protected-area",
       "inversedBy": "parkOperationSubAreas"
     },
+    "site": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::site.site",
+      "inversedBy": "parkOperationSubAreas"
+    },
     "parkOperationSubAreaDates": {
       "type": "relation",
       "relation": "oneToMany",

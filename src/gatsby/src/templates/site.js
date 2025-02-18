@@ -45,6 +45,7 @@ export default function SiteTemplate({ data }) {
   const hasSiteGuidelines = site.parkGuidelines?.length > 0
   const managementAreas = park.managementAreas || []
   const searchArea = managementAreas[0]?.searchArea || {}
+  const parkOperationSubAreas = site.parkOperationSubAreas || []
 
   const activeActivities = sortBy(
     site.parkActivities.filter(
@@ -54,7 +55,7 @@ export default function SiteTemplate({ data }) {
     ["asc"]
   )
 
-  const subAreas = preProcessSubAreas(site.protectedArea.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber))
+  const subAreas = preProcessSubAreas(parkOperationSubAreas)
   const activeFacilities = combineFacilities(site.parkFacilities, data.allStrapiFacilityType.nodes, subAreas);
   const activeCampings = combineCampingTypes(site.parkCampingTypes, data.allStrapiCampingType.nodes, subAreas);
 
@@ -228,7 +229,7 @@ export default function SiteTemplate({ data }) {
             searchArea={searchArea}
             parkOperation={operations}
             operationDates={site?.parkOperationDates || park.parkOperationDates}
-            subAreas={park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)}
+            subAreas={parkOperationSubAreas}
           />
         </div>
         <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
@@ -332,7 +333,7 @@ export default function SiteTemplate({ data }) {
                     hasDayUsePass: hasDayUsePass,
                     hasReservations: hasReservations,
                     parkOperation: operations,
-                    subAreas: park.parkOperationSubAreas.filter(sa => sa.orcsSiteNumber === site.orcsSiteNumber)
+                    subAreas: parkOperationSubAreas
                   }}
                 />
               </div>
@@ -413,6 +414,82 @@ export const query = graphql`
         }
       }
       isUnofficialSite
+      parkOperationSubAreas {
+        parkSubArea
+        orcsSiteNumber
+        isActive
+        isOpen
+        hasReservations
+        hasBackcountryReservations
+        hasBackcountryPermits
+        hasFirstComeFirstServed
+        parkAccessUnitId
+        isCleanAirSite
+        totalCapacity
+        frontcountrySites
+        reservableSites
+        nonReservableSites
+        vehicleSites
+        vehicleSitesReservable
+        doubleSites
+        pullThroughSites
+        rvSites
+        rvSitesReservable
+        electrifiedSites
+        longStaySites
+        walkInSites
+        walkInSitesReservable
+        groupSites
+        groupSitesReservable
+        backcountrySites
+        wildernessSites
+        boatAccessSites
+        horseSites
+        cabins
+        huts
+        yurts
+        shelters
+        boatLaunches
+        serviceNote {
+          data {
+            serviceNote
+          }
+        }
+        reservationNote {
+          data {
+            reservationNote
+          }
+        }
+        offSeasonNote {
+          data {
+            offSeasonNote
+          }
+        }
+        closureAffectsAccessStatus
+        parkOperationSubAreaDates {
+          isActive
+          operatingYear
+          openDate
+          closeDate
+          serviceStartDate
+          serviceEndDate
+          reservationStartDate
+          reservationEndDate
+          offSeasonStartDate
+          offSeasonEndDate
+        }
+        parkSubAreaType {
+          subAreaType
+          subAreaTypeCode
+          closureAffectsAccessStatus
+          facilityType {
+            facilityCode
+          }
+          campingType {
+            campingTypeCode
+          }
+        }
+      }
       protectedArea {
         orcs
         slug
@@ -421,82 +498,6 @@ export const query = graphql`
           operatingYear
           gateOpenDate
           gateCloseDate
-        }
-        parkOperationSubAreas {
-          parkSubArea
-          orcsSiteNumber
-          isActive
-          isOpen
-          hasReservations
-          hasBackcountryReservations
-          hasBackcountryPermits
-          hasFirstComeFirstServed
-          parkAccessUnitId
-          isCleanAirSite
-          totalCapacity
-          frontcountrySites
-          reservableSites
-          nonReservableSites
-          vehicleSites
-          vehicleSitesReservable
-          doubleSites
-          pullThroughSites
-          rvSites
-          rvSitesReservable
-          electrifiedSites
-          longStaySites
-          walkInSites
-          walkInSitesReservable
-          groupSites
-          groupSitesReservable
-          backcountrySites
-          wildernessSites
-          boatAccessSites
-          horseSites
-          cabins
-          huts
-          yurts
-          shelters
-          boatLaunches
-          serviceNote {
-            data {
-              serviceNote
-            }
-          }
-          reservationNote {
-            data {
-              reservationNote
-            }
-          }
-          offSeasonNote {
-            data {
-              offSeasonNote
-            }
-          }
-          closureAffectsAccessStatus
-          parkOperationSubAreaDates {
-            isActive
-            operatingYear
-            openDate
-            closeDate
-            serviceStartDate
-            serviceEndDate
-            reservationStartDate
-            reservationEndDate
-            offSeasonStartDate
-            offSeasonEndDate
-          }
-          parkSubAreaType {
-            subAreaType
-            subAreaTypeCode
-            closureAffectsAccessStatus
-            facilityType {
-              facilityCode
-            }
-            campingType {
-              campingTypeCode
-            }
-          }
         }
         managementAreas {
           searchArea {
