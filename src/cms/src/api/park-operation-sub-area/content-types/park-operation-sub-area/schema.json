@@ -237,6 +237,12 @@
     },
     "gateOpen24Hours": {
       "type": "boolean"
+    },
+    "parkFeatureDates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-feature-date.park-feature-date",
+      "mappedBy": "parkOperationSubArea"
     }
   }
 }
