@@ -41,6 +41,7 @@ export default function ParkOverview({ description, type, audioClips }) {
   }, [])
 
   // inject audio button into the placeholder
+  // the placeholder needs to be hydrated since audio button has event listeners
   useEffect(() => {
     if (typeof window === "undefined") return
     let root = null
@@ -48,15 +49,18 @@ export default function ParkOverview({ description, type, audioClips }) {
 
     const setupAudio = () => {
       if (isUnmounting) return
+      // check if the placeholder exists and if there is an audio clip
       if (hasAudioClipPlaceholder && audioClip.length > 0) {
         const placeholder = document.getElementsByClassName("audio-clip")[0]
         if (placeholder) {
           placeholder.innerHTML = ""
+          // check if the placeholder has been hydrated
           if (placeholder.hasAttribute("data-reactroot")) {
             root = hydrateRoot(
               placeholder,
               <AudioButton audio={audioClip[0]} />
             )
+          // create a new root if the placeholder hasn't been hydrated
           } else {
             root = createRoot(placeholder)
             root.render(<AudioButton audio={audioClip[0]} />)
@@ -69,6 +73,7 @@ export default function ParkOverview({ description, type, audioClips }) {
     return () => {
       isUnmounting = true
       clearTimeout(timer)
+      // unmount the root if it exists
       requestAnimationFrame(() => {
         if (root) {
           root.unmount()
