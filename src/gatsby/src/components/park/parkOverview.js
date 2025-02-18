@@ -45,7 +45,7 @@ export default function ParkOverview({ data: parkOverview, type }) {
           Highlights in this {type}
         </h2>
         {/* let voiceover skip reading content if it is not expanded */}
-        <HtmlContent ariaHidden={hasExpandCondition ? !expanded : false} className="park-overview-html">
+        <HtmlContent ariaHidden={hasExpandCondition && !expanded} className="park-overview-html">
           {hasExpandCondition ? (expanded ? parkOverview : collapsedParkOverview) : parkOverview }
         </HtmlContent>
       </div>

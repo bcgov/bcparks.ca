@@ -74,7 +74,7 @@ export const CampingType = ({ camping, parkOperation }) => {
           </h3>
         </div>
         {/* let voiceover skip reading content if it is not expanded */}
-        <HtmlContent ariaHidden={hasExpandCondition ? !expanded : false} className="park-camping-description">
+        <HtmlContent ariaHidden={hasExpandCondition && !expanded} className="park-camping-description">
           {hasExpandCondition ? (expanded ? campingDescription : collapsedDescription) : campingDescription}
         </HtmlContent>
         {!camping.hideStandardCallout &&
