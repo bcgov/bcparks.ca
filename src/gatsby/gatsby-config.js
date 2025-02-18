@@ -57,6 +57,7 @@ module.exports = {
           "search-city",
           "management-document",
           "emergency-alert",
+          "audio-clip",
           {
             singularName: "page",
             queryParams: {
@@ -130,6 +131,9 @@ module.exports = {
                 parkPhotos: {
                   fields: "*"
                 },
+                audioClips: {
+                  fields: "*"
+                },
                 trailReports: {
                   fields: "*"
                 },
@@ -184,6 +188,9 @@ module.exports = {
                   fields: "*"
                 },
                 parkOperationDates: {
+                  fields: "*"
+                },
+                audioClips: {
                   fields: "*"
                 },
                 trailReports: {

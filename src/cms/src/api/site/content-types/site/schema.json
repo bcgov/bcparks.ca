@@ -147,6 +147,12 @@
       "relation": "oneToMany",
       "target": "api::park-operation-date.park-operation-date",
       "mappedBy": "site"
+    },
+    "audioClips": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::audio-clip.audio-clip",
+      "mappedBy": "sites"
     }
   }
 }
