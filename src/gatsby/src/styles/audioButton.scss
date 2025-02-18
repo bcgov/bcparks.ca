@@ -24,6 +24,7 @@
   position: fixed;
   bottom: 0;
   left: 0;
+  // cover the mobile menu which is z-index: 1024
   z-index: 1025;
   padding: 32px;
   @media (min-width: $lgBreakpoint) {
