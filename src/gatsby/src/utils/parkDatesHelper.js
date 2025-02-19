@@ -1,5 +1,6 @@
 import moment from "moment"
 import _ from "lodash"
+import { parseISO, format } from "date-fns"
 
 const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix, nowrap) => {
   if (openDate && closeDate) {
@@ -71,6 +72,10 @@ const processDateRanges = (arr, fmt, yr, delimiter) => {
   if (phrase !== "") {
     groupedByYear.push(phrase);
   }
+  // remove the year prefix if there is only one item in groupedByYear
+  if (groupedByYear.length === 1) {
+    groupedByYear[0] = groupedByYear[0].replace(/^\d{4}: /, '');
+  }
   return groupedByYear
 }
 
@@ -105,8 +110,21 @@ const groupSubAreaDates = (subArea) => {
   return subArea;
 }
 
+// function to format gate open/close time e.g. "08:00:00" to "8 am"
+const formattedTime = time => {
+  // prepend a dummy date to the time string to parse it
+  const dateTime = parseISO(`1970-01-01T${time}`)
+  const minutes = format(dateTime, "mm")
+  if (minutes === "00") {
+    return format(dateTime, "h aa").toLowerCase()
+  } else {
+    return format(dateTime, "h:mm aa").toLowerCase()
+  }
+}
+
 export {
   datePhrase,
   processDateRanges,
-  groupSubAreaDates
+  groupSubAreaDates,
+  formattedTime
 }
