@@ -53,7 +53,7 @@ const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) 
     if (subArea.serviceDates.length === 0
       && subArea.resDates.length === 0
       && subArea.offSeasonDates.length === 0) {
-      subArea.serviceDates.push(`${new Date().getFullYear()}: Dates unavailable`)
+      subArea.serviceDates.push("Dates unavailable")
     }
   }
 
