@@ -3,10 +3,9 @@ import HtmlContent from "../htmlContent"
 import ParkAccessStatus from "./parkAccessStatus"
 import CampfireBan from "../campfireBan"
 import FontAwesome from "../fontAwesome"
-import { datePhrase } from "../../utils/parkDatesHelper"
+import { datePhrase, formattedTime } from "../../utils/parkDatesHelper"
 
 import PropTypes from "prop-types"
-import { parseISO, format } from "date-fns"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCalendar } from "@fortawesome/free-regular-svg-icons"
 import lowerMainland from "../../images/area-maps/area-maps-with-labels/1-lower-mainland-label.svg"
@@ -46,17 +45,6 @@ const convertToCamelCase = (str) => {
 }
 const mapImages = {
   lowerMainland, southIsland, okanagan, seaToSky, kootenay, thompson, cariboo, haidaGwaii, northIsland, omineca, peace, skeenaEast, skeenaWest, southCentralCoast
-}
-// Helper function to format gate open/close time e.g. "08:00:00" to "8 am"
-const formattedTime = (time) => {
-  // Prepend a dummy date to the time string to parse it
-  const dateTime = parseISO(`1970-01-01T${time}`)
-  const minutes = format(dateTime, 'mm');
-  if (minutes === '00') {
-    return format(dateTime, 'h aa').toLowerCase()
-  } else {
-    return format(dateTime, 'h:mm aa').toLowerCase()
-  }
 }
 // Helper function to render the gate open/close times
 const renderGateTimes = (parkOperation) => {

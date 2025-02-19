@@ -458,6 +458,17 @@ export const query = graphql`
           yurts
           shelters
           boatLaunches
+          hasGate
+          gateOpenTime
+          gateCloseTime
+          gateOpensAtDawn
+          gateClosesAtDusk
+          gateOpen24Hours
+          gateNote {
+            data {
+              gateNote
+            }
+          }
           serviceNote {
             data {
               serviceNote
