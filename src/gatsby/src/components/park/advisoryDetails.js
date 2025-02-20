@@ -13,6 +13,7 @@ import AdvisoryDate from "../advisories/advisoryDate"
 import blueAlertIcon from "../../images/park/blue-alert.svg"
 import redAlertIcon from "../../images/park/red-alert.svg"
 import yellowAlertIcon from "../../images/park/yellow-alert.svg"
+import { compareAdvisories } from "../../utils/advisoryHelper"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/advisories/advisoryDetails.scss"
 
@@ -22,9 +23,21 @@ const formatDate = isoDate => {
 
 export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus }) {
   advisories.sort((a, b) => {
-    return b.listingRank - a.listingRank
-      || b?.urgency?.sequence - a?.urgency?.sequence
-      || new Date(b.advisoryDate) - new Date(a.advisoryDate)
+    return (
+      // advisory sort order
+      // 1 - listingRank:DESC
+      // 2 - urgency.sequence:DESC
+      // 3 - accessStatus.precedence:ASC
+      // 4 - eventType.precedence:ASC
+      // 5 - display date:DESC
+      // DESC - check a value is null or undefined with value - Infinity
+      // ASC - check a value is null or undefined with value ?? Infinity
+      (b.listingRank ?? - Infinity) - (a.listingRank ?? - Infinity) ||
+      (b.urgency.sequence ?? - Infinity) - (a.urgency.sequence ?? - Infinity) ||
+      (a.accessStatus?.precedence ?? Infinity) - (b.accessStatus?.precedence ?? Infinity) ||
+      (a.eventType?.precedence ?? Infinity) - (b.eventType?.precedence ?? Infinity) ||
+      compareAdvisories(a, b)
+    )
   })
 
   const [openAccordions, setOpenAccordions] = useState({})
