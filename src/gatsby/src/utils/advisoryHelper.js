@@ -58,6 +58,30 @@ const loadAllAdvisories = (apiBaseUrl) => {
   return axios.get(`${apiBaseUrl}/public-advisories/?${params}`)
 }
 
+// Get advisory displayed date
+const getAdvisoryDate = (advisory) => {
+  if (advisory.isAdvisoryDateDisplayed) {
+    return new Date(advisory.advisoryDate)
+  }
+  if (advisory.isEffectiveDateDisplayed) {
+    return new Date(advisory.effectiveDate)
+  }
+  if (advisory.isUpdatedDateDisplayed) {
+    return new Date(advisory.updatedDate)
+  }
+  // If none of the above conditions are met
+  // return updatedDate if available, otherwise return advisoryDate
+  return advisory.updatedDate ? new Date(advisory.updatedDate) : new Date(advisory.advisoryDate)
+}
+
+// Compare advisories by date
+const compareAdvisories = (a, b) => {
+  const dateA = getAdvisoryDate(a)
+  const dateB = getAdvisoryDate(b)
+  // Sort in descending order (latest date first)
+  return dateB - dateA
+}
+
 const WINTER_FULL_PARK_ADVISORY = {
   id: -1,
   title: "Limited access to this park during winter season",
@@ -84,6 +108,8 @@ export {
   loadAdvisories,
   loadAllAdvisories,
   getAdvisoryTypeFromUrl,
+  getAdvisoryDate,
+  compareAdvisories,
   WINTER_FULL_PARK_ADVISORY,
   WINTER_SUB_AREA_ADVISORY
 }
