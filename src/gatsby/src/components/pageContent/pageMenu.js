@@ -24,9 +24,9 @@ export default function PageMenu({ pageSections, activeSection, menuStyle }) {
     )
   }
 
-  if (menuStyle === "select") {
+  if (menuStyle === "list") {
     return (
-      <div className="section-select-container">
+      <div className="section-list-container">
         <p><b>On this page</b></p>
         <ul>
           {pageSections.filter(section => section.visible).map(section => (

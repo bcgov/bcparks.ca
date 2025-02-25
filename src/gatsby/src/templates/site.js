@@ -244,8 +244,7 @@ export default function SiteTemplate({ data }) {
         <div className="page-menu--mobile d-block d-md-none">
           <PageMenu
             pageSections={menuItems}
-            activeSection={activeSection}
-            menuStyle="select"
+            menuStyle="list"
           />
         </div>
         <div className="row g-0 park-info-container">
