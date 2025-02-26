@@ -36,29 +36,26 @@ export default function SubArea({ data, showHeading }) {
       gateNote,
     } = subArea
 
-    if (hasGate) {
-      let message = "Gates are open"
-      if (gateOpen24Hours) {
-        message += " 24 hours a day."
-      } else if (
-        (gateOpenTime || gateOpensAtDawn) &&
-        (gateCloseTime || gateClosesAtDusk)
-      ) {
-        message += ` from ${
-          gateOpensAtDawn ? "dawn" : formattedTime(gateOpenTime)
-        } to ${
-          gateClosesAtDusk ? "dusk" : formattedTime(gateCloseTime)
-        }, daily.`
-      } else {
-        message += "."
-      }
-      return (
-        <>
-          {message}
-          {gateNote && <HtmlContent>{gateNote.data.gateNote}</HtmlContent>}
-        </>
-      )
+    if (!hasGate) return null
+    let message = ""
+    if (gateOpen24Hours) {
+      message += "Gates are open 24 hours a day."
+    } else if (
+      (gateOpenTime || gateOpensAtDawn) &&
+      (gateCloseTime || gateClosesAtDusk)
+    ) {
+      message += `Gates are open from ${
+        gateOpensAtDawn ? "dawn" : formattedTime(gateOpenTime)
+      } to ${
+        gateClosesAtDusk ? "dusk" : formattedTime(gateCloseTime)
+      }, daily.`
     }
+    return (
+      <>
+        {message}
+        {gateNote && <HtmlContent>{gateNote.data.gateNote}</HtmlContent>}
+      </>
+    )
   }
 
   return (
@@ -110,18 +107,6 @@ export default function SubArea({ data, showHeading }) {
                 )
               )}
             </div>
-            {subAreasNotesList
-              .filter(note => data[note.noteVar]?.data[note.noteVar])
-              .map((note, index) => (
-                <div key={index} className="subarea-list subarea-note">
-                  {note.display && (
-                    <h4>{note.display}</h4>
-                  )}
-                  <HtmlContent>
-                    {data[note.noteVar].data[note.noteVar]}
-                  </HtmlContent>
-                </div>
-              ))}
           </div>
         </Col>
         {countsList
@@ -145,6 +130,22 @@ export default function SubArea({ data, showHeading }) {
               </div>
             </Col>
           )}
+      </Row>
+      <Row className="subarea-container mt-3">
+        <Col>
+          {subAreasNotesList
+            .filter(note => data[note.noteVar]?.data[note.noteVar])
+            .map((note, index) => (
+              <div key={index} className="subarea-list subarea-note">
+                {note.display && (
+                  <h4>{note.display}</h4>
+                )}
+                <HtmlContent>
+                  {data[note.noteVar].data[note.noteVar]}
+                </HtmlContent>
+              </div>
+            ))}
+        </Col>
       </Row>
     </div>
   )

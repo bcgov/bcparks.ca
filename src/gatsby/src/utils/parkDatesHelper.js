@@ -26,7 +26,7 @@ const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix, 
 
 // get unique date ranges, excluding years in the past, 
 //sorted chronologically by start date and formatted as date pharses
-const processDateRanges = (arr, fmt, yr, delimiter) => {
+const processDateRanges = (arr, fmt, yr, delimiter, yearPrefix) => {
   const newArr = []
   for (let dateRange of arr) {
     const startYear = moment(dateRange.start).year();
@@ -72,9 +72,12 @@ const processDateRanges = (arr, fmt, yr, delimiter) => {
   if (phrase !== "") {
     groupedByYear.push(phrase);
   }
-  // remove the year prefix if there is only one item in groupedByYear
-  if (groupedByYear.length === 1) {
-    groupedByYear[0] = groupedByYear[0].replace(/^\d{4}: /, '');
+  // on the park page, remove the year prefix if there is only one item in groupedByYear
+  // on the park operationg dates page, keep the year prefix
+  if (!yearPrefix) {
+    if (groupedByYear.length === 1) {
+      groupedByYear[0] = groupedByYear[0].replace(/^\d{4}: /, '');
+    }
   }
   return groupedByYear
 }

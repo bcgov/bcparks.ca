@@ -44,10 +44,10 @@ const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) 
     subArea = groupSubAreaDates(subArea)
 
     // get distinct date ranges sorted chronologically
-    subArea.operationDates = processDateRanges(subArea.operationDates, fmt, yr, "–")
-    subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, "–")
-    subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, "–")
-    subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, "–")
+    subArea.operationDates = processDateRanges(subArea.operationDates, fmt, yr, "–", true)
+    subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, "–", true)
+    subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, "–", true)
+    subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, "–", true)
 
     // add a placeholder if no dates are available for the current year
     if (subArea.serviceDates.length === 0

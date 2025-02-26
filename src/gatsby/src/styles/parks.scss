@@ -565,9 +565,6 @@ h2.section-heading {
         padding: 0;
       }
     }
-    .subarea-list + .subarea-list {
-      margin-top: 16px;
-    }
   }
   &--right {
     margin-top: 32px;
@@ -583,6 +580,9 @@ h2.section-heading {
   .subarea-list {
     h4 {
       margin-bottom: 4px;
+    }
+    & + .subarea-list {
+      margin-top: 16px;
     }
   }
 }
