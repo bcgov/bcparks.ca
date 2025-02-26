@@ -24,31 +24,19 @@ export default function PageMenu({ pageSections, activeSection, menuStyle }) {
     )
   }
 
-  if (menuStyle === "select") {
-    let sectionIndex = activeSection
-    const handleSectionChange = e => {
-      let index = e.target.value
-      let s = pageSections.find(c => c.sectionIndex === Number(index))
-      let link = s.link
-      window.location.hash = link
-    }
-
+  if (menuStyle === "list") {
     return (
-      <div className="section-select-container">
-        <select
-          className="section-select"
-          value={sectionIndex}
-          onChange={handleSectionChange}
-          title="mobile-navigation"
-        >
-          <option value="" disabled>Table of Contents</option>
-          {pageSections.filter(s => s.visible).map(
-            section =>
-              <option key={section.sectionIndex} value={section.sectionIndex}>
+      <div className="section-list-container">
+        <p><b>On this page</b></p>
+        <ul>
+          {pageSections.filter(section => section.visible).map(section => (
+            <li key={section.sectionIndex}>
+              <a href={section.link}>
                 {section.display}
-              </option>
-          )}
-        </select>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     )
   }

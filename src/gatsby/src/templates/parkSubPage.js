@@ -117,8 +117,7 @@ export default function ParkSubPage({ data }) {
         <div className="page-menu--mobile d-block d-md-none">
           <PageMenu
             pageSections={pageSections}
-            activeSection={activeSection}
-            menuStyle="select"
+            menuStyle="list"
           />
         </div>
       )}
