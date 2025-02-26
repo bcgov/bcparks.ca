@@ -4,6 +4,7 @@ import { parseJSON, format } from "date-fns"
 import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import { orderBy } from "lodash"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
@@ -13,6 +14,7 @@ import AdvisoryDate from "../advisories/advisoryDate"
 import blueAlertIcon from "../../images/park/blue-alert.svg"
 import redAlertIcon from "../../images/park/red-alert.svg"
 import yellowAlertIcon from "../../images/park/yellow-alert.svg"
+import { compareAdvisories } from "../../utils/advisoryHelper"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/advisories/advisoryDetails.scss"
 
@@ -21,15 +23,29 @@ const formatDate = isoDate => {
 }
 
 export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus }) {
-  advisories.sort((a, b) => {
-    return b.listingRank - a.listingRank
-      || b?.urgency?.sequence - a?.urgency?.sequence
-      || new Date(b.advisoryDate) - new Date(a.advisoryDate)
-  })
+  const sortedAdvisories = orderBy(
+    advisories,
+    // advisory sort order
+    // 1 - listingRank:DESC
+    // 2 - urgency.sequence:DESC
+    // 3 - accessStatus.precedence:ASC
+    // 4 - eventType.precedence:ASC
+    // 5 - display date:DESC
+    // DESC - check a value is null or undefined with value - Infinity
+    // ASC - check a value is null or undefined with value ?? Infinity
+    [
+      (advisory) => advisory.listingRank ?? - Infinity,
+      (advisory) => advisory.urgency.sequence ?? - Infinity,
+      (advisory) => advisory.accessStatus?.precedence ?? Infinity,
+      (advisory) => advisory.eventType?.precedence ?? Infinity,
+      (advisory) => compareAdvisories(advisory, advisory)
+    ],
+    ['desc', 'desc', 'asc', 'asc', 'desc']
+  )
 
   const [openAccordions, setOpenAccordions] = useState({})
 
-  const advisoriesWithFormatting = advisories.map(advisory => {
+  const advisoriesWithFormatting = sortedAdvisories.map(advisory => {
     let alertIcon
     switch (advisory.urgency.color) {
       case "blue":

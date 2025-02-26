@@ -12,7 +12,7 @@ import AdvisoryList from "../components/advisories/advisoryList"
 import AdvisoryPageNav from "../components/advisories/advisoryPageNav"
 import AdvisoryLegend from "../components/advisories/advisoryLegend"
 import ScrollToTop from "../components/scrollToTop"
-import { getAdvisoryTypeFromUrl } from "../utils/advisoryHelper"
+import { getAdvisoryTypeFromUrl, compareAdvisories } from "../utils/advisoryHelper"
 
 import "../styles/home.scss"
 
@@ -127,29 +127,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     getFilter: getAdvistoryFilter,
     setType: setAdvisoryType,
     getType: getAdvisoryType,
-  }
-
-  // Get advisory displayed date
-  const getAdvisoryDate = (advisory) => {
-    if (advisory.isAdvisoryDateDisplayed) {
-      return new Date(advisory.advisoryDate)
-    }
-    if (advisory.isEffectiveDateDisplayed) {
-      return new Date(advisory.effectiveDate)
-    }
-    if (advisory.isUpdatedDateDisplayed) {
-      return new Date(advisory.updatedDate)
-    }
-    // If none of the above conditions are met
-    // return updatedDate if available, otherwise return advisoryDate
-    return advisory.updatedDate ? new Date(advisory.updatedDate) : new Date(advisory.advisoryDate)
-  }
-  // Compare advisories by date
-  const compareAdvisories = (a, b) => {
-    const dateA = getAdvisoryDate(a)
-    const dateB = getAdvisoryDate(b)
-    // Sort in descending order (latest date first)
-    return dateB - dateA
   }
 
   // API calls to get advisories and total count
