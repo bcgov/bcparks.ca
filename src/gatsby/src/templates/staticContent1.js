@@ -162,15 +162,6 @@ export default function StaticContent1({ pageContext }) {
           </>
         )}
       </div>
-      {hasSections && (
-        <div className="page-menu--mobile d-block d-md-none">
-          <PageMenu
-            pageSections={pageSections}
-            activeSection={activeSection}
-            menuStyle="select"
-          />
-        </div>
-      )}
       <div className="static-content-container">
         <div className="page-content-wrapper">
           {hasSections ? (
