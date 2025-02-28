@@ -7,6 +7,7 @@ import { faCalendar } from "@fortawesome/free-regular-svg-icons"
 import HtmlContent from "../htmlContent"
 import FontAwesome from "../fontAwesome"
 import { countsList } from "../../utils/constants"
+import { formattedTime } from "../../utils/parkDatesHelper"
 
 export default function SubArea({ data, showHeading }) {
 
@@ -21,6 +22,40 @@ export default function SubArea({ data, showHeading }) {
       countGroup[count.countVar] !== "0" &&
       countGroup[count.countVar] !== "*" &&
       count.isActive;
+  }
+
+  const renderGateTimes = subArea => {
+    if (!subArea) return null
+    const {
+      hasGate,
+      gateOpenTime,
+      gateCloseTime,
+      gateOpensAtDawn,
+      gateClosesAtDusk,
+      gateOpen24Hours,
+      gateNote,
+    } = subArea
+
+    if (!hasGate) return null
+    let message = ""
+    if (gateOpen24Hours) {
+      message += "Gates are open 24 hours a day."
+    } else if (
+      (gateOpenTime || gateOpensAtDawn) &&
+      (gateCloseTime || gateClosesAtDusk)
+    ) {
+      message += `Gates are open from ${
+        gateOpensAtDawn ? "dawn" : formattedTime(gateOpenTime)
+      } to ${
+        gateClosesAtDusk ? "dusk" : formattedTime(gateCloseTime)
+      }, daily.`
+    }
+    return (
+      <>
+        {message}
+        {gateNote && <HtmlContent>{gateNote.data.gateNote}</HtmlContent>}
+      </>
+    )
   }
 
   return (
@@ -40,11 +75,12 @@ export default function SubArea({ data, showHeading }) {
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
+                <small>{renderGateTimes(data)}</small>
               </div>
             )}
             {data.resDates.length > 0 && (
               <div className="subarea-list">
-                <h4 className="mt-3">Booking available</h4>
+                <h4>Booking available</h4>
                 <ul>
                   {data.resDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
@@ -53,7 +89,7 @@ export default function SubArea({ data, showHeading }) {
               </div>
             )}
             <div className="subarea-list">
-              <h4 className="mt-3">Winter season</h4>
+              <h4>Winter season</h4>
               {data.offSeasonDates.length > 0 ? (
                 <ul>
                   {data.offSeasonDates.map((dateRange, index) =>
@@ -71,18 +107,6 @@ export default function SubArea({ data, showHeading }) {
                 )
               )}
             </div>
-            {subAreasNotesList
-              .filter(note => data[note.noteVar]?.data[note.noteVar])
-              .map((note, index) => (
-                <div key={index} className="subarea-list subarea-note">
-                  {note.display && (
-                    <h4 className="mt-3">{note.display}</h4>
-                  )}
-                  <HtmlContent>
-                    {data[note.noteVar].data[note.noteVar]}
-                  </HtmlContent>
-                </div>
-              ))}
           </div>
         </Col>
         {countsList
@@ -106,6 +130,22 @@ export default function SubArea({ data, showHeading }) {
               </div>
             </Col>
           )}
+      </Row>
+      <Row className="subarea-container mt-3">
+        <Col>
+          {subAreasNotesList
+            .filter(note => data[note.noteVar]?.data[note.noteVar])
+            .map((note, index) => (
+              <div key={index} className="subarea-list subarea-note">
+                {note.display && (
+                  <h4>{note.display}</h4>
+                )}
+                <HtmlContent>
+                  {data[note.noteVar].data[note.noteVar]}
+                </HtmlContent>
+              </div>
+            ))}
+        </Col>
       </Row>
     </div>
   )
