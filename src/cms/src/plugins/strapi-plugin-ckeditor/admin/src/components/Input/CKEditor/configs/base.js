@@ -27,11 +27,11 @@ import ckeditor5LanguageDll from "@ckeditor/ckeditor5-language/build/language.js
 import ckeditor5HighlightDll from "@ckeditor/ckeditor5-highlight/build/highlight.js";
 import ckeditor5StyleDll from "@ckeditor/ckeditor5-style/build/style.js";
 import ckeditor5MentionDll from "@ckeditor/ckeditor5-mention/build/mention.js";
-import ckeditor5FontWithPickerDll from "@_sh/ckeditor5-font-with-picker/build/font-with-picker.js";
+import ckeditor5FontWithPickerDll from "@_sh/ckeditor5-font-with-picker/build/font-with-picker";
 
 import sanitizeHtml from "sanitize-html";
 
-import * as strapiPlugins from '../plugins'
+import * as strapiPlugins from "../plugins";
 window.CKEditor5.strapiPlugins = strapiPlugins;
 
 const w = {
@@ -87,12 +87,17 @@ const w = {
   RemoveFormat: window.CKEditor5.removeFormat.RemoveFormat,
   SourceEditing: window.CKEditor5.sourceEditing.SourceEditing,
   SpecialCharacters: window.CKEditor5.specialCharacters.SpecialCharacters,
-  SpecialCharactersArrows: window.CKEditor5.specialCharacters.SpecialCharactersArrows,
-  SpecialCharactersCurrency: window.CKEditor5.specialCharacters.SpecialCharactersCurrency,
+  SpecialCharactersArrows:
+    window.CKEditor5.specialCharacters.SpecialCharactersArrows,
+  SpecialCharactersCurrency:
+    window.CKEditor5.specialCharacters.SpecialCharactersCurrency,
   // SpecialCharactersEssentials: window.CKEditor5.specialCharacters.SpecialCharactersEssentials,
-  SpecialCharactersLatin: window.CKEditor5.specialCharacters.SpecialCharactersLatin,
-  SpecialCharactersMathematical: window.CKEditor5.specialCharacters.SpecialCharactersMathematical,
-  SpecialCharactersText: window.CKEditor5.specialCharacters.SpecialCharactersText,
+  SpecialCharactersLatin:
+    window.CKEditor5.specialCharacters.SpecialCharactersLatin,
+  SpecialCharactersMathematical:
+    window.CKEditor5.specialCharacters.SpecialCharactersMathematical,
+  SpecialCharactersText:
+    window.CKEditor5.specialCharacters.SpecialCharactersText,
   StrapiMediaLib: window.CKEditor5.strapiPlugins.StrapiMediaLib,
   StrapiUploadAdapter: window.CKEditor5.strapiPlugins.StrapiUploadAdapter,
   Strikethrough: window.CKEditor5.basicStyles.Strikethrough,
@@ -108,16 +113,25 @@ const w = {
   TextPartLanguage: window.CKEditor5.language.TextPartLanguage,
   TodoList: window.CKEditor5.list.TodoList,
   Underline: window.CKEditor5.basicStyles.Underline,
-  WordCount: window.CKEditor5.wordCount.WordCount
-}
-
+  WordCount: window.CKEditor5.wordCount.WordCount,
+};
 
 const base = {
   heading: {
     options: [
       { model: "paragraph", title: "Paragraph", class: "ck-heading_paragraph" },
-      { model: "heading3", view: "h3", title: "Heading 3", class: "ck-heading_heading3" },
-      { model: "heading4", view: "h4", title: "Heading 4", class: "ck-heading_heading4" },
+      {
+        model: "heading3",
+        view: "h3",
+        title: "Heading 3",
+        class: "ck-heading_heading3",
+      },
+      {
+        model: "heading4",
+        view: "h4",
+        title: "Heading 4",
+        class: "ck-heading_heading4",
+      },
     ],
   },
   htmlSupport: {
@@ -133,7 +147,10 @@ const base = {
       {
         attributes: [
           { key: /^on(.*)/i, value: true },
-          { key: /.*/, value: /(\b)(on\S+)(\s*)=|javascript:|(<\s*)(\/*)script/i },
+          {
+            key: /.*/,
+            value: /(\b)(on\S+)(\s*)=|javascript:|(<\s*)(\/*)script/i,
+          },
           { key: /.*/, value: /data:(?!image\/(png|jpeg|gif|webp))/i },
         ],
       },
@@ -151,29 +168,29 @@ const base = {
     },
   },
   mediaEmbed: {
-    previewsInData: true
+    previewsInData: true,
   },
   table: {
     contentToolbar: [
-      'tableColumn',
-      'tableRow',
-      'mergeTableCells',
-      'tableCellProperties'
+      "tableColumn",
+      "tableRow",
+      "mergeTableCells",
+      "tableCellProperties",
     ],
   },
   image: {
     toolbar: [
-      'linkImage',
-      '|',
+      "linkImage",
+      "|",
       // 'toggleImageCaption',
-      'imageTextAlternative'
+      "imageTextAlternative",
     ],
     insert: {
       integrations: ["insertImageViaUrl"],
     },
   },
   link: {
-    defaultProtocol: 'https://',
+    defaultProtocol: "https://",
     decorators: {
       openInNewTab: {
         mode: "manual",
@@ -185,42 +202,42 @@ const base = {
         },
       },
       detectDownloadable: {
-        mode: 'automatic',
-        callback: url => url.endsWith( '.pdf' ),
+        mode: "automatic",
+        callback: (url) => url.endsWith(".pdf"),
         attributes: {
           target: "_blank",
           rel: "noopener",
-        }
+        },
       },
       makeLinkWithIcon: {
-        mode: 'manual',
-        label: 'Learn more link',
+        mode: "manual",
+        label: "Learn more link",
         attributes: {
-            class: 'learn-more-link',
-        }
+          class: "learn-more-link",
+        },
       },
       makeButton: {
-        mode: 'manual',
-        label: 'Primary button',
+        mode: "manual",
+        label: "Primary button",
         attributes: {
-            class: 'btn btn-primary',
-            role: "button"
-        }
+          class: "btn btn-primary",
+          role: "button",
+        },
       },
       makeSecondaryButton: {
-        mode: 'manual',
-        label: 'Secondary button',
+        mode: "manual",
+        label: "Secondary button",
         attributes: {
-          class: 'btn btn-secondary',
-          role: "button"
-        }
+          class: "btn btn-secondary",
+          role: "button",
+        },
       },
     },
   },
   list: {
     properties: {
-      styles: false
-    }
+      styles: false,
+    },
   },
   style: {
     definitions: [
@@ -245,24 +262,26 @@ const base = {
 };
 
 const toolbarConfig = [
-  'heading',
-  'style',
-  '|',
-  'bold', 'italic',
-  'underline',
-  '|',
-  'link',
-  'strapiMediaLib',
-  '|',
-  'bulletedList',
-  'numberedList',
-  '|',
-  'horizontalLine',
-  'blockQuote',
-  'insertTable',
-  'mediaEmbed', '|',
-  'removeFormat',
-  'SourceEditing'
+  "heading",
+  "style",
+  "|",
+  "bold",
+  "italic",
+  "underline",
+  "|",
+  "link",
+  "strapiMediaLib",
+  "|",
+  "bulletedList",
+  "numberedList",
+  "|",
+  "horizontalLine",
+  "blockQuote",
+  "insertTable",
+  "mediaEmbed",
+  "|",
+  "removeFormat",
+  "SourceEditing",
 ];
 
 const basePlugins = [
@@ -326,38 +345,39 @@ const basePlugins = [
 ];
 
 export const toolbarEditorConfig = {
-  plugins:basePlugins,
+  plugins: basePlugins,
   ...base,
   toolbar: toolbarConfig,
-}
+};
 
 export const toolbarBaloonEditorConfig = {
-  plugins:[...basePlugins, w.BalloonToolbar],
+  plugins: [...basePlugins, w.BalloonToolbar],
   ...base,
   toolbar: toolbarConfig,
-
-}
+};
 
 export const blockBaloonEditorConfig = {
-  plugins:[
-    ...basePlugins.filter(({pluginName})=>
-      pluginName !== "SourceEditing" &&
-      pluginName !== "SpecialCharacters" &&
-      pluginName !== "SpecialCharactersArrows" &&
-      pluginName !== "SpecialCharactersCurrency" &&
-      pluginName !== "SpecialCharactersEssentials" &&
-      pluginName !== "SpecialCharactersLatin" &&
-      pluginName !== "SpecialCharactersMathematical" &&
-      pluginName !== "SpecialCharactersText" &&
-      pluginName !== "PageBreak" &&
-      pluginName !== "HorizontalLine" &&
-      pluginName !== "MediaEmbed" &&
-      pluginName !== "HtmlEmbed" &&
-      pluginName !== "Code" &&
-      pluginName !== "CodeBlock"
+  plugins: [
+    ...basePlugins.filter(
+      ({ pluginName }) =>
+        pluginName !== "SourceEditing" &&
+        pluginName !== "SpecialCharacters" &&
+        pluginName !== "SpecialCharactersArrows" &&
+        pluginName !== "SpecialCharactersCurrency" &&
+        pluginName !== "SpecialCharactersEssentials" &&
+        pluginName !== "SpecialCharactersLatin" &&
+        pluginName !== "SpecialCharactersMathematical" &&
+        pluginName !== "SpecialCharactersText" &&
+        pluginName !== "PageBreak" &&
+        pluginName !== "HorizontalLine" &&
+        pluginName !== "MediaEmbed" &&
+        pluginName !== "HtmlEmbed" &&
+        pluginName !== "Code" &&
+        pluginName !== "CodeBlock",
     ),
-    w.BlockToolbar, w.BalloonToolbar
+    w.BlockToolbar,
+    w.BalloonToolbar,
   ],
   ...base,
-  blockToolbar: toolbarConfig
-}
+  blockToolbar: toolbarConfig,
+};

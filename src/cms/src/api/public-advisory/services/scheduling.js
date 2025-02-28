@@ -13,23 +13,23 @@ module.exports = ({ strapi }) => ({
 
     if (Object.keys(advisoryStatusMap).length > 0) {
       // fetch advisories to unpublish - public advisory table
-      const advisoryToUnpublish = await strapi.entityService.findMany(
-        "api::public-advisory.public-advisory", {
+      const advisoryToUnpublish = await strapi.documents("api::public-advisory.public-advisory").findMany({
         filters: {
           expiryDate: {
             $lte: new Date().toISOString()
           },
           advisoryStatus: advisoryStatusMap["PUB"].id,
         },
-        publicationState: "live",
+        status: "published",
         populate: "*",
       });
 
       // delete advisories - public advisory table
       advisoryToUnpublish.forEach(async (advisory) => {
         strapi.log.info(`unpublishing public-advisory [advisoryNumber:${advisory.advisoryNumber}]`);
-        await strapi.entityService.update(
-          "api::public-advisory.public-advisory", advisory.id, {
+        await strapi.documents("api::public-advisory.public-advisory").update({
+          documentId: "__TODO__",
+
           data: {
             publishedAt: null,
           }
@@ -53,8 +53,7 @@ module.exports = ({ strapi }) => ({
 
       // unpublish advisories - audit table
       advisoryToUnpublish.forEach(async (advisory) => {
-        const advisoryAudit = await strapi.entityService.findMany(
-          "api::public-advisory-audit.public-advisory-audit", {
+        const advisoryAudit = await strapi.documents("api::public-advisory-audit.public-advisory-audit").findMany({
           filters: {
             advisoryNumber: advisory.advisoryNumber,
             isLatestRevision: true
@@ -62,8 +61,9 @@ module.exports = ({ strapi }) => ({
         });
         if (advisoryAudit.length) {
           strapi.log.info(`setting public-advisory-audit to inactive [advisoryNumber:${advisory.advisoryNumber}]`);
-          await strapi.entityService.update(
-            "api::public-advisory-audit.public-advisory-audit", advisoryAudit[0].id, {
+          await strapi.documents("api::public-advisory-audit.public-advisory-audit").update({
+            documentId: "__TODO__",
+
             data: {
               publishedAt: new Date(),
               advisoryStatus: {
@@ -73,8 +73,7 @@ module.exports = ({ strapi }) => ({
               modifiedBy: "system",
               modifiedDate: new Date(),
             }
-          }
-          )
+          })
             .catch((error) => {
               strapi.log.error(
                 `error updating public-advisory-audit #${advisory.advisoryNumber}`,
@@ -90,8 +89,7 @@ module.exports = ({ strapi }) => ({
   publish: async (advisoryStatusMap) => {
     if (Object.keys(advisoryStatusMap).length > 0) {
       // fetch advisories to publish - audit table
-      const draftAdvisoryToPublishAudit = await strapi.entityService.findMany(
-        "api::public-advisory-audit.public-advisory-audit", {
+      const draftAdvisoryToPublishAudit = await strapi.documents("api::public-advisory-audit.public-advisory-audit").findMany({
         filters: {
           isLatestRevision: true,
           advisoryDate: {
@@ -99,18 +97,18 @@ module.exports = ({ strapi }) => ({
           },
           advisoryStatus: advisoryStatusMap["APR"].id,
         },
-        publicationState: "live",
+        status: "published",
         populate: "*",
-      }
-      );
+      });
 
       let publishedAdviosryCount = 0;
 
       // publish advisories - audit table
       draftAdvisoryToPublishAudit.forEach(async (advisory) => {
         strapi.log.info(`publishing approved public-advisory-audit [advisoryNumber:${advisory.advisoryNumber}]`);
-        await strapi.entityService.update(
-          "api::public-advisory-audit.public-advisory-audit", advisory.id, {
+        await strapi.documents("api::public-advisory-audit.public-advisory-audit").update({
+          documentId: "__TODO__",
+
           data: {
             publishedAt: advisory.advisoryDate,
             advisoryStatus: {
@@ -120,8 +118,7 @@ module.exports = ({ strapi }) => ({
             modifiedDate: new Date(),
             removalDate: null,
           }
-        }
-        )
+        })
           .then(async (advisory) => {
             publishedAdviosryCount++;
             await queueAdvisoryEmail(
@@ -148,8 +145,7 @@ module.exports = ({ strapi }) => ({
       const nextWeek = new Date(today.setTime(today.getTime() + 7 * 24 * 60 * 60 * 1000));
       const rangeStart = new Date(nextWeek.setTime(nextWeek.getTime() - 60 * 1000)).toISOString();
       const rangeEnd = new Date(nextWeek.setTime(nextWeek.getTime() + 120 * 1000)).toISOString();
-      const expiringSoon = await strapi.entityService.findMany(
-        "api::public-advisory-audit.public-advisory-audit", {
+      const expiringSoon = await strapi.documents("api::public-advisory-audit.public-advisory-audit").findMany({
         filters: {
           $and: [
             {
@@ -166,7 +162,7 @@ module.exports = ({ strapi }) => ({
             }
           ]
         },
-        publicationState: "live"
+        status: "published"
       });
       expiringSoon.forEach(async (advisory) => {
         strapi.log.info(`advisory expiring soon [advisoryNumber:${advisory.advisoryNumber}]`);
@@ -193,8 +189,7 @@ module.exports = ({ strapi }) => ({
         const reminderDate = new Date(today.setTime(today.getTime() + reminder.daysBefore * 24 * 60 * 60 * 1000));
         const rangeStart = new Date(reminderDate.setTime(reminderDate.getTime() - 60 * 1000)).toISOString();
         const rangeEnd = new Date(reminderDate.setTime(reminderDate.getTime() + 120 * 1000)).toISOString();
-        const publishingSoon = await strapi.entityService.findMany(
-          "api::public-advisory-audit.public-advisory-audit", {
+        const publishingSoon = await strapi.documents("api::public-advisory-audit.public-advisory-audit").findMany({
           filters: {
             $and: [
               {
@@ -211,7 +206,7 @@ module.exports = ({ strapi }) => ({
               }
             ]
           },
-          publicationState: "live"
+          status: "published"
         });
         publishingSoon.forEach(async (advisory) => {
           strapi.log.info(`advisory going live soon [advisoryNumber:${advisory.advisoryNumber}]`);
@@ -231,12 +226,10 @@ module.exports = ({ strapi }) => ({
 
   getAdvisoryStatusMap: async () => {
     // fetch advisory statuses
-    const advisoryStatus = await strapi.entityService.findMany(
-      "api::advisory-status.advisory-status", {
+    const advisoryStatus = await strapi.documents("api::advisory-status.advisory-status").findMany({
       limit: -1,
       populate: "*",
-    }
-    );
+    });
     const advisoryStatusMap = {};
     advisoryStatus.forEach(a => {
       advisoryStatusMap[a.code] = a;
