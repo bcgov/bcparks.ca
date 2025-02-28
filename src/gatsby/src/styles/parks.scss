@@ -561,6 +561,7 @@ h2.section-heading {
     .subarea-list:not(.subarea-note) {
       ul {
         list-style: none;
+        margin: 0;
         padding: 0;
       }
     }
@@ -579,6 +580,9 @@ h2.section-heading {
   .subarea-list {
     h4 {
       margin-bottom: 4px;
+    }
+    & + .subarea-list {
+      margin-top: 16px;
     }
   }
 }

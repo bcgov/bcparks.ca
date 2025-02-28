@@ -15,16 +15,16 @@ const preProcessSubAreas = (subAreas) => {
       subArea = groupSubAreaDates(subArea);
 
       // get distinct date ranges sorted chronologically
-      subArea.operationDates = processDateRanges(subArea.operationDates, fmt, yr, " to ")
-      subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, " to ")
-      subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, " to ")
-      subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, " to ")
+      subArea.operationDates = processDateRanges(subArea.operationDates, fmt, yr, " to ", false)
+      subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, " to ", false)
+      subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, " to ", false)
+      subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, " to ", false)
 
       // add a placeholder if no dates are available for the current year
       if (subArea.serviceDates.length === 0
         && subArea.resDates.length === 0
         && subArea.offSeasonDates.length === 0) {
-        subArea.serviceDates.push(`${new Date().getFullYear()}: Dates unavailable`)
+        subArea.serviceDates.push("Dates unavailable")
       }
     }
   }
