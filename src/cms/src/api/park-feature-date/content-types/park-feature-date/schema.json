@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_feature_dates",
+  "info": {
+    "singularName": "park-feature-date",
+    "pluralName": "park-feature-dates",
+    "displayName": "Park-feature-date"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "isActive": {
+      "type": "boolean"
+    },
+    "operatingYear": {
+      "type": "integer",
+      "required": true
+    },
+    "startDate": {
+      "type": "date",
+      "required": true
+    },
+    "endDate": {
+      "type": "date",
+      "required": true
+    },
+    "dateType": {
+      "type": "enumeration",
+      "enum": [
+        "Operation",
+        "Reservation",
+        "Winter fee"
+      ],
+      "required": true
+    },
+    "adminNote": {
+      "type": "text"
+    },
+    "parkOperationSubArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::park-operation-sub-area.park-operation-sub-area",
+      "inversedBy": "parkFeatureDates"
+    }
+  }
+}
