@@ -35,6 +35,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
   const [selectedCity, setSelectedCity] = useState([])
   const [hasPermission, setHasPermission] = useState(false)
   const [isMatched, setIsMatched] = useState(false)
+  const [hasParkSelected, setHasParkSelected] = useState(false)
   const [currentLocation, setCurrentLocation] = useState({
     strapi_id: 0,
     cityName: "Current location",
@@ -96,6 +97,8 @@ const MainSearch = ({ hasCityNameSearch }) => {
   const handleSearchNameChange = (selected) => {
     if (selected.length) {
       setSearchText(selected[0]?.protectedAreaName)
+      setHasParkSelected(true)
+      navigate(`/${selected[0].slug}`)
     }
   }
   const handleSearchNameInputChange = (text) => {
@@ -128,7 +131,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
 
   // useEffect
   useEffect(() => {
-    if (searchText) {
+    if (searchText && !hasParkSelected) {
       setInputText(searchText)
       searchParkFilter()
     }
