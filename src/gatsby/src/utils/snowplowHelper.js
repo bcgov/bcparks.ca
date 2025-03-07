@@ -32,21 +32,27 @@ export const trackSnowplowEvent = (
 // convert filter array to object
 export const transformFilters = filters => {
   return filters.reduce((acc, filter) => {
-    if (!acc[filter.type]) {
-      acc[filter.type] = []
+    let filterType = filter.type.toLocaleLowerCase()
+    // change "things to do" to "activities"
+    if (filterType === "things to do") {
+      filterType = "activities";
     }
-    acc[filter.type].push(filter.label)
+
+    if (!acc[filterType]) {
+      acc[filterType] = []
+    }
+    acc[filterType].push(filter.label)
 
     // check for "Popular" filters
     if (
-      (filter.type === "Camping" && [1, 36].includes(filter.value)) ||
-      (filter.type === "Things to do" && [1, 3, 8, 9].includes(filter.value)) ||
-      (filter.type === "Facilities" && filter.value === 6)
+      (filterType === "camping" && [1, 36].includes(filter.value)) ||
+      (filterType === "activities" && [1, 3, 8, 9].includes(filter.value)) ||
+      (filterType === "facilities" && filter.value === 6)
     ) {
-      if (!acc["Popular"]) {
-        acc["Popular"] = []
+      if (!acc["popular"]) {
+        acc["popular"] = []
       }
-      acc["Popular"].push(filter.label)
+      acc["popular"].push(filter.label)
     }
     return acc
   }, {})
