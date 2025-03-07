@@ -35,6 +35,7 @@ const MainSearch = ({ hasCityNameSearch }) => {
   const [selectedCity, setSelectedCity] = useState([])
   const [hasPermission, setHasPermission] = useState(false)
   const [isMatched, setIsMatched] = useState(false)
+  const [selectedParkSlug, setSelectedParkSlug] = useState("")
   const [currentLocation, setCurrentLocation] = useState({
     strapi_id: 0,
     cityName: "Current location",
@@ -45,6 +46,12 @@ const MainSearch = ({ hasCityNameSearch }) => {
 
   // functions
   const searchParkFilter = (clickedCity) => {
+    // if a park is selected, navigate to the park page directly
+    if (selectedParkSlug.length) {
+      navigate(`/${selectedParkSlug}`)
+      return
+    }
+    // if not, navigate to the find a park page with the selected city and search text
     let findAPark = "/find-a-park/";
     let queryText = searchText || inputText;
     const queryString = qs.stringify({
@@ -95,7 +102,8 @@ const MainSearch = ({ hasCityNameSearch }) => {
   // event handlers
   const handleSearchNameChange = (selected) => {
     if (selected.length) {
-      setSearchText(selected[0]?.protectedAreaName)
+      setSearchText(selected[0].protectedAreaName)
+      setSelectedParkSlug(selected[0].slug)
     }
   }
   const handleSearchNameInputChange = (text) => {
