@@ -32,7 +32,7 @@ export const trackSnowplowEvent = (
 // convert filter array to object
 export const transformFilters = filters => {
   return filters.reduce((acc, filter) => {
-    let filterType = filter.type.toLowerCase()
+    let filterType = filter.type.toLocaleLowerCase()
     // change "things to do" to "activities"
     if (filterType === "things to do") {
       filterType = "activities";
