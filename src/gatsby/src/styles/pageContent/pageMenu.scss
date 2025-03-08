@@ -47,15 +47,15 @@
           width: 100%;
           margin-top: 16px;
           padding: 10px 12px;
+          &[active-section="true"] {
+            color: $colorBlue;
+            font-weight: bold;
+            box-sizing: border-box;
+            border-left: $colorBlue solid 3px;
+          }
         }
       }
     }
-  }
-  & [active-section="true"] {
-    color: $colorBlue;
-    font-weight: bold;
-    box-sizing: border-box;
-    border-left: $colorBlue solid 3px;
   }
 }
 // mobile menu
