@@ -1,74 +1,77 @@
 @import "../variables.scss";
 
-.page-menu--desktop {
-  padding-right: 20px;
-  font-size: 0.875rem;
-  padding-left: 0px;
-  margin-bottom: 80px;
-
-  align-self: flex-start;
-  top: 0px;
-  position: sticky;
-  position: -webkit-sticky;
-
-  .navbar {
-    padding: 0;
-  }
-
-  a {
-    width: 100%;
-    color: $colorBlueMed;
-    font-size: 1rem;
-    text-decoration: none;
-    border-radius: 0px;
-    margin-top: 15px;
-    padding: 6px 12px;
-    &:hover, &:focus-visible {
-      color: $colorBlue;
-      text-decoration: underline;
-    }
-    &:focus-visible {
-      border: $colorWhite solid 2px;
-      outline: $colorBlueMed solid 2px;
-      outline-offset: 0px;
-      border-radius: 4px;
-    }
-    &:first-of-type {
-      margin-top: 64px;
-    }
-  }
-}
-.page-menu--desktop[section-count="1"] {
-  display: none;
-}
-.page-menu--desktop [active-section="true"] {
-  color: $colorBlue;
-  font-weight: bold;
-  box-sizing: border-box;
-  border-left: $colorBlue solid 3px;
-}
-.page-menu--mobile {
-  padding: 0 16px;
-  .section-list-container {
+// both desktop and mobile menu
+.page-menu--desktop, .page-menu--mobile {
+  .page-menu--container {
     padding-top: 64px;
-    p {
+    .menu-header {
       font-size: 1.25rem;
     }
     ul {
-      margin-bottom: 0;
+      margin: 0;
+      a {
+        display: inline-block;
+        color: $colorBlueMed;
+        font-size: 1rem;
+        line-height: 1.5;
+        text-decoration: none;
+        &:hover, &:focus-visible {
+          color: $colorBlue;
+          text-decoration: underline;
+        }
+        &:focus-visible {
+          border: $colorWhite solid 2px;
+          border-radius: 4px;
+          outline: $colorBlueMed solid 2px;
+          outline-offset: 0px;
+        }
+      }
+    }
+  }
+}
+// desktop menu
+.page-menu--desktop {
+  top: 0px;
+  position: sticky;
+  position: -webkit-sticky;
+  align-self: flex-start;
+  margin-bottom: 80px;
+  padding-left: 0px;
+  padding-right: 20px;  
+  .page-menu--container {
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        a {
+          width: 100%;
+          margin-top: 16px;
+          padding: 10px 12px;
+          &[active-section="true"] {
+            color: $colorBlue;
+            font-weight: bold;
+            box-sizing: border-box;
+            border-left: $colorBlue solid 3px;
+          }
+        }
+      }
+    }
+  }
+}
+// mobile menu
+.page-menu--mobile {
+  padding: 0 16px;
+  .page-menu--container {
+    .menu-header {
+      margin-bottom: 16px;
+    }
+    ul {
       li {
         & + li {
           margin-top: 8px;
         }
         a {
-          text-decoration: underline;
-          &:focus-visible {
-            color: $colorBlue;
-            border-radius: 4px;
-            border: $colorWhite solid 2px;
-            outline: $colorBlueMed solid 2px;
-            outline-offset: 0px;
-          }
+          padding: 10px 0;
         }
       }
     }
