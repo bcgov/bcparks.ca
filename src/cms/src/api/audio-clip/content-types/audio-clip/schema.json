@@ -38,10 +38,20 @@
     "audioClipType": {
       "type": "enumeration",
       "enum": [
-        "Park name",
         "Place name",
         "Welcome message"
       ]
+    },
+    "displayLocation": {
+      "type": "customField",
+      "options": [
+        "Park name:tldr",
+        "Highlights in this park:highlights",
+        "About this park - history:history",
+        "About this park - cultural heritage:heritage"
+      ],
+      "customField": "plugin::multi-select.multi-select",
+      "required": false
     },
     "description": {
       "type": "customField",
