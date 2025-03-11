@@ -536,16 +536,13 @@ button.btn:not(.btn-link):not(.btn-tooltip) {
     width: 28px;
     color: $colorBlue;
   }
-  &:hover, &:focus {
-    background-color: $colorBlue;
+  &:hover, &:focus, &:focus-visible {
+    background-color: $colorBlueLight;
     border: $colorBlue solid 1px;
-    svg {
-      color: $colorWhite !important;
-    }
   }
   &:focus-visible {
-    border: $colorWhite solid 2px;
     outline: $colorBlueMed solid 2px;
+    outline-offset: 2px;
   }
 }
 

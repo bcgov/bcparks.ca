@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useMemo } from "react"
 import { hydrateRoot, createRoot } from "react-dom/client"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
@@ -21,9 +21,12 @@ export default function ParkOverview({ description, type, audioClips }) {
   const hrAtEnd = description.trim().endsWith("<hr>")
   const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
   const hasAudioClipPlaceholder = $(".audio-clip").length > 0
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const audioClip =
-    audioClips?.filter(audio => audio.audioClipType !== "Park name") || []
+    // Check if array contains a "highlights"
+    const hasHighlights = (array) => array?.includes("highlights") || false
+    // Filter audio clips if it has a "highlights" displayLocation
+    const audioClip = useMemo(() => {
+      return audioClips?.filter(audio => hasHighlights(audio.displayLocation?.strapi_json_value)) || []
+    }, [audioClips])
 
   useEffect(() => {
     if (!hasHr && ref.current.clientHeight > 260) {
@@ -58,12 +61,12 @@ export default function ParkOverview({ description, type, audioClips }) {
           if (placeholder.hasAttribute("data-reactroot")) {
             root = hydrateRoot(
               placeholder,
-              <AudioButton audio={audioClip[0]} />
+              <AudioButton audio={audioClip[0]} location="highlights" />
             )
           // create a new root if the placeholder hasn't been hydrated
           } else {
             root = createRoot(placeholder)
-            root.render(<AudioButton audio={audioClip[0]} />)
+            root.render(<AudioButton audio={audioClip[0]} location="highlights" />)
           }
         }
       }
@@ -105,7 +108,7 @@ export default function ParkOverview({ description, type, audioClips }) {
         </HtmlContent>
         {/* display audio button at the bottom if it doesn't have the placeholder */}
         {!hasAudioClipPlaceholder && audioClip.length > 0 ? (
-          <AudioButton audio={audioClip[0]} />
+          <AudioButton audio={audioClip[0]} location="highlights" />
         ) : (
           ""
         )}
