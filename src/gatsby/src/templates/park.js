@@ -437,6 +437,7 @@ export default function ParkTemplate({ data }) {
                   biogeoclimaticZones={park.biogeoclimaticZones}
                   terrestrialEcosections={park.terrestrialEcosections}
                   marineEcosections={park.marineEcosections}
+                  audioClips={park.audioClips}
                 />
               </div>
             )}

@@ -43,7 +43,6 @@ export default function AudioButton({ audio, location }) {
   const [expanded, setExpanded] = useState(false)
   const [isPlayerVisible, setIsPlayerVisible] = useState(false)
   const hasTranscript = audio?.transcript.data?.transcript.length > 0
-  const displayLocations = audio?.displayLocation?.strapi_json_value || []
 
   // functions
   const stripHtmlTags = html => {
@@ -66,10 +65,6 @@ export default function AudioButton({ audio, location }) {
     const seconds = time % 60
     return `00:${minutes.toString().padStart(2, "0")}:
       ${seconds.toFixed(3).padStart(6, "0")}`
-  }
-  // check if location matches a value in displayLocations
-  const checkLocation = string => {
-    return displayLocations?.includes(string) && location === string
   }
 
   // effects
@@ -95,7 +90,7 @@ export default function AudioButton({ audio, location }) {
   return (
     <>
       {/* audio button - display in tldr */}
-      {checkLocation("tldr") && (
+      {location === "tldr" && (
         <div className="audio-container park-name">
           <button
             aria-label="Play park name audio"
@@ -106,8 +101,8 @@ export default function AudioButton({ audio, location }) {
           </button>
         </div>
       )}
-      {/* audio button + credit - display in highlights */}
-      {checkLocation("highlights") && (
+      {/* audio button + credit - display in highlights or about(heritage/history) */}
+      {location !== "tldr" && (
         <div className="audio-container place-name">
           <div className="audio-container--left">
             <button

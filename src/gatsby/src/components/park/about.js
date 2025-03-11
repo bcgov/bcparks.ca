@@ -7,11 +7,22 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "../htmlContent"
 import CustomToggle from "./customToggle"
+import AudioButton from "../audioButton"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion }) => {
+export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion, audioClips }) => {
+  // Check if array contains a "heritage" or "history"
+  const hasHeritageOrHistory = (array) => {
+    const keywords = ["heritage", "history"]
+    return array?.some(item => keywords.includes(item)) || false
+  }
+  // Filter audio clips if it has a "heritage" or "history" displayLocation
+  const audioClip = useMemo(() => {
+    return audioClips?.filter(audio => hasHeritageOrHistory(audio.displayLocation?.strapi_json_value)) || []
+  }, [audioClips])
+
   return (
     <Accordion
       className={`about-accordion is-open--${openAccordions[eventKey]}`}
@@ -38,6 +49,11 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion 
           <HtmlContent>
             {!isNullOrWhiteSpace(data.description) && data.description}
           </HtmlContent>
+          {audioClip.length > 0 && (data.code === "heritage" || data.code === "history") ? (
+            <AudioButton audio={audioClip[0]} location="about" />
+          ) : (
+            ""
+          )}
         </div>
       </Accordion.Collapse>
     </Accordion>
@@ -45,10 +61,10 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion 
 }
 
 export default function About({
-  parkType, conservation, culturalHeritage, history, wildlife, biogeoclimaticZones, terrestrialEcosections, marineEcosections
+  parkType, conservation, culturalHeritage, history, wildlife, biogeoclimaticZones, terrestrialEcosections, marineEcosections, audioClips
 }) {
   const dataList = [
-    { "title": "Cultural heritage", "code": "cultural-heritage", "description": culturalHeritage },
+    { "title": "Cultural heritage", "code": "heritage", "description": culturalHeritage },
     { "title": "History", "code": "history", "description": history },
     { "title": "Conservation", "code": "conservation", "description": conservation },
     { "title": "Wildlife", "code": "wildlife", "description": wildlife }
@@ -200,6 +216,7 @@ export default function About({
                   data={data}
                   openAccordions={openAccordions}
                   toggleAccordion={toggleAccordion}
+                  audioClips={audioClips}
                 />
               ))}
             </Col>
