@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { hydrateRoot, createRoot } from "react-dom/client"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
@@ -21,12 +21,11 @@ export default function ParkOverview({ description, type, audioClips }) {
   const hrAtEnd = description.trim().endsWith("<hr>")
   const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
   const hasAudioClipPlaceholder = $(".audio-clip").length > 0
-    // Check if array contains a "highlights"
-    const hasHighlights = (array) => array?.includes("highlights") || false
-    // Filter audio clips if it has a "highlights" displayLocation
-    const audioClip = useMemo(() => {
-      return audioClips?.filter(audio => hasHighlights(audio.displayLocation?.strapi_json_value)) || []
-    }, [audioClips])
+  // Check if array contains a "highlights"
+  const hasHighlights = (array) => array?.includes("highlights") || false
+  // Filter audio clips if it has a "highlights" displayLocation
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const audioClip = audioClips?.filter(audio => hasHighlights(audio.displayLocation?.strapi_json_value)) || []
 
   useEffect(() => {
     if (!hasHr && ref.current.clientHeight > 260) {
