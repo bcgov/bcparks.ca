@@ -67,6 +67,13 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
+    "adminNote": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
     "protectedAreas": {
       "type": "relation",
       "relation": "manyToMany",
