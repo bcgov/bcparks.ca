@@ -11,6 +11,7 @@ export default function ParkOverview({ description, type, audioClips }) {
   const [height, setHeight] = useState(0)
   const [sectionHeight, setSectionHeight] = useState(0)
   const ref = useRef(null)
+  const rootRef = useRef(null)
   const isLong = height >= 300
   const isMedium = height > 260 && height < 300
 
@@ -46,26 +47,27 @@ export default function ParkOverview({ description, type, audioClips }) {
   // the placeholder needs to be hydrated since audio button has event listeners
   useEffect(() => {
     if (typeof window === "undefined") return
-    let root = null
     let isUnmounting = false
 
     const setupAudio = () => {
       if (isUnmounting) return
-      // check if the placeholder exists and if there is an audio clip
       if (hasAudioClipPlaceholder && audioClip.length > 0) {
         const placeholder = document.getElementsByClassName("audio-clip")[0]
         if (placeholder) {
-          placeholder.innerHTML = ""
-          // check if the placeholder has been hydrated
-          if (placeholder.hasAttribute("data-reactroot")) {
-            root = hydrateRoot(
-              placeholder,
-              <AudioButton audio={audioClip[0]} location="highlights" />
-            )
-          // create a new root if the placeholder hasn't been hydrated
+          if (rootRef.current) {
+            rootRef.current.render(<AudioButton audio={audioClip[0]} location="highlights" />)
           } else {
-            root = createRoot(placeholder)
-            root.render(<AudioButton audio={audioClip[0]} location="highlights" />)
+            // check if the placeholder has been hydrated
+            if (placeholder.hasAttribute("data-reactroot")) {
+              rootRef.current = hydrateRoot(
+                placeholder,
+                <AudioButton audio={audioClip[0]} location="highlights" />
+              )
+            // create a new root if the placeholder hasn't been hydrated
+            } else {
+              rootRef.current = createRoot(placeholder)
+              rootRef.current.render(<AudioButton audio={audioClip[0]} location="highlights" />)
+            }
           }
         }
       }
@@ -77,8 +79,9 @@ export default function ParkOverview({ description, type, audioClips }) {
       clearTimeout(timer)
       // unmount the root if it exists
       requestAnimationFrame(() => {
-        if (root) {
-          root.unmount()
+        if (rootRef.current) {
+          rootRef.current.unmount()
+          rootRef.current = null
         }
       })
     }
