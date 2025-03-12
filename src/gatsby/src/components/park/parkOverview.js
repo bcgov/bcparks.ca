@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useMemo } from "react"
 import { hydrateRoot, createRoot } from "react-dom/client"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
@@ -25,8 +25,9 @@ export default function ParkOverview({ description, type, audioClips }) {
   // Check if array contains a "highlights"
   const hasHighlights = (array) => array?.includes("highlights") || false
   // Filter audio clips if it has a "highlights" displayLocation
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const audioClip = audioClips?.filter(audio => hasHighlights(audio.displayLocation?.strapi_json_value)) || []
+  const audioClip = useMemo(() => {
+    return audioClips?.filter(audio => hasHighlights(audio.displayLocation?.strapi_json_value)) || []
+  }, [audioClips])
 
   useEffect(() => {
     if (!hasHr && ref.current.clientHeight > 260) {
@@ -85,7 +86,7 @@ export default function ParkOverview({ description, type, audioClips }) {
         }
       })
     }
-  }, [hasAudioClipPlaceholder, audioClip])
+  }, [hasAudioClipPlaceholder, audioClip, expanded])
 
   return (
     <div id="highlights" className="anchor-link">
