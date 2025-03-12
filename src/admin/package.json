@@ -20,7 +20,7 @@
     "bootstrap": "^4.6.0",
     "history": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
-    "keycloak-js": "^12.0.4",
+    "keycloak-js": "^26.2.0",
     "material-table": "^1.69.2",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.45",
