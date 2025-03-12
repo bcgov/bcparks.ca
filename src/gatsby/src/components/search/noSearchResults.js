@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSearch, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 import PropTypes from "prop-types"
+import { mapUrl } from "../../utils/constants"
 
 import "../../styles/search.scss"
 
@@ -10,7 +11,7 @@ const MapLink = () => {
   return (
     <a
       className="map-link"
-      href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
+      href={mapUrl}
     >
       Map of parks
       <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="link-icon" />

@@ -4,6 +4,7 @@ import ParkAccessStatus from "./parkAccessStatus"
 import CampfireBan from "../campfireBan"
 import FontAwesome from "../fontAwesome"
 import { datePhrase, formattedTime } from "../../utils/parkDatesHelper"
+import { mapUrl } from "../../utils/constants"
 
 import PropTypes from "prop-types"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -26,7 +27,6 @@ import southCentralCoast from "../../images/area-maps/area-maps-with-labels/14-s
 // URLs
 const reservationsURL = "https://camping.bcparks.ca"
 const dayUsePassURL = "https://reserve.bcparks.ca/dayuse"
-const portalURL = "https://governmentofbc.maps.arcgis.com"
 // Helper function to get the park operation dates
 const getParkOperationDates = (operationDates, thisYear) => {
   const fmt = "MMMM D, yyyy"
@@ -96,7 +96,7 @@ export default function ParkHeader({
 }) {
   const linkZoom = mapZoom + 1
   const externalLink =
-    `${portalURL}/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,${orcs}&center=${longitude},${latitude}&level=${linkZoom}`
+    `${mapUrl}&center=${longitude},${latitude}&level=${linkZoom}`
   // Get the park operation dates
   const thisYear = new Date().getFullYear()
   const parkDates = getParkOperationDates(operationDates, thisYear)
