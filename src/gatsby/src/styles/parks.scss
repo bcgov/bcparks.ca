@@ -556,6 +556,17 @@ h2.section-heading {
         height: 16px;
       }
     }
+    .btn-tooltip {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      border-radius: 8px;
+      margin: 0;
+      padding: 0;
+      img {
+        filter: brightness(0) saturate(100%) invert(7%) sepia(0%) saturate(0%) hue-rotate(253deg) brightness(97%) contrast(97%);
+      }
+    }
   }
   &--left {
     .subarea-list:not(.subarea-note) {
@@ -584,6 +595,15 @@ h2.section-heading {
     & + .subarea-list {
       margin-top: 16px;
     }
+  }
+}
+
+// tooltip
+#winter-rate-tooltip {
+  font-size: 0.875rem;
+  .tooltip-inner {
+    background-color: $colorBlack;
+    padding: 4px 8px;
   }
 }
 
