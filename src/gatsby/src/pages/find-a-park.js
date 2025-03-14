@@ -18,6 +18,7 @@ import ParkLinksModal from "../components/search/parkLinksModal"
 import ParkCard from "../components/search/parkCard"
 import ParkNameSearch from "../components/search/parkNameSearch"
 import CityNameSearch from "../components/search/cityNameSearch"
+import { mapUrl } from "../utils/constants"
 import { useScreenSize } from "../utils/helpers"
 import { trackSnowplowEvent, transformFilters } from "../utils/snowplowHelper"
 
@@ -877,7 +878,7 @@ export default function FindAPark({ location, data }) {
                   <br />
                   <a
                     className="map-link"
-                    href="https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000"
+                    href={mapUrl}
                   >
                     Map
                     <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="link-icon" />
