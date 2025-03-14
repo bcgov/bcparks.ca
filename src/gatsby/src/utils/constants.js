@@ -1,3 +1,6 @@
+export const mapUrl = 
+  "https://governmentofbc.maps.arcgis.com/apps/instant/basic/index.html?appid=4b3eb47c25ff45fa9f6bff45e3f2a389"
+
 export const PARK_NAME_TYPE = {
   Legal: 1,
   Escaped: 2,

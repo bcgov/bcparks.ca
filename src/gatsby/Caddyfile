@@ -14,7 +14,7 @@ http://beta.bcparks.ca:3000 {
 
     root * /usr/share/caddy
 
-    redir /map https://governmentofbc.maps.arcgis.com/apps/webappviewer/index.html?id=077ef73a1eae4ca88f2bafbb831215af&query=British_Columbia_Parks_Ecological_Reserves_and_Protected_Areas_8747,ORCS_PRIMARY,0000
+    redir /map https://governmentofbc.maps.arcgis.com/apps/instant/basic/index.html?appid=4b3eb47c25ff45fa9f6bff45e3f2a389
 
     handle_errors {
         @404 {
