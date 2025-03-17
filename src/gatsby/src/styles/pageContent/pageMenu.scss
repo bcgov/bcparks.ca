@@ -14,10 +14,8 @@
         color: $colorBlueMed;
         font-size: 1rem;
         line-height: 1.5;
-        text-decoration: none;
         &:hover, &:focus-visible {
           color: $colorBlue;
-          text-decoration: underline;
         }
         &:focus-visible {
           border: $colorWhite solid 2px;
@@ -47,8 +45,9 @@
           width: 100%;
           margin-top: 16px;
           padding: 10px 12px;
+          text-decoration: none !important;
           &[active-section="true"] {
-            color: $colorBlue;
+            color: $colorBlue !important;
             font-weight: bold;
             box-sizing: border-box;
             border-left: $colorBlue solid 3px;
@@ -71,6 +70,7 @@
           margin-top: 8px;
         }
         a {
+          text-decoration: underline;
           padding: 10px 0;
         }
       }
