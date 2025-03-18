@@ -159,6 +159,15 @@ module.exports = ({ env }) => {
             "api::search-area.search-area": {
               GET: true,
             },
+            "api::park-operation-sub-area.park-operation-sub-area": {
+              GET: true,
+            },
+            "api::park-operation-sub-area-date.park-operation-sub-area-date": {
+              GET: true,
+            },
+            "api::park-feature-date.park-feature-date": {
+              GET: true,
+            },
           },
         },
       },
