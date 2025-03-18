@@ -563,8 +563,9 @@ h2.section-heading {
       border-radius: 8px;
       margin: 0;
       padding: 0;
+      // change the color of the icon to $colorGrey
       img {
-        filter: brightness(0) saturate(100%) invert(7%) sepia(0%) saturate(0%) hue-rotate(253deg) brightness(97%) contrast(97%);
+        filter: invert(7%) brightness(20%);
       }
     }
   }
