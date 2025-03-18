@@ -363,7 +363,7 @@ a.learn-more-link {
 
 //buttons
 a.btn,
-button.btn:not(.btn-link) {
+button.btn:not(.btn-link):not(.btn-tooltip) {
   height: 48px;
   display: inline-flex !important;
   align-items: center;
