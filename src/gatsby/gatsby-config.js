@@ -45,9 +45,9 @@ module.exports = {
           "footer-menu",
           "park-operation",
           "park-operation-date",
-          "park-operation-sub-area",
           "park-operation-sub-area-date",
           "park-operation-sub-area-type",
+          "park-feature-date",
           "park-contact",
           "park-operator-contact",
           "park-photo",
@@ -200,6 +200,31 @@ module.exports = {
               }
             }
           },
+          {
+            singularName: "park-operation-sub-area",
+            queryParams: {
+              populate: {
+                populate: {
+                  protectedArea: {
+                    fields: "*"
+                  },
+                  parkSubAreaType: {
+                    fields: "*",
+                    populate: {
+                      campingType: {fields: "*"},
+                      facilityType: {fields: "*"}
+                    }
+                  },
+                  parkFeatureDates: {
+                    fields: "*"
+                  },
+                  parkOperationSubAreaDates: {
+                    fields: "*"
+                  }
+                }
+              }
+            }
+          }
         ]
       }
     },

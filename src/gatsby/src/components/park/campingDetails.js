@@ -11,7 +11,7 @@ import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const CampingType = ({ camping, parkOperation }) => {
+export const CampingType = ({ camping, parkOperation, isLoadingSubAreas, subAreasLoadError }) => {
   const [expanded, setExpanded] = useState(false)
   const [height, setHeight] = useState(0)
   const [sectionHeight, setSectionHeight] = useState(0)
@@ -99,7 +99,12 @@ export const CampingType = ({ camping, parkOperation }) => {
           }
         </button>
       }
-      <ParkDates data={camping} parkOperation={parkOperation} />
+      <ParkDates
+        data={camping}
+        parkOperation={parkOperation}
+        isLoadingSubAreas={isLoadingSubAreas}
+        subAreasLoadError={subAreasLoadError}
+      />
     </div>
   )
 }
@@ -107,8 +112,6 @@ export const CampingType = ({ camping, parkOperation }) => {
 export default function CampingDetails({ data }) {
   const activeCampings = data.activeCampings
   const parkOperation = data.parkOperation
-  const subAreas = data.subAreas || []
-  subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
 
   return (
     <div id="camping" className="anchor-link">
@@ -128,6 +131,8 @@ export default function CampingDetails({ data }) {
               eventKey={index.toString()}
               camping={camping}
               parkOperation={parkOperation}
+              isLoadingSubAreas={data.isLoadingSubAreas}
+              subAreasLoadError={data.subAreasLoadError}
             />
           ))}
         </Col>

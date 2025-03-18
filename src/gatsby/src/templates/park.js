@@ -8,7 +8,7 @@ import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from '../utils/advisoryHelper';
-import { preProcessSubAreas, combineCampingTypes, combineFacilities } from '../utils/subAreaHelper';
+import { preProcessSubAreas, combineCampingTypes, combineFacilities, loadSubAreas } from '../utils/subAreaHelper';
 
 import About from "../components/park/about"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -70,10 +70,6 @@ export default function ParkTemplate({ data }) {
     ["asc"]
   )
 
-  const subAreas = preProcessSubAreas(park.parkOperationSubAreas)
-  const activeFacilities = combineFacilities(park.parkFacilities, data.allStrapiFacilityType.nodes, subAreas);
-  const activeCampings = combineCampingTypes(park.parkCampingTypes, data.allStrapiCampingType.nodes, subAreas);
-
   const hasReservations = operations.hasReservations
   const hasDayUsePass = operations.hasDayUsePass
 
@@ -87,40 +83,90 @@ export default function ParkTemplate({ data }) {
   const [hasCampfireBan, setHasCampfireBan] = useState(false)
   const [parkAccessStatus, setParkAccessStatus] = useState(null)
   const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
+  const [subAreas, setSubAreas] = useState([])
+  const [processSubAreas, setProcessSubAreas] = useState([])
+  const [subAreasLoadError, setSubAreasLoadError] = useState(false)
+  const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
+  const activeFacilities = combineFacilities(park.parkFacilities, data.allStrapiFacilityType.nodes, subAreas)
+  const activeCampings = combineCampingTypes(park.parkCampingTypes, data.allStrapiCampingType.nodes, subAreas)
 
-  useEffect(() => {
+  const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
-    loadAdvisories(apiBaseUrl, park.orcs)
-      .then(response => {
-        if (response.status === 200) {
-          setAdvisories(response.data.data)
-          setAdvisoryLoadError(false)
-        } else {
-          setAdvisories([])
-          setAdvisoryLoadError(true)
-        }
-      })
-      .finally(() => {
-        setIsLoadingAdvisories(false)
-      })
+    try {
+      const response = await loadAdvisories(apiBaseUrl, park.orcs)
+      if (response.status === 200) {
+        setAdvisories(response.data.data)
+        setAdvisoryLoadError(false)
+      } else {
+        setAdvisories([])
+        setAdvisoryLoadError(true)
+      }
+    } catch (error) {
+      console.error("Error loading advisories:", error)
+      setAdvisories([])
+      setAdvisoryLoadError(true)
+    } finally {
+      setIsLoadingAdvisories(false)
+    }
+  }
+  
+  const loadProtectedAreaData = async () => {
     setIsLoadingProtectedArea(true)
-    axios.get(`${apiBaseUrl}/protected-areas/${park.orcs}?fields=hasCampfireBan`)
-      .then(response => {
-        if (response.status === 200) {
-          setHasCampfireBan(response.data.hasCampfireBan)
-          setProtectedAreaLoadError(false)
-        } else {
-          setHasCampfireBan(false)
-          setProtectedAreaLoadError(true)
-        }
-      })
-      .finally(() => {
-        setIsLoadingProtectedArea(false)
-      })
+    try {
+      const response = await axios.get(
+        `${apiBaseUrl}/protected-areas/${park.orcs}?fields=hasCampfireBan`
+      )
+      if (response.status === 200) {
+        setHasCampfireBan(response.data.hasCampfireBan)
+        setProtectedAreaLoadError(false)
+      } else {
+        setHasCampfireBan(false)
+        setProtectedAreaLoadError(true)
+      }
+    } catch (error) {
+      console.error("Error loading protected area:", error)
+      setHasCampfireBan(false)
+      setProtectedAreaLoadError(true)
+    } finally {
+      setIsLoadingProtectedArea(false)
+    }
+  }
+  
+  const loadSubAreasData = async () => {
+    setIsLoadingSubAreas(true)
+    try {
+      const response = await loadSubAreas(apiBaseUrl, park.orcs)
+      if (response.status === 200) {
+        setSubAreas(response.data.data)
+        setSubAreasLoadError(false)
+      } else {
+        setSubAreas([])
+        setSubAreasLoadError(true)
+      }
+    } catch (error) {
+      console.error("Error loading sub-areas:", error)
+      setSubAreas([])
+      setSubAreasLoadError(true)
+    } finally {
+      setIsLoadingSubAreas(false)
+    }
+  }
+  
+  useEffect(() => {
+    loadAdvisoriesData()
+    loadProtectedAreaData()
+    loadSubAreasData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiBaseUrl, park.orcs])
 
   useEffect(() => {
-    if (window.location.hash && !isLoadingProtectedArea && !isLoadingAdvisories) {
+    if (!isLoadingSubAreas && !subAreasLoadError && subAreas.length) {
+      setProcessSubAreas(preProcessSubAreas(subAreas))
+    }
+  }, [isLoadingSubAreas, subAreasLoadError, subAreas])
+
+  useEffect(() => {
+    if (window.location.hash && !isLoadingProtectedArea && !isLoadingAdvisories && !isLoadingSubAreas) {
       const id = window.location.hash.replace("#", "")
       const element = document.getElementById(id) || document.querySelector(window.location.hash)
       if (element) {
@@ -129,7 +175,7 @@ export default function ParkTemplate({ data }) {
         }, 100)
       }
     }
-  }, [isLoadingProtectedArea, isLoadingAdvisories])
+  }, [isLoadingProtectedArea, isLoadingAdvisories, isLoadingSubAreas])
 
   const handleAccessStatus = function (statusObj) {
     setParkAccessStatus(statusObj);
@@ -295,7 +341,9 @@ export default function ParkTemplate({ data }) {
             searchArea={searchArea}
             parkOperation={park.parkOperation}
             operationDates={park.parkOperationDates}
-            subAreas={park.parkOperationSubAreas}
+            subAreas={subAreas}
+            isLoadingSubAreas={isLoadingSubAreas}
+            subAreasLoadError={subAreasLoadError}
             onStatusCalculated={handleAccessStatus}
           />
         </div>
@@ -399,11 +447,10 @@ export default function ParkTemplate({ data }) {
                 <CampingDetails
                   data={{
                     activeCampings: activeCampings,
-                    reservations: park.reservations,
-                    hasDayUsePass: hasDayUsePass,
-                    hasReservations: hasReservations,
                     parkOperation: park.parkOperation,
-                    subAreas: park.parkOperationSubAreas,
+                    subAreas: subAreas,
+                    isLoadingSubAreas: isLoadingSubAreas,
+                    subAreasLoadError: subAreasLoadError,
                   }}
                 />
               </div>

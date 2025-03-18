@@ -134,14 +134,14 @@ export default function SubArea({ data, showHeading }) {
       <Row className="subarea-container mt-3">
         <Col>
           {subAreasNotesList
-            .filter(note => data[note.noteVar]?.data[note.noteVar])
+            .filter(note => data[note.noteVar])
             .map((note, index) => (
               <div key={index} className="subarea-list subarea-note">
                 {note.display && (
                   <h4>{note.display}</h4>
                 )}
                 <HtmlContent>
-                  {data[note.noteVar].data[note.noteVar]}
+                  {data[note.noteVar]}
                 </HtmlContent>
               </div>
             ))}

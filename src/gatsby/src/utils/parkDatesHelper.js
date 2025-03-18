@@ -84,11 +84,13 @@ const processDateRanges = (arr, fmt, yr, delimiter, yearPrefix) => {
 
 const groupSubAreaDates = (subArea) => {
   const saDates = subArea.parkOperationSubAreaDates
+  const featureDates = subArea.parkFeatureDates || []
   subArea.operationDates = []
   subArea.offSeasonDates = []
   subArea.resDates = []
   subArea.serviceDates = []
 
+  // change saDates to featureDates once data migration is complete
   for (let dIdx in saDates) {
     const dateRec = saDates[dIdx]
     if (dateRec.isActive) {
@@ -108,6 +110,31 @@ const groupSubAreaDates = (subArea) => {
         start: dateRec.offSeasonStartDate,
         end: dateRec.offSeasonEndDate
       })
+    }
+  }
+  // override dates from parkOperationSubAreaDates with dates from parkFeatureDates
+  if (featureDates.length) {
+    const operationDates = featureDates.find(date => date.dateType === "Operation")
+    const reservationDates = featureDates.find(date => date.dateType === "Reservation")
+    const winterFeeDates = featureDates.find(date => date.dateType === "Winter fee")
+
+    if (operationDates) {
+      subArea.serviceDates = [{
+        start: operationDates.startDate,
+        end: operationDates.endDate,
+      }]
+    }
+    if (reservationDates) {
+      subArea.resDates = [{
+        start: reservationDates.startDate,
+        end: reservationDates.endDate,
+      }]
+    }
+    if (winterFeeDates) {
+      subArea.offSeasonDates = [{
+        start: winterFeeDates.startDate,
+        end: winterFeeDates.endDate,
+      }]
     }
   }
   return subArea;

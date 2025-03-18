@@ -11,15 +11,15 @@ import ScrollToTop from "../../components/scrollToTop"
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import StaticIcon from "../../components/park/staticIcon"
 import NoSearchResults from "../../components/search/noSearchResults"
+import { loadAllSubAreas } from "../../utils/subAreaHelper"
 import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
 import { loadAllAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
 
-const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) => {
+const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvisories, subAreaLoadError, isLoadingSubAreas }) => {
   const thisYear = new Date().getFullYear()
   const parkOperation = park.parkOperation
   const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
-  const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
   const [parkAccessStatus, setParkAccessStatus] = useState({})
   const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
 
@@ -84,11 +84,12 @@ const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) 
       <div className="mb-3">
         <>
           <span className="me-1">
-            {(!isLoadingAdvisories && !advisoryLoadError) &&
+            {(!isLoadingAdvisories && !advisoryLoadError && 
+              !isLoadingSubAreas && !subAreaLoadError) &&
               <ParkAccessStatus
                 advisories={advisories}
                 slug={park.slug}
-                subAreas={park.parkOperationSubAreas}
+                subAreas={subAreas}
                 operationDates={park.parkOperationDates}
                 onStatusCalculated={setParkAccessStatus}
                 punctuation="."
@@ -251,34 +252,6 @@ const ParkOperatingDatesPage = () => {
           parkOperation {
             hasParkGate
           }
-          parkOperationSubAreas {
-            isOpen
-            isCleanAirSite
-            parkSubArea
-            isActive
-            closureAffectsAccessStatus
-            parkOperationSubAreaDates {
-              operatingYear
-              isActive
-              openDate
-              closeDate
-              serviceStartDate
-              serviceEndDate
-              reservationStartDate
-              reservationEndDate
-              offSeasonStartDate
-              offSeasonEndDate
-            }
-            parkSubAreaType {
-              closureAffectsAccessStatus
-              facilityType {
-                 icon
-              }
-              campingType {
-                 icon
-              }
-            }
-          }
           parkOperationDates {
             operatingYear
             gateOpenDate
@@ -331,6 +304,9 @@ const ParkOperatingDatesPage = () => {
   const [advisories, setAdvisories] = useState([])
   const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
   const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
+  const [subAreas, setSubAreas] = useState([])
+  const [subAreaLoadError, setSubAreaLoadError] = useState(false)
+  const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
   const [currentFilter, setCurrentFilter] = useState("All")
 
   // functions
@@ -343,6 +319,11 @@ const ParkOperatingDatesPage = () => {
   const filterAdvisoriesByOrcs = (orcs) => {
     return advisories.filter(advisory => 
       advisory.protectedAreas.some(protectedArea => protectedArea.orcs === orcs)
+    )
+  }
+  const filterSubAreasByOrcs = (orcs) => {
+    return subAreas.filter(subArea =>
+      subArea.protectedArea.orcs === orcs
     )
   }
   const fetchAdvisories = () => {
@@ -361,10 +342,27 @@ const ParkOperatingDatesPage = () => {
         setIsLoadingAdvisories(false)
       })
   }
+  const fetchSubAreas = () => {
+    setIsLoadingSubAreas(true)
+    loadAllSubAreas(apiBaseUrl)
+      .then(response => {
+        setSubAreas(response.data.data)
+        setSubAreaLoadError(false)
+      })
+      .catch(error => {
+        setSubAreas([])
+        setSubAreaLoadError(true)
+        console.error("Error fetching subareas:", error)
+      })
+      .finally(() => {
+        setIsLoadingSubAreas(false)
+      })
+  }
 
   // effects
   useEffect(() => {
     fetchAdvisories()
+    fetchSubAreas()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiBaseUrl])
 
@@ -456,6 +454,9 @@ const ParkOperatingDatesPage = () => {
                       key={index}
                       park={park}
                       advisories={filterAdvisoriesByOrcs(park.orcs)}
+                      subAreas={filterSubAreasByOrcs(park.orcs)}
+                      subAreaLoadError={subAreaLoadError}
+                      isLoadingSubAreas={isLoadingSubAreas}
                       advisoryLoadError={advisoryLoadError}
                       isLoadingAdvisories={isLoadingAdvisories}
                     />
@@ -470,6 +471,9 @@ const ParkOperatingDatesPage = () => {
                       key={index}
                       park={park}
                       advisories={filterAdvisoriesByOrcs(park.orcs)}
+                      subAreas={filterSubAreasByOrcs(park.orcs)}
+                      subAreaLoadError={subAreaLoadError}
+                      isLoadingSubAreas={isLoadingSubAreas}
                       advisoryLoadError={advisoryLoadError}
                       isLoadingAdvisories={isLoadingAdvisories}
                     />
