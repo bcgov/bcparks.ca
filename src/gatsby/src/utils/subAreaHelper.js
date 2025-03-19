@@ -1,5 +1,4 @@
 import axios from "axios"
-import moment from "moment"
 import qs from "qs"
 import { processDateRanges, groupSubAreaDates } from "./parkDatesHelper"
 
@@ -213,36 +212,11 @@ const loadSubAreas = (apiBaseUrl, orcs) => {
   })
   return axios.get(`${apiBaseUrl}/park-operation-sub-areas?${params}`)
 }
-// load subarea dates by feature id
-const loadSubAreaDates = (apiBaseUrl, featureId) => {
-  const currentYear = moment().year()
-  const params = qs.stringify({
-    filters: {
-      $and: [
-        {operatingYear: {$gte: currentYear}},
-        {
-          parkOperationSubArea: {
-            featureId: {
-              $eq: featureId,
-            },
-          },
-        },
-      ],
-    },
-    pagination: {
-      limit: 10,
-    }
-  }, {
-    encodeValuesOnly: true,
-  })
-  return axios.get(`${apiBaseUrl}/park-operation-sub-area-dates?${params}`)
-}
 
 export {
   preProcessSubAreas,
   combineCampingTypes,
   combineFacilities,
   loadAllSubAreas,
-  loadSubAreas,
-  loadSubAreaDates
+  loadSubAreas
 }
