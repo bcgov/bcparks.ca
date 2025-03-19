@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { graphql, useStaticQuery, Link } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
+import { ProgressBar } from "react-bootstrap"
 
 import Breadcrumbs from "../../components/breadcrumbs"
 import Header from "../../components/header"
@@ -73,19 +74,19 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
 
   return (
     <div className="park-list operating-dates-list">
-      <div className="d-md-flex justify-content-between mb-2">
-        <h2 className="mb-0">
+      <div className="d-md-flex justify-content-between">
+        <h2 className="mb-3">
           <Link to={`/${park.slug}`}>
             {park.protectedAreaName}
             <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
           </Link>
         </h2>
       </div>
-      <div className="mb-3">
+      <div className="mb-2">
         <>
           <span className="me-1">
             {(!isLoadingAdvisories && !advisoryLoadError && 
-              !isLoadingSubAreas && !subAreaLoadError) &&
+              !isLoadingSubAreas && !subAreaLoadError) ?
               <ParkAccessStatus
                 advisories={advisories}
                 slug={park.slug}
@@ -94,6 +95,7 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                 onStatusCalculated={setParkAccessStatus}
                 punctuation="."
               />
+              : <ProgressBar animated now={100} />
             }
           </span>
           {parkDates && (

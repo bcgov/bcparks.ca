@@ -110,8 +110,7 @@ export const CampingType = ({ camping, parkOperation, isLoadingSubAreas, subArea
 }
 
 export default function CampingDetails({ data }) {
-  const activeCampings = data.activeCampings
-  const parkOperation = data.parkOperation
+  const { activeCampings, parkOperation, isLoadingSubAreas, subAreasLoadError } = data
 
   return (
     <div id="camping" className="anchor-link">
@@ -131,8 +130,8 @@ export default function CampingDetails({ data }) {
               eventKey={index.toString()}
               camping={camping}
               parkOperation={parkOperation}
-              isLoadingSubAreas={data.isLoadingSubAreas}
-              subAreasLoadError={data.subAreasLoadError}
+              isLoadingSubAreas={isLoadingSubAreas}
+              subAreasLoadError={subAreasLoadError}
             />
           ))}
         </Col>
