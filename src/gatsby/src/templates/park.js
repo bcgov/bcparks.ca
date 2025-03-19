@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState, useRef, useMemo } from "react"
 import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
@@ -84,11 +84,8 @@ export default function ParkTemplate({ data }) {
   const [parkAccessStatus, setParkAccessStatus] = useState(null)
   const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
   const [subAreas, setSubAreas] = useState([])
-  const [processSubAreas, setProcessSubAreas] = useState([])
   const [subAreasLoadError, setSubAreasLoadError] = useState(false)
   const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
-  const activeFacilities = combineFacilities(park.parkFacilities, data.allStrapiFacilityType.nodes, subAreas)
-  const activeCampings = combineCampingTypes(park.parkCampingTypes, data.allStrapiCampingType.nodes, subAreas)
 
   const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
@@ -159,11 +156,15 @@ export default function ParkTemplate({ data }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiBaseUrl, park.orcs])
 
-  useEffect(() => {
+  const processedSubAreas = useMemo(() => {
     if (!isLoadingSubAreas && !subAreasLoadError && subAreas.length) {
-      setProcessSubAreas(preProcessSubAreas(subAreas))
+      return preProcessSubAreas(subAreas)
     }
+    return []
   }, [isLoadingSubAreas, subAreasLoadError, subAreas])
+
+  const activeFacilities = combineFacilities(park.parkFacilities, data.allStrapiFacilityType.nodes, processedSubAreas)
+  const activeCampings = combineCampingTypes(park.parkCampingTypes, data.allStrapiCampingType.nodes, processedSubAreas)
 
   useEffect(() => {
     if (window.location.hash && !isLoadingProtectedArea && !isLoadingAdvisories && !isLoadingSubAreas) {
@@ -725,93 +726,6 @@ export const query = graphql`
             data {
               content
             }
-          }
-        }
-      }
-      parkOperationSubAreas {
-        parkSubArea
-        orcsSiteNumber
-        isActive
-        isOpen
-        hasReservations
-        hasBackcountryReservations
-        hasBackcountryPermits
-        hasFirstComeFirstServed
-        parkAccessUnitId
-        isCleanAirSite
-        totalCapacity
-        frontcountrySites
-        reservableSites
-        nonReservableSites
-        vehicleSites
-        vehicleSitesReservable
-        doubleSites
-        pullThroughSites
-        rvSites
-        rvSitesReservable
-        electrifiedSites
-        longStaySites
-        walkInSites
-        walkInSitesReservable
-        groupSites
-        groupSitesReservable
-        backcountrySites
-        wildernessSites
-        boatAccessSites
-        horseSites
-        cabins
-        huts
-        yurts
-        shelters
-        boatLaunches
-        hasGate
-        gateOpenTime
-        gateCloseTime
-        gateOpensAtDawn
-        gateClosesAtDusk
-        gateOpen24Hours
-        gateNote {
-          data {
-            gateNote
-          }
-        }
-        serviceNote {
-          data {
-            serviceNote
-          }
-        }
-        reservationNote {
-          data {
-            reservationNote
-          }
-        }
-        offSeasonNote {
-          data {
-            offSeasonNote
-          }
-        }
-        closureAffectsAccessStatus
-        parkOperationSubAreaDates {
-          isActive
-          operatingYear
-          openDate
-          closeDate
-          serviceStartDate
-          serviceEndDate
-          reservationStartDate
-          reservationEndDate
-          offSeasonStartDate
-          offSeasonEndDate
-        }
-        parkSubAreaType {
-          subAreaType
-          subAreaTypeCode
-          closureAffectsAccessStatus
-          facilityType {
-            facilityCode
-          }
-          campingType {
-            campingTypeCode
           }
         }
       }

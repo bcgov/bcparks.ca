@@ -53,7 +53,7 @@ export default function SubArea({ data, showHeading }) {
     return (
       <>
         {message}
-        {gateNote && <HtmlContent>{gateNote.data.gateNote}</HtmlContent>}
+        {gateNote && <HtmlContent>{gateNote}</HtmlContent>}
       </>
     )
   }

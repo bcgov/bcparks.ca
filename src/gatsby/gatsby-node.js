@@ -227,20 +227,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     gateCloseDate: Date
   }
 
-  type STRAPI_PARK_OPERATION_SUB_AREA implements Node {
-    nonReservableSites: String
-    vehicleSitesReservable: String
-    pullThroughSites: String
-    rvSitesReservable: String
-    longStaySites: String
-    groupSitesReservable: String
-    boatLaunches: String
-    closureAffectsAccessStatus: Boolean
-  }
-
-  type STRAPI_PARK_OPERATION_SUB_AREA_TYPE implements Node {
-    closureAffectsAccessStatus: Boolean
-  }
 
   type STRAPI__COMPONENT_PARKS_PAGE_HEADER_INTROHTML_TEXTNODE implements Node @dontInfer {
     introHtml: String
@@ -330,7 +316,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     safetyInfo: STRAPI_SITE_SAFETYINFO
     parkOperation: STRAPI_PARK_OPERATION @link(by: "id", from: "parkOperation___NODE")
     parkOperationDates: [STRAPI_PARK_OPERATION_DATE] @link(by: "id", from: "parkOperationDates___NODE")
-    parkOperationSubAreas: [STRAPI_PARK_OPERATION_SUB_AREA] @link(by: "id", from: "parkOperationSubAreas___NODE")
     parkActivities: [STRAPI_PARK_ACTIVITY] @link(by: "id", from: "parkActivities___NODE")
     parkFacilities: [STRAPI_PARK_FACILITY] @link(by: "id", from: "parkFacilities___NODE")
     parkCampingTypes: [STRAPI_PARK_CAMPING_TYPE] @link(by: "id", from: "parkCampingTypes___NODE")
