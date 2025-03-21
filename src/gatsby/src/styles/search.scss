@@ -501,17 +501,12 @@ div[class$="-singleValue"] {
 
   .park-content-mobile {
     padding: 16px;
-    a:not(.mobile-park-link) {
-      display: block;
-      text-decoration: underline;
-      margin-top: 8px;
-      p {
-        font-size: 0.875rem;
-      }
-    }
-    .access-status-icon {
+    .park-icons {
       a {
-        margin-top: 0;
+        display: block;
+        font-size: 0.875rem;
+        line-height: 2.75rem;
+        text-decoration: underline;
       }
     }
   }
