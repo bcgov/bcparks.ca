@@ -83,61 +83,35 @@ const processDateRanges = (arr, fmt, yr, delimiter, yearPrefix) => {
 }
 
 const groupSubAreaDates = (subArea) => {
-  const saDates = subArea.parkOperationSubAreaDates
+  const subAreaDates = subArea.parkOperationSubAreaDates || []
   const featureDates = subArea.parkFeatureDates || []
   subArea.operationDates = []
   subArea.offSeasonDates = []
   subArea.resDates = []
   subArea.serviceDates = []
 
-  // change saDates to featureDates once data migration is complete
-  for (let dIdx in saDates) {
-    const dateRec = saDates[dIdx]
-    if (dateRec.isActive) {
-      subArea.operationDates.push({
-        start: dateRec.openDate,
-        end: dateRec.closeDate
-      })
-      subArea.serviceDates.push({
-        start: dateRec.serviceStartDate,
-        end: dateRec.serviceEndDate
-      })
-      subArea.resDates.push({
-        start: dateRec.reservationStartDate,
-        end: dateRec.reservationEndDate
-      })
-      subArea.offSeasonDates.push({
-        start: dateRec.offSeasonStartDate,
-        end: dateRec.offSeasonEndDate
-      })
-    }
-  }
-  // override dates from parkOperationSubAreaDates with dates from parkFeatureDates
-  if (featureDates.length) {
-    const operationDates = featureDates.find(date => date.dateType === "Operation")
-    const reservationDates = featureDates.find(date => date.dateType === "Reservation")
-    const winterFeeDates = featureDates.find(date => date.dateType === "Winter fee")
+  // TODO: remove it once data migration is completed
+  subAreaDates.filter((date) => date.isActive).forEach((date) => {
+    subArea.operationDates.push({ start: date.openDate, end: date.closeDate })
+    subArea.serviceDates.push({ start: date.serviceStartDate, end: date.serviceEndDate })
+    subArea.resDates.push({ start: date.reservationStartDate, end: date.reservationEndDate })
+    subArea.offSeasonDates.push({ start: date.offSeasonStartDate, end: date.offSeasonEndDate })
+  })
 
-    if (operationDates) {
-      subArea.serviceDates = [{
-        start: operationDates.startDate,
-        end: operationDates.endDate,
-      }]
-    }
-    if (reservationDates) {
-      subArea.resDates = [{
-        start: reservationDates.startDate,
-        end: reservationDates.endDate,
-      }]
-    }
-    if (winterFeeDates) {
-      subArea.offSeasonDates = [{
-        start: winterFeeDates.startDate,
-        end: winterFeeDates.endDate,
-      }]
-    }
+  // override subAreaDates with featureDates
+  const dateTypes = {
+    "Operation": "serviceDates",
+    "Reservation": "resDates",
+    "Winter fee": "offSeasonDates",
+    // TODO: add more date types as needed
   }
-  return subArea;
+  _.forEach(dateTypes, (key, type) => {
+    const featureDate = featureDates.find((date) => date.dateType === type)
+    if (featureDate) {
+      subArea[key] = [{ start: featureDate.startDate, end: featureDate.endDate }]
+    }
+  })
+  return subArea
 }
 
 // function to format gate open/close time e.g. "08:00:00" to "8 am"
