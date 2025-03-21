@@ -91,13 +91,8 @@ export default function ParkTemplate({ data }) {
     setIsLoadingAdvisories(true)
     try {
       const response = await loadAdvisories(apiBaseUrl, park.orcs)
-      if (response.status === 200) {
-        setAdvisories(response.data.data)
-        setAdvisoryLoadError(false)
-      } else {
-        setAdvisories([])
-        setAdvisoryLoadError(true)
-      }
+      setAdvisories(response.data.data)
+      setAdvisoryLoadError(false)
     } catch (error) {
       console.error("Error loading advisories:", error)
       setAdvisories([])
@@ -113,13 +108,8 @@ export default function ParkTemplate({ data }) {
       const response = await axios.get(
         `${apiBaseUrl}/protected-areas/${park.orcs}?fields=hasCampfireBan`
       )
-      if (response.status === 200) {
-        setHasCampfireBan(response.data.hasCampfireBan)
-        setProtectedAreaLoadError(false)
-      } else {
-        setHasCampfireBan(false)
-        setProtectedAreaLoadError(true)
-      }
+      setHasCampfireBan(response.data.hasCampfireBan)
+      setProtectedAreaLoadError(false)
     } catch (error) {
       console.error("Error loading protected area:", error)
       setHasCampfireBan(false)
@@ -133,13 +123,8 @@ export default function ParkTemplate({ data }) {
     setIsLoadingSubAreas(true)
     try {
       const response = await loadSubAreas(apiBaseUrl, park.orcs)
-      if (response.status === 200) {
-        setSubAreas(response.data.data)
-        setSubAreasLoadError(false)
-      } else {
-        setSubAreas([])
-        setSubAreasLoadError(true)
-      }
+      setSubAreas(response.data.data)
+      setSubAreasLoadError(false)
     } catch (error) {
       console.error("Error loading sub-areas:", error)
       setSubAreas([])
