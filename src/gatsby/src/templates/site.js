@@ -73,23 +73,17 @@ export default function SiteTemplate({ data }) {
     setIsLoadingAdvisories(true)
     try {
       const response = await loadAdvisories(apiBaseUrl, park?.orcs)
-      if (response.status === 200) {
-        // for sites, we want to include all advisories at the park level  
-        // and advisories for this specific site, but we exclude advisories 
-        // for other sites at the same park
-        const advisories = response.data.data.filter(
-          (advisory) => {
-            return advisory.sites.length === 0 ||
-              advisory.sites.some(
-                (s) => s.orcsSiteNumber === site.orcsSiteNumber
-              )
-          })
-        setAdvisories(advisories)
-        setAdvisoryLoadError(false)
-      } else {
-        setAdvisories([])
-        setAdvisoryLoadError(true)
-      }
+      // for sites, we want to include all advisories at the park level  
+      // and advisories for this specific site, but we exclude advisories 
+      // for other sites at the same park
+      const advisories = response.data.data.filter(advisory => {
+        return advisory.sites.length === 0 ||
+          advisory.sites.some(
+            (s) => s.orcsSiteNumber === site.orcsSiteNumber
+          )
+      })
+      setAdvisories(advisories)
+      setAdvisoryLoadError(false)
     } catch (error) {
       console.error("Error loading advisories:", error)
       setAdvisories([])
@@ -105,13 +99,8 @@ export default function SiteTemplate({ data }) {
       const response = await axios.get(
         `${apiBaseUrl}/protected-areas/${park?.orcs}?fields=hasCampfireBan`
       )
-      if (response.status === 200) {
-        setHasCampfireBan(response.data.hasCampfireBan)
-        setProtectedAreaLoadError(false)
-      } else {
-        setHasCampfireBan(false)
-        setProtectedAreaLoadError(true)
-      }
+      setHasCampfireBan(response.data.hasCampfireBan)
+      setProtectedAreaLoadError(false)
     } catch (error) {
       console.error("Error loading protected area:", error)
       setHasCampfireBan(false)
@@ -125,13 +114,8 @@ export default function SiteTemplate({ data }) {
     setIsLoadingSubAreas(true)
     try {
       const response = await loadSubAreas(apiBaseUrl, park?.orcs)
-      if (response.status === 200) {
-        setSubAreas(response.data.data)
-        setSubAreasLoadError(false)
-      } else {
-        setSubAreas([])
-        setSubAreasLoadError(true)
-      }
+      setSubAreas(response.data.data)
+      setSubAreasLoadError(false)
     } catch (error) {
       console.error("Error loading sub-areas:", error)
       setSubAreas([])
