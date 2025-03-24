@@ -2,6 +2,7 @@ import React, { useRef } from "react"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 import useScrollSpy from "react-use-scrollspy"
 
+import Acknowledgment from "../components/acknowledgment"
 import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -171,10 +172,9 @@ export default function ParkSubPage({ data }) {
           )}
         </div>
       </div>
-      <div className="max-width-override">
-        <ScrollToTop />
-        <Footer />
-      </div>
+      <Acknowledgment />
+      <ScrollToTop />
+      <Footer />
     </>
   )
 }

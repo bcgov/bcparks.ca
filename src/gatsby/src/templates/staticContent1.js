@@ -2,6 +2,7 @@ import React, { useRef } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import useScrollSpy from "react-use-scrollspy"
 
+import Acknowledgment from "../components/acknowledgment"
 import Breadcrumbs from "../components/breadcrumbs"
 import Header from "../components/header"
 import Footer from "../components/footer"
@@ -222,10 +223,9 @@ export default function StaticContent1({ pageContext }) {
           )}
         </div>
       </div >
-      <div className="max-width-override">
-        <ScrollToTop />
-        <Footer />
-      </div>
+      <Acknowledgment  />
+      <ScrollToTop />
+      <Footer />
     </>
   )
 }

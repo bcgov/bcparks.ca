@@ -1,6 +1,7 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 
+import Acknowledgment from "../components/acknowledgment.js"
 import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -43,6 +44,7 @@ const SitemapPage = ({ data }) => {
       <div className="static-content-container">
         <MegaMenu content={menuContent} menuMode="sitemap" />
       </div>
+      <Acknowledgment />
       <ScrollToTop />
       <Footer />
     </>
