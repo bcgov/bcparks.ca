@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleXmark, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 import { useQueryParamString } from 'react-use-query-param-string'
 
+import Acknowledgment from "../components/acknowledgment";
 import Footer from "../components/footer"
 import Header from "../components/header"
 import Seo from "../components/seo"
@@ -1046,6 +1047,7 @@ export default function FindAPark({ location, data }) {
         }}
       />
       <ParkLinksModal data={{ openModal, setOpenModal }} />
+      <Acknowledgment color="grey" condition={true} />
       <ScrollToTop />
       <Footer />
     </>

@@ -3,6 +3,7 @@ import { graphql, Link } from "gatsby"
 import axios from "axios"
 import { ProgressBar } from "react-bootstrap"
 
+import Acknowledgment from "../components/acknowledgment"
 import Breadcrumbs from "../components/breadcrumbs"
 import Footer from "../components/footer"
 import Header from "../components/header"
@@ -423,6 +424,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           />
         </div>
       </div>
+      <Acknowledgment />
       <ScrollToTop />
       <Footer />
     </div>

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
 import { ProgressBar } from "react-bootstrap"
 
+import Acknowledgment from "../../components/acknowledgment"
 import Breadcrumbs from "../../components/breadcrumbs"
 import Header from "../../components/header"
 import Footer from "../../components/footer"
@@ -487,10 +488,9 @@ const ParkOperatingDatesPage = () => {
           </div>
         </div>
       </div>
-      <div className="max-width-override">
-        <ScrollToTop />
-        <Footer />
-      </div>
+      <Acknowledgment />
+      <ScrollToTop />
+      <Footer />
     </div>
   )
 }

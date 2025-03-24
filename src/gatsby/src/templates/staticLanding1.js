@@ -1,13 +1,12 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
 
+import Acknowledgment from "../components/acknowledgment"
 import Breadcrumbs from "../components/breadcrumbs"
 import Header from "../components/header"
 import Footer from "../components/footer"
 import HtmlContent from "../components/htmlContent"
 import Seo from "../components/seo"
-import MainSearch from "../components/search/mainSearch"
 import PageContent from "../components/pageContent/pageContent"
 import ScrollToTop from "../components/scrollToTop"
 
@@ -61,7 +60,6 @@ const LandingPage = ({ pageContext }) => {
   return (
     <>
       <Header mode="internal" content={menuContents} />
-      <div id="main-content"></div>
       <div id="intro-content" className="bcp-landing-intro">
         {/* Display new non-repeatable pageHeader component if exists */}
         {/* Otherwise, display old repeatable pageHeader component */}
@@ -120,21 +118,7 @@ const LandingPage = ({ pageContext }) => {
           </div>
         </div>
       )}
-      <div className="bcp-landing-park-search d-none d-lg-block">
-        <div className="container">
-          <div className="row g-0">
-            <div className="col">
-              <StaticImage
-                src="../images/landing/footer-find-your-next-adventure.png"
-                alt="Two hikers filming in a BC Park"
-              />
-            </div>
-            <div className="col">
-              <MainSearch hasCityNameSearch={false} />
-            </div>
-          </div>
-        </div>
-      </div>
+      <Acknowledgment color="grey" condition={true} />
       <ScrollToTop />
       <Footer />
     </>

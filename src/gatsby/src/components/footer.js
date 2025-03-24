@@ -115,13 +115,6 @@ export default function Footer() {
 
   return (
     <footer id="footer">
-      <div className="acknowledgment-container">
-        <div className="acknowledgment">
-          We acknowledge all First Nations on whose territories BC Parks were established. 
-          We honour their connection to the land and respect the importance of their diverse teachings,
-          traditions, and practices within these territories.
-        </div>
-      </div>
       <div className="home-footer" id="home-footer">
         <div className="row g-0">
           <div className="col col-12 col-md-4">

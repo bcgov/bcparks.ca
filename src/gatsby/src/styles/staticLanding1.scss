@@ -62,10 +62,10 @@
 .bcp-landing-links {
   width: 100%;
   background-color: $colorBackgroundGrey;
-  padding: 32px 0;
+  padding: 32px 0 0;
 
   @media screen and (min-width: $mdBreakpoint) {
-    padding: 72px 0;
+    padding: 72px 0 0;
   }
 
   .container {
@@ -76,6 +76,13 @@
     }
     & > div {
       margin: 32px 0;
+      &:last-of-type {
+        margin: 32px 0 0;
+        .link-card {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+      }
     }
   }
 }
