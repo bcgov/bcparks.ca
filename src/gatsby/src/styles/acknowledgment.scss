@@ -2,11 +2,11 @@
 
 .acknowledgment {
   position: relative;
-  // keep space between content and acknowledgement
-  // 100px (half of acknowledgement height) + 40px (space) = 140px
+  // keep space between content and acknowledgment
+  // 100px (half of acknowledgment height) + 40px (space) = 140px
   padding-bottom: 140px;
   @media (min-width: $mdBreakpoint) {
-    // 80px (half of acknowledgement height) + 40px (space) = 120px
+    // 80px (half of acknowledgment height) + 40px (space) = 120px
     padding-bottom: 120px;
   }
   &-container{
@@ -42,10 +42,10 @@
   &__text {
     max-width: 600px;
   }
-  &.is-bg-brown--true {
+  &.bg-brown {
     background-color: $colorBrownMed;
   }
-  &.is-bg-grey--true {
+  &.bg-grey {
     background-color: $colorBackgroundGrey;
   }
 }
