@@ -1,0 +1,51 @@
+@import "variables.scss";
+
+.acknowledgment {
+  position: relative;
+  // keep space between content and acknowledgment
+  // 100px (half of acknowledgment height) + 40px (space) = 140px
+  padding-bottom: 140px;
+  @media (min-width: $mdBreakpoint) {
+    // 80px (half of acknowledgment height) + 40px (space) = 120px
+    padding-bottom: 120px;
+  }
+  &-container{
+    position: absolute;
+    // 200px / 2 = 100px (half of height)
+    bottom: -100px;
+    // side padding
+    left: 32px;
+    min-height: 200px;
+    // 32px * 2 = 64px (side padding)
+    width: calc(100% - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $colorWhite;
+    background-color: $colorBlueMed;
+    line-height: 1.75;
+    padding: 16px;
+    @media (min-width: $mdBreakpoint) {
+      // 160px / 2 = 80px (half of height)
+      bottom: -80px;
+      // 600px / 2 = 300px (half of width)
+      left: calc(50% - 300px);
+      min-height: 160px;
+      width: 600px;
+    }
+    @media (min-width: $lgBreakpoint) {
+      // 800px / 2 = 400px (half of width)
+      left: calc(50% - 400px);
+      width: 800px;
+    }
+  }
+  &__text {
+    max-width: 600px;
+  }
+  &.bg-brown {
+    background-color: $colorBrownMed;
+  }
+  &.bg-grey {
+    background-color: $colorBackgroundGrey;
+  }
+}
