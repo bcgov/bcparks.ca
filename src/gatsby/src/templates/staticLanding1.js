@@ -118,7 +118,7 @@ const LandingPage = ({ pageContext }) => {
           </div>
         </div>
       )}
-      <Acknowledgment color="grey" condition={true} />
+      <Acknowledgment color="grey" />
       <ScrollToTop />
       <Footer />
     </>

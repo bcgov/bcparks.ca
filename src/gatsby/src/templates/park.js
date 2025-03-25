@@ -493,7 +493,7 @@ export default function ParkTemplate({ data }) {
       {hasNearbyParks &&
         <NearbyParks parks={nearbyParks} />
       }
-      <Acknowledgment color="brown" condition={hasNearbyParks} />
+      <Acknowledgment color={hasNearbyParks ? "brown" : ""} />
       <ScrollToTop />
       <Footer />
     </div>

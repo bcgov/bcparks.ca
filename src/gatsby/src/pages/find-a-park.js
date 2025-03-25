@@ -1047,7 +1047,7 @@ export default function FindAPark({ location, data }) {
         }}
       />
       <ParkLinksModal data={{ openModal, setOpenModal }} />
-      <Acknowledgment color="grey" condition={true} />
+      <Acknowledgment color="grey" />
       <ScrollToTop />
       <Footer />
     </>
