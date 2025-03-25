@@ -105,8 +105,12 @@ const groupSubAreaDates = (subArea) => {
     "Winter fee": "offSeasonDates",
     // TODO: add more date types as needed
   }
-  _.forEach(dateTypes, (key, type) => {
-    const featureDate = featureDates.find((date) => date.dateType === type)
+  // create an object keyed by dateType
+  const featureDatesByType = _.keyBy(featureDates, "dateType")
+  // narrow down to the date types
+  const relevantFeatureDates = _.pick(featureDatesByType, Object.keys(dateTypes))
+  _.forEach(relevantFeatureDates, (featureDate, type) => {
+    const key = dateTypes[type]
     if (featureDate) {
       subArea[key] = [{ start: featureDate.startDate, end: featureDate.endDate }]
     }
