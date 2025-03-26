@@ -19,6 +19,17 @@ export default function ParkOverview({ data: parkOverview, type }) {
   const hrAtEnd = parkOverview.trim().endsWith('<hr>')
   const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
 
+  // handle focusing when the "Show more" button is clicked by keyboard
+  const handleKeyDown = (e) => {
+    if ((e.key === "Enter" || e.key === " ") && !expanded) {
+      setExpanded(true)
+      const focusElement = document.getElementById("highlights-content")
+      if (focusElement) {
+        focusElement.focus()
+      }
+    }
+  }
+
   useEffect(() => {
     if (!hasHr && ref.current.clientHeight > 260) {
       setHeight(ref.current.clientHeight)
@@ -44,6 +55,8 @@ export default function ParkOverview({ data: parkOverview, type }) {
         <h2 id="park-overview-container" className="section-heading">
           Highlights in this {type}
         </h2>
+        {/* focus this when the "Show more" button is clicked by keyboard*/}
+        <div id="highlights-content" tabIndex="-1"></div>
         {/* let voiceover skip reading content if it is not expanded */}
         <HtmlContent ariaHidden={hasExpandCondition && !expanded} className="park-overview-html">
           {hasExpandCondition ? (expanded ? parkOverview : collapsedParkOverview) : parkOverview }
@@ -56,6 +69,9 @@ export default function ParkOverview({ data: parkOverview, type }) {
           aria-label={expanded ? "Show fewer highlights" : "Show more highlights"}
           onClick={() => {
             setExpanded(!expanded)
+          }}
+          onKeyDown={(e) => {
+            handleKeyDown(e)
           }}
         >
           {expanded ?
