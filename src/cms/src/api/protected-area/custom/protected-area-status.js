@@ -50,40 +50,34 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
   return _.sortBy(publicAdvisories, ["precedence"])[0];
 };
 const getPublishedPublicAdvisories = async () => {
-  return await strapi.entityService.findMany(
-    "api::public-advisory.public-advisory",
-    {
-      publicationState: "live",
-      sort: "id",
-      limit: -1,
-      populate: {
-        protectedAreas: { fields: ["orcs"] },
-        accessStatus: { fields: ["accessStatus"] },
-        eventType: { fields: ["eventType"] },
-        links: { populate: { type: { fields: ["type"] } } }
-      },
-      filters: {
-        accessStatus: {
-          precedence: {
-            $lt: 120,
-          },
+  return await strapi.documents("api::public-advisory.public-advisory").findMany({
+    status: "published",
+    sort: "id",
+    limit: -1,
+    populate: {
+      protectedAreas: { fields: ["orcs"] },
+      accessStatus: { fields: ["accessStatus"] },
+      eventType: { fields: ["eventType"] },
+      links: { populate: { type: { fields: ["type"] } } }
+    },
+    filters: {
+      accessStatus: {
+        precedence: {
+          $lt: 120,
         },
       },
-    }
-  );
+    },
+  });
 };
 
 const getPublicAdvisoryAudits = async () => {
-  return await strapi.entityService.findMany(
-    "api::public-advisory-audit.public-advisory-audit",
-    {
-      fields: ["advisoryNumber"],
-      filters: {
-        isLatestRevision: true
-      },
-      sort: "id:DESC"
-    }
-  );
+  return await strapi.documents("api::public-advisory-audit.public-advisory-audit").findMany({
+    fields: ["advisoryNumber"],
+    filters: {
+      isLatestRevision: true
+    },
+    sort: "id:DESC"
+  });
 };
 
 // custom route for park status view
@@ -149,64 +143,43 @@ const getProtectedAreaStatus = async (ctx) => {
     || eventType_ne
     || eventType_contains
   ) {
-    entities = await strapi.entityService.findMany(
-      "api::protected-area.protected-area",
-      {
-        ...query,
-        limit: -1,
-        populate: protectedAreaPopulateSettings,
-      }
-    );
+    entities = await strapi.documents("api::protected-area.protected-area").findMany({
+      ...query,
+      limit: -1,
+      populate: protectedAreaPopulateSettings,
+    });
   } else {
-    entities = await strapi.entityService.findMany(
-      "api::protected-area.protected-area",
-      {
-        ...ctx.query,
-        populate: protectedAreaPopulateSettings
-      }
-    );
+    entities = await strapi.documents("api::protected-area.protected-area").findMany({
+      ...ctx.query,
+      populate: protectedAreaPopulateSettings
+    });
   }
 
-  const regionsData = await strapi.entityService.findMany(
-    "api::region.region",
-    {
-      limit: -1,
-      populate: "*",
-    }
-  );
-  const sectionsData = await strapi.entityService.findMany(
-    "api::section.section",
-    {
-      limit: -1,
-      populate: "*",
-    }
-  );
-  const searchAreasData = await strapi.entityService.findMany(
-    "api::search-area.search-area",
-    {
-      limit: -1,
-      populate: "*",
-    }
-  );
-  const fireCentresData = await strapi.entityService.findMany(
-    "api::fire-centre.fire-centre",
-    {
-      limit: -1,
-      populate: "*",
-    }
-  );
-  const parkNamesAliases = await strapi.entityService.findMany(
-    "api::park-name.park-name",
-    {
-      limit: -1,
-      populate: "*",
-      filters: {
-        parkNameType: {
-          nameType: "Alias",
-        },
+  const regionsData = await strapi.documents("api::region.region").findMany({
+    limit: -1,
+    populate: "*",
+  });
+  const sectionsData = await strapi.documents("api::section.section").findMany({
+    limit: -1,
+    populate: "*",
+  });
+  const searchAreasData = await strapi.documents("api::search-area.search-area").findMany({
+    limit: -1,
+    populate: "*",
+  });
+  const fireCentresData = await strapi.documents("api::fire-centre.fire-centre").findMany({
+    limit: -1,
+    populate: "*",
+  });
+  const parkNamesAliases = await strapi.documents("api::park-name.park-name").findMany({
+    limit: -1,
+    populate: "*",
+    filters: {
+      parkNameType: {
+        nameType: "Alias",
       },
-    }
-  );
+    },
+  });
 
   let publicAdvisories = await getPublishedPublicAdvisories();
   let publicAdvisoryAudits = await getPublicAdvisoryAudits();

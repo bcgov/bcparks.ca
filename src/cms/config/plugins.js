@@ -85,84 +85,85 @@ module.exports = ({ env }) => {
       },
     },
 
-    transformer: {
-      enabled: true,
-      config: {
-        responseTransforms: {
-          removeAttributesKey: true,
-          removeDataKey: true,
-        },
-        requestTransforms: {
-          wrapBodyWithDataKey: true,
-        },
-        hooks: {},
-        contentTypeFilter: {
-          mode: "allow",
-          uids: {
-            "api::public-advisory-audit.public-advisory-audit": {
-              GET: true,
-              PUT: true,
-              POST: true,
-            },
-            "api::public-advisory-audit.public-advisory-audit/id": {
-              PUT: true,
-            },
-            "api::region.region": {
-              GET: true,
-            },
-            "api::management-area.management-area": {
-              GET: true,
-            },
-            "api::park-name.park-name": {
-              GET: true,
-            },
-            "api::advisory-status.advisory-status": {
-              GET: true,
-            },
-            "api::standard-message.standard-message": {
-              GET: true,
-            },
-            "api::business-hour.business-hour": {
-              GET: true,
-            },
-            "api::link-type.link-type": {
-              GET: true,
-            },
-            "api::statutory-holiday.statutory-holiday": {
-              GET: true,
-              PUT: true,
-            },
-            "api::public-advisory.public-advisory": {
-              GET: true,
-            },
-            "api::urgency.urgency": {
-              GET: true,
-            },
-            "api::access-status.access-status": {
-              GET: true,
-            },
-            "api::section.section": {
-              GET: true,
-            },
-            "api::fire-zone.fire-zone": {
-              GET: true,
-            },
-            "api::fire-centre.fire-centre": {
-              GET: true,
-            },
-            "api::natural-resource-district.natural-resource-district": {
-              GET: true,
-            },
-            "api::event-type.event-type": {
-              GET: true,
-            },
-            "api::search-area.search-area": {
-              GET: true,
-            },
-          },
-        },
-      },
-    },
+    // TODO - not updated for Strapi 5 https://www.npmjs.com/package/strapi-plugin-transformer
+    // transformer: {
+    //   enabled: true,
+    //   config: {
+    //     responseTransforms: {
+    //       removeAttributesKey: true,
+    //       removeDataKey: true,
+    //     },
+    //     requestTransforms: {
+    //       wrapBodyWithDataKey: true,
+    //     },
+    //     hooks: {},
+    //     contentTypeFilter: {
+    //       mode: "allow",
+    //       uids: {
+    //         "api::public-advisory-audit.public-advisory-audit": {
+    //           GET: true,
+    //           PUT: true,
+    //           POST: true,
+    //         },
+    //         "api::public-advisory-audit.public-advisory-audit/id": {
+    //           PUT: true,
+    //         },
+    //         "api::region.region": {
+    //           GET: true,
+    //         },
+    //         "api::management-area.management-area": {
+    //           GET: true,
+    //         },
+    //         "api::park-name.park-name": {
+    //           GET: true,
+    //         },
+    //         "api::advisory-status.advisory-status": {
+    //           GET: true,
+    //         },
+    //         "api::standard-message.standard-message": {
+    //           GET: true,
+    //         },
+    //         "api::business-hour.business-hour": {
+    //           GET: true,
+    //         },
+    //         "api::link-type.link-type": {
+    //           GET: true,
+    //         },
+    //         "api::statutory-holiday.statutory-holiday": {
+    //           GET: true,
+    //           PUT: true,
+    //         },
+    //         "api::public-advisory.public-advisory": {
+    //           GET: true,
+    //         },
+    //         "api::urgency.urgency": {
+    //           GET: true,
+    //         },
+    //         "api::access-status.access-status": {
+    //           GET: true,
+    //         },
+    //         "api::section.section": {
+    //           GET: true,
+    //         },
+    //         "api::fire-zone.fire-zone": {
+    //           GET: true,
+    //         },
+    //         "api::fire-centre.fire-centre": {
+    //           GET: true,
+    //         },
+    //         "api::natural-resource-district.natural-resource-district": {
+    //           GET: true,
+    //         },
+    //         "api::event-type.event-type": {
+    //           GET: true,
+    //         },
+    //         "api::search-area.search-area": {
+    //           GET: true,
+    //         },
+    //       },
+    //     },
+    //   },
+    // },
     "users-permissions": {
       config: {
         jwt: {

@@ -1,3 +1,4 @@
 'use strict';
-
-module.exports = require('./admin/src').default;
+import CKEditor from 'ckeditor5/build/ckeditor';
+export default CKEditor;
+// module.exports = require('./admin/src').default;
