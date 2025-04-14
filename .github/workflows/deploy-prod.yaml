@@ -41,29 +41,6 @@ jobs:
           openshift_server_url: ${{ secrets.OPENSHIFT_GOLD_SERVER_URL }}
           openshift_token: ${{ secrets.OPENSHIFT_GOLD_SERVICE_TOKEN }}
 
-      - name: Tag Prod images
-        run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin-main:${{ github.event.inputs.releaseTag }} admin-main:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder-main:${{ github.event.inputs.releaseTag }} public-builder-main:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-main:${{ github.event.inputs.releaseTag }} strapi-main:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-main:${{ github.event.inputs.releaseTag }} maintenance-main:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag etl-main:${{ github.event.inputs.releaseTag }} etl-main:${{ env.ENVIRONMENT }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag scheduler-main:${{ github.event.inputs.releaseTag }} scheduler-main:${{ env.ENVIRONMENT }}
-
       - name: TESTING Create OpenShift secret
         run: |
           oc create secret generic test-access-secret --from-literal=TEST_REPO_ACCESS_TOKEN="${{ secrets.REPO_ACCESS_TOKEN }}"
-
-      - name: Trigger Gatsby static build workflow
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          event-type: publish-gatsby
-          client-payload: '{"env": "${{ env.ENVIRONMENT }}", "branch": "main"}'
-
-      - name: Trigger new rollout
-        run: |
-          oc -n ${{ env.NAMESPACE }} rollout restart deployment main-admin
-          oc -n ${{ env.NAMESPACE }} rollout restart deployment main-cms
-          oc -n ${{ env.NAMESPACE }} rollout restart deployment main-maintenance
-          oc -n ${{ env.NAMESPACE }} rollout restart deployment main-scheduler
