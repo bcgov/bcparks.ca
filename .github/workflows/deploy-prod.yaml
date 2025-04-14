@@ -29,7 +29,7 @@ jobs:
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-      
+
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
@@ -49,6 +49,10 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-main:${{ github.event.inputs.releaseTag }} maintenance-main:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag etl-main:${{ github.event.inputs.releaseTag }} etl-main:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag scheduler-main:${{ github.event.inputs.releaseTag }} scheduler-main:${{ env.ENVIRONMENT }}
+
+      - name: TESTING Create OpenShift secret
+        run: |
+          oc create secret generic test-access-secret --from-literal=TEST_REPO_ACCESS_TOKEN="${{ secrets.REPO_ACCESS_TOKEN }}"
 
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v2
