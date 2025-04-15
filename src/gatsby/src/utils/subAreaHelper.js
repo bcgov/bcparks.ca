@@ -53,11 +53,13 @@ const combineCampingTypes = (campings, campingTypes, subAreas) => {
   )
   // add the parkCampingTypes to the common object
   for (const parkCampingType of parkCampingTypes) {
-    const campingTypeCode = parkCampingType.campingType?.campingTypeCode;
-    if (!obj[campingTypeCode]) {
-      obj[campingTypeCode] = { subAreas: [] };
+    if (parkCampingType.isActive && parkCampingType.isCampingOpen) {
+      const campingTypeCode = parkCampingType.campingType?.campingTypeCode;
+      if (!obj[campingTypeCode]) {
+        obj[campingTypeCode] = { subAreas: [] };
+      }
+      obj[campingTypeCode] = { ...parkCampingType, ...obj[campingTypeCode] };
     }
-    obj[campingTypeCode] = { ...parkCampingType, ...obj[campingTypeCode] };
   }
 
   // add the campingTypes to the common object and convert it to an array
@@ -86,11 +88,13 @@ const combineFacilities = (facilities, facilityTypes, subAreas) => {
   )
   // add the parkFacilities to the common object
   for (const parkFacility of parkFacilities) {
-    const facilityCode = parkFacility.facilityType?.facilityCode;
-    if (!obj[facilityCode]) {
-      obj[facilityCode] = { subAreas: [] };
+    if (parkFacility.isActive && parkFacility.isFacilityOpen) { 
+      const facilityCode = parkFacility.facilityType?.facilityCode;
+      if (!obj[facilityCode]) {
+        obj[facilityCode] = { subAreas: [] };
+      }
+      obj[facilityCode] = { ...parkFacility, ...obj[facilityCode] };
     }
-    obj[facilityCode] = { ...parkFacility, ...obj[facilityCode] };
   }
 
   // add the facilityTypes to the common object and convert it to an array
