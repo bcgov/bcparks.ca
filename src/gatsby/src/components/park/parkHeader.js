@@ -92,6 +92,8 @@ export default function ParkHeader({
   parkOperation,
   operationDates,
   subAreas,
+  isLoadingSubAreas,
+  subAreasLoadError,
   onStatusCalculated
 }) {
   const linkZoom = mapZoom + 1
@@ -119,7 +121,7 @@ export default function ParkHeader({
           </div>
         )}
         <div className="park-header-child">
-          {(!isLoadingAdvisories && !advisoryLoadError) ?
+          {(!isLoadingAdvisories && !advisoryLoadError && !isLoadingSubAreas && !subAreasLoadError) ?
             <ParkAccessStatus
               advisories={advisories}
               slug={slug}
@@ -215,5 +217,7 @@ ParkHeader.propTypes = {
   parkOperation: PropTypes.object,
   operationDates: PropTypes.array.isRequired,
   subAreas: PropTypes.array.isRequired,
+  isLoadingSubAreas: PropTypes.bool.isRequired,
+  subAreasLoadError: PropTypes.any,
   onStatusCalculated: PropTypes.func
 }

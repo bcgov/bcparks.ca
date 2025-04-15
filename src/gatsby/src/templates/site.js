@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState, useRef, useMemo } from "react"
 import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
@@ -8,7 +8,7 @@ import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories } from '../utils/advisoryHelper';
-import { preProcessSubAreas, combineCampingTypes, combineFacilities } from '../utils/subAreaHelper';
+import { preProcessSubAreas, combineCampingTypes, combineFacilities, loadSubAreas } from '../utils/subAreaHelper';
 
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import Breadcrumbs from "../components/breadcrumbs"
@@ -45,7 +45,6 @@ export default function SiteTemplate({ data }) {
   const hasSiteGuidelines = site.parkGuidelines?.length > 0
   const managementAreas = park.managementAreas || []
   const searchArea = managementAreas[0]?.searchArea || {}
-  const parkOperationSubAreas = site.parkOperationSubAreas || []
 
   const activeActivities = sortBy(
     site.parkActivities.filter(
@@ -54,10 +53,6 @@ export default function SiteTemplate({ data }) {
     ["activityType.rank", "activityType.activityName"],
     ["asc"]
   )
-
-  const subAreas = preProcessSubAreas(parkOperationSubAreas)
-  const activeFacilities = combineFacilities(site.parkFacilities, data.allStrapiFacilityType.nodes, subAreas);
-  const activeCampings = combineCampingTypes(site.parkCampingTypes, data.allStrapiCampingType.nodes, subAreas);
 
   const hasReservations = operations.hasReservations
   const hasDayUsePass = operations.hasDayUsePass
@@ -70,47 +65,82 @@ export default function SiteTemplate({ data }) {
   const [protectedAreaLoadError, setProtectedAreaLoadError] = useState(false)
   const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
   const [hasCampfireBan, setHasCampfireBan] = useState(false)
+  const [subAreas, setSubAreas] = useState([])
+  const [subAreasLoadError, setSubAreasLoadError] = useState(false)
+  const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
 
-  useEffect(() => {
+  const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
-    loadAdvisories(apiBaseUrl, park?.orcs)
-      .then(response => {
-        if (response.status === 200) {
-          // for sites, we want to include all advisories at the park level  
-          // and advisories for this specific site, but we exclude advisories 
-          // for other sites at the same park
-          const advisories = response.data.data.filter(
-            (advisory) => {
-              return advisory.sites.length === 0 ||
-                advisory.sites.some(
-                  (s) => s.orcsSiteNumber === site.orcsSiteNumber
-                )
-            })
-          setAdvisories(advisories)
-          setAdvisoryLoadError(false)
-        } else {
-          setAdvisories([])
-          setAdvisoryLoadError(true)
-        }
+    try {
+      const response = await loadAdvisories(apiBaseUrl, park?.orcs)
+      // for sites, we want to include all advisories at the park level  
+      // and advisories for this specific site, but we exclude advisories 
+      // for other sites at the same park
+      const advisories = response.data.data.filter(advisory => {
+        return advisory.sites.length === 0 ||
+          advisory.sites.some(
+            (s) => s.orcsSiteNumber === site.orcsSiteNumber
+          )
       })
-      .finally(() => {
-        setIsLoadingAdvisories(false)
-      })
+      setAdvisories(advisories)
+      setAdvisoryLoadError(false)
+    } catch (error) {
+      console.error("Error loading advisories:", error)
+      setAdvisories([])
+      setAdvisoryLoadError(true)
+    } finally {
+      setIsLoadingAdvisories(false)
+    }
+  }
+  
+  const loadProtectedAreaData = async () => {
     setIsLoadingProtectedArea(true)
-    axios.get(`${apiBaseUrl}/protected-areas/${park?.orcs}?fields=hasCampfireBan`)
-      .then(response => {
-        if (response.status === 200) {
-          setHasCampfireBan(response.data.hasCampfireBan)
-          setProtectedAreaLoadError(false)
-        } else {
-          setHasCampfireBan(false)
-          setProtectedAreaLoadError(true)
-        }
-      })
-      .finally(() => {
-        setIsLoadingProtectedArea(false)
-      })
+    try {
+      const response = await axios.get(
+        `${apiBaseUrl}/protected-areas/${park?.orcs}?fields=hasCampfireBan`
+      )
+      setHasCampfireBan(response.data.hasCampfireBan)
+      setProtectedAreaLoadError(false)
+    } catch (error) {
+      console.error("Error loading protected area:", error)
+      setHasCampfireBan(false)
+      setProtectedAreaLoadError(true)
+    } finally {
+      setIsLoadingProtectedArea(false)
+    }
+  }
+  
+  const loadSubAreasData = async () => {
+    setIsLoadingSubAreas(true)
+    try {
+      const response = await loadSubAreas(apiBaseUrl, park?.orcs)
+      setSubAreas(response.data.data)
+      setSubAreasLoadError(false)
+    } catch (error) {
+      console.error("Error loading sub-areas:", error)
+      setSubAreas([])
+      setSubAreasLoadError(true)
+    } finally {
+      setIsLoadingSubAreas(false)
+    }
+  }
+  
+  useEffect(() => {
+    loadAdvisoriesData()
+    loadProtectedAreaData()
+    loadSubAreasData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiBaseUrl, park?.orcs, site.orcsSiteNumber])
+  
+  const processedSubAreas = useMemo(() => {
+    if (!isLoadingSubAreas && !subAreasLoadError && subAreas.length) {
+      return preProcessSubAreas(subAreas)
+    }
+    return []
+  }, [isLoadingSubAreas, subAreasLoadError, subAreas])
+
+  const activeFacilities = combineFacilities(site.parkFacilities, data.allStrapiFacilityType.nodes, processedSubAreas);
+  const activeCampings = combineCampingTypes(site.parkCampingTypes, data.allStrapiCampingType.nodes, processedSubAreas);
 
   const parkOverviewRef = useRef("")
   const knowBeforeRef = useRef("")
@@ -229,7 +259,9 @@ export default function SiteTemplate({ data }) {
             searchArea={searchArea}
             parkOperation={operations}
             operationDates={site?.parkOperationDates || park.parkOperationDates}
-            subAreas={parkOperationSubAreas}
+            subAreas={subAreas}
+            isLoadingSubAreas={isLoadingSubAreas}
+            subAreasLoadError={subAreasLoadError}
           />
         </div>
         <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
@@ -328,11 +360,10 @@ export default function SiteTemplate({ data }) {
                 <CampingDetails
                   data={{
                     activeCampings: activeCampings,
-                    reservations: site.reservations,
-                    hasDayUsePass: hasDayUsePass,
-                    hasReservations: hasReservations,
                     parkOperation: operations,
-                    subAreas: parkOperationSubAreas
+                    subAreas: subAreas,
+                    isLoadingSubAreas: isLoadingSubAreas,
+                    subAreasLoadError: subAreasLoadError,
                   }}
                 />
               </div>
@@ -413,93 +444,6 @@ export const query = graphql`
         }
       }
       isUnofficialSite
-      parkOperationSubAreas {
-        parkSubArea
-        orcsSiteNumber
-        isActive
-        isOpen
-        hasReservations
-        hasBackcountryReservations
-        hasBackcountryPermits
-        hasFirstComeFirstServed
-        parkAccessUnitId
-        isCleanAirSite
-        totalCapacity
-        frontcountrySites
-        reservableSites
-        nonReservableSites
-        vehicleSites
-        vehicleSitesReservable
-        doubleSites
-        pullThroughSites
-        rvSites
-        rvSitesReservable
-        electrifiedSites
-        longStaySites
-        walkInSites
-        walkInSitesReservable
-        groupSites
-        groupSitesReservable
-        backcountrySites
-        wildernessSites
-        boatAccessSites
-        horseSites
-        cabins
-        huts
-        yurts
-        shelters
-        boatLaunches
-        hasGate
-        gateOpenTime
-        gateCloseTime
-        gateOpensAtDawn
-        gateClosesAtDusk
-        gateOpen24Hours
-        gateNote {
-          data {
-            gateNote
-          }
-        }
-        serviceNote {
-          data {
-            serviceNote
-          }
-        }
-        reservationNote {
-          data {
-            reservationNote
-          }
-        }
-        offSeasonNote {
-          data {
-            offSeasonNote
-          }
-        }
-        closureAffectsAccessStatus
-        parkOperationSubAreaDates {
-          isActive
-          operatingYear
-          openDate
-          closeDate
-          serviceStartDate
-          serviceEndDate
-          reservationStartDate
-          reservationEndDate
-          offSeasonStartDate
-          offSeasonEndDate
-        }
-        parkSubAreaType {
-          subAreaType
-          subAreaTypeCode
-          closureAffectsAccessStatus
-          facilityType {
-            facilityCode
-          }
-          campingType {
-            campingTypeCode
-          }
-        }
-      }
       protectedArea {
         orcs
         slug
