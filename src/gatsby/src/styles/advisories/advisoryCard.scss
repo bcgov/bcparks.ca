@@ -42,6 +42,12 @@
           display: flex;
         }
       }
+      
+      .raw-html-content {
+        & > div {
+          margin-bottom: 16px;
+        }
+      }
     }
   }
 }

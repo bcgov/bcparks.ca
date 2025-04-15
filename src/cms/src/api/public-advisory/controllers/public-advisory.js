@@ -27,12 +27,12 @@ const populateStandardMessages = function (query) {
 const appendStandardMessages = function (entity) {
     if (entity) {
         const { description = "", standardMessages } = entity;
+        let content = description ? `<div>${description}</div>` : "";
         if (standardMessages && standardMessages.length > 0) {
-            entity.description = (
-                "<p>" + description + "</p>" +
-                standardMessages.map((m) => m.description).join(" ")
-            ).trim();
+          content +=
+            standardMessages.map((m) => `<div>${m.description}</div>`).join(" ")
         }
+        entity.description = content.trim()
     }
     return entity;
 }
