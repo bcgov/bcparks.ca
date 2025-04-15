@@ -208,7 +208,7 @@ const ParkCard = ({ r }) => {
             <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
           </h2>
           <p>{locationLabel(r.parkLocations)}</p>
-          <div>
+          <div className="park-icons">
             <FeatureIcons
               page="find a park"
               slug={r.slug}
@@ -218,7 +218,7 @@ const ParkCard = ({ r }) => {
               parkCampingTypes={r.parkCampingTypes}
             />
           </div>
-          <div className="text-blue">
+          <div>
             <ParkAccessStatus
               advisories={r.advisories}
               slug={r.slug}
