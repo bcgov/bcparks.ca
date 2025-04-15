@@ -14,7 +14,7 @@ import AdvisoryDate from "../advisories/advisoryDate"
 import blueAlertIcon from "../../images/park/blue-alert.svg"
 import redAlertIcon from "../../images/park/red-alert.svg"
 import yellowAlertIcon from "../../images/park/yellow-alert.svg"
-import { compareAdvisories } from "../../utils/advisoryHelper"
+import { getAdvisoryDate } from "../../utils/advisoryHelper"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/advisories/advisoryDetails.scss"
 
@@ -26,19 +26,13 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
   const sortedAdvisories = orderBy(
     advisories,
     // advisory sort order
-    // 1 - listingRank:DESC
-    // 2 - urgency.sequence:DESC
-    // 3 - accessStatus.precedence:ASC
-    // 4 - eventType.precedence:ASC
-    // 5 - display date:DESC
-    // DESC - check a value is null or undefined with value - Infinity
-    // ASC - check a value is null or undefined with value ?? Infinity
     [
-      (advisory) => advisory.listingRank ?? - Infinity,
-      (advisory) => advisory.urgency.sequence ?? - Infinity,
-      (advisory) => advisory.accessStatus?.precedence ?? Infinity,
-      (advisory) => advisory.eventType?.precedence ?? Infinity,
-      (advisory) => compareAdvisories(advisory, advisory)
+      'listingRank',
+      'urgency.sequence',
+      'accessStatus.precedence',
+      'eventType.precedence',
+      // display date
+      getAdvisoryDate
     ],
     ['desc', 'desc', 'asc', 'asc', 'desc']
   )
@@ -191,7 +185,7 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                         advisoryDate={advisory.formattedAdvisoryDate}
                         hasUpdatedDateDisplay={advisory.isUpdatedDateDisplayed && advisory.formattedUpdatedDate}
                         updatedDate={advisory.formattedUpdatedDate}
-                        hasDisplayedDate={advisory.isAdvisoryDateDisplayed || advisory.isUpdatedDateDisplayed || 
+                        hasDisplayedDate={advisory.isAdvisoryDateDisplayed || advisory.isUpdatedDateDisplayed ||
                           advisory.isEffectiveDateDisplayed || advisory.isEndDateDisplayed}
                       />
                     </div>
