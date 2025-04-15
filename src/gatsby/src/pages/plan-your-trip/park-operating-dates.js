@@ -109,7 +109,6 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
           <tr>
             <th scope="col">Facility</th>
             <th scope="col">Operating season</th>
-            <th scope="col">Winter season</th>
             <th scope="col">Booking available</th>
           </tr>
         </thead>
@@ -134,23 +133,17 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
-              </td>
-              <td>
-                {subArea.offSeasonDates.length > 0 ? (
-                  <ul>
-                    {subArea.offSeasonDates.map((dateRange, index) =>
-                      <li key={index}>{dateRange}</li>
-                    )}
-                  </ul>
-                ) : (
-                  subArea.operationDates.length > 0 ? (
-                    <>
-                      {subArea.operationDates[0].toLowerCase().includes("year-round") ?
-                        "Limited services" : "No services"}
-                    </>
-                  ) : (
-                    <>Not known</>
-                  )
+                {subArea.offSeasonDates.length > 0 && (
+                  <div className="d-flex">
+                    <div className="me-1">
+                      <small>Winter rate:</small>
+                    </div>
+                    <ul>
+                      {subArea.offSeasonDates.map((dateRange, index) =>
+                        <li key={index}><small>{dateRange}</small></li>
+                      )}
+                    </ul>
+                  </div>
                 )}
               </td>
               <td>
@@ -190,25 +183,17 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                       <li key={index}>{dateRange}</li>
                     )}
                   </ul>
-                </div>
-                <div className="list-group-item--container">
-                  <b>Winter season</b>
-                  {subArea.offSeasonDates.length > 0 ? (
-                    <ul>
-                      {subArea.offSeasonDates.map((dateRange, index) =>
-                        <li key={index}>{dateRange}</li>
-                      )}
-                    </ul>
-                  ) : (
-                    subArea.operationDates.length > 0 ? (
-                      <>
-                        <br />{subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
-                      </>
-                    ) : (
-                      <>
-                        <br />Not known
-                      </>
-                    )
+                  {subArea.offSeasonDates.length > 0 && (
+                    <div className="d-flex">
+                      <div className="me-1">
+                        <small>Winter rate:</small>
+                      </div>
+                      <ul>
+                        {subArea.offSeasonDates.map((dateRange, index) =>
+                          <li key={index}><small>{dateRange}</small></li>
+                        )}
+                      </ul>
+                    </div>
                   )}
                 </div>
                 <div className="list-group-item--container">
@@ -410,7 +395,7 @@ const ParkOperatingDatesPage = () => {
               so <Link to="/find-a-park">check the park page</Link> for details.
             </li>
             <li>
-              <b>Winter season: </b>
+              <b>Winter rate: </b>
               These dates indicate when a frontcountry campground offers camping with reduced fees and services in their shoulder season.
               {" "}<Link to="/find-a-park">Check the park page</Link> for winter rates and details. 
             </li>
