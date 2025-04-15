@@ -1,6 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 
+import Acknowledgment from "../components/acknowledgment"
 import Footer from "../components/footer"
 import Header from "../components/header"
 import MainSearch from "../components/search/mainSearch"
@@ -106,10 +107,9 @@ export default function Home({ data }) {
           ))}
         </div>
       </div>
-      <div>
-        <ScrollToTop />
-        <Footer />
-      </div>
+      <Acknowledgment />
+      <ScrollToTop />
+      <Footer />
     </div>
   )
 }

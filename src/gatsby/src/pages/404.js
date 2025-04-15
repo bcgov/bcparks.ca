@@ -1,6 +1,7 @@
 import * as React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
+import Acknowledgment from "../components/acknowledgment"
 import Header from "../components/header"
 import Footer from "../components/footer"
 import Seo from "../components/seo"
@@ -68,6 +69,7 @@ const NotFoundPage = () => {
               </div>
             </div>
           </div>
+          <Acknowledgment />
           <Footer />
         </div>
       </div>

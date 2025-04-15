@@ -11,6 +11,7 @@ import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } f
 import { preProcessSubAreas, combineCampingTypes, combineFacilities, loadSubAreas } from '../utils/subAreaHelper';
 
 import About from "../components/park/about"
+import Acknowledgment from "../components/acknowledgment"
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import Breadcrumbs from "../components/breadcrumbs"
 import CampingDetails from "../components/park/campingDetails"
@@ -492,6 +493,7 @@ export default function ParkTemplate({ data }) {
       {hasNearbyParks &&
         <NearbyParks parks={nearbyParks} />
       }
+      <Acknowledgment color={hasNearbyParks ? "brown" : ""} />
       <ScrollToTop />
       <Footer />
     </div>
