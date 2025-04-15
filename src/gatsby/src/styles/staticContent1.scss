@@ -120,9 +120,6 @@
     .header-content > div {
       margin-top: 64px;
     }
-    & > div:last-of-type {
-      min-height: calc(100vh - 380px);
-    }
   }
 }
 

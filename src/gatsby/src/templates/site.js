@@ -10,6 +10,7 @@ import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories } from '../utils/advisoryHelper';
 import { preProcessSubAreas, combineCampingTypes, combineFacilities } from '../utils/subAreaHelper';
 
+import Acknowledgment from "../components/acknowledgment"
 import AdvisoryDetails from "../components/park/advisoryDetails"
 import Breadcrumbs from "../components/breadcrumbs"
 import CampingDetails from "../components/park/campingDetails"
@@ -355,6 +356,7 @@ export default function SiteTemplate({ data }) {
           </div>
         </div>
       </div>
+      <Acknowledgment />
       <ScrollToTop />
       <Footer />
     </div>
