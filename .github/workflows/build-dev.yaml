@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: strapi-${{ github.ref_name }}
-      BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
+      BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-18:9.5
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
@@ -155,7 +155,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: etl-${{ github.ref_name }}
-      BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
+      BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-18:9.5
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
@@ -185,7 +185,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: scheduler-${{ github.ref_name }}
-      BUILDER_IMAGE: registry.access.redhat.com/ubi8/nodejs-18:1-32
+      BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-18:9.5
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
