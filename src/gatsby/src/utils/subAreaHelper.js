@@ -43,19 +43,21 @@ const preProcessSubAreas = (subAreas) => {
   return result;
 }
 
-const combineCampingTypes = (parkCampingTypes, campingTypes, subAreas) => {
+const combineCampingTypes = (campings, campingTypes, subAreas) => {
   let arr = [];
   let obj = subAreas;
 
+  // filter the campings to include only active and open campings
+  const parkCampingTypes = campings.filter(
+    (camping) => camping.isActive && camping.isCampingOpen
+  )
   // add the parkCampingTypes to the common object
   for (const parkCampingType of parkCampingTypes) {
-    if (parkCampingType.isActive && parkCampingType.isCampingOpen) {
-      const campingTypeCode = parkCampingType.campingType?.campingTypeCode;
-      if (!obj[campingTypeCode]) {
-        obj[campingTypeCode] = { subAreas: [] };
-      }
-      obj[campingTypeCode] = { ...parkCampingType, ...obj[campingTypeCode] };
+    const campingTypeCode = parkCampingType.campingType?.campingTypeCode;
+    if (!obj[campingTypeCode]) {
+      obj[campingTypeCode] = { subAreas: [] };
     }
+    obj[campingTypeCode] = { ...parkCampingType, ...obj[campingTypeCode] };
   }
 
   // add the campingTypes to the common object and convert it to an array
@@ -74,19 +76,21 @@ const combineCampingTypes = (parkCampingTypes, campingTypes, subAreas) => {
   return arr.sort((a, b) => a.campingType.campingTypeName.localeCompare(b.campingType.campingTypeName))
 }
 
-const combineFacilities = (parkFacilities, facilityTypes, subAreas) => {
+const combineFacilities = (facilities, facilityTypes, subAreas) => {
   let arr = [];
   let obj = subAreas;
 
+  // filter the facilities to include only active and open facilities
+  const parkFacilities = facilities.filter(
+    (facility) => facility.isActive && facility.isFacilityOpen
+  )
   // add the parkFacilities to the common object
   for (const parkFacility of parkFacilities) {
-    if (parkFacility.isActive && parkFacility.isFacilityOpen) { 
-      const facilityCode = parkFacility.facilityType?.facilityCode;
-      if (!obj[facilityCode]) {
-        obj[facilityCode] = { subAreas: [] };
-      }
-      obj[facilityCode] = { ...parkFacility, ...obj[facilityCode] };
+    const facilityCode = parkFacility.facilityType?.facilityCode;
+    if (!obj[facilityCode]) {
+      obj[facilityCode] = { subAreas: [] };
     }
+    obj[facilityCode] = { ...parkFacility, ...obj[facilityCode] };
   }
 
   // add the facilityTypes to the common object and convert it to an array
