@@ -332,6 +332,7 @@ export default function ParkTemplate({ data }) {
             isLoadingSubAreas={isLoadingSubAreas}
             subAreasLoadError={subAreasLoadError}
             onStatusCalculated={handleAccessStatus}
+            audioClips={park.audioClips}
           />
         </div>
         <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
@@ -361,7 +362,7 @@ export default function ParkTemplate({ data }) {
           <div className={`page-content has-nearby-parks--${hasNearbyParks} col-12 col-md-8`}>
             {menuItems[0].visible && (
               <div ref={parkOverviewRef} className="w-100">
-                <ParkOverview data={description} type={parkType} />
+                <ParkOverview description={description} type={parkType} audioClips={park.audioClips} />
               </div>
             )}
             {menuItems[1].visible && (
@@ -470,6 +471,7 @@ export default function ParkTemplate({ data }) {
                   biogeoclimaticZones={park.biogeoclimaticZones}
                   terrestrialEcosections={park.terrestrialEcosections}
                   marineEcosections={park.marineEcosections}
+                  audioClips={park.audioClips}
                 />
               </div>
             )}
@@ -801,6 +803,28 @@ export const query = graphql`
             contactType
             contactText
             contactUrl
+          }
+        }
+      }
+      audioClips {
+        title
+        url
+        speakerTitle
+        speakerName
+        languageName
+        firstNationName
+        phoneticSpelling
+        displayLocation {
+          strapi_json_value
+        }
+        description {
+          data {
+            description
+          }
+        }
+        transcript {
+          data {
+            transcript
           }
         }
       }

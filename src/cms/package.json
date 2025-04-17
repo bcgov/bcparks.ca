@@ -26,6 +26,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^5.3.4",
+    "strapi-plugin-multi-select": "^1.2.3",
     "strapi-plugin-redis": "^1.1.0",
     "strapi-plugin-rest-cache": "^4.2.9",
     "strapi-plugin-transformer": "^3.1.2",

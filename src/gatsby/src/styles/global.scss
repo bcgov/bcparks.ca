@@ -521,6 +521,31 @@ button.btn:not(.btn-link):not(.btn-tooltip) {
   }
 }
 
+.btn-audio {
+  height: 48px;
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 50%;
+  border: $colorGreyLight solid 1px;
+  padding: 0;
+  svg {
+    height: 28px;
+    width: 28px;
+    color: $colorBlue;
+  }
+  &:hover, &:focus, &:focus-visible {
+    background-color: $colorBlueLight;
+    border: $colorBlue solid 1px;
+  }
+  &:focus-visible {
+    outline: $colorBlueMed solid 2px;
+    outline-offset: 2px;
+  }
+}
+
 // breadcurmbs
 nav.breadcrumbs {
   ol {
@@ -617,7 +642,7 @@ nav.breadcrumbs {
     @media screen and (min-width: $smBreakpoint) {
       padding-left: 40px;
     }
-    & > :not(.subarea-container) {
+    & > :not(.subarea-container):not(.audio-player) {
       max-width: 600px !important;
     }
   }

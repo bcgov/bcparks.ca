@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useMemo } from "react"
 import HtmlContent from "../htmlContent"
 import ParkAccessStatus from "./parkAccessStatus"
+import AudioButton from "../audioButton"
 import CampfireBan from "../campfireBan"
 import FontAwesome from "../fontAwesome"
 import { datePhrase, formattedTime } from "../../utils/parkDatesHelper"
@@ -94,7 +95,8 @@ export default function ParkHeader({
   subAreas,
   isLoadingSubAreas,
   subAreasLoadError,
-  onStatusCalculated
+  onStatusCalculated,
+  audioClips
 }) {
   const linkZoom = mapZoom + 1
   const externalLink =
@@ -104,13 +106,22 @@ export default function ParkHeader({
   const parkDates = getParkOperationDates(operationDates, thisYear)
   const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
   const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
+  // Check if array contains a "tldr"
+  const hasTldr = (array) => array?.includes("tldr") || false
+  // Filter audio clips if it has a "tldr" displayLocation
+  const audioClip = useMemo(() => {
+    return audioClips?.filter(audio => hasTldr(audio.displayLocation?.strapi_json_value)) || []
+  }, [audioClips])
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
 
   return (
     <div id="park-header-container" className="d-flex park-info-container">
       <div className="park-header park-header--left">
-        <h1>{parkName}</h1>
+        <div className="d-flex">
+          <h1>{parkName}</h1>
+          {audioClip.length ? <AudioButton audio={audioClip[0]} location="tldr" /> : ""}
+        </div>
         {searchArea?.searchAreaName && (
           <div className="park-header-child">
             <FontAwesome icon="location-dot" />
