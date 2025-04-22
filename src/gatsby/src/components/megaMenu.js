@@ -244,7 +244,7 @@ const MegaMenu = ({ content, menuMode }) => {
 
   useEffect(() => {
       setIsMenuOpen(screenSize.width > 992)
-  }, [screenSize])
+  }, [screenSize.width])
 
   // recursive menu generator which makes single version of DOM
   // that can be used for desktop, mobile and sitemap views of megamenu
