@@ -38,10 +38,12 @@ export const transformFilters = filters => {
       filterType = "activities";
     }
 
+    // add filter label to object 
     if (!acc[filterType]) {
-      acc[filterType] = []
+      acc[filterType] = filter.label
+    } else {
+      acc[filterType] += `, ${filter.label}`
     }
-    acc[filterType].push(filter.label)
 
     // check for "Popular" filters
     if (
@@ -50,9 +52,10 @@ export const transformFilters = filters => {
       (filterType === "facilities" && filter.value === 6)
     ) {
       if (!acc["popular"]) {
-        acc["popular"] = []
+        acc["popular"] = filter.label
+      } else {
+        acc["popular"] += `, ${filter.label}`
       }
-      acc["popular"].push(filter.label)
     }
     return acc
   }, {})
