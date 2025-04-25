@@ -86,8 +86,7 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
       <div className="mb-2">
         <>
           <span className="me-1">
-            {(!isLoadingAdvisories && !advisoryLoadError && 
-              !isLoadingSubAreas && !subAreaLoadError) ?
+            {(!isLoadingAdvisories && !advisoryLoadError) &&
               <ParkAccessStatus
                 advisories={advisories}
                 slug={park.slug}
@@ -96,7 +95,6 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                 onStatusCalculated={setParkAccessStatus}
                 punctuation="."
               />
-              : <ProgressBar animated now={100} />
             }
           </span>
           {parkDates && (
@@ -432,6 +430,13 @@ const ParkOperatingDatesPage = () => {
               ))}
             </div>
           </div>
+          
+          {(isLoadingSubAreas || subAreaLoadError) &&
+            <div className="mt-5">
+              Loading...
+              <ProgressBar animated now={100} className="mt-2" />
+            </div>
+          }
 
           <div className="lists">
             {currentFilter === "All" ? (
