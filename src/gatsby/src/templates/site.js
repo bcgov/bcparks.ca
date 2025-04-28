@@ -69,6 +69,8 @@ export default function SiteTemplate({ data }) {
   const [subAreas, setSubAreas] = useState([])
   const [subAreasLoadError, setSubAreasLoadError] = useState(false)
   const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
+  const [activeFacilities, setActiveFacilities] = useState([])
+  const [activeCampings, setActiveCampings] = useState([])
 
   const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
@@ -140,8 +142,51 @@ export default function SiteTemplate({ data }) {
     return []
   }, [isLoadingSubAreas, subAreasLoadError, subAreas])
 
-  const activeFacilities = combineFacilities(site.parkFacilities, data.allStrapiFacilityType.nodes, processedSubAreas);
-  const activeCampings = combineCampingTypes(site.parkCampingTypes, data.allStrapiCampingType.nodes, processedSubAreas);
+  // set active facilities
+  useEffect(() => {
+    const fetchActiveFacilities = async () => {
+      if (site.parkFacilities.length > 0 &&
+        data.allStrapiFacilityType.nodes.length > 0 && 
+        Object.keys(processedSubAreas).length > 0
+      ) {
+        try {
+          const facilities = await combineFacilities(
+            site.parkFacilities,
+            data.allStrapiFacilityType.nodes,
+            processedSubAreas
+          )
+          setActiveFacilities(facilities)
+        } catch (error) {
+          console.error("Error fetching facilities:", error)
+          setActiveFacilities([])
+        }
+      }
+    }
+    fetchActiveFacilities()
+  }, [site.parkFacilities, data.allStrapiFacilityType.nodes, processedSubAreas])
+
+    // set active campings
+    useEffect(() => {
+      const fetchActiveCampings = async () => {
+        if (site.parkCampingTypes.length > 0 &&
+          data.allStrapiCampingType.nodes.length > 0 &&
+          Object.keys(processedSubAreas).length > 0
+        ) {
+          try {
+            const campings = await combineCampingTypes(
+              site.parkCampingTypes,
+              data.allStrapiCampingType.nodes,
+              processedSubAreas
+            )
+            setActiveCampings(campings)
+          } catch (error) {
+            console.error("Error fetching campings:", error)
+            setActiveCampings([])
+          }
+        }
+      }
+      fetchActiveCampings()
+    }, [site.parkCampingTypes, data.allStrapiCampingType.nodes, processedSubAreas])
 
   const parkOverviewRef = useRef("")
   const knowBeforeRef = useRef("")
