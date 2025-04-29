@@ -22,6 +22,8 @@ const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) 
   const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
   const [parkAccessStatus, setParkAccessStatus] = useState({})
   const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
+  // Check if park access status is "Closed"
+  const [isParkOpen, setIsParkOpen] = useState(null)
 
   // Overall operating dates for parks, to display above subareas
   let fmt = "MMM D, yyyy"
@@ -92,10 +94,11 @@ const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) 
                 operationDates={park.parkOperationDates}
                 onStatusCalculated={setParkAccessStatus}
                 punctuation="."
+                setIsParkOpen={setIsParkOpen}
               />
             }
           </span>
-          {parkDates && (
+          {(parkDates && isParkOpen !== false) && (
             <span className="gate-text">The {park.type.toLowerCase()} {parkOperation.hasParkGate !== false && "gate"} is open {parkDates}.</span>
           )}
         </>
