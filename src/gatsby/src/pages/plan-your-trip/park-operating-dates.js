@@ -18,7 +18,7 @@ import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/pa
 import { loadAllAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
 
-const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvisories, subAreaLoadError, isLoadingSubAreas }) => {
+const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvisories }) => {
   const thisYear = new Date().getFullYear()
   const parkOperation = park.parkOperation
   const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
@@ -434,51 +434,49 @@ const ParkOperatingDatesPage = () => {
             </div>
           </div>
           
-          {(isLoadingSubAreas || subAreaLoadError) &&
+          {(isLoadingSubAreas || subAreaLoadError) ?
+            // display the loading bar if subareas are loading
             <div className="mt-5">
               Loading...
               <ProgressBar animated now={100} className="mt-2" />
             </div>
-          }
-
-          <div className="lists">
-            {currentFilter === "All" ? (
-              filters.map((filter, index) => (
-                <div key={index} className="list">
-                  {filtering(filter).map((park, index) => (
-                    <ParkLink 
-                      key={index}
-                      park={park}
-                      advisories={filterAdvisoriesByOrcs(park.orcs)}
-                      subAreas={filterSubAreasByOrcs(park.orcs)}
-                      subAreaLoadError={subAreaLoadError}
-                      isLoadingSubAreas={isLoadingSubAreas}
-                      advisoryLoadError={advisoryLoadError}
-                      isLoadingAdvisories={isLoadingAdvisories}
-                    />
-                  ))}
+          :
+            // display the list of parks if subareas are loaded
+            <div className="lists">
+              {currentFilter === "All" ? (
+                filters.map((filter, index) => (
+                  <div key={index} className="list">
+                    {filtering(filter).map((park, index) => (
+                      <ParkLink 
+                        key={index}
+                        park={park}
+                        advisories={filterAdvisoriesByOrcs(park.orcs)}
+                        subAreas={filterSubAreasByOrcs(park.orcs)}
+                        advisoryLoadError={advisoryLoadError}
+                        isLoadingAdvisories={isLoadingAdvisories}
+                      />
+                    ))}
+                  </div>
+                ))
+              ) : (
+                <div className="list">
+                  {hasResult ? 
+                    filtering(currentFilter).map((park, index) => (
+                      <ParkLink
+                        key={index}
+                        park={park}
+                        advisories={filterAdvisoriesByOrcs(park.orcs)}
+                        subAreas={filterSubAreasByOrcs(park.orcs)}
+                        advisoryLoadError={advisoryLoadError}
+                        isLoadingAdvisories={isLoadingAdvisories}
+                      />
+                    ))
+                    : <NoSearchResults page="park-operating-dates" />
+                  }
                 </div>
-              ))
-            ) : (
-              <div className="list">
-                {hasResult ? 
-                  filtering(currentFilter).map((park, index) => (
-                    <ParkLink
-                      key={index}
-                      park={park}
-                      advisories={filterAdvisoriesByOrcs(park.orcs)}
-                      subAreas={filterSubAreasByOrcs(park.orcs)}
-                      subAreaLoadError={subAreaLoadError}
-                      isLoadingSubAreas={isLoadingSubAreas}
-                      advisoryLoadError={advisoryLoadError}
-                      isLoadingAdvisories={isLoadingAdvisories}
-                    />
-                  ))
-                  : <NoSearchResults page="park-operating-dates" />
-                }
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          }
         </div>
       </div>
       <Acknowledgment />
