@@ -20,7 +20,6 @@ export default function ParkOverview({ description, type, audioClips }) {
   const collapsedDescription = $.html()
   const hasHr = $("hr").length > 0
   const hrAtEnd = description.trim().endsWith("<hr>")
-  const hasExpandCondition = (hasHr || isLong) && !isMedium && !hrAtEnd
   const hasAudioClipPlaceholder = $(".audio-clip").length > 0
   // Check if array contains a "highlights"
   const hasHighlights = (array) => array?.includes("highlights") || false
@@ -28,6 +27,12 @@ export default function ParkOverview({ description, type, audioClips }) {
   const audioClip = useMemo(() => {
     return audioClips?.filter(audio => hasHighlights(audio.displayLocation?.strapi_json_value)) || []
   }, [audioClips])
+  // Set the expand condition if 
+  // 1 - the description is long or has a <hr> tag
+  // 2 - the description is medium
+  // 3 - the <hr> tag is NOT at the end of the description or audio clip is present
+  const hasExpandCondition = 
+    (hasHr || isLong) && !isMedium && (!hrAtEnd || audioClip.length > 0)
 
   useEffect(() => {
     if (!hasHr && ref.current.clientHeight > 260) {
