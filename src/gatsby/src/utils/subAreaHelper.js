@@ -43,7 +43,7 @@ const preProcessSubAreas = (subAreas) => {
   return result;
 }
 
-const combineCampingTypes = async (campings, campingTypes, subAreas) => {
+const combineCampingTypes = (campings, campingTypes, subAreas) => {
   let arr = [];
   let obj = subAreas;
 
@@ -63,7 +63,7 @@ const combineCampingTypes = async (campings, campingTypes, subAreas) => {
   // add the campingTypes to the common object and convert it to an array
   for (const campingTypeCode in obj) {
     const parkCampingType = obj[campingTypeCode];
-    parkCampingType.campingType = await campingTypes.find(ct => ct.campingTypeCode === campingTypeCode);
+    parkCampingType.campingType = campingTypes.find(ct => ct.campingTypeCode === campingTypeCode);
     // only include camping, not facilities
     if (parkCampingType.campingType) {
       // the camping type should be active, but we will include it anyway if it has subareas
@@ -76,7 +76,7 @@ const combineCampingTypes = async (campings, campingTypes, subAreas) => {
   return arr.sort((a, b) => a.campingType.campingTypeName.localeCompare(b.campingType.campingTypeName))
 }
 
-const combineFacilities = async (facilities, facilityTypes, subAreas) => {
+const combineFacilities = (facilities, facilityTypes, subAreas) => {
   let arr = [];
   let obj = subAreas;
 
@@ -96,7 +96,7 @@ const combineFacilities = async (facilities, facilityTypes, subAreas) => {
   // add the facilityTypes to the common object and convert it to an array
   for (const facilityCode in obj) {
     const parkFacility = obj[facilityCode];
-    parkFacility.facilityType = await facilityTypes.find(f => f.facilityCode === facilityCode);
+    parkFacility.facilityType = facilityTypes.find(f => f.facilityCode === facilityCode);
     // only include facilities, not camping
     if (parkFacility.facilityType) {
       // the facility type should be active, but we will include it anyway if it has subareas

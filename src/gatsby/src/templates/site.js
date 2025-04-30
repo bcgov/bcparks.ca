@@ -144,22 +144,17 @@ export default function SiteTemplate({ data }) {
 
   // set active facilities
   useEffect(() => {
-    const fetchActiveFacilities = async () => {
+    const fetchActiveFacilities = () => {
       if (site.parkFacilities.length > 0 &&
         data.allStrapiFacilityType.nodes.length > 0 && 
         Object.keys(processedSubAreas).length > 0
       ) {
-        try {
-          const facilities = await combineFacilities(
+          const facilities = combineFacilities(
             site.parkFacilities,
             data.allStrapiFacilityType.nodes,
             processedSubAreas
           )
           setActiveFacilities(facilities)
-        } catch (error) {
-          console.error("Error fetching facilities:", error)
-          setActiveFacilities([])
-        }
       }
     }
     fetchActiveFacilities()
@@ -167,22 +162,17 @@ export default function SiteTemplate({ data }) {
 
     // set active campings
     useEffect(() => {
-      const fetchActiveCampings = async () => {
+      const fetchActiveCampings = () => {
         if (site.parkCampingTypes.length > 0 &&
           data.allStrapiCampingType.nodes.length > 0 &&
           Object.keys(processedSubAreas).length > 0
         ) {
-          try {
-            const campings = await combineCampingTypes(
+            const campings = combineCampingTypes(
               site.parkCampingTypes,
               data.allStrapiCampingType.nodes,
               processedSubAreas
             )
             setActiveCampings(campings)
-          } catch (error) {
-            console.error("Error fetching campings:", error)
-            setActiveCampings([])
-          }
         }
       }
       fetchActiveCampings()
