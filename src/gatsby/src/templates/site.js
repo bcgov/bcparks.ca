@@ -144,38 +144,32 @@ export default function SiteTemplate({ data }) {
 
   // set active facilities
   useEffect(() => {
-    const fetchActiveFacilities = () => {
-      if (site.parkFacilities.length > 0 &&
-        data.allStrapiFacilityType.nodes.length > 0 && 
-        Object.keys(processedSubAreas).length > 0
-      ) {
-          const facilities = combineFacilities(
-            site.parkFacilities,
-            data.allStrapiFacilityType.nodes,
-            processedSubAreas
-          )
-          setActiveFacilities(facilities)
-      }
+    if (site.parkFacilities.length > 0 &&
+      data.allStrapiFacilityType.nodes.length > 0 && 
+      Object.keys(processedSubAreas).length > 0
+    ) {
+      const facilities = combineFacilities(
+        site.parkFacilities,
+        data.allStrapiFacilityType.nodes,
+        processedSubAreas
+      )
+      setActiveFacilities(facilities)
     }
-    fetchActiveFacilities()
   }, [site.parkFacilities, data.allStrapiFacilityType.nodes, processedSubAreas])
 
     // set active campings
     useEffect(() => {
-      const fetchActiveCampings = () => {
-        if (site.parkCampingTypes.length > 0 &&
-          data.allStrapiCampingType.nodes.length > 0 &&
-          Object.keys(processedSubAreas).length > 0
-        ) {
-            const campings = combineCampingTypes(
-              site.parkCampingTypes,
-              data.allStrapiCampingType.nodes,
-              processedSubAreas
-            )
-            setActiveCampings(campings)
-        }
+      if (site.parkCampingTypes.length > 0 &&
+        data.allStrapiCampingType.nodes.length > 0 &&
+        Object.keys(processedSubAreas).length > 0
+      ) {
+        const campings = combineCampingTypes(
+          site.parkCampingTypes,
+          data.allStrapiCampingType.nodes,
+          processedSubAreas
+        )
+        setActiveCampings(campings)
       }
-      fetchActiveCampings()
     }, [site.parkCampingTypes, data.allStrapiCampingType.nodes, processedSubAreas])
 
   const parkOverviewRef = useRef("")

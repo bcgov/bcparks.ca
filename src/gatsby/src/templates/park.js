@@ -153,38 +153,32 @@ export default function ParkTemplate({ data }) {
 
   // set active facilities
   useEffect(() => {
-    const fetchActiveFacilities = () => {
-      if (park.parkFacilities.length > 0 &&
-        data.allStrapiFacilityType.nodes.length > 0 && 
-        Object.keys(processedSubAreas).length > 0
-      ) {
-          const facilities = combineFacilities(
-            park.parkFacilities,
-            data.allStrapiFacilityType.nodes,
-            processedSubAreas
-          )
-          setActiveFacilities(facilities)
-      }
+    if (park.parkFacilities.length > 0 &&
+      data.allStrapiFacilityType.nodes.length > 0 && 
+      Object.keys(processedSubAreas).length > 0
+    ) {
+      const facilities = combineFacilities(
+        park.parkFacilities,
+        data.allStrapiFacilityType.nodes,
+        processedSubAreas
+      )
+      setActiveFacilities(facilities)
     }
-    fetchActiveFacilities()
   }, [park.parkFacilities, data.allStrapiFacilityType.nodes, processedSubAreas])
 
   // set active campings
   useEffect(() => {
-    const fetchActiveCampings = () => {
-      if (park.parkCampingTypes.length > 0 &&
-        data.allStrapiCampingType.nodes.length > 0 &&
-        Object.keys(processedSubAreas).length > 0
-      ) {
-          const campings = combineCampingTypes(
-            park.parkCampingTypes,
-            data.allStrapiCampingType.nodes,
-            processedSubAreas
-          )
-          setActiveCampings(campings)
-      }
+    if (park.parkCampingTypes.length > 0 &&
+      data.allStrapiCampingType.nodes.length > 0 &&
+      Object.keys(processedSubAreas).length > 0
+    ) {
+      const campings = combineCampingTypes(
+        park.parkCampingTypes,
+        data.allStrapiCampingType.nodes,
+        processedSubAreas
+      )
+      setActiveCampings(campings)
     }
-    fetchActiveCampings()
   }, [park.parkCampingTypes, data.allStrapiCampingType.nodes, processedSubAreas])
 
   useEffect(() => {
