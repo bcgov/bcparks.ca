@@ -29,7 +29,7 @@ export default function ParkOverview({ description, type, audioClips }) {
   }, [audioClips])
   // Set the expand condition if 
   // 1 - the description is long or has a <hr> tag
-  // 2 - the description is medium
+  // 2 - the description is NOT medium
   // 3 - the <hr> tag is NOT at the end of the description or audio clip is present
   const hasExpandCondition = 
     (hasHr || isLong) && !isMedium && (!hrAtEnd || audioClip.length > 0)
