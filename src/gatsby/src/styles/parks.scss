@@ -604,9 +604,9 @@ h2.section-heading {
 // tooltip
 #winter-rate-tooltip {
   font-size: 0.875rem;
+  opacity: 1;
   .tooltip-inner {
-    background-color: $colorBlack;
-    padding: 4px 8px;
+    background-color: $colorGrey;
   }
 }
 
