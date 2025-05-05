@@ -71,6 +71,8 @@ export default function SiteTemplate({ data }) {
   const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
   const [activeFacilities, setActiveFacilities] = useState([])
   const [activeCampings, setActiveCampings] = useState([])
+  // only one audio clip can be active at a time
+  const [activeAudio, setActiveAudio] = useState("")
 
   const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
@@ -293,6 +295,8 @@ export default function SiteTemplate({ data }) {
             isLoadingSubAreas={isLoadingSubAreas}
             subAreasLoadError={subAreasLoadError}
             audioClips={site.audioClips}
+            activeAudio={activeAudio}
+            setActiveAudio={setActiveAudio}
           />
         </div>
         <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
@@ -322,7 +326,13 @@ export default function SiteTemplate({ data }) {
           <div className="page-content col-12 col-md-8">
             {menuItems[0].visible && (
               <div ref={parkOverviewRef} className="w-100">
-                <ParkOverview description={description} type="site" audioClips={site.audioClips} />
+                <ParkOverview
+                  description={description}
+                  type="site"
+                  audioClips={site.audioClips}
+                  activeAudio={activeAudio}
+                  setActiveAudio={setActiveAudio}
+                />
               </div>
             )}
             {menuItems[1].visible && (
@@ -614,6 +624,7 @@ export const query = graphql`
         gateCloseDate
       }
       audioClips {
+        id
         title
         url
         speakerTitle

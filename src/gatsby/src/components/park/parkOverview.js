@@ -6,7 +6,7 @@ import HtmlContent from "../htmlContent"
 import AudioButton from "../audioButton"
 import * as cheerio from "cheerio"
 
-export default function ParkOverview({ description, type, audioClips }) {
+export default function ParkOverview({ description, type, audioClips, activeAudio, setActiveAudio }) {
   const [expanded, setExpanded] = useState(false)
   const [height, setHeight] = useState(0)
   const [sectionHeight, setSectionHeight] = useState(0)
@@ -54,6 +54,14 @@ export default function ParkOverview({ description, type, audioClips }) {
   useEffect(() => {
     if (typeof window === "undefined") return
     let isUnmounting = false
+    const audioButtonElement = (
+      <AudioButton
+        audio={audioClip[0]}
+        location="highlights"
+        activeAudio={activeAudio}
+        setActiveAudio={setActiveAudio}
+      />
+    )
 
     const setupAudio = () => {
       if (isUnmounting) return
@@ -61,18 +69,18 @@ export default function ParkOverview({ description, type, audioClips }) {
         const placeholder = document.getElementsByClassName("audio-clip")[0]
         if (placeholder) {
           if (rootRef.current) {
-            rootRef.current.render(<AudioButton audio={audioClip[0]} location="highlights" />)
+            rootRef.current.render(audioButtonElement)
           } else {
             // check if the placeholder has been hydrated
             if (placeholder.hasAttribute("data-reactroot")) {
               rootRef.current = hydrateRoot(
                 placeholder,
-                <AudioButton audio={audioClip[0]} location="highlights" />
+                audioButtonElement
               )
             // create a new root if the placeholder hasn't been hydrated
             } else {
               rootRef.current = createRoot(placeholder)
-              rootRef.current.render(<AudioButton audio={audioClip[0]} location="highlights" />)
+              rootRef.current.render(audioButtonElement)
             }
           }
         }
@@ -91,6 +99,7 @@ export default function ParkOverview({ description, type, audioClips }) {
         }
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasAudioClipPlaceholder, audioClip, expanded])
 
   return (
@@ -116,7 +125,12 @@ export default function ParkOverview({ description, type, audioClips }) {
         </HtmlContent>
         {/* display audio button at the bottom if it doesn't have the placeholder */}
         {!hasAudioClipPlaceholder && audioClip.length > 0 ? (
-          <AudioButton audio={audioClip[0]} location="highlights" />
+          <AudioButton
+            audio={audioClip[0]}
+            location="highlights"
+            activeAudio={activeAudio}
+            setActiveAudio={setActiveAudio}
+          />
         ) : (
           ""
         )}

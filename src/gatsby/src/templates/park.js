@@ -89,6 +89,8 @@ export default function ParkTemplate({ data }) {
   const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
   const [activeFacilities, setActiveFacilities] = useState([])
   const [activeCampings, setActiveCampings] = useState([])
+  // only one audio clip can be active at a time
+  const [activeAudio, setActiveAudio] = useState("")
 
   const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
@@ -362,6 +364,8 @@ export default function ParkTemplate({ data }) {
             subAreasLoadError={subAreasLoadError}
             onStatusCalculated={handleAccessStatus}
             audioClips={park.audioClips}
+            activeAudio={activeAudio}
+            setActiveAudio={setActiveAudio}
           />
         </div>
         <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
@@ -391,7 +395,13 @@ export default function ParkTemplate({ data }) {
           <div className={`page-content has-nearby-parks--${hasNearbyParks} col-12 col-md-8`}>
             {menuItems[0].visible && (
               <div ref={parkOverviewRef} className="w-100">
-                <ParkOverview description={description} type={parkType} audioClips={park.audioClips} />
+                <ParkOverview
+                  description={description}
+                  type={parkType}
+                  audioClips={park.audioClips}
+                  activeAudio={activeAudio}
+                  setActiveAudio={setActiveAudio}
+                />
               </div>
             )}
             {menuItems[1].visible && (
@@ -501,6 +511,8 @@ export default function ParkTemplate({ data }) {
                   terrestrialEcosections={park.terrestrialEcosections}
                   marineEcosections={park.marineEcosections}
                   audioClips={park.audioClips}
+                  activeAudio={activeAudio}
+                  setActiveAudio={setActiveAudio}
                 />
               </div>
             )}
@@ -836,6 +848,7 @@ export const query = graphql`
         }
       }
       audioClips {
+        id
         title
         url
         speakerTitle
