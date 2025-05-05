@@ -69,6 +69,8 @@ export default function SiteTemplate({ data }) {
   const [subAreas, setSubAreas] = useState([])
   const [subAreasLoadError, setSubAreasLoadError] = useState(false)
   const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
+  const [activeFacilities, setActiveFacilities] = useState([])
+  const [activeCampings, setActiveCampings] = useState([])
 
   const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
@@ -140,8 +142,35 @@ export default function SiteTemplate({ data }) {
     return []
   }, [isLoadingSubAreas, subAreasLoadError, subAreas])
 
-  const activeFacilities = combineFacilities(site.parkFacilities, data.allStrapiFacilityType.nodes, processedSubAreas);
-  const activeCampings = combineCampingTypes(site.parkCampingTypes, data.allStrapiCampingType.nodes, processedSubAreas);
+  // set active facilities
+  useEffect(() => {
+    if (site.parkFacilities.length > 0 &&
+      data.allStrapiFacilityType.nodes.length > 0 && 
+      Object.keys(processedSubAreas).length > 0
+    ) {
+      const facilities = combineFacilities(
+        site.parkFacilities,
+        data.allStrapiFacilityType.nodes,
+        processedSubAreas
+      )
+      setActiveFacilities(facilities)
+    }
+  }, [site.parkFacilities, data.allStrapiFacilityType.nodes, processedSubAreas])
+
+    // set active campings
+    useEffect(() => {
+      if (site.parkCampingTypes.length > 0 &&
+        data.allStrapiCampingType.nodes.length > 0 &&
+        Object.keys(processedSubAreas).length > 0
+      ) {
+        const campings = combineCampingTypes(
+          site.parkCampingTypes,
+          data.allStrapiCampingType.nodes,
+          processedSubAreas
+        )
+        setActiveCampings(campings)
+      }
+    }, [site.parkCampingTypes, data.allStrapiCampingType.nodes, processedSubAreas])
 
   const parkOverviewRef = useRef("")
   const knowBeforeRef = useRef("")
