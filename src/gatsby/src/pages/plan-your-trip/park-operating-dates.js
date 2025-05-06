@@ -14,7 +14,7 @@ import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import StaticIcon from "../../components/park/staticIcon"
 import NoSearchResults from "../../components/search/noSearchResults"
 import { loadAllSubAreas } from "../../utils/subAreaHelper"
-import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
+import { datePhrase, processDateRanges, groupSubAreaDates, convertWinterRate } from "../../utils/parkDatesHelper"
 import { loadAllAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
 
@@ -52,6 +52,7 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
     subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, "–", true)
     subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, "–", true)
     subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, "–", true)
+    subArea.offSeasonDates = convertWinterRate(subArea.offSeasonDates)
 
     // add a placeholder if no dates are available for the current year
     if (subArea.serviceDates.length === 0
