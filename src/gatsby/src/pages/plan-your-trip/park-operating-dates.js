@@ -433,14 +433,21 @@ const ParkOperatingDatesPage = () => {
               ))}
             </div>
           </div>
-          
-          {(isLoadingSubAreas || subAreaLoadError) ?
+          {isLoadingSubAreas ? (
             // display the loading bar if subareas are loading
             <div className="mt-5">
               Loading...
               <ProgressBar animated now={100} className="mt-2" />
             </div>
-          :
+          ) : subAreaLoadError ? (
+            // display the error message if subareas failed to load
+            <div className="mt-5">
+              <h2 className="sub-heading">Something went wrong. Please try again later.</h2>
+              <p>If the problem continues, please contact{" "}
+                <a href="mailto:parkinfo@gov.bc.ca">parkinfo@gov.bc.ca</a>.
+              </p>
+            </div>
+          ) : (
             // display the list of parks if subareas are loaded
             <div className="lists">
               {currentFilter === "All" ? (
@@ -476,7 +483,7 @@ const ParkOperatingDatesPage = () => {
                 </div>
               )}
             </div>
-          }
+          )}
         </div>
       </div>
       <Acknowledgment />
