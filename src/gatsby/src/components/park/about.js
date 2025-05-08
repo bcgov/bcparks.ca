@@ -12,7 +12,7 @@ import { isNullOrWhiteSpace } from "../../utils/helpers"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion, audioClips }) => {
+export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion, audioClips, activeAudio, setActiveAudio }) => {
   // Check if array contains a "heritage" or "history"
   const hasHeritageOrHistory = (array) => {
     const keywords = ["heritage", "history"]
@@ -50,7 +50,12 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion,
             {!isNullOrWhiteSpace(data.description) && data.description}
           </HtmlContent>
           {audioClip.length > 0 && (data.code === "heritage" || data.code === "history") ? (
-            <AudioButton audio={audioClip[0]} location="about" />
+            <AudioButton
+              audio={audioClip[0]}
+              location="about"
+              activeAudio={activeAudio}
+              setActiveAudio={setActiveAudio}
+            />
           ) : (
             ""
           )}
@@ -61,7 +66,7 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion,
 }
 
 export default function About({
-  parkType, conservation, culturalHeritage, history, wildlife, biogeoclimaticZones, terrestrialEcosections, marineEcosections, audioClips
+  parkType, conservation, culturalHeritage, history, wildlife, biogeoclimaticZones, terrestrialEcosections, marineEcosections, audioClips, activeAudio, setActiveAudio
 }) {
   const dataList = [
     { "title": "Cultural heritage", "code": "heritage", "description": culturalHeritage },
@@ -217,6 +222,8 @@ export default function About({
                   openAccordions={openAccordions}
                   toggleAccordion={toggleAccordion}
                   audioClips={audioClips}
+                  activeAudio={activeAudio}
+                  setActiveAudio={setActiveAudio}
                 />
               ))}
             </Col>

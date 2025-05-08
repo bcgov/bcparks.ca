@@ -96,7 +96,9 @@ export default function ParkHeader({
   isLoadingSubAreas,
   subAreasLoadError,
   onStatusCalculated,
-  audioClips
+  audioClips,
+  activeAudio,
+  setActiveAudio
 }) {
   const linkZoom = mapZoom + 1
   const externalLink =
@@ -120,7 +122,14 @@ export default function ParkHeader({
       <div className="park-header park-header--left">
         <div className="d-flex">
           <h1>{parkName}</h1>
-          {audioClip.length ? <AudioButton audio={audioClip[0]} location="tldr" /> : ""}
+          {audioClip.length ? 
+            <AudioButton
+              audio={audioClip[0]}
+              location="tldr"
+              activeAudio={activeAudio}
+              setActiveAudio={setActiveAudio} 
+            />
+          : ""}
         </div>
         {searchArea?.searchAreaName && (
           <div className="park-header-child">
@@ -230,5 +239,8 @@ ParkHeader.propTypes = {
   subAreas: PropTypes.array.isRequired,
   isLoadingSubAreas: PropTypes.bool.isRequired,
   subAreasLoadError: PropTypes.any,
-  onStatusCalculated: PropTypes.func
+  onStatusCalculated: PropTypes.func,
+  audioClips: PropTypes.array,
+  activeAudio: PropTypes.string,
+  setActiveAudio: PropTypes.func,
 }

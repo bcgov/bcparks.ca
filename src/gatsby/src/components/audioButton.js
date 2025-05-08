@@ -37,11 +37,12 @@ function Credit({ audio }) {
   )
 }
 
-export default function AudioButton({ audio, location }) {
+export default function AudioButton({ audio, location, activeAudio, setActiveAudio }) {
   // refs and states
   const [trackSrc, setTrackSrc] = useState("")
   const [expanded, setExpanded] = useState(false)
-  const [isPlayerVisible, setIsPlayerVisible] = useState(false)
+  const audioId = location + "-" + audio.id
+  const isActiveAudio = activeAudio === audioId
   const hasTranscript = audio?.transcript.data?.transcript.length > 0
 
   // functions
@@ -94,7 +95,7 @@ export default function AudioButton({ audio, location }) {
         <div className="audio-container park-name">
           <button
             aria-label="Play park name audio"
-            onClick={() => setIsPlayerVisible(!isPlayerVisible)}
+            onClick={() => setActiveAudio(audioId)}
             className="btn-audio"
           >
             <FontAwesomeIcon icon={faVolumeHigh} />
@@ -107,7 +108,7 @@ export default function AudioButton({ audio, location }) {
           <div className="audio-container--left">
             <button
               aria-label="Play park name audio"
-              onClick={() => setIsPlayerVisible(!isPlayerVisible)}
+              onClick={() => setActiveAudio(audioId)}
               className="btn-audio"
             >
               <FontAwesomeIcon icon={faVolumeHigh} />
@@ -154,8 +155,8 @@ export default function AudioButton({ audio, location }) {
         </div>
       )}
       {/* audio player */}
-      {isPlayerVisible && (
-        <div className="audio-player">
+      {isActiveAudio && (
+        <div id={audioId} className="audio-player">
           <div className="audio-player-container">
             <div className="audio-player-container--left">
               <Credit audio={audio} />
@@ -166,7 +167,7 @@ export default function AudioButton({ audio, location }) {
           </div>
           <button
             aria-label="Close audio player"
-            onClick={() => setIsPlayerVisible(false)}
+            onClick={() => setActiveAudio("")}
             className="btn btn-x"
           >
             <FontAwesomeIcon icon={faXmark} />
