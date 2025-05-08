@@ -44,6 +44,7 @@ export default function AudioButton({ audio, location, activeAudio, setActiveAud
   const audioId = location + "-" + audio.id
   const isActiveAudio = activeAudio === audioId
   const hasTranscript = audio?.transcript.data?.transcript.length > 0
+  const hasDescription = audio?.description.data?.description.length > 0
 
   // functions
   const stripHtmlTags = html => {
@@ -104,55 +105,60 @@ export default function AudioButton({ audio, location, activeAudio, setActiveAud
       )}
       {/* audio button + credit - display in highlights or about(heritage/history) */}
       {location !== "tldr" && (
-        <div className="audio-container place-name">
-          <div className="audio-container--left">
-            <button
-              aria-label="Play park name audio"
-              onClick={() => setActiveAudio(audioId)}
-              className="btn-audio"
-            >
-              <FontAwesomeIcon icon={faVolumeHigh} />
-            </button>
-          </div>
-          <div className="audio-container--right">
-            <Credit audio={audio} />
-            {hasTranscript && (
-              <>
-                {expanded && (
-                  <div>
-                    <p>
+        <>
+          <div className="audio-container place-name">
+            <div className="audio-container--left">
+              <button
+                aria-label="Play park name audio"
+                onClick={() => setActiveAudio(audioId)}
+                className="btn-audio"
+              >
+                <FontAwesomeIcon icon={faVolumeHigh} />
+              </button>
+            </div>
+            <div className="audio-container--right">
+              <Credit audio={audio} />
+              {hasTranscript && (
+                <>
+                  {expanded && (
+                    <div>
+                      <p>
+                        <small>
+                          <b>Transcript</b>
+                        </small>
+                      </p>
                       <small>
-                        <b>Transcript</b>
+                        <HtmlContent>
+                          {audio.transcript.data.transcript}
+                        </HtmlContent>
                       </small>
-                    </p>
-                    <small>
-                      <HtmlContent>
-                        {audio.transcript.data.transcript}
-                      </HtmlContent>
-                    </small>
-                  </div>
-                )}
-                <button
-                  aria-label={`${expanded ? "Hide" : "Show"} transcript for ${
-                    audio.title
-                  }`}
-                  onClick={() => setExpanded(!expanded)}
-                  className="btn btn-link expand-icon transcript-link"
-                >
-                  {expanded ? (
-                    <small>
-                      Hide transcript <FontAwesomeIcon icon={faChevronUp} />
-                    </small>
-                  ) : (
-                    <small>
-                      Show transcript <FontAwesomeIcon icon={faChevronDown} />
-                    </small>
+                    </div>
                   )}
-                </button>
-              </>
-            )}
+                  <button
+                    aria-label={`${expanded ? "Hide" : "Show"} transcript for ${
+                      audio.title
+                    }`}
+                    onClick={() => setExpanded(!expanded)}
+                    className="btn btn-link expand-icon transcript-link"
+                  >
+                    {expanded ? (
+                      <small>
+                        Hide transcript <FontAwesomeIcon icon={faChevronUp} />
+                      </small>
+                    ) : (
+                      <small>
+                        Show transcript <FontAwesomeIcon icon={faChevronDown} />
+                      </small>
+                    )}
+                  </button>
+                </>
+              )}
+            </div>
           </div>
-        </div>
+          {hasDescription && (
+            <HtmlContent>{audio.description.data.description}</HtmlContent>
+          )}
+        </>
       )}
       {/* audio player */}
       {isActiveAudio && (
