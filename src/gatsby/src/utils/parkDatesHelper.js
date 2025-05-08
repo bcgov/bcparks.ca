@@ -130,9 +130,24 @@ const formattedTime = time => {
   }
 }
 
+// function to convert date from "YYYY: MM/DD – MM/DD" to "MM/DD, YYYY – MM/DD, YYYY"
+function convertWinterRate(dates) {
+  if (dates.length === 0) {
+    return []
+  }
+  return dates.map(date => {
+    const [year, range] = date.split(": ")
+    const [start, end] = range.split("–")
+    const startDate = `${start.trim()}, ${year}`
+    const endDate = `${end.trim()}, ${year}`
+    return `${startDate}–${endDate}`
+  })
+}
+
 export {
   datePhrase,
   processDateRanges,
   groupSubAreaDates,
-  formattedTime
+  formattedTime,
+  convertWinterRate
 }
