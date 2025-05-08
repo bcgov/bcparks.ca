@@ -99,8 +99,7 @@ export default function ParkOverview({ description, type, audioClips, activeAudi
         }
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasAudioClipPlaceholder, audioClip, expanded])
+  }, [hasAudioClipPlaceholder, audioClip, activeAudio, setActiveAudio, expanded])
 
   return (
     <div id="highlights" className="anchor-link">
