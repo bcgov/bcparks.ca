@@ -14,14 +14,14 @@ import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion, audioClips, activeAudio, setActiveAudio }) => {
   // Filter function for audio clips
-  const filterAudioClipsByLocation = useCallback((location) => {
-    return audioClips?.filter(audio => audio.displayLocation?.strapi_json_value?.includes(location)) || []
+  const findAudioClipsByLocation = useCallback((location) => {
+    return audioClips?.find(audio => audio.displayLocation?.strapi_json_value?.includes(location)) || null
   }, [audioClips])
   // Filtered audio clips
   const heritageAudioClip = useMemo(() =>
-    filterAudioClipsByLocation("heritage"), [filterAudioClipsByLocation])
+    findAudioClipsByLocation("heritage"), [findAudioClipsByLocation])
   const historyAudioClip = useMemo(() =>
-    filterAudioClipsByLocation("history"), [filterAudioClipsByLocation])
+    findAudioClipsByLocation("history"), [findAudioClipsByLocation])
 
   return (
     <Accordion
@@ -49,17 +49,17 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion,
           <HtmlContent>
             {!isNullOrWhiteSpace(data.description) && data.description}
           </HtmlContent>
-          {heritageAudioClip.length > 0 && data.code === "heritage" && (
+          {heritageAudioClip && data.code === "heritage" && (
             <AudioButton
-              audio={heritageAudioClip[0]}
+              audio={heritageAudioClip}
               location="about"
               activeAudio={activeAudio}
               setActiveAudio={setActiveAudio}
             />
           )}
-          {historyAudioClip.length > 0 && data.code === "history" && (
+          {historyAudioClip && data.code === "history" && (
             <AudioButton
-              audio={historyAudioClip[0]}
+              audio={historyAudioClip}
               location="about"
               activeAudio={activeAudio}
               setActiveAudio={setActiveAudio}
