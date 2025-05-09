@@ -13,15 +13,15 @@ import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
 export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion, audioClips, activeAudio, setActiveAudio }) => {
-  // Check if array contains a "heritage" or "history"
-  const hasHeritageOrHistory = (array) => {
-    const keywords = ["heritage", "history"]
-    return array?.some(item => keywords.includes(item)) || false
-  }
-  // Filter audio clips if it has a "heritage" or "history" displayLocation
-  const audioClip = useMemo(() => {
-    return audioClips?.filter(audio => hasHeritageOrHistory(audio.displayLocation?.strapi_json_value)) || []
+  // Filter function for audio clips
+  const filterAudioClipsByLocation = useCallback((location) => {
+    return audioClips?.filter(audio => audio.displayLocation?.strapi_json_value?.includes(location)) || []
   }, [audioClips])
+  // Filtered audio clips
+  const heritageAudioClip = useMemo(() =>
+    filterAudioClipsByLocation("heritage"), [filterAudioClipsByLocation])
+  const historyAudioClip = useMemo(() =>
+    filterAudioClipsByLocation("history"), [filterAudioClipsByLocation])
 
   return (
     <Accordion
@@ -49,15 +49,21 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion,
           <HtmlContent>
             {!isNullOrWhiteSpace(data.description) && data.description}
           </HtmlContent>
-          {audioClip.length > 0 && (data.code === "heritage" || data.code === "history") ? (
+          {heritageAudioClip.length > 0 && data.code === "heritage" && (
             <AudioButton
-              audio={audioClip[0]}
+              audio={heritageAudioClip[0]}
               location="about"
               activeAudio={activeAudio}
               setActiveAudio={setActiveAudio}
             />
-          ) : (
-            ""
+          )}
+          {historyAudioClip.length > 0 && data.code === "history" && (
+            <AudioButton
+              audio={historyAudioClip[0]}
+              location="about"
+              activeAudio={activeAudio}
+              setActiveAudio={setActiveAudio}
+            />
           )}
         </div>
       </Accordion.Collapse>
