@@ -52,7 +52,7 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion,
           {heritageAudioClip && data.code === "heritage" && (
             <AudioButton
               audio={heritageAudioClip}
-              location="about"
+              location="heritage"
               activeAudio={activeAudio}
               setActiveAudio={setActiveAudio}
             />
@@ -60,7 +60,7 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion,
           {historyAudioClip && data.code === "history" && (
             <AudioButton
               audio={historyAudioClip}
-              location="about"
+              location="history"
               activeAudio={activeAudio}
               setActiveAudio={setActiveAudio}
             />
