@@ -30,7 +30,8 @@
       "enum": [
         "Operation",
         "Reservation",
-        "Winter fee"
+        "Winter fee",
+        "First come, first served"
       ],
       "required": true
     },
