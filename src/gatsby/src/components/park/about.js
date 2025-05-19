@@ -15,7 +15,9 @@ import "../../styles/cmsSnippets/parkInfoPage.scss"
 export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion, audioClips, activeAudio, setActiveAudio }) => {
   // Filter function for audio clips
   const findAudioClipsByLocation = useCallback((location) => {
-    return audioClips?.find(audio => audio.displayLocation?.strapi_json_value?.includes(location)) || null
+    return audioClips?.find(audio => 
+      audio.displayLocation?.strapi_json_value?.includes(location) && audio.url
+    ) || null
   }, [audioClips])
   // Filtered audio clips
   const heritageAudioClip = useMemo(() =>

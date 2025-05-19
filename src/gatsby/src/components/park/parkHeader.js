@@ -112,7 +112,9 @@ export default function ParkHeader({
   const hasTldr = (array) => array?.includes("tldr") || false
   // Filter audio clips if it has a "tldr" displayLocation
   const audioClip = useMemo(() => {
-    return audioClips?.filter(audio => hasTldr(audio.displayLocation?.strapi_json_value)) || []
+    return audioClips?.filter(audio => 
+      hasTldr(audio.displayLocation?.strapi_json_value) && audio.url
+    ) || []
   }, [audioClips])
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
