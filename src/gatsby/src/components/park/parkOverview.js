@@ -25,7 +25,9 @@ export default function ParkOverview({ description, type, audioClips, activeAudi
   const hasHighlights = (array) => array?.includes("highlights") || false
   // Filter audio clips if it has a "highlights" displayLocation
   const audioClip = useMemo(() => {
-    return audioClips?.filter(audio => hasHighlights(audio.displayLocation?.strapi_json_value)) || []
+    return audioClips?.filter(audio => 
+      hasHighlights(audio.displayLocation?.strapi_json_value) && audio.url
+    ) || []
   }, [audioClips])
   // Set the expand condition if 
   // 1 - the description is long or has a <hr> tag
