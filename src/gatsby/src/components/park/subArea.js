@@ -33,7 +33,7 @@ export default function SubArea({ data, showHeading }) {
   const subAreasNotesList = [
     { noteVar: "serviceNote", display: "Service note" },
     { noteVar: "reservationNote", display: "Booking note" },
-    { noteVar: "offSeasonNote", display: "Winter note" },
+    { noteVar: "offSeasonNote", display: "Off-season note" },
   ]
 
   const isShown = (count, countGroup) => {
