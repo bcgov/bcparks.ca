@@ -59,7 +59,10 @@ const AdvisoryLegend = () => {
         <a href="https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/drought-flooding-dikes-dams/river-forecast-centre">
           BC River Forecast Centre
         </a>{", "}
-        <a href="https://drivebc.ca">Drive BC</a>
+        <a href="https://drivebc.ca">DriveBC</a>{", "}
+        <a href="https://www.emergencyinfobc.gov.bc.ca">
+          EmergencyInfoBC
+        </a>
       </div>
     </div>
   )
