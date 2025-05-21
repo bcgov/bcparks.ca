@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState, useRef, useMemo } from "react"
 import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
@@ -8,7 +8,7 @@ import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories } from '../utils/advisoryHelper';
-import { preProcessSubAreas, combineCampingTypes, combineFacilities } from '../utils/subAreaHelper';
+import { preProcessSubAreas, combineCampingTypes, combineFacilities, loadSubAreas } from '../utils/subAreaHelper';
 
 import Acknowledgment from "../components/acknowledgment"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -46,19 +46,14 @@ export default function SiteTemplate({ data }) {
   const hasSiteGuidelines = site.parkGuidelines?.length > 0
   const managementAreas = park.managementAreas || []
   const searchArea = managementAreas[0]?.searchArea || {}
-  const parkOperationSubAreas = site.parkOperationSubAreas || []
 
   const activeActivities = sortBy(
     site.parkActivities.filter(
-      activity => activity.isActive && activity.activityType?.isActive
+      activity => activity.isActive && activity.isActivityOpen && activity.activityType?.isActive
     ),
     ["activityType.rank", "activityType.activityName"],
     ["asc"]
   )
-
-  const subAreas = preProcessSubAreas(parkOperationSubAreas)
-  const activeFacilities = combineFacilities(site.parkFacilities, data.allStrapiFacilityType.nodes, subAreas);
-  const activeCampings = combineCampingTypes(site.parkCampingTypes, data.allStrapiCampingType.nodes, subAreas);
 
   const hasReservations = operations.hasReservations
   const hasDayUsePass = operations.hasDayUsePass
@@ -71,47 +66,113 @@ export default function SiteTemplate({ data }) {
   const [protectedAreaLoadError, setProtectedAreaLoadError] = useState(false)
   const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
   const [hasCampfireBan, setHasCampfireBan] = useState(false)
+  const [subAreas, setSubAreas] = useState([])
+  const [subAreasLoadError, setSubAreasLoadError] = useState(false)
+  const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
+  const [activeFacilities, setActiveFacilities] = useState([])
+  const [activeCampings, setActiveCampings] = useState([])
+  // only one audio clip can be active at a time
+  const [activeAudio, setActiveAudio] = useState("")
 
-  useEffect(() => {
+  const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
-    loadAdvisories(apiBaseUrl, park?.orcs)
-      .then(response => {
-        if (response.status === 200) {
-          // for sites, we want to include all advisories at the park level  
-          // and advisories for this specific site, but we exclude advisories 
-          // for other sites at the same park
-          const advisories = response.data.data.filter(
-            (advisory) => {
-              return advisory.sites.length === 0 ||
-                advisory.sites.some(
-                  (s) => s.orcsSiteNumber === site.orcsSiteNumber
-                )
-            })
-          setAdvisories(advisories)
-          setAdvisoryLoadError(false)
-        } else {
-          setAdvisories([])
-          setAdvisoryLoadError(true)
-        }
+    try {
+      const response = await loadAdvisories(apiBaseUrl, park?.orcs)
+      // for sites, we want to include all advisories at the park level  
+      // and advisories for this specific site, but we exclude advisories 
+      // for other sites at the same park
+      const advisories = response.data.data.filter(advisory => {
+        return advisory.sites.length === 0 ||
+          advisory.sites.some(
+            (s) => s.orcsSiteNumber === site.orcsSiteNumber
+          )
       })
-      .finally(() => {
-        setIsLoadingAdvisories(false)
-      })
+      setAdvisories(advisories)
+      setAdvisoryLoadError(false)
+    } catch (error) {
+      console.error("Error loading advisories:", error)
+      setAdvisories([])
+      setAdvisoryLoadError(true)
+    } finally {
+      setIsLoadingAdvisories(false)
+    }
+  }
+  
+  const loadProtectedAreaData = async () => {
     setIsLoadingProtectedArea(true)
-    axios.get(`${apiBaseUrl}/protected-areas/${park?.orcs}?fields=hasCampfireBan`)
-      .then(response => {
-        if (response.status === 200) {
-          setHasCampfireBan(response.data.hasCampfireBan)
-          setProtectedAreaLoadError(false)
-        } else {
-          setHasCampfireBan(false)
-          setProtectedAreaLoadError(true)
-        }
-      })
-      .finally(() => {
-        setIsLoadingProtectedArea(false)
-      })
+    try {
+      const response = await axios.get(
+        `${apiBaseUrl}/protected-areas/${park?.orcs}?fields=hasCampfireBan`
+      )
+      setHasCampfireBan(response.data.hasCampfireBan)
+      setProtectedAreaLoadError(false)
+    } catch (error) {
+      console.error("Error loading protected area:", error)
+      setHasCampfireBan(false)
+      setProtectedAreaLoadError(true)
+    } finally {
+      setIsLoadingProtectedArea(false)
+    }
+  }
+  
+  const loadSubAreasData = async () => {
+    setIsLoadingSubAreas(true)
+    try {
+      const response = await loadSubAreas(apiBaseUrl, park?.orcs)
+      setSubAreas(response.data.data)
+      setSubAreasLoadError(false)
+    } catch (error) {
+      console.error("Error loading sub-areas:", error)
+      setSubAreas([])
+      setSubAreasLoadError(true)
+    } finally {
+      setIsLoadingSubAreas(false)
+    }
+  }
+  
+  useEffect(() => {
+    loadAdvisoriesData()
+    loadProtectedAreaData()
+    loadSubAreasData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiBaseUrl, park?.orcs, site.orcsSiteNumber])
+  
+  const processedSubAreas = useMemo(() => {
+    if (!isLoadingSubAreas && !subAreasLoadError && subAreas.length) {
+      return preProcessSubAreas(subAreas)
+    }
+    return []
+  }, [isLoadingSubAreas, subAreasLoadError, subAreas])
+
+  // set active facilities
+  useEffect(() => {
+    if (site.parkFacilities.length > 0 &&
+      data.allStrapiFacilityType.nodes.length > 0 && 
+      Object.keys(processedSubAreas).length > 0
+    ) {
+      const facilities = combineFacilities(
+        site.parkFacilities,
+        data.allStrapiFacilityType.nodes,
+        processedSubAreas
+      )
+      setActiveFacilities(facilities)
+    }
+  }, [site.parkFacilities, data.allStrapiFacilityType.nodes, processedSubAreas])
+
+    // set active campings
+    useEffect(() => {
+      if (site.parkCampingTypes.length > 0 &&
+        data.allStrapiCampingType.nodes.length > 0 &&
+        Object.keys(processedSubAreas).length > 0
+      ) {
+        const campings = combineCampingTypes(
+          site.parkCampingTypes,
+          data.allStrapiCampingType.nodes,
+          processedSubAreas
+        )
+        setActiveCampings(campings)
+      }
+    }, [site.parkCampingTypes, data.allStrapiCampingType.nodes, processedSubAreas])
 
   const parkOverviewRef = useRef("")
   const knowBeforeRef = useRef("")
@@ -230,7 +291,12 @@ export default function SiteTemplate({ data }) {
             searchArea={searchArea}
             parkOperation={operations}
             operationDates={site?.parkOperationDates || park.parkOperationDates}
-            subAreas={parkOperationSubAreas}
+            subAreas={subAreas}
+            isLoadingSubAreas={isLoadingSubAreas}
+            subAreasLoadError={subAreasLoadError}
+            audioClips={site.audioClips}
+            activeAudio={activeAudio}
+            setActiveAudio={setActiveAudio}
           />
         </div>
         <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
@@ -260,7 +326,13 @@ export default function SiteTemplate({ data }) {
           <div className="page-content col-12 col-md-8">
             {menuItems[0].visible && (
               <div ref={parkOverviewRef} className="w-100">
-                <ParkOverview data={description} type="site" />
+                <ParkOverview
+                  description={description}
+                  type="site"
+                  audioClips={site.audioClips}
+                  activeAudio={activeAudio}
+                  setActiveAudio={setActiveAudio}
+                />
               </div>
             )}
             {menuItems[1].visible && (
@@ -329,11 +401,10 @@ export default function SiteTemplate({ data }) {
                 <CampingDetails
                   data={{
                     activeCampings: activeCampings,
-                    reservations: site.reservations,
-                    hasDayUsePass: hasDayUsePass,
-                    hasReservations: hasReservations,
                     parkOperation: operations,
-                    subAreas: parkOperationSubAreas
+                    subAreas: subAreas,
+                    isLoadingSubAreas: isLoadingSubAreas,
+                    subAreasLoadError: subAreasLoadError,
                   }}
                 />
               </div>
@@ -415,93 +486,6 @@ export const query = graphql`
         }
       }
       isUnofficialSite
-      parkOperationSubAreas {
-        parkSubArea
-        orcsSiteNumber
-        isActive
-        isOpen
-        hasReservations
-        hasBackcountryReservations
-        hasBackcountryPermits
-        hasFirstComeFirstServed
-        parkAccessUnitId
-        isCleanAirSite
-        totalCapacity
-        frontcountrySites
-        reservableSites
-        nonReservableSites
-        vehicleSites
-        vehicleSitesReservable
-        doubleSites
-        pullThroughSites
-        rvSites
-        rvSitesReservable
-        electrifiedSites
-        longStaySites
-        walkInSites
-        walkInSitesReservable
-        groupSites
-        groupSitesReservable
-        backcountrySites
-        wildernessSites
-        boatAccessSites
-        horseSites
-        cabins
-        huts
-        yurts
-        shelters
-        boatLaunches
-        hasGate
-        gateOpenTime
-        gateCloseTime
-        gateOpensAtDawn
-        gateClosesAtDusk
-        gateOpen24Hours
-        gateNote {
-          data {
-            gateNote
-          }
-        }
-        serviceNote {
-          data {
-            serviceNote
-          }
-        }
-        reservationNote {
-          data {
-            reservationNote
-          }
-        }
-        offSeasonNote {
-          data {
-            offSeasonNote
-          }
-        }
-        closureAffectsAccessStatus
-        parkOperationSubAreaDates {
-          isActive
-          operatingYear
-          openDate
-          closeDate
-          serviceStartDate
-          serviceEndDate
-          reservationStartDate
-          reservationEndDate
-          offSeasonStartDate
-          offSeasonEndDate
-        }
-        parkSubAreaType {
-          subAreaType
-          subAreaTypeCode
-          closureAffectsAccessStatus
-          facilityType {
-            facilityCode
-          }
-          campingType {
-            campingTypeCode
-          }
-        }
-      }
       protectedArea {
         orcs
         slug
@@ -638,6 +622,29 @@ export const query = graphql`
         operatingYear
         gateOpenDate
         gateCloseDate
+      }
+      audioClips {
+        id
+        title
+        url
+        speakerTitle
+        speakerName
+        languageName
+        firstNationName
+        phoneticSpelling
+        displayLocation {
+          strapi_json_value
+        }
+        description {
+          data {
+            description
+          }
+        }
+        transcript {
+          data {
+            transcript
+          }
+        }
       }
     }
     featuredPhotos: allStrapiParkPhoto(

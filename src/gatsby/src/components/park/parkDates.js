@@ -141,7 +141,7 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
   )
 }
 
-export default function ParkDates({ data, parkOperation }) {
+export default function ParkDates({ data, parkOperation, isLoadingSubAreas, subAreasLoadError }) {
   const subAreas = data.subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
@@ -218,7 +218,7 @@ export default function ParkDates({ data, parkOperation }) {
 
   return (
     <>
-      {subAreas.length > 0 && (
+      {!isLoadingSubAreas && !subAreasLoadError && subAreas.length > 0 && (
         <>
           <Row className="align-items-center my-4">
             <Col>

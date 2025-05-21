@@ -234,6 +234,11 @@ const base = {
         element: "a",
         classes: ["legacy-link"],
       },
+      {
+        name: "Audio clip",
+        element: "div",
+        classes: ["audio-clip"],
+      },
       // not working any more, need a new approach
       // {
       //   name: "Lettered list",

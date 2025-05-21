@@ -320,6 +320,20 @@ export const common = css`
       background-color: #FFFF00;
     }
 
+    .audio-clip {
+      &::after {
+        content: "\f028";
+        display: inline-block;
+        font-size: 1rem;
+        font-weight: 700;
+        font-family: "Font Awesome 5 Free";
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+      }
+    }
+
     a.btn {
       height: 48px;
       display: inline-flex !important;

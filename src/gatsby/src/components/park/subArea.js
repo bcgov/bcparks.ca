@@ -1,6 +1,8 @@
 import React from "react"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import Tooltip from "react-bootstrap/Tooltip"
+import OverlayTrigger from "react-bootstrap/OverlayTrigger"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCalendar } from "@fortawesome/free-regular-svg-icons"
 
@@ -9,12 +11,29 @@ import FontAwesome from "../fontAwesome"
 import { countsList } from "../../utils/constants"
 import { formattedTime } from "../../utils/parkDatesHelper"
 
+const WinterRateTooltip = () => {
+  return (
+  <OverlayTrigger
+    placement="top"
+    overlay={
+      <Tooltip id="winter-rate-tooltip">
+        Shoulder season with reduced fees and services
+      </Tooltip>
+    }
+  >
+    <button className="btn-tooltip btn">
+      <FontAwesome icon="generic-information" />
+    </button>
+  </OverlayTrigger>
+  )
+}
+
 export default function SubArea({ data, showHeading }) {
 
   const subAreasNotesList = [
     { noteVar: "serviceNote", display: "Service note" },
     { noteVar: "reservationNote", display: "Booking note" },
-    { noteVar: "offSeasonNote", display: "Winter season note" },
+    { noteVar: "offSeasonNote", display: "Off-season note" },
   ]
 
   const isShown = (count, countGroup) => {
@@ -53,7 +72,7 @@ export default function SubArea({ data, showHeading }) {
     return (
       <>
         {message}
-        {gateNote && <HtmlContent>{gateNote.data.gateNote}</HtmlContent>}
+        {gateNote && <HtmlContent>{gateNote}</HtmlContent>}
       </>
     )
   }
@@ -88,25 +107,18 @@ export default function SubArea({ data, showHeading }) {
                 </ul>
               </div>
             )}
-            <div className="subarea-list">
-              <h4>Winter season</h4>
-              {data.offSeasonDates.length > 0 ? (
+            {data.offSeasonDates.length > 0 && (
+              <div className="subarea-list">
+                <h4>
+                  Winter rate <WinterRateTooltip />
+                </h4>
                 <ul>
                   {data.offSeasonDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
-              ) : (
-                data.operationDates.length > 0 ? (
-                  <>
-                    {data.operationDates[0].toLowerCase().includes("year-round") ?
-                      "Limited services" : "No services"}
-                  </>
-                ) : (
-                  <>Not known</>
-                )
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </Col>
         {countsList
@@ -134,14 +146,14 @@ export default function SubArea({ data, showHeading }) {
       <Row className="subarea-container mt-3">
         <Col>
           {subAreasNotesList
-            .filter(note => data[note.noteVar]?.data[note.noteVar])
+            .filter(note => data[note.noteVar])
             .map((note, index) => (
               <div key={index} className="subarea-list subarea-note">
                 {note.display && (
                   <h4>{note.display}</h4>
                 )}
                 <HtmlContent>
-                  {data[note.noteVar].data[note.noteVar]}
+                  {data[note.noteVar]}
                 </HtmlContent>
               </div>
             ))}

@@ -314,6 +314,9 @@ h2.section-heading {
     }
     &--left {
       width: 670px;
+      h1 {
+        line-height: 1.5;
+      }
       p {
         margin-bottom: 0;
         & + p {
@@ -555,6 +558,18 @@ h2.section-heading {
         height: 16px;
       }
     }
+    .btn-tooltip {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      border-radius: 8px;
+      margin: 0;
+      padding: 0;
+      // change the color of the icon to $colorGrey
+      img {
+        filter: invert(7%) brightness(20%);
+      }
+    }
   }
   &--left {
     .subarea-list:not(.subarea-note) {
@@ -583,6 +598,15 @@ h2.section-heading {
     & + .subarea-list {
       margin-top: 16px;
     }
+  }
+}
+
+// tooltip
+#winter-rate-tooltip {
+  font-size: 0.875rem;
+  opacity: 1;
+  .tooltip-inner {
+    background-color: $colorGrey;
   }
 }
 

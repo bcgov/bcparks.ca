@@ -893,7 +893,7 @@ export default function FindAPark({ location, data }) {
                 {/* park results text */}
                 <p className="result-count-text">
                   {acquiringGeolocation && <>Getting location...</>}
-                  {(isLoading && !acquiringGeolocation) && <>Searching...</>}
+                  {(isLoading && !acquiringGeolocation) && <>Loading...</>}
                   {(!isLoading && !acquiringGeolocation) && (
                     <>
                       <b>{finalResults}</b>

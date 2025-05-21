@@ -45,7 +45,6 @@ module.exports = {
           "footer-menu",
           "park-operation",
           "park-operation-date",
-          "park-operation-sub-area",
           "park-operation-sub-area-date",
           "park-operation-sub-area-type",
           "park-contact",
@@ -57,6 +56,7 @@ module.exports = {
           "search-city",
           "management-document",
           "emergency-alert",
+          "audio-clip",
           {
             singularName: "page",
             queryParams: {
@@ -130,6 +130,9 @@ module.exports = {
                 parkPhotos: {
                   fields: "*"
                 },
+                audioClips: {
+                  fields: "*"
+                },
                 trailReports: {
                   fields: "*"
                 },
@@ -192,6 +195,9 @@ module.exports = {
                   fields: "*"
                 },
                 parkOperationDates: {
+                  fields: "*"
+                },
+                audioClips: {
                   fields: "*"
                 },
                 trailReports: {

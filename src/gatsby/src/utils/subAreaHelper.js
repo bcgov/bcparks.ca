@@ -1,3 +1,5 @@
+import axios from "axios"
+import qs from "qs"
 import { processDateRanges, groupSubAreaDates } from "./parkDatesHelper"
 
 
@@ -41,10 +43,14 @@ const preProcessSubAreas = (subAreas) => {
   return result;
 }
 
-const combineCampingTypes = (parkCampingTypes, campingTypes, subAreas) => {
+const combineCampingTypes = (campings, campingTypes, subAreas) => {
   let arr = [];
   let obj = subAreas;
 
+  // filter the campings to include only active and open campings
+  const parkCampingTypes = campings.filter(
+    (camping) => camping.isActive && camping.isCampingOpen
+  )
   // add the parkCampingTypes to the common object
   for (const parkCampingType of parkCampingTypes) {
     const campingTypeCode = parkCampingType.campingType?.campingTypeCode;
@@ -70,10 +76,14 @@ const combineCampingTypes = (parkCampingTypes, campingTypes, subAreas) => {
   return arr.sort((a, b) => a.campingType.campingTypeName.localeCompare(b.campingType.campingTypeName))
 }
 
-const combineFacilities = (parkFacilities, facilityTypes, subAreas) => {
+const combineFacilities = (facilities, facilityTypes, subAreas) => {
   let arr = [];
   let obj = subAreas;
 
+  // filter the facilities to include only active and open facilities
+  const parkFacilities = facilities.filter(
+    (facility) => facility.isActive && facility.isFacilityOpen
+  )
   // add the parkFacilities to the common object
   for (const parkFacility of parkFacilities) {
     const facilityCode = parkFacility.facilityType?.facilityCode;
@@ -98,9 +108,123 @@ const combineFacilities = (parkFacilities, facilityTypes, subAreas) => {
 
   return arr.sort((a, b) => a.facilityType.facilityName.localeCompare(b.facilityType.facilityName))
 }
+// load all subareas
+const loadAllSubAreas = (apiBaseUrl) => {
+  const params = qs.stringify({
+    filters: {
+      isActive: true,
+    },
+    fields: [
+      "isOpen",
+      "isCleanAirSite",
+      "parkSubArea",
+      "isActive",
+      "closureAffectsAccessStatus"
+    ],
+    populate: {
+      protectedArea: {
+        fields: ["orcs"]
+      },
+      parkSubAreaType: {
+        fields: [
+          "closureAffectsAccessStatus",
+        ], 
+        populate : {
+          campingType: {fields: ["icon"]}, 
+          facilityType: {fields: ["icon"]}
+        }
+      },
+      parkFeatureDates: {
+        fields: [
+          "operatingYear",
+          "isActive",
+          "startDate",
+          "endDate",
+          "dateType",
+        ]
+      },
+      parkOperationSubAreaDates: {
+        fields: [
+          "operatingYear",
+          "isActive",
+          "openDate",
+          "closeDate",
+          "serviceStartDate",
+          "serviceEndDate",
+          "reservationStartDate",
+          "reservationEndDate",
+          "offSeasonStartDate",
+          "offSeasonEndDate",
+        ]
+      },
+    },
+    pagination: {
+      limit: 1000,
+    }
+  }, {
+    encodeValuesOnly: true,
+  })
+  return axios.get(`${apiBaseUrl}/park-operation-sub-areas?${params}`)
+}
+// load subareas by protected area
+const loadSubAreas = (apiBaseUrl, orcs) => {
+  const params = qs.stringify({
+    filters: {
+      protectedArea: {
+        orcs: {
+          $eq: orcs
+        }
+      }
+    },
+    populate: {
+      parkSubAreaType: {
+        fields: [
+          "subAreaType",
+          "subAreaTypeCode",
+          "closureAffectsAccessStatus",
+        ], 
+        populate : {
+          campingType: {fields: ["campingTypeCode"]}, 
+          facilityType: {fields: ["facilityCode"]}
+        }
+      },
+      parkFeatureDates: {
+        fields: [
+          "operatingYear",
+          "isActive",
+          "startDate",
+          "endDate",
+          "dateType",
+        ]
+      },
+      parkOperationSubAreaDates: {
+        fields: [
+          "operatingYear",
+          "isActive",
+          "openDate",
+          "closeDate",
+          "serviceStartDate",
+          "serviceEndDate",
+          "reservationStartDate",
+          "reservationEndDate",
+          "offSeasonStartDate",
+          "offSeasonEndDate",
+        ]
+      },
+    },
+    pagination: {
+      limit: 100,
+    }
+  }, {
+    encodeValuesOnly: true,
+  })
+  return axios.get(`${apiBaseUrl}/park-operation-sub-areas?${params}`)
+}
 
 export {
   preProcessSubAreas,
   combineCampingTypes,
-  combineFacilities
+  combineFacilities,
+  loadAllSubAreas,
+  loadSubAreas
 }

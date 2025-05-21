@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { graphql, useStaticQuery, Link } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
+import { ProgressBar } from "react-bootstrap"
 
 import Acknowledgment from "../../components/acknowledgment"
 import Breadcrumbs from "../../components/breadcrumbs"
@@ -12,15 +13,15 @@ import ScrollToTop from "../../components/scrollToTop"
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import StaticIcon from "../../components/park/staticIcon"
 import NoSearchResults from "../../components/search/noSearchResults"
-import { datePhrase, processDateRanges, groupSubAreaDates } from "../../utils/parkDatesHelper"
+import { loadAllSubAreas } from "../../utils/subAreaHelper"
+import { datePhrase, processDateRanges, groupSubAreaDates, convertWinterRate } from "../../utils/parkDatesHelper"
 import { loadAllAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
 
-const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) => {
+const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvisories }) => {
   const thisYear = new Date().getFullYear()
   const parkOperation = park.parkOperation
   const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
-  const subAreas = park.parkOperationSubAreas.filter(a => a.isActive) || []
   const [parkAccessStatus, setParkAccessStatus] = useState({})
   const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
   // Check if park access status is "Closed"
@@ -51,6 +52,7 @@ const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) 
     subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, "–", true)
     subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, "–", true)
     subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, "–", true)
+    subArea.offSeasonDates = convertWinterRate(subArea.offSeasonDates)
 
     // add a placeholder if no dates are available for the current year
     if (subArea.serviceDates.length === 0
@@ -76,22 +78,22 @@ const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) 
 
   return (
     <div className="park-list operating-dates-list">
-      <div className="d-md-flex justify-content-between mb-2">
-        <h2 className="mb-0">
+      <div className="d-md-flex justify-content-between">
+        <h2 className="mb-3">
           <Link to={`/${park.slug}`}>
             {park.protectedAreaName}
             <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
           </Link>
         </h2>
       </div>
-      <div className="mb-3">
+      <div className="mb-2">
         <>
           <span className="me-1">
             {(!isLoadingAdvisories && !advisoryLoadError) &&
               <ParkAccessStatus
                 advisories={advisories}
                 slug={park.slug}
-                subAreas={park.parkOperationSubAreas}
+                subAreas={subAreas}
                 operationDates={park.parkOperationDates}
                 onStatusCalculated={setParkAccessStatus}
                 punctuation="."
@@ -110,7 +112,6 @@ const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) 
           <tr>
             <th scope="col">Facility</th>
             <th scope="col">Operating season</th>
-            <th scope="col">Winter season</th>
             <th scope="col">Booking available</th>
           </tr>
         </thead>
@@ -135,23 +136,17 @@ const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) 
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
-              </td>
-              <td>
-                {subArea.offSeasonDates.length > 0 ? (
-                  <ul>
-                    {subArea.offSeasonDates.map((dateRange, index) =>
-                      <li key={index}>{dateRange}</li>
-                    )}
-                  </ul>
-                ) : (
-                  subArea.operationDates.length > 0 ? (
-                    <>
-                      {subArea.operationDates[0].toLowerCase().includes("year-round") ?
-                        "Limited services" : "No services"}
-                    </>
-                  ) : (
-                    <>Not known</>
-                  )
+                {subArea.offSeasonDates.length > 0 && (
+                  <div className="d-flex">
+                    <div className="me-1">
+                      <small>Winter rate:</small>
+                    </div>
+                    <ul>
+                      {subArea.offSeasonDates.map((dateRange, index) =>
+                        <li key={index}><small>{dateRange}</small></li>
+                      )}
+                    </ul>
+                  </div>
                 )}
               </td>
               <td>
@@ -191,25 +186,17 @@ const ParkLink = ({ park, advisories, advisoryLoadError, isLoadingAdvisories }) 
                       <li key={index}>{dateRange}</li>
                     )}
                   </ul>
-                </div>
-                <div className="list-group-item--container">
-                  <b>Winter season</b>
-                  {subArea.offSeasonDates.length > 0 ? (
-                    <ul>
-                      {subArea.offSeasonDates.map((dateRange, index) =>
-                        <li key={index}>{dateRange}</li>
-                      )}
-                    </ul>
-                  ) : (
-                    subArea.operationDates.length > 0 ? (
-                      <>
-                        <br />{subArea.operationDates[0].includes("Year-round") ? "Limited services" : "No services"}
-                      </>
-                    ) : (
-                      <>
-                        <br />Not known
-                      </>
-                    )
+                  {subArea.offSeasonDates.length > 0 && (
+                    <div className="d-flex">
+                      <div className="me-1">
+                        <small>Winter rate:</small>
+                      </div>
+                      <ul>
+                        {subArea.offSeasonDates.map((dateRange, index) =>
+                          <li key={index}><small>{dateRange}</small></li>
+                        )}
+                      </ul>
+                    </div>
                   )}
                 </div>
                 <div className="list-group-item--container">
@@ -254,34 +241,6 @@ const ParkOperatingDatesPage = () => {
           type
           parkOperation {
             hasParkGate
-          }
-          parkOperationSubAreas {
-            isOpen
-            isCleanAirSite
-            parkSubArea
-            isActive
-            closureAffectsAccessStatus
-            parkOperationSubAreaDates {
-              operatingYear
-              isActive
-              openDate
-              closeDate
-              serviceStartDate
-              serviceEndDate
-              reservationStartDate
-              reservationEndDate
-              offSeasonStartDate
-              offSeasonEndDate
-            }
-            parkSubAreaType {
-              closureAffectsAccessStatus
-              facilityType {
-                 icon
-              }
-              campingType {
-                 icon
-              }
-            }
           }
           parkOperationDates {
             operatingYear
@@ -335,6 +294,9 @@ const ParkOperatingDatesPage = () => {
   const [advisories, setAdvisories] = useState([])
   const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
   const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
+  const [subAreas, setSubAreas] = useState([])
+  const [subAreaLoadError, setSubAreaLoadError] = useState(false)
+  const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
   const [currentFilter, setCurrentFilter] = useState("All")
 
   // functions
@@ -347,6 +309,11 @@ const ParkOperatingDatesPage = () => {
   const filterAdvisoriesByOrcs = (orcs) => {
     return advisories.filter(advisory => 
       advisory.protectedAreas.some(protectedArea => protectedArea.orcs === orcs)
+    )
+  }
+  const filterSubAreasByOrcs = (orcs) => {
+    return subAreas.filter(subArea =>
+      subArea.protectedArea.orcs === orcs
     )
   }
   const fetchAdvisories = () => {
@@ -365,10 +332,27 @@ const ParkOperatingDatesPage = () => {
         setIsLoadingAdvisories(false)
       })
   }
+  const fetchSubAreas = () => {
+    setIsLoadingSubAreas(true)
+    loadAllSubAreas(apiBaseUrl)
+      .then(response => {
+        setSubAreas(response.data.data)
+        setSubAreaLoadError(false)
+      })
+      .catch(error => {
+        setSubAreas([])
+        setSubAreaLoadError(true)
+        console.error("Error fetching subareas:", error)
+      })
+      .finally(() => {
+        setIsLoadingSubAreas(false)
+      })
+  }
 
   // effects
   useEffect(() => {
     fetchAdvisories()
+    fetchSubAreas()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiBaseUrl])
 
@@ -414,7 +398,7 @@ const ParkOperatingDatesPage = () => {
               so <Link to="/find-a-park">check the park page</Link> for details.
             </li>
             <li>
-              <b>Winter season: </b>
+              <b>Winter rate: </b>
               These dates indicate when a frontcountry campground offers camping with reduced fees and services in their shoulder season.
               {" "}<Link to="/find-a-park">Check the park page</Link> for winter rates and details. 
             </li>
@@ -450,39 +434,57 @@ const ParkOperatingDatesPage = () => {
               ))}
             </div>
           </div>
-
-          <div className="lists">
-            {currentFilter === "All" ? (
-              filters.map((filter, index) => (
-                <div key={index} className="list">
-                  {filtering(filter).map((park, index) => (
-                    <ParkLink 
-                      key={index}
-                      park={park}
-                      advisories={filterAdvisoriesByOrcs(park.orcs)}
-                      advisoryLoadError={advisoryLoadError}
-                      isLoadingAdvisories={isLoadingAdvisories}
-                    />
-                  ))}
+          {isLoadingSubAreas ? (
+            // display the loading bar if subareas are loading
+            <div className="mt-5">
+              Loading...
+              <ProgressBar animated now={100} className="mt-2" />
+            </div>
+          ) : subAreaLoadError ? (
+            // display the error message if subareas failed to load
+            <div className="mt-5">
+              <h2 className="sub-heading">Something went wrong. Please try again later.</h2>
+              <p>If the problem continues, please contact{" "}
+                <a href="mailto:parkinfo@gov.bc.ca">parkinfo@gov.bc.ca</a>.
+              </p>
+            </div>
+          ) : (
+            // display the list of parks if subareas are loaded
+            <div className="lists">
+              {currentFilter === "All" ? (
+                filters.map((filter, index) => (
+                  <div key={index} className="list">
+                    {filtering(filter).map((park, index) => (
+                      <ParkLink 
+                        key={index}
+                        park={park}
+                        advisories={filterAdvisoriesByOrcs(park.orcs)}
+                        subAreas={filterSubAreasByOrcs(park.orcs)}
+                        advisoryLoadError={advisoryLoadError}
+                        isLoadingAdvisories={isLoadingAdvisories}
+                      />
+                    ))}
+                  </div>
+                ))
+              ) : (
+                <div className="list">
+                  {hasResult ? 
+                    filtering(currentFilter).map((park, index) => (
+                      <ParkLink
+                        key={index}
+                        park={park}
+                        advisories={filterAdvisoriesByOrcs(park.orcs)}
+                        subAreas={filterSubAreasByOrcs(park.orcs)}
+                        advisoryLoadError={advisoryLoadError}
+                        isLoadingAdvisories={isLoadingAdvisories}
+                      />
+                    ))
+                    : <NoSearchResults page="park-operating-dates" />
+                  }
                 </div>
-              ))
-            ) : (
-              <div className="list">
-                {hasResult ? 
-                  filtering(currentFilter).map((park, index) => (
-                    <ParkLink
-                      key={index}
-                      park={park}
-                      advisories={filterAdvisoriesByOrcs(park.orcs)}
-                      advisoryLoadError={advisoryLoadError}
-                      isLoadingAdvisories={isLoadingAdvisories}
-                    />
-                  ))
-                  : <NoSearchResults page="park-operating-dates" />
-                }
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
       <Acknowledgment />

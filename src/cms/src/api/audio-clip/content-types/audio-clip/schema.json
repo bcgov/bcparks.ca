@@ -1,0 +1,98 @@
+{
+  "kind": "collectionType",
+  "collectionName": "audio_clips",
+  "info": {
+    "singularName": "audio-clip",
+    "pluralName": "audio-clips",
+    "displayName": "Audio-clip",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "speakerTitle": {
+      "type": "string"
+    },
+    "speakerName": {
+      "type": "string"
+    },
+    "languageName": {
+      "type": "string"
+    },
+    "firstNationName": {
+      "type": "string"
+    },
+    "phoneticSpelling": {
+      "type": "string"
+    },
+    "recordingDate": {
+      "type": "date"
+    },
+    "audioClipType": {
+      "type": "enumeration",
+      "enum": [
+        "Place name",
+        "Welcome message"
+      ]
+    },
+    "displayLocation": {
+      "type": "customField",
+      "options": [
+        "Park name:tldr",
+        "Highlights in this park:highlights",
+        "About this park - history:history",
+        "About this park - cultural heritage:heritage"
+      ],
+      "customField": "plugin::multi-select.multi-select",
+      "required": false
+    },
+    "description": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "transcript": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "adminNote": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "protectedAreas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "audioClips"
+    },
+    "sites": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::site.site",
+      "inversedBy": "audioClips"
+    },
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "audios"
+      ]
+    }
+  }
+}

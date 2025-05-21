@@ -7,11 +7,24 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "../htmlContent"
 import CustomToggle from "./customToggle"
+import AudioButton from "../audioButton"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion }) => {
+export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion, audioClips, activeAudio, setActiveAudio }) => {
+  // Filter function for audio clips
+  const findAudioClipsByLocation = useCallback((location) => {
+    return audioClips?.find(audio => 
+      audio.displayLocation?.strapi_json_value?.includes(location) && audio.url
+    ) || null
+  }, [audioClips])
+  // Filtered audio clips
+  const heritageAudioClip = useMemo(() =>
+    findAudioClipsByLocation("heritage"), [findAudioClipsByLocation])
+  const historyAudioClip = useMemo(() =>
+    findAudioClipsByLocation("history"), [findAudioClipsByLocation])
+
   return (
     <Accordion
       className={`about-accordion is-open--${openAccordions[eventKey]}`}
@@ -38,6 +51,22 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion 
           <HtmlContent>
             {!isNullOrWhiteSpace(data.description) && data.description}
           </HtmlContent>
+          {heritageAudioClip && data.code === "heritage" && (
+            <AudioButton
+              audio={heritageAudioClip}
+              location="heritage"
+              activeAudio={activeAudio}
+              setActiveAudio={setActiveAudio}
+            />
+          )}
+          {historyAudioClip && data.code === "history" && (
+            <AudioButton
+              audio={historyAudioClip}
+              location="history"
+              activeAudio={activeAudio}
+              setActiveAudio={setActiveAudio}
+            />
+          )}
         </div>
       </Accordion.Collapse>
     </Accordion>
@@ -45,10 +74,10 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion 
 }
 
 export default function About({
-  parkType, conservation, culturalHeritage, history, wildlife, biogeoclimaticZones, terrestrialEcosections, marineEcosections
+  parkType, conservation, culturalHeritage, history, wildlife, biogeoclimaticZones, terrestrialEcosections, marineEcosections, audioClips, activeAudio, setActiveAudio
 }) {
   const dataList = [
-    { "title": "Cultural heritage", "code": "cultural-heritage", "description": culturalHeritage },
+    { "title": "Cultural heritage", "code": "heritage", "description": culturalHeritage },
     { "title": "History", "code": "history", "description": history },
     { "title": "Conservation", "code": "conservation", "description": conservation },
     { "title": "Wildlife", "code": "wildlife", "description": wildlife }
@@ -200,6 +229,9 @@ export default function About({
                   data={data}
                   openAccordions={openAccordions}
                   toggleAccordion={toggleAccordion}
+                  audioClips={audioClips}
+                  activeAudio={activeAudio}
+                  setActiveAudio={setActiveAudio}
                 />
               ))}
             </Col>

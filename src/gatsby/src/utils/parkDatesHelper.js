@@ -83,34 +83,39 @@ const processDateRanges = (arr, fmt, yr, delimiter, yearPrefix) => {
 }
 
 const groupSubAreaDates = (subArea) => {
-  const saDates = subArea.parkOperationSubAreaDates
+  const subAreaDates = subArea.parkOperationSubAreaDates || []
+  const featureDates = subArea.parkFeatureDates || []
   subArea.operationDates = []
   subArea.offSeasonDates = []
   subArea.resDates = []
   subArea.serviceDates = []
 
-  for (let dIdx in saDates) {
-    const dateRec = saDates[dIdx]
-    if (dateRec.isActive) {
-      subArea.operationDates.push({
-        start: dateRec.openDate,
-        end: dateRec.closeDate
-      })
-      subArea.serviceDates.push({
-        start: dateRec.serviceStartDate,
-        end: dateRec.serviceEndDate
-      })
-      subArea.resDates.push({
-        start: dateRec.reservationStartDate,
-        end: dateRec.reservationEndDate
-      })
-      subArea.offSeasonDates.push({
-        start: dateRec.offSeasonStartDate,
-        end: dateRec.offSeasonEndDate
-      })
-    }
+  // TODO: remove it once data migration is completed
+  subAreaDates.filter((date) => date.isActive).forEach((date) => {
+    subArea.operationDates.push({ start: date.openDate, end: date.closeDate })
+    subArea.serviceDates.push({ start: date.serviceStartDate, end: date.serviceEndDate })
+    subArea.resDates.push({ start: date.reservationStartDate, end: date.reservationEndDate })
+    subArea.offSeasonDates.push({ start: date.offSeasonStartDate, end: date.offSeasonEndDate })
+  })
+
+  // override subAreaDates with featureDates
+  const dateTypes = {
+    "Operation": "serviceDates",
+    "Reservation": "resDates",
+    "Winter fee": "offSeasonDates",
+    // TODO: add more date types as needed
   }
-  return subArea;
+  // create an object keyed by dateType
+  const featureDatesByType = _.keyBy(featureDates, "dateType")
+  // narrow down to the date types
+  const relevantFeatureDates = _.pick(featureDatesByType, Object.keys(dateTypes))
+  _.forEach(relevantFeatureDates, (featureDate, type) => {
+    const key = dateTypes[type]
+    if (featureDate) {
+      subArea[key] = [{ start: featureDate.startDate, end: featureDate.endDate }]
+    }
+  })
+  return subArea
 }
 
 // function to format gate open/close time e.g. "08:00:00" to "8 am"
@@ -125,9 +130,24 @@ const formattedTime = time => {
   }
 }
 
+// function to convert date from "YYYY: MM/DD – MM/DD" to "MM/DD, YYYY – MM/DD, YYYY"
+function convertWinterRate(dates) {
+  if (dates.length === 0) {
+    return []
+  }
+  return dates.map(date => {
+    const [year, range] = date.split(": ")
+    const [start, end] = range.split("–")
+    const startDate = `${start.trim()}, ${year}`
+    const endDate = `${end.trim()}, ${year}`
+    return `${startDate}–${endDate}`
+  })
+}
+
 export {
   datePhrase,
   processDateRanges,
   groupSubAreaDates,
-  formattedTime
+  formattedTime,
+  convertWinterRate
 }
