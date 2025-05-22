@@ -50,7 +50,7 @@ jobs:
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           event-type: publish-gatsby
           client-payload: '{"env": "${{ env.ENVIRONMENT }}", "branch": "main"}'
 
