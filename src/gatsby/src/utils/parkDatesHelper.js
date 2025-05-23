@@ -131,16 +131,22 @@ const formattedTime = time => {
 }
 
 // function to convert date from "YYYY: MM/DD – MM/DD" to "MM/DD, YYYY – MM/DD, YYYY"
-function convertWinterRate(dates) {
-  if (dates.length === 0) {
+const convertWinterRate = dates => {
+  if (!Array.isArray(dates) || dates.length === 0) {
     return []
   }
-  return dates.map(date => {
-    const [year, range] = date.split(": ")
-    const [start, end] = range.split("–")
-    const startDate = `${start.trim()}, ${year}`
-    const endDate = `${end.trim()}, ${year}`
-    return `${startDate}–${endDate}`
+  // flatten all ranges into a single array
+  return dates.flatMap(date => {
+    const [year, ranges] = date.split(": ")
+    if (!year || !ranges) return []
+    // split multiple ranges by comma
+    return ranges.split(",").map(range => {
+      const [start, end] = range.split("–")
+      if (!start || !end) return ""
+      const startDate = `${start.trim()}, ${year}`
+      const endDate = `${end.trim()}, ${year}`
+      return `${startDate}–${endDate}`
+    }).filter(Boolean)
   })
 }
 
