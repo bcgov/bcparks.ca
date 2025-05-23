@@ -30,7 +30,10 @@
       "enum": [
         "Operation",
         "Reservation",
-        "Winter fee"
+        "Winter fee",
+        "Full service and fees",
+        "Backcountry registration",
+        "First come, first served"
       ],
       "required": true
     },
