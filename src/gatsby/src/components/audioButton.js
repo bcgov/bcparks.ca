@@ -28,8 +28,8 @@ function Credit({ audio }) {
       {hasCredit && (
         <p>
           <small>
-            Spoken in the {audio.languageName} language, by {audio.speakerName},{" "}
-            {audio.speakerTitle}, of the {audio.firstNationName}
+            Spoken in the {audio.languageName} language by {audio.speakerTitle}{" "}
+            {audio.speakerName} of the {audio.firstNationName}
           </small>
         </p>
       )}
