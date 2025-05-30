@@ -47,9 +47,9 @@ const combineCampingTypes = (campings, campingTypes, subAreas) => {
   let arr = [];
   let obj = subAreas;
 
-  // filter the campings to include only active and open campings
+  // filter the campings to include only active
   const parkCampingTypes = campings.filter(
-    (camping) => camping.isActive && camping.isCampingOpen
+    (camping) => camping.isActive
   )
   // add the parkCampingTypes to the common object
   for (const parkCampingType of parkCampingTypes) {
@@ -80,9 +80,9 @@ const combineFacilities = (facilities, facilityTypes, subAreas) => {
   let arr = [];
   let obj = subAreas;
 
-  // filter the facilities to include only active and open facilities
+  // filter the facilities to include only active
   const parkFacilities = facilities.filter(
-    (facility) => facility.isActive && facility.isFacilityOpen
+    (facility) => facility.isActive
   )
   // add the parkFacilities to the common object
   for (const parkFacility of parkFacilities) {

@@ -65,7 +65,7 @@ export default function ParkTemplate({ data }) {
 
   const activeActivities = sortBy(
     park.parkActivities.filter(
-      activity => activity.isActive && activity.isActivityOpen && activity.activityType?.isActive
+      activity => activity.isActive && activity.activityType?.isActive
     ),
     ["activityType.rank", "activityType.activityName"],
     ["asc"]
