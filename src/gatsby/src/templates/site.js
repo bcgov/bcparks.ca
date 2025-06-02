@@ -49,7 +49,7 @@ export default function SiteTemplate({ data }) {
 
   const activeActivities = sortBy(
     site.parkActivities.filter(
-      activity => activity.isActive && activity.isActivityOpen && activity.activityType?.isActive
+      activity => activity.isActive && activity.activityType?.isActive
     ),
     ["activityType.rank", "activityType.activityName"],
     ["asc"]
