@@ -15,7 +15,6 @@ This site is built using [Strapi CMS](https://strapi.io), a headless CMS, and [G
   - [Prerequisites](#prerequisites)
   - [Backend Development - Strapi Localhost](#backend-development---strapi-localhost)
   - [Frontend development - Gatsby](#frontend-development---gatsby)
-  - [Staff Portal development](#staff-portal-development)
 - [Commit/branching](#commitbranching)
 - [Application walkthrough](#application-walkthrough)
 - [Communication Channels](#communication-channels)
@@ -62,11 +61,6 @@ IMPORTANT: this process is not currently working on Windows without virtualisati
 
 - [Gatsby setup instructions](src/gatsby/README.md)
     
-
-### Staff Portal development
-
-- [Staff portal setup instructions](src/admin/README.md)
-
 
 ## Commit/branching
 
