@@ -156,8 +156,7 @@ export default function ParkTemplate({ data }) {
   // set active facilities
   useEffect(() => {
     if (park.parkFacilities.length > 0 &&
-      data.allStrapiFacilityType.nodes.length > 0 && 
-      Object.keys(processedSubAreas).length > 0
+      data.allStrapiFacilityType.nodes.length > 0
     ) {
       const facilities = combineFacilities(
         park.parkFacilities,
@@ -171,8 +170,7 @@ export default function ParkTemplate({ data }) {
   // set active campings
   useEffect(() => {
     if (park.parkCampingTypes.length > 0 &&
-      data.allStrapiCampingType.nodes.length > 0 &&
-      Object.keys(processedSubAreas).length > 0
+      data.allStrapiCampingType.nodes.length > 0
     ) {
       const campings = combineCampingTypes(
         park.parkCampingTypes,

@@ -147,8 +147,7 @@ export default function SiteTemplate({ data }) {
   // set active facilities
   useEffect(() => {
     if (site.parkFacilities.length > 0 &&
-      data.allStrapiFacilityType.nodes.length > 0 && 
-      Object.keys(processedSubAreas).length > 0
+      data.allStrapiFacilityType.nodes.length > 0
     ) {
       const facilities = combineFacilities(
         site.parkFacilities,
@@ -162,8 +161,7 @@ export default function SiteTemplate({ data }) {
     // set active campings
     useEffect(() => {
       if (site.parkCampingTypes.length > 0 &&
-        data.allStrapiCampingType.nodes.length > 0 &&
-        Object.keys(processedSubAreas).length > 0
+        data.allStrapiCampingType.nodes.length > 0
       ) {
         const campings = combineCampingTypes(
           site.parkCampingTypes,
