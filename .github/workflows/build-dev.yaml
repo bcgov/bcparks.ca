@@ -43,47 +43,6 @@ jobs:
       - name: Push Docker image
         run: docker push --all-tags ${{ steps.build_image.outputs.image }}
 
-  build-admin:
-    runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: admin-${{ github.ref_name }}
-    steps:
-      - name: Git Checkout
-        uses: actions/checkout@v3
-
-      - name: Set env
-        run: |
-          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
-
-      - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v2
-        with:
-          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
-          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
-          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-
-      - name: npm build
-        run: |
-          npm install
-          npm run build
-        working-directory: src/admin
-
-      - name: Docker build
-        run: |
-          docker build -t ${{ env.IMAGE_NAME }} .
-          docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:latest
-          docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:${{ env.SHORT_SHA }}
-        working-directory: src/admin
-
-      - name: Push Docker image
-        run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}
-
   build-public-builder:
     runs-on: ubuntu-latest
     env:
@@ -214,7 +173,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [build-cms, build-admin]
+    needs: [build-cms]
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
@@ -232,7 +191,6 @@ jobs:
 
       - name: Trigger rollout
         run: |
-          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-admin
           oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-cms
           oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-maintenance
           oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-scheduler
