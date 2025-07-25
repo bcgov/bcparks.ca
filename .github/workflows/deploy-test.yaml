@@ -40,7 +40,6 @@ jobs:
 
       - name: Tag Test images
         run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin-main:${{ github.event.inputs.releaseTag }} admin-main:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder-main:${{ github.event.inputs.releaseTag }} public-builder-main:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-main:${{ github.event.inputs.releaseTag }} strapi-main:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-main:${{ github.event.inputs.releaseTag }} maintenance-main:${{ env.ENVIRONMENT }}
@@ -56,7 +55,6 @@ jobs:
 
       - name: Trigger new rollout
         run: |
-          oc -n ${{ env.NAMESPACE }} rollout restart deployment main-admin
           oc -n ${{ env.NAMESPACE }} rollout restart deployment main-cms
           oc -n ${{ env.NAMESPACE }} rollout restart deployment main-maintenance
           oc -n ${{ env.NAMESPACE }} rollout restart deployment main-scheduler
