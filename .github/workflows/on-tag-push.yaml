@@ -31,7 +31,6 @@ jobs:
 
       - name: Tag images
         run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin-main:${{ env.SHORT_SHA }} admin-main:${{ env.RELEASE_VERSION }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder-main:${{ env.SHORT_SHA }} public-builder-main:${{ env.RELEASE_VERSION }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-main:${{ env.SHORT_SHA }} strapi-main:${{ env.RELEASE_VERSION }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-main:${{ env.SHORT_SHA }} maintenance-main:${{ env.RELEASE_VERSION }}
@@ -40,7 +39,6 @@ jobs:
 
       - name: Delete images tags with commit hash
         run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d admin-main:${{ env.SHORT_SHA }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag -d public-builder-main:${{ env.SHORT_SHA }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag -d strapi-main:${{ env.SHORT_SHA }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag -d maintenance-main:${{ env.SHORT_SHA }}

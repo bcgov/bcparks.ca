@@ -25,7 +25,6 @@ jobs:
 
       - name: Tag Test images
         run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag admin-alpha:latest admin-alpha:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public-builder-alpha:latest public-builder-alpha:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag strapi-alpha:latest strapi-alpha:${{ env.ENVIRONMENT }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-alpha:latest maintenance-alpha:${{ env.ENVIRONMENT }}
@@ -41,7 +40,6 @@ jobs:
 
       - name: Trigger new rollout
         run: |
-          oc -n ${{ env.NAMESPACE }} rollout restart deployment alpha-admin
           oc -n ${{ env.NAMESPACE }} rollout restart deployment alpha-cms
           oc -n ${{ env.NAMESPACE }} rollout restart deployment alpha-maintenance
           oc -n ${{ env.NAMESPACE }} rollout restart deployment alpha-scheduler
