@@ -84,7 +84,7 @@ export default function Home({ data }) {
           id="main-content"
           className="park-search"
           style={{
-            backgroundImage: `url(${require("../images/home/search_bg.png").default})`,
+            backgroundImage: `url(${require("../images/home/search_bg.jpg").default})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center"
