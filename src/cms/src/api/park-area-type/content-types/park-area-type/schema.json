@@ -24,7 +24,7 @@
       "relation": "oneToOne",
       "target": "api::facility-type.facility-type"
     },
-    "closureAffectesAccessStatus": {
+    "closureAffectsAccessStatus": {
       "type": "boolean"
     }
   }
