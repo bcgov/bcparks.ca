@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_area_types",
+  "info": {
+    "singularName": "park-area-type",
+    "pluralName": "park-area-types",
+    "displayName": "Park-area-type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "campingType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::camping-type.camping-type"
+    },
+    "facilityType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::facility-type.facility-type"
+    },
+    "closureAffectesAccessStatus": {
+      "type": "boolean"
+    }
+  }
+}
