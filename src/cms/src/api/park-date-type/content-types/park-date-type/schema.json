@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_date_types",
+  "info": {
+    "singularName": "park-date-type",
+    "pluralName": "park-date-types",
+    "displayName": "Park-date-type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "dateTypeId": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "dateType": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}
