@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_gates",
+  "info": {
+    "singularName": "park-gate",
+    "pluralName": "park-gates",
+    "displayName": "Park-gate"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "hasGate": {
+      "type": "boolean"
+    },
+    "gateOpenTime": {
+      "type": "time"
+    },
+    "gateCloseTime": {
+      "type": "time"
+    },
+    "gateOpensAtDawn": {
+      "type": "boolean"
+    },
+    "gateClosesAtDusk": {
+      "type": "boolean"
+    },
+    "gateOpen24Hours": {
+      "type": "boolean"
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::protected-area.protected-area"
+    }
+  }
+}
