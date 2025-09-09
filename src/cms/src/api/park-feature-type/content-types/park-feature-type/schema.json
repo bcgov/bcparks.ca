@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_feature_types",
+  "info": {
+    "singularName": "park-feature-type",
+    "pluralName": "park-feature-types",
+    "displayName": "Park-feature-type"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "parkFeatureType": {
+      "type": "string",
+      "required": true
+    },
+    "closureAffectsAccessStatus": {
+      "type": "boolean"
+    },
+    "campingType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::camping-type.camping-type"
+    },
+    "facilityType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::facility-type.facility-type"
+    }
+  }
+}

@@ -43,6 +43,12 @@
       "relation": "manyToOne",
       "target": "api::protected-area.protected-area",
       "inversedBy": "parkDates"
+    },
+    "parkFeature": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::park-feature.park-feature",
+      "inversedBy": "parkDates"
     }
   }
 }

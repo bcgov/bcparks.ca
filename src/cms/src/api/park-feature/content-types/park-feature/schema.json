@@ -1,0 +1,212 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_features",
+  "info": {
+    "singularName": "park-feature",
+    "pluralName": "park-features",
+    "displayName": "Park-feature"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "featureId": {
+      "type": "string"
+    },
+    "parkFeature": {
+      "type": "string",
+      "required": true
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "isOpen": {
+      "type": "boolean"
+    },
+    "closureAffectsAccessStatus": {
+      "type": "boolean"
+    },
+    "inReservationSystem": {
+      "type": "boolean"
+    },
+    "hasReservations": {
+      "type": "boolean"
+    },
+    "hasFirstComeFirstServed": {
+      "type": "boolean"
+    },
+    "hasFrontcountryReservations": {
+      "type": "boolean"
+    },
+    "hasFrontcountryGroupReservations": {
+      "type": "boolean"
+    },
+    "hasFrontcountryCabinReservations": {
+      "type": "boolean"
+    },
+    "hasBackcountryReservations": {
+      "type": "boolean"
+    },
+    "hasBackcountryGroupReservations": {
+      "type": "boolean"
+    },
+    "hasBackcountryShelterReservations": {
+      "type": "boolean"
+    },
+    "hasBackcountryPermits": {
+      "type": "boolean"
+    },
+    "hasBackcountryWildernessReservations": {
+      "type": "boolean"
+    },
+    "hasGroupPicnicReservations": {
+      "type": "boolean"
+    },
+    "hasCanoeCircuitReservations": {
+      "type": "boolean"
+    },
+    "hasWinterFee": {
+      "type": "boolean"
+    },
+    "isCleanAirSite": {
+      "type": "boolean"
+    },
+    "offSeasonUse": {
+      "type": "boolean"
+    },
+    "totalCapacity": {
+      "type": "string"
+    },
+    "frontcountrySites": {
+      "type": "string"
+    },
+    "reservableSites": {
+      "type": "string"
+    },
+    "nonReservableSites": {
+      "type": "string"
+    },
+    "walkInSites": {
+      "type": "string"
+    },
+    "walkInSitesReservable": {
+      "type": "string"
+    },
+    "vehicleSites": {
+      "type": "string"
+    },
+    "vehicleSitesReservable": {
+      "type": "string"
+    },
+    "rvSites": {
+      "type": "string"
+    },
+    "rvSitesReservable": {
+      "type": "string"
+    },
+    "doubleSites": {
+      "type": "string"
+    },
+    "pullThroughSites": {
+      "type": "string"
+    },
+    "electrifiedSites": {
+      "type": "string"
+    },
+    "longStaySites": {
+      "type": "string"
+    },
+    "groupSite": {
+      "type": "string"
+    },
+    "groupSitesReservable": {
+      "type": "string"
+    },
+    "backcountrySites": {
+      "type": "string"
+    },
+    "boatAccessSites": {
+      "type": "string"
+    },
+    "horseSites": {
+      "type": "string"
+    },
+    "wildernessSites": {
+      "type": "string"
+    },
+    "cabins": {
+      "type": "string"
+    },
+    "huts": {
+      "type": "string"
+    },
+    "yurt": {
+      "type": "string"
+    },
+    "shelters": {
+      "type": "string"
+    },
+    "boatLaunches": {
+      "type": "string"
+    },
+    "parkAccessUnitId": {
+      "type": "integer"
+    },
+    "adminNote": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "operationNote": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "reservationNote": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "offSeasonNote": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "registrationNote": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::protected-area.protected-area"
+    },
+    "site": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::site.site"
+    },
+    "parkFeatureType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::park-feature-type.park-feature-type"
+    },
+    "parkDates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-date.park-date",
+      "mappedBy": "parkFeature"
+    }
+  }
+}
