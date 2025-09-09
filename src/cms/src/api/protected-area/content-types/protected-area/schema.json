@@ -361,6 +361,12 @@
       "relation": "manyToMany",
       "target": "api::audio-clip.audio-clip",
       "mappedBy": "protectedAreas"
+    },
+    "parkDates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-date.park-date",
+      "mappedBy": "protectedArea"
     }
   }
 }

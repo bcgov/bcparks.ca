@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "park_dates",
+  "info": {
+    "singularName": "park-date",
+    "pluralName": "park-dates",
+    "displayName": "Park-date",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "isDateAnnual": {
+      "type": "boolean"
+    },
+    "operatingYear": {
+      "type": "integer",
+      "required": true
+    },
+    "startDate": {
+      "type": "date",
+      "required": true
+    },
+    "endDate": {
+      "type": "date",
+      "required": true
+    },
+    "adminNote": {
+      "type": "text"
+    },
+    "parkDateType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::park-date-type.park-date-type"
+    },
+    "protectedArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkDates"
+    }
+  }
+}
