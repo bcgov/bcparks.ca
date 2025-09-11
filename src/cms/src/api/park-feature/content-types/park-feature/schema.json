@@ -4,7 +4,8 @@
   "info": {
     "singularName": "park-feature",
     "pluralName": "park-features",
-    "displayName": "Park-feature"
+    "displayName": "Park-feature",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -196,6 +197,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::site.site"
+    },
+    "parkArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::park-area.park-area",
+      "inversedBy": "parkFeatures"
     },
     "parkFeatureType": {
       "type": "relation",

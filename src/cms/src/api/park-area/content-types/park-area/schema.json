@@ -201,6 +201,12 @@
     },
     "hasWinterFee": {
       "type": "boolean"
+    },
+    "parkFeatures": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-feature.park-feature",
+      "mappedBy": "parkArea"
     }
   }
 }
