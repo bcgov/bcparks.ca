@@ -11,8 +11,10 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "featureId": {
-      "type": "string"
+    "orcsFeatureNumber": {
+      "type": "string",
+      "unique": true,
+      "required": true
     },
     "parkFeature": {
       "type": "string",
