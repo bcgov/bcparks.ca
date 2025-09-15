@@ -11,6 +11,9 @@
     "draftAndPublish": true
   },
   "attributes": {
+    "featureId": {
+      "type": "string"
+    },
     "orcsFeatureNumber": {
       "type": "string",
       "unique": true,
