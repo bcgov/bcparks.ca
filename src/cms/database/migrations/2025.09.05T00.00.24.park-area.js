@@ -230,13 +230,8 @@ const rows = [
     orcs: "15",
     parkAreaName: "Mount Seymour Group Campground",
     parkAreaType: "Group Campground",
-    orcsAreaNumber: "",
-  },
-  {
-    orcs: 'Mount Seymour groupsite"',
-    parkAreaName: "15-1",
-    parkAreaType: "",
-    orcsAreaNumber: "",
+    parkSubArea: "Mount Seymour groupsite",
+    orcsAreaNumber: "15-1",
   },
   {
     orcs: "16",
@@ -1130,13 +1125,7 @@ const rows = [
     orcs: "206",
     parkAreaName: "Bugaboo Backcountry",
     parkAreaType: "Backcountry area",
-    orcsAreaNumber: "",
-  },
-  {
-    orcs: 'Boulder Campground"',
-    parkAreaName: "206-2",
-    parkAreaType: "",
-    orcsAreaNumber: "",
+    orcsAreaNumber: "206-2",
   },
   {
     orcs: "210",
@@ -1990,7 +1979,7 @@ module.exports = {
             );
 
             // If not found, try with parkSubArea
-            if (!parkOperationSubArea) {
+            if (parkOperationSubArea.length === 0 && row.parkSubArea) {
               parkOperationSubArea = await strapi.entityService.findMany(
                 "api::park-operation-sub-area.park-operation-sub-area",
                 {
@@ -2001,6 +1990,9 @@ module.exports = {
                   limit: 1,
                 }
               );
+              if (parkOperationSubArea.length > 0) {
+                console.log(row.parkAreaName, "matched by parkSubArea");
+              }
             }
 
             const sa = parkOperationSubArea?.[0] || null;
