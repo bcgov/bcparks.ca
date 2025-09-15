@@ -29,6 +29,11 @@
       "relation": "oneToOne",
       "target": "api::site.site"
     },
+    "orcsAreaNumber": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
     "isActive": {
       "type": "boolean"
     },
