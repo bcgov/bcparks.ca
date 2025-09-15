@@ -1990,16 +1990,13 @@ module.exports = {
                   limit: 1,
                 }
               );
-              if (parkOperationSubArea.length > 0) {
-                console.log(row.parkAreaName, "matched by parkSubArea");
-              }
             }
 
             const sa = parkOperationSubArea?.[0] || null;
 
             let area = {
               parkArea: row.parkAreaName,
-              parkAreaType: pat[row.parkAreaType],
+              parkAreaType: pat[row.parkAreaType] ?? null,
               protectedArea: protectedAreaId,
               orcsAreaNumber: row.orcsAreaNumber,
               publishedAt: new Date().toISOString(),
