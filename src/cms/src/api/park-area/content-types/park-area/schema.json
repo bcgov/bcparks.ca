@@ -194,9 +194,6 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
-    "areaId": {
-      "type": "string"
-    },
     "registrationNote": {
       "type": "customField",
       "options": {

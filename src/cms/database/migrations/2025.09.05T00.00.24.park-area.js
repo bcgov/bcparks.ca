@@ -2058,7 +2058,6 @@ module.exports = {
                 operationNote: sa.operationNote,
                 reservationNote: sa.reservationNote,
                 offSeasonNote: sa.offSeasonNote,
-                areaId: sa.areaId,
                 registrationNote: sa.registrationNote,
                 hasWinterFee: sa.hasWinterFee,
                 parkAccessUnitId: sa.parkAccessUnitId,
