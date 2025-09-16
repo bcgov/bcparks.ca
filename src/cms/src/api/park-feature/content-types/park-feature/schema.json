@@ -1,38 +1,27 @@
 {
   "kind": "collectionType",
-  "collectionName": "park_areas",
+  "collectionName": "park_features",
   "info": {
-    "singularName": "park-area",
-    "pluralName": "park-areas",
-    "displayName": "Park-area",
+    "singularName": "park-feature",
+    "pluralName": "park-features",
+    "displayName": "Park-feature",
     "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
-    "parkArea": {
+    "featureId": {
       "type": "string"
     },
-    "parkAreaType": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::park-area-type.park-area-type"
-    },
-    "protectedArea": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::protected-area.protected-area"
-    },
-    "site": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::site.site"
-    },
-    "orcsAreaNumber": {
+    "orcsFeatureNumber": {
       "type": "string",
-      "required": true,
-      "unique": true
+      "unique": true,
+      "required": true
+    },
+    "parkFeature": {
+      "type": "string",
+      "required": true
     },
     "isActive": {
       "type": "boolean"
@@ -80,6 +69,9 @@
       "type": "boolean"
     },
     "hasCanoeCircuitReservations": {
+      "type": "boolean"
+    },
+    "hasWinterFee": {
       "type": "boolean"
     },
     "isCleanAirSite": {
@@ -201,14 +193,32 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
-    "hasWinterFee": {
-      "type": "boolean"
+    "protectedArea": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::protected-area.protected-area"
     },
-    "parkFeatures": {
+    "site": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::site.site"
+    },
+    "parkArea": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::park-area.park-area",
+      "inversedBy": "parkFeatures"
+    },
+    "parkFeatureType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::park-feature-type.park-feature-type"
+    },
+    "parkDates": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::park-feature.park-feature",
-      "mappedBy": "parkArea"
+      "target": "api::park-date.park-date",
+      "mappedBy": "parkFeature"
     }
   }
 }

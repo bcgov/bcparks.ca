@@ -28,10 +28,22 @@
     "gateOpen24Hours": {
       "type": "boolean"
     },
+    "gateNote": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbar"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
     "protectedArea": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::protected-area.protected-area"
+    },
+    "parkFeature": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::park-feature.park-feature"
     }
   }
 }
