@@ -154,7 +154,7 @@
     "huts": {
       "type": "string"
     },
-    "yurt": {
+    "yurts": {
       "type": "string"
     },
     "shelters": {
