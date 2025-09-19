@@ -227,6 +227,7 @@ const multiItemAreas = [
       },
     ],
     orcs: 33,
+    orcsAreaNumber: "33-6",
   },
   {
     campgroundName: "Maple Bay Campground",
@@ -919,6 +920,7 @@ const singleItemAreas = [
       },
     ],
     orcs: 58,
+    orcsAreaNumber: "58-1",
   },
   {
     campgroundName: "Buckhorn Campground",
