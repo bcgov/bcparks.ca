@@ -19,7 +19,7 @@
       "unique": true,
       "required": true
     },
-    "parkFeature": {
+    "parkFeatureName": {
       "type": "string",
       "required": true
     },
@@ -211,8 +211,9 @@
     },
     "parkFeatureType": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::park-feature-type.park-feature-type"
+      "relation": "manyToOne",
+      "target": "api::park-feature-type.park-feature-type",
+      "inversedBy": "parkFeatures"
     },
     "parkDates": {
       "type": "relation",

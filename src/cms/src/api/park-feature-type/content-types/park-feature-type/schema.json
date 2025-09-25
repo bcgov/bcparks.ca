@@ -26,6 +26,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::facility-type.facility-type"
+    },
+    "parkFeatures": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-feature.park-feature",
+      "mappedBy": "parkFeatureType"
     }
   }
 }

@@ -4424,7 +4424,7 @@ module.exports = {
         // to create the final data for the new park-feature record
         const parkFeatureData = {
           ...sharedData,
-          parkFeature: featureName,
+          parkFeatureName: featureName,
           publishedAt: new Date().toISOString(),
           featureId:
             record.featureId ?? `${record.protectedArea.orcs}_${record.id}`,
