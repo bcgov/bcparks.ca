@@ -11,7 +11,7 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "name": {
+    "parkAreaType": {
       "type": "string"
     },
     "campingType": {
@@ -26,6 +26,12 @@
     },
     "closureAffectsAccessStatus": {
       "type": "boolean"
+    },
+    "parkAreas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-area.park-area",
+      "mappedBy": "parkAreaType"
     }
   }
 }

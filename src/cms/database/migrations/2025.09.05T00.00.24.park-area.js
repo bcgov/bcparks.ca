@@ -1955,11 +1955,11 @@ module.exports = {
       const parkAreaTypes = await strapi.db
         .query("api::park-area-type.park-area-type")
         .findMany({
-          select: ["id", "name"],
+          select: ["id", "parkAreaType"],
         });
       let pat = {};
       for (const type of parkAreaTypes) {
-        pat[type.name] = type.id;
+        pat[type.parkAreaType] = type.id;
       }
 
       await strapi.db.transaction(async () => {
@@ -1995,7 +1995,7 @@ module.exports = {
             const sa = parkOperationSubArea?.[0] || null;
 
             let area = {
-              parkArea: row.parkAreaName,
+              parkAreaName: row.parkAreaName,
               parkAreaType: pat[row.parkAreaType] ?? null,
               protectedArea: protectedAreaId,
               orcsAreaNumber: row.orcsAreaNumber,
