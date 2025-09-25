@@ -1,6 +1,6 @@
 "use strict";
 
-const rows = [
+const typeNames = [
   "Anchorage area",
   "Backcountry area",
   "Backcountry campground",
@@ -34,19 +34,19 @@ module.exports = {
   async up(knex) {
     if (await knex.schema.hasTable("park_area_types")) {
       await strapi.db.transaction(async () => {
-        for (const row of rows) {
+        for (const name of typeNames) {
           try {
             await strapi.entityService.create(
               "api::park-area-type.park-area-type",
               {
                 data: {
-                  name: row,
+                  parkAreaType: name,
                   publishedAt: new Date().toISOString(),
                 },
               }
             );
           } catch (error) {
-            console.error(`Failed to insert: ${row}`, error);
+            console.error(`Failed to insert: ${name}`, error);
           }
         }
       });

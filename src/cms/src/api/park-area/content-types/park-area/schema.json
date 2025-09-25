@@ -11,13 +11,14 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "parkArea": {
+    "parkAreaName": {
       "type": "string"
     },
     "parkAreaType": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::park-area-type.park-area-type"
+      "relation": "manyToOne",
+      "target": "api::park-area-type.park-area-type",
+      "inversedBy": "parkAreas"
     },
     "protectedArea": {
       "type": "relation",
