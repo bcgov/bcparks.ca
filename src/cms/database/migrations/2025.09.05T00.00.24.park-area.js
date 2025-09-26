@@ -2043,7 +2043,7 @@ module.exports = {
                 pullThroughSites: sa.pullThroughSites,
                 electrifiedSites: sa.electrifiedSites,
                 longStaySites: sa.longStaySites,
-                groupSite: sa.groupSite,
+                groupSites: sa.groupSites,
                 groupSitesReservable: sa.groupSitesReservable,
                 backcountrySites: sa.backcountrySites,
                 boatAccessSites: sa.boatAccessSites,
