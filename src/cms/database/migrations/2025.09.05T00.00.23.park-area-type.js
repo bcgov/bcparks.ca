@@ -41,6 +41,7 @@ module.exports = {
               {
                 data: {
                   parkAreaType: name,
+                  areaTypeId: typeNames.indexOf(name) + 1,
                   publishedAt: new Date().toISOString(),
                 },
               }
