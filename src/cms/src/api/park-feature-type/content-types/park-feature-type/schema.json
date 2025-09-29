@@ -14,6 +14,11 @@
       "type": "string",
       "required": true
     },
+    "featureTypeId": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
     "closureAffectsAccessStatus": {
       "type": "boolean"
     },
