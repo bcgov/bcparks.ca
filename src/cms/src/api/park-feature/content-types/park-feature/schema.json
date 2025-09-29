@@ -122,7 +122,7 @@
     "longStaySites": {
       "type": "string"
     },
-    "groupSite": {
+    "groupSites": {
       "type": "string"
     },
     "groupSitesReservable": {
