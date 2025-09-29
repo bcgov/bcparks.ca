@@ -4295,7 +4295,7 @@ module.exports = {
         "doubleSites",
         "electrifiedSites",
         "frontcountrySites",
-        "groupSite",
+        "groupSites",
         "groupSitesReservable",
         "hasBackcountryGroupReservations",
         "hasBackcountryPermits",
