@@ -44,7 +44,7 @@ module.exports = {
           facilityType: type.facilityType
             ? { connect: [{ id: type.facilityType.id }] }
             : undefined,
-          featureTypeId: parkFeatureTypeMap[type.subAreaType] || null,
+          featureTypeId: parkFeatureTypeMap[type.subAreaType] || type.id + 100,
           publishedAt: new Date().toISOString(),
         };
       });
