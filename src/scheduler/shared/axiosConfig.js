@@ -1,8 +1,8 @@
-const axios = require('axios');
-const dotenv = require('dotenv');
+const axios = require("axios");
+const dotenv = require("dotenv");
 
 dotenv.config({
-  path: `.env`
+  path: `.env`,
 });
 
 const cmsAxios = axios.create({
@@ -10,16 +10,24 @@ const cmsAxios = axios.create({
   headers: {
     post: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + process.env.STRAPI_API_TOKEN,
+      Authorization: "Bearer " + process.env.STRAPI_API_TOKEN,
     },
     get: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + process.env.STRAPI_API_TOKEN,
-    }
+      Authorization: "Bearer " + process.env.STRAPI_API_TOKEN,
+    },
+    put: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.STRAPI_API_TOKEN,
+    },
+    delete: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + process.env.STRAPI_API_TOKEN,
+    },
   },
-  rejectUnauthorized: false
+  rejectUnauthorized: false,
 });
 
 module.exports = {
-  cmsAxios
+  cmsAxios,
 };
