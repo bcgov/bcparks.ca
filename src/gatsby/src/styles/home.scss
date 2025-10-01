@@ -69,15 +69,6 @@
   }
 }
 
-.home-card-wrapper {
-  max-height: 320px;
-  margin-bottom: 30px;  
-  
-  @media screen and (min-width: $lgBreakpoint) {
-    max-height: 500px;
-  }
-}
-
 /* ------------- SEARCH ------------ */
 
 #home-parks-search {
