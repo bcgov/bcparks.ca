@@ -2,7 +2,7 @@ const { getLogger } = require("../../shared/logging");
 const { readQueue, removeFromQueue } = require("../../shared/taskQueue");
 const { noCommandLineArgs } = require("../../shared/commandLine");
 const { cmsAxios } = require("../../shared/axiosConfig");
-const { getEntityIds, getDateTypeMap } = require("../utils/helper");
+const { getEntityIds, getDateTypeMap, getParkGateIds } = require("../utils/helper");
 
 /**
  * Publishes DOOT date and gate info to Strapi
@@ -23,73 +23,77 @@ exports.dootPublish = async function () {
     let jsonData = message.attributes?.jsonData;
 
     // loop through each item in the jsonData array
+    if (!Array.isArray(jsonData)) {
+      logger.error(`dootPublish() expected jsonData to be an array but got: ${typeof jsonData}`);
+      continue;
+    }
     for (const item of jsonData) {
-      let protectedAreaId, parkAreaId, parkFeatureId;
+      let protectedAreaId, parkAreaId, parkFeatureId, relationName;
       try {
-        ({ protectedAreaId, parkAreaId, parkFeatureId } = await getEntityIds(item));
+        ({ protectedAreaId, parkAreaId, parkFeatureId, relationName } = await getEntityIds(item));
       } catch (error) {
         logger.error(`dootPublish() failed while retrieving entity IDs: ${error}`);
-        return;
+        break;
       }
-      // check the park-gates collection to see if there is an existing record
-      // matching the protectedAreaId, parkAreaId, or parkFeatureId
-      const gateParams = {
-        filters: {
-          protectedArea: protectedAreaId ? { id: protectedAreaId } : undefined,
-          parkArea: parkAreaId ? { id: parkAreaId } : undefined,
-          parkFeature: parkFeatureId ? { id: parkFeatureId } : undefined,
-        },
-        fields: ["id"],
-      };
-      let gateResponse;
-      try {
-        gateResponse = await cmsAxios.get("/api/park-gates", {
-          params: gateParams,
-        });
-      } catch (error) {
-        logger.error(`dootPublish() failed while retrieving park-gates: ${error}`);
-        return;
-      }
-
-      if (gateResponse.data.data.length > 0) {
-        // update the existing park-gates record
-        const gateInfo = gateResponse.data.data[0];
-        const updateData = {
-          hasGate: item.gateInfo.hasGate,
-          gateNote: item.gateInfo.gateNote,
-          gateOpenTime: item.gateInfo.gateOpenTime,
-          gateCloseTime: item.gateInfo.gateCloseTime,
-          gateOpen24Hours: item.gateInfo.gateOpen24Hours,
-          gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
-          gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
-        };
-        try {
-          await cmsAxios.put(`/api/park-gates/${gateInfo.id}`, {
-            data: updateData,
-          });
-        } catch (error) {
-          logger.error(`dootPublish() failed while updating park-gates: ${error}`);
-          return;
+      if (item.gateInfo) {
+        // check the park-gates collection to see if there is an existing record
+        // matching the protectedAreaId, parkAreaId, or parkFeatureId
+        const parkGateIds = await getParkGateIds(protectedAreaId, parkAreaId, parkFeatureId);
+        if (parkGateIds.length > 0) {
+          // update the existing park-gates record
+          const updateData = {
+            hasGate: item.gateInfo.hasGate,
+            gateNote: item.gateInfo.gateNote,
+            gateOpenTime: item.gateInfo.gateOpenTime,
+            gateCloseTime: item.gateInfo.gateCloseTime,
+            gateOpen24Hours: item.gateInfo.gateOpen24Hours,
+            gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
+            gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
+          };
+          try {
+            await cmsAxios.put(`/api/park-gates/${parkGateIds[0]}`, {
+              data: updateData,
+            });
+            logger.info(`Updated park-gates record for ${relationName}`);
+          } catch (error) {
+            logger.error(`dootPublish() failed while updating park-gates: ${error}`);
+            break;
+          }
+        } else {
+          // create a new park-gates record
+          const createData = {
+            hasGate: item.gateInfo.hasGate,
+            gateNote: item.gateInfo.gateNote,
+            gateOpenTime: item.gateInfo.gateOpenTime,
+            gateCloseTime: item.gateInfo.gateCloseTime,
+            gateOpen24Hours: item.gateInfo.gateOpen24Hours,
+            gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
+            gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
+            protectedArea: protectedAreaId ? protectedAreaId : undefined,
+            parkArea: parkAreaId ? parkAreaId : undefined,
+            parkFeature: parkFeatureId ? parkFeatureId : undefined,
+          };
+          try {
+            await cmsAxios.post("/api/park-gates", { data: createData });
+            logger.info(`Created new park-gates record for ${relationName}`);
+          } catch (error) {
+            logger.error(`dootPublish() failed while creating park-gates: ${error}`);
+            break;
+          }
         }
       } else {
-        // create a new park-gates record
-        const createData = {
-          hasGate: item.gateInfo.hasGate,
-          gateNote: item.gateInfo.gateNote,
-          gateOpenTime: item.gateInfo.gateOpenTime,
-          gateCloseTime: item.gateInfo.gateCloseTime,
-          gateOpen24Hours: item.gateInfo.gateOpen24Hours,
-          gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
-          gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
-          protectedArea: protectedAreaId ? protectedAreaId : undefined,
-          parkArea: parkAreaId ? parkAreaId : undefined,
-          parkFeature: parkFeatureId ? parkFeatureId : undefined,
-        };
-        try {
-          await cmsAxios.post("/api/park-gates", { data: createData });
-        } catch (error) {
-          logger.error(`dootPublish() failed while creating park-gates: ${error}`);
-          return;
+        // delete any existing park-gates record if gateInfo is undefined
+        const parkGateIds = await getParkGateIds(protectedAreaId, parkAreaId, parkFeatureId);
+        if (parkGateIds.length > 0) {
+          try {
+            for (const gateId of parkGateIds) {
+              await cmsAxios.delete(`/api/park-gates/${gateId}`);
+            }
+            logger.info(`Deleted existing park-gates record(s) for ${relationName}`);
+          } catch (error) {
+            logger.error(`dootPublish() failed while deleting park-gates: ${error}`);
+            break;
+          }
         }
       }
 
@@ -111,15 +115,15 @@ exports.dootPublish = async function () {
           });
         } catch (error) {
           logger.error(`dootPublish() failed while retrieving park-dates: ${error}`);
-          return;
+          break;
         }
-        for (const dateRange of datesToDelete.data.data) {
-          try {
+        try {
+          for (const dateRange of datesToDelete.data.data) {
             await cmsAxios.delete(`/api/park-dates/${dateRange.id}`);
-          } catch (error) {
-            logger.error(`dootPublish() failed while deleting park-dates: ${error}`);
-            return;
           }
+        } catch (error) {
+          logger.error(`dootPublish() failed while deleting park-dates: ${error}`);
+          break;
         }
 
         // create a map of the park-date-types collection to get the id for each
@@ -129,31 +133,35 @@ exports.dootPublish = async function () {
           dateTypeMap = await getDateTypeMap();
         } catch (error) {
           logger.error(`dootPublish() failed while retrieving dateTypeMap: ${error}`);
-          return;
+          break;
         }
 
         // create new date ranges
         if (item.dateRanges && item.dateRanges.length > 0) {
-          for (const dootDateRange of item.dateRanges) {
-            const createDateRangeData = {
-              startDate: dootDateRange.startDate,
-              endDate: dootDateRange.endDate,
-              isActive: dootDateRange.isActive,
-              adminNote: dootDateRange.adminNote,
-              parkDateType: dateTypeMap.get(dootDateRange.dateTypeId),
-              isDateAnnual: dootDateRange.isDateAnnual,
-              operatingYear: item.operatingYear,
-              protectedArea: protectedAreaId ? protectedAreaId : undefined,
-              parkFeature: parkFeatureId ? parkFeatureId : undefined,
-            };
-            try {
-              await cmsAxios.post("/api/park-dates", {
+          try {
+            for (const dootDateRange of item.dateRanges) {
+              const createDateRangeData = {
+                startDate: dootDateRange.startDate,
+                endDate: dootDateRange.endDate,
+                isActive: dootDateRange.isActive,
+                adminNote: dootDateRange.adminNote,
+                parkDateType: dateTypeMap.get(dootDateRange.dateTypeId),
+                isDateAnnual: dootDateRange.isDateAnnual,
+                operatingYear: item.operatingYear,
+                protectedArea: protectedAreaId ? protectedAreaId : undefined,
+                parkFeature: parkFeatureId ? parkFeatureId : undefined,
+              };
+
+              const response = await cmsAxios.post("/api/park-dates", {
                 data: createDateRangeData,
               });
-            } catch (error) {
-              logger.error(`dootPublish() failed while creating park-dates: ${error}`);
-              return;
             }
+            // After creating all date ranges, log a summary message
+            const count = item.dateRanges.length;
+            logger.info(`Created ${count} park-dates records for ${relationName}`);
+          } catch (error) {
+            logger.error(`dootPublish() failed while creating park-dates: ${error}`);
+            break;
           }
         }
       }
@@ -167,7 +175,7 @@ exports.dootPublish = async function () {
         await removeFromQueue([message.id]);
       } catch (error) {
         logger.error(`dootPublish() failed while removing message from queue: ${error}`);
-        return;
+        continue;
       }
     }
   }
