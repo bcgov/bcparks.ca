@@ -51,9 +51,7 @@ exports.dootPublish = async function () {
             gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
           };
           try {
-            await cmsAxios.put(`/api/park-gates/${parkGateIds[0]}`, {
-              data: updateData,
-            });
+            await cmsAxios.put(`/api/park-gates/${parkGateIds[0]}`, { data: updateData });
             logger.info(`Updated park-gates record for ${relationName}`);
           } catch (error) {
             logger.error(`dootPublish() failed while updating park-gates: ${error}`);
@@ -110,9 +108,7 @@ exports.dootPublish = async function () {
 
         let datesToDelete;
         try {
-          datesToDelete = await cmsAxios.get("/api/park-dates", {
-            params: deleteParams,
-          });
+          datesToDelete = await cmsAxios.get("/api/park-dates", { params: deleteParams });
         } catch (error) {
           logger.error(`dootPublish() failed while retrieving park-dates: ${error}`);
           break;
@@ -139,6 +135,15 @@ exports.dootPublish = async function () {
         // create new date ranges
         if (item.dateRanges && item.dateRanges.length > 0) {
           try {
+            // validate all the dateTypeIds first
+            for (const dootDateRange of item.dateRanges) {
+              if (!dateTypeMap.has(dootDateRange.dateTypeId)) {
+                throw new Error(
+                  `Invalid dateTypeId ${dootDateRange.dateTypeId} in DOOT data for ${relationName}`
+                );
+              }
+            }
+            // create the date ranges
             for (const dootDateRange of item.dateRanges) {
               const createDateRangeData = {
                 startDate: dootDateRange.startDate,
@@ -151,10 +156,7 @@ exports.dootPublish = async function () {
                 protectedArea: protectedAreaId ? protectedAreaId : undefined,
                 parkFeature: parkFeatureId ? parkFeatureId : undefined,
               };
-
-              const response = await cmsAxios.post("/api/park-dates", {
-                data: createDateRangeData,
-              });
+              await cmsAxios.post("/api/park-dates", { data: createDateRangeData });
             }
             // After creating all date ranges, log a summary message
             const count = item.dateRanges.length;
