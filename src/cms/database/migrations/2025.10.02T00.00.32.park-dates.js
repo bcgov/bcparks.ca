@@ -190,7 +190,12 @@ const tierDates = [
 async function insertParkDate(knex, dateData, relations) {
   try {
     const [newParkDate] = await knex("park_dates")
-      .insert(dateData)
+      .insert({
+        ...dateData,
+        published_at: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      })
       .returning("id");
 
     // Insert relations
@@ -208,10 +213,10 @@ async function insertParkDate(knex, dateData, relations) {
 module.exports = {
   async up(knex) {
     // Park-date-type
-    const dateTypes = await knex("park_date_types").select("id", "name");
+    const dateTypes = await knex("park_date_types").select("id", "date_type");
     const dateTypeMap = {};
     dateTypes.forEach((type) => {
-      dateTypeMap[type.name] = type.id;
+      dateTypeMap[type.date_type] = type.id;
     });
 
     // 1. Park-operation-date (park level) -> Park-date
@@ -261,8 +266,6 @@ module.exports = {
           // Park-operation-date does not have is_active column, default to true
           is_active: true,
           is_date_annual: isDateAnnual,
-          created_at: new Date(),
-          updated_at: new Date(),
         },
         {
           park_dates_protected_area_links: {
@@ -280,10 +283,44 @@ module.exports = {
       "*"
     );
     for (const subAreaDate of subAreaDates) {
+      // Get the link to park_operation_sub_area via link table
+      const subAreaLink = await knex(
+        "park_operation_sub_area_dates_park_operation_sub_area_links"
+      )
+        .where({ park_operation_sub_area_date_id: subAreaDate.id })
+        .first();
+
+      if (!subAreaLink) {
+        console.warn(
+          "No park_operation_sub_area link for park_operation_sub_area_date id:",
+          subAreaDate.id
+        );
+        continue;
+      }
+
       // Find related park_operation_sub_area for hasBackcountryPermits
       const subArea = await knex("park_operation_sub_areas")
-        .where({ id: subAreaDate.park_operation_sub_area_id })
+        .where({ id: subAreaLink.park_operation_sub_area_id })
         .first();
+
+      if (!subArea || !subArea.feature_id) {
+        console.warn(
+          `No sub_area or feature_id found for sub_area id: ${subAreaLink.park_operation_sub_area_id}`
+        );
+        continue;
+      }
+
+      // Find the corresponding park_feature using feature_id
+      const parkFeature = await knex("park_features")
+        .where({ feature_id: subArea.feature_id })
+        .first();
+
+      if (!parkFeature) {
+        console.warn(
+          `No park_feature found for feature_id: ${subArea.feature_id}`
+        );
+        continue;
+      }
 
       // Service Dates
       if (subAreaDate.service_start_date && subAreaDate.service_end_date) {
@@ -297,12 +334,10 @@ module.exports = {
             is_active: subAreaDate.is_active,
             // Park-operation-sub-area-date does not have is_date_annual column, default to false
             is_date_annual: false,
-            created_at: new Date(),
-            updated_at: new Date(),
           },
           {
             park_dates_park_feature_links: {
-              park_feature_id: subAreaDate.park_operation_sub_area_id,
+              park_feature_id: parkFeature.id,
             },
             park_dates_park_date_type_links: {
               park_date_type_id: dateTypeMap["Operation"],
@@ -331,12 +366,10 @@ module.exports = {
             is_active: subAreaDate.is_active,
             // Park-operation-sub-area-date does not have is_date_annual column, default to false
             is_date_annual: false,
-            created_at: new Date(),
-            updated_at: new Date(),
           },
           {
             park_dates_park_feature_links: {
-              park_feature_id: subAreaDate.park_operation_sub_area_id,
+              park_feature_id: parkFeature.id,
             },
             park_dates_park_date_type_links: {
               park_date_type_id: dateTypeId,
@@ -357,12 +390,10 @@ module.exports = {
             is_active: subAreaDate.is_active,
             // Park-operation-sub-area-date does not have is_date_annual column, default to false
             is_date_annual: false,
-            created_at: new Date(),
-            updated_at: new Date(),
           },
           {
             park_dates_park_feature_links: {
-              park_feature_id: subAreaDate.park_operation_sub_area_id,
+              park_feature_id: parkFeature.id,
             },
             park_dates_park_date_type_links: {
               park_date_type_id: dateTypeMap["Gate"],
@@ -385,8 +416,6 @@ module.exports = {
           is_active: featureDate.is_active,
           // Park-feature-date does not have is_date_annual column, default to false
           is_date_annual: false,
-          created_at: new Date(),
-          updated_at: new Date(),
         },
         {
           park_dates_park_feature_links: {
@@ -419,8 +448,6 @@ module.exports = {
           end_date: tierDate.endDate,
           is_active: true, // Default value
           is_date_annual: false, // Default value
-          created_at: new Date(),
-          updated_at: new Date(),
         },
         {
           park_dates_protected_area_links: {
