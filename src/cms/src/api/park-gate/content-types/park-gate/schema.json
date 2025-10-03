@@ -39,7 +39,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::protected-area.protected-area",
-      "inversedBy": "parkGate"
+      "mappedBy": "parkGate"
     },
     "parkArea": {
       "type": "relation",
