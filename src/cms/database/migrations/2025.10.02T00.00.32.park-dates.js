@@ -1,6 +1,6 @@
 "use strict";
 
-// imported from DOOT backend/tasks/populate-previous-dates/previous-dates.json
+// Imported from DOOT backend/tasks/populate-previous-dates/previous-dates.json
 const tierDates = [
   {
     orcs: 45,
@@ -186,27 +186,38 @@ const tierDates = [
   },
 ];
 
+// Helper function to insert park date and its relations
+async function insertParkDate(knex, dateData, relations) {
+  try {
+    const [newParkDate] = await knex("park_dates")
+      .insert(dateData)
+      .returning("id");
+
+    // Insert relations
+    for (const [table, data] of Object.entries(relations)) {
+      await knex(table).insert({ park_date_id: newParkDate.id, ...data });
+    }
+
+    return newParkDate;
+  } catch (error) {
+    console.error("Failed to insert park date:", error);
+    throw error;
+  }
+}
+
 module.exports = {
   async up(knex) {
     // Park-date-type
-    const dateTypeMap = {
-      Gate: 1,
-      "Tier 1": 2,
-      "Tier 2": 3,
-      "Winter fee": 4,
-      "Day-use pass": 5,
-      Operation: 6,
-      Reservation: 7,
-      "Backcountry registration": 8,
-      "First come, first served": 9,
-      "Full services and fees": 10,
-    };
+    const dateTypes = await knex("park_date_types").select("id", "name");
+    const dateTypeMap = {};
+    dateTypes.forEach((type) => {
+      dateTypeMap[type.name] = type.id;
+    });
 
     // 1. Park-operation-date (park level) -> Park-date
     const parkOperationDates = await knex("park_operation_dates").select("*");
     for (const parkDate of parkOperationDates) {
-
-      // Step 1: Get the link to protected_area
+      // Get the link to protected_area
       const dateLink = await knex("park_operation_dates_protected_area_links")
         .where({ park_operation_date_id: parkDate.id })
         .first();
@@ -219,7 +230,7 @@ module.exports = {
         continue;
       }
 
-      // Step 2: Get the park_operations_protected_area_links record
+      // Get the park_operations_protected_area_links record
       const operationLink = await knex("park_operations_protected_area_links")
         .where({ protected_area_id: dateLink.protected_area_id })
         .first();
@@ -232,7 +243,7 @@ module.exports = {
         continue;
       }
 
-      // Step 3: Get the park_operation
+      // Get the park_operation
       const parkOperation = await knex("park_operations")
         .where({ id: operationLink.park_operation_id })
         .first();
@@ -240,19 +251,28 @@ module.exports = {
       const isDateAnnual = parkOperation?.is_date_range_annual || false;
 
       // Gate dates
-      await knex("park_dates").insert({
-        operating_year: parkDate.operating_year,
-        start_date: parkDate.gate_open_date,
-        end_date: parkDate.gate_close_date,
-        admin_note: parkDate.admin_note,
-        protected_area_id: dateLink.protected_area_id,
-        park_date_type_id: dateTypeMap["Gate"],
-        // Park-operation-date does not have is_active column, default to true
-        is_active: true,
-        is_date_annual: isDateAnnual,
-        created_at: new Date(),
-        updated_at: new Date(),
-      });
+      await insertParkDate(
+        knex,
+        {
+          operating_year: parkDate.operating_year,
+          start_date: parkDate.gate_open_date,
+          end_date: parkDate.gate_close_date,
+          admin_note: parkDate.admin_note,
+          // Park-operation-date does not have is_active column, default to true
+          is_active: true,
+          is_date_annual: isDateAnnual,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          park_dates_protected_area_links: {
+            protected_area_id: dateLink.protected_area_id,
+          },
+          park_dates_park_date_type_links: {
+            park_date_type_id: dateTypeMap["Gate"],
+          },
+        }
+      );
     }
 
     // 2. Park-operation-sub-area-date (feature level) -> Park-date
@@ -267,19 +287,28 @@ module.exports = {
 
       // Service Dates
       if (subAreaDate.service_start_date && subAreaDate.service_end_date) {
-        await knex("park_dates").insert({
-          operating_year: subAreaDate.operating_year,
-          start_date: subAreaDate.service_start_date,
-          end_date: subAreaDate.service_end_date,
-          admin_note: subAreaDate.admin_note,
-          park_feature_id: subAreaDate.park_operation_sub_area_id, // or park_area_id if needed
-          park_date_type_id: dateTypeMap["Operation"],
-          is_active: subAreaDate.is_active,
-          // Park-operation-sub-area-date does not have is_date_annual column, default to false
-          is_date_annual: false,
-          created_at: new Date(),
-          updated_at: new Date(),
-        });
+        await insertParkDate(
+          knex,
+          {
+            operating_year: subAreaDate.operating_year,
+            start_date: subAreaDate.service_start_date,
+            end_date: subAreaDate.service_end_date,
+            admin_note: subAreaDate.admin_note,
+            is_active: subAreaDate.is_active,
+            // Park-operation-sub-area-date does not have is_date_annual column, default to false
+            is_date_annual: false,
+            created_at: new Date(),
+            updated_at: new Date(),
+          },
+          {
+            park_dates_park_feature_links: {
+              park_feature_id: subAreaDate.park_operation_sub_area_id,
+            },
+            park_dates_park_date_type_links: {
+              park_date_type_id: dateTypeMap["Operation"],
+            },
+          }
+        );
       }
 
       // Reservation Dates
@@ -291,55 +320,83 @@ module.exports = {
         if (subArea?.has_backcountry_permits) {
           dateTypeId = dateTypeMap["Backcountry registration"];
         }
-        await knex("park_dates").insert({
-          operating_year: subAreaDate.operating_year,
-          start_date: subAreaDate.reservation_start_date,
-          end_date: subAreaDate.reservation_end_date,
-          admin_note: subAreaDate.admin_note,
-          park_feature_id: subAreaDate?.park_operation_sub_area_id,
-          park_date_type_id: dateTypeId,
-          is_active: subAreaDate.is_active,
-          // Park-operation-sub-area-date does not have is_date_annual column, default to false
-          is_date_annual: false,
-          created_at: new Date(),
-          updated_at: new Date(),
-        });
+
+        await insertParkDate(
+          knex,
+          {
+            operating_year: subAreaDate.operating_year,
+            start_date: subAreaDate.reservation_start_date,
+            end_date: subAreaDate.reservation_end_date,
+            admin_note: subAreaDate.admin_note,
+            is_active: subAreaDate.is_active,
+            // Park-operation-sub-area-date does not have is_date_annual column, default to false
+            is_date_annual: false,
+            created_at: new Date(),
+            updated_at: new Date(),
+          },
+          {
+            park_dates_park_feature_links: {
+              park_feature_id: subAreaDate.park_operation_sub_area_id,
+            },
+            park_dates_park_date_type_links: {
+              park_date_type_id: dateTypeId,
+            },
+          }
+        );
       }
 
-      // Gate Dates, not used in DOOT
+      // Gate Dates, but not used in DOOT
       if (subAreaDate.open_date && subAreaDate.close_date) {
-        await knex("park_dates").insert({
-          operating_year: subAreaDate.operating_year,
-          start_date: subAreaDate.open_date,
-          end_date: subAreaDate.close_date,
-          admin_note: subAreaDate.admin_note,
-          park_feature_id: subAreaDate?.park_operation_sub_area_id,
-          park_date_type_id: dateTypeMap["Gate"],
-          is_active: subAreaDate.is_active,
-          // Park-operation-sub-area-date does not have is_date_annual column, default to false
-          is_date_annual: false,
-          created_at: new Date(),
-          updated_at: new Date(),
-        });
+        await insertParkDate(
+          knex,
+          {
+            operating_year: subAreaDate.operating_year,
+            start_date: subAreaDate.open_date,
+            end_date: subAreaDate.close_date,
+            admin_note: subAreaDate.admin_note,
+            is_active: subAreaDate.is_active,
+            // Park-operation-sub-area-date does not have is_date_annual column, default to false
+            is_date_annual: false,
+            created_at: new Date(),
+            updated_at: new Date(),
+          },
+          {
+            park_dates_park_feature_links: {
+              park_feature_id: subAreaDate.park_operation_sub_area_id,
+            },
+            park_dates_park_date_type_links: {
+              park_date_type_id: dateTypeMap["Gate"],
+            },
+          }
+        );
       }
     }
 
     // 3. Park-feature-date (feature level) -> Park-date
     const featureDates = await knex("park_feature_dates").select("*");
     for (const featureDate of featureDates) {
-      await knex("park_dates").insert({
-        operating_year: featureDate.operating_year,
-        start_date: featureDate.start_date,
-        end_date: featureDate.end_date,
-        admin_note: featureDate.admin_note,
-        park_feature_id: featureDate.park_feature_id, // or park_area_id if needed
-        park_date_type_id: dateTypeMap[featureDate.date_type],
-        is_active: featureDate.is_active,
-        // Park-feature-date does not have is_date_annual column, default to false
-        is_date_annual: false,
-        created_at: new Date(),
-        updated_at: new Date(),
-      });
+      await insertParkDate(
+        knex,
+        {
+          operating_year: featureDate.operating_year,
+          start_date: featureDate.start_date,
+          end_date: featureDate.end_date,
+          admin_note: featureDate.admin_note,
+          is_active: featureDate.is_active,
+          // Park-feature-date does not have is_date_annual column, default to false
+          is_date_annual: false,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          park_dates_park_feature_links: {
+            park_feature_id: featureDate.park_feature_id,
+          },
+          park_dates_park_date_type_links: {
+            park_date_type_id: dateTypeMap[featureDate.date_type],
+          },
+        }
+      );
     }
 
     // 4. tierDates (park level) -> Park-date
@@ -349,17 +406,31 @@ module.exports = {
         .where({ orcs: tierDate.orcs })
         .first();
 
-      await knex("park_dates").insert({
-        operating_year: tierDate.operatingYear,
-        start_date: tierDate.startDate,
-        end_date: tierDate.endDate,
-        protected_area_id: protectedArea ? protectedArea.id : null,
-        park_date_type_id: dateTypeMap[tierDate.dateType],
-        is_active: true,
-        is_date_annual: false,
-        created_at: new Date(),
-        updated_at: new Date(),
-      });
+      if (!protectedArea) {
+        console.warn(`No protected area found for orcs: ${tierDate.orcs}`);
+        continue;
+      }
+
+      await insertParkDate(
+        knex,
+        {
+          operating_year: tierDate.operatingYear,
+          start_date: tierDate.startDate,
+          end_date: tierDate.endDate,
+          is_active: true, // Default value
+          is_date_annual: false, // Default value
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          park_dates_protected_area_links: {
+            protected_area_id: protectedArea.id,
+          },
+          park_dates_park_date_type_links: {
+            park_date_type_id: dateTypeMap[tierDate.dateType],
+          },
+        }
+      );
     }
   },
 };
