@@ -38,17 +38,20 @@
     "protectedArea": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::protected-area.protected-area"
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkGate"
     },
     "parkArea": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::park-area.park-area"
+      "target": "api::park-area.park-area",
+      "inversedBy": "parkGate"
     },
     "parkFeature": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::park-feature.park-feature"
+      "target": "api::park-feature.park-feature",
+      "inversedBy": "parkGate"
     }
   }
 }
