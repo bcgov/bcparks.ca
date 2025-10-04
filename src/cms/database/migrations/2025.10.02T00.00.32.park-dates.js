@@ -406,6 +406,24 @@ module.exports = {
     // 3. Park-feature-date (feature level) -> Park-date
     const featureDates = await knex("park_feature_dates").select("*");
     for (const featureDate of featureDates) {
+      if (!featureDate.date_type) {
+        console.warn(
+          `Skipping park_feature_date id ${featureDate.id}: missing date_type`
+        );
+        continue;
+      }
+
+      const dateTypeId = dateTypeMap[featureDate.date_type];
+      if (!dateTypeId) {
+        console.warn(
+          `Skipping park_feature_date id ${featureDate.id}: unknown date_type "${featureDate.date_type}"`
+        );
+        console.warn(
+          `Available date types: ${Object.keys(dateTypeMap).join(", ")}`
+        );
+        continue;
+      }
+
       await insertParkDate(
         knex,
         {
@@ -422,7 +440,7 @@ module.exports = {
             park_feature_id: featureDate.park_feature_id,
           },
           park_dates_park_date_type_links: {
-            park_date_type_id: dateTypeMap[featureDate.date_type],
+            park_date_type_id: dateTypeId,
           },
         }
       );
