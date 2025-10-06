@@ -243,9 +243,9 @@ module.exports = {
       if (!operationLink) {
         console.warn(
           "No park_operation link for protected_area id:",
-          dateLink.protected_area_id
+          dateLink.protected_area_id,
+          "proceeding with isDateAnnual = false"
         );
-        continue;
       }
 
       // Get the park_operation
