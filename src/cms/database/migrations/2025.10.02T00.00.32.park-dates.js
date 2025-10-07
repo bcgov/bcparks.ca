@@ -212,6 +212,14 @@ async function insertParkDate(knex, dateData, relations) {
 
 module.exports = {
   async up(knex) {
+    // Check if the park_date_types table exists
+    const hasParkDateTypes = await knex.schema.hasTable("park_date_types");
+
+    if (!hasParkDateTypes) {
+      console.log("park_date_types table not found");
+      return;
+    }
+
     // Park-date-type
     const dateTypes = await knex("park_date_types").select("id", "date_type");
     const dateTypeMap = {};
