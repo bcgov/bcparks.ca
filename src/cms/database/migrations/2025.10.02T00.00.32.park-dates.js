@@ -220,6 +220,25 @@ module.exports = {
       return;
     }
 
+    // populate missing feature_id in park_operation_sub_areas
+    await knex.raw(`
+        WITH feature_ids AS (
+          SELECT
+            subarea.id,
+            park.orcs || '_' || subarea.id AS feature_id
+          FROM park_operation_sub_areas subarea
+          INNER JOIN park_operation_sub_areas_protected_area_links link
+            ON link.park_operation_sub_area_id = subarea.id
+          INNER JOIN protected_areas park
+            ON park.id = link.protected_area_id
+        )
+        UPDATE park_operation_sub_areas
+        SET feature_id = feature_ids.feature_id
+        FROM feature_ids
+        WHERE park_operation_sub_areas.id = feature_ids.id
+          AND park_operation_sub_areas.feature_id IS NULL;
+      `);
+
     // Park-date-type
     const dateTypes = await knex("park_date_types").select("id", "date_type");
     const dateTypeMap = {};
@@ -230,6 +249,9 @@ module.exports = {
     // 1. Park-operation-date (park level) -> Park-date
     const parkOperationDates = await knex("park_operation_dates").select("*");
     for (const parkDate of parkOperationDates) {
+      let parkOperation;
+      let isDateAnnual = false;
+
       // Get the link to protected_area
       const dateLink = await knex("park_operation_dates_protected_area_links")
         .where({ park_operation_date_id: parkDate.id })
@@ -248,20 +270,20 @@ module.exports = {
         .where({ protected_area_id: dateLink.protected_area_id })
         .first();
 
-      if (!operationLink) {
+      if (operationLink && operationLink.park_operation_id) {
+        parkOperation = await knex("park_operations")
+          .where({ id: operationLink.park_operation_id })
+          .first();
+        if (parkOperation) {
+          isDateAnnual = parkOperation?.is_date_range_annual || false;
+        }
+      } else {
         console.warn(
           "No park_operation link for protected_area id:",
           dateLink.protected_area_id,
           "proceeding with isDateAnnual = false"
         );
       }
-
-      // Get the park_operation
-      const parkOperation = await knex("park_operations")
-        .where({ id: operationLink.park_operation_id })
-        .first();
-
-      const isDateAnnual = parkOperation?.is_date_range_annual || false;
 
       // Gate dates
       await insertParkDate(
