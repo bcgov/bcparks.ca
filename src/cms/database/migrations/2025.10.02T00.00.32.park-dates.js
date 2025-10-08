@@ -1,6 +1,6 @@
 "use strict";
 
-// Imported from DOOT backend/tasks/populate-previous-dates/previous-dates.json
+// Copied from DOOT: https://github.com/bcgov/bcparks-staff-portal/blob/v2.0.0/backend/tasks/populate-previous-dates/previous-dates.json
 const tierDates = [
   {
     orcs: 45,
