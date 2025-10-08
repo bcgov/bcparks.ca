@@ -70,7 +70,8 @@ async function up(knex) {
             gateOpen24Hours: subArea.gateOpen24Hours ?? null,
             gateNote: subArea.gateNote ?? null,
             parkFeature: subArea.id,
-            protectedArea: subArea.protectedArea.id,
+            // Only Park-level (Protected Area) gate data will link to Protected Area records
+            protectedArea: null,
             publishedAt: new Date().toISOString(),
           },
         });
