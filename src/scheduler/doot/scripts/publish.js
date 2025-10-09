@@ -35,10 +35,10 @@ exports.dootPublish = async function () {
         logger.error(`dootPublish() failed while retrieving entity IDs: ${error}`);
         break;
       }
+      const parkGateIds = await getParkGateIds(protectedAreaId, parkAreaId, parkFeatureId);
       if (item.gateInfo) {
         // check the park-gates collection to see if there is an existing record
         // matching the protectedAreaId, parkAreaId, or parkFeatureId
-        const parkGateIds = await getParkGateIds(protectedAreaId, parkAreaId, parkFeatureId);
         if (parkGateIds.length > 0) {
           // update the existing park-gates record
           const updateData = {
@@ -80,16 +80,42 @@ exports.dootPublish = async function () {
           }
         }
       } else {
-        // delete any existing park-gates record if gateInfo is undefined
-        const parkGateIds = await getParkGateIds(protectedAreaId, parkAreaId, parkFeatureId);
+        // If gateInfo is not provided in the input, update any existing park-gates records
+        // for this entity to indicate no gate info
         if (parkGateIds.length > 0) {
           try {
-            for (const gateId of parkGateIds) {
-              await cmsAxios.delete(`/api/park-gates/${gateId}`);
-            }
-            logger.info(`Deleted existing park-gates record(s) for ${relationName}`);
+            await cmsAxios.put(`/api/park-gates/${parkGateIds[0]}`, {
+              data: {
+                hasGate: false,
+                gateNote: "",
+                gateOpenTime: null,
+                gateCloseTime: null,
+                gateOpen24Hours: null,
+                gateOpensAtDawn: null,
+                gateClosesAtDusk: null,
+              },
+            });
+
+            logger.info(
+              `Updated existing park-gates record(s) for ${relationName} to indicate no gate info`
+            );
           } catch (error) {
-            logger.error(`dootPublish() failed while deleting park-gates: ${error}`);
+            logger.error(`dootPublish() failed while updating park-gates: ${error}`);
+            break;
+          }
+        }
+      }
+
+      // if there is more than one parkGateId for the entity, delete the extras
+      if (parkGateIds.length > 1) {
+        for (let i = 1; i < parkGateIds.length; i++) {
+          try {
+            await cmsAxios.delete(`/api/park-gates/${parkGateIds[i]}`);
+            logger.info(
+              `Deleted duplicate park-gates record ID ${parkGateIds[i]} for ${relationName}`
+            );
+          } catch (error) {
+            logger.error(`dootPublish() failed while deleting duplicate park-gates: ${error}`);
             break;
           }
         }
