@@ -88,13 +88,13 @@ async function up(knex) {
         // Create new park-gate record for this park feature (sub-area)
         await strapi.db.query("api::park-gate.park-gate").create({
           data: {
-            hasGate: subArea.hasGate ?? null,
-            gateOpenTime: subArea.gateOpenTime ?? null,
-            gateCloseTime: subArea.gateCloseTime ?? null,
-            gateOpensAtDawn: subArea.gateOpensAtDawn ?? null,
-            gateClosesAtDusk: subArea.gateClosesAtDusk ?? null,
-            gateOpen24Hours: subArea.gateOpen24Hours ?? null,
-            gateNote: subArea.gateNote ?? null,
+            hasGate: subArea.hasGate,
+            gateOpenTime: subArea.gateOpenTime,
+            gateCloseTime: subArea.gateCloseTime,
+            gateOpensAtDawn: subArea.gateOpensAtDawn,
+            gateClosesAtDusk: subArea.gateClosesAtDusk,
+            gateOpen24Hours: subArea.gateOpen24Hours,
+            gateNote: subArea.gateNote,
             parkFeature: parkFeatureId ?? null,
             // Only Park-level (Protected Area) gate data will link to Protected Area records
             protectedArea: null,
