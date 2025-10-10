@@ -443,6 +443,14 @@ module.exports = {
         continue;
       }
 
+      // Skip Winter fee date types
+      if (featureDate.date_type === "Winter fee") {
+        console.log(
+          `Skipping park_feature_date id ${featureDate.id}: Winter fee date type not imported`
+        );
+        continue;
+      }
+
       const dateTypeId = dateTypeMap[featureDate.date_type];
       if (!dateTypeId) {
         console.warn(
