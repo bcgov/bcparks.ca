@@ -26,6 +26,7 @@ async function up(knex) {
         "gateClosesAtDusk",
         "gateOpen24Hours",
         "gateNote",
+        "featureId",
       ],
       populate: {
         protectedArea: {
@@ -42,6 +43,27 @@ async function up(knex) {
   let migratedCount = 0;
 
   await strapi.db.transaction(async () => {
+    // Fetch the sub-areas from the new Park-features collection,
+    // to look up and link the IDs
+    const parkFeatures = await strapi.db
+      .query("api::park-feature.park-feature")
+      .findMany({
+        select: ["id", "featureId"],
+        where: {
+          featureId: {
+            $notNull: true,
+          },
+        },
+        limit: 10000,
+      });
+
+    // Convert ID pair entities structure to a map for easy lookups
+    const parkFeaturesMap = new Map(
+      parkFeatures.map((parkFeature) => {
+        return [parkFeature.featureId, parkFeature.id];
+      })
+    );
+
     for (const subArea of parkOperationSubAreas) {
       // Only migrate if there's gate-related data
       const hasGateData =
@@ -58,6 +80,10 @@ async function up(knex) {
         continue;
       }
 
+      // Look up the ID of the Park-feature record that corresponds to this Sub-area record
+      // (If there is one. It may be undefined, depending on data completeness.)
+      const parkFeatureId = parkFeaturesMap.get(subArea.featureId);
+
       try {
         // Create new park-gate record for this park feature (sub-area)
         await strapi.db.query("api::park-gate.park-gate").create({
@@ -69,7 +95,7 @@ async function up(knex) {
             gateClosesAtDusk: subArea.gateClosesAtDusk ?? null,
             gateOpen24Hours: subArea.gateOpen24Hours ?? null,
             gateNote: subArea.gateNote ?? null,
-            parkFeature: subArea.id,
+            parkFeature: parkFeatureId ?? null,
             // Only Park-level (Protected Area) gate data will link to Protected Area records
             protectedArea: null,
             publishedAt: new Date().toISOString(),
