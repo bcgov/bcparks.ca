@@ -86,6 +86,15 @@ module.exports = ({ strapi }) => ({
             fields: ["id"]
           }
         }
+      },
+      parkDates: {
+        fields: ["operatingYear", "startDate", "endDate", "publishedAt"]
+      },
+      parkAreas: {
+        fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
+      },
+      parkFeatures: {
+        fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
       }
     };
     query.publicationState = "preview";

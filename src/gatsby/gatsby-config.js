@@ -47,6 +47,9 @@ module.exports = {
           "park-operation-date",
           "park-operation-sub-area-date",
           "park-operation-sub-area-type",
+          "park-date",
+          "park-area-type",
+          "park-feature-type",
           "park-contact",
           "park-operator-contact",
           "park-photo",
@@ -99,6 +102,22 @@ module.exports = {
                   fields: "*",
                   populate: {
                     parkOperationSubAreaType: {
+                      fields: "*"
+                    }
+                  }
+                },
+                parkAreas: {
+                  fields: "*",
+                  populate: {
+                    parkAreaType: {
+                      fields: "*"
+                    }
+                  }
+                },
+                parkFeatures: {
+                  fields: "*",
+                  populate: {
+                    parkFeatureType: {
                       fields: "*"
                     }
                   }
