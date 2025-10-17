@@ -220,6 +220,12 @@
       "relation": "oneToMany",
       "target": "api::park-date.park-date",
       "mappedBy": "parkFeature"
+    },
+    "parkGates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-gate.park-gate",
+      "mappedBy": "parkFeature"
     }
   }
 }
