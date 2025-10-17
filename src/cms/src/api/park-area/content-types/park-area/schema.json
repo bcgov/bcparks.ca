@@ -210,6 +210,12 @@
       "relation": "oneToMany",
       "target": "api::park-feature.park-feature",
       "mappedBy": "parkArea"
+    },
+    "parkGates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-gate.park-gate",
+      "mappedBy": "parkArea"
     }
   }
 }
