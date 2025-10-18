@@ -2,6 +2,62 @@ import moment from "moment"
 import _ from "lodash"
 import { parseISO, format } from "date-fns"
 
+const formatDateRange = (startDate, endDate) => {
+  if (!startDate || !endDate) {
+    return ""
+  }
+
+  const openDate = new Date(startDate)
+  const closeDate = new Date(endDate)
+  
+  // Check if it's year-round (Jan 1 to Dec 31)
+  const isYearRound = (
+    openDate.getMonth() === 0 && openDate.getDate() === 1 && // Jan 1
+    closeDate.getMonth() === 11 && closeDate.getDate() === 31 // Dec 31
+  )
+  
+  if (isYearRound) {
+    return "year-round"
+  }
+
+  const openYear = openDate.getFullYear()
+  const closeYear = closeDate.getFullYear()
+  const sameYear = openYear === closeYear
+
+  // Format options
+  const monthDayFormat = { month: 'short', day: 'numeric' }
+  const monthDayYearFormat = { month: 'short', day: 'numeric', year: 'numeric' }
+
+  if (sameYear) {
+    // Same year: "May 15 – Oct 31, 2025"
+    const openFormatted = openDate.toLocaleDateString('en-US', monthDayFormat)
+    const closeFormatted = closeDate.toLocaleDateString('en-US', monthDayFormat)
+    return `${openFormatted} – ${closeFormatted}, ${openYear}`
+  } else {
+    // Different years: "May 15, 2025 – Oct 31, 2026"
+    const openFormatted = openDate.toLocaleDateString('en-US', monthDayYearFormat)
+    const closeFormatted = closeDate.toLocaleDateString('en-US', monthDayYearFormat)
+    return `${openFormatted} – ${closeFormatted}`
+  }
+}
+
+// Updated getParkDates function using the reusable formatter
+const getParkDates = (operationDates, thisYear) => {
+  const parkOperationDates = operationDates.find(d => d.operatingYear === +thisYear) || {}
+  
+  const parkDates = formatDateRange(
+    parkOperationDates.gateOpenDate, 
+    parkOperationDates.gateCloseDate
+  )
+
+  // If the dates don't include the current year, return empty string
+  if (parkDates && parkDates !== "year-round" && !parkDates.includes(thisYear.toString())) {
+    return ""
+  }
+
+  return parkDates
+}
+
 const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix, nowrap) => {
   if (openDate && closeDate) {
     try {
@@ -151,6 +207,8 @@ const convertWinterRate = dates => {
 }
 
 export {
+  formatDateRange,
+  getParkDates,
   datePhrase,
   processDateRanges,
   groupSubAreaDates,

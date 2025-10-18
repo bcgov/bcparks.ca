@@ -1,26 +1,34 @@
 import axios from "axios"
 import qs from "qs"
-import { processDateRanges, groupSubAreaDates } from "./parkDatesHelper"
+import { formatDateRange, groupSubAreaDates } from "./parkDatesHelper"
 
 
-const preProcessSubAreas = (subAreas) => {
-  const fmt = "MMMM D"  // date format for overall operating dates
-  const yr = "year-round" // lowercase for overall operating dates
+const preProcessSubAreas = (subAreas) => {  
   for (let idx in subAreas) {
     let subArea = subAreas[idx]
 
     if (subArea.isActive) {
-
       const facilityType = subArea.parkSubAreaType?.facilityType || {}
       const campingType = subArea.parkSubAreaType?.campingType || {}
       subArea.typeCode = facilityType.facilityCode || campingType.campingTypeCode || ""
       subArea = groupSubAreaDates(subArea);
 
-      // get distinct date ranges sorted chronologically
-      subArea.operationDates = processDateRanges(subArea.operationDates, fmt, yr, " to ", false)
-      subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, " to ", false)
-      subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, " to ", false)
-      subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, " to ", false)
+      // Format date ranges using the new formatDateRange function
+      subArea.operationDates = subArea.operationDates
+        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+        .filter(dateStr => dateStr !== "") // Remove empty strings
+
+      subArea.serviceDates = subArea.serviceDates
+        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+        .filter(dateStr => dateStr !== "")
+
+      subArea.resDates = subArea.resDates
+        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+        .filter(dateStr => dateStr !== "")
+
+      subArea.offSeasonDates = subArea.offSeasonDates
+        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+        .filter(dateStr => dateStr !== "")
 
       // add a placeholder if no dates are available for the current year
       if (subArea.serviceDates.length === 0

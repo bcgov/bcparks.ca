@@ -11,13 +11,13 @@ import FontAwesome from "../fontAwesome"
 import { countsList } from "../../utils/constants"
 import { formattedTime } from "../../utils/parkDatesHelper"
 
-const WinterRateTooltip = () => {
+const DateTypeTooltip = ({description}) => {
   return (
   <OverlayTrigger
     placement="top"
     overlay={
-      <Tooltip id="winter-rate-tooltip">
-        Shoulder season with reduced fees and services
+      <Tooltip id="tooltip">
+        {description}
       </Tooltip>
     }
   >
@@ -99,7 +99,14 @@ export default function SubArea({ data, showHeading }) {
             )}
             {data.resDates.length > 0 && (
               <div className="subarea-list">
-                <h4>Booking available</h4>
+                <h4>
+                  Reservations {data.hasBackcountryReservations && "required"}
+                  <DateTypeTooltip description={
+                    data.hasBackcountryReservations ?
+                    "Reservations must be made in advance. First come, first served camping is not available." : 
+                    "Reservations are highly recommended. You can book up to four months in advance."
+                  } />
+                </h4>
                 <ul>
                   {data.resDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
@@ -110,7 +117,10 @@ export default function SubArea({ data, showHeading }) {
             {data.offSeasonDates.length > 0 && (
               <div className="subarea-list">
                 <h4>
-                  Winter rate <WinterRateTooltip />
+                  Winter rate
+                  <DateTypeTooltip 
+                    description="Shoulder season with reduced fees and services" 
+                  />
                 </h4>
                 <ul>
                   {data.offSeasonDates.map((dateRange, index) =>
