@@ -14,7 +14,7 @@ import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import StaticIcon from "../../components/park/staticIcon"
 import NoSearchResults from "../../components/search/noSearchResults"
 import { loadAllSubAreas } from "../../utils/subAreaHelper"
-import { datePhrase, processDateRanges, groupSubAreaDates, convertWinterRate } from "../../utils/parkDatesHelper"
+import { datePhrase, formatDateRange, groupSubAreaDates, convertWinterRate } from "../../utils/parkDatesHelper"
 import { loadAllAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
 
@@ -48,10 +48,21 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
     subArea = groupSubAreaDates(subArea)
 
     // get distinct date ranges sorted chronologically
-    subArea.operationDates = processDateRanges(subArea.operationDates, fmt, yr, "–", true)
-    subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, "–", true)
-    subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, "–", true)
-    subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, "–", true)
+    subArea.operationDates = subArea.operationDates
+        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+        .filter(dateStr => dateStr !== "") // Remove empty strings
+
+      subArea.serviceDates = subArea.serviceDates
+        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+        .filter(dateStr => dateStr !== "")
+
+      subArea.resDates = subArea.resDates
+        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+        .filter(dateStr => dateStr !== "")
+
+      subArea.offSeasonDates = subArea.offSeasonDates
+        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+        .filter(dateStr => dateStr !== "")
     subArea.offSeasonDates = convertWinterRate(subArea.offSeasonDates)
 
     // add a placeholder if no dates are available for the current year
@@ -112,7 +123,7 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
           <tr>
             <th scope="col">Facility</th>
             <th scope="col">Operating season</th>
-            <th scope="col">Booking available</th>
+            <th scope="col">Reservations / registration</th>
           </tr>
         </thead>
         <tbody>
@@ -150,6 +161,11 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                 )}
               </td>
               <td>
+                <div>
+                  <small>
+                    Reservations{subArea.hasBackcountryReservations && " required"}
+                  </small>
+                </div>
                 {subArea.resDates.length > 0 ? (
                   <ul>
                     {subArea.resDates.map((dateRange, index) =>
@@ -200,7 +216,7 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                   )}
                 </div>
                 <div className="list-group-item--container">
-                  <b>Booking available</b>
+                  <b>Reservations / registration</b>
                   {subArea.resDates.length > 0 ? (
                     <ul>
                       {subArea.resDates.map((dateRange, index) =>
@@ -392,22 +408,17 @@ const ParkOperatingDatesPage = () => {
           <ul>
             <li>
               <b>Operating season: </b>
-              During these dates, the facility is open, services are provided, and fees may be charged.
-              Outside of these dates, there are no services provided, there are no fees, and access may not be available.
-              Each park has different services, fees, and access,
-              so <Link to="/find-a-park">check the park page</Link> for details.
+              The facility is open, services are provided, and fees may be charged.
+              Outside these dates, there are no services provided, there are no fees, and access may not be available. 
             </li>
             <li>
               <b>Winter rate: </b>
-              These dates indicate when a frontcountry campground offers camping with reduced fees and services in their shoulder season.
-              {" "}<Link to="/find-a-park">Check the park page</Link> for winter rates and details. 
+              When a frontcountry campground offers camping with reduced fees and services in its shoulder season. 
             </li>
             <li>
-              <b>Booking available: </b>
-              During these dates, either <Link to="/reservations">reservations</Link> are available,
-              or <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit registration</Link> is required.
-              To find out which booking you need, <Link to="/find-a-park">check the park page</Link>.
-              If a reservable campground is open outside of these dates, sites are available on a first come, first served basis.
+              <b>Reservations / registration: </b>
+              Either <Link to="/reservations">reservations</Link> can be made, 
+              or <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit registration</Link> is required. 
             </li>
           </ul>
         </div>

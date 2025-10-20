@@ -127,6 +127,7 @@ const loadAllSubAreas = (apiBaseUrl) => {
       "isCleanAirSite",
       "parkSubArea",
       "isActive",
+      "hasBackcountryReservations",
       "closureAffectsAccessStatus"
     ],
     populate: {

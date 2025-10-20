@@ -16,12 +16,12 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
     "backcountry-camping": {
       buttons: [
         {
-          label: "Register for permit",
-          fieldName: "backcountryPermitUrl"
-        },
-        {
           label: "Make a reservation",
           fieldName: "backcountryReservationUrl"
+        },
+        {
+          label: "Register for permit",
+          fieldName: "backcountryPermitUrl"
         },
         {
           label: "Reserve canoe circuit",

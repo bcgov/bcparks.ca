@@ -9,19 +9,28 @@ const formatDateRange = (startDate, endDate) => {
 
   const openDate = new Date(startDate)
   const closeDate = new Date(endDate)
+  const currentYear = new Date().getFullYear()
+  
+  // Only show dates that are current year or future
+  const openYear = openDate.getFullYear()
+  const closeYear = closeDate.getFullYear()
+  
+  // Skip if both start and end years are before current year
+  if (openYear < currentYear && closeYear < currentYear) {
+    return ""
+  }
   
   // Check if it's year-round (Jan 1 to Dec 31)
   const isYearRound = (
     openDate.getMonth() === 0 && openDate.getDate() === 1 && // Jan 1
-    closeDate.getMonth() === 11 && closeDate.getDate() === 31 // Dec 31
+    closeDate.getMonth() === 11 && closeDate.getDate() === 31 && // Dec 31
+    openYear === closeYear // Same year
   )
   
   if (isYearRound) {
     return "year-round"
   }
 
-  const openYear = openDate.getFullYear()
-  const closeYear = closeDate.getFullYear()
   const sameYear = openYear === closeYear
 
   // Format options
@@ -78,64 +87,6 @@ const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix, 
   } else {
     return ""
   }
-}
-
-// get unique date ranges, excluding years in the past, 
-//sorted chronologically by start date and formatted as date pharses
-const processDateRanges = (arr, fmt, yr, delimiter, yearPrefix) => {
-  const newArr = []
-  for (let dateRange of arr) {
-    const startYear = moment(dateRange.start).year();
-    const endYear = moment(dateRange.end).year();
-    if (startYear === endYear) {
-      newArr.push(dateRange)
-    } else if (endYear > startYear) {
-      for (let year = startYear; year <= endYear; year++) {
-        if (year === startYear) {
-          newArr.push({ start: dateRange.start, end: `${year}-12-31` })
-        } else if (year === endYear) {
-          newArr.push({ start: `${year}-01-01`, end: dateRange.end })
-        } else {
-          newArr.push({ start: `${year}-01-01`, end: `${year}-12-31` })
-        }
-      }
-    } else {
-      newArr.push(dateRange)
-    }
-  }
-
-  const sortedUniqueFutureDates = _.uniqWith(newArr, _.isEqual)
-    .filter(dateRange => moment(dateRange.end).year() >= new Date().getFullYear())
-    .sort((a, b) => {
-      return a.start < b.start ? -1 : 1
-    })
-
-  let groupedByYear = []
-  let prevYear = 0
-  let phrase = ""
-  for (let dateRange of sortedUniqueFutureDates) {
-    const year = moment(dateRange.start).year();
-    if (phrase !== "" && year !== prevYear) {
-      groupedByYear.push(phrase);
-    }
-    if (year !== prevYear) {
-      phrase = `${year}: ${datePhrase(dateRange.start, dateRange.end, fmt, yr, delimiter, "", true)}`
-    } else {
-      phrase += `, ${datePhrase(dateRange.start, dateRange.end, fmt, yr, delimiter, "", true)}`
-    }
-    prevYear = year;
-  }
-  if (phrase !== "") {
-    groupedByYear.push(phrase);
-  }
-  // on the park page, remove the year prefix if there is only one item in groupedByYear
-  // on the park operationg dates page, keep the year prefix
-  if (!yearPrefix) {
-    if (groupedByYear.length === 1) {
-      groupedByYear[0] = groupedByYear[0].replace(/^\d{4}: /, '');
-    }
-  }
-  return groupedByYear
 }
 
 const groupSubAreaDates = (subArea) => {
@@ -210,7 +161,6 @@ export {
   formatDateRange,
   getParkDates,
   datePhrase,
-  processDateRanges,
   groupSubAreaDates,
   formattedTime,
   convertWinterRate

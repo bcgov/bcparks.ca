@@ -100,7 +100,7 @@ export default function SubArea({ data, showHeading }) {
             {data.resDates.length > 0 && (
               <div className="subarea-list">
                 <h4>
-                  Reservations {data.hasBackcountryReservations && "required"}
+                  Reservations {data.hasBackcountryReservations && "required "}
                   <DateTypeTooltip description={
                     data.hasBackcountryReservations ?
                     "Reservations must be made in advance. First come, first served camping is not available." : 
@@ -117,7 +117,7 @@ export default function SubArea({ data, showHeading }) {
             {data.offSeasonDates.length > 0 && (
               <div className="subarea-list">
                 <h4>
-                  Winter rate
+                  Winter rate{" "}
                   <DateTypeTooltip 
                     description="Shoulder season with reduced fees and services" 
                   />
