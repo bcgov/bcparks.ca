@@ -1,19 +1,19 @@
-import moment from "moment"
 import _ from "lodash"
-import { parseISO, format } from "date-fns"
+import { parseISO, format, getYear, getMonth, getDate } from "date-fns"
 
 const formatDateRange = (startDate, endDate) => {
   if (!startDate || !endDate) {
     return ""
   }
 
-  const openDate = new Date(startDate)
-  const closeDate = new Date(endDate)
+  // Parse dates using date-fns
+  const openDate = parseISO(startDate)
+  const closeDate = parseISO(endDate)
   const currentYear = new Date().getFullYear()
   
   // Only show dates that are current year or future
-  const openYear = openDate.getFullYear()
-  const closeYear = closeDate.getFullYear()
+  const openYear = getYear(openDate)
+  const closeYear = getYear(closeDate)
   
   // Skip if both start and end years are before current year
   if (openYear < currentYear && closeYear < currentYear) {
@@ -22,8 +22,8 @@ const formatDateRange = (startDate, endDate) => {
   
   // Check if it's year-round (Jan 1 to Dec 31)
   const isYearRound = (
-    openDate.getMonth() === 0 && openDate.getDate() === 1 && // Jan 1
-    closeDate.getMonth() === 11 && closeDate.getDate() === 31 && // Dec 31
+    getMonth(openDate) === 0 && getDate(openDate) === 1 && // Jan 1
+    getMonth(closeDate) === 11 && getDate(closeDate) === 31 && // Dec 31
     openYear === closeYear // Same year
   )
   
@@ -33,19 +33,15 @@ const formatDateRange = (startDate, endDate) => {
 
   const sameYear = openYear === closeYear
 
-  // Format options
-  const monthDayFormat = { month: 'short', day: 'numeric' }
-  const monthDayYearFormat = { month: 'short', day: 'numeric', year: 'numeric' }
-
   if (sameYear) {
     // Same year: "May 15 – Oct 31, 2025"
-    const openFormatted = openDate.toLocaleDateString('en-US', monthDayFormat)
-    const closeFormatted = closeDate.toLocaleDateString('en-US', monthDayFormat)
+    const openFormatted = format(openDate, 'MMM d')
+    const closeFormatted = format(closeDate, 'MMM d')
     return `${openFormatted} – ${closeFormatted}, ${openYear}`
   } else {
     // Different years: "May 15, 2025 – Oct 31, 2026"
-    const openFormatted = openDate.toLocaleDateString('en-US', monthDayYearFormat)
-    const closeFormatted = closeDate.toLocaleDateString('en-US', monthDayYearFormat)
+    const openFormatted = format(openDate, 'MMM d, yyyy')
+    const closeFormatted = format(closeDate, 'MMM d, yyyy')
     return `${openFormatted} – ${closeFormatted}`
   }
 }
@@ -65,28 +61,6 @@ const getParkDates = (operationDates, thisYear) => {
   }
 
   return parkDates
-}
-
-const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix, nowrap) => {
-  if (openDate && closeDate) {
-    try {
-      const open = moment(openDate).format(fmt)
-      const close = moment(closeDate).format(fmt)
-      const openYearRound =
-        (open.indexOf("Jan 1") === 0 && close.indexOf("Dec 31") === 0) ||
-        (open.indexOf("January 1") === 0 && close.indexOf("December 31") === 0)
-      let output = openYearRound ? yearRoundText : `${prefix || ""}${open}${delimiter}${close}`
-      if (nowrap) {
-        return output.replace(/ /g, "\u00A0")
-      }
-      return output;
-    } catch (err) {
-      console.error("Err formatting date " + openDate + ", " + closeDate)
-      return ""
-    }
-  } else {
-    return ""
-  }
 }
 
 const groupSubAreaDates = (subArea) => {
@@ -160,7 +134,6 @@ const convertWinterRate = dates => {
 export {
   formatDateRange,
   getParkDates,
-  datePhrase,
   groupSubAreaDates,
   formattedTime,
   convertWinterRate

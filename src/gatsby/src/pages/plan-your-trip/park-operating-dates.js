@@ -14,32 +14,22 @@ import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import StaticIcon from "../../components/park/staticIcon"
 import NoSearchResults from "../../components/search/noSearchResults"
 import { loadAllSubAreas } from "../../utils/subAreaHelper"
-import { datePhrase, formatDateRange, groupSubAreaDates, convertWinterRate } from "../../utils/parkDatesHelper"
+import { formatDateRange, groupSubAreaDates, getParkDates } from "../../utils/parkDatesHelper"
 import { loadAllAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
 
 const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvisories }) => {
   const thisYear = new Date().getFullYear()
   const parkOperation = park.parkOperation
-  const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
   const [parkAccessStatus, setParkAccessStatus] = useState({})
   const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
 
   // Overall operating dates for parks, to display above subareas
-  let fmt = "MMM D, yyyy"
-  let yr = "year-round"
-  let parkDates = datePhrase(parkOperationDates.gateOpenDate, parkOperationDates.gateCloseDate, fmt, yr, " to ", "from ")
-
-  if (parkDates !== yr && !parkDates.includes(thisYear)) {
-    parkDates = ""
-  }
+  let parkDates = getParkDates(park.parkOperationDates, thisYear)
 
   // ---- Subarea Dates -----
-  yr = "Year-round"
-  fmt = "MMM D"
-
   for (let idx in subAreas) {
     let subArea = subAreas[idx]
     const facilityType = subArea.parkSubAreaType?.facilityType || {}
@@ -49,21 +39,28 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
 
     // get distinct date ranges sorted chronologically
     subArea.operationDates = subArea.operationDates
-        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-        .filter(dateStr => dateStr !== "") // Remove empty strings
+      .sort((a, b) => new Date(a.start) - new Date(b.start))
+      .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+      .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr)
+      .filter(dateStr => dateStr !== "") // Remove empty strings
 
-      subArea.serviceDates = subArea.serviceDates
-        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-        .filter(dateStr => dateStr !== "")
+    subArea.serviceDates = subArea.serviceDates
+      .sort((a, b) => new Date(a.start) - new Date(b.start))
+      .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+      .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr)
+      .filter(dateStr => dateStr !== "")
 
-      subArea.resDates = subArea.resDates
-        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-        .filter(dateStr => dateStr !== "")
+    subArea.resDates = subArea.resDates
+      .sort((a, b) => new Date(a.start) - new Date(b.start))
+      .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+      .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr)
+      .filter(dateStr => dateStr !== "")
 
-      subArea.offSeasonDates = subArea.offSeasonDates
-        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-        .filter(dateStr => dateStr !== "")
-    subArea.offSeasonDates = convertWinterRate(subArea.offSeasonDates)
+    subArea.offSeasonDates = subArea.offSeasonDates
+      .sort((a, b) => new Date(a.start) - new Date(b.start))
+      .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+      .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr) // Capitalize here
+      .filter(dateStr => dateStr !== "")
 
     // add a placeholder if no dates are available for the current year
     if (subArea.serviceDates.length === 0
@@ -148,8 +145,8 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                   )}
                 </ul>
                 {subArea.offSeasonDates.length > 0 && (
-                  <div className="d-flex">
-                    <div className="me-1">
+                  <>
+                    <div>
                       <small>Winter rate:</small>
                     </div>
                     <ul>
@@ -157,10 +154,11 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                         <li key={index}><small>{dateRange}</small></li>
                       )}
                     </ul>
-                  </div>
+                  </>
                 )}
               </td>
               <td>
+                {/* TODO: Add Backcountry registration dates after API endpoint change */}
                 <div>
                   <small>
                     Reservations{subArea.hasBackcountryReservations && " required"}
@@ -203,8 +201,8 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                     )}
                   </ul>
                   {subArea.offSeasonDates.length > 0 && (
-                    <div className="d-flex">
-                      <div className="me-1">
+                    <>
+                      <div>
                         <small>Winter rate:</small>
                       </div>
                       <ul>
@@ -212,19 +210,25 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                           <li key={index}><small>{dateRange}</small></li>
                         )}
                       </ul>
-                    </div>
+                    </>
                   )}
                 </div>
+                {/* TODO: Add Backcountry registration dates after API endpoint change */}
                 <div className="list-group-item--container">
-                  <b>Reservations / registration</b>
                   {subArea.resDates.length > 0 ? (
-                    <ul>
-                      {subArea.resDates.map((dateRange, index) =>
+                    <>
+                      <b>
+                        Reservations{subArea.hasBackcountryReservations && " required"}
+                      </b>
+                      <ul>
+                        {subArea.resDates.map((dateRange, index) =>
                         <li key={index}>{dateRange}</li>
                       )}
                     </ul>
+                    </>
                   ) : (
                     <>
+                      <b>Reservations / registration</b>
                       <br />No {"("}first come, first served{")"}
                     </>
                   )}
