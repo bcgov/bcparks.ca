@@ -12,8 +12,9 @@ import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 import SubArea from "./subArea"
 import CustomToggle from "./customToggle"
+import ParkDates from "./parkDates"
 
-export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccordion, groupPicnicReservationUrl }) => {
+export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccordion, groupPicnicReservationUrl, isLoadingSubAreas, subAreasLoadError }) => {
   const isPicnicFacility = facility.facilityType.facilityCode === "picnic-shelters"
 
   return (
@@ -57,6 +58,11 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
                   </HtmlContent>
                 </blockquote>
               )}
+            <ParkDates
+              data={facility}
+              isLoadingSubAreas={isLoadingSubAreas}
+              subAreasLoadError={subAreasLoadError}
+            />
             {/* picnic shelter reservation button */}
             {isPicnicFacility && groupPicnicReservationUrl && (
               <a href={groupPicnicReservationUrl} className="btn btn-secondary my-4">
@@ -70,9 +76,10 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
   )
 }
 
-export default function ParkFacility({ data, groupPicnicReservationUrl }) {
+export default function ParkFacility({ data }) {
+  const { activeFacilities, isLoadingSubAreas, subAreasLoadError, groupPicnicReservationUrl } = data
   const [facilityData] = useState(
-    JSON.parse(JSON.stringify(data)) // deep copy
+    JSON.parse(JSON.stringify(activeFacilities)) // deep copy
   )
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})

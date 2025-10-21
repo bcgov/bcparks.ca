@@ -114,6 +114,7 @@ export default function SubArea({ data, showHeading }) {
                 </ul>
               </div>
             )}
+            {/* TODO: Add Backcountry registration dates after API endpoint change */}
             {data.offSeasonDates.length > 0 && (
               <div className="subarea-list">
                 <h4>

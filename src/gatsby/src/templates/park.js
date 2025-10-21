@@ -492,8 +492,12 @@ export default function ParkTemplate({ data }) {
             {menuItems[5].visible && (
               <div ref={facilityRef} className="w-100">
                 <ParkFacility
-                  data={activeFacilities}
-                  groupPicnicReservationUrl={park.parkOperation?.groupPicnicReservationUrl}
+                  data={{
+                    activeFacilities: activeFacilities,
+                    isLoadingSubAreas: isLoadingSubAreas,
+                    subAreasLoadError: subAreasLoadError,
+                    groupPicnicReservationUrl: park.parkOperation?.groupPicnicReservationUrl
+                  }}
                 />
               </div>
             )}

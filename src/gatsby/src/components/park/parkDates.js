@@ -16,7 +16,7 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
     "backcountry-camping": {
       buttons: [
         {
-          label: "Make a reservation",
+          label: "Make reservation",
           fieldName: "backcountryReservationUrl"
         },
         {

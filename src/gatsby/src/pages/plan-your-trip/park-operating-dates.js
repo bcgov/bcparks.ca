@@ -13,8 +13,8 @@ import ScrollToTop from "../../components/scrollToTop"
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import StaticIcon from "../../components/park/staticIcon"
 import NoSearchResults from "../../components/search/noSearchResults"
-import { loadAllSubAreas } from "../../utils/subAreaHelper"
-import { formatDateRange, groupSubAreaDates, getParkDates } from "../../utils/parkDatesHelper"
+import { loadAllSubAreas, preProcessSubAreas } from "../../utils/subAreaHelper"
+import { getParkDates } from "../../utils/parkDatesHelper"
 import { loadAllAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
 
@@ -28,47 +28,8 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
 
   // Overall operating dates for parks, to display above subareas
   let parkDates = getParkDates(park.parkOperationDates, thisYear)
-
-  // ---- Subarea Dates -----
-  for (let idx in subAreas) {
-    let subArea = subAreas[idx]
-    const facilityType = subArea.parkSubAreaType?.facilityType || {}
-    const campingType = subArea.parkSubAreaType?.campingType || {}
-    subArea.typeIcon = facilityType.icon || campingType.icon || "";
-    subArea = groupSubAreaDates(subArea)
-
-    // get distinct date ranges sorted chronologically
-    subArea.operationDates = subArea.operationDates
-      .sort((a, b) => new Date(a.start) - new Date(b.start))
-      .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-      .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr)
-      .filter(dateStr => dateStr !== "") // Remove empty strings
-
-    subArea.serviceDates = subArea.serviceDates
-      .sort((a, b) => new Date(a.start) - new Date(b.start))
-      .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-      .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr)
-      .filter(dateStr => dateStr !== "")
-
-    subArea.resDates = subArea.resDates
-      .sort((a, b) => new Date(a.start) - new Date(b.start))
-      .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-      .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr)
-      .filter(dateStr => dateStr !== "")
-
-    subArea.offSeasonDates = subArea.offSeasonDates
-      .sort((a, b) => new Date(a.start) - new Date(b.start))
-      .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-      .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr) // Capitalize here
-      .filter(dateStr => dateStr !== "")
-
-    // add a placeholder if no dates are available for the current year
-    if (subArea.serviceDates.length === 0
-      && subArea.resDates.length === 0
-      && subArea.offSeasonDates.length === 0) {
-      subArea.serviceDates.push("Dates unavailable")
-    }
-  }
+  // Pre-process subareas to format dates
+  preProcessSubAreas(subAreas)
 
   if (!addedSeasonalAdvisory) {
     if (advisories.some(a => a.accessStatus?.hidesSeasonalAdvisory)) {

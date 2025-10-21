@@ -1,6 +1,6 @@
 import axios from "axios"
 import qs from "qs"
-import { formatDateRange, groupSubAreaDates } from "./parkDatesHelper"
+import { groupSubAreaDates, getFeatureDates } from "./parkDatesHelper"
 
 
 const preProcessSubAreas = (subAreas) => {  
@@ -14,21 +14,10 @@ const preProcessSubAreas = (subAreas) => {
       subArea = groupSubAreaDates(subArea);
 
       // Format date ranges using the new formatDateRange function
-      subArea.operationDates = subArea.operationDates
-        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-        .filter(dateStr => dateStr !== "") // Remove empty strings
-
-      subArea.serviceDates = subArea.serviceDates
-        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-        .filter(dateStr => dateStr !== "")
-
-      subArea.resDates = subArea.resDates
-        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-        .filter(dateStr => dateStr !== "")
-
-      subArea.offSeasonDates = subArea.offSeasonDates
-        .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-        .filter(dateStr => dateStr !== "")
+      subArea.operationDates = getFeatureDates(subArea.operationDates)
+      subArea.serviceDates = getFeatureDates(subArea.serviceDates)
+      subArea.resDates = getFeatureDates(subArea.resDates)
+      subArea.offSeasonDates = getFeatureDates(subArea.offSeasonDates)
 
       // add a placeholder if no dates are available for the current year
       if (subArea.serviceDates.length === 0

@@ -46,21 +46,48 @@ const formatDateRange = (startDate, endDate) => {
   }
 }
 
-// Updated getParkDates function using the reusable formatter
-const getParkDates = (operationDates, thisYear) => {
-  const parkOperationDates = operationDates.find(d => d.operatingYear === +thisYear) || {}
+// Helper function to join date ranges
+const joinDateRanges = (dateRanges) => {
+  if (dateRanges.length === 0) return ""
+  if (dateRanges.length === 1) return dateRanges[0]
+  if (dateRanges.length === 2) return `${dateRanges[0]} and ${dateRanges[1]}`
   
-  const parkDates = formatDateRange(
-    parkOperationDates.gateOpenDate, 
-    parkOperationDates.gateCloseDate
-  )
+  // For 3 or more ranges: "range1, range2, range3 and range4"
+  const lastRange = dateRanges[dateRanges.length - 1]
+  const otherRanges = dateRanges.slice(0, -1)
+  return `${otherRanges.join(", ")} and ${lastRange}`
+}
 
-  // If the dates don't include the current year, return empty string
-  if (parkDates && parkDates !== "year-round" && !parkDates.includes(thisYear.toString())) {
+// Updated getParkDates function to handle multiple operation dates
+const getParkDates = (operationDates, thisYear) => {
+  // Filter operation dates for the current year
+  const parkOperationDates = operationDates.filter(d => d.operatingYear === +thisYear)
+  
+  if (parkOperationDates.length === 0) {
     return ""
   }
 
-  return parkDates
+  // Format each date range and filter out empty ones
+  const formattedDateRanges = parkOperationDates
+    .sort((a, b) => new Date(a.gateOpenDate) - new Date(b.gateOpenDate))
+    .map(dateData => formatDateRange(dateData.gateOpenDate, dateData.gateCloseDate))
+    .filter(dateStr => dateStr !== "")
+  
+  if (formattedDateRanges.length === 0) {
+    return ""
+  }
+
+  // Join the date ranges with proper grammar
+  return joinDateRanges(formattedDateRanges)
+}
+
+// Helper function to process and format date arrays
+const getFeatureDates = (dateArray) => {
+  return dateArray
+    .sort((a, b) => new Date(a.start) - new Date(b.start))
+    .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+    .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr)
+    .filter(dateStr => dateStr !== "")
 }
 
 const groupSubAreaDates = (subArea) => {
@@ -134,6 +161,7 @@ const convertWinterRate = dates => {
 export {
   formatDateRange,
   getParkDates,
+  getFeatureDates,
   groupSubAreaDates,
   formattedTime,
   convertWinterRate
