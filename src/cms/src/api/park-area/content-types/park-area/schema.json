@@ -211,9 +211,9 @@
       "target": "api::park-feature.park-feature",
       "mappedBy": "parkArea"
     },
-    "parkGates": {
+    "parkGate": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::park-gate.park-gate",
       "mappedBy": "parkArea"
     }

@@ -37,21 +37,21 @@
     },
     "protectedArea": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToOne",
       "target": "api::protected-area.protected-area",
-      "inversedBy": "parkGates"
+      "inversedBy": "parkGate"
     },
     "parkArea": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToOne",
       "target": "api::park-area.park-area",
-      "inversedBy": "parkGates"
+      "inversedBy": "parkGate"
     },
     "parkFeature": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToOne",
       "target": "api::park-feature.park-feature",
-      "inversedBy": "parkGates"
+      "inversedBy": "parkGate"
     }
   }
 }

@@ -368,9 +368,9 @@
       "target": "api::park-date.park-date",
       "mappedBy": "protectedArea"
     },
-    "parkGates": {
+    "parkGate": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::park-gate.park-gate",
       "mappedBy": "protectedArea"
     }
