@@ -26,8 +26,7 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
 
-  // Overall operating dates for parks, to display above subareas
-  let parkDates = getParkDates(park.parkOperationDates, thisYear)
+  const parkDates = getParkDates(park.parkOperationDates, thisYear)
   // Pre-process subareas to format dates
   preProcessSubAreas(subAreas)
 
