@@ -1,6 +1,8 @@
 import _ from "lodash"
 import { parseISO, format, getYear, getMonth, getDate } from "date-fns"
 
+// Format a date range
+// e.g. "May 15 – Oct 31, 2025" or "year-round"
 const formatDateRange = (startDate, endDate) => {
   if (!startDate || !endDate) {
     return ""
@@ -46,7 +48,20 @@ const formatDateRange = (startDate, endDate) => {
   }
 }
 
-// Helper function to join date ranges
+// Format gate time 
+// e.g. "08:00:00" to "8 am"
+const formattedTime = time => {
+  // prepend a dummy date to the time string to parse it
+  const dateTime = parseISO(`1970-01-01T${time}`)
+  const minutes = format(dateTime, "mm")
+  if (minutes === "00") {
+    return format(dateTime, "h aa").toLowerCase()
+  } else {
+    return format(dateTime, "h:mm aa").toLowerCase()
+  }
+}
+
+// Join date ranges
 const joinDateRanges = (dateRanges) => {
   if (dateRanges.length === 0) return ""
   if (dateRanges.length === 1) return dateRanges[0]
@@ -58,7 +73,16 @@ const joinDateRanges = (dateRanges) => {
   return `${otherRanges.join(", ")} and ${lastRange}`
 }
 
-// Updated getParkDates function to handle multiple operation dates
+// Get feature dates formatted
+const getFeatureDates = (dateArray) => {
+  return dateArray
+    .sort((a, b) => new Date(a.start) - new Date(b.start))
+    .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
+    .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr)
+    .filter(dateStr => dateStr !== "")
+}
+
+// Get park dates formatted
 const getParkDates = (operationDates, thisYear) => {
   // Filter operation dates for the current year
   const parkOperationDates = operationDates.filter(d => d.operatingYear === +thisYear)
@@ -81,15 +105,7 @@ const getParkDates = (operationDates, thisYear) => {
   return joinDateRanges(formattedDateRanges)
 }
 
-// Helper function to process and format date arrays
-const getFeatureDates = (dateArray) => {
-  return dateArray
-    .sort((a, b) => new Date(a.start) - new Date(b.start))
-    .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-    .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr)
-    .filter(dateStr => dateStr !== "")
-}
-
+// Group subarea dates into operation, service, reservation, off-season
 const groupSubAreaDates = (subArea) => {
   const subAreaDates = subArea.parkOperationSubAreaDates || []
   const featureDates = subArea.parkFeatureDates || []
@@ -126,43 +142,11 @@ const groupSubAreaDates = (subArea) => {
   return subArea
 }
 
-// function to format gate open/close time e.g. "08:00:00" to "8 am"
-const formattedTime = time => {
-  // prepend a dummy date to the time string to parse it
-  const dateTime = parseISO(`1970-01-01T${time}`)
-  const minutes = format(dateTime, "mm")
-  if (minutes === "00") {
-    return format(dateTime, "h aa").toLowerCase()
-  } else {
-    return format(dateTime, "h:mm aa").toLowerCase()
-  }
-}
-
-// function to convert date from "YYYY: MM/DD – MM/DD" to "MM/DD, YYYY – MM/DD, YYYY"
-const convertWinterRate = dates => {
-  if (!Array.isArray(dates) || dates.length === 0) {
-    return []
-  }
-  // flatten all ranges into a single array
-  return dates.flatMap(date => {
-    const [year, ranges] = date.split(": ")
-    if (!year || !ranges) return []
-    // split multiple ranges by comma
-    return ranges.split(",").map(range => {
-      const [start, end] = range.split("–")
-      if (!start || !end) return ""
-      const startDate = `${start.trim()}, ${year}`
-      const endDate = `${end.trim()}, ${year}`
-      return `${startDate}–${endDate}`
-    }).filter(Boolean)
-  })
-}
 
 export {
   formatDateRange,
-  getParkDates,
-  getFeatureDates,
-  groupSubAreaDates,
   formattedTime,
-  convertWinterRate
+  getFeatureDates,
+  getParkDates,
+  groupSubAreaDates,
 }

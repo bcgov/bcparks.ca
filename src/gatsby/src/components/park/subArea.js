@@ -11,12 +11,12 @@ import FontAwesome from "../fontAwesome"
 import { countsList } from "../../utils/constants"
 import { formattedTime } from "../../utils/parkDatesHelper"
 
-const DateTypeTooltip = ({description}) => {
+const DateTypeTooltip = ({ dateType, description }) => {
   return (
   <OverlayTrigger
     placement="top"
     overlay={
-      <Tooltip id="tooltip">
+      <Tooltip id={`${dateType}-tooltip`}>
         {description}
       </Tooltip>
     }
@@ -29,6 +29,12 @@ const DateTypeTooltip = ({description}) => {
 }
 
 export default function SubArea({ data, showHeading }) {
+  const reservationName = 
+    data.hasBackcountryReservations ? "Reservations required" : "Reservations"
+  const reservationDescription =
+    data.hasBackcountryReservations ?
+    "Reservations must be made in advance. First come, first served camping is not available." : 
+    "Reservations are highly recommended. You can book up to four months in advance."
 
   const subAreasNotesList = [
     { noteVar: "serviceNote", display: "Service note" },
@@ -100,12 +106,11 @@ export default function SubArea({ data, showHeading }) {
             {data.resDates.length > 0 && (
               <div className="subarea-list">
                 <h4>
-                  Reservations {data.hasBackcountryReservations && "required "}
-                  <DateTypeTooltip description={
-                    data.hasBackcountryReservations ?
-                    "Reservations must be made in advance. First come, first served camping is not available." : 
-                    "Reservations are highly recommended. You can book up to four months in advance."
-                  } />
+                  {reservationName}{" "}
+                  <DateTypeTooltip
+                    dateType="reservation"
+                    description={reservationDescription}
+                  />
                 </h4>
                 <ul>
                   {data.resDates.map((dateRange, index) =>
@@ -119,7 +124,8 @@ export default function SubArea({ data, showHeading }) {
               <div className="subarea-list">
                 <h4>
                   Winter rate{" "}
-                  <DateTypeTooltip 
+                  <DateTypeTooltip
+                    dateType="winter-rate"
                     description="Shoulder season with reduced fees and services" 
                   />
                 </h4>

@@ -45,6 +45,10 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
     }
   }
 
+  const getReservationName = (hasBackcountryReservations) => {
+    return hasBackcountryReservations ? "Reservations required" : "Reservations"
+  }
+
   return (
     <div className="park-list operating-dates-list">
       <div className="d-md-flex justify-content-between">
@@ -122,7 +126,7 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                 {/* TODO: Add Backcountry registration dates after API endpoint change */}
                 <div>
                   <small>
-                    Reservations{subArea.hasBackcountryReservations && " required"}
+                    {getReservationName(subArea.hasBackcountryReservations)}
                   </small>
                 </div>
                 {subArea.resDates.length > 0 ? (
@@ -179,7 +183,7 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                   {subArea.resDates.length > 0 ? (
                     <>
                       <b>
-                        Reservations{subArea.hasBackcountryReservations && " required"}
+                        {getReservationName(subArea.hasBackcountryReservations)}
                       </b>
                       <ul>
                         {subArea.resDates.map((dateRange, index) =>

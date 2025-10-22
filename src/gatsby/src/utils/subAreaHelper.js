@@ -13,7 +13,7 @@ const preProcessSubAreas = (subAreas) => {
       subArea.typeCode = facilityType.facilityCode || campingType.campingTypeCode || ""
       subArea = groupSubAreaDates(subArea);
 
-      // Format date ranges using the new formatDateRange function
+      // Format date ranges
       subArea.operationDates = getFeatureDates(subArea.operationDates)
       subArea.serviceDates = getFeatureDates(subArea.serviceDates)
       subArea.resDates = getFeatureDates(subArea.resDates)
