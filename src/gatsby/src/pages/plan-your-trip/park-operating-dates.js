@@ -27,8 +27,6 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
   const [isParkOpen, setIsParkOpen] = useState(null)
 
   const parkDates = getParkDates(park.parkOperationDates, thisYear)
-  // Pre-process subareas to format dates
-  preProcessSubAreas(subAreas)
 
   if (!addedSeasonalAdvisory) {
     if (advisories.some(a => a.accessStatus?.hidesSeasonalAdvisory)) {
@@ -300,6 +298,11 @@ const ParkOperatingDatesPage = () => {
       subArea.protectedArea.orcs === orcs
     )
   }
+  // Pre-process subareas to format dates
+  const getProcessedSubAreas = (orcs) => {
+    const filteredSubAreas = filterSubAreasByOrcs(orcs)
+    return preProcessSubAreas(filteredSubAreas)
+  }
   const fetchAdvisories = () => {
     setIsLoadingAdvisories(true)
     loadAllAdvisories(apiBaseUrl)
@@ -438,7 +441,7 @@ const ParkOperatingDatesPage = () => {
                         key={index}
                         park={park}
                         advisories={filterAdvisoriesByOrcs(park.orcs)}
-                        subAreas={filterSubAreasByOrcs(park.orcs)}
+                        subAreas={getProcessedSubAreas(park.orcs)}
                         advisoryLoadError={advisoryLoadError}
                         isLoadingAdvisories={isLoadingAdvisories}
                       />
@@ -453,7 +456,7 @@ const ParkOperatingDatesPage = () => {
                         key={index}
                         park={park}
                         advisories={filterAdvisoriesByOrcs(park.orcs)}
-                        subAreas={filterSubAreasByOrcs(park.orcs)}
+                        subAreas={getProcessedSubAreas(park.orcs)}
                         advisoryLoadError={advisoryLoadError}
                         isLoadingAdvisories={isLoadingAdvisories}
                       />

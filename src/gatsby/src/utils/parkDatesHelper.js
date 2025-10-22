@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { parseISO, format, getYear, getMonth, getDate } from "date-fns"
+import { parseISO, format, getYear, getMonth, getDate, getMinutes } from "date-fns"
 
 // Format a date range
 // e.g. "May 15 – Oct 31, 2025" or "year-round"
@@ -53,8 +53,8 @@ const formatDateRange = (startDate, endDate) => {
 const formattedTime = time => {
   // prepend a dummy date to the time string to parse it
   const dateTime = parseISO(`1970-01-01T${time}`)
-  const minutes = format(dateTime, "mm")
-  if (minutes === "00") {
+  const minutes = getMinutes(dateTime)
+  if (minutes === 0) {
     return format(dateTime, "h aa").toLowerCase()
   } else {
     return format(dateTime, "h:mm aa").toLowerCase()
@@ -68,7 +68,7 @@ const joinDateRanges = (dateRanges) => {
   if (dateRanges.length === 2) return `${dateRanges[0]} and ${dateRanges[1]}`
   
   // For 3 or more ranges: "range1, range2, range3 and range4"
-  const lastRange = dateRanges[dateRanges.length - 1]
+  const lastRange = dateRanges.at(-1)
   const otherRanges = dateRanges.slice(0, -1)
   return `${otherRanges.join(", ")} and ${lastRange}`
 }

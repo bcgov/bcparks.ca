@@ -2,35 +2,45 @@ import axios from "axios"
 import qs from "qs"
 import { groupSubAreaDates, getFeatureDates } from "./parkDatesHelper"
 
-
-const preProcessSubAreas = (subAreas) => {  
-  for (let idx in subAreas) {
-    let subArea = subAreas[idx]
-
-    if (subArea.isActive) {
+const preProcessSubAreas = (subAreas) => {
+  const processedSubAreas = subAreas
+    .filter(subArea => subArea.isActive)
+    .map(subArea => {
       const facilityType = subArea.parkSubAreaType?.facilityType || {}
       const campingType = subArea.parkSubAreaType?.campingType || {}
-      subArea.typeCode = facilityType.facilityCode || campingType.campingTypeCode || ""
-      subArea.typeIcon = facilityType.icon || campingType.icon || ""
-      subArea = groupSubAreaDates(subArea);
+
+      let processed = {
+        ...subArea,
+        typeCode: facilityType.facilityCode || campingType.campingTypeCode || "",
+        typeIcon: facilityType.icon || campingType.icon || ""
+      }
+
+      processed = groupSubAreaDates(processed)
 
       // Format date ranges
-      subArea.operationDates = getFeatureDates(subArea.operationDates)
-      subArea.serviceDates = getFeatureDates(subArea.serviceDates)
-      subArea.resDates = getFeatureDates(subArea.resDates)
-      subArea.offSeasonDates = getFeatureDates(subArea.offSeasonDates)
+      processed.operationDates = getFeatureDates(processed.operationDates)
+      processed.serviceDates = getFeatureDates(processed.serviceDates)
+      processed.resDates = getFeatureDates(processed.resDates)
+      processed.offSeasonDates = getFeatureDates(processed.offSeasonDates)
 
-      // add a placeholder if no dates are available for the current year
-      if (subArea.serviceDates.length === 0
-        && subArea.resDates.length === 0
-        && subArea.offSeasonDates.length === 0) {
-        subArea.serviceDates.push("Dates unavailable")
+      // Add a placeholder if no dates are available for the current year
+      if (
+        processed.serviceDates.length === 0 &&
+        processed.resDates.length === 0 &&
+        processed.offSeasonDates.length === 0
+      ) {
+        processed.serviceDates.push("Dates unavailable")
       }
-    }
-  }
+      return processed
+    })
 
-  // add the subareas to a common object
-  let result = {};
+  return processedSubAreas
+}
+
+// Group subAreas by typeCode
+const groupSubAreasByType = (subAreasData) => {
+  const result = {}
+  const subAreas = preProcessSubAreas(subAreasData);
   for (const subArea of subAreas) {
     const campingTypeCode = subArea.typeCode;
     if (!result[campingTypeCode]) {
@@ -225,5 +235,6 @@ export {
   combineCampingTypes,
   combineFacilities,
   loadAllSubAreas,
-  loadSubAreas
+  loadSubAreas,
+  groupSubAreasByType
 }
