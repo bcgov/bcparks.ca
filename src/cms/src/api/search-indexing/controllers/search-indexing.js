@@ -76,6 +76,7 @@ module.exports = ({ strapi }) => ({
       parkOperationDates: {
         fields: ["operatingYear", "gateOpenDate", "gateCloseDate", "publishedAt"]
       },
+      // TODO: Replace with parkAreas/parkFeatures/parkAreaType/parkFeatureType/parkDates
       parkOperationSubAreas: {
         fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
         populate: {
@@ -92,9 +93,22 @@ module.exports = ({ strapi }) => ({
       },
       parkAreas: {
         fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
+        populate: {
+          "parkAreaType": {
+            fields: ["id"]
+          }
+        }
       },
       parkFeatures: {
         fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
+        populate: {
+          "parkDates": {
+            fields: ["operatingYear", "startDate", "endDate", "isActive", "publishedAt"]
+          },
+          "parkFeatureType": {
+            fields: ["id"]
+          }
+        }
       }
     };
     query.publicationState = "preview";

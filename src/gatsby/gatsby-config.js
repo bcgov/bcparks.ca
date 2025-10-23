@@ -98,14 +98,6 @@ module.exports = {
                 parkOperationDates: {
                   fields: "*"
                 },
-                parkOperationSubAreas: {
-                  fields: "*",
-                  populate: {
-                    parkOperationSubAreaType: {
-                      fields: "*"
-                    }
-                  }
-                },
                 parkAreas: {
                   fields: "*",
                   populate: {
@@ -190,6 +182,7 @@ module.exports = {
                 protectedArea: {
                   fields: "*"
                 },
+                // TODO: site doesn't have a relarion with park-feature yet
                 parkOperationSubAreas: {
                   fields: "*",
                   populate: {
