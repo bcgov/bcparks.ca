@@ -59,8 +59,8 @@ const convertParkFeatures = function (parkFeatures) {
             return d;
           })
       }
-      if (sa.parkOperationSubAreaDates.length > 0) {
-        results.push(sa);
+      if (f.parkFeatureDates.length > 0) {
+        results.push(f);
       }
     }
   }

@@ -182,7 +182,7 @@ module.exports = {
                 protectedArea: {
                   fields: "*"
                 },
-                // TODO: site doesn't have a relarion with park-feature yet
+                // TODO: site doesn't have a relation with park-feature yet
                 parkOperationSubAreas: {
                   fields: "*",
                   populate: {

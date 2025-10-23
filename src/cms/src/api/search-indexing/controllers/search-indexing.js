@@ -76,7 +76,7 @@ module.exports = ({ strapi }) => ({
       parkOperationDates: {
         fields: ["operatingYear", "gateOpenDate", "gateCloseDate", "publishedAt"]
       },
-      // TODO: Replace with parkAreas/parkFeatures/parkAreaType/parkFeatureType/parkDates
+      // TODO: CMS-1206 Replace with parkFeatures and parkDates
       parkOperationSubAreas: {
         fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
         populate: {

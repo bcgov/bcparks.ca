@@ -149,12 +149,12 @@ exports.createElasticPark = async function (park, photos) {
   // in Elasticsearch
   park.geoBoundary = geo.outline(flattenedGeometry);
 
-  // TODO: Replace with parkDates
+  // TODO: CMS-1206 Replace with parkDates
   // remove unnecessary operating dates
   park.parkOperationDates = operatingDates.convertParkOperationDates(park.parkOperationDates);
   park.parkDates = operatingDates.convertParkDates(park.parkDates);
 
-  //TODO: Replace with parkFeatures
+  // TODO: CMS-1206 Replace with parkFeatures - check if it has any dates
   // remove unnecessary subareas and subarea dates
   park.parkOperationSubAreas = operatingDates.convertParkOperationSubAreas(park.parkOperationSubAreas);
   park.parkFeatures = operatingDates.convertParkFeatures(park.parkFeatures);
