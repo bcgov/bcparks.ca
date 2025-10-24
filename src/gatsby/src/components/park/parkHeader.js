@@ -4,7 +4,7 @@ import ParkAccessStatus from "./parkAccessStatus"
 import AudioButton from "../audioButton"
 import CampfireBan from "../campfireBan"
 import FontAwesome from "../fontAwesome"
-import { datePhrase, formattedTime } from "../../utils/parkDatesHelper"
+import { formattedTime, getParkDates } from "../../utils/parkDatesHelper"
 import { mapUrl } from "../../utils/constants"
 
 import PropTypes from "prop-types"
@@ -28,17 +28,6 @@ import southCentralCoast from "../../images/area-maps/area-maps-with-labels/14-s
 // URLs
 const reservationsURL = "https://camping.bcparks.ca"
 const dayUsePassURL = "https://reserve.bcparks.ca/dayuse"
-// Helper function to get the park operation dates
-const getParkOperationDates = (operationDates, thisYear) => {
-  const fmt = "MMMM D, yyyy"
-  const yr = "year-round"
-  const parkOperationDates = operationDates.find(d => d.operatingYear === +thisYear) || {}
-  let parkDates = datePhrase(parkOperationDates.gateOpenDate, parkOperationDates.gateCloseDate, fmt, yr, " to ", "")
-  if (parkDates !== yr && !parkDates.includes(thisYear)) {
-    parkDates = ""
-  }
-  return parkDates
-}
 // Helper function to get the area map image
 const convertToCamelCase = (str) => {
   return str.split(" ").map((word, index) =>
@@ -105,7 +94,7 @@ export default function ParkHeader({
     `${mapUrl}&center=${longitude},${latitude}&level=${linkZoom}`
   // Get the park operation dates
   const thisYear = new Date().getFullYear()
-  const parkDates = getParkOperationDates(operationDates, thisYear)
+  const parkDates = getParkDates(operationDates, thisYear)
   const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
   const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
   // Check if array contains a "tldr"

@@ -8,7 +8,7 @@ import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories } from '../utils/advisoryHelper';
-import { preProcessSubAreas, combineCampingTypes, combineFacilities, loadSubAreas } from '../utils/subAreaHelper';
+import { groupSubAreasByType, combineCampingTypes, combineFacilities, loadSubAreas } from '../utils/subAreaHelper';
 
 import Acknowledgment from "../components/acknowledgment"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -139,7 +139,7 @@ export default function SiteTemplate({ data }) {
   
   const processedSubAreas = useMemo(() => {
     if (!isLoadingSubAreas && !subAreasLoadError && subAreas.length) {
-      return preProcessSubAreas(subAreas)
+      return groupSubAreasByType(subAreas)
     }
     return []
   }, [isLoadingSubAreas, subAreasLoadError, subAreas])

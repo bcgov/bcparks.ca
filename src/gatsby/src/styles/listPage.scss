@@ -50,7 +50,8 @@
   .intro-text-container {
     max-width: 900px;
     ul {
-      padding-left: 40px;
+      max-width: 600px;
+      margin-left: 40px;
       li:not(:last-of-type) {
         margin-bottom: 8px;
       }

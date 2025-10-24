@@ -1,87 +1,114 @@
-import moment from "moment"
 import _ from "lodash"
-import { parseISO, format } from "date-fns"
+import { parseISO, format, getYear, getMonth, getDate, getMinutes } from "date-fns"
 
-const datePhrase = (openDate, closeDate, fmt, yearRoundText, delimiter, prefix, nowrap) => {
-  if (openDate && closeDate) {
-    try {
-      const open = moment(openDate).format(fmt)
-      const close = moment(closeDate).format(fmt)
-      const openYearRound =
-        (open.indexOf("Jan 1") === 0 && close.indexOf("Dec 31") === 0) ||
-        (open.indexOf("January 1") === 0 && close.indexOf("December 31") === 0)
-      let output = openYearRound ? yearRoundText : `${prefix || ""}${open}${delimiter}${close}`
-      if (nowrap) {
-        return output.replace(/ /g, "\u00A0")
-      }
-      return output;
-    } catch (err) {
-      console.error("Err formatting date " + openDate + ", " + closeDate)
-      return ""
-    }
-  } else {
+// Format a date range
+// e.g. "May 15 – Oct 31, 2025" or "year-round"
+const formatDateRange = (startDate, endDate) => {
+  if (!startDate || !endDate) {
     return ""
   }
-}
 
-// get unique date ranges, excluding years in the past, 
-//sorted chronologically by start date and formatted as date pharses
-const processDateRanges = (arr, fmt, yr, delimiter, yearPrefix) => {
-  const newArr = []
-  for (let dateRange of arr) {
-    const startYear = moment(dateRange.start).year();
-    const endYear = moment(dateRange.end).year();
-    if (startYear === endYear) {
-      newArr.push(dateRange)
-    } else if (endYear > startYear) {
-      for (let year = startYear; year <= endYear; year++) {
-        if (year === startYear) {
-          newArr.push({ start: dateRange.start, end: `${year}-12-31` })
-        } else if (year === endYear) {
-          newArr.push({ start: `${year}-01-01`, end: dateRange.end })
-        } else {
-          newArr.push({ start: `${year}-01-01`, end: `${year}-12-31` })
-        }
-      }
-    } else {
-      newArr.push(dateRange)
-    }
+  // Parse dates using date-fns
+  const openDate = parseISO(startDate)
+  const closeDate = parseISO(endDate)
+  const currentYear = new Date().getFullYear()
+  
+  // Only show dates that are current year or future
+  const openYear = getYear(openDate)
+  const closeYear = getYear(closeDate)
+  
+  // Skip if both start and end years are before current year
+  if (openYear < currentYear && closeYear < currentYear) {
+    return ""
+  }
+  
+  // Check if it's year-round (Jan 1 to Dec 31)
+  const isYearRound = (
+    getMonth(openDate) === 0 && getDate(openDate) === 1 && // Jan 1
+    getMonth(closeDate) === 11 && getDate(closeDate) === 31 && // Dec 31
+    openYear === closeYear // Same year
+  )
+  
+  if (isYearRound) {
+    return "year-round"
   }
 
-  const sortedUniqueFutureDates = _.uniqWith(newArr, _.isEqual)
-    .filter(dateRange => moment(dateRange.end).year() >= new Date().getFullYear())
-    .sort((a, b) => {
-      return a.start < b.start ? -1 : 1
+  const sameYear = openYear === closeYear
+
+  if (sameYear) {
+    // Same year: "May 15 – Oct 31, 2025"
+    const openFormatted = format(openDate, 'MMM d')
+    const closeFormatted = format(closeDate, 'MMM d')
+    return `${openFormatted} – ${closeFormatted}, ${openYear}`
+  } else {
+    // Different years: "May 15, 2025 – Oct 31, 2026"
+    const openFormatted = format(openDate, 'MMM d, yyyy')
+    const closeFormatted = format(closeDate, 'MMM d, yyyy')
+    return `${openFormatted} – ${closeFormatted}`
+  }
+}
+
+// Format gate time 
+// e.g. "08:00:00" to "8 am"
+const formattedTime = time => {
+  // prepend a dummy date to the time string to parse it
+  const dateTime = parseISO(`1970-01-01T${time}`)
+  const minutes = getMinutes(dateTime)
+  if (minutes === 0) {
+    return format(dateTime, "h aa").toLowerCase()
+  } else {
+    return format(dateTime, "h:mm aa").toLowerCase()
+  }
+}
+
+// Join date ranges
+const joinDateRanges = (dateRanges) => {
+  if (dateRanges.length === 0) return ""
+  if (dateRanges.length === 1) return dateRanges[0]
+  if (dateRanges.length === 2) return `${dateRanges[0]} and ${dateRanges[1]}`
+  
+  // For 3 or more ranges: "range1, range2, range3 and range4"
+  const lastRange = dateRanges.at(-1)
+  const otherRanges = dateRanges.slice(0, -1)
+  return `${otherRanges.join(", ")} and ${lastRange}`
+}
+
+// Get feature dates formatted
+const getFeatureDates = (dateArray) => {
+  return dateArray
+    .sort((a, b) => new Date(a.start) - new Date(b.start))
+    .map(dateRange => {
+      const dateStr = formatDateRange(dateRange.start, dateRange.end)
+      if (dateStr === "") return null
+      return dateStr === "year-round" ? "Year-round" : dateStr
     })
-
-  let groupedByYear = []
-  let prevYear = 0
-  let phrase = ""
-  for (let dateRange of sortedUniqueFutureDates) {
-    const year = moment(dateRange.start).year();
-    if (phrase !== "" && year !== prevYear) {
-      groupedByYear.push(phrase);
-    }
-    if (year !== prevYear) {
-      phrase = `${year}: ${datePhrase(dateRange.start, dateRange.end, fmt, yr, delimiter, "", true)}`
-    } else {
-      phrase += `, ${datePhrase(dateRange.start, dateRange.end, fmt, yr, delimiter, "", true)}`
-    }
-    prevYear = year;
-  }
-  if (phrase !== "") {
-    groupedByYear.push(phrase);
-  }
-  // on the park page, remove the year prefix if there is only one item in groupedByYear
-  // on the park operationg dates page, keep the year prefix
-  if (!yearPrefix) {
-    if (groupedByYear.length === 1) {
-      groupedByYear[0] = groupedByYear[0].replace(/^\d{4}: /, '');
-    }
-  }
-  return groupedByYear
+    .filter(Boolean)
 }
 
+// Get park dates formatted
+const getParkDates = (operationDates, thisYear) => {
+  // Filter operation dates for the current year
+  const parkOperationDates = operationDates.filter(d => d.operatingYear === +thisYear)
+  
+  if (parkOperationDates.length === 0) {
+    return ""
+  }
+
+  // Format each date range and filter out empty ones
+  const formattedDateRanges = parkOperationDates
+    .sort((a, b) => new Date(a.gateOpenDate) - new Date(b.gateOpenDate))
+    .map(dateData => formatDateRange(dateData.gateOpenDate, dateData.gateCloseDate))
+    .filter(dateStr => dateStr !== "")
+  
+  if (formattedDateRanges.length === 0) {
+    return ""
+  }
+
+  // Join the date ranges with proper grammar
+  return joinDateRanges(formattedDateRanges)
+}
+
+// Group subarea dates into operation, service, reservation, off-season
 const groupSubAreaDates = (subArea) => {
   const subAreaDates = subArea.parkOperationSubAreaDates || []
   const featureDates = subArea.parkFeatureDates || []
@@ -118,42 +145,11 @@ const groupSubAreaDates = (subArea) => {
   return subArea
 }
 
-// function to format gate open/close time e.g. "08:00:00" to "8 am"
-const formattedTime = time => {
-  // prepend a dummy date to the time string to parse it
-  const dateTime = parseISO(`1970-01-01T${time}`)
-  const minutes = format(dateTime, "mm")
-  if (minutes === "00") {
-    return format(dateTime, "h aa").toLowerCase()
-  } else {
-    return format(dateTime, "h:mm aa").toLowerCase()
-  }
-}
-
-// function to convert date from "YYYY: MM/DD – MM/DD" to "MM/DD, YYYY – MM/DD, YYYY"
-const convertWinterRate = dates => {
-  if (!Array.isArray(dates) || dates.length === 0) {
-    return []
-  }
-  // flatten all ranges into a single array
-  return dates.flatMap(date => {
-    const [year, ranges] = date.split(": ")
-    if (!year || !ranges) return []
-    // split multiple ranges by comma
-    return ranges.split(",").map(range => {
-      const [start, end] = range.split("–")
-      if (!start || !end) return ""
-      const startDate = `${start.trim()}, ${year}`
-      const endDate = `${end.trim()}, ${year}`
-      return `${startDate}–${endDate}`
-    }).filter(Boolean)
-  })
-}
 
 export {
-  datePhrase,
-  processDateRanges,
-  groupSubAreaDates,
+  formatDateRange,
   formattedTime,
-  convertWinterRate
+  getFeatureDates,
+  getParkDates,
+  groupSubAreaDates,
 }

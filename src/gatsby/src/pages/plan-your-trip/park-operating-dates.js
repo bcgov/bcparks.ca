@@ -13,54 +13,20 @@ import ScrollToTop from "../../components/scrollToTop"
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import StaticIcon from "../../components/park/staticIcon"
 import NoSearchResults from "../../components/search/noSearchResults"
-import { loadAllSubAreas } from "../../utils/subAreaHelper"
-import { datePhrase, processDateRanges, groupSubAreaDates, convertWinterRate } from "../../utils/parkDatesHelper"
+import { loadAllSubAreas, preProcessSubAreas } from "../../utils/subAreaHelper"
+import { getParkDates } from "../../utils/parkDatesHelper"
 import { loadAllAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
 
 const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvisories }) => {
   const thisYear = new Date().getFullYear()
   const parkOperation = park.parkOperation
-  const parkOperationDates = park.parkOperationDates.find(d => d.operatingYear === +thisYear) || {}
   const [parkAccessStatus, setParkAccessStatus] = useState({})
   const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
 
-  // Overall operating dates for parks, to display above subareas
-  let fmt = "MMM D, yyyy"
-  let yr = "year-round"
-  let parkDates = datePhrase(parkOperationDates.gateOpenDate, parkOperationDates.gateCloseDate, fmt, yr, " to ", "from ")
-
-  if (parkDates !== yr && !parkDates.includes(thisYear)) {
-    parkDates = ""
-  }
-
-  // ---- Subarea Dates -----
-  yr = "Year-round"
-  fmt = "MMM D"
-
-  for (let idx in subAreas) {
-    let subArea = subAreas[idx]
-    const facilityType = subArea.parkSubAreaType?.facilityType || {}
-    const campingType = subArea.parkSubAreaType?.campingType || {}
-    subArea.typeIcon = facilityType.icon || campingType.icon || "";
-    subArea = groupSubAreaDates(subArea)
-
-    // get distinct date ranges sorted chronologically
-    subArea.operationDates = processDateRanges(subArea.operationDates, fmt, yr, "–", true)
-    subArea.serviceDates = processDateRanges(subArea.serviceDates, fmt, yr, "–", true)
-    subArea.resDates = processDateRanges(subArea.resDates, fmt, yr, "–", true)
-    subArea.offSeasonDates = processDateRanges(subArea.offSeasonDates, fmt, yr, "–", true)
-    subArea.offSeasonDates = convertWinterRate(subArea.offSeasonDates)
-
-    // add a placeholder if no dates are available for the current year
-    if (subArea.serviceDates.length === 0
-      && subArea.resDates.length === 0
-      && subArea.offSeasonDates.length === 0) {
-      subArea.serviceDates.push("Dates unavailable")
-    }
-  }
+  const parkDates = getParkDates(park.parkOperationDates, thisYear)
 
   if (!addedSeasonalAdvisory) {
     if (advisories.some(a => a.accessStatus?.hidesSeasonalAdvisory)) {
@@ -74,6 +40,10 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
       advisories.push(WINTER_SUB_AREA_ADVISORY)
       setAddedSeasonalAdvisory(true)
     }
+  }
+
+  const getReservationName = (hasBackcountryReservations) => {
+    return hasBackcountryReservations ? "Reservations required" : "Reservations"
   }
 
   return (
@@ -112,7 +82,7 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
           <tr>
             <th scope="col">Facility</th>
             <th scope="col">Operating season</th>
-            <th scope="col">Booking available</th>
+            <th scope="col">Reservations / registration</th>
           </tr>
         </thead>
         <tbody>
@@ -137,8 +107,8 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                   )}
                 </ul>
                 {subArea.offSeasonDates.length > 0 && (
-                  <div className="d-flex">
-                    <div className="me-1">
+                  <>
+                    <div>
                       <small>Winter rate:</small>
                     </div>
                     <ul>
@@ -146,10 +116,16 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                         <li key={index}><small>{dateRange}</small></li>
                       )}
                     </ul>
-                  </div>
+                  </>
                 )}
               </td>
               <td>
+                {/* TODO: Add Backcountry registration dates after API endpoint change */}
+                <div>
+                  <small>
+                    {getReservationName(subArea.hasBackcountryReservations)}
+                  </small>
+                </div>
                 {subArea.resDates.length > 0 ? (
                   <ul>
                     {subArea.resDates.map((dateRange, index) =>
@@ -187,8 +163,8 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                     )}
                   </ul>
                   {subArea.offSeasonDates.length > 0 && (
-                    <div className="d-flex">
-                      <div className="me-1">
+                    <>
+                      <div>
                         <small>Winter rate:</small>
                       </div>
                       <ul>
@@ -196,19 +172,25 @@ const ParkLink = ({ park, advisories, subAreas, advisoryLoadError, isLoadingAdvi
                           <li key={index}><small>{dateRange}</small></li>
                         )}
                       </ul>
-                    </div>
+                    </>
                   )}
                 </div>
+                {/* TODO: Add Backcountry registration dates after API endpoint change */}
                 <div className="list-group-item--container">
-                  <b>Booking available</b>
                   {subArea.resDates.length > 0 ? (
-                    <ul>
-                      {subArea.resDates.map((dateRange, index) =>
+                    <>
+                      <b>
+                        {getReservationName(subArea.hasBackcountryReservations)}
+                      </b>
+                      <ul>
+                        {subArea.resDates.map((dateRange, index) =>
                         <li key={index}>{dateRange}</li>
                       )}
                     </ul>
+                    </>
                   ) : (
                     <>
+                      <b>Reservations / registration</b>
                       <br />No {"("}first come, first served{")"}
                     </>
                   )}
@@ -316,6 +298,11 @@ const ParkOperatingDatesPage = () => {
       subArea.protectedArea.orcs === orcs
     )
   }
+  // Pre-process subareas to format dates
+  const getProcessedSubAreas = (orcs) => {
+    const filteredSubAreas = filterSubAreasByOrcs(orcs)
+    return preProcessSubAreas(filteredSubAreas)
+  }
   const fetchAdvisories = () => {
     setIsLoadingAdvisories(true)
     loadAllAdvisories(apiBaseUrl)
@@ -392,22 +379,17 @@ const ParkOperatingDatesPage = () => {
           <ul>
             <li>
               <b>Operating season: </b>
-              During these dates, the facility is open, services are provided, and fees may be charged.
-              Outside of these dates, there are no services provided, there are no fees, and access may not be available.
-              Each park has different services, fees, and access,
-              so <Link to="/find-a-park">check the park page</Link> for details.
+              The facility is open, services are provided, and fees may be charged.
+              Outside these dates, there are no services provided, there are no fees, and access may not be available. 
             </li>
             <li>
               <b>Winter rate: </b>
-              These dates indicate when a frontcountry campground offers camping with reduced fees and services in their shoulder season.
-              {" "}<Link to="/find-a-park">Check the park page</Link> for winter rates and details. 
+              When a frontcountry campground offers camping with reduced fees and services in its shoulder season. 
             </li>
             <li>
-              <b>Booking available: </b>
-              During these dates, either <Link to="/reservations">reservations</Link> are available,
-              or <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit registration</Link> is required.
-              To find out which booking you need, <Link to="/find-a-park">check the park page</Link>.
-              If a reservable campground is open outside of these dates, sites are available on a first come, first served basis.
+              <b>Reservations / registration: </b>
+              Either <Link to="/reservations">reservations</Link> can be made, 
+              or <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit registration</Link> is required. 
             </li>
           </ul>
         </div>
@@ -459,7 +441,7 @@ const ParkOperatingDatesPage = () => {
                         key={index}
                         park={park}
                         advisories={filterAdvisoriesByOrcs(park.orcs)}
-                        subAreas={filterSubAreasByOrcs(park.orcs)}
+                        subAreas={getProcessedSubAreas(park.orcs)}
                         advisoryLoadError={advisoryLoadError}
                         isLoadingAdvisories={isLoadingAdvisories}
                       />
@@ -474,7 +456,7 @@ const ParkOperatingDatesPage = () => {
                         key={index}
                         park={park}
                         advisories={filterAdvisoriesByOrcs(park.orcs)}
-                        subAreas={filterSubAreasByOrcs(park.orcs)}
+                        subAreas={getProcessedSubAreas(park.orcs)}
                         advisoryLoadError={advisoryLoadError}
                         isLoadingAdvisories={isLoadingAdvisories}
                       />

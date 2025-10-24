@@ -11,13 +11,13 @@ import FontAwesome from "../fontAwesome"
 import { countsList } from "../../utils/constants"
 import { formattedTime } from "../../utils/parkDatesHelper"
 
-const WinterRateTooltip = () => {
+const DateTypeTooltip = ({ dateType, description }) => {
   return (
   <OverlayTrigger
     placement="top"
     overlay={
-      <Tooltip id="winter-rate-tooltip">
-        Shoulder season with reduced fees and services
+      <Tooltip id={`${dateType}-tooltip`}>
+        {description}
       </Tooltip>
     }
   >
@@ -29,6 +29,12 @@ const WinterRateTooltip = () => {
 }
 
 export default function SubArea({ data, showHeading }) {
+  const reservationName = 
+    data.hasBackcountryReservations ? "Reservations required" : "Reservations"
+  const reservationDescription =
+    data.hasBackcountryReservations ?
+    "Reservations must be made in advance. First come, first served camping is not available." : 
+    "Reservations are highly recommended. You can book up to four months in advance."
 
   const subAreasNotesList = [
     { noteVar: "serviceNote", display: "Service note" },
@@ -99,7 +105,13 @@ export default function SubArea({ data, showHeading }) {
             )}
             {data.resDates.length > 0 && (
               <div className="subarea-list">
-                <h4>Booking available</h4>
+                <h4>
+                  {reservationName}{" "}
+                  <DateTypeTooltip
+                    dateType="reservation"
+                    description={reservationDescription}
+                  />
+                </h4>
                 <ul>
                   {data.resDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
@@ -107,10 +119,15 @@ export default function SubArea({ data, showHeading }) {
                 </ul>
               </div>
             )}
+            {/* TODO: Add Backcountry registration dates after API endpoint change */}
             {data.offSeasonDates.length > 0 && (
               <div className="subarea-list">
                 <h4>
-                  Winter rate <WinterRateTooltip />
+                  Winter rate{" "}
+                  <DateTypeTooltip
+                    dateType="winter-rate"
+                    description="Shoulder season with reduced fees and services" 
+                  />
                 </h4>
                 <ul>
                   {data.offSeasonDates.map((dateRange, index) =>

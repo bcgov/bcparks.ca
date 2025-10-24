@@ -71,9 +71,7 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
 }
 
 export default function ParkFacility({ data, groupPicnicReservationUrl }) {
-  const [facilityData] = useState(
-    JSON.parse(JSON.stringify(data)) // deep copy
-  )
+  const facilityData = useMemo(() => data || [], [data])
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
 
