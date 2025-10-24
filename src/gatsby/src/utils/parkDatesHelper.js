@@ -82,7 +82,7 @@ const getFeatureDates = (dateArray) => {
       if (dateStr === "") return null
       return dateStr === "year-round" ? "Year-round" : dateStr
     })
-    .filter(dateStr => dateStr !== "")
+    .filter(Boolean)
 }
 
 // Get park dates formatted
