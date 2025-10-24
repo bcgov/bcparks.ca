@@ -77,8 +77,11 @@ const joinDateRanges = (dateRanges) => {
 const getFeatureDates = (dateArray) => {
   return dateArray
     .sort((a, b) => new Date(a.start) - new Date(b.start))
-    .map(dateRange => formatDateRange(dateRange.start, dateRange.end))
-    .map(dateStr => dateStr === "year-round" ? "Year-round" : dateStr)
+    .map(dateRange => {
+      const dateStr = formatDateRange(dateRange.start, dateRange.end)
+      if (dateStr === "") return null
+      return dateStr === "year-round" ? "Year-round" : dateStr
+    })
     .filter(dateStr => dateStr !== "")
 }
 
