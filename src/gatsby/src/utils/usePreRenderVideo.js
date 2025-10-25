@@ -8,49 +8,55 @@ export const usePreRenderVideo = (content) => {
   const [htmlContent, setHtmlContent] = useState('');
   const $ref = useRef(null);
 
-  const fetchData = useCallback(() => {
+  const fetchData = useCallback(async () => {
     if (content) {
       $ref.current = cheerio.load(content);
       const media = $ref.current("figure.media");
 
-      return media?.map(async (index, el) => {
+      setList([]);
+      const fetchPromises = [];
+
+      media.each((index, el) => {
         const $el = cheerio.load(el);
         const getIframe = $el("iframe").attr("src")?.split("/");
         const url = getIframe && getIframe[getIframe?.length - 1];
-        const fetchVideo = await fetch(
-          `https://noembed.com/embed?dataType=json&url=https://www.youtube.com/watch?v=${url}`
-        );
-        const response = await fetchVideo.json();
 
-        setList((prev) =>
-          prev ? [...prev, response.title] : [response.title]
-        );
+        if (url) {
+          const fetchPromise = fetch(
+            `https://noembed.com/embed?dataType=json&url=https://www.youtube.com/watch?v=${url}`
+          )
+          .then(response => response.json())
+          .then(data => data.title);
+
+          fetchPromises.push(fetchPromise);
+        }
       });
+
+      // Wait for all promises and set the list
+      const titles = await Promise.all(fetchPromises);
+      setList(titles);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content]);
 
   useEffect(() => {
     if (content) fetchData();
+  }, [content, fetchData]);
 
+  useEffect(() => {
     if (content && list.length) {
       const $ = cheerio.load(content);
-      $("body")
-        .toArray()
-        .map((element) => {
-          return $(element)
-            .find("iframe")
-            .each((index, video) => {
-              const findTitleByIndex = list[index];
-              if (findTitleByIndex) {
-                $(video).attr("id", slugify(findTitleByIndex)?.toLowerCase());
-                $(video).attr("title", findTitleByIndex);
-              }
-            });
-        });
-      setHtmlContent($?.html())
+
+      $("iframe").each((index, video) => {
+        const title = list[index];
+        if (title) {
+          $(video).attr("id", slugify(title, { lower: true }));
+          $(video).attr("title", title);
+        }
+      });
+
+      setHtmlContent($.html());
     }
-  }, [content, fetchData, list]);
+  }, [content, list]);
 
   return { htmlContent: htmlContent || null };
 };
