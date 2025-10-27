@@ -11,9 +11,9 @@ const slugify = require("slugify");
  * @param {string} content - HTML content containing figure.media elements with YouTube iframes
  * @returns {Object} - { htmlContent: processed HTML with video titles, or original content if no videos found }
  */
-export const usePreRenderVideo = (content) => {
-  // Processed HTML content - either with video titles added or original content
-  const [htmlContent, setHtmlContent] = useState('');
+export const usePreRenderVideo = (content = "") => {
+  // Processed HTML content with video titles added, or original content
+  const [htmlContent, setHtmlContent] = useState(content);
 
   /**
    * Fetches video titles for all YouTube iframes found in content.
@@ -67,11 +67,8 @@ export const usePreRenderVideo = (content) => {
       // Fetch video titles
       const videoTitles = await fetchVideoTitles();
 
-      // Set unchanged content if no videos are found
-      if (!videoTitles.length) {
-        setHtmlContent(content);
-        return;
-      }
+      // Skip processing if no video titles found
+      if (!videoTitles.length) return;
 
       // Parse content and apply video titles to iframes
       const $ = cheerio.load(content);
