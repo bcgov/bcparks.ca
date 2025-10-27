@@ -98,8 +98,9 @@ module.exports = ({ strapi }) => ({
         },
         filters: {
           parkDateType: {
-            dateType: {
-              $eq: "Gate"
+            // Gate date type
+            dateTypeId: {
+              $eq: 1
             }
           }
         }
@@ -124,8 +125,9 @@ module.exports = ({ strapi }) => ({
             },
             filters: {
               parkDateType: {
-                dateType: {
-                  $eq: "Gate"
+                // Gate date type
+                dateTypeId: {
+                  $eq: 1
                 }
               }
             }
