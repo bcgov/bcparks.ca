@@ -36,7 +36,7 @@ function checkSubAreaClosure(subAreas, staticData) {
   if (!subAreas) {
     return false;
   }
-  const parkFeatureTypes = staticData?.allStrapiParkFeatureType.nodes
+  const parkFeatureTypes = staticData?.allStrapiParkFeatureType.nodes || []
   for (const subArea of subAreas) {
     // standardize date from graphQL with date from elasticSearch
     if (subArea.parkSubAreaType) {
@@ -47,6 +47,10 @@ function checkSubAreaClosure(subAreas, staticData) {
       let parkFeatureType = parkFeatureTypes.find(type => {
         return type.strapi_id === subArea.subAreaTypeId
       });
+      if (!parkFeatureType) {
+        continue;
+      }
+
       subArea.closureAffectsAccessStatus = subArea.isIgnored === null
         ? parkFeatureType.closureAffectsAccessStatus
         : !subArea.isIgnored;
