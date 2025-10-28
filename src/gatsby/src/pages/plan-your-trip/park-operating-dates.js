@@ -342,9 +342,6 @@ const ParkOperatingDatesPage = () => {
       setSubAreas([])
       setSubAreaLoadError(true)
       console.error("Error fetching subareas:", error)
-    } finally {
-      setIsInitialLoading(false)
-      setIsLoadingSubAreas(false)
     }
   }
 
