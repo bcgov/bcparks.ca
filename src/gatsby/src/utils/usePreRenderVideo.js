@@ -73,7 +73,7 @@ export const usePreRenderVideo = (content = "") => {
       // Parse content and apply video titles to iframes
       const $ = cheerio.load(content);
 
-      $("iframe").each((index, iframe) => {
+      $("figure.media iframe").each((index, iframe) => {
         const videoTitle = videoTitles[index];
 
         if (videoTitle) {
