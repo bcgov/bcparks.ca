@@ -165,6 +165,12 @@
       "relation": "oneToMany",
       "target": "api::park-feature.park-feature",
       "mappedBy": "site"
+    },
+    "parkAreas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-area.park-area",
+      "mappedBy": "site"
     }
   }
 }
