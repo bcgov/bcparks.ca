@@ -116,12 +116,23 @@ const combineFacilities = (facilities, facilityTypes, subAreas) => {
 
   return arr.sort((a, b) => a.facilityType.facilityName.localeCompare(b.facilityType.facilityName))
 }
-// load all subareas
-const loadAllSubAreas = (apiBaseUrl) => {
+// load all subareas (optionally filtered by starting letter)
+const loadAllSubAreas = async (apiBaseUrl, startingLetter = null) => {
+  const filters = {
+    isActive: true,
+  }
+
+  // Add starting letter filter, if provided
+  if (startingLetter) {
+    filters.protectedArea = {
+      protectedAreaName: {
+        $startsWith: startingLetter
+      }
+    }
+  }
+
   const params = qs.stringify({
-    filters: {
-      isActive: true,
-    },
+    filters,
     fields: [
       "isOpen",
       "isCleanAirSite",
@@ -137,9 +148,9 @@ const loadAllSubAreas = (apiBaseUrl) => {
       parkSubAreaType: {
         fields: [
           "closureAffectsAccessStatus",
-        ], 
+        ],
         populate : {
-          campingType: {fields: ["icon"]}, 
+          campingType: {fields: ["icon"]},
           facilityType: {fields: ["icon"]}
         }
       },
@@ -173,7 +184,8 @@ const loadAllSubAreas = (apiBaseUrl) => {
   }, {
     encodeValuesOnly: true,
   })
-  return axios.get(`${apiBaseUrl}/park-operation-sub-areas?${params}`)
+  const response = await axios.get(`${apiBaseUrl}/park-operation-sub-areas?${params}`);
+  return response.data;
 }
 // load subareas by protected area
 const loadSubAreas = (apiBaseUrl, orcs) => {
@@ -191,9 +203,9 @@ const loadSubAreas = (apiBaseUrl, orcs) => {
           "subAreaType",
           "subAreaTypeCode",
           "closureAffectsAccessStatus",
-        ], 
+        ],
         populate : {
-          campingType: {fields: ["campingTypeCode"]}, 
+          campingType: {fields: ["campingTypeCode"]},
           facilityType: {fields: ["facilityCode"]}
         }
       },
