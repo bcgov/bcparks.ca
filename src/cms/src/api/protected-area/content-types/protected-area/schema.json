@@ -373,6 +373,12 @@
       "relation": "oneToOne",
       "target": "api::park-gate.park-gate",
       "mappedBy": "protectedArea"
+    },
+    "parkFeatures": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-feature.park-feature",
+      "mappedBy": "protectedArea"
     }
   }
 }

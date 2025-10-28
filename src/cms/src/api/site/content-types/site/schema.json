@@ -159,6 +159,12 @@
       "relation": "manyToMany",
       "target": "api::audio-clip.audio-clip",
       "mappedBy": "sites"
+    },
+    "parkFeatures": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::park-feature.park-feature",
+      "mappedBy": "site"
     }
   }
 }
