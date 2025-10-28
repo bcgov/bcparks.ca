@@ -1,56 +1,102 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import * as cheerio from "cheerio";
 
 const slugify = require("slugify");
 
-export const usePreRenderVideo = (content) => {
-  const [list, setList] = useState([]);
-  const [htmlContent, setHtmlContent] = useState('');
-  const $ref = useRef(null);
+/**
+ * Custom hook that processes HTML content containing YouTube video embeds.
+ * Fetches video titles from YouTube via noembed API and adds them as
+ * id and title attributes to iframe elements for accessibility and analytics tracking.
+ *
+ * @param {string} content - HTML content containing figure.media elements with YouTube iframes
+ * @returns {Object} - { htmlContent: processed HTML with video titles, or original content if no videos found }
+ */
+export const usePreRenderVideo = (content = "") => {
+  // Processed HTML content with video titles added, or original content
+  const [htmlContent, setHtmlContent] = useState(content);
 
-  const fetchData = useCallback(() => {
-    if (content) {
-      $ref.current = cheerio.load(content);
-      const media = $ref.current("figure.media");
+  /**
+   * Fetches video titles for all YouTube iframes found in content.
+   * Extracts video IDs from iframe src URLs and calls noembed API for titles.
+   * @param {string} htmlContent - HTML content to process
+   * @returns {Promise<string[]>} Array of video titles (with null for failed requests)
+   */
+  const fetchVideoTitles = useCallback(async (htmlContent) => {
+    if (!htmlContent) return [];
 
-      return media?.map(async (index, el) => {
-        const $el = cheerio.load(el);
-        const getIframe = $el("iframe").attr("src")?.split("/");
-        const url = getIframe && getIframe[getIframe?.length - 1];
-        const fetchVideo = await fetch(
-          `https://noembed.com/embed?dataType=json&url=https://www.youtube.com/watch?v=${url}`
-        );
-        const response = await fetchVideo.json();
+    // Parse the HTML content to find video elements
+    const $ = cheerio.load(htmlContent);
+    const mediaElements = $("figure.media");
+    const fetchPromises = [];
 
-        setList((prev) =>
-          prev ? [...prev, response.title] : [response.title]
-        );
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content]);
+    // Process each media element to extract YouTube video URLs
+    mediaElements.each((index, element) => {
+      const $element = $(element);
+      const iframeSrc = $element.find("iframe").attr("src");
 
+      // Extract YouTube video ID from URL (last segment after splitting by "/")
+      const urlSegments = iframeSrc?.split("/");
+      const videoId = urlSegments?.at(-1);
+
+      if (videoId) {
+        // Fetch video title from noembed API (YouTube metadata service)
+        const titlePromise = fetch(
+          `https://noembed.com/embed?dataType=json&url=https://www.youtube.com/watch?v=${videoId}`
+        )
+        .then(response => response.json())
+        .then(data => data.title)
+        .catch(() => null); // Return null for failed requests to maintain array indices
+
+        fetchPromises.push(titlePromise);
+      }
+    });
+
+    // Wait for all API calls to complete and return results
+    // Note: Array may have null values for failed requests to preserve iframe order
+    return await Promise.all(fetchPromises);
+  }, []);
+
+  /**
+   * Processes content by fetching video titles and updating HTML.
+   * Updates htmlContent state - either with processed content or original content.
+   * Runs when content changes.
+   */
   useEffect(() => {
-    if (content) fetchData();
+    const processContent = async () => {
+      if (!content) return;
 
-    if (content && list.length) {
+      // Fetch video titles
+      const videoTitles = await fetchVideoTitles(content);
+
+      // Skip processing if no video titles found, just update state
+      if (!videoTitles.length) {
+        setHtmlContent(content);
+        return;
+      }
+
+      // Parse content and apply video titles to iframes
       const $ = cheerio.load(content);
-      $("body")
-        .toArray()
-        .map((element) => {
-          return $(element)
-            .find("iframe")
-            .each((index, video) => {
-              const findTitleByIndex = list[index];
-              if (findTitleByIndex) {
-                $(video).attr("id", slugify(findTitleByIndex)?.toLowerCase());
-                $(video).attr("title", findTitleByIndex);
-              }
-            });
-        });
-      setHtmlContent($?.html())
-    }
-  }, [content, fetchData, list]);
 
-  return { htmlContent: htmlContent || null };
+      $("figure.media iframe").each((index, iframe) => {
+        const videoTitle = videoTitles[index];
+
+        if (videoTitle) {
+          // Create ID slug from video title for analytics tracking
+          $(iframe).attr("id", slugify(videoTitle, { lower: true }));
+
+          // Add title attribute for accessibility (screen readers)
+          $(iframe).attr("title", videoTitle);
+        }
+      });
+
+      // Update state with the modified HTML
+      setHtmlContent($.html());
+    };
+
+    processContent();
+  }, [content, fetchVideoTitles]);
+
+  return {
+    htmlContent
+  };
 };
