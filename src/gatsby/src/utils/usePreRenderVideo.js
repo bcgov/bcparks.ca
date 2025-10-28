@@ -18,13 +18,14 @@ export const usePreRenderVideo = (content = "") => {
   /**
    * Fetches video titles for all YouTube iframes found in content.
    * Extracts video IDs from iframe src URLs and calls noembed API for titles.
+   * @param {string} htmlContent - HTML content to process
    * @returns {Promise<string[]>} Array of video titles (with null for failed requests)
    */
-  const fetchVideoTitles = useCallback(async () => {
-    if (!content) return [];
+  const fetchVideoTitles = useCallback(async (htmlContent) => {
+    if (!htmlContent) return [];
 
     // Parse the HTML content to find video elements
-    const $ = cheerio.load(content);
+    const $ = cheerio.load(htmlContent);
     const mediaElements = $("figure.media");
     const fetchPromises = [];
 
@@ -53,7 +54,7 @@ export const usePreRenderVideo = (content = "") => {
     // Wait for all API calls to complete and return results
     // Note: Array may have null values for failed requests to preserve iframe order
     return await Promise.all(fetchPromises);
-  }, [content]);
+  }, []);
 
   /**
    * Processes content by fetching video titles and updating HTML.
@@ -65,7 +66,7 @@ export const usePreRenderVideo = (content = "") => {
       if (!content) return;
 
       // Fetch video titles
-      const videoTitles = await fetchVideoTitles();
+      const videoTitles = await fetchVideoTitles(content);
 
       // Skip processing if no video titles found
       if (!videoTitles.length) return;
