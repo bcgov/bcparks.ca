@@ -279,7 +279,7 @@ const ParkOperatingDatesPage = () => {
   const [subAreas, setSubAreas] = useState([])
   const [subAreaLoadError, setSubAreaLoadError] = useState(false)
   const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
-  const [currentFilter, setCurrentFilter] = useState("All")
+  const [currentFilter, setCurrentFilter] = useState("A")
 
   // functions
   const handleClick = (e) => {
