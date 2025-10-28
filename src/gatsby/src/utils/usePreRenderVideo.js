@@ -68,8 +68,11 @@ export const usePreRenderVideo = (content = "") => {
       // Fetch video titles
       const videoTitles = await fetchVideoTitles(content);
 
-      // Skip processing if no video titles found
-      if (!videoTitles.length) return;
+      // Skip processing if no video titles found, just update state
+      if (!videoTitles.length) {
+        setHtmlContent(content);
+        return;
+      }
 
       // Parse content and apply video titles to iframes
       const $ = cheerio.load(content);
