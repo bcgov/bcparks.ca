@@ -329,12 +329,12 @@ const ParkOperatingDatesPage = () => {
 
     try {
       // Initially, load just the visible data for the default filters
-      const {data: initialData} = await loadAllSubAreas(apiBaseUrl, currentFilter)
+      const { data: initialData } = await loadAllSubAreas(apiBaseUrl, currentFilter)
       setSubAreas(initialData)
       setIsInitialLoading(false)
 
       // Once the initial data is loaded, begin loading the full dataset in the background
-      const {data: allData} = await loadAllSubAreas(apiBaseUrl)
+      const { data: allData } = await loadAllSubAreas(apiBaseUrl)
       setSubAreas(allData)
       setIsLoadingSubAreas(false)
     } catch (error) {
