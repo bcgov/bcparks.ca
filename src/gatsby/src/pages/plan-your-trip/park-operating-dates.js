@@ -278,6 +278,7 @@ const ParkOperatingDatesPage = () => {
   const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
   const [subAreas, setSubAreas] = useState([])
   const [subAreaLoadError, setSubAreaLoadError] = useState(false)
+  const [isInitialLoading, setIsInitialLoading] = useState(true)
   const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
   const [currentFilter, setCurrentFilter] = useState("A")
 
@@ -287,9 +288,9 @@ const ParkOperatingDatesPage = () => {
   }
   const filtering = (char) =>
     parks.filter(park => park.slug.charAt(0).toUpperCase() === char)
-  const hasResult = filtering(currentFilter).length > 0 
+  const hasResult = filtering(currentFilter).length > 0
   const filterAdvisoriesByOrcs = (orcs) => {
-    return advisories.filter(advisory => 
+    return advisories.filter(advisory =>
       advisory.protectedAreas.some(protectedArea => protectedArea.orcs === orcs)
     )
   }
@@ -319,21 +320,31 @@ const ParkOperatingDatesPage = () => {
         setIsLoadingAdvisories(false)
       })
   }
-  const fetchSubAreas = () => {
+
+  // Fetches subarea data for the default filter, then fetches the full dataset
+  const fetchSubAreas = async () => {
+    setIsInitialLoading(true)
     setIsLoadingSubAreas(true)
-    loadAllSubAreas(apiBaseUrl)
-      .then(response => {
-        setSubAreas(response.data.data)
-        setSubAreaLoadError(false)
-      })
-      .catch(error => {
-        setSubAreas([])
-        setSubAreaLoadError(true)
-        console.error("Error fetching subareas:", error)
-      })
-      .finally(() => {
-        setIsLoadingSubAreas(false)
-      })
+    setSubAreaLoadError(false)
+
+    try {
+      // Initially, load just the visible data for the default filters
+      const {data: initialData} = await loadAllSubAreas(apiBaseUrl, currentFilter)
+      setSubAreas(initialData)
+      setIsInitialLoading(false)
+
+      // Once the initial data is loaded, begin loading the full dataset in the background
+      const {data: allData} = await loadAllSubAreas(apiBaseUrl)
+      setSubAreas(allData)
+      setIsLoadingSubAreas(false)
+    } catch (error) {
+      setSubAreas([])
+      setSubAreaLoadError(true)
+      console.error("Error fetching subareas:", error)
+    } finally {
+      setIsInitialLoading(false)
+      setIsLoadingSubAreas(false)
+    }
   }
 
   // effects
@@ -380,16 +391,16 @@ const ParkOperatingDatesPage = () => {
             <li>
               <b>Operating season: </b>
               The facility is open, services are provided, and fees may be charged.
-              Outside these dates, there are no services provided, there are no fees, and access may not be available. 
+              Outside these dates, there are no services provided, there are no fees, and access may not be available.
             </li>
             <li>
               <b>Winter rate: </b>
-              When a frontcountry campground offers camping with reduced fees and services in its shoulder season. 
+              When a frontcountry campground offers camping with reduced fees and services in its shoulder season.
             </li>
             <li>
               <b>Reservations / registration: </b>
-              Either <Link to="/reservations">reservations</Link> can be made, 
-              or <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit registration</Link> is required. 
+              Either <Link to="/reservations">reservations</Link> can be made,
+              or <Link to="/reservations/backcountry-camping/permit-registration">backcountry permit registration</Link> is required.
             </li>
           </ul>
         </div>
@@ -416,7 +427,12 @@ const ParkOperatingDatesPage = () => {
               ))}
             </div>
           </div>
-          {isLoadingSubAreas ? (
+
+          {/*
+            Display loading indicator while loading initial data,
+            or if the user changes the filter before the full dataset is loaded
+          */}
+          {(isInitialLoading || (isLoadingSubAreas && currentFilter !== "A")) ? (
             // display the loading bar if subareas are loading
             <div className="mt-5">
               Loading...
@@ -437,7 +453,7 @@ const ParkOperatingDatesPage = () => {
                 filters.map((filter, index) => (
                   <div key={index} className="list">
                     {filtering(filter).map((park, index) => (
-                      <ParkLink 
+                      <ParkLink
                         key={index}
                         park={park}
                         advisories={filterAdvisoriesByOrcs(park.orcs)}
@@ -450,7 +466,7 @@ const ParkOperatingDatesPage = () => {
                 ))
               ) : (
                 <div className="list">
-                  {hasResult ? 
+                  {hasResult ?
                     filtering(currentFilter).map((park, index) => (
                       <ParkLink
                         key={index}
