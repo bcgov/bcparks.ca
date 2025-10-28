@@ -22,13 +22,15 @@
     },
     "protectedArea": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::protected-area.protected-area"
+      "relation": "manyToOne",
+      "target": "api::protected-area.protected-area",
+      "inversedBy": "parkAreas"
     },
     "site": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::site.site"
+      "relation": "manyToOne",
+      "target": "api::site.site",
+      "inversedBy": "parkAreas"
     },
     "orcsAreaNumber": {
       "type": "string",
