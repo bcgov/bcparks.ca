@@ -280,7 +280,8 @@ const ParkOperatingDatesPage = () => {
   const [subAreaLoadError, setSubAreaLoadError] = useState(false)
   const [isInitialLoading, setIsInitialLoading] = useState(true)
   const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
-  const [currentFilter, setCurrentFilter] = useState("A")
+  const initialFilter = "A"
+  const [currentFilter, setCurrentFilter] = useState(initialFilter)
 
   // functions
   const handleClick = (e) => {
@@ -329,7 +330,7 @@ const ParkOperatingDatesPage = () => {
 
     try {
       // Initially, load just the visible data for the default filters
-      const { data: initialData } = await loadAllSubAreas(apiBaseUrl, currentFilter)
+      const { data: initialData } = await loadAllSubAreas(apiBaseUrl, initialFilter)
       setSubAreas(initialData)
       setIsInitialLoading(false)
 
@@ -436,7 +437,7 @@ const ParkOperatingDatesPage = () => {
                 <a href="mailto:parkinfo@gov.bc.ca">parkinfo@gov.bc.ca</a>.
               </p>
             </div>
-          ) : (isInitialLoading || (isLoadingSubAreas && currentFilter !== "A")) ? (
+          ) : (isInitialLoading || (isLoadingSubAreas && currentFilter !== initialFilter)) ? (
             // Display loading indicator while loading initial data,
             // or if the user changes the filter before the full dataset is loaded
             <div className="mt-5">
