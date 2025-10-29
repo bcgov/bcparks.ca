@@ -155,7 +155,7 @@ export default function ParkHeader({
               {/* Hide here if park access status is "Closed" */}
               {isParkOpen !== false &&
                 <p>
-                  The {parkType} {parkGate?.hasParkGate !== false && "gate"} is open {parkDates}
+                  The {parkType} {parkGate?.hasParkGate === true && "gate"} is open {parkDates}
                   {renderGateTimes(parkGate)}
                 </p>
               }
