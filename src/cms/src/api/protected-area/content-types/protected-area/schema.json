@@ -233,18 +233,6 @@
       "target": "api::park-operation-sub-area.park-operation-sub-area",
       "mappedBy": "protectedArea"
     },
-    "parkAreas": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::park-area.park-area",
-      "mappedBy": "protectedArea"
-    },
-    "parkFeatures": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::park-feature.park-feature",
-      "mappedBy": "protectedArea"
-    },
     "parkOperation": {
       "type": "relation",
       "relation": "oneToOne",

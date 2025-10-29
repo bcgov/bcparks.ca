@@ -37,6 +37,8 @@ function checkSubAreaClosure(subAreas, staticData) {
     return false;
   }
   const parkFeatureTypes = staticData?.allStrapiParkFeatureType.nodes || []
+  // TODO: CMS-1206 Replace with parkFeatures when available in Elasticsearch
+  // https://github.com/bcgov/bcparks.ca/pull/1661#discussion_r2466731034
   for (const subArea of subAreas) {
     // standardize date from graphQL with date from elasticSearch
     if (subArea.parkSubAreaType) {
