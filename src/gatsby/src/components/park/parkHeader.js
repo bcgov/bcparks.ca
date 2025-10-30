@@ -37,9 +37,9 @@ const mapImages = {
   lowerMainland, southIsland, okanagan, seaToSky, kootenay, thompson, cariboo, haidaGwaii, northIsland, omineca, peace, skeenaEast, skeenaWest, southCentralCoast
 }
 // Helper function to render the gate open/close times
-const renderGateTimes = (parkOperation) => {
-  if (!parkOperation) return null
-  const { gateOpenTime, gateCloseTime, gateOpensAtDawn, gateClosesAtDusk, gateOpen24Hours } = parkOperation
+const renderGateTimes = (parkGate) => {
+  if (!parkGate) return null
+  const { gateOpenTime, gateCloseTime, gateOpensAtDawn, gateClosesAtDusk, gateOpen24Hours } = parkGate
 
   if (gateOpen24Hours) {
     return <>, 24 hours a day.</>
@@ -80,6 +80,7 @@ export default function ParkHeader({
   isLoadingProtectedArea,
   searchArea,
   parkOperation,
+  parkGate,
   operationDates,
   subAreas,
   isLoadingSubAreas,
@@ -154,8 +155,8 @@ export default function ParkHeader({
               {/* Hide here if park access status is "Closed" */}
               {isParkOpen !== false &&
                 <p>
-                  The {parkType} {parkOperation?.hasParkGate !== false && "gate"} is open {parkDates}
-                  {renderGateTimes(parkOperation)}
+                  The {parkType} {parkGate?.hasParkGate === true && "gate"} is open {parkDates}
+                  {renderGateTimes(parkGate)}
                 </p>
               }
               {parkOperation?.openNote?.data?.openNote &&
@@ -212,8 +213,8 @@ ParkHeader.propTypes = {
   ]),
   parkType: PropTypes.string.isRequired,
   mapZoom: PropTypes.number.isRequired,
-  latitude: PropTypes.number.isRequired,
-  longitude: PropTypes.number.isRequired,
+  latitude: PropTypes.number,
+  longitude: PropTypes.number,
   campings: PropTypes.array,
   facilities: PropTypes.array,
   hasCampfireBan: PropTypes.bool,
@@ -226,6 +227,7 @@ ParkHeader.propTypes = {
   isLoadingProtectedArea: PropTypes.bool.isRequired,
   searchArea: PropTypes.object.isRequired,
   parkOperation: PropTypes.object,
+  parkGate: PropTypes.object,
   operationDates: PropTypes.array.isRequired,
   subAreas: PropTypes.array.isRequired,
   isLoadingSubAreas: PropTypes.bool.isRequired,

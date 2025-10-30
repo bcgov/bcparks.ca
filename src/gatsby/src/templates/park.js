@@ -9,6 +9,7 @@ import useScrollSpy from "react-use-scrollspy"
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from '../utils/advisoryHelper';
 import { groupSubAreasByType, combineCampingTypes, combineFacilities, loadSubAreas } from '../utils/subAreaHelper';
+import { loadProtectedArea } from "../utils/protectedAreaHelper"
 
 import About from "../components/park/about"
 import Acknowledgment from "../components/acknowledgment"
@@ -91,6 +92,7 @@ export default function ParkTemplate({ data }) {
   const [activeCampings, setActiveCampings] = useState([])
   // only one audio clip can be active at a time
   const [activeAudio, setActiveAudio] = useState("")
+  const [parkGate, setParkGate] = useState({})
 
   const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
@@ -110,14 +112,14 @@ export default function ParkTemplate({ data }) {
   const loadProtectedAreaData = async () => {
     setIsLoadingProtectedArea(true)
     try {
-      const response = await axios.get(
-        `${apiBaseUrl}/protected-areas/${park.orcs}?fields=hasCampfireBan`
-      )
+      const response = await loadProtectedArea(apiBaseUrl, park.orcs)
       setHasCampfireBan(response.data.hasCampfireBan)
+      setParkGate(response.data.parkGate)
       setProtectedAreaLoadError(false)
     } catch (error) {
       console.error("Error loading protected area:", error)
       setHasCampfireBan(false)
+      setParkGate({})
       setProtectedAreaLoadError(true)
     } finally {
       setIsLoadingProtectedArea(false)
@@ -356,6 +358,7 @@ export default function ParkTemplate({ data }) {
             isLoadingProtectedArea={isLoadingProtectedArea}
             searchArea={searchArea}
             parkOperation={park.parkOperation}
+            parkGate={parkGate}
             operationDates={park.parkOperationDates}
             subAreas={subAreas}
             isLoadingSubAreas={isLoadingSubAreas}
@@ -729,18 +732,12 @@ export const query = graphql`
         backcountryShelterReservationUrl
         canoeCircuitReservationUrl
         groupPicnicReservationUrl
-        hasParkGate
         offSeasonUse
         openNote {
           data {
             openNote
           }
         }
-        gateOpenTime
-        gateCloseTime
-        gateOpensAtDawn
-        gateClosesAtDusk
-        gateOpen24Hours
         hasGroupPicnicReservations
         hasCanoeCircuitReservations
         hasFrontcountryReservations
