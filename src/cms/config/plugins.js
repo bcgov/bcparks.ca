@@ -171,7 +171,7 @@ module.exports = ({ env }) => {
             "api::park-date.park-date": {
               GET: true,
             },
-            "api:park-date-type.park-date-type": {
+            "api::park-date-type.park-date-type": {
               GET: true,
             },
             "api::park-area.park-area": {
@@ -180,7 +180,7 @@ module.exports = ({ env }) => {
             "api::park-area-type.park-area-type": {
               GET: true,
             },
-            "api::park-featue.park-feature": {
+            "api::park-feature.park-feature": {
               GET: true,
             },
             "api::park-feature-type.park-feature-type": {
