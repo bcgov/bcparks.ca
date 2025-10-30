@@ -10,6 +10,7 @@ import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from '../utils/advisoryHelper';
 import { groupSubAreasByType, combineCampingTypes, combineFacilities, loadSubAreas } from '../utils/subAreaHelper';
 import { loadProtectedArea } from "../utils/protectedAreaHelper"
+import { getParkFeatures } from "../utils/parkFeaturesHelper"
 
 import About from "../components/park/about"
 import Acknowledgment from "../components/acknowledgment"
@@ -88,6 +89,9 @@ export default function ParkTemplate({ data }) {
   const [subAreas, setSubAreas] = useState([])
   const [subAreasLoadError, setSubAreasLoadError] = useState(false)
   const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
+  const [parkFeatures, setParkFeatures] = useState([])
+  const [parkFeaturesLoadError, setParkFeaturesLoadError] = useState(false)
+  const [isLoadingParkFeatures, setIsLoadingParkFeatures] = useState(true)
   const [activeFacilities, setActiveFacilities] = useState([])
   const [activeCampings, setActiveCampings] = useState([])
   // only one audio clip can be active at a time
@@ -141,10 +145,26 @@ export default function ParkTemplate({ data }) {
     }
   }
   
+  const loadParkFeaturesData = async () => {
+    setIsLoadingParkFeatures(true)
+    try {
+      const response = await getParkFeatures(apiBaseUrl, park.orcs)
+      setParkFeatures(response.data.data)
+      setParkFeaturesLoadError(false)
+    } catch (error) {
+      console.error("Error loading park features:", error)
+      setParkFeatures([])
+      setParkFeaturesLoadError(true)
+    } finally {
+      setIsLoadingParkFeatures(false)
+    }
+  }
+
   useEffect(() => {
     loadAdvisoriesData()
     loadProtectedAreaData()
     loadSubAreasData()
+    loadParkFeaturesData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiBaseUrl, park.orcs])
 
