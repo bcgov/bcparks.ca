@@ -73,9 +73,11 @@ module.exports = ({ strapi }) => ({
       geoShape: {
         fields: ["geometry"],
       },
+      // TODO: CMS-1206 Replace with parkDates
       parkOperationDates: {
         fields: ["operatingYear", "gateOpenDate", "gateCloseDate", "publishedAt"]
       },
+      // TODO: CMS-1206 Replace with parkFeatures and parkDates
       parkOperationSubAreas: {
         fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
         populate: {
@@ -83,6 +85,52 @@ module.exports = ({ strapi }) => ({
             fields: ["operatingYear", "openDate", "closeDate", "isActive", "publishedAt"]
           },
           "parkSubAreaType": {
+            fields: ["id"]
+          }
+        }
+      },
+      parkDates: {
+        fields: ["operatingYear", "startDate", "endDate", "publishedAt"],
+        populate: {
+          "parkDateType": {
+            fields: ["dateType"]
+          }
+        },
+        filters: {
+          parkDateType: {
+            dateTypeId: {
+              $eq: 1
+            }
+          }
+        }
+      },
+      parkAreas: {
+        fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
+        populate: {
+          "parkAreaType": {
+            fields: ["id"]
+          }
+        }
+      },
+      parkFeatures: {
+        fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
+        populate: {
+          "parkDates": {
+            fields: ["operatingYear", "startDate", "endDate", "isActive", "publishedAt"],
+            populate: {
+              "parkDateType": {
+                fields: ["dateType"]
+              }
+            },
+            filters: {
+              parkDateType: {
+                dateTypeId: {
+                  $eq: 1
+                }
+              }
+            }
+          },
+          "parkFeatureType": {
             fields: ["id"]
           }
         }

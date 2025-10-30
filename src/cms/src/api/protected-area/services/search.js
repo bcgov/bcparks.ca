@@ -259,7 +259,11 @@ module.exports = ({ strapi }) => ({
             "advisories",
             "parkPhotos",
             "parkOperationSubAreas",
-            "parkOperationDates"
+            // TODO: CMS-1206 Replace with parkDates
+            "parkOperationDates",
+            "parkDates",
+            "parkAreas",
+            "parkFeatures"
           ],
           aggs: aggregations
         }

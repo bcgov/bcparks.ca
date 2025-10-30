@@ -168,6 +168,27 @@ module.exports = ({ env }) => {
             "api::park-feature-date.park-feature-date": {
               GET: true,
             },
+            "api::park-date.park-date": {
+              GET: true,
+            },
+            "api:park-date-type.park-date-type": {
+              GET: true,
+            },
+            "api::park-area.park-area": {
+              GET: true,
+            },
+            "api::park-area-type.park-area-type": {
+              GET: true,
+            },
+            "api::park-featue.park-feature": {
+              GET: true,
+            },
+            "api::park-feature-type.park-feature-type": {
+              GET: true,
+            },
+            "api::park-gate.park-gate": {
+              GET: true,
+            },
           },
         },
       },

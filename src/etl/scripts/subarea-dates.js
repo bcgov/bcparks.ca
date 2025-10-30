@@ -5,7 +5,7 @@ import { promises as fs } from 'fs';
 import { getDataFilePath } from '../utils/commandLine.js';
 import { getLogger } from '../utils/logging.js';
 
-
+// TODO: CMS-1206 Replace with parkDates
 const loadData = async function () {
   dotenv.config({
     path: `.env`,
@@ -26,6 +26,7 @@ const loadData = async function () {
   const subareaDates = JSON.parse(data);
   logger.info(`${subareaDates.length} records found in ${dataFilePath}`);
 
+  // TODO: CMS-1206 Replace with parkDates
   for (const yearData of subareaDates) {
 
     yearData["parkOperationSubArea"] = { connect: [{ id: yearData.parkOperationSubAreaId }] };

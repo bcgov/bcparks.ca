@@ -36,7 +36,9 @@ function checkSubAreaClosure(subAreas, staticData) {
   if (!subAreas) {
     return false;
   }
-  const subAreaTypeList = staticData?.allStrapiParkOperationSubAreaType.nodes
+  const parkFeatureTypes = staticData?.allStrapiParkFeatureType.nodes || []
+  // TODO: CMS-1206 Replace with parkFeatures when available in Elasticsearch
+  // https://github.com/bcgov/bcparks.ca/pull/1661#discussion_r2466731034
   for (const subArea of subAreas) {
     // standardize date from graphQL with date from elasticSearch
     if (subArea.parkSubAreaType) {
@@ -44,11 +46,15 @@ function checkSubAreaClosure(subAreas, staticData) {
         subArea.closureAffectsAccessStatus = subArea.parkSubAreaType.closureAffectsAccessStatus;
       }
     } else if (subArea.subAreaTypeId) {
-      let subAreaType = subAreaTypeList.find(type => {
+      let parkFeatureType = parkFeatureTypes.find(type => {
         return type.strapi_id === subArea.subAreaTypeId
       });
+      if (!parkFeatureType) {
+        continue;
+      }
+
       subArea.closureAffectsAccessStatus = subArea.isIgnored === null
-        ? subAreaType.closureAffectsAccessStatus
+        ? parkFeatureType.closureAffectsAccessStatus
         : !subArea.isIgnored;
     }
     // skip ignored subareas
@@ -158,7 +164,7 @@ export default function ParkAccessStatus({
             precedence
           }
         }
-        allStrapiParkOperationSubAreaType {
+        allStrapiParkFeatureType {
           nodes {
             strapi_id
             closureAffectsAccessStatus

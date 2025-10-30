@@ -212,7 +212,7 @@ const ParkOperatingDatesPage = () => {
         filter: {
           isDisplayed: {eq: true},
           parkOperation: {isActive: {eq: true}},
-          parkOperationSubAreas: {elemMatch: {isActive: {eq: true}}}
+          parkFeatures: {elemMatch: {isActive: {eq: true}}}
         }
       ) {
         nodes {

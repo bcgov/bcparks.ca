@@ -47,6 +47,9 @@ module.exports = {
           "park-operation-date",
           "park-operation-sub-area-date",
           "park-operation-sub-area-type",
+          "park-date",
+          "park-area-type",
+          "park-feature-type",
           "park-contact",
           "park-operator-contact",
           "park-photo",
@@ -95,10 +98,18 @@ module.exports = {
                 parkOperationDates: {
                   fields: "*"
                 },
-                parkOperationSubAreas: {
+                parkAreas: {
                   fields: "*",
                   populate: {
-                    parkOperationSubAreaType: {
+                    parkAreaType: {
+                      fields: "*"
+                    }
+                  }
+                },
+                parkFeatures: {
+                  fields: "*",
+                  populate: {
+                    parkFeatureType: {
                       fields: "*"
                     }
                   }
@@ -171,10 +182,18 @@ module.exports = {
                 protectedArea: {
                   fields: "*"
                 },
-                parkOperationSubAreas: {
+                parkAreas: {
                   fields: "*",
                   populate: {
-                    parkOperationSubAreaType: {
+                    parkAreaType: {
+                      fields: "*"
+                    }
+                  }
+                },
+                parkFeatures: {
+                  fields: "*",
+                  populate: {
+                    parkFeatureType: {
                       fields: "*"
                     }
                   }
