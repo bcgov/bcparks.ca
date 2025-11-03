@@ -32,40 +32,40 @@ function checkParkClosure(operatingDates) {
   return false;
 }
 
-function checkSubAreaClosure(subAreas, staticData) {
-  if (!subAreas) {
+function checkSubAreaClosure(parkFeatures, staticData) {
+  if (!parkFeatures) {
     return false;
   }
   const parkFeatureTypes = staticData?.allStrapiParkFeatureType.nodes || []
   // TODO: CMS-1206 Replace with parkFeatures when available in Elasticsearch
   // https://github.com/bcgov/bcparks.ca/pull/1661#discussion_r2466731034
-  for (const subArea of subAreas) {
+  for (const parkFeature of parkFeatures) {
     // standardize date from graphQL with date from elasticSearch
-    if (subArea.parkSubAreaType) {
-      if (subArea.closureAffectsAccessStatus === null) {
-        subArea.closureAffectsAccessStatus = subArea.parkSubAreaType.closureAffectsAccessStatus;
+    if (parkFeature.parkSubAreaType) {
+      if (parkFeature.closureAffectsAccessStatus === null) {
+        parkFeature.closureAffectsAccessStatus = parkFeature.parkSubAreaType.closureAffectsAccessStatus;
       }
-    } else if (subArea.subAreaTypeId) {
+    } else if (parkFeature.subAreaTypeId) {
       let parkFeatureType = parkFeatureTypes.find(type => {
-        return type.strapi_id === subArea.subAreaTypeId
+        return type.strapi_id === parkFeature.subAreaTypeId
       });
       if (!parkFeatureType) {
         continue;
       }
 
-      subArea.closureAffectsAccessStatus = subArea.isIgnored === null
+      parkFeature.closureAffectsAccessStatus = parkFeature.isIgnored === null
         ? parkFeatureType.closureAffectsAccessStatus
-        : !subArea.isIgnored;
+        : !parkFeature.isIgnored;
     }
-    // skip ignored subareas
-    if (!subArea.closureAffectsAccessStatus) {
+    // skip ignored parkFeatures
+    if (!parkFeature.closureAffectsAccessStatus) {
       continue;
     }
-    if (subArea.isActive !== true || subArea.isOpen !== true) {
+    if (parkFeature.isActive !== true || parkFeature.isOpen !== true) {
       continue;
     }
-    // check the dates to see if any subareas are closed
-    const dates = subArea.parkOperationSubAreaDates.filter(d =>
+    // check the dates to see if any parkFeatures are closed
+    const dates = parkFeature.parkOperationSubAreaDates.filter(d =>
       d.operatingYear === thisYear &&
       d.isActive === true
     );
@@ -143,7 +143,7 @@ function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, stat
 export default function ParkAccessStatus({
   advisories,
   slug,
-  subAreas,
+  parkFeatures,
   operationDates,
   onStatusCalculated,
   punctuation,
@@ -178,7 +178,7 @@ export default function ParkAccessStatus({
 
   useEffect(() => {
     const mainGateClosure = checkParkClosure(operationDates);
-    const areaClosure = checkSubAreaClosure(subAreas, staticData);
+    const areaClosure = checkSubAreaClosure(parkFeatures, staticData);
     const status = parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData);
     setAccessStatus(status)
     if (onStatusCalculated !== undefined) {
@@ -192,7 +192,7 @@ export default function ParkAccessStatus({
       }
     } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [operationDates, subAreas, advisories]);
+  }, [operationDates, parkFeatures, advisories]);
 
 
   return (
@@ -216,7 +216,7 @@ export default function ParkAccessStatus({
 ParkAccessStatus.propTypes = {
   advisories: PropTypes.array.isRequired,
   slug: PropTypes.string.isRequired,
-  subAreas: PropTypes.array.isRequired,
+  parkFeatures: PropTypes.array.isRequired,
   operationDates: PropTypes.array.isRequired,
   onStatusCalculated: PropTypes.func,
   punctuation: PropTypes.string,

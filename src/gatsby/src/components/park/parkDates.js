@@ -102,8 +102,8 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
   )
 }
 
-export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordion, itemCount }) => {
-  const parkSubAreaId = _.kebabCase(subArea.parkSubArea)
+export const AccordionList = ({ eventKey, feature, openAccordions, toggleAccordion, itemCount }) => {
+  const parkFeatureId = _.kebabCase(feature.parkFeatureName)
 
   return (
     <Accordion
@@ -112,13 +112,13 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
       {itemCount > 1 ? (
         <CustomToggle
           eventKey={eventKey}
-          toggleId={parkSubAreaId}
-          ariaControls={subArea.parkSubArea}
-          handleClick={() => toggleAccordion(eventKey, subArea.parkSubArea)}
+          toggleId={parkFeatureId}
+          ariaControls={feature.parkFeatureName}
+          handleClick={() => toggleAccordion(eventKey, feature.parkFeatureName)}
         >
           <div className="d-flex align-items-center">
             <HtmlContent className="accordion-header">
-              {subArea.parkSubArea}
+              {feature.parkFeatureName}
             </HtmlContent>
           </div>
           <div className="d-flex align-items-center">
@@ -128,21 +128,21 @@ export const AccordionList = ({ eventKey, subArea, openAccordions, toggleAccordi
             </div>
         </CustomToggle>
       ) : (
-        <div id={parkSubAreaId} className="accordion-toggle">
+        <div id={parkFeatureId} className="accordion-toggle">
           <HtmlContent className="accordion-header">
-            {subArea.parkSubArea}
+            {feature.parkFeatureName}
           </HtmlContent>
         </div>
       )}
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
-        <SubArea data={subArea} />
+        <SubArea data={feature} />
       </Accordion.Collapse>
     </Accordion>
   )
 }
 
-export default function ParkDates({ data, parkOperation, isLoadingSubAreas, subAreasLoadError }) {
-  const subAreas = data.subAreas.sort((a, b) => (a.parkSubArea >= b.parkSubArea ? 1 : -1))
+export default function ParkDates({ data, parkOperation, isLoadingParkFeatures, parkFeaturesLoadError }) {
+  const parkFeatures = data.parkFeatures?.sort((a, b) => (a.parkFeature >= b.parkFeature ? 1 : -1)) || []
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
 
@@ -168,7 +168,7 @@ export default function ParkDates({ data, parkOperation, isLoadingSubAreas, subA
 
   const toggleExpandAll = () => {
     const newExpandAll = !allExpanded
-    const newOpenAccordions = subAreas.reduce((acc, _, index) => {
+    const newOpenAccordions = parkFeatures.reduce((acc, _, index) => {
       acc[index] = newExpandAll
       return acc
     }, {})
@@ -176,30 +176,30 @@ export default function ParkDates({ data, parkOperation, isLoadingSubAreas, subA
   }
 
   const allExpanded = useMemo(() => {
-    return subAreas.length > 0 &&
-      Object.keys(openAccordions).length === subAreas.length &&
+    return parkFeatures.length > 0 &&
+      Object.keys(openAccordions).length === parkFeatures.length &&
       Object.values(openAccordions).every((isOpen) => isOpen)
-  }, [openAccordions, subAreas.length])
+  }, [openAccordions, parkFeatures.length])
 
   const checkHash = useCallback(() => {
     // Check hash in url
-    // if we find a matching parkSubArea, open that subArea accordion
+    // if we find a matching parkFeatureName, open that feature accordion
     if (typeof window !== "undefined") {
       const windowHash = window?.location?.hash
       if (!windowHash || windowHash === hash) return
-      const matchingSubAreaIndex = subAreas.findIndex(
-        (subArea) => windowHash === "#" + _.kebabCase(subArea.parkSubArea)
+      const matchingFeatureIndex = parkFeatures.findIndex(
+        (feature) => windowHash === "#" + _.kebabCase(feature.parkFeatureName)
       )
-      if (matchingSubAreaIndex === -1) return
-      if (!openAccordions[matchingSubAreaIndex]) {
+      if (matchingFeatureIndex === -1) return
+      if (!openAccordions[matchingFeatureIndex]) {
         setOpenAccordions((prev) => ({
           ...prev,
-          [matchingSubAreaIndex]: true,
+          [matchingFeatureIndex]: true,
         }))
       }
       setHash(windowHash)
     }
-  }, [subAreas, hash, openAccordions])
+  }, [parkFeatures, hash, openAccordions])
 
   useEffect(() => {
     window.addEventListener("hashchange", function (e) {
@@ -209,16 +209,16 @@ export default function ParkDates({ data, parkOperation, isLoadingSubAreas, subA
   }, [checkHash])
 
   useEffect(() => {
-    if (subAreas.length === 1) {
+    if (parkFeatures.length === 1) {
       setOpenAccordions({ 0: true })
     }
-  }, [subAreas.length])
+  }, [parkFeatures.length])
 
-  if (subAreas.length === 0) return null
+  if (parkFeatures.length === 0) return null
 
   return (
     <>
-      {!isLoadingSubAreas && !subAreasLoadError && subAreas.length > 0 && (
+      {!isLoadingParkFeatures && !parkFeaturesLoadError && parkFeatures.length > 0 && (
         <>
           <Row className="align-items-center my-4">
             <Col>
@@ -233,7 +233,7 @@ export default function ParkDates({ data, parkOperation, isLoadingSubAreas, subA
           <Row className="mb-5">
             <Col>
               <>
-                {subAreas.length > 1 && (
+                {parkFeatures.length > 1 && (
                   <button
                     onClick={toggleExpandAll}
                     aria-label={expandLabel(data.campingType.pluralName)}
@@ -245,16 +245,16 @@ export default function ParkDates({ data, parkOperation, isLoadingSubAreas, subA
                     }
                   </button>
                 )}
-                {subAreas
-                  .filter(subArea => subArea.isActive)
-                  .map((subArea, index) => (
+                {parkFeatures
+                  .filter(feature => feature.isActive)
+                  .map((feature, index) => (
                     <AccordionList
                       key={index}
                       eventKey={index.toString()}
-                      subArea={subArea}
+                      feature={feature}
                       openAccordions={openAccordions}
                       toggleAccordion={toggleAccordion}
-                      itemCount={subAreas.length}
+                      itemCount={parkFeatures.length}
                     />
                   ))}
               </>

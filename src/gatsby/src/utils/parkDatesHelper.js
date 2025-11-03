@@ -145,11 +145,48 @@ const groupSubAreaDates = (subArea) => {
   return subArea
 }
 
+const groupParkFeatureDates = (feature) => {
+  const featureDates = feature.parkDates || []
+  
+  // Group dates by dateTypeId
+  const datesByTypeId = featureDates
+    .filter(date => date.isActive && date.parkDateType?.dateTypeId)
+    .reduce((acc, date) => {
+      const dateTypeId = date.parkDateType.dateTypeId
+      
+      if (!acc[dateTypeId]) {
+        acc[dateTypeId] = []
+      }
+      
+      acc[dateTypeId].push({
+        operatingYear: date.operatingYear,
+        start: date.startDate,
+        end: date.endDate
+      })
+      
+      return acc
+    }, {})
+
+  // Map dateTypeIds to feature properties based on your API data
+  feature.gateDates = datesByTypeId[1] || []                   // Gate
+  feature.tier1Dates = datesByTypeId[2] || []                   // Tier 1
+  feature.tier2Dates = datesByTypeId[3] || []                   // Tier 2
+  feature.winterFeeDates = datesByTypeId[4] || []               // Winter fee
+  feature.dayUsePassDates = datesByTypeId[5] || []              // Day-use pass
+  feature.operationDates = datesByTypeId[6] || []               // Operation
+  feature.reservationDates = datesByTypeId[7] || []             // Reservation
+  feature.backcountryDates = datesByTypeId[8] || []             // Backcountry registration
+  feature.firstComeFirstServedDates = datesByTypeId[9] || []    // First come, first served
+  feature.serviceAndFeeDates = datesByTypeId[10] || []          // Full services and fees
+
+  return feature
+}
 
 export {
   formatDateRange,
   formattedTime,
   getFeatureDates,
   getParkDates,
+  groupParkFeatureDates,
   groupSubAreaDates,
 }

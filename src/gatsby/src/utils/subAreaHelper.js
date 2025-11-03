@@ -1,6 +1,4 @@
-import axios from "axios"
-import qs from "qs"
-import { groupSubAreaDates, getFeatureDates } from "./parkDatesHelper"
+import { groupSubAreaDates, groupParkFeatureDates, getFeatureDates } from "./parkDatesHelper"
 
 const preProcessSubAreas = (subAreas) => {
   const processedSubAreas = subAreas
@@ -37,6 +35,49 @@ const preProcessSubAreas = (subAreas) => {
   return processedSubAreas
 }
 
+const preProcessParkFeatures = (parkFeatures) => {
+  const processedParkFeatures = parkFeatures
+    .filter(feature => feature.isActive)
+    .map(feature => {
+      const facilityType = feature.parkFeatureType?.facilityType || {}
+      const campingType = feature.parkFeatureType?.campingType || {}
+
+      let processed = {
+        ...feature,
+        typeCode: facilityType.facilityCode || campingType.campingTypeCode || "",
+        typeIcon: facilityType.icon || campingType.icon || ""
+      }
+
+      processed = groupParkFeatureDates(processed)
+
+      // Format date ranges using the property names from groupParkFeatureDates
+      processed.gateDates = getFeatureDates(processed.gateDates)
+      processed.tier1Dates = getFeatureDates(processed.tier1Dates)
+      processed.tier2Dates = getFeatureDates(processed.tier2Dates)
+      processed.winterFeeDates = getFeatureDates(processed.winterFeeDates)
+      processed.dayUsePassDates = getFeatureDates(processed.dayUsePassDates)
+      processed.operationDates = getFeatureDates(processed.operationDates)
+      processed.reservationDates = getFeatureDates(processed.reservationDates)
+      processed.backcountryDates = getFeatureDates(processed.backcountryDates)
+      processed.firstComeFirstServedDates = getFeatureDates(processed.firstComeFirstServedDates)
+      processed.serviceAndFeeDates = getFeatureDates(processed.serviceAndFeeDates)
+
+      // Add a placeholder if no dates are available for the current year
+      if (
+        // processed.serviceAndFeeDates.length === 0 &&
+        processed.reservationDates.length === 0 &&
+        // processed.winterFeeDates.length === 0 &&
+        processed.operationDates.length === 0
+      ) {
+        processed.serviceAndFeeDates.push("Dates unavailable")
+      }
+      
+      return processed
+    })
+
+  return processedParkFeatures
+}
+
 // Group subAreas by typeCode
 const groupSubAreasByType = (subAreasData) => {
   const result = {}
@@ -47,6 +88,19 @@ const groupSubAreasByType = (subAreasData) => {
       result[campingTypeCode] = { subAreas: [] };
     }
     result[campingTypeCode].subAreas.push(subArea);
+  }
+  return result;
+}
+
+const groupParkFeaturesByType = (parkFeatures) => {
+  const result = {}
+  const features = preProcessParkFeatures(parkFeatures);
+  for (const feature of features) {
+    const campingTypeCode = feature.typeCode;
+    if (!result[campingTypeCode]) {
+      result[campingTypeCode] = { parkFeatures: [] };
+    }
+    result[campingTypeCode].parkFeatures.push(feature);
   }
   return result;
 }
@@ -116,137 +170,12 @@ const combineFacilities = (facilities, facilityTypes, subAreas) => {
 
   return arr.sort((a, b) => a.facilityType.facilityName.localeCompare(b.facilityType.facilityName))
 }
-// load all subareas (optionally filtered by starting letter)
-const loadAllSubAreas = async (apiBaseUrl, startingLetter = null) => {
-  const filters = {
-    isActive: true,
-  }
-
-  // Add starting letter filter, if provided
-  if (startingLetter) {
-    filters.protectedArea = {
-      protectedAreaName: {
-        $startsWith: startingLetter
-      }
-    }
-  }
-
-  const params = qs.stringify({
-    filters,
-    fields: [
-      "isOpen",
-      "isCleanAirSite",
-      "parkSubArea",
-      "isActive",
-      "hasBackcountryReservations",
-      "closureAffectsAccessStatus"
-    ],
-    populate: {
-      protectedArea: {
-        fields: ["orcs"]
-      },
-      parkSubAreaType: {
-        fields: [
-          "closureAffectsAccessStatus",
-        ],
-        populate : {
-          campingType: {fields: ["icon"]},
-          facilityType: {fields: ["icon"]}
-        }
-      },
-      parkFeatureDates: {
-        fields: [
-          "operatingYear",
-          "isActive",
-          "startDate",
-          "endDate",
-          "dateType",
-        ]
-      },
-      parkOperationSubAreaDates: {
-        fields: [
-          "operatingYear",
-          "isActive",
-          "openDate",
-          "closeDate",
-          "serviceStartDate",
-          "serviceEndDate",
-          "reservationStartDate",
-          "reservationEndDate",
-          "offSeasonStartDate",
-          "offSeasonEndDate",
-        ]
-      },
-    },
-    pagination: {
-      limit: 1000,
-    }
-  }, {
-    encodeValuesOnly: true,
-  })
-  const response = await axios.get(`${apiBaseUrl}/park-operation-sub-areas?${params}`);
-  return response.data;
-}
-// load subareas by protected area
-const loadSubAreas = (apiBaseUrl, orcs) => {
-  const params = qs.stringify({
-    filters: {
-      protectedArea: {
-        orcs: {
-          $eq: orcs
-        }
-      }
-    },
-    populate: {
-      parkSubAreaType: {
-        fields: [
-          "subAreaType",
-          "subAreaTypeCode",
-          "closureAffectsAccessStatus",
-        ],
-        populate : {
-          campingType: {fields: ["campingTypeCode"]},
-          facilityType: {fields: ["facilityCode"]}
-        }
-      },
-      parkFeatureDates: {
-        fields: [
-          "operatingYear",
-          "isActive",
-          "startDate",
-          "endDate",
-          "dateType",
-        ]
-      },
-      parkOperationSubAreaDates: {
-        fields: [
-          "operatingYear",
-          "isActive",
-          "openDate",
-          "closeDate",
-          "serviceStartDate",
-          "serviceEndDate",
-          "reservationStartDate",
-          "reservationEndDate",
-          "offSeasonStartDate",
-          "offSeasonEndDate",
-        ]
-      },
-    },
-    pagination: {
-      limit: 100,
-    }
-  }, {
-    encodeValuesOnly: true,
-  })
-  return axios.get(`${apiBaseUrl}/park-operation-sub-areas?${params}`)
-}
 
 export {
   preProcessSubAreas,
+  preProcessParkFeatures,
   combineCampingTypes,
   combineFacilities,
-  loadAllSubAreas,
-  loadSubAreas,
-  groupSubAreasByType
+  groupSubAreasByType,
+  groupParkFeaturesByType
 }

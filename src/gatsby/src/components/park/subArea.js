@@ -85,25 +85,25 @@ export default function SubArea({ data, showHeading }) {
 
   return (
     <div className="accordion-content">
-      {showHeading && (<h4>{data.parkSubArea}</h4>)}
+      {showHeading && (<h4>{data.parkFeatureName}</h4>)}
       <Row className="subarea-container">
         <Col className="subarea-container--left" xs={12} lg={6}>
           <div className="subarea-icon">
             <FontAwesomeIcon icon={faCalendar} />
           </div>
           <div className="subarea-lists">
-            {data.serviceDates.length > 0 && (
+            {data.operationDates.length > 0 && (
               <div className="subarea-list">
                 <h4>Operating season</h4>
                 <ul>
-                  {data.serviceDates.map((dateRange, index) =>
+                  {data.operationDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
                 <small>{renderGateTimes(data)}</small>
               </div>
             )}
-            {data.resDates.length > 0 && (
+            {data.reservationDates.length > 0 && (
               <div className="subarea-list">
                 <h4>
                   {reservationName}{" "}
@@ -113,14 +113,14 @@ export default function SubArea({ data, showHeading }) {
                   />
                 </h4>
                 <ul>
-                  {data.resDates.map((dateRange, index) =>
+                  {data.reservationDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
               </div>
             )}
             {/* TODO: Add Backcountry registration dates after API endpoint change */}
-            {data.offSeasonDates.length > 0 && (
+            {data.winterFeeDates.length > 0 && (
               <div className="subarea-list">
                 <h4>
                   Winter rate{" "}
@@ -130,7 +130,7 @@ export default function SubArea({ data, showHeading }) {
                   />
                 </h4>
                 <ul>
-                  {data.offSeasonDates.map((dateRange, index) =>
+                  {data.winterFeeDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>

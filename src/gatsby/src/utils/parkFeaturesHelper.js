@@ -8,8 +8,18 @@ const PARK_AREA = {
 const PARK_DATES = {
   fields: ["isActive", "operatingYear", "startDate", "endDate"],
   populate: {
-    parkDateType: { fields: ["dateType"] },
+    parkDateType: { fields: ["dateTypeId", "dateType"] },
   },
+}
+const PARK_FEATURE = {
+  fields: [
+    // "isActive",
+    "isOpen",
+    "isCleanAirSite",
+    "parkFeatureName",
+    "hasBackcountryReservations",
+    "closureAffectsAccessStatus",
+  ],
 }
 const PARK_FEATURE_TYPE = {
   fields: ["parkFeatureType", "closureAffectsAccessStatus"],
@@ -21,7 +31,7 @@ const PARK_FEATURE_TYPE = {
 
 // Get all park features (optionally filtered by starting letter)
 const getAllParkFeatures = async (apiBaseUrl, startingLetter = null) => {
-  const filters = {
+    const filters = {
     isActive: true,
   }
 
@@ -47,7 +57,7 @@ const getAllParkFeatures = async (apiBaseUrl, startingLetter = null) => {
       ],
       populate: {
         protectedArea: {
-          fields: ["orcs"],
+          fields: ["orcs", "protectedAreaName"],
         },
         parkArea: PARK_AREA,
         parkDates: PARK_DATES,
@@ -70,12 +80,21 @@ const getParkFeatures = (apiBaseUrl, orcs) => {
   const params = qs.stringify(
     {
       filters: {
+        isActive: true,
         protectedArea: {
           orcs: {
             $eq: orcs,
           },
         },
       },
+      fields: [
+        "isActive",
+        "isOpen",
+        "isCleanAirSite",
+        "parkFeatureName",
+        "hasBackcountryReservations",
+        "closureAffectsAccessStatus",
+      ],
       populate: {
         parkArea: PARK_AREA,
         parkDates: PARK_DATES,
