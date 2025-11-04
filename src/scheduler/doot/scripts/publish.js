@@ -21,10 +21,12 @@ exports.dootPublish = async function () {
 
   for (const message of queue) {
     let jsonData = message.attributes?.jsonData;
+    let errorProcessingMessage = false;
 
     // loop through each item in the jsonData array
     if (!Array.isArray(jsonData)) {
       logger.error(`dootPublish() expected jsonData to be an array but got: ${typeof jsonData}`);
+      errorProcessingMessage = true;
       continue;
     }
     for (const item of jsonData) {
@@ -33,6 +35,7 @@ exports.dootPublish = async function () {
         ({ protectedAreaId, parkAreaId, parkFeatureId, relationName } = await getEntityIds(item));
       } catch (error) {
         logger.error(`dootPublish() failed while retrieving entity IDs: ${error}`);
+        errorProcessingMessage = true;
         break;
       }
       const parkGateIds = await getParkGateIds(protectedAreaId, parkAreaId, parkFeatureId);
@@ -55,6 +58,7 @@ exports.dootPublish = async function () {
             logger.info(`Updated park-gates record for ${relationName}`);
           } catch (error) {
             logger.error(`dootPublish() failed while updating park-gates: ${error}`);
+            errorProcessingMessage = true;
             break;
           }
         } else {
@@ -76,6 +80,7 @@ exports.dootPublish = async function () {
             logger.info(`Created new park-gates record for ${relationName}`);
           } catch (error) {
             logger.error(`dootPublish() failed while creating park-gates: ${error}`);
+            errorProcessingMessage = true;
             break;
           }
         }
@@ -101,6 +106,7 @@ exports.dootPublish = async function () {
             );
           } catch (error) {
             logger.error(`dootPublish() failed while updating park-gates: ${error}`);
+            errorProcessingMessage = true;
             break;
           }
         }
@@ -116,6 +122,7 @@ exports.dootPublish = async function () {
             );
           } catch (error) {
             logger.error(`dootPublish() failed while deleting duplicate park-gates: ${error}`);
+            errorProcessingMessage = true;
             break;
           }
         }
@@ -137,6 +144,7 @@ exports.dootPublish = async function () {
           datesToDelete = await cmsAxios.get("/api/park-dates", { params: deleteParams });
         } catch (error) {
           logger.error(`dootPublish() failed while retrieving park-dates: ${error}`);
+          errorProcessingMessage = true;
           break;
         }
         try {
@@ -145,6 +153,7 @@ exports.dootPublish = async function () {
           }
         } catch (error) {
           logger.error(`dootPublish() failed while deleting park-dates: ${error}`);
+          errorProcessingMessage = true;
           break;
         }
 
@@ -155,6 +164,7 @@ exports.dootPublish = async function () {
           dateTypeMap = await getDateTypeMap();
         } catch (error) {
           logger.error(`dootPublish() failed while retrieving dateTypeMap: ${error}`);
+          errorProcessingMessage = true;
           break;
         }
 
@@ -189,6 +199,7 @@ exports.dootPublish = async function () {
             logger.info(`Created ${count} park-dates records for ${relationName}`);
           } catch (error) {
             logger.error(`dootPublish() failed while creating park-dates: ${error}`);
+            errorProcessingMessage = true;
             break;
           }
         }
@@ -198,7 +209,7 @@ exports.dootPublish = async function () {
     // if this script is being called from server.js then we need to remove the
     // message from the queue, otherwise manage.js will leave it in the queue
     // for further testing
-    if (noCommandLineArgs()) {
+    if (!errorProcessingMessage && noCommandLineArgs()) {
       try {
         await removeFromQueue([message.id]);
       } catch (error) {

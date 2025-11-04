@@ -64,7 +64,7 @@ async function getDateTypeMap() {
   let dateTypesResponse;
   dateTypesResponse = await cmsAxios.get("/api/park-date-types");
   for (const dateType of dateTypesResponse.data.data) {
-    dateTypeMap.set(dateType.attributes.dateTypeId, dateType.id);
+    dateTypeMap.set(dateType.dateTypeId, dateType.id);
   }
   return dateTypeMap;
 }
