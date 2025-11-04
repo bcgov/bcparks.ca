@@ -7,9 +7,8 @@ import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from '../utils/advisoryHelper';
-import { groupParkFeaturesByType, combineCampingTypes, combineFacilities } from '../utils/subAreaHelper';
-import { loadProtectedArea } from "../utils/protectedAreaHelper"
-import { getParkFeatures } from "../utils/parkFeaturesHelper"
+import { groupParkFeaturesByType, combineCampingTypes, combineFacilities } from '../utils/parkFeaturesHelper';
+import { getParkFeatures, getProtectedArea } from "../utils/apiHelper"
 
 import About from "../components/park/about"
 import Acknowledgment from "../components/acknowledgment"
@@ -93,6 +92,7 @@ export default function ParkTemplate({ data }) {
   // only one audio clip can be active at a time
   const [activeAudio, setActiveAudio] = useState("")
   const [parkGate, setParkGate] = useState({})
+  const [parkGateDates, setParkGateDates] = useState([])
 
   const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
@@ -112,14 +112,16 @@ export default function ParkTemplate({ data }) {
   const loadProtectedAreaData = async () => {
     setIsLoadingProtectedArea(true)
     try {
-      const response = await loadProtectedArea(apiBaseUrl, park.orcs)
-      setHasCampfireBan(response.data.hasCampfireBan)
-      setParkGate(response.data.parkGate)
+      const response = await getProtectedArea(apiBaseUrl, park.orcs)
+      setHasCampfireBan(response.hasCampfireBan)
+      setParkGate(response.parkGate)
+      setParkGateDates(response.parkDates)
       setProtectedAreaLoadError(false)
     } catch (error) {
       console.error("Error loading protected area:", error)
       setHasCampfireBan(false)
       setParkGate({})
+      setParkGateDates([])
       setProtectedAreaLoadError(true)
     } finally {
       setIsLoadingProtectedArea(false)
@@ -130,7 +132,7 @@ export default function ParkTemplate({ data }) {
     setIsLoadingParkFeatures(true)
     try {
       const response = await getParkFeatures(apiBaseUrl, park.orcs)
-      setParkFeatures(response.data.data)
+      setParkFeatures(response.data)
       setParkFeaturesLoadError(false)
     } catch (error) {
       console.error("Error loading park features:", error)
@@ -359,7 +361,7 @@ export default function ParkTemplate({ data }) {
             searchArea={searchArea}
             parkOperation={park.parkOperation}
             parkGate={parkGate}
-            operationDates={park.parkOperationDates}
+            operationDates={parkGateDates}
             parkFeatures={parkFeatures}
             isLoadingParkFeatures={isLoadingParkFeatures}
             parkFeaturesLoadError={parkFeaturesLoadError}
@@ -753,11 +755,6 @@ export const query = graphql`
             }
           }
         }
-      }
-      parkOperationDates {
-        operatingYear
-        gateOpenDate
-        gateCloseDate
       }
       biogeoclimaticZones {
         zone

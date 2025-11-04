@@ -1,114 +1,199 @@
-import axios from "axios"
-import qs from "qs"
+import { groupParkFeatureDates, getFeatureDates } from "./parkDatesHelper"
 
-// Constants for population configurations
-const PARK_AREA = {
-  fields: ["parkAreaName"],
-}
-const PARK_DATES = {
-  fields: ["isActive", "operatingYear", "startDate", "endDate"],
-  populate: {
-    parkDateType: { fields: ["dateTypeId", "dateType"] },
-  },
-}
-const PARK_FEATURE = {
-  fields: [
-    // "isActive",
-    "isOpen",
-    "isCleanAirSite",
-    "parkFeatureName",
-    "hasBackcountryReservations",
-    "closureAffectsAccessStatus",
-  ],
-}
-const PARK_FEATURE_TYPE = {
-  fields: ["parkFeatureType", "closureAffectsAccessStatus"],
-  populate: {
-    campingType: { fields: ["campingTypeCode", "icon"] },
-    facilityType: { fields: ["facilityCode", "icon"] },
-  },
+/**
+ * Processes raw park features data by grouping dates, formatting date ranges, and adding computed properties
+ * @param {Array} parkFeatures - Array of raw park feature objects from the API
+ * @returns {Array} Array of processed park features with formatted dates and additional properties
+ * @throws {Error} Throws an error if parkFeatures is not an array
+ * @example
+ * const rawFeatures = [{ isActive: true, parkFeatureName: "Campground A", ... }]
+ * const processedFeatures = preProcessParkFeatures(rawFeatures)
+ * // Returns features with formatted dates: gateDates, operationDates, etc.
+ */
+const preProcessParkFeatures = parkFeatures => {
+  const processedParkFeatures = parkFeatures
+    .filter(feature => feature.isActive)
+    .map(feature => {
+      const facilityType = feature.parkFeatureType?.facilityType || {}
+      const campingType = feature.parkFeatureType?.campingType || {}
+
+      let processed = {
+        ...feature,
+        typeCode:
+          facilityType.facilityCode || campingType.campingTypeCode || "",
+        typeIcon: facilityType.icon || campingType.icon || "",
+      }
+
+      processed = groupParkFeatureDates(processed)
+
+      // Format date ranges
+      processed.gateDates = getFeatureDates(processed.gateDates)
+      processed.tier1Dates = getFeatureDates(processed.tier1Dates)
+      processed.tier2Dates = getFeatureDates(processed.tier2Dates)
+      processed.winterFeeDates = getFeatureDates(processed.winterFeeDates)
+      processed.dayUsePassDates = getFeatureDates(processed.dayUsePassDates)
+      processed.operationDates = getFeatureDates(processed.operationDates)
+      processed.reservationDates = getFeatureDates(processed.reservationDates)
+      processed.backcountryDates = getFeatureDates(processed.backcountryDates)
+      processed.firstComeFirstServedDates = getFeatureDates(
+        processed.firstComeFirstServedDates
+      )
+      processed.serviceAndFeeDates = getFeatureDates(
+        processed.serviceAndFeeDates
+      )
+
+      // Add a placeholder if no dates are available for the current year
+      if (
+        processed.operationDates.length === 0 &&
+        processed.reservationDates.length === 0 &&
+        processed.winterFeeDates.length === 0
+      ) {
+        processed.operationDates.push("Dates unavailable")
+      }
+
+      return processed
+    })
+
+  return processedParkFeatures
 }
 
-// Get all park features (optionally filtered by starting letter)
-const getAllParkFeatures = async (apiBaseUrl, startingLetter = null) => {
-    const filters = {
-    isActive: true,
+/**
+ * Groups park features by their type code (facilityCode or campingTypeCode)
+ * @param {Array} parkFeatures - Array of raw park feature objects
+ * @returns {Object} Object with typeCode as keys and objects containing parkFeatures array as values
+ * @throws {Error} Throws an error if parkFeatures is not an array
+ * @example
+ * const features = [{ typeCode: "RV", parkFeatureName: "RV Site A" }]
+ * const grouped = groupParkFeaturesByType(features)
+ * // Returns: { "RV": { parkFeatures: [{ typeCode: "RV", ... }] } }
+ */
+const groupParkFeaturesByType = parkFeatures => {
+  const result = {}
+  const features = preProcessParkFeatures(parkFeatures)
+
+  for (const feature of features) {
+    const typeCode = feature.typeCode
+    if (!result[typeCode]) {
+      result[typeCode] = { parkFeatures: [] }
+    }
+    result[typeCode].parkFeatures.push(feature)
+  }
+  return result
+}
+
+/**
+ * Combines park camping data with camping types and park features into a unified structure
+ * @param {Array} campings - Array of park camping objects from the API
+ * @param {Array} campingTypes - Array of camping type definitions
+ * @param {Object} parkFeatures - Object of park features grouped by type code
+ * @returns {Array} Array of combined camping objects sorted by camping type name
+ * @throws {Error} Throws an error if any parameter is not the expected type
+ * @example
+ * const campings = [{ isActive: true, campingType: { campingTypeCode: "RV" } }]
+ * const campingTypes = [{ campingTypeCode: "RV", campingTypeName: "RV Sites" }]
+ * const parkFeatures = { "RV": { parkFeatures: [...] } }
+ * const combined = combineCampingTypes(campings, campingTypes, parkFeatures)
+ */
+const combineCampingTypes = (campings, campingTypes, parkFeatures) => {
+  let arr = []
+  let obj = { ...parkFeatures }
+
+  // Filter the campings to include only active
+  const parkCampingTypes = campings.filter(camping => camping.isActive)
+
+  // Add the parkCampingTypes to the common object
+  for (const parkCampingType of parkCampingTypes) {
+    const campingTypeCode = parkCampingType.campingType?.campingTypeCode
+    if (!campingTypeCode) continue
+
+    if (!obj[campingTypeCode]) {
+      obj[campingTypeCode] = { parkFeatures: [] }
+    }
+    obj[campingTypeCode] = { ...parkCampingType, ...obj[campingTypeCode] }
   }
 
-  // Add starting letter filter, if provided
-  if (startingLetter) {
-    filters.protectedArea = {
-      protectedAreaName: {
-        $startsWith: startingLetter,
-      },
+  // Add the campingTypes to the common object and convert it to an array
+  for (const campingTypeCode in obj) {
+    const parkCampingType = obj[campingTypeCode]
+    parkCampingType.campingType = campingTypes.find(
+      ct => ct.campingTypeCode === campingTypeCode
+    )
+
+    // Only include camping, not facilities
+    if (parkCampingType.campingType) {
+      // The camping type should be active, but include it anyway if it has parkFeatures
+      if (
+        parkCampingType.campingType.isActive ||
+        parkCampingType.parkFeatures.length > 0
+      ) {
+        arr.push(parkCampingType)
+      }
     }
   }
 
-  const params = qs.stringify(
-    {
-      filters,
-      fields: [
-        "isActive",
-        "isOpen",
-        "isCleanAirSite",
-        "parkFeatureName",
-        "hasBackcountryReservations",
-        "closureAffectsAccessStatus",
-      ],
-      populate: {
-        protectedArea: {
-          fields: ["orcs", "protectedAreaName"],
-        },
-        parkArea: PARK_AREA,
-        parkDates: PARK_DATES,
-        parkFeatureType: PARK_FEATURE_TYPE,
-      },
-      pagination: {
-        limit: 1000,
-      },
-    },
-    {
-      encodeValuesOnly: true,
-    }
+  return arr.sort((a, b) =>
+    a.campingType.campingTypeName.localeCompare(b.campingType.campingTypeName)
   )
-  const response = await axios.get(`${apiBaseUrl}/park-features?${params}`)
-  return response.data
 }
 
-// Get park features by protected area
-const getParkFeatures = (apiBaseUrl, orcs) => {
-  const params = qs.stringify(
-    {
-      filters: {
-        isActive: true,
-        protectedArea: {
-          orcs: {
-            $eq: orcs,
-          },
-        },
-      },
-      fields: [
-        "isActive",
-        "isOpen",
-        "isCleanAirSite",
-        "parkFeatureName",
-        "hasBackcountryReservations",
-        "closureAffectsAccessStatus",
-      ],
-      populate: {
-        parkArea: PARK_AREA,
-        parkDates: PARK_DATES,
-        parkFeatureType: PARK_FEATURE_TYPE,
-      },
-      pagination: {
-        limit: 100,
-      },
-    },
-    {
-      encodeValuesOnly: true,
+/**
+ * Combines park facilities data with facility types and park features into a unified structure
+ * @param {Array} facilities - Array of park facility objects from the API
+ * @param {Array} facilityTypes - Array of facility type definitions
+ * @param {Object} parkFeatures - Object of park features grouped by type code
+ * @returns {Array} Array of combined facility objects sorted by facility name
+ * @throws {Error} Throws an error if any parameter is not the expected type
+ * @example
+ * const facilities = [{ isActive: true, facilityType: { facilityCode: "BOAT" } }]
+ * const facilityTypes = [{ facilityCode: "BOAT", facilityName: "Boat Launch" }]
+ * const parkFeatures = { "BOAT": { parkFeatures: [...] } }
+ * const combined = combineFacilities(facilities, facilityTypes, parkFeatures)
+ */
+const combineFacilities = (facilities, facilityTypes, parkFeatures) => {
+  let arr = []
+  let obj = { ...parkFeatures } // Create a copy to avoid mutation
+
+  // Filter the facilities to include only active
+  const parkFacilities = facilities.filter(facility => facility.isActive)
+
+  // Add the parkFacilities to the common object
+  for (const parkFacility of parkFacilities) {
+    const facilityCode = parkFacility.facilityType?.facilityCode
+    if (!facilityCode) continue
+
+    if (!obj[facilityCode]) {
+      obj[facilityCode] = { parkFeatures: [] }
     }
+    obj[facilityCode] = { ...parkFacility, ...obj[facilityCode] }
+  }
+
+  // Add the facilityTypes to the common object and convert it to an array
+  for (const facilityCode in obj) {
+    const parkFacility = obj[facilityCode]
+    parkFacility.facilityType = facilityTypes.find(
+      f => f.facilityCode === facilityCode
+    )
+
+    // Only include facilities, not camping
+    if (parkFacility.facilityType) {
+      // The facility type should be active, but include it anyway if it has parkFeatures
+      if (
+        parkFacility.facilityType.isActive ||
+        parkFacility.parkFeatures.length > 0
+      ) {
+        arr.push(parkFacility)
+      }
+    }
+  }
+
+  return arr.sort((a, b) =>
+    a.facilityType.facilityName.localeCompare(b.facilityType.facilityName)
   )
-  return axios.get(`${apiBaseUrl}/park-features?${params}`)
 }
 
-export { getAllParkFeatures, getParkFeatures }
+export {
+  combineFacilities,
+  combineCampingTypes,
+  groupParkFeaturesByType,
+  preProcessParkFeatures,
+}

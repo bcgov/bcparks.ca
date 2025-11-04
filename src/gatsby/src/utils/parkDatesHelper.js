@@ -1,4 +1,3 @@
-import _ from "lodash"
 import { parseISO, format, getYear, getMonth, getDate, getMinutes } from "date-fns"
 
 // Format a date range
@@ -96,8 +95,8 @@ const getParkDates = (operationDates, thisYear) => {
 
   // Format each date range and filter out empty ones
   const formattedDateRanges = parkOperationDates
-    .sort((a, b) => new Date(a.gateOpenDate) - new Date(b.gateOpenDate))
-    .map(dateData => formatDateRange(dateData.gateOpenDate, dateData.gateCloseDate))
+    .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
+    .map(dateData => formatDateRange(dateData.startDate, dateData.endDate))
     .filter(dateStr => dateStr !== "")
   
   if (formattedDateRanges.length === 0) {
@@ -106,43 +105,6 @@ const getParkDates = (operationDates, thisYear) => {
 
   // Join the date ranges with proper grammar
   return joinDateRanges(formattedDateRanges)
-}
-
-// Group subarea dates into operation, service, reservation, off-season
-const groupSubAreaDates = (subArea) => {
-  const subAreaDates = subArea.parkOperationSubAreaDates || []
-  const featureDates = subArea.parkFeatureDates || []
-  subArea.operationDates = []
-  subArea.offSeasonDates = []
-  subArea.resDates = []
-  subArea.serviceDates = []
-
-  // TODO: remove it once data migration is completed
-  subAreaDates.filter((date) => date.isActive).forEach((date) => {
-    subArea.operationDates.push({ start: date.openDate, end: date.closeDate })
-    subArea.serviceDates.push({ start: date.serviceStartDate, end: date.serviceEndDate })
-    subArea.resDates.push({ start: date.reservationStartDate, end: date.reservationEndDate })
-    subArea.offSeasonDates.push({ start: date.offSeasonStartDate, end: date.offSeasonEndDate })
-  })
-
-  // override subAreaDates with featureDates
-  const dateTypes = {
-    "Operation": "serviceDates",
-    "Reservation": "resDates",
-    "Winter fee": "offSeasonDates",
-    // TODO: add more date types as needed
-  }
-  // create an object keyed by dateType
-  const featureDatesByType = _.keyBy(featureDates, "dateType")
-  // narrow down to the date types
-  const relevantFeatureDates = _.pick(featureDatesByType, Object.keys(dateTypes))
-  _.forEach(relevantFeatureDates, (featureDate, type) => {
-    const key = dateTypes[type]
-    if (featureDate) {
-      subArea[key] = [{ start: featureDate.startDate, end: featureDate.endDate }]
-    }
-  })
-  return subArea
 }
 
 const groupParkFeatureDates = (feature) => {
@@ -168,7 +130,7 @@ const groupParkFeatureDates = (feature) => {
     }, {})
 
   // Map dateTypeIds to feature properties based on your API data
-  feature.gateDates = datesByTypeId[1] || []                   // Gate
+  feature.gateDates = datesByTypeId[1] || []                    // Gate
   feature.tier1Dates = datesByTypeId[2] || []                   // Tier 1
   feature.tier2Dates = datesByTypeId[3] || []                   // Tier 2
   feature.winterFeeDates = datesByTypeId[4] || []               // Winter fee
@@ -188,5 +150,4 @@ export {
   getFeatureDates,
   getParkDates,
   groupParkFeatureDates,
-  groupSubAreaDates,
 }

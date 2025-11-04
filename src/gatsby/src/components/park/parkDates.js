@@ -103,7 +103,8 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
 }
 
 export const AccordionList = ({ eventKey, feature, openAccordions, toggleAccordion, itemCount }) => {
-  const parkFeatureId = _.kebabCase(feature.parkFeatureName)
+  const parkAreaName = feature.parkArea?.parkAreaName || ""
+  const parkFeatureId = _.kebabCase(parkAreaName)
 
   return (
     <Accordion
@@ -113,12 +114,12 @@ export const AccordionList = ({ eventKey, feature, openAccordions, toggleAccordi
         <CustomToggle
           eventKey={eventKey}
           toggleId={parkFeatureId}
-          ariaControls={feature.parkFeatureName}
-          handleClick={() => toggleAccordion(eventKey, feature.parkFeatureName)}
+          ariaControls={parkAreaName}
+          handleClick={() => toggleAccordion(eventKey, parkAreaName)}
         >
           <div className="d-flex align-items-center">
             <HtmlContent className="accordion-header">
-              {feature.parkFeatureName}
+              {parkAreaName}
             </HtmlContent>
           </div>
           <div className="d-flex align-items-center">
@@ -130,7 +131,7 @@ export const AccordionList = ({ eventKey, feature, openAccordions, toggleAccordi
       ) : (
         <div id={parkFeatureId} className="accordion-toggle">
           <HtmlContent className="accordion-header">
-            {feature.parkFeatureName}
+            {parkAreaName}
           </HtmlContent>
         </div>
       )}
@@ -142,7 +143,9 @@ export const AccordionList = ({ eventKey, feature, openAccordions, toggleAccordi
 }
 
 export default function ParkDates({ data, parkOperation, isLoadingParkFeatures, parkFeaturesLoadError }) {
-  const parkFeatures = data.parkFeatures?.sort((a, b) => (a.parkFeature >= b.parkFeature ? 1 : -1)) || []
+  const parkFeatures = useMemo(() => {
+    return data.parkFeatures?.sort((a, b) => (a.parkFeature >= b.parkFeature ? 1 : -1)) || []
+  }, [data.parkFeatures])
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
 
@@ -183,12 +186,12 @@ export default function ParkDates({ data, parkOperation, isLoadingParkFeatures, 
 
   const checkHash = useCallback(() => {
     // Check hash in url
-    // if we find a matching parkFeatureName, open that feature accordion
+    // if we find a matching parkAreaName, open that feature accordion
     if (typeof window !== "undefined") {
       const windowHash = window?.location?.hash
       if (!windowHash || windowHash === hash) return
       const matchingFeatureIndex = parkFeatures.findIndex(
-        (feature) => windowHash === "#" + _.kebabCase(feature.parkFeatureName)
+        (feature) => windowHash === "#" + _.kebabCase(feature.parkArea.parkAreaName)
       )
       if (matchingFeatureIndex === -1) return
       if (!openAccordions[matchingFeatureIndex]) {

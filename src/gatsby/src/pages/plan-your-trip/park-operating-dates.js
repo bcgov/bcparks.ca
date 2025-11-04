@@ -13,8 +13,8 @@ import ScrollToTop from "../../components/scrollToTop"
 import ParkAccessStatus from "../../components/park/parkAccessStatus"
 import StaticIcon from "../../components/park/staticIcon"
 import NoSearchResults from "../../components/search/noSearchResults"
-import { preProcessParkFeatures } from "../../utils/subAreaHelper"
-import { getAllParkFeatures } from "../../utils/parkFeaturesHelper"
+import { preProcessParkFeatures } from "../../utils/parkFeaturesHelper"
+import { getAllParkFeatures } from "../../utils/apiHelper"
 import { getParkDates } from "../../utils/parkDatesHelper"
 import {
   loadAllAdvisories,

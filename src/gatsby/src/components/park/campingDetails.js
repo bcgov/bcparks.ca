@@ -102,9 +102,6 @@ export const CampingType = ({ camping, parkOperation, isLoadingSubAreas, subArea
       <ParkDates
         data={camping}
         parkOperation={parkOperation}
-        // TODO delete
-        isLoadingSubAreas={isLoadingSubAreas}
-        subAreasLoadError={subAreasLoadError}
         isLoadingParkFeatures={isLoadingParkFeatures}
         parkFeaturesLoadError={parkFeaturesLoadError}
       />
@@ -114,7 +111,6 @@ export const CampingType = ({ camping, parkOperation, isLoadingSubAreas, subArea
 
 export default function CampingDetails({ data }) {
   const { activeCampings, parkOperation, isLoadingSubAreas, subAreasLoadError, isLoadingParkFeatures, parkFeaturesLoadError } = data
-  // console.log("CampingDetails activeCampings:", activeCampings)
 
   return (
     <div id="camping" className="anchor-link">

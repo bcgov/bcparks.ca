@@ -85,7 +85,7 @@ export default function SubArea({ data, showHeading }) {
 
   return (
     <div className="accordion-content">
-      {showHeading && (<h4>{data.parkFeatureName}</h4>)}
+      {showHeading && (<h4>{data.parkArea.parkAreaName}</h4>)}
       <Row className="subarea-container">
         <Col className="subarea-container--left" xs={12} lg={6}>
           <div className="subarea-icon">
@@ -119,7 +119,16 @@ export default function SubArea({ data, showHeading }) {
                 </ul>
               </div>
             )}
-            {/* TODO: Add Backcountry registration dates after API endpoint change */}
+            {data.backcountryDates.length > 0 && (
+              <div className="subarea-list">
+                <h4>Registration required</h4>
+                <ul>
+                  {data.backcountryDates.map((dateRange, index) =>
+                    <li key={index}>{dateRange}</li>
+                  )}
+                </ul>
+              </div>
+            )}
             {data.winterFeeDates.length > 0 && (
               <div className="subarea-list">
                 <h4>

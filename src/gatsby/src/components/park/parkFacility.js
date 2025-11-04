@@ -40,7 +40,7 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
       </CustomToggle>
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
         <>
-          {facility.subAreas.map((subArea, index) => (
+          {facility.parkFeatures.map((subArea, index) => (
             <SubArea key={index} data={subArea} showHeading={true} />
           ))}
           <div className="accordion-content">
