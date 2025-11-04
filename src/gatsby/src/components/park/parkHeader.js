@@ -94,8 +94,7 @@ export default function ParkHeader({
   const externalLink =
     `${mapUrl}&center=${longitude},${latitude}&level=${linkZoom}`
   // Get the park operation dates
-  const thisYear = new Date().getFullYear()
-  const parkDates = getParkDates(operationDates, thisYear)
+  const parkDates = getParkDates(operationDates)
   const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
   const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
   // Check if array contains a "tldr"

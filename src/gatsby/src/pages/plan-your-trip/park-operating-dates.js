@@ -30,14 +30,14 @@ const ParkLink = ({
   advisoryLoadError,
   isLoadingAdvisories,
 }) => {
-  const thisYear = new Date().getFullYear()
   const parkOperation = park.parkOperation
   const [parkAccessStatus, setParkAccessStatus] = useState({})
   const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
 
-  const parkDates = getParkDates(park.parkOperationDates, thisYear)
+  const parkDates = parkFeatures[0]?.protectedArea?.parkDates || []
+  const parkGateDates = getParkDates(parkDates)
 
   if (!addedSeasonalAdvisory) {
     if (advisories.some(a => a.accessStatus?.hidesSeasonalAdvisory)) {
@@ -77,18 +77,18 @@ const ParkLink = ({
                 advisories={advisories}
                 slug={park.slug}
                 parkFeatures={parkFeatures}
-                operationDates={park.parkOperationDates}
+                operationDates={parkDates}
                 onStatusCalculated={setParkAccessStatus}
                 punctuation="."
                 setIsParkOpen={setIsParkOpen}
               />
             )}
           </span>
-          {parkDates && isParkOpen !== false && (
+          {parkGateDates && isParkOpen !== false && (
             <span className="gate-text">
               The {park.type.toLowerCase()}{" "}
               {parkOperation.hasParkGate !== false && "gate"} is open{" "}
-              {parkDates}.
+              {parkGateDates}.
             </span>
           )}
         </>
@@ -139,18 +139,37 @@ const ParkLink = ({
                 )}
               </td>
               <td>
-                {/* TODO: Add Backcountry registration dates after API endpoint change */}
-                <div>
-                  <small>
-                    {getReservationName(feature.hasBackcountryReservations)}
-                  </small>
-                </div>
-                {feature.reservationDates.length > 0 ? (
-                  <ul>
-                    {feature.reservationDates.map((dateRange, index) => (
-                      <li key={index}>{dateRange}</li>
-                    ))}
-                  </ul>
+              {feature.reservationDates.length > 0 || feature.backcountryDates.length > 0 ? (
+                <>
+                {feature.reservationDates.length > 0 && (
+                  <>
+                    <div>
+                      <small>
+                        {getReservationName(feature.hasBackcountryReservations)}
+                      </small>
+                    </div>
+                    <ul>
+                      {feature.reservationDates.map((dateRange, index) => (
+                        <li key={index}>{dateRange}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+                {feature.backcountryDates.length > 0 && (
+                  <>
+                    <div>
+                      <small>
+                        Registration required
+                      </small>
+                    </div>
+                    <ul>
+                      {feature.backcountryDates.map((dateRange, index) => (
+                        <li key={index}>{dateRange}</li>
+                      ))}
+                    </ul>
+                  </>
+                  )}
+                </>
                 ) : (
                   <>
                     No {"("}first come, first served{")"}
@@ -200,9 +219,10 @@ const ParkLink = ({
                     </>
                   )}
                 </div>
-                {/* TODO: Add Backcountry registration dates after API endpoint change */}
                 <div className="list-group-item--container">
-                  {feature.reservationDates.length > 0 ? (
+                  {feature.reservationDates.length > 0 || feature.backcountryDates.length > 0 ? (
+                  <>
+                  {feature.reservationDates.length > 0 && (
                     <>
                       <b>
                         {getReservationName(feature.hasBackcountryReservations)}
@@ -213,6 +233,18 @@ const ParkLink = ({
                         ))}
                       </ul>
                     </>
+                  )}
+                  {feature.backcountryDates.length > 0 && (
+                    <>
+                      <b>Registration required</b>
+                      <ul>
+                        {feature.backcountryDates.map((dateRange, index) => (
+                          <li key={index}>{dateRange}</li>
+                        ))}
+                      </ul>
+                    </>
+                    )}
+                  </>
                   ) : (
                     <>
                       <b>Reservations / registration</b>
@@ -249,11 +281,6 @@ const ParkOperatingDatesPage = () => {
           type
           parkOperation {
             hasParkGate
-          }
-          parkOperationDates {
-            operatingYear
-            gateOpenDate
-            gateCloseDate
           }
         }
       }

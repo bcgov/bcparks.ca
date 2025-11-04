@@ -13,19 +13,17 @@ const ICONS = {
   red: redStatusIcon,
 }
 
-const thisYear = new Date().getFullYear();
 const today = format(new Date(), "yyyy-MM-dd");
 
 function checkParkClosure(operatingDates) {
   if (!operatingDates) {
     return false;
   }
-  const dates = operatingDates.filter(d => d.operatingYear === thisYear);
-  for (const d of dates) {
-    if (d.gateOpenDate && d.gateOpenDate > today) {
+  for (const d of operatingDates) {
+    if (d.startDate && d.startDate > today) {
       return true;
     }
-    if (d.gateCloseDate && d.gateCloseDate < today) {
+    if (d.endDate && d.endDate < today) {
       return true;
     }
   }
@@ -41,10 +39,11 @@ function checkSubAreaClosure(parkFeatures, staticData) {
   // https://github.com/bcgov/bcparks.ca/pull/1661#discussion_r2466731034
   for (const parkFeature of parkFeatures) {
     // standardize date from graphQL with date from elasticSearch
-    if (parkFeature.parkSubAreaType) {
+    if (parkFeature.parkFeatureType) {
       if (parkFeature.closureAffectsAccessStatus === null) {
-        parkFeature.closureAffectsAccessStatus = parkFeature.parkSubAreaType.closureAffectsAccessStatus;
+        parkFeature.closureAffectsAccessStatus = parkFeature.parkFeatureType.closureAffectsAccessStatus;
       }
+      // TODO: subAreaTypeId is no longer exist?
     } else if (parkFeature.subAreaTypeId) {
       let parkFeatureType = parkFeatureTypes.find(type => {
         return type.strapi_id === parkFeature.subAreaTypeId
@@ -65,15 +64,12 @@ function checkSubAreaClosure(parkFeatures, staticData) {
       continue;
     }
     // check the dates to see if any parkFeatures are closed
-    const dates = parkFeature.parkOperationSubAreaDates.filter(d =>
-      d.operatingYear === thisYear &&
-      d.isActive === true
-    );
+    const dates = parkFeature.parkDates
     for (const d of dates) {
-      if (d.openDate && d.openDate > today) {
+      if (d.startDate && d.startDate > today) {
         return true;
       }
-      if (d.closeDate && d.closeDate < today) {
+      if (d.endDate && d.endDate < today) {
         return true;
       }
     }

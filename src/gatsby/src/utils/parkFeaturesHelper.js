@@ -28,19 +28,23 @@ const preProcessParkFeatures = parkFeatures => {
 
       // Format date ranges
       processed.gateDates = getFeatureDates(processed.gateDates)
-      processed.tier1Dates = getFeatureDates(processed.tier1Dates)
-      processed.tier2Dates = getFeatureDates(processed.tier2Dates)
       processed.winterFeeDates = getFeatureDates(processed.winterFeeDates)
-      processed.dayUsePassDates = getFeatureDates(processed.dayUsePassDates)
       processed.operationDates = getFeatureDates(processed.operationDates)
       processed.reservationDates = getFeatureDates(processed.reservationDates)
       processed.backcountryDates = getFeatureDates(processed.backcountryDates)
-      processed.firstComeFirstServedDates = getFeatureDates(
-        processed.firstComeFirstServedDates
-      )
-      processed.serviceAndFeeDates = getFeatureDates(
-        processed.serviceAndFeeDates
-      )
+
+      // Commented out dates are not currently used
+      // Comment them back in if needed in the future
+
+      // processed.tier1Dates = getFeatureDates(processed.tier1Dates)
+      // processed.tier2Dates = getFeatureDates(processed.tier2Dates)
+      // processed.dayUsePassDates = getFeatureDates(processed.dayUsePassDates)
+      // processed.firstComeFirstServedDates = getFeatureDates(
+      //   processed.firstComeFirstServedDates
+      // )
+      // processed.serviceAndFeeDates = getFeatureDates(
+      //   processed.serviceAndFeeDates
+      // )
 
       // Add a placeholder if no dates are available for the current year
       if (

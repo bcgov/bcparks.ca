@@ -10,16 +10,11 @@ const formatDateRange = (startDate, endDate) => {
   // Parse dates using date-fns
   const openDate = parseISO(startDate)
   const closeDate = parseISO(endDate)
-  const currentYear = new Date().getFullYear()
   
   // Only show dates that are current year or future
   const openYear = getYear(openDate)
   const closeYear = getYear(closeDate)
-  
-  // Skip if both start and end years are before current year
-  if (openYear < currentYear && closeYear < currentYear) {
-    return ""
-  }
+  const sameYear = openYear === closeYear
   
   // Check if it's year-round (Jan 1 to Dec 31)
   const isYearRound = (
@@ -31,8 +26,6 @@ const formatDateRange = (startDate, endDate) => {
   if (isYearRound) {
     return "year-round"
   }
-
-  const sameYear = openYear === closeYear
 
   if (sameYear) {
     // Same year: "May 15 – Oct 31, 2025"
@@ -85,10 +78,7 @@ const getFeatureDates = (dateArray) => {
 }
 
 // Get park dates formatted
-const getParkDates = (operationDates, thisYear) => {
-  // Filter operation dates for the current year
-  const parkOperationDates = operationDates.filter(d => d.operatingYear === +thisYear)
-  
+const getParkDates = (parkOperationDates) => {  
   if (parkOperationDates.length === 0) {
     return ""
   }

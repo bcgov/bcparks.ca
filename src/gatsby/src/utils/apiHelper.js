@@ -2,11 +2,23 @@ import axios from "axios"
 import qs from "qs"
 
 // Constants
+const currentYear = new Date().getFullYear()
+
 const PARK_AREA = {
   fields: ["parkAreaName"],
 }
 const PARK_DATES = {
   fields: ["isActive", "operatingYear", "startDate", "endDate"],
+  filters: {
+    $and: [
+      {
+        isActive: { $eq: true },
+      },
+      {
+        operatingYear: { $gte: currentYear },
+      },
+    ],
+  },
   populate: {
     parkDateType: { fields: ["dateTypeId", "dateType"] },
   },
@@ -27,6 +39,24 @@ const PARK_GATE = {
     "gateClosesAtDusk",
     "gateOpen24Hours",
   ],
+}
+const PARK_GATE_DATES = {
+  fields: ["isActive", "operatingYear", "startDate", "endDate"],
+  filters: {
+    $and: [
+      {
+        isActive: { $eq: true },
+      },
+      {
+        operatingYear: { $gte: currentYear },
+      },
+      {
+        parkDateType: {
+          dateTypeId: { $eq: 1 }, // Gate dates only
+        },
+      },
+    ],
+  },
 }
 
 /**
@@ -70,6 +100,9 @@ const getAllParkFeatures = async (apiBaseUrl, startingLetter = null) => {
       populate: {
         protectedArea: {
           fields: ["orcs", "protectedAreaName"],
+          populate: {
+            parkDates: PARK_GATE_DATES,
+          },
         },
         parkArea: PARK_AREA,
         parkDates: PARK_DATES,
@@ -148,31 +181,12 @@ const getParkFeatures = async (apiBaseUrl, orcs) => {
  * const protectedArea = await getProtectedArea(apiBaseUrl, 123)
  */
 const getProtectedArea = async (apiBaseUrl, orcs) => {
-  const currentYear = new Date().getFullYear()
-
   const params = qs.stringify(
     {
       fields: ["hasCampfireBan"],
       populate: {
         parkGate: PARK_GATE,
-        parkDates: {
-          fields: ["isActive", "operatingYear", "startDate", "endDate"],
-          filters: {
-            $and: [
-              {
-                parkDateType: {
-                  dateTypeId: { $eq: 1 }, // Gate dates only
-                },
-              },
-              {
-                isActive: { $eq: true },
-              },
-              {
-                operatingYear: { $gte: currentYear },
-              },
-            ],
-          },
-        },
+        parkDates: PARK_GATE_DATES,
       },
       pagination: {
         limit: 100,
@@ -193,4 +207,5 @@ const getProtectedArea = async (apiBaseUrl, orcs) => {
     throw new Error(`Failed to fetch protected area ${orcs}: ${error.message}`)
   }
 }
+
 export { getAllParkFeatures, getParkFeatures, getProtectedArea }
