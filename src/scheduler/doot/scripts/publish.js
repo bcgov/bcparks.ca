@@ -26,7 +26,6 @@ exports.dootPublish = async function () {
     // loop through each item in the jsonData array
     if (!Array.isArray(jsonData)) {
       logger.error(`dootPublish() expected jsonData to be an array but got: ${typeof jsonData}`);
-      errorProcessingMessage = true;
       continue;
     }
     for (const item of jsonData) {
