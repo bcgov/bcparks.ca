@@ -30,7 +30,7 @@ function checkParkClosure(operatingDates) {
   return false;
 }
 
-function checkSubAreaClosure(parkFeatures, staticData) {
+function checkParkFeatureClosure(parkFeatures, staticData) {
   if (!parkFeatures) {
     return false;
   }
@@ -43,18 +43,21 @@ function checkSubAreaClosure(parkFeatures, staticData) {
       if (parkFeature.closureAffectsAccessStatus === null) {
         parkFeature.closureAffectsAccessStatus = parkFeature.parkFeatureType.closureAffectsAccessStatus;
       }
-      // TODO: subAreaTypeId is no longer exist?
-    } else if (parkFeature.subAreaTypeId) {
-      let parkFeatureType = parkFeatureTypes.find(type => {
-        return type.strapi_id === parkFeature.subAreaTypeId
-      });
-      if (!parkFeatureType) {
-        continue;
-      }
 
-      parkFeature.closureAffectsAccessStatus = parkFeature.isIgnored === null
-        ? parkFeatureType.closureAffectsAccessStatus
-        : !parkFeature.isIgnored;
+    // subAreaTypeId is no longer available in parkFeatures
+    // strapi_id does not match with parkFeatureTypeId in parkFeatureTypes
+
+    // } else if (parkFeature.subAreaTypeId) {
+    //   let parkFeatureType = parkFeatureTypes.find(type => {
+    //     return type.strapi_id === parkFeature.subAreaTypeId
+    //   });
+    //   if (!parkFeatureType) {
+    //     continue;
+    //   }
+
+    //   parkFeature.closureAffectsAccessStatus = parkFeature.isIgnored === null
+    //     ? parkFeatureType.closureAffectsAccessStatus
+    //     : !parkFeature.isIgnored;
     }
     // skip ignored parkFeatures
     if (!parkFeature.closureAffectsAccessStatus) {
@@ -174,7 +177,7 @@ export default function ParkAccessStatus({
 
   useEffect(() => {
     const mainGateClosure = checkParkClosure(operationDates);
-    const areaClosure = checkSubAreaClosure(parkFeatures, staticData);
+    const areaClosure = checkParkFeatureClosure(parkFeatures, staticData);
     const status = parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData);
     setAccessStatus(status)
     if (onStatusCalculated !== undefined) {

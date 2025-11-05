@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
 
 import HtmlContent from "../htmlContent"
-import SubArea from "./subArea"
+import ParkFeature from "./parkFeature"
 import CustomToggle from "./customToggle"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 
@@ -103,8 +103,8 @@ export const ReservationButtons = ({ campingTypeCode, parkOperation }) => {
 }
 
 export const AccordionList = ({ eventKey, feature, openAccordions, toggleAccordion, itemCount }) => {
-  const parkAreaName = feature.parkArea?.parkAreaName || ""
-  const parkFeatureId = _.kebabCase(parkAreaName)
+  const displayName = feature.displayName || ""
+  const parkFeatureId = _.kebabCase(displayName)
 
   return (
     <Accordion
@@ -114,12 +114,12 @@ export const AccordionList = ({ eventKey, feature, openAccordions, toggleAccordi
         <CustomToggle
           eventKey={eventKey}
           toggleId={parkFeatureId}
-          ariaControls={parkAreaName}
-          handleClick={() => toggleAccordion(eventKey, parkAreaName)}
+          ariaControls={displayName}
+          handleClick={() => toggleAccordion(eventKey, displayName)}
         >
           <div className="d-flex align-items-center">
             <HtmlContent className="accordion-header">
-              {parkAreaName}
+              {displayName}
             </HtmlContent>
           </div>
           <div className="d-flex align-items-center">
@@ -131,21 +131,19 @@ export const AccordionList = ({ eventKey, feature, openAccordions, toggleAccordi
       ) : (
         <div id={parkFeatureId} className="accordion-toggle">
           <HtmlContent className="accordion-header">
-            {parkAreaName}
+            {displayName}
           </HtmlContent>
         </div>
       )}
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
-        <SubArea data={feature} />
+        <ParkFeature data={feature} />
       </Accordion.Collapse>
     </Accordion>
   )
 }
 
 export default function ParkDates({ data, parkOperation, isLoadingParkFeatures, parkFeaturesLoadError }) {
-  const parkFeatures = useMemo(() => {
-    return data.parkFeatures?.sort((a, b) => (a.parkFeature >= b.parkFeature ? 1 : -1)) || []
-  }, [data.parkFeatures])
+  const parkFeatures = data.parkFeatures || []
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
 
@@ -154,7 +152,7 @@ export default function ParkDates({ data, parkOperation, isLoadingParkFeatures, 
       `Collapse all ${campingType.toLowerCase()}` : `Expand all ${campingType.toLowerCase()}`
   }
 
-  const toggleAccordion = (index, subAreaName) => {
+  const toggleAccordion = (index, name) => {
     setOpenAccordions((prev) => ({
       ...prev,
       [index]: !prev[index],
@@ -164,7 +162,7 @@ export default function ParkDates({ data, parkOperation, isLoadingParkFeatures, 
       null,
       null,
       null,
-      subAreaName,
+      name,
       {}
     )
   }
@@ -186,12 +184,12 @@ export default function ParkDates({ data, parkOperation, isLoadingParkFeatures, 
 
   const checkHash = useCallback(() => {
     // Check hash in url
-    // if we find a matching parkAreaName, open that feature accordion
+    // if we find a matching displayName, open that feature accordion
     if (typeof window !== "undefined") {
       const windowHash = window?.location?.hash
       if (!windowHash || windowHash === hash) return
       const matchingFeatureIndex = parkFeatures.findIndex(
-        (feature) => windowHash === "#" + _.kebabCase(feature.parkArea.parkAreaName)
+        (feature) => windowHash === "#" + _.kebabCase(feature.displayName)
       )
       if (matchingFeatureIndex === -1) return
       if (!openAccordions[matchingFeatureIndex]) {

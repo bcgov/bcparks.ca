@@ -10,7 +10,7 @@ import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
-import SubArea from "./subArea"
+import ParkFeature from "./parkFeature"
 import CustomToggle from "./customToggle"
 
 export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccordion, groupPicnicReservationUrl }) => {
@@ -40,8 +40,8 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
       </CustomToggle>
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
         <>
-          {facility.parkFeatures.map((subArea, index) => (
-            <SubArea key={index} data={subArea} showHeading={true} />
+          {facility.parkFeatures.map((feature, index) => (
+            <ParkFeature key={index} data={feature} showHeading={true} />
           ))}
           <div className="accordion-content">
             <HtmlContent>

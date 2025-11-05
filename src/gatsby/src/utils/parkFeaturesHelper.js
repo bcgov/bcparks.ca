@@ -19,6 +19,7 @@ const preProcessParkFeatures = parkFeatures => {
 
       let processed = {
         ...feature,
+        displayName: getDisplayName(feature),
         typeCode:
           facilityType.facilityCode || campingType.campingTypeCode || "",
         typeIcon: facilityType.icon || campingType.icon || "",
@@ -100,7 +101,8 @@ const groupParkFeaturesByType = parkFeatures => {
  */
 const combineCampingTypes = (campings, campingTypes, parkFeatures) => {
   let arr = []
-  let obj = { ...parkFeatures }
+  // Create a copy to avoid mutation
+  const obj = JSON.parse(JSON.stringify(parkFeatures))
 
   // Filter the campings to include only active
   const parkCampingTypes = campings.filter(camping => camping.isActive)
@@ -155,7 +157,8 @@ const combineCampingTypes = (campings, campingTypes, parkFeatures) => {
  */
 const combineFacilities = (facilities, facilityTypes, parkFeatures) => {
   let arr = []
-  let obj = { ...parkFeatures } // Create a copy to avoid mutation
+  // Create a copy to avoid mutation
+  const obj = JSON.parse(JSON.stringify(parkFeatures))
 
   // Filter the facilities to include only active
   const parkFacilities = facilities.filter(facility => facility.isActive)
@@ -193,6 +196,51 @@ const combineFacilities = (facilities, facilityTypes, parkFeatures) => {
   return arr.sort((a, b) =>
     a.facilityType.facilityName.localeCompare(b.facilityType.facilityName)
   )
+}
+
+/**
+ * Generates a display name for a park feature based on its area and feature name
+ * @param {Object} feature - The park feature object
+ * @param {Object|null} feature.parkArea - The park area object (can be null)
+ * @param {string} [feature.parkArea.parkAreaName] - The name of the park area
+ * @param {string} [feature.parkFeatureName] - The name of the park feature
+ * @returns {string} The formatted facility name
+ * @example
+ * // No park area - returns just feature name
+ * getDisplayName({ parkArea: null, parkFeatureName: "Boat Launch" })
+ * // Returns: "Boat Launch"
+ *
+ * @example
+ * // Feature name is "All sites" - returns just area name
+ * getDisplayName({
+ *   parkArea: { parkAreaName: "Campground A" },
+ *   parkFeatureName: "All sites"
+ * })
+ * // Returns: "Campground A"
+ *
+ * @example
+ * // Normal case - returns combined name
+ * getDisplayName({
+ *   parkArea: { parkAreaName: "Campground A" },
+ *   parkFeatureName: "Site 1"
+ * })
+ * // Returns: "Campground A: Site 1"
+ */
+const getDisplayName = feature => {
+  // If no park area, just display the feature name
+  if (feature.parkArea == null) {
+    return feature.parkFeatureName || ""
+  }
+
+  // If feature name is "All sites", just display the area name
+  if (feature.parkFeatureName === "All sites") {
+    return feature.parkArea.parkAreaName || ""
+  }
+
+  // Normal case: display both area and feature name
+  return `${feature.parkArea?.parkAreaName || ""}: ${
+    feature.parkFeatureName || ""
+  }`
 }
 
 export {

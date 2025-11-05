@@ -28,7 +28,7 @@ const DateTypeTooltip = ({ dateType, description }) => {
   )
 }
 
-export default function SubArea({ data, showHeading }) {
+export default function ParkFeature({ data, showHeading }) {
   const reservationName = 
     data.hasBackcountryReservations ? "Reservations required" : "Reservations"
   const reservationDescription =
@@ -85,7 +85,7 @@ export default function SubArea({ data, showHeading }) {
 
   return (
     <div className="accordion-content">
-      {showHeading && (<h4>{data.parkArea.parkAreaName}</h4>)}
+      {showHeading && (<h4>{data.displayName}</h4>)}
       <Row className="subarea-container">
         <Col className="subarea-container--left" xs={12} lg={6}>
           <div className="subarea-icon">

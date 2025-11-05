@@ -301,7 +301,7 @@ export default function ParkTemplate({ data }) {
       advisories.push(WINTER_FULL_PARK_ADVISORY);
       setAddedSeasonalAdvisory(true);
     }
-    // add subarea seasonal advisory
+    // add park feature seasonal advisory
     else if (parkAccessStatus?.areaClosure) {
       advisories.push(WINTER_SUB_AREA_ADVISORY);
       setAddedSeasonalAdvisory(true);

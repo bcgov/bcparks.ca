@@ -11,7 +11,7 @@ import StaticIcon from "./staticIcon"
 import { isNullOrWhiteSpace } from "../../utils/helpers"
 import "../../styles/cmsSnippets/parkInfoPage.scss"
 
-export const CampingType = ({ camping, parkOperation, isLoadingSubAreas, subAreasLoadError, isLoadingParkFeatures, parkFeaturesLoadError}) => {
+export const CampingType = ({ camping, parkOperation, isLoadingParkFeatures, parkFeaturesLoadError}) => {
   const [expanded, setExpanded] = useState(false)
   const [height, setHeight] = useState(0)
   const [sectionHeight, setSectionHeight] = useState(0)
@@ -110,7 +110,7 @@ export const CampingType = ({ camping, parkOperation, isLoadingSubAreas, subArea
 }
 
 export default function CampingDetails({ data }) {
-  const { activeCampings, parkOperation, isLoadingSubAreas, subAreasLoadError, isLoadingParkFeatures, parkFeaturesLoadError } = data
+  const { activeCampings, parkOperation, isLoadingParkFeatures, parkFeaturesLoadError } = data
 
   return (
     <div id="camping" className="anchor-link">
@@ -130,8 +130,6 @@ export default function CampingDetails({ data }) {
               eventKey={index.toString()}
               camping={camping}
               parkOperation={parkOperation}
-              isLoadingSubAreas={isLoadingSubAreas}
-              subAreasLoadError={subAreasLoadError}
               isLoadingParkFeatures={isLoadingParkFeatures}
               parkFeaturesLoadError={parkFeaturesLoadError}
             />

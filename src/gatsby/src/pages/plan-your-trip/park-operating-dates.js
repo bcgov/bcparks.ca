@@ -108,7 +108,7 @@ const ParkLink = ({
               <td>
                 <div className="subarea-name">
                   <StaticIcon name={feature.typeIcon} size={32} />
-                  {feature.parkFeatureName}
+                  {feature.displayName}
                 </div>
                 {feature.isCleanAirSite && (
                   <>
@@ -187,7 +187,7 @@ const ParkLink = ({
             <div className="card-title">
               <div className="subarea-name">
                 <StaticIcon name={feature.typeIcon} size={32} />
-                <h4>{feature.parkFeatureName}</h4>
+                <h4>{feature.displayName}</h4>
               </div>
               {feature.isCleanAirSite && (
                 <h5 className="mt-2">

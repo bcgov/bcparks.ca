@@ -108,6 +108,7 @@ const getAllParkFeatures = async (apiBaseUrl, startingLetter = null) => {
         parkDates: PARK_DATES,
         parkFeatureType: PARK_FEATURE_TYPE,
       },
+      sort: ["parkFeatureName:asc"],
       pagination: {
         limit: 1000,
       },
@@ -152,6 +153,7 @@ const getParkFeatures = async (apiBaseUrl, orcs) => {
         parkDates: PARK_DATES,
         parkFeatureType: PARK_FEATURE_TYPE,
       },
+      sort: ["parkFeatureName:asc"],
       pagination: {
         limit: 100,
       },
