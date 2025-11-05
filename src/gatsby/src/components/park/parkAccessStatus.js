@@ -39,25 +39,34 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
   // https://github.com/bcgov/bcparks.ca/pull/1661#discussion_r2466731034
   for (const parkFeature of parkFeatures) {
     // standardize date from graphQL with date from elasticSearch
-    if (parkFeature.parkFeatureType) {
-      if (parkFeature.closureAffectsAccessStatus === null) {
-        parkFeature.closureAffectsAccessStatus = parkFeature.parkFeatureType.closureAffectsAccessStatus;
+    // comment out for now
+    // closureAffectsAccessStatus is no longer available in parkFeatureType
+    // strapi_id does not match with subAreaTypeId
+
+    // if (subArea.parkSubAreaType) {
+    //   if (subArea.closureAffectsAccessStatus === null) {
+    //     subArea.closureAffectsAccessStatus = subArea.parkSubAreaType.closureAffectsAccessStatus;
+    //   }
+    // } else if (subArea.subAreaTypeId) {
+    //   let subAreaType = subAreaTypeList.find(type => {
+    //     return type.strapi_id === subArea.subAreaTypeId
+    //   });
+    //   subArea.closureAffectsAccessStatus = subArea.isIgnored === null
+    //     ? subAreaType.closureAffectsAccessStatus
+    //     : !subArea.isIgnored;
+    // }
+
+    if (parkFeature.parkFeatureTypeId) {
+      let parkFeatureType = parkFeatureTypes.find(type => {
+        return type.parkFeatureTypeId === parkFeature.parkFeatureTypeId
+      });
+      if (!parkFeatureType) {
+        continue;
       }
 
-    // subAreaTypeId is no longer available in parkFeatures
-    // strapi_id does not match with parkFeatureTypeId in parkFeatureTypes
-
-    // } else if (parkFeature.subAreaTypeId) {
-    //   let parkFeatureType = parkFeatureTypes.find(type => {
-    //     return type.strapi_id === parkFeature.subAreaTypeId
-    //   });
-    //   if (!parkFeatureType) {
-    //     continue;
-    //   }
-
-    //   parkFeature.closureAffectsAccessStatus = parkFeature.isIgnored === null
-    //     ? parkFeatureType.closureAffectsAccessStatus
-    //     : !parkFeature.isIgnored;
+      parkFeature.closureAffectsAccessStatus = parkFeature.isIgnored === null
+        ? parkFeatureType.closureAffectsAccessStatus
+        : !parkFeature.isIgnored;
     }
     // skip ignored parkFeatures
     if (!parkFeature.closureAffectsAccessStatus) {
@@ -165,7 +174,8 @@ export default function ParkAccessStatus({
         }
         allStrapiParkFeatureType {
           nodes {
-            strapi_id
+            featureTypeId
+            parkFeatureType
             closureAffectsAccessStatus
           }
         }

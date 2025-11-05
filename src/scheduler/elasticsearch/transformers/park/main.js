@@ -148,15 +148,10 @@ exports.createElasticPark = async function (park, photos) {
   // this is a work-around because you can't sort by distance to a shape
   // in Elasticsearch
   park.geoBoundary = geo.outline(flattenedGeometry);
-
-  // TODO: CMS-1206 Replace with parkDates
-  // remove unnecessary operating dates
-  park.parkOperationDates = operatingDates.convertParkOperationDates(park.parkOperationDates);
+  // remove unnecessary park gate dates
   park.parkDates = operatingDates.convertParkDates(park.parkDates);
 
-  // TODO: CMS-1206 Replace with parkFeatures - check if it has any dates
-  // remove unnecessary subareas and subarea dates
-  park.parkOperationSubAreas = operatingDates.convertParkOperationSubAreas(park.parkOperationSubAreas);
+  // remove unnecessary park features and park feature dates
   park.parkFeatures = operatingDates.convertParkFeatures(park.parkFeatures);
 
   // delete raw fields that were used for transformation

@@ -8,9 +8,6 @@ const convertParkDates = function (parkDates) {
   return parkDates
     .filter(d =>
       d.operatingYear >= thisYear &&
-      // dateTypeId 1 = gate dates
-      d.parkDateType.dateTypeId === 1 &&
-      d.protectedArea !== null &&
       d.publishedAt !== null &&
       (d.startDate || d.endDate)
     )
@@ -44,7 +41,7 @@ const convertParkFeatures = function (parkFeatures) {
       const f = {
         isActive: true,
         isOpen: true,
-        parkFeatureTypeId: feature?.parkFeatureType?.id,
+        parkFeatureTypeId: feature?.parkFeatureType?.featureTypeId,
         isIgnored: feature.closureAffectsAccessStatus === null ? null : !feature.closureAffectsAccessStatus,
         parkFeatureDates: feature.parkDates
           .filter(d =>

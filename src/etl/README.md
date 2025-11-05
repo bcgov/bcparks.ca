@@ -38,21 +38,3 @@ Copy .env.example to .env and populate the `PARK_NAMES_API_KEY` and `STRAPI_API_
 ```
     npm run start parknames ./data/park-names-response.json
 ```
-
-## Import subarea dates
-
-(this was run manually for 2024)
-
-#### with test data stored in a file
-```
-    npm run start subareadates ./data/2024-subarea-dates.json
-```
-
-## Import subarea notes
-
-(this was run manually for 2024)
-
-#### with test data stored in a file
-```
-    npm run start subareanotes ./data/2024-subarea-notes.json
-```

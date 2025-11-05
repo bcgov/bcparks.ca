@@ -91,11 +91,6 @@ module.exports = ({ strapi }) => ({
       },
       parkDates: {
         fields: ["operatingYear", "startDate", "endDate", "publishedAt"],
-        populate: {
-          "parkDateType": {
-            fields: ["dateType"]
-          }
-        },
         filters: {
           parkDateType: {
             dateTypeId: {
@@ -104,24 +99,11 @@ module.exports = ({ strapi }) => ({
           }
         }
       },
-      parkAreas: {
-        fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
-        populate: {
-          "parkAreaType": {
-            fields: ["id"]
-          }
-        }
-      },
       parkFeatures: {
         fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
         populate: {
           "parkDates": {
             fields: ["operatingYear", "startDate", "endDate", "isActive", "publishedAt"],
-            populate: {
-              "parkDateType": {
-                fields: ["dateType"]
-              }
-            },
             filters: {
               parkDateType: {
                 dateTypeId: {
@@ -131,7 +113,7 @@ module.exports = ({ strapi }) => ({
             }
           },
           "parkFeatureType": {
-            fields: ["id"]
+            fields: ["id", "featureTypeId"]
           }
         }
       }
