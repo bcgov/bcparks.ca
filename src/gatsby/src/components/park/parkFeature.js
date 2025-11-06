@@ -36,8 +36,8 @@ export default function ParkFeature({ data, showHeading }) {
     "Reservations must be made in advance. First come, first served camping is not available." : 
     "Reservations are highly recommended. You can book up to four months in advance."
 
-  const subAreasNotesList = [
-    { noteVar: "serviceNote", display: "Service note" },
+  const parkFeatureNotesList = [
+    { noteVar: "operationNote", display: "Operation note" },
     { noteVar: "reservationNote", display: "Booking note" },
     { noteVar: "offSeasonNote", display: "Off-season note" },
   ]
@@ -49,8 +49,8 @@ export default function ParkFeature({ data, showHeading }) {
       count.isActive;
   }
 
-  const renderGateTimes = subArea => {
-    if (!subArea) return null
+  const renderGateTimes = gate => {
+    if (!gate) return null
     const {
       hasGate,
       gateOpenTime,
@@ -59,7 +59,7 @@ export default function ParkFeature({ data, showHeading }) {
       gateClosesAtDusk,
       gateOpen24Hours,
       gateNote,
-    } = subArea
+    } = gate
 
     if (!hasGate) return null
     let message = ""
@@ -100,7 +100,7 @@ export default function ParkFeature({ data, showHeading }) {
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
-                <small>{renderGateTimes(data)}</small>
+                <small>{renderGateTimes(data.parkGate)}</small>
               </div>
             )}
             {data.reservationDates.length > 0 && (
@@ -171,7 +171,7 @@ export default function ParkFeature({ data, showHeading }) {
       </Row>
       <Row className="subarea-container mt-3">
         <Col>
-          {subAreasNotesList
+          {parkFeatureNotesList
             .filter(note => data[note.noteVar])
             .map((note, index) => (
               <div key={index} className="subarea-list subarea-note">

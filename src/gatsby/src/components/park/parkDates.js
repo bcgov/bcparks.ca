@@ -143,7 +143,10 @@ export const AccordionList = ({ eventKey, feature, openAccordions, toggleAccordi
 }
 
 export default function ParkDates({ data, parkOperation, isLoadingParkFeatures, parkFeaturesLoadError }) {
-  const parkFeatures = data.parkFeatures || []
+ const parkFeatures = useMemo(() => {
+    return data.parkFeatures || []
+  }, [data.parkFeatures])
+
   const [hash, setHash] = useState("")
   const [openAccordions, setOpenAccordions] = useState({})
 

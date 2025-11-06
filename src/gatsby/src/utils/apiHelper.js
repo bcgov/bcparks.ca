@@ -1,8 +1,13 @@
 import axios from "axios"
 import qs from "qs"
 
+import { countsList } from "./constants"
+
 // Constants
 const currentYear = new Date().getFullYear()
+const campsites = countsList
+  .filter(count => count.isActive)
+  .map(count => count.countVar)
 
 const PARK_AREA = {
   fields: ["parkAreaName"],
@@ -38,6 +43,7 @@ const PARK_GATE = {
     "gateOpensAtDawn",
     "gateClosesAtDusk",
     "gateOpen24Hours",
+    "gateNote",
   ],
 }
 const PARK_GATE_DATES = {
@@ -148,10 +154,19 @@ const getParkFeatures = async (apiBaseUrl, orcs) => {
           },
         },
       },
+      fields: [
+        "isActive",
+        "isOpen",
+        "parkFeatureName",
+        "hasBackcountryReservations",
+        "closureAffectsAccessStatus",
+        ...campsites,
+      ],
       populate: {
         parkArea: PARK_AREA,
         parkDates: PARK_DATES,
         parkFeatureType: PARK_FEATURE_TYPE,
+        parkGate: PARK_GATE,
       },
       sort: ["parkFeatureName:asc"],
       pagination: {

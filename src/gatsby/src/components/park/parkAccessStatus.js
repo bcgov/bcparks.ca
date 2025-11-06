@@ -35,13 +35,11 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
     return false;
   }
   const parkFeatureTypes = staticData?.allStrapiParkFeatureType.nodes || []
-  // TODO: CMS-1206 Replace with parkFeatures when available in Elasticsearch
-  // https://github.com/bcgov/bcparks.ca/pull/1661#discussion_r2466731034
   for (const parkFeature of parkFeatures) {
     // standardize date from graphQL with date from elasticSearch
     // comment out for now
     // closureAffectsAccessStatus is no longer available in parkFeatureType
-    // strapi_id does not match with subAreaTypeId
+    // strapi_id does not match with subAreaTypeId (featureTypeId)
 
     // if (subArea.parkSubAreaType) {
     //   if (subArea.closureAffectsAccessStatus === null) {
