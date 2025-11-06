@@ -102,7 +102,7 @@ const groupParkFeatureDates = (feature) => {
   
   // Group dates by dateTypeId
   const datesByTypeId = featureDates
-    .filter(date => date.isActive && date.parkDateType?.dateTypeId)
+    .filter(date => date.isActive && date.parkDateType?.dateTypeId != null)
     .reduce((acc, date) => {
       const dateTypeId = date.parkDateType.dateTypeId
       

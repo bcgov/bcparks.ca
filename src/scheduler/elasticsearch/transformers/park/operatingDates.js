@@ -33,7 +33,7 @@ const convertParkFeatures = function (parkFeatures) {
             d.operatingYear >= thisYear &&
             d.isActive &&
             d.publishedAt !== null &&
-            (d.startDate || d.endDate)
+            (d.startDate && d.endDate)
           )
           .map(d => {
             delete d.id;
