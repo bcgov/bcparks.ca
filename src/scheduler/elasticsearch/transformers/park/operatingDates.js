@@ -9,7 +9,7 @@ const convertParkDates = function (parkDates) {
     .filter(d =>
       d.operatingYear >= thisYear &&
       d.publishedAt !== null &&
-      (d.startDate || d.endDate)
+      (d.startDate && d.endDate)
     )
     .map(d => {
       delete d.id;
