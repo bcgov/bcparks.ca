@@ -159,6 +159,7 @@ module.exports = ({ env }) => {
             "api::search-area.search-area": {
               GET: true,
             },
+            // TODO: Data cleanup - remove unused content types
             "api::park-operation-sub-area.park-operation-sub-area": {
               GET: true,
             },
