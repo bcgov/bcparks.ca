@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef, useMemo } from "react"
-import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 import Row from "react-bootstrap/Row"
@@ -8,7 +7,8 @@ import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories } from '../utils/advisoryHelper';
-import { groupSubAreasByType, combineCampingTypes, combineFacilities, loadSubAreas } from '../utils/subAreaHelper';
+import { groupParkFeaturesByType, combineCampingTypes, combineFacilities } from '../utils/parkFeaturesHelper';
+import { getParkFeatures, getProtectedArea } from "../utils/apiHelper"
 
 import Acknowledgment from "../components/acknowledgment"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -66,9 +66,9 @@ export default function SiteTemplate({ data }) {
   const [protectedAreaLoadError, setProtectedAreaLoadError] = useState(false)
   const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
   const [hasCampfireBan, setHasCampfireBan] = useState(false)
-  const [subAreas, setSubAreas] = useState([])
-  const [subAreasLoadError, setSubAreasLoadError] = useState(false)
-  const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
+  const [parkFeatures, setParkFeatures] = useState([])
+  const [parkFeaturesLoadError, setParkFeaturesLoadError] = useState(false)
+  const [isLoadingParkFeatures, setIsLoadingParkFeatures] = useState(true)
   const [activeFacilities, setActiveFacilities] = useState([])
   const [activeCampings, setActiveCampings] = useState([])
   // only one audio clip can be active at a time
@@ -101,10 +101,8 @@ export default function SiteTemplate({ data }) {
   const loadProtectedAreaData = async () => {
     setIsLoadingProtectedArea(true)
     try {
-      const response = await axios.get(
-        `${apiBaseUrl}/protected-areas/${park?.orcs}?fields=hasCampfireBan`
-      )
-      setHasCampfireBan(response.data.hasCampfireBan)
+      const response = await getProtectedArea(apiBaseUrl, park.orcs)
+      setHasCampfireBan(response.hasCampfireBan)
       setProtectedAreaLoadError(false)
     } catch (error) {
       console.error("Error loading protected area:", error)
@@ -115,34 +113,34 @@ export default function SiteTemplate({ data }) {
     }
   }
   
-  const loadSubAreasData = async () => {
-    setIsLoadingSubAreas(true)
+  const loadParkFeaturesData = async () => {
+    setIsLoadingParkFeatures(true)
     try {
-      const response = await loadSubAreas(apiBaseUrl, park?.orcs)
-      setSubAreas(response.data.data)
-      setSubAreasLoadError(false)
+      const response = await getParkFeatures(apiBaseUrl, park.orcs)
+      setParkFeatures(response.data)
+      setParkFeaturesLoadError(false)
     } catch (error) {
-      console.error("Error loading sub-areas:", error)
-      setSubAreas([])
-      setSubAreasLoadError(true)
+      console.error("Error loading park features:", error)
+      setParkFeatures([])
+      setParkFeaturesLoadError(true)
     } finally {
-      setIsLoadingSubAreas(false)
+      setIsLoadingParkFeatures(false)
     }
   }
   
   useEffect(() => {
     loadAdvisoriesData()
     loadProtectedAreaData()
-    loadSubAreasData()
+    loadParkFeaturesData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiBaseUrl, park?.orcs, site.orcsSiteNumber])
   
-  const processedSubAreas = useMemo(() => {
-    if (!isLoadingSubAreas && !subAreasLoadError && subAreas.length) {
-      return groupSubAreasByType(subAreas)
-    }
-    return []
-  }, [isLoadingSubAreas, subAreasLoadError, subAreas])
+  const processedFeatures = useMemo(() => {
+      if (!isLoadingParkFeatures && !parkFeaturesLoadError && parkFeatures.length) {
+        return groupParkFeaturesByType(parkFeatures)
+      }
+      return []
+    }, [isLoadingParkFeatures, parkFeaturesLoadError, parkFeatures])
 
   // set active facilities
   useEffect(() => {
@@ -152,11 +150,11 @@ export default function SiteTemplate({ data }) {
       const facilities = combineFacilities(
         site.parkFacilities,
         data.allStrapiFacilityType.nodes,
-        processedSubAreas
+        processedFeatures
       )
       setActiveFacilities(facilities)
     }
-  }, [site.parkFacilities, data.allStrapiFacilityType.nodes, processedSubAreas])
+  }, [site.parkFacilities, data.allStrapiFacilityType.nodes, processedFeatures])
 
     // set active campings
     useEffect(() => {
@@ -166,11 +164,11 @@ export default function SiteTemplate({ data }) {
         const campings = combineCampingTypes(
           site.parkCampingTypes,
           data.allStrapiCampingType.nodes,
-          processedSubAreas
+          processedFeatures
         )
         setActiveCampings(campings)
       }
-    }, [site.parkCampingTypes, data.allStrapiCampingType.nodes, processedSubAreas])
+    }, [site.parkCampingTypes, data.allStrapiCampingType.nodes, processedFeatures])
 
   const parkOverviewRef = useRef("")
   const knowBeforeRef = useRef("")
@@ -289,9 +287,9 @@ export default function SiteTemplate({ data }) {
             searchArea={searchArea}
             parkOperation={operations}
             operationDates={site?.parkOperationDates || park.parkOperationDates}
-            subAreas={subAreas}
-            isLoadingSubAreas={isLoadingSubAreas}
-            subAreasLoadError={subAreasLoadError}
+            parkFeatures={parkFeatures}
+            isLoadingParkFeatures={isLoadingParkFeatures}
+            parkFeaturesLoadError={parkFeaturesLoadError}
             audioClips={site.audioClips}
             activeAudio={activeAudio}
             setActiveAudio={setActiveAudio}
@@ -400,9 +398,9 @@ export default function SiteTemplate({ data }) {
                   data={{
                     activeCampings: activeCampings,
                     parkOperation: operations,
-                    subAreas: subAreas,
-                    isLoadingSubAreas: isLoadingSubAreas,
-                    subAreasLoadError: subAreasLoadError,
+                    parkFeatures: parkFeatures,
+                    isLoadingParkFeatures: isLoadingParkFeatures,
+                    parkFeaturesLoadError: parkFeaturesLoadError
                   }}
                 />
               </div>

@@ -45,8 +45,6 @@ module.exports = {
           "footer-menu",
           "park-operation",
           "park-operation-date",
-          "park-operation-sub-area-date",
-          "park-operation-sub-area-type",
           "park-date",
           "park-area-type",
           "park-feature-type",

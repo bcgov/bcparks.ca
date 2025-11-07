@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef, useMemo } from "react"
-import axios from "axios"
 import { sortBy, truncate } from "lodash"
 import { graphql, Link as GatsbyLink, navigate } from "gatsby"
 import Row from "react-bootstrap/Row"
@@ -8,8 +7,8 @@ import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from '../utils/advisoryHelper';
-import { groupSubAreasByType, combineCampingTypes, combineFacilities, loadSubAreas } from '../utils/subAreaHelper';
-import { loadProtectedArea } from "../utils/protectedAreaHelper"
+import { groupParkFeaturesByType, combineCampingTypes, combineFacilities } from '../utils/parkFeaturesHelper';
+import { getParkFeatures, getProtectedArea } from "../utils/apiHelper"
 
 import About from "../components/park/about"
 import Acknowledgment from "../components/acknowledgment"
@@ -85,14 +84,15 @@ export default function ParkTemplate({ data }) {
   const [hasCampfireBan, setHasCampfireBan] = useState(false)
   const [parkAccessStatus, setParkAccessStatus] = useState(null)
   const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
-  const [subAreas, setSubAreas] = useState([])
-  const [subAreasLoadError, setSubAreasLoadError] = useState(false)
-  const [isLoadingSubAreas, setIsLoadingSubAreas] = useState(true)
+  const [parkFeatures, setParkFeatures] = useState([])
+  const [parkFeaturesLoadError, setParkFeaturesLoadError] = useState(false)
+  const [isLoadingParkFeatures, setIsLoadingParkFeatures] = useState(true)
   const [activeFacilities, setActiveFacilities] = useState([])
   const [activeCampings, setActiveCampings] = useState([])
   // only one audio clip can be active at a time
   const [activeAudio, setActiveAudio] = useState("")
   const [parkGate, setParkGate] = useState({})
+  const [parkGateDates, setParkGateDates] = useState([])
 
   const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
@@ -112,48 +112,50 @@ export default function ParkTemplate({ data }) {
   const loadProtectedAreaData = async () => {
     setIsLoadingProtectedArea(true)
     try {
-      const response = await loadProtectedArea(apiBaseUrl, park.orcs)
-      setHasCampfireBan(response.data.hasCampfireBan)
-      setParkGate(response.data.parkGate)
+      const response = await getProtectedArea(apiBaseUrl, park.orcs)
+      setHasCampfireBan(response.hasCampfireBan)
+      setParkGate(response.parkGate)
+      setParkGateDates(response.parkDates)
       setProtectedAreaLoadError(false)
     } catch (error) {
       console.error("Error loading protected area:", error)
       setHasCampfireBan(false)
       setParkGate({})
+      setParkGateDates([])
       setProtectedAreaLoadError(true)
     } finally {
       setIsLoadingProtectedArea(false)
     }
   }
   
-  const loadSubAreasData = async () => {
-    setIsLoadingSubAreas(true)
+  const loadParkFeaturesData = async () => {
+    setIsLoadingParkFeatures(true)
     try {
-      const response = await loadSubAreas(apiBaseUrl, park.orcs)
-      setSubAreas(response.data.data)
-      setSubAreasLoadError(false)
+      const response = await getParkFeatures(apiBaseUrl, park.orcs)
+      setParkFeatures(response.data)
+      setParkFeaturesLoadError(false)
     } catch (error) {
-      console.error("Error loading sub-areas:", error)
-      setSubAreas([])
-      setSubAreasLoadError(true)
+      console.error("Error loading park features:", error)
+      setParkFeatures([])
+      setParkFeaturesLoadError(true)
     } finally {
-      setIsLoadingSubAreas(false)
+      setIsLoadingParkFeatures(false)
     }
   }
-  
+
   useEffect(() => {
     loadAdvisoriesData()
     loadProtectedAreaData()
-    loadSubAreasData()
+    loadParkFeaturesData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiBaseUrl, park.orcs])
 
-  const processedSubAreas = useMemo(() => {
-    if (!isLoadingSubAreas && !subAreasLoadError && subAreas.length) {
-      return groupSubAreasByType(subAreas)
+  const processedFeatures = useMemo(() => {
+    if (!isLoadingParkFeatures && !parkFeaturesLoadError && parkFeatures.length) {
+      return groupParkFeaturesByType(parkFeatures)
     }
     return []
-  }, [isLoadingSubAreas, subAreasLoadError, subAreas])
+  }, [isLoadingParkFeatures, parkFeaturesLoadError, parkFeatures])
 
   // set active facilities
   useEffect(() => {
@@ -163,11 +165,11 @@ export default function ParkTemplate({ data }) {
       const facilities = combineFacilities(
         park.parkFacilities,
         data.allStrapiFacilityType.nodes,
-        processedSubAreas
+        processedFeatures
       )
       setActiveFacilities(facilities)
     }
-  }, [park.parkFacilities, data.allStrapiFacilityType.nodes, processedSubAreas])
+  }, [park.parkFacilities, data.allStrapiFacilityType.nodes, processedFeatures])
 
   // set active campings
   useEffect(() => {
@@ -177,14 +179,14 @@ export default function ParkTemplate({ data }) {
       const campings = combineCampingTypes(
         park.parkCampingTypes,
         data.allStrapiCampingType.nodes,
-        processedSubAreas
+        processedFeatures
       )
       setActiveCampings(campings)
     }
-  }, [park.parkCampingTypes, data.allStrapiCampingType.nodes, processedSubAreas])
+  }, [park.parkCampingTypes, data.allStrapiCampingType.nodes, processedFeatures])
 
   useEffect(() => {
-    if (window.location.hash && !isLoadingProtectedArea && !isLoadingAdvisories && !isLoadingSubAreas) {
+    if (window.location.hash && !isLoadingProtectedArea && !isLoadingAdvisories && !isLoadingParkFeatures) {
       const id = window.location.hash.replace("#", "")
       const element = document.getElementById(id) || document.querySelector(window.location.hash)
       if (element) {
@@ -193,7 +195,7 @@ export default function ParkTemplate({ data }) {
         }, 100)
       }
     }
-  }, [isLoadingProtectedArea, isLoadingAdvisories, isLoadingSubAreas])
+  }, [isLoadingProtectedArea, isLoadingAdvisories, isLoadingParkFeatures])
 
   const handleAccessStatus = function (statusObj) {
     setParkAccessStatus(statusObj);
@@ -299,7 +301,7 @@ export default function ParkTemplate({ data }) {
       advisories.push(WINTER_FULL_PARK_ADVISORY);
       setAddedSeasonalAdvisory(true);
     }
-    // add subarea seasonal advisory
+    // add park feature seasonal advisory
     else if (parkAccessStatus?.areaClosure) {
       advisories.push(WINTER_SUB_AREA_ADVISORY);
       setAddedSeasonalAdvisory(true);
@@ -359,10 +361,10 @@ export default function ParkTemplate({ data }) {
             searchArea={searchArea}
             parkOperation={park.parkOperation}
             parkGate={parkGate}
-            operationDates={park.parkOperationDates}
-            subAreas={subAreas}
-            isLoadingSubAreas={isLoadingSubAreas}
-            subAreasLoadError={subAreasLoadError}
+            operationDates={parkGateDates}
+            parkFeatures={parkFeatures}
+            isLoadingParkFeatures={isLoadingParkFeatures}
+            parkFeaturesLoadError={parkFeaturesLoadError}
             onStatusCalculated={handleAccessStatus}
             audioClips={park.audioClips}
             activeAudio={activeAudio}
@@ -476,9 +478,9 @@ export default function ParkTemplate({ data }) {
                   data={{
                     activeCampings: activeCampings,
                     parkOperation: park.parkOperation,
-                    subAreas: subAreas,
-                    isLoadingSubAreas: isLoadingSubAreas,
-                    subAreasLoadError: subAreasLoadError,
+                    parkFeatures: parkFeatures,
+                    isLoadingParkFeatures: isLoadingParkFeatures,
+                    parkFeaturesLoadError: parkFeaturesLoadError
                   }}
                 />
               </div>
@@ -753,11 +755,6 @@ export const query = graphql`
             }
           }
         }
-      }
-      parkOperationDates {
-        operatingYear
-        gateOpenDate
-        gateCloseDate
       }
       biogeoclimaticZones {
         zone

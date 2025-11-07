@@ -258,9 +258,6 @@ module.exports = ({ strapi }) => ({
             "parkLocations.searchAreaNum",
             "advisories",
             "parkPhotos",
-            "parkOperationSubAreas",
-            // TODO: CMS-1206 Replace with parkDates
-            "parkOperationDates",
             "parkDates",
             "parkAreas",
             "parkFeatures"

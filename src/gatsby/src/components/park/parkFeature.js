@@ -28,7 +28,7 @@ const DateTypeTooltip = ({ dateType, description }) => {
   )
 }
 
-export default function SubArea({ data, showHeading }) {
+export default function ParkFeature({ data, showHeading }) {
   const reservationName = 
     data.hasBackcountryReservations ? "Reservations required" : "Reservations"
   const reservationDescription =
@@ -36,8 +36,8 @@ export default function SubArea({ data, showHeading }) {
     "Reservations must be made in advance. First come, first served camping is not available." : 
     "Reservations are highly recommended. You can book up to four months in advance."
 
-  const subAreasNotesList = [
-    { noteVar: "serviceNote", display: "Service note" },
+  const parkFeatureNotesList = [
+    { noteVar: "operationNote", display: "Operation note" },
     { noteVar: "reservationNote", display: "Booking note" },
     { noteVar: "offSeasonNote", display: "Off-season note" },
   ]
@@ -49,8 +49,8 @@ export default function SubArea({ data, showHeading }) {
       count.isActive;
   }
 
-  const renderGateTimes = subArea => {
-    if (!subArea) return null
+  const renderGateTimes = gate => {
+    if (!gate) return null
     const {
       hasGate,
       gateOpenTime,
@@ -59,7 +59,7 @@ export default function SubArea({ data, showHeading }) {
       gateClosesAtDusk,
       gateOpen24Hours,
       gateNote,
-    } = subArea
+    } = gate
 
     if (!hasGate) return null
     let message = ""
@@ -85,25 +85,25 @@ export default function SubArea({ data, showHeading }) {
 
   return (
     <div className="accordion-content">
-      {showHeading && (<h4>{data.parkSubArea}</h4>)}
+      {showHeading && (<h4>{data.displayName}</h4>)}
       <Row className="subarea-container">
         <Col className="subarea-container--left" xs={12} lg={6}>
           <div className="subarea-icon">
             <FontAwesomeIcon icon={faCalendar} />
           </div>
           <div className="subarea-lists">
-            {data.serviceDates.length > 0 && (
+            {data.operationDates.length > 0 && (
               <div className="subarea-list">
                 <h4>Operating season</h4>
                 <ul>
-                  {data.serviceDates.map((dateRange, index) =>
+                  {data.operationDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
-                <small>{renderGateTimes(data)}</small>
+                <small>{renderGateTimes(data.parkGate)}</small>
               </div>
             )}
-            {data.resDates.length > 0 && (
+            {data.reservationDates.length > 0 && (
               <div className="subarea-list">
                 <h4>
                   {reservationName}{" "}
@@ -113,14 +113,23 @@ export default function SubArea({ data, showHeading }) {
                   />
                 </h4>
                 <ul>
-                  {data.resDates.map((dateRange, index) =>
+                  {data.reservationDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
               </div>
             )}
-            {/* TODO: Add Backcountry registration dates after API endpoint change */}
-            {data.offSeasonDates.length > 0 && (
+            {data.backcountryDates.length > 0 && (
+              <div className="subarea-list">
+                <h4>Registration required</h4>
+                <ul>
+                  {data.backcountryDates.map((dateRange, index) =>
+                    <li key={index}>{dateRange}</li>
+                  )}
+                </ul>
+              </div>
+            )}
+            {data.winterFeeDates.length > 0 && (
               <div className="subarea-list">
                 <h4>
                   Winter rate{" "}
@@ -130,7 +139,7 @@ export default function SubArea({ data, showHeading }) {
                   />
                 </h4>
                 <ul>
-                  {data.offSeasonDates.map((dateRange, index) =>
+                  {data.winterFeeDates.map((dateRange, index) =>
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
@@ -162,7 +171,7 @@ export default function SubArea({ data, showHeading }) {
       </Row>
       <Row className="subarea-container mt-3">
         <Col>
-          {subAreasNotesList
+          {parkFeatureNotesList
             .filter(note => data[note.noteVar])
             .map((note, index) => (
               <div key={index} className="subarea-list subarea-note">

@@ -130,8 +130,8 @@ const ParkCard = ({ r }) => {
                 <ParkAccessStatus
                   advisories={r.advisories}
                   slug={r.slug}
-                  subAreas={r.parkOperationSubAreas}
-                  operationDates={r.parkOperationDates}
+                  parkFeatures={r.parkFeatures}
+                  operationDates={r.parkDates}
                   hideComma={true}
                 />
                 {r.hasCampfireBan &&
@@ -222,8 +222,8 @@ const ParkCard = ({ r }) => {
             <ParkAccessStatus
               advisories={r.advisories}
               slug={r.slug}
-              subAreas={r.parkOperationSubAreas}
-              operationDates={r.parkOperationDates}
+              parkFeatures={r.parkFeatures}
+              operationDates={r.parkDates}
               hideComma={true}
             />
             {r.hasCampfireBan &&

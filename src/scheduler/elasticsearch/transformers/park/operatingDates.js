@@ -1,6 +1,6 @@
 /* 
-  Remove extra data from parkOperationDates and parkOperationSubAreaDates 
-  e.g. inactive or closed subareas and data from past years
+  Remove extra data from parkDates for park and parkFeatures
+  e.g. inactive or closed parkFeatures and data from past years
 */
 
 const convertParkDates = function (parkDates) {
@@ -8,26 +8,8 @@ const convertParkDates = function (parkDates) {
   return parkDates
     .filter(d =>
       d.operatingYear >= thisYear &&
-      // dateTypeId 1 = gate dates
-      d.parkDateType.dateTypeId === 1 &&
-      d.protectedArea !== null &&
       d.publishedAt !== null &&
-      (d.startDate || d.endDate)
-    )
-    .map(d => {
-      delete d.id;
-      delete d.publishedAt;
-      return d;
-    });
-}
-
-const convertParkOperationDates = function (parkOperationDates) {
-  const thisYear = new Date().getFullYear();
-  return parkOperationDates
-    .filter(d =>
-      d.operatingYear >= thisYear &&
-      d.publishedAt !== null &&
-      (d.gateOpenDate || d.gateCloseDate)
+      (d.startDate && d.endDate)
     )
     .map(d => {
       delete d.id;
@@ -44,14 +26,14 @@ const convertParkFeatures = function (parkFeatures) {
       const f = {
         isActive: true,
         isOpen: true,
-        parkFeatureTypeId: feature?.parkFeatureType?.id,
+        parkFeatureTypeId: feature?.parkFeatureType?.featureTypeId,
         isIgnored: feature.closureAffectsAccessStatus === null ? null : !feature.closureAffectsAccessStatus,
-        parkFeatureDates: feature.parkDates
+        parkDates: feature.parkDates
           .filter(d =>
             d.operatingYear >= thisYear &&
             d.isActive &&
             d.publishedAt !== null &&
-            (d.startDate || d.endDate)
+            (d.startDate && d.endDate)
           )
           .map(d => {
             delete d.id;
@@ -59,39 +41,8 @@ const convertParkFeatures = function (parkFeatures) {
             return d;
           })
       }
-      if (f.parkFeatureDates.length > 0) {
+      if (f.parkDates.length > 0) {
         results.push(f);
-      }
-    }
-  }
-  return results;
-}
-
-const convertParkOperationSubAreas = function (parkOperationSubAreas) {
-  const thisYear = new Date().getFullYear();
-  const results = [];
-  for (const subarea of parkOperationSubAreas) {
-    if (subarea.isActive && subarea.isOpen && subarea.publishedAt !== null) {
-      const sa = {
-        isActive: true,
-        isOpen: true,
-        subAreaTypeId: subarea?.parkSubAreaType?.id,
-        isIgnored: subarea.closureAffectsAccessStatus === null ? null : !subarea.closureAffectsAccessStatus,
-        parkOperationSubAreaDates: subarea.parkOperationSubAreaDates
-          .filter(d =>
-            d.operatingYear >= thisYear &&
-            d.isActive &&
-            d.publishedAt !== null &&
-            (d.openDate || d.closeDate)
-          )
-          .map(d => {
-            delete d.id;
-            delete d.publishedAt;
-            return d;
-          })
-      }
-      if (sa.parkOperationSubAreaDates.length > 0) {
-        results.push(sa);
       }
     }
   }
@@ -100,7 +51,5 @@ const convertParkOperationSubAreas = function (parkOperationSubAreas) {
 
 module.exports = {
   convertParkDates,
-  convertParkOperationDates,
-  convertParkFeatures,
-  convertParkOperationSubAreas
+  convertParkFeatures
 }

@@ -82,9 +82,9 @@ export default function ParkHeader({
   parkOperation,
   parkGate,
   operationDates,
-  subAreas,
-  isLoadingSubAreas,
-  subAreasLoadError,
+  parkFeatures,
+  isLoadingParkFeatures,
+  parkFeaturesLoadError,
   onStatusCalculated,
   audioClips,
   activeAudio,
@@ -94,8 +94,7 @@ export default function ParkHeader({
   const externalLink =
     `${mapUrl}&center=${longitude},${latitude}&level=${linkZoom}`
   // Get the park operation dates
-  const thisYear = new Date().getFullYear()
-  const parkDates = getParkDates(operationDates, thisYear)
+  const parkDates = getParkDates(operationDates)
   const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
   const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
   // Check if array contains a "tldr"
@@ -133,11 +132,11 @@ export default function ParkHeader({
           </div>
         )}
         <div className="park-header-child">
-          {(!isLoadingAdvisories && !advisoryLoadError && !isLoadingSubAreas && !subAreasLoadError) ?
+          {(!isLoadingAdvisories && !advisoryLoadError && !isLoadingParkFeatures && !parkFeaturesLoadError) ?
             <ParkAccessStatus
               advisories={advisories}
               slug={slug}
-              subAreas={subAreas}
+              parkFeatures={parkFeatures}
               operationDates={operationDates}
               onStatusCalculated={onStatusCalculated}
               punctuation="."
@@ -229,9 +228,9 @@ ParkHeader.propTypes = {
   parkOperation: PropTypes.object,
   parkGate: PropTypes.object,
   operationDates: PropTypes.array.isRequired,
-  subAreas: PropTypes.array.isRequired,
-  isLoadingSubAreas: PropTypes.bool.isRequired,
-  subAreasLoadError: PropTypes.any,
+  parkFeatures: PropTypes.array.isRequired,
+  isLoadingParkFeatures: PropTypes.bool.isRequired,
+  parkFeaturesLoadError: PropTypes.any,
   onStatusCalculated: PropTypes.func,
   audioClips: PropTypes.array,
   activeAudio: PropTypes.string,
