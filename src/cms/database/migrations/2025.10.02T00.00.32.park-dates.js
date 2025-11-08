@@ -189,6 +189,19 @@ const tierDates = [
 // Helper function to insert park date and its relations
 async function insertParkDate(knex, dateData, relations) {
   try {
+    // Skip if either start_date or end_date is missing
+    if (!dateData.start_date || !dateData.end_date) {
+      console.warn(
+        "Skipping park date creation: missing start_date or end_date",
+        {
+          start_date: dateData.start_date,
+          end_date: dateData.end_date,
+          operating_year: dateData.operating_year,
+        }
+      );
+      return null;
+    }
+
     const [newParkDate] = await knex("park_dates")
       .insert({
         ...dateData,
