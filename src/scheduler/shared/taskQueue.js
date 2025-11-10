@@ -22,7 +22,15 @@ const readQueue = async function (actionName, options) {
     getLogger().info(`Got ${queuedTasks.length} "${actionName}" tasks from the queue`);
   }
   return queuedTasks;
-}
+};
+
+const addToQueue = async function (task) {
+  try {
+    await cmsAxios.post("/api/queued-tasks", task);
+  } catch (error) {
+    getLogger().error(error);
+  }
+};
 
 const removeFromQueue = async function (queueIds) {
   if (queueIds?.length > 0) {
@@ -33,9 +41,10 @@ const removeFromQueue = async function (queueIds) {
       getLogger().error(error);
     }
   }
-}
+};
 
 module.exports = {
   readQueue,
-  removeFromQueue
-}
+  removeFromQueue,
+  addToQueue,
+};

@@ -89,4 +89,10 @@ async function getParkGateIds(protectedAreaId, parkAreaId, parkFeatureId) {
   return gateResponse.data.data.map((gate) => gate.id);
 }
 
-module.exports = { getEntityIds, getDateTypeMap, getParkGateIds };
+// Try to get the orcs from the orcs, orcsAreaNumber or orcsFeatureNumber fields
+function tryGetOrcs(item) {
+  const wellKnownKey = item.orcs || item.orcsAreaNumber || item.orcsFeatureNumber;
+  return wellKnownKey ? parseInt(wellKnownKey, 10) : undefined;
+}
+
+module.exports = { getEntityIds, getDateTypeMap, getParkGateIds, tryGetOrcs };
