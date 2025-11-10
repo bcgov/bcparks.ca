@@ -3,6 +3,7 @@ const { readQueue, removeFromQueue } = require("../../shared/taskQueue");
 const { noCommandLineArgs } = require("../../shared/commandLine");
 const { cmsAxios } = require("../../shared/axiosConfig");
 const { getEntityIds, getDateTypeMap, getParkGateIds } = require("../utils/helper");
+const { dootSplitMessage } = require("./splitMessage");
 
 /**
  * Publishes DOOT date and gate info to Strapi
@@ -28,6 +29,17 @@ exports.dootPublish = async function () {
       logger.error(`dootPublish() expected jsonData to be an array but got: ${typeof jsonData}`);
       continue;
     }
+
+    // check if the array contains data from multiple entities. If so, then split
+    // it up into separate messages\
+    if (jsonData.length > 1) {
+      logger.info(
+        `Splitting dootpublish task with ${jsonData.length} items into separate messages`
+      );
+      await dootSplitMessage(message);
+      continue;
+    }
+
     for (const item of jsonData) {
       let protectedAreaId, parkAreaId, parkFeatureId, relationName;
       try {

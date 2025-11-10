@@ -89,4 +89,25 @@ async function getParkGateIds(protectedAreaId, parkAreaId, parkFeatureId) {
   return gateResponse.data.data.map((gate) => gate.id);
 }
 
-module.exports = { getEntityIds, getDateTypeMap, getParkGateIds };
+// Try to get the orcs from the orcs, orcsAreaNumber or orcsFeatureNumber fields
+function tryGetOrcs(item) {
+  let orcs = -1; // we don't use the orcs for anthing other than numericData
+  // in the queue which is for information purposes only, so -1 is fine here
+
+  try {
+    if (item.orcs) {
+      orcs = item.orcs;
+    } else if (item.orcsAreaNumber) {
+      // split in the hyphen from the orcsAreaNumber to get the orcs
+      orcs = item.orcsAreaNumber.split("-")[0];
+    } else if (item.orcsFeatureNumber) {
+      // split in the hyphen from the orcsFeatureNumber to get the orcs
+      orcs = item.orcsFeatureNumber.split("-")[0];
+    }
+  } catch (error) {
+    throw new Error(`tryGetOrcs() failed to get orcs from item: ${error}`);
+  }
+  return orcs;
+}
+
+module.exports = { getEntityIds, getDateTypeMap, getParkGateIds, tryGetOrcs };
