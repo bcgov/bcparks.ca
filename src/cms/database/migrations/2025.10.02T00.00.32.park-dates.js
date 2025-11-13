@@ -187,7 +187,7 @@ const tierDates = [
 ];
 
 // Helper function to insert park date and its relations
-async function insertParkDate(knex, dateData, relations) {
+async function insertParkDate(knex, dateData, relations, dateType = null) {
   try {
     // Skip if either start_date or end_date is missing
     if (!dateData.start_date || !dateData.end_date) {
@@ -197,6 +197,19 @@ async function insertParkDate(knex, dateData, relations) {
           start_date: dateData.start_date,
           end_date: dateData.end_date,
           operating_year: dateData.operating_year,
+        }
+      );
+      return null;
+    }
+
+    // Skip Winter fee date types globally
+    if (dateType === "Winter fee") {
+      console.log(
+        `Skipping park date creation: Winter fee date type not imported`,
+        {
+          operating_year: dateData.operating_year,
+          start_date: dateData.start_date,
+          end_date: dateData.end_date,
         }
       );
       return null;
@@ -260,7 +273,9 @@ module.exports = {
     });
 
     // 1. Park-operation-date (park level) -> Park-date
-    const parkOperationDates = await knex("park_operation_dates").select("*");
+    const parkOperationDates = await knex("park_operation_dates")
+      .select("*")
+      .whereNotNull("published_at");
     for (const parkDate of parkOperationDates) {
       let parkOperation;
       let isDateAnnual = false;
@@ -317,14 +332,15 @@ module.exports = {
           park_dates_park_date_type_links: {
             park_date_type_id: dateTypeMap["Gate"],
           },
-        }
+        },
+        "Gate"
       );
     }
 
     // 2. Park-operation-sub-area-date (feature level) -> Park-date
-    const subAreaDates = await knex("park_operation_sub_area_dates").select(
-      "*"
-    );
+    const subAreaDates = await knex("park_operation_sub_area_dates")
+      .select("*")
+      .whereNotNull("published_at");
     for (const subAreaDate of subAreaDates) {
       // Get the link to park_operation_sub_area via link table
       const subAreaLink = await knex(
@@ -385,7 +401,8 @@ module.exports = {
             park_dates_park_date_type_links: {
               park_date_type_id: dateTypeMap["Operation"],
             },
-          }
+          },
+          "Operation"
         );
       }
 
@@ -395,8 +412,10 @@ module.exports = {
         subAreaDate.reservation_end_date
       ) {
         let dateTypeId = dateTypeMap["Reservation"];
+        let dateType = "Reservation";
         if (subArea?.has_backcountry_permits) {
           dateTypeId = dateTypeMap["Backcountry registration"];
+          dateType = "Backcountry registration";
         }
 
         await insertParkDate(
@@ -417,7 +436,8 @@ module.exports = {
             park_dates_park_date_type_links: {
               park_date_type_id: dateTypeId,
             },
-          }
+          },
+          dateType
         );
       }
 
@@ -441,25 +461,20 @@ module.exports = {
             park_dates_park_date_type_links: {
               park_date_type_id: dateTypeMap["Gate"],
             },
-          }
+          },
+          "Gate"
         );
       }
     }
 
     // 3. Park-feature-date (feature level) -> Park-date
-    const featureDates = await knex("park_feature_dates").select("*");
+    const featureDates = await knex("park_feature_dates")
+      .select("*")
+      .whereNotNull("published_at");
     for (const featureDate of featureDates) {
       if (!featureDate.date_type) {
         console.warn(
           `Skipping park_feature_date id ${featureDate.id}: missing date_type`
-        );
-        continue;
-      }
-
-      // Skip Winter fee date types
-      if (featureDate.date_type === "Winter fee") {
-        console.log(
-          `Skipping park_feature_date id ${featureDate.id}: Winter fee date type not imported`
         );
         continue;
       }
@@ -493,7 +508,8 @@ module.exports = {
           park_dates_park_date_type_links: {
             park_date_type_id: dateTypeId,
           },
-        }
+        },
+        featureDate.date_type
       );
     }
 
@@ -525,7 +541,8 @@ module.exports = {
           park_dates_park_date_type_links: {
             park_date_type_id: dateTypeMap[tierDate.dateType],
           },
-        }
+        },
+        tierDate.dateType
       );
     }
   },
