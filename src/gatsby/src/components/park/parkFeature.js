@@ -100,7 +100,7 @@ export default function ParkFeature({ data, showHeading }) {
                     <li key={index}>{dateRange}</li>
                   )}
                 </ul>
-                <small>{renderGateTimes(data.parkGate)}</small>
+                <small>{renderGateTimes(data.displayGate)}</small>
               </div>
             )}
             {data.reservationDates.length > 0 && (

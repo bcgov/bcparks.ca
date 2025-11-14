@@ -77,14 +77,17 @@ const getFeatureDates = (dateArray) => {
     .filter(Boolean)
 }
 
-// Get park dates formatted
+// Get park dates formatted (current year only)
 const getParkDates = (parkOperationDates) => {  
   if (parkOperationDates.length === 0) {
     return ""
   }
 
-  // Format each date range and filter out empty ones
+  const currentYear = new Date().getFullYear()
+
+  // Format each date range, filter by operating year
   const formattedDateRanges = parkOperationDates
+    .filter(dateData => dateData.operatingYear === currentYear)
     .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
     .map(dateData => formatDateRange(dateData.startDate, dateData.endDate))
     .filter(dateStr => dateStr !== "")

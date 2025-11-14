@@ -9,8 +9,22 @@ const campsites = countsList
   .filter(count => count.isActive)
   .map(count => count.countVar)
 
+const PARK_GATE = {
+  fields: [
+    "hasGate",
+    "gateOpenTime",
+    "gateCloseTime",
+    "gateOpensAtDawn",
+    "gateClosesAtDusk",
+    "gateOpen24Hours",
+    "gateNote",
+  ],
+}
 const PARK_AREA = {
   fields: ["parkAreaName"],
+  populate: {
+    parkGate: PARK_GATE,
+  },
 }
 const PARK_DATES = {
   fields: ["isActive", "operatingYear", "startDate", "endDate"],
@@ -34,17 +48,6 @@ const PARK_FEATURE_TYPE = {
     campingType: { fields: ["campingTypeCode", "icon"] },
     facilityType: { fields: ["facilityCode", "icon"] },
   },
-}
-const PARK_GATE = {
-  fields: [
-    "hasGate",
-    "gateOpenTime",
-    "gateCloseTime",
-    "gateOpensAtDawn",
-    "gateClosesAtDusk",
-    "gateOpen24Hours",
-    "gateNote",
-  ],
 }
 const PARK_GATE_DATES = {
   fields: ["isActive", "operatingYear", "startDate", "endDate"],
