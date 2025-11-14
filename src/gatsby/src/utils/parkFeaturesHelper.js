@@ -20,6 +20,7 @@ const preProcessParkFeatures = parkFeatures => {
       let processed = {
         ...feature,
         displayName: getDisplayName(feature),
+        displayGate: getDisplayGate(feature),
         typeCode:
           facilityType.facilityCode || campingType.campingTypeCode || "",
         typeIcon: facilityType.icon || campingType.icon || "",
@@ -241,6 +242,29 @@ const getDisplayName = feature => {
   return `${feature.parkArea?.parkAreaName || ""}: ${
     feature.parkFeatureName || ""
   }`
+}
+
+/**
+ * Gets park gate data with fallback logic
+ * @param {Object} feature - The park feature object
+ * @param {Object|null} feature.parkArea - The park area object (can be null)
+ * @param {Object} [feature.parkArea.parkGate] - The park gate data from area level
+ * @param {Object} [feature.parkGate] - The park gate data from feature level
+ * @returns {Object|null} The park gate data or null if none available
+ */
+const getDisplayGate = feature => {
+  // If park area exists and has gate data, use area gate
+  if (feature.parkArea?.parkGate) {
+    return feature.parkArea.parkGate
+  }
+
+  // If no area gate but feature has gate data, use feature gate
+  if (feature.parkGate) {
+    return feature.parkGate
+  }
+
+  // No gate data available
+  return null
 }
 
 export {
