@@ -436,12 +436,12 @@ const ParkOperatingDatesPage = () => {
       <div className="static-content-container">
         <div className="intro-text-container">
           <p>
-            This page provides a list of planned operating dates for BC Parks
-            and their facilities. All dates are subject to change without
-            notice. Be sure to{" "}
-            <Link to="/find-a-park">check the park page</Link> or the{" "}
-            <Link to="/active-advisories">active advisories page</Link> for
-            warnings and closures.
+            This page provides a list of planned operating dates for BC Parks campgrounds
+            and other facilities. All dates are subject to change without
+            notice. For full details, check the{" "}
+            <Link to="/find-a-park">park page</Link>.
+            For warnings and closures, check{" "}
+            <Link to="/active-advisories">active advisories</Link>.
           </p>
           <ul>
             <li>
