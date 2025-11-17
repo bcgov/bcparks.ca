@@ -581,7 +581,6 @@ export const query = graphql`
         backcountryShelterReservationUrl
         canoeCircuitReservationUrl
         groupPicnicReservationUrl
-        hasParkGate
         offSeasonUse
         openNote {
           data {
