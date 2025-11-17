@@ -462,7 +462,8 @@ const ParkOperatingDatesPage = () => {
               <Link to="/reservations/backcountry-camping/permit-registration">
                 backcountry permit registration
               </Link>{" "}
-              is required.
+              is required. If a reservable facility is open outside these dates,
+              it is available on a first come, first served basis.
             </li>
           </ul>
         </div>
