@@ -30,13 +30,14 @@ const ParkLink = ({
   advisoryLoadError,
   isLoadingAdvisories,
 }) => {
-  const parkOperation = park.parkOperation
   const [parkAccessStatus, setParkAccessStatus] = useState({})
   const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
 
-  const parkDates = parkFeatures[0]?.protectedArea?.parkDates || []
+  const protectedArea = parkFeatures[0]?.protectedArea || {}
+  const parkDates = protectedArea.parkDates || []
+  const parkGate = protectedArea.parkGate || {}
   const parkGateDates = getParkDates(parkDates)
 
   if (!addedSeasonalAdvisory) {
@@ -87,7 +88,7 @@ const ParkLink = ({
           {parkGateDates && isParkOpen !== false && (
             <span className="gate-text">
               The {park.type.toLowerCase()}{" "}
-              {parkOperation.hasParkGate !== false && "gate"} is open{" "}
+              {parkGate.hasGate !== false && "gate"} is open{" "}
               {parkGateDates}.
             </span>
           )}
@@ -269,7 +270,6 @@ const ParkOperatingDatesPage = () => {
         sort: { slug: ASC }
         filter: {
           isDisplayed: { eq: true }
-          parkOperation: { isActive: { eq: true } }
           parkFeatures: { elemMatch: { isActive: { eq: true } } }
         }
       ) {
@@ -279,9 +279,6 @@ const ParkOperatingDatesPage = () => {
           protectedAreaName
           marineProtectedArea
           type
-          parkOperation {
-            hasParkGate
-          }
         }
       }
       allStrapiMenu(sort: { order: ASC }, filter: { show: { eq: true } }) {
