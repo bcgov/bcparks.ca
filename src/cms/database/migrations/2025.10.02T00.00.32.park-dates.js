@@ -273,9 +273,7 @@ module.exports = {
     });
 
     // 1. Park-operation-date (park level) -> Park-date
-    const parkOperationDates = await knex("park_operation_dates")
-      .select("*")
-      .whereNotNull("published_at");
+    const parkOperationDates = await knex("park_operation_dates").select("*");
     for (const parkDate of parkOperationDates) {
       let parkOperation;
       let isDateAnnual = false;
@@ -321,8 +319,9 @@ module.exports = {
           start_date: parkDate.gate_open_date,
           end_date: parkDate.gate_close_date,
           admin_note: parkDate.admin_note,
-          // Park-operation-date does not have is_active column, default to true
-          is_active: true,
+          // park_operation_dates does not have an is_active column. The content
+          // team has been using Strapi draft mode to manage active status.
+          is_active: parkDate.published_at ? true : false,
           is_date_annual: isDateAnnual,
         },
         {
