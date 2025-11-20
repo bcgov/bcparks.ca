@@ -111,6 +111,9 @@ const getAllParkFeatures = async (apiBaseUrl, startingLetter = null) => {
           fields: ["orcs", "protectedAreaName"],
           populate: {
             parkDates: PARK_GATE_DATES,
+            parkGate: {
+              fields: ["hasGate"],
+            },
           },
         },
         parkArea: PARK_AREA,
