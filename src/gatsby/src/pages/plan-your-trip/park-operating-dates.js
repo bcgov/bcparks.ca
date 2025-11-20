@@ -270,6 +270,7 @@ const ParkOperatingDatesPage = () => {
         sort: { slug: ASC }
         filter: {
           isDisplayed: { eq: true }
+          parkOperation: { isActive: { eq: true } }
           parkFeatures: { elemMatch: { isActive: { eq: true } } }
         }
       ) {
