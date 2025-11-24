@@ -8,7 +8,7 @@ import useScrollSpy from "react-use-scrollspy"
 import { isNullOrWhiteSpace } from "../utils/helpers";
 import { loadAdvisories } from '../utils/advisoryHelper';
 import { groupParkFeaturesByType, combineCampingTypes, combineFacilities } from '../utils/parkFeaturesHelper';
-import { getParkFeatures, getProtectedArea } from "../utils/apiHelper"
+import { getParkFeaturesByOrcsSiteNumber, getProtectedArea } from "../utils/apiHelper"
 
 import Acknowledgment from "../components/acknowledgment"
 import AdvisoryDetails from "../components/park/advisoryDetails"
@@ -116,7 +116,7 @@ export default function SiteTemplate({ data }) {
   const loadParkFeaturesData = async () => {
     setIsLoadingParkFeatures(true)
     try {
-      const response = await getParkFeatures(apiBaseUrl, park.orcs)
+      const response = await getParkFeaturesByOrcsSiteNumber(apiBaseUrl, site.orcsSiteNumber)
       setParkFeatures(response.data)
       setParkFeaturesLoadError(false)
     } catch (error) {

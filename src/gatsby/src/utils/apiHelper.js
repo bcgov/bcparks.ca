@@ -194,6 +194,64 @@ const getParkFeatures = async (apiBaseUrl, orcs) => {
 }
 
 /**
+ * Retrieves park features for a specific site by orcsSiteNumber
+ * @param {string} apiBaseUrl - The base URL for the API
+ * @param {string} orcsSiteNumber - The ORCS site number
+ * @returns {Promise<Object>} Promise that resolves to the API response data containing park features
+ * @throws {Error} Throws an error if the API request fails
+ * @example
+ * // Get park features for a specific site
+ * const features = await getParkFeaturesByOrcsSiteNumber(apiBaseUrl, "123-1")
+ */
+const getParkFeaturesByOrcsSiteNumber = async (apiBaseUrl, orcsSiteNumber) => {
+  const params = qs.stringify(
+    {
+      filters: {
+        isActive: true,
+        site: {
+          orcsSiteNumber: {
+            $eq: orcsSiteNumber,
+          },
+        },
+      },
+      fields: [
+        "isActive",
+        "isOpen",
+        "parkFeatureName",
+        "hasBackcountryReservations",
+        "closureAffectsAccessStatus",
+        "operationNote",
+        "offSeasonNote",
+        "registrationNote",
+        "reservationNote",
+        ...campsites,
+      ],
+      populate: {
+        parkArea: PARK_AREA,
+        parkDates: PARK_DATES,
+        parkFeatureType: PARK_FEATURE_TYPE,
+        parkGate: PARK_GATE,
+      },
+      sort: ["parkFeatureName:asc"],
+      pagination: {
+        limit: 100,
+      },
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  )
+
+  try {
+    const response = await axios.get(`${apiBaseUrl}/park-features?${params}`)
+    return response.data
+  } catch (error) {
+    console.error("Error fetching park features:", error)
+    throw error
+  }
+}
+
+/**
  * Retrieves protected area data with gate information and filtered park dates
  * @param {string} apiBaseUrl - The base URL for the API
  * @param {number} orcs - The ORCS number of the protected area
@@ -231,4 +289,9 @@ const getProtectedArea = async (apiBaseUrl, orcs) => {
   }
 }
 
-export { getAllParkFeatures, getParkFeatures, getProtectedArea }
+export {
+  getAllParkFeatures,
+  getParkFeatures,
+  getParkFeaturesByOrcsSiteNumber,
+  getProtectedArea,
+}
