@@ -166,6 +166,10 @@ const getParkFeatures = async (apiBaseUrl, orcs) => {
         "parkFeatureName",
         "hasBackcountryReservations",
         "closureAffectsAccessStatus",
+        "operationNote",
+        "offSeasonNote",
+        "registrationNote",
+        "reservationNote",
         ...campsites,
       ],
       populate: {

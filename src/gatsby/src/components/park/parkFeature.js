@@ -40,6 +40,7 @@ export default function ParkFeature({ data, showHeading }) {
     { noteVar: "operationNote", display: "Operation note" },
     { noteVar: "reservationNote", display: "Booking note" },
     { noteVar: "offSeasonNote", display: "Off-season note" },
+    { noteVar: "registrationNote", display: "Registration note" },
   ]
 
   const isShown = (count, countGroup) => {
