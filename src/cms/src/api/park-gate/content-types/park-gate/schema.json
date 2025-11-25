@@ -13,10 +13,10 @@
     "hasGate": {
       "type": "boolean"
     },
-    "gateOpenTime": {
+    "gateOpenHoursStartTime": {
       "type": "time"
     },
-    "gateCloseTime": {
+    "gateOpenHoursEndTime": {
       "type": "time"
     },
     "gateOpensAtDawn": {
