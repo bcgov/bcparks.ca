@@ -97,6 +97,33 @@ export default function ParkHeader({
   const parkDates = getParkDates(operationDates)
   const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
   const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
+  const openNote = parkOperation?.openNote?.data?.openNote || null
+  const hasParkDates = parkDates && parkDates.length > 0
+  const hasOpenNote = openNote && openNote.length > 0
+  
+  // Check if park access status is "Closed"
+  const [isParkOpen, setIsParkOpen] = useState(null)
+
+  // Check if park features have dates for camping
+  const hasCampingWithDates = useMemo(() => {
+    return parkFeatures?.some(feature => 
+      feature.parkFeatureType?.campingType && 
+      feature.parkDates && 
+      feature.parkDates.length > 0
+    ) || false
+  }, [parkFeatures])
+  // Check if park features have dates for facilities
+  const hasFacilitiesWithDates = useMemo(() => {
+    return parkFeatures?.some(feature => 
+      feature.parkFeatureType?.facilityType && 
+      feature.parkDates && 
+      feature.parkDates.length > 0
+    ) || false
+  }, [parkFeatures])
+
+  const hasFeatureDates = hasCampingWithDates || hasFacilitiesWithDates
+  const hasDatesSection = isParkOpen !== false && (hasParkDates || hasOpenNote || hasFeatureDates)
+
   // Check if array contains a "tldr"
   const hasTldr = (array) => array?.includes("tldr") || false
   // Filter audio clips if it has a "tldr" displayLocation
@@ -105,8 +132,6 @@ export default function ParkHeader({
       hasTldr(audio.displayLocation?.strapi_json_value) && audio.url
     ) || []
   }, [audioClips])
-  // Check if park access status is "Closed"
-  const [isParkOpen, setIsParkOpen] = useState(null)
 
   return (
     <div id="park-header-container" className="d-flex park-info-container">
@@ -147,29 +172,28 @@ export default function ParkHeader({
             <>&nbsp;</>
           }
         </div>
-        {parkDates && (
+        {hasDatesSection && (
           <div className="park-header-child">
             <FontAwesomeIcon icon={faCalendar} />
             <div>
-              {/* Hide here if park access status is "Closed" */}
-              {isParkOpen !== false &&
+              {hasParkDates  &&
                 <p>
                   The {parkType} {parkGate?.hasGate === true && "gate"} is open {parkDates}
                   {renderGateTimes(parkGate)}
                 </p>
               }
-              {parkOperation?.openNote?.data?.openNote &&
-                <HtmlContent>{parkOperation.openNote.data.openNote}</HtmlContent>
+              {hasOpenNote &&
+                <HtmlContent>{openNote}</HtmlContent>
               }
-              {(campings.length > 0 || facilities.length > 0) && (
+              {hasFeatureDates  && (
                 <p>
-                  {campings.length > 0 && <>Check <a href="#camping">camping</a></>}
-                  {facilities.length > 0 &&
+                  {hasCampingWithDates && <>Check <a href="#camping">camping</a></>}
+                  {hasFacilitiesWithDates &&
                     <>
-                      {campings.length > 0 ? " and " : "Check "}
+                      {hasCampingWithDates ? " and " : "Check "}
                       <a href="#facilities">facilities</a>
                     </>
-                  } for additional dates.
+                  } for {hasParkDates ? "additional " : ""}dates.
                 </p>
               )}
             </div>
