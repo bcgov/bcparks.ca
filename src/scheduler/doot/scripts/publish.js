@@ -58,8 +58,8 @@ exports.dootPublish = async function () {
           const updateData = {
             hasGate: item.gateInfo.hasGate,
             gateNote: item.gateInfo.gateNote,
-            gateOpenTime: item.gateInfo.gateOpenTime,
-            gateCloseTime: item.gateInfo.gateCloseTime,
+            gateOpenHoursStartTime: item.gateInfo.gateOpenHoursStartTime,
+            gateOpenHoursEndTime: item.gateInfo.gateOpenHoursEndTime,
             gateOpen24Hours: item.gateInfo.gateOpen24Hours,
             gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
             gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
@@ -77,8 +77,8 @@ exports.dootPublish = async function () {
           const createData = {
             hasGate: item.gateInfo.hasGate,
             gateNote: item.gateInfo.gateNote,
-            gateOpenTime: item.gateInfo.gateOpenTime,
-            gateCloseTime: item.gateInfo.gateCloseTime,
+            gateOpenHoursStartTime: item.gateInfo.gateOpenHoursStartTime,
+            gateOpenHoursEndTime: item.gateInfo.gateOpenHoursEndTime,
             gateOpen24Hours: item.gateInfo.gateOpen24Hours,
             gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
             gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
@@ -104,8 +104,8 @@ exports.dootPublish = async function () {
               data: {
                 hasGate: false,
                 gateNote: "",
-                gateOpenTime: null,
-                gateCloseTime: null,
+                gateOpenHoursStartTime: null,
+                gateOpenHoursEndTime: null,
                 gateOpen24Hours: null,
                 gateOpensAtDawn: null,
                 gateClosesAtDusk: null,

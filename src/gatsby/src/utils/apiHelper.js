@@ -12,8 +12,8 @@ const campsites = countsList
 const PARK_GATE = {
   fields: [
     "hasGate",
-    "gateOpenTime",
-    "gateCloseTime",
+    "gateOpenHoursStartTime",
+    "gateOpenHoursEndTime",
     "gateOpensAtDawn",
     "gateClosesAtDusk",
     "gateOpen24Hours",

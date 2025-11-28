@@ -39,19 +39,19 @@ const mapImages = {
 // Helper function to render the gate open/close times
 const renderGateTimes = (parkGate) => {
   if (!parkGate) return null
-  const { gateOpenTime, gateCloseTime, gateOpensAtDawn, gateClosesAtDusk, gateOpen24Hours } = parkGate
+  const { gateOpenHoursStartTime, gateOpenHoursEndTime, gateOpensAtDawn, gateClosesAtDusk, gateOpen24Hours } = parkGate
 
   if (gateOpen24Hours) {
     return <>, 24 hours a day.</>
-    // Either gateOpenTime or gateOpensAtDawn is available, then either gateCloseTime or gateClosesAtDusk must also be available
-  } else if ((gateOpenTime || gateOpensAtDawn) && (gateCloseTime || gateClosesAtDusk)) {
+    // Either gateOpenHoursStartTime or gateOpensAtDawn is available, then either gateOpenHoursEndTime or gateClosesAtDusk must also be available
+  } else if ((gateOpenHoursStartTime || gateOpensAtDawn) && (gateOpenHoursEndTime || gateClosesAtDusk)) {
     return (
       <>
         , from <span className="no-wrap">
-          {gateOpensAtDawn ? "dawn" : formattedTime(gateOpenTime)}
+          {gateOpensAtDawn ? "dawn" : formattedTime(gateOpenHoursStartTime)}
         </span>{" "}
         to <span className="no-wrap">
-          {gateClosesAtDusk ? "dusk" : formattedTime(gateCloseTime)}
+          {gateClosesAtDusk ? "dusk" : formattedTime(gateOpenHoursEndTime)}
         </span>, daily.
       </>
     )

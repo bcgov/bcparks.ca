@@ -54,8 +54,8 @@ export default function ParkFeature({ data, showHeading }) {
     if (!gate) return null
     const {
       hasGate,
-      gateOpenTime,
-      gateCloseTime,
+      gateOpenHoursStartTime,
+      gateOpenHoursEndTime,
       gateOpensAtDawn,
       gateClosesAtDusk,
       gateOpen24Hours,
@@ -67,13 +67,13 @@ export default function ParkFeature({ data, showHeading }) {
     if (gateOpen24Hours) {
       message += "Gates are open 24 hours a day."
     } else if (
-      (gateOpenTime || gateOpensAtDawn) &&
-      (gateCloseTime || gateClosesAtDusk)
+      (gateOpenHoursStartTime || gateOpensAtDawn) &&
+      (gateOpenHoursEndTime || gateClosesAtDusk)
     ) {
       message += `Gates are open from ${
-        gateOpensAtDawn ? "dawn" : formattedTime(gateOpenTime)
+        gateOpensAtDawn ? "dawn" : formattedTime(gateOpenHoursStartTime)
       } to ${
-        gateClosesAtDusk ? "dusk" : formattedTime(gateCloseTime)
+        gateClosesAtDusk ? "dusk" : formattedTime(gateOpenHoursEndTime)
       }, daily.`
     }
     return (
