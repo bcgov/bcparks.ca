@@ -176,7 +176,7 @@ export default function ParkHeader({
           <div className="park-header-child">
             <FontAwesomeIcon icon={faCalendar} />
             <div>
-              {hasParkDates  &&
+              {hasParkDates &&
                 <p>
                   The {parkType} {parkGate?.hasGate === true && "gate"} is open {parkDates}
                   {renderGateTimes(parkGate)}
@@ -185,7 +185,7 @@ export default function ParkHeader({
               {hasOpenNote &&
                 <HtmlContent>{openNote}</HtmlContent>
               }
-              {hasFeatureDates  && (
+              {hasFeatureDates && (
                 <p>
                   {hasCampingWithDates && <>Check <a href="#camping">camping</a></>}
                   {hasFacilitiesWithDates &&
