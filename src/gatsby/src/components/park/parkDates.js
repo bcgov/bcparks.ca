@@ -136,7 +136,9 @@ export const AccordionList = ({ eventKey, feature, openAccordions, toggleAccordi
         </div>
       )}
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
-        <ParkFeature data={feature} />
+        <div className="accordion-content">
+          <ParkFeature data={feature} />
+        </div>
       </Accordion.Collapse>
     </Accordion>
   )

@@ -39,11 +39,8 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
         </div>
       </CustomToggle>
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
-        <>
-          {facility.parkFeatures.map((feature, index) => (
-            <ParkFeature key={index} data={feature} showHeading={true} />
-          ))}
-          <div className="accordion-content">
+        <div className="accordion-content">
+          <div className="mb-3">
             <HtmlContent>
               {!isNullOrWhiteSpace(facility.description?.data) ?
                 facility.description.data : facility.facilityType.defaultDescription.data.defaultDescription
@@ -57,14 +54,17 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
                   </HtmlContent>
                 </blockquote>
               )}
-            {/* picnic shelter reservation button */}
-            {isPicnicFacility && groupPicnicReservationUrl && (
-              <a href={groupPicnicReservationUrl} className="btn btn-secondary my-4">
-                Book picnic shelter
-              </a>
-            )}
           </div>
-        </>
+          {facility.parkFeatures.map((feature, index) => (
+            <ParkFeature key={index} data={feature} showHeading={true} />
+          ))}
+          {/* picnic shelter reservation button */}
+          {isPicnicFacility && groupPicnicReservationUrl && (
+            <a href={groupPicnicReservationUrl} className="btn btn-secondary my-4">
+              Book picnic shelter
+            </a>
+          )}
+        </div>
       </Accordion.Collapse>
     </Accordion>
   )
