@@ -12,6 +12,11 @@ exports.dootPublish = async function () {
   let queue;
   const logger = getLogger();
 
+  // When we create/update date ranges from DOOT data, we will only delete existing
+  // date ranges of these types to avoid removing date ranges managed manually in Strapi.
+  // @TODO: When `Winter fee` date publishing is enabled, add its type ID (4) to this list.
+  const DOOT_MANAGED_DATE_TYPE_IDS = [1, 2, 3, 6, 7, 8]; // Gate, Tier 1, Tier 2, Operation, Reservation, Backcountry registration
+
   // get items from the queue with the action 'doot publish'
   try {
     queue = await readQueue("doot publish");
@@ -148,6 +153,11 @@ exports.dootPublish = async function () {
             operatingYear: item.operatingYear,
           },
           fields: ["id"],
+          populate: {
+            parkDateType: {
+              fields: ["dateTypeId"],
+            },
+          },
         };
 
         let datesToDelete;
@@ -160,7 +170,9 @@ exports.dootPublish = async function () {
         }
         try {
           for (const dateRange of datesToDelete.data.data) {
-            await cmsAxios.delete(`/api/park-dates/${dateRange.id}`);
+            if (DOOT_MANAGED_DATE_TYPE_IDS.includes(dateRange.parkDateType.dateTypeId)) {
+              await cmsAxios.delete(`/api/park-dates/${dateRange.id}`);
+            }
           }
         } catch (error) {
           logger.error(`dootPublish() failed while deleting park-dates: ${error}`);
