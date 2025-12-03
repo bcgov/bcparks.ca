@@ -28,7 +28,7 @@ const DateTypeTooltip = ({ dateType, description }) => {
   )
 }
 
-export default function ParkFeature({ data, showHeading }) {
+export default function ParkFeature({ data, showHeading = false }) {
   const reservationName = 
     data.hasBackcountryReservations ? "Reservations required" : "Reservations"
   const reservationDescription =
@@ -85,14 +85,14 @@ export default function ParkFeature({ data, showHeading }) {
   }
 
   return (
-    <div className="accordion-content">
-      {showHeading && (<h4>{data.displayName}</h4>)}
+    <div>
       <Row className="subarea-container">
         <Col className="subarea-container--left" xs={12} lg={6}>
           <div className="subarea-icon">
             <FontAwesomeIcon icon={faCalendar} />
           </div>
           <div className="subarea-lists">
+            {showHeading && (<h4>{data.displayName}</h4>)}
             {data.operationDates.length > 0 && (
               <div className="subarea-list">
                 <h4>Operating season</h4>
@@ -154,18 +154,20 @@ export default function ParkFeature({ data, showHeading }) {
               <div className="subarea-icon">
                 <FontAwesome icon="campground" />
               </div>
-              <div className="subarea-list">
-                <h4>Number of campsites</h4>
-                <ul>
-                  {countsList
-                    .filter(count => isShown(count, data))
-                    .map((count, index) => (
-                      <li key={index}>
-                        {count.display}:{" "}
-                        {data[count.countVar]}
-                      </li>
-                    ))}
-                </ul>
+              <div className="subarea-lists">
+                <div className="subarea-list">
+                  <h4>Number of campsites</h4>
+                  <ul>
+                    {countsList
+                      .filter(count => isShown(count, data))
+                      .map((count, index) => (
+                        <li key={index}>
+                          {count.display}:{" "}
+                          {data[count.countVar]}
+                        </li>
+                      ))}
+                  </ul>
+                </div>
               </div>
             </Col>
           )}

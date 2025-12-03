@@ -638,10 +638,6 @@ nav.breadcrumbs {
   }
   &-content {
     padding-top: 32px;
-    padding-left: 0;
-    @media screen and (min-width: $smBreakpoint) {
-      padding-left: 40px;
-    }
     & > :not(.subarea-container):not(.audio-player) {
       max-width: 600px !important;
     }
