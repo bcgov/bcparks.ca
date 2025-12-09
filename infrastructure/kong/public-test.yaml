@@ -679,6 +679,160 @@ services:
       - tags:
           - OAS3_import
           - ns.bcparks
+        name: test_get_park_features
+        methods:
+          - GET
+        paths:
+          - /api/park-features
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_features_id
+        methods:
+          - GET
+        paths:
+          - /api/park-features/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_feature_types
+        methods:
+          - GET
+        paths:
+          - /api/park-feature-types
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_feature_types_id
+        methods:
+          - GET
+        paths:
+          - /api/park-feature-types/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_dates
+        methods:
+          - GET
+        paths:
+          - /api/park-dates
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_dates_id
+        methods:
+          - GET
+        paths:
+          - /api/park-dates/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_date_types
+        methods:
+          - GET
+        paths:
+          - /api/park-date-types
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_date_types_id
+        methods:
+          - GET
+        paths:
+          - /api/park-date-types/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_areas
+        methods:
+          - GET
+        paths:
+          - /api/park-areas
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_areas_id
+        methods:
+          - GET
+        paths:
+          - /api/park-areas/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_area_types
+        methods:
+          - GET
+        paths:
+          - /api/park-area-types
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_area_types_id
+        methods:
+          - GET
+        paths:
+          - /api/park-area-types/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_gates
+        methods:
+          - GET
+        paths:
+          - /api/park-gates
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
+        name: test_get_park_gates_id
+        methods:
+          - GET
+        paths:
+          - /api/park-gates/(?<id>\S+)$
+        strip_path: false
+        hosts:
+          - bcparks.test.api.gov.bc.ca
+      - tags:
+          - OAS3_import
+          - ns.bcparks
         name: test_get_park_photos
         methods:
           - GET
