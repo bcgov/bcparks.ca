@@ -1,21 +1,26 @@
 # KONG API Service Portal Setup
 
 The public API is accessible at https://bcparks.api.gov.bc.ca (PROD) or
-https://bcparks-api-gov-bc-ca.test.api.gov.bc.ca (TEST). Dev does not have a corresponding API Gateway.
+https://bcparks.test.api.gov.bc.ca (TEST). Dev does not have a corresponding API Gateway.
 
 API access is controlled via Kong, administered via the BC Gov API Programme Services API Gateway.
 **Kong configuration is not updated via Github Actions, and must be updated manually when there are changes.**
 
 For an overview of the API Gateway update process, see:
-https://api-gov-bc-ca.test.api.gov.bc.ca/docs/platform-api-owner-user-journey
+https://developer.gov.bc.ca/docs/default/component/aps-infra-platform-docs/
 
 Access to the web UI for creating service accounts can be requested in the `#aps-ops` rocketchat channel.
+
+## Prerequisites
+
+- Install GWA CLI v2.x from https://github.com/bcgov/gwa-cli/releases
+- Verify installation: `gwa --version`
 
 ## Kong Config Update
 
 **The update to Strapi4 is currently outputting documentation that won't work properly. This may be fixed with Strapi updates, so check first, and update these docs as required. Two things need to be addressed**
-1. The operationId field in `public-documentation.json` needs to be changed to scrub non-alphanumeric characters (ie. `/` and `{}`). 
-2. The paths need to have `/api` prepended to them. (ie. `/urgencies` shoud be `/api/urgencies`). 
+1. The operationId field in `public-documentation.json` needs to be changed to scrub non-alphanumeric characters (ie. `/` and `{}`).
+2. The paths need to have `/api` prepended to them. (ie. `/urgencies` shoud be `/api/urgencies`).
 
 If there have been changes to the API endpoints available on Strapi, the following steps need to be taken.
 
@@ -55,13 +60,22 @@ The important thing thing to note is in step #6 - once you run through the steps
 5. In command prompt run the following commands (the first command create a .env file locally, which will need to be deleted if you need to create one for the other environment):
 
    ```sh
-   gwa init -T --api-version=2 --namespace=bcparks --client-id=<ClientID> --client-secret=<ClientSecret>
+   # Set the namespace
+   gwa config set namespace bcparks
+
+   # Set the host for TEST environment
+   gwa config set host api-gov-bc-ca.test.api.gov.bc.ca
+
+   # Login with service account credentials
+   gwa login --client-id=<CLIENT_ID> --client-secret=<CLIENT-SECRET>
+
+   # Publish the configuration
    gwa pg public-test.yaml
    ```
 
 6. Check the Gateway in the API Service Portal to make sure that the routes have been published
 
-## PROD Environment Publication
+## TEST and PROD Environment Publication
 
 1. Log into https://api.gov.bc.ca/
 2. Select the BC Parks namespace
@@ -70,7 +84,16 @@ The important thing thing to note is in step #6 - once you run through the steps
 5. In command prompt run the following commands (the first command create a .env file locally, which will need to be deleted if you need to create one for the other environment):
 
    ```sh
-   gwa init -P --api-version=2 --namespace=bcparks --client-id=<ClientID> --client-secret=<ClientSecret>
+   # Set the namespace
+   gwa config set namespace bcparks
+
+   # Set the host for PROD environment
+   gwa config set host api.gov.bc.ca
+
+   # Login with service account credentials
+   gwa login --client-id=<CLIENT_ID> --client-secret=<CLIENT_SECRET>
+
+   # Publish the configuration
    gwa pg public-prod.yaml
    ```
 
