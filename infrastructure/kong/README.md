@@ -51,7 +51,7 @@ Access to the web UI for creating service accounts can be requested in the `#aps
 
 6. Check the Gateway in the API Service Portal to make sure that the routes have been published
 
-## TEST and PROD Environment Publication
+## PROD Environment Publication
 
 1. Log into https://api.gov.bc.ca/
 2. Select the BC Parks namespace
