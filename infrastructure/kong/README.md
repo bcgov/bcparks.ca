@@ -1,7 +1,7 @@
 # KONG API Service Portal Setup
 
 The public API is accessible at https://bcparks.api.gov.bc.ca (PROD) or
-https://bcparks.test.api.gov.bc.ca (TEST). Dev does not have a corresponding API Gateway.
+https://bcparks-api-gov-bc-ca.test.api.gov.bc.ca (TEST). Dev does not have a corresponding API Gateway.
 
 API access is controlled via Kong, administered via the BC Gov API Programme Services API Gateway.
 **Kong configuration is not updated via Github Actions, and must be updated manually when there are changes.**
