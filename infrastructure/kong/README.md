@@ -18,20 +18,14 @@ Access to the web UI for creating service accounts can be requested in the `#aps
 
 ## Kong Config Update
 
-**The update to Strapi4 is currently outputting documentation that won't work properly. This may be fixed with Strapi updates, so check first, and update these docs as required. Two things need to be addressed**
-1. The operationId field in `public-documentation.json` needs to be changed to scrub non-alphanumeric characters (ie. `/` and `{}`).
-2. The paths need to have `/api` prepended to them. (ie. `/urgencies` shoud be `/api/urgencies`).
-
-If there have been changes to the API endpoints available on Strapi, the following steps need to be taken.
-
-The important thing thing to note is in step #6 - once you run through the steps, you **will need to revert changes** or publishing the gateway will fail.
-
 1. Visit [Strapi admin](http://localhost:1337/admin/plugins/documentation) and under Plugins -> Documentation,
    click the circular arrow icon which says "Regenerate 1.0.0".
-2. Copy the content of `src/cms/src/extensions/documentation/documentation/1.0.0/full_documentation.json` (the
-   generated OpenAPI spec) to `infrastructure/kong/public-documentation.json` (overwriting the existing content).
+2. Copy the content of `src/cms/src/extensions/documentation/documentation/1.0.0/full_documentation.json` to
+   `infrastructure/kong/public-documentation.json` (overwriting the existing content).
 3. Run `node clean.js` to remove any private API endpoints from the file.
-4. Commit the files and publish per the instructions below.
+4. Commit the file.
+
+**Note:** `public-documentation.json` is for documentation purposes only. The catch-all routes in `public-test.yaml` and `public-prod.yaml` handle all API traffic automatically.
 
 ## TEST Environment Publication
 
