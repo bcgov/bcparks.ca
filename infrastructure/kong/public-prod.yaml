@@ -1,96 +1,5 @@
 _format_version: "3.0"
 services:
-  - name: BCPARKS-TEST
-    host: main-cms.c1643c-test.svc
-    protocol: http
-    port: 1337
-    routes:
-      - tags:
-          - ns.bcparks
-        name: api_get_all
-        methods:
-          - GET
-        paths:
-          - ~/api/.*
-        strip_path: false
-        hosts:
-          - bcparks.test.api.gov.bc.ca
-    plugins:
-      - name: rate-limiting
-        tags:
-          - ns.bcparks
-        enabled: true
-        config:
-          fault_tolerant: true
-          hide_client_headers: false
-          limit_by: consumer
-          minute: 100
-          policy: cluster
-          header_name: null
-          second: null
-          hour: null
-          day: null
-          month: null
-          year: null
-          redis_database: 0
-          redis_host: null
-          redis_password: null
-          redis_port: 6379
-          redis_timeout: 2000
-      - name: cors
-        tags:
-          - ns.bcparks
-        enabled: true
-        config:
-          origins: ["*"]
-          methods:
-            - GET
-            - HEAD
-            - PUT
-            - PATCH
-            - POST
-            - DELETE
-            - OPTIONS
-            - TRACE
-            - CONNECT
-          headers: null
-          exposed_headers: null
-          credentials: false
-          max_age: null
-          preflight_continue: false
-      - name: proxy-cache
-        service: BCPARKS-TEST
-        tags:
-          - ns.bcparks
-        enabled: true
-        config:
-          response_code:
-            - 200
-          request_method:
-            - GET
-            - HEAD
-          content_type:
-            - application/json; charset=utf-8
-          cache_ttl: 15
-          strategy: memory
-    tags:
-      - ns.bcparks
-
-  - name: BCPARKS-TEST-GRAPHQL
-    host: main-cms.c1643c-test.svc
-    protocol: http
-    port: 1337
-    routes:
-      - name: test_graphql
-        tags:
-          - ns.bcparks
-        paths:
-          - /graphql
-        strip_path: false
-        hosts:
-          - bcparks.test.api.gov.bc.ca
-    tags:
-      - ns.bcparks
   - name: BCPARKS
     host: main-cms.c1643c-prod.svc
     protocol: http
@@ -98,7 +7,7 @@ services:
     routes:
       - tags:
           - ns.bcparks
-        name: api_get_all_prod
+        name: api_get_all
         methods:
           - GET
         paths:
@@ -172,7 +81,7 @@ services:
     protocol: http
     port: 1337
     routes:
-      - name: graphql_prod
+      - name: graphql
         tags:
           - ns.bcparks
         paths:

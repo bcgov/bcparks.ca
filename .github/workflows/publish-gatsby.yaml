@@ -72,7 +72,7 @@ jobs:
               echo "IMAGE_TAG=test" >> $GITHUB_ENV
               if [[ "${{ github.event.client_payload.branch }}" == "main" || "${{ github.event.inputs.branchName }}" == "main" ]]; then
                   echo "STRAPI_SOURCE_URL=https://test-cms.bcparks.ca" >> $GITHUB_ENV              
-                  echo "REACT_APP_CMS_BASE_URL=https://bcparks.test.api.gov.bc.ca" >> $GITHUB_ENV
+                  echo "REACT_APP_CMS_BASE_URL=https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://test.bcparks.ca" >> $GITHUB_ENV
                   echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_TEST__GOLD }}" >> $GITHUB_ENV
               else

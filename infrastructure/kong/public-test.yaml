@@ -81,7 +81,7 @@ services:
     protocol: http
     port: 1337
     routes:
-      - name: test_graphql
+      - name: graphql
         tags:
           - ns.bcparks
         paths:
