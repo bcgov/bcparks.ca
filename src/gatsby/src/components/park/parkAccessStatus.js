@@ -16,7 +16,7 @@ const ICONS = {
 const today = format(new Date(), "yyyy-MM-dd");
 
 function checkParkClosure(operatingDates) {
-  if (!operatingDates) {
+  if (!operatingDates || operatingDates.length === 0) {
     return false;
   }
   for (const d of operatingDates) {
@@ -31,51 +31,45 @@ function checkParkClosure(operatingDates) {
 }
 
 function checkParkFeatureClosure(parkFeatures, staticData) {
-  if (!parkFeatures) {
+  if (!parkFeatures || parkFeatures.length === 0) {
     return false;
   }
   const parkFeatureTypes = staticData?.allStrapiParkFeatureType.nodes || []
   for (const parkFeature of parkFeatures) {
-    // standardize date from graphQL with date from elasticSearch
-    // comment out for now
-    // closureAffectsAccessStatus is no longer available in parkFeatureType
-    // strapi_id does not match with subAreaTypeId (featureTypeId)
+    // determine if closure affects access status using isIgnored
 
-    // if (subArea.parkSubAreaType) {
-    //   if (subArea.closureAffectsAccessStatus === null) {
-    //     subArea.closureAffectsAccessStatus = subArea.parkSubAreaType.closureAffectsAccessStatus;
-    //   }
-    // } else if (subArea.subAreaTypeId) {
-    //   let subAreaType = subAreaTypeList.find(type => {
-    //     return type.strapi_id === subArea.subAreaTypeId
-    //   });
-    //   subArea.closureAffectsAccessStatus = subArea.isIgnored === null
-    //     ? subAreaType.closureAffectsAccessStatus
-    //     : !subArea.isIgnored;
-    // }
-
-    if (parkFeature.parkFeatureTypeId) {
-      let parkFeatureType = parkFeatureTypes.find(type => {
-        return type.parkFeatureTypeId === parkFeature.parkFeatureTypeId
-      });
-      if (!parkFeatureType) {
-        continue;
+    // in scheduler/elasticsearch/transformers/park/operatingDates.js
+    // isIgnored: feature.closureAffectsAccessStatus === null ? null : !feature.closureAffectsAccessStatus
+    // isIgnored is the inverse of closureAffectsAccessStatus
+    let closureAffectsAccessStatus;
+    
+    if (parkFeature.isIgnored === null || parkFeature.isIgnored === undefined) {
+      // inherit from park feature type using parkFeatureTypeId
+      if (parkFeature.parkFeatureTypeId) {
+        const parkFeatureType = parkFeatureTypes.find(type => 
+          type.featureTypeId === parkFeature.parkFeatureTypeId
+        );
+        if (parkFeatureType) {
+          closureAffectsAccessStatus = parkFeatureType.closureAffectsAccessStatus;
+        }
       }
-
-      parkFeature.closureAffectsAccessStatus = parkFeature.isIgnored === null
-        ? parkFeatureType.closureAffectsAccessStatus
-        : !parkFeature.isIgnored;
+    } else {
+      // isIgnored is set, so closureAffectsAccessStatus is the inverse
+      closureAffectsAccessStatus = !parkFeature.isIgnored;
     }
-    // skip ignored parkFeatures
-    if (!parkFeature.closureAffectsAccessStatus) {
+    // skip features that don't affect access status
+    if (!closureAffectsAccessStatus) {
       continue;
     }
+    // skip inactive or closed features
     if (parkFeature.isActive !== true || parkFeature.isOpen !== true) {
       continue;
     }
     // check the dates to see if any parkFeatures are closed
-    const dates = parkFeature.parkDates
+    const dates = parkFeature.parkDates || [];
+    if (dates.length === 0) { continue; }
     for (const d of dates) {
+      if (d.isActive !== true) { continue; }
       if (d.startDate && d.startDate > today) {
         return true;
       }
