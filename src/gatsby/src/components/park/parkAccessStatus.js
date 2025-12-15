@@ -67,7 +67,6 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
     }
     // check the dates to see if any parkFeatures are closed
     const dates = parkFeature.parkDates || [];
-    if (dates.length === 0) { continue; }
     for (const d of dates) {
       if (d.isActive !== true) { continue; }
       if (d.startDate && d.startDate > today) {
@@ -178,8 +177,12 @@ export default function ParkAccessStatus({
   const [accessStatus, setAccessStatus] = useState(null)
 
   useEffect(() => {
-    const mainGateClosure = checkParkClosure(operationDates);
-    const areaClosure = checkParkFeatureClosure(parkFeatures, staticData);
+    const mainGateClosure = checkParkClosure(operationDates);    
+    // only check feature closure if park is not already in "Seasonal restrictions" from park-wide check
+    let areaClosure = false;
+    if (!mainGateClosure) {
+      areaClosure = checkParkFeatureClosure(parkFeatures, staticData);
+    }
     const status = parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData);
     setAccessStatus(status)
     if (onStatusCalculated !== undefined) {
