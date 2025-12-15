@@ -43,7 +43,7 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
     // isIgnored is the inverse of closureAffectsAccessStatus
     let closureAffectsAccessStatus;
     
-    if (parkFeature.isIgnored === null || parkFeature.isIgnored === undefined) {
+    if (parkFeature.isIgnored == null) {
       // inherit from park feature type using parkFeatureTypeId
       if (parkFeature.parkFeatureTypeId) {
         const parkFeatureType = parkFeatureTypes.find(type => 
