@@ -42,20 +42,33 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
     // isIgnored: feature.closureAffectsAccessStatus === null ? null : !feature.closureAffectsAccessStatus
     // isIgnored is the inverse of closureAffectsAccessStatus
     let closureAffectsAccessStatus;
-    
-    if (parkFeature.isIgnored == null) {
-      // inherit from park feature type using parkFeatureTypeId
-      if (parkFeature.parkFeatureTypeId) {
-        const parkFeatureType = parkFeatureTypes.find(type => 
-          type.featureTypeId === parkFeature.parkFeatureTypeId
-        );
-        if (parkFeatureType) {
-          closureAffectsAccessStatus = parkFeatureType.closureAffectsAccessStatus;
+
+    // check if data has isIgnored field (from Elasticsearch - find a park page)
+    if ('isIgnored' in parkFeature) {
+      if (parkFeature.isIgnored == null) {
+        // inherit from park feature type using parkFeatureTypeId
+        if (parkFeature.parkFeatureTypeId) {
+          const parkFeatureType = parkFeatureTypes.find(type => 
+            type.featureTypeId === parkFeature.parkFeatureTypeId
+          );
+          if (parkFeatureType) {
+            closureAffectsAccessStatus = parkFeatureType.closureAffectsAccessStatus;
+          }
         }
+      } else {
+        // isIgnored is set, so closureAffectsAccessStatus is the inverse
+        closureAffectsAccessStatus = !parkFeature.isIgnored;
       }
     } else {
-      // isIgnored is set, so closureAffectsAccessStatus is the inverse
-      closureAffectsAccessStatus = !parkFeature.isIgnored;
+      // data from Strapi API (park page and dates page) - use closureAffectsAccessStatus directly
+      if (parkFeature.closureAffectsAccessStatus == null) {
+        // inherit from park feature type
+        if (parkFeature.parkFeatureType?.closureAffectsAccessStatus != null) {
+          closureAffectsAccessStatus = parkFeature.parkFeatureType.closureAffectsAccessStatus;
+        }
+      } else {
+        closureAffectsAccessStatus = parkFeature.closureAffectsAccessStatus;
+      }
     }
     // skip features that don't affect access status
     if (!closureAffectsAccessStatus) {
@@ -69,6 +82,7 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
     const dates = parkFeature.parkDates || [];
     for (const d of dates) {
       if (d.isActive !== true) { continue; }
+      if (d.parkDateType?.dateTypeId !== 6) { continue; }
       if (d.startDate && d.startDate > today) {
         return true;
       }
@@ -178,11 +192,7 @@ export default function ParkAccessStatus({
 
   useEffect(() => {
     const mainGateClosure = checkParkClosure(operationDates);    
-    // only check feature closure if park is not already in "Seasonal restrictions" from park-wide check
-    let areaClosure = false;
-    if (!mainGateClosure) {
-      areaClosure = checkParkFeatureClosure(parkFeatures, staticData);
-    }
+    const areaClosure = checkParkFeatureClosure(parkFeatures, staticData);
     const status = parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData);
     setAccessStatus(status)
     if (onStatusCalculated !== undefined) {
