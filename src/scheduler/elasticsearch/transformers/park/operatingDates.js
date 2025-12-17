@@ -40,9 +40,11 @@ const convertParkFeatures = function (parkFeatures) {
             operatingYear: d.operatingYear,
             startDate: d.startDate,
             endDate: d.endDate,
-            parkDateType: {
-              dateTypeId: d.parkDateType?.dateTypeId
-            }
+            ...(d.parkDateType?.dateTypeId && { 
+              parkDateType: { 
+                dateTypeId: d.parkDateType.dateTypeId 
+              } 
+            })
           }))
       }
       if (f.parkDates.length > 0) {
