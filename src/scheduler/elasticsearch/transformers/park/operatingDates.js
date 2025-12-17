@@ -35,11 +35,15 @@ const convertParkFeatures = function (parkFeatures) {
             d.publishedAt !== null &&
             (d.startDate && d.endDate)
           )
-          .map(d => {
-            delete d.id;
-            delete d.publishedAt;
-            return d;
-          })
+          .map(d => ({
+            isActive: d.isActive,
+            operatingYear: d.operatingYear,
+            startDate: d.startDate,
+            endDate: d.endDate,
+            parkDateType: {
+              dateTypeId: d.parkDateType?.dateTypeId
+            }
+          }))
       }
       if (f.parkDates.length > 0) {
         results.push(f);
