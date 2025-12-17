@@ -91,8 +91,13 @@ module.exports = ({ strapi }) => ({
             filters: {
               parkDateType: {
                 dateTypeId: {
-                  $eq: 1
+                  $eq: 6
                 }
+              }
+            },
+            populate: {
+              "parkDateType": {
+                fields: ["dateTypeId"]
               }
             }
           },
