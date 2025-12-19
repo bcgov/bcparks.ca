@@ -8,6 +8,9 @@ import blueStatusIcon from "../../images/park/blue-status.svg"
 import redStatusIcon from "../../images/park/red-status.svg"
 import yellowStatusIcon from "../../images/park/yellow-status.svg"
 
+// Seasonal advisories (WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY) use id=-1
+const SEASONAL_ADVISORY_ID = -1
+
 const ICONS = {
   blue: blueStatusIcon,
   yellow: yellowStatusIcon,
@@ -191,33 +194,41 @@ export default function ParkAccessStatus({
 
   const [accessStatus, setAccessStatus] = useState(null)
 
+  // Calculate closure status
+  const closureStatus = useMemo(() => ({
+    mainGateClosure: checkParkClosure(operationDates),
+    areaClosure: checkParkFeatureClosure(parkFeatures, staticData)
+  }), [operationDates, parkFeatures, staticData])
+
   // Inject seasonal advisories based on closure status
   const advisoriesWithSeasonal = useMemo(() => {
     const newAdvisories = [...(advisories || [])]
     
     // Don't inject if already added or if another advisory hides seasonal advisories
-    if (newAdvisories.some(a => a.id === -1 || a.accessStatus?.hidesSeasonalAdvisory)) {
+    if (newAdvisories.some(
+      advisory => advisory.id === SEASONAL_ADVISORY_ID ||
+      advisory.accessStatus?.hidesSeasonalAdvisory
+    )) {
       return newAdvisories
     }
 
-    // Calculate closures
-    const mainGateClosure = checkParkClosure(operationDates)
-    const areaClosure = checkParkFeatureClosure(parkFeatures, staticData)
-
     // Inject pseudo-advisory based on closure type
-    if (mainGateClosure) {
+    if (closureStatus.mainGateClosure) {
       newAdvisories.push(WINTER_FULL_PARK_ADVISORY)
-    } else if (areaClosure) {
+    } else if (closureStatus.areaClosure) {
       newAdvisories.push(WINTER_SUB_AREA_ADVISORY)
     }
 
     return newAdvisories
-  }, [advisories, operationDates, parkFeatures, staticData])
+  }, [advisories, closureStatus])
 
   useEffect(() => {
-    const mainGateClosure = checkParkClosure(operationDates);    
-    const areaClosure = checkParkFeatureClosure(parkFeatures, staticData);
-    const status = parkAccessFromAdvisories(advisoriesWithSeasonal, mainGateClosure, areaClosure, staticData);
+    const status = parkAccessFromAdvisories(
+      advisoriesWithSeasonal, 
+      closureStatus.mainGateClosure, 
+      closureStatus.areaClosure, 
+      staticData
+    );
     setAccessStatus(status)
     if (onStatusCalculated !== undefined) {
       // return the accessStatus to the parent component if a function prop was passed in
