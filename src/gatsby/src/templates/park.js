@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col"
 import useScrollSpy from "react-use-scrollspy"
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
-import { loadAdvisories, WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from '../utils/advisoryHelper';
+import { loadAdvisories } from '../utils/advisoryHelper';
 import { groupParkFeaturesByType, combineCampingTypes, combineFacilities } from '../utils/parkFeaturesHelper';
 import { getParkFeatures, getProtectedArea } from "../utils/apiHelper"
 
@@ -83,7 +83,6 @@ export default function ParkTemplate({ data }) {
   const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
   const [hasCampfireBan, setHasCampfireBan] = useState(false)
   const [parkAccessStatus, setParkAccessStatus] = useState(null)
-  const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
   const [parkFeatures, setParkFeatures] = useState([])
   const [parkFeaturesLoadError, setParkFeaturesLoadError] = useState(false)
   const [isLoadingParkFeatures, setIsLoadingParkFeatures] = useState(true)
@@ -289,24 +288,6 @@ export default function ParkTemplate({ data }) {
   ]
 
   const parkName = park.protectedAreaName;
-
-  if (!addedSeasonalAdvisory) {
-    // suppress any seasonal advisories if another advisory overrides them.
-    // usually this is due to some sort of full park closure event.
-    if (advisories.some(a => a.accessStatus?.hidesSeasonalAdvisory)) {
-      setAddedSeasonalAdvisory(true);
-    }
-    // add park-level seasonal advisory
-    if (parkAccessStatus?.mainGateClosure) {
-      advisories.push(WINTER_FULL_PARK_ADVISORY);
-      setAddedSeasonalAdvisory(true);
-    }
-    // add park feature seasonal advisory
-    else if (parkAccessStatus?.areaClosure) {
-      advisories.push(WINTER_SUB_AREA_ADVISORY);
-      setAddedSeasonalAdvisory(true);
-    }
-  }
 
   const breadcrumbs = [
     <GatsbyLink key="1" to="/">

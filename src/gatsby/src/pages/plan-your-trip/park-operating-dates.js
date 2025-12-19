@@ -16,11 +16,7 @@ import NoSearchResults from "../../components/search/noSearchResults"
 import { preProcessParkFeatures } from "../../utils/parkFeaturesHelper"
 import { getAllParkFeatures } from "../../utils/apiHelper"
 import { getParkDates } from "../../utils/parkDatesHelper"
-import {
-  loadAllAdvisories,
-  WINTER_FULL_PARK_ADVISORY,
-  WINTER_SUB_AREA_ADVISORY,
-} from "../../utils/advisoryHelper"
+import { loadAllAdvisories } from "../../utils/advisoryHelper"
 import "../../styles/listPage.scss"
 
 const ParkLink = ({
@@ -30,8 +26,6 @@ const ParkLink = ({
   advisoryLoadError,
   isLoadingAdvisories,
 }) => {
-  const [parkAccessStatus, setParkAccessStatus] = useState({})
-  const [addedSeasonalAdvisory, setAddedSeasonalAdvisory] = useState(false)
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
 
@@ -39,19 +33,6 @@ const ParkLink = ({
   const parkDates = protectedArea.parkDates || []
   const parkGate = protectedArea.parkGate || {}
   const parkGateDates = getParkDates(parkDates)
-
-  if (!addedSeasonalAdvisory) {
-    if (advisories.some(a => a.accessStatus?.hidesSeasonalAdvisory)) {
-      setAddedSeasonalAdvisory(true)
-    }
-    if (parkAccessStatus?.mainGateClosure) {
-      advisories.push(WINTER_FULL_PARK_ADVISORY)
-      setAddedSeasonalAdvisory(true)
-    } else if (parkAccessStatus?.areaClosure) {
-      advisories.push(WINTER_SUB_AREA_ADVISORY)
-      setAddedSeasonalAdvisory(true)
-    }
-  }
 
   const getReservationName = hasBackcountryReservations => {
     return hasBackcountryReservations ? "Reservations required" : "Reservations"
@@ -79,7 +60,6 @@ const ParkLink = ({
                 slug={park.slug}
                 parkFeatures={parkFeatures}
                 operationDates={parkDates}
-                onStatusCalculated={setParkAccessStatus}
                 punctuation="."
                 setIsParkOpen={setIsParkOpen}
               />

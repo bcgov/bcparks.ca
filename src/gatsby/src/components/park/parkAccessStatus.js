@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { graphql, useStaticQuery, Link } from "gatsby"
 import { format } from "date-fns"
+import { WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 
 import blueStatusIcon from "../../images/park/blue-status.svg"
 import redStatusIcon from "../../images/park/red-status.svg"
@@ -190,10 +191,33 @@ export default function ParkAccessStatus({
 
   const [accessStatus, setAccessStatus] = useState(null)
 
+  // Inject seasonal advisories based on closure status
+  const advisoriesWithSeasonal = useMemo(() => {
+    const newAdvisories = [...(advisories || [])]
+    
+    // Don't inject if already added or if another advisory hides seasonal advisories
+    if (newAdvisories.some(a => a.id === -1 || a.accessStatus?.hidesSeasonalAdvisory)) {
+      return newAdvisories
+    }
+
+    // Calculate closures
+    const mainGateClosure = checkParkClosure(operationDates)
+    const areaClosure = checkParkFeatureClosure(parkFeatures, staticData)
+
+    // Inject pseudo-advisory based on closure type
+    if (mainGateClosure) {
+      newAdvisories.push(WINTER_FULL_PARK_ADVISORY)
+    } else if (areaClosure) {
+      newAdvisories.push(WINTER_SUB_AREA_ADVISORY)
+    }
+
+    return newAdvisories
+  }, [advisories, operationDates, parkFeatures, staticData])
+
   useEffect(() => {
     const mainGateClosure = checkParkClosure(operationDates);    
     const areaClosure = checkParkFeatureClosure(parkFeatures, staticData);
-    const status = parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData);
+    const status = parkAccessFromAdvisories(advisoriesWithSeasonal, mainGateClosure, areaClosure, staticData);
     setAccessStatus(status)
     if (onStatusCalculated !== undefined) {
       // return the accessStatus to the parent component if a function prop was passed in
@@ -206,7 +230,7 @@ export default function ParkAccessStatus({
       }
     } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [operationDates, parkFeatures, advisories]);
+  }, [operationDates, parkFeatures, advisoriesWithSeasonal]);
 
 
   return (
@@ -214,10 +238,10 @@ export default function ParkAccessStatus({
       {accessStatus &&
         <>
           <img src={accessStatus.parkStatusIcon} alt="" />
-          {accessStatus.parkStatusText}{(!hideComma && advisories.length > 0) && ", "}
-          {advisories.length > 0 &&
+          {accessStatus.parkStatusText}{(!hideComma && advisoriesWithSeasonal.length > 0) && ", "}
+          {advisoriesWithSeasonal.length > 0 &&
             <Link to={`/${slug}/#advisories`}>
-              {hideComma ? "C": "c"}heck advisories {`(${advisories.length})`}
+              {hideComma ? "C": "c"}heck advisories {`(${advisoriesWithSeasonal.length})`}
             </Link>
           } 
           {punctuation}
