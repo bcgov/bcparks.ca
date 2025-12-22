@@ -83,6 +83,7 @@ export default function ParkTemplate({ data }) {
   const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
   const [hasCampfireBan, setHasCampfireBan] = useState(false)
   const [parkAccessStatus, setParkAccessStatus] = useState(null)
+  const [advisoriesWithSeasonal, setAdvisoriesWithSeasonal] = useState([])
   const [parkFeatures, setParkFeatures] = useState([])
   const [parkFeaturesLoadError, setParkFeaturesLoadError] = useState(false)
   const [isLoadingParkFeatures, setIsLoadingParkFeatures] = useState(true)
@@ -198,6 +199,9 @@ export default function ParkTemplate({ data }) {
 
   const handleAccessStatus = function (statusObj) {
     setParkAccessStatus(statusObj);
+    if (statusObj?.advisoriesWithSeasonal) {
+      setAdvisoriesWithSeasonal(statusObj.advisoriesWithSeasonal);
+    }
   };
 
   const parkOverviewRef = useRef(null)
@@ -409,7 +413,11 @@ export default function ParkTemplate({ data }) {
                     </div>
                   )}
                   {!isLoadingAdvisories && !advisoryLoadError && (
-                    <AdvisoryDetails advisories={advisories} parkType={parkType} parkAccessStatus={parkAccessStatus} />
+                    <AdvisoryDetails 
+                      advisories={advisoriesWithSeasonal.length > 0 ? advisoriesWithSeasonal : advisories} 
+                      parkType={parkType} 
+                      parkAccessStatus={parkAccessStatus}
+                    />
                   )}
                   {hasParkGuidelines &&
                     <Row>

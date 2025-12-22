@@ -230,6 +230,9 @@ export default function ParkAccessStatus({
       closureStatus.areaClosure, 
       staticData
     );
+    // add advisoriesWithSeasonal to the status object
+    status.advisoriesWithSeasonal = advisoriesWithSeasonal;
+
     setAccessStatus(status)
     if (onStatusCalculated !== undefined) {
       // return the accessStatus to the parent component if a function prop was passed in
