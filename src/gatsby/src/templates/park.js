@@ -197,7 +197,7 @@ export default function ParkTemplate({ data }) {
     }
   }, [isLoadingProtectedArea, isLoadingAdvisories, isLoadingParkFeatures])
 
-  const handleAccessStatus = function (statusObj) {
+  const handleAccessStatus = (statusObj) => {
     setParkAccessStatus(statusObj);
     if (statusObj?.advisoriesWithSeasonal) {
       setAdvisoriesWithSeasonal(statusObj.advisoriesWithSeasonal);

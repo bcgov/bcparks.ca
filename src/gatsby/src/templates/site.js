@@ -178,7 +178,7 @@ export default function SiteTemplate({ data }) {
       }
     }, [site.parkCampingTypes, data.allStrapiCampingType.nodes, processedFeatures])
 
-  const handleAccessStatus = function (statusObj) {
+  const handleAccessStatus = (statusObj) => {
     setParkAccessStatus(statusObj);
     if (statusObj?.advisoriesWithSeasonal) {
       setAdvisoriesWithSeasonal(statusObj.advisoriesWithSeasonal);
