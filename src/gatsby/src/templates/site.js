@@ -73,6 +73,8 @@ export default function SiteTemplate({ data }) {
   const [activeCampings, setActiveCampings] = useState([])
   // only one audio clip can be active at a time
   const [activeAudio, setActiveAudio] = useState("")
+  const [parkGate, setParkGate] = useState({})
+  const [parkGateDates, setParkGateDates] = useState([])
 
   const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
@@ -103,10 +105,14 @@ export default function SiteTemplate({ data }) {
     try {
       const response = await getProtectedArea(apiBaseUrl, park.orcs)
       setHasCampfireBan(response.hasCampfireBan)
+      setParkGate(response.parkGate)
+      setParkGateDates(response.parkDates)
       setProtectedAreaLoadError(false)
     } catch (error) {
       console.error("Error loading protected area:", error)
       setHasCampfireBan(false)
+      setParkGate({})
+      setParkGateDates([])
       setProtectedAreaLoadError(true)
     } finally {
       setIsLoadingProtectedArea(false)
@@ -286,7 +292,8 @@ export default function SiteTemplate({ data }) {
             isLoadingProtectedArea={isLoadingProtectedArea}
             searchArea={searchArea}
             parkOperation={operations}
-            operationDates={site?.parkOperationDates || park.parkOperationDates}
+            parkGate={parkGate}
+            operationDates={parkGateDates}
             parkFeatures={parkFeatures}
             isLoadingParkFeatures={isLoadingParkFeatures}
             parkFeaturesLoadError={parkFeaturesLoadError}

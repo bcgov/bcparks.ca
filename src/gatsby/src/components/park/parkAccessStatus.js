@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { graphql, useStaticQuery, Link } from "gatsby"
 import { format } from "date-fns"
+import { PARK_DATE_TYPE } from "../../utils/constants"
 import { WINTER_FULL_PARK_ADVISORY, WINTER_SUB_AREA_ADVISORY } from "../../utils/advisoryHelper"
 
 import blueStatusIcon from "../../images/park/blue-status.svg"
@@ -86,7 +87,7 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
     const dates = parkFeature.parkDates || [];
     for (const d of dates) {
       if (d.isActive !== true) { continue; }
-      if (d.parkDateType?.dateTypeId !== 6) { continue; }
+      if (d.parkDateType?.dateTypeId !== PARK_DATE_TYPE.OPERATION) { continue; }
       if (d.startDate && d.startDate > today) {
         return true;
       }
