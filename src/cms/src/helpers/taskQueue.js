@@ -3,7 +3,7 @@ module.exports = {
     if (!id) {
       return;
     }
-    const exists = (await strapi.entityService.findMany('api::queued-task.queued-task', {
+    const exists = (await strapi.documents('api::queued-task.queued-task').findMany({
       filters: {
         action: 'elastic index park',
         numericData: id
@@ -12,7 +12,7 @@ module.exports = {
     if (!exists) {
       strapi.log.info(`queued protectedArea ${id} for reindexing`)
       try {
-        await strapi.entityService.create('api::queued-task.queued-task', {
+        await strapi.documents('api::queued-task.queued-task').create({
           data: {
             action: 'elastic index park',
             numericData: id
@@ -27,7 +27,7 @@ module.exports = {
     if (!id) {
       return;
     }
-    const exists = (await strapi.entityService.findMany('api::queued-task.queued-task', {
+    const exists = (await strapi.documents('api::queued-task.queued-task').findMany({
       filters: {
         action: 'elastic remove park',
         numericData: id
@@ -36,7 +36,7 @@ module.exports = {
     if (!exists) {
       strapi.log.info(`queued protectedArea ${id} for removal`)
       try {
-        await strapi.entityService.create('api::queued-task.queued-task', {
+        await strapi.documents('api::queued-task.queued-task').create({
           data: {
             action: 'elastic remove park',
             numericData: id
@@ -51,7 +51,7 @@ module.exports = {
     if (!subject || !title || !advisoryNumber) {
       return;
     }
-    const exists = (await strapi.entityService.findMany('api::queued-task.queued-task', {
+    const exists = (await strapi.documents('api::queued-task.queued-task').findMany({
       filters: {
         action: 'email advisory',
         numericData: advisoryNumber
@@ -60,7 +60,7 @@ module.exports = {
     if (!exists) {
       strapi.log.info(`queued advisoryNumber ${advisoryNumber} for "${subject}" notification`)
       try {
-        await strapi.entityService.create('api::queued-task.queued-task', {
+        await strapi.documents('api::queued-task.queued-task').create({
           data: {
             action: 'email advisory',
             numericData: advisoryNumber,

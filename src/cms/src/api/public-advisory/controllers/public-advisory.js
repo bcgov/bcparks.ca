@@ -45,7 +45,7 @@ module.exports = createCoreController(
             const { id } = ctx.params;
 
             // look up the public advisory id by the advisory number
-            const entities = await strapi.entityService.findMany("api::public-advisory.public-advisory", {
+            const entities = await strapi.documents("api::public-advisory.public-advisory").findMany({
                 filters: { advisoryNumber: id },
                 fields: ["id"]
             });
@@ -138,13 +138,13 @@ module.exports = createCoreController(
             };
         },
         async getAccessStatusesByProtectedArea(ctx) {
-            const entries = await strapi.entityService.findMany('api::public-advisory.public-advisory', {
+            const entries = await strapi.documents('api::public-advisory.public-advisory').findMany({
                 fields: ["id"],
                 populate: {
                     accessStatus: { fields: ["id"] },
                     protectedAreas: { fields: ["id"] }
                 },
-                publicationState: "live"
+                status: "published"
             });
             const results = {};
             for (const advisory of entries) {

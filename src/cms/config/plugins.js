@@ -10,7 +10,7 @@ module.exports = ({ env }) => {
           tracing: false,
           introspection: true,
         },
-      }
+      },
     },
     email: {
       provider: "nodemailer",
@@ -29,10 +29,11 @@ module.exports = ({ env }) => {
         breakpoints: {
           small: 720,
         },
-      }
+      },
     },
+    // TODO: Temporarily disabled for v5 upgrade - needs v5 compatible ckeditor plugin
     ckeditor5: {
-      enabled: true,
+      enabled: false,
       resolve: "./src/plugins/strapi-plugin-ckeditor",
     },
     // Step 1: Configure the redis connection
@@ -63,7 +64,7 @@ module.exports = ({ env }) => {
       enabled: env.bool("STRAPI_CACHE_ENABLED", false),
       config: {
         provider: {
-          name: env("STRAPI_CACHE_TYPE", 'memory'),
+          name: env("STRAPI_CACHE_TYPE", "memory"),
           options: {
             max: 32767,
             connection: "default",
@@ -81,116 +82,6 @@ module.exports = ({ env }) => {
             "api::public-advisory.public-advisory",
             "api::park-access-status.park-access-status",
           ],
-        },
-      },
-    },
-
-    transformer: {
-      enabled: true,
-      config: {
-        responseTransforms: {
-          removeAttributesKey: true,
-          removeDataKey: true,
-        },
-        requestTransforms: {
-          wrapBodyWithDataKey: true,
-        },
-        hooks: {},
-        contentTypeFilter: {
-          mode: "allow",
-          uids: {
-            "api::public-advisory-audit.public-advisory-audit": {
-              GET: true,
-              PUT: true,
-              POST: true,
-            },
-            "api::public-advisory-audit.public-advisory-audit/id": {
-              PUT: true,
-            },
-            "api::region.region": {
-              GET: true,
-            },
-            "api::management-area.management-area": {
-              GET: true,
-            },
-            "api::park-name.park-name": {
-              GET: true,
-            },
-            "api::advisory-status.advisory-status": {
-              GET: true,
-            },
-            "api::standard-message.standard-message": {
-              GET: true,
-            },
-            "api::business-hour.business-hour": {
-              GET: true,
-            },
-            "api::link-type.link-type": {
-              GET: true,
-            },
-            "api::statutory-holiday.statutory-holiday": {
-              GET: true,
-              PUT: true,
-            },
-            "api::public-advisory.public-advisory": {
-              GET: true,
-            },
-            "api::urgency.urgency": {
-              GET: true,
-            },
-            "api::access-status.access-status": {
-              GET: true,
-            },
-            "api::section.section": {
-              GET: true,
-            },
-            "api::fire-zone.fire-zone": {
-              GET: true,
-            },
-            "api::fire-centre.fire-centre": {
-              GET: true,
-            },
-            "api::natural-resource-district.natural-resource-district": {
-              GET: true,
-            },
-            "api::event-type.event-type": {
-              GET: true,
-            },
-            "api::search-area.search-area": {
-              GET: true,
-            },
-            // TODO: Data cleanup - remove unused content types
-            "api::park-operation-sub-area.park-operation-sub-area": {
-              GET: true,
-            },
-            "api::park-operation-sub-area-date.park-operation-sub-area-date": {
-              GET: true,
-            },
-            "api::park-feature-date.park-feature-date": {
-              GET: true,
-            },
-            "api::park-date.park-date": {
-              GET: true,
-            },
-            "api::park-date-type.park-date-type": {
-              GET: true,
-            },
-            "api::park-area.park-area": {
-              GET: true,
-            },
-            "api::park-area-type.park-area-type": {
-              GET: true,
-            },
-            "api::park-feature.park-feature": {
-              GET: true,
-            },
-            "api::park-feature-type.park-feature-type": {
-              GET: true,
-            },
-            "api::park-gate.park-gate": {
-              GET: true,
-            },
-          },
         },
       },
     },
