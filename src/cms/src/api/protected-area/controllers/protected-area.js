@@ -14,7 +14,7 @@ module.exports = createCoreController(
     async findOne(ctx) {
       const { id } = ctx.params;
       // look up the protected area by the orcs
-      const entities = await strapi.entityService.findMany("api::protected-area.protected-area", {
+      const entities = await strapi.documents("api::protected-area.protected-area").findMany({
         filters: { orcs: id },
         fields: ["id"]
       });

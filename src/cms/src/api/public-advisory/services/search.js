@@ -19,13 +19,13 @@ module.exports = ({ strapi }) => ({
 
     query.sort = ["advisoryDate:DESC"];
 
-    const results = await strapi.entityService.findMany("api::public-advisory.public-advisory", query);
+    const results = await strapi.documents("api::public-advisory.public-advisory").findMany(query);
     return { results: results };
   },
   countSearch: async (query) => {
     query = buildQuery(query);
     query.fields = ["id"];
-    const results = await strapi.entityService.findMany("api::public-advisory.public-advisory", query);
+    const results = await strapi.documents("api::public-advisory.public-advisory").findMany(query);
     return results.length;
   },
 });
