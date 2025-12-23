@@ -16,12 +16,12 @@ module.exports = ({ strapi }) => ({
     // items queued to be deleted are okay to be deleted twice because there is a big risk of 
     // missing them if we delete them as well
 
-    const removeParks = await strapi.entityService.findMany("api::protected-area.protected-area", {
+    const removeParks = await strapi.documents("api::protected-area.protected-area").findMany({
       filters: { isDisplayed: { $ne: true } },
       fields: ["id"]
     });
 
-    const addParks = await strapi.entityService.findMany("api::protected-area.protected-area", {
+    const addParks = await strapi.documents("api::protected-area.protected-area").findMany({
       filters: { isDisplayed: true },
       fields: ["id"]
     });

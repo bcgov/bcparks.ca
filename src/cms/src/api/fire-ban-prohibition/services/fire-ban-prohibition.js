@@ -38,8 +38,7 @@ module.exports = createCoreService(
     async generateAllProtectedAreaFireBans() {
       // sort the bans in descending order so the oldest one will be last and the earliest
       // date  will be applied to the protectedArea when there are multiple bans
-      const campfireBans = await strapi.entityService.findMany(
-        "api::fire-ban-prohibition.fire-ban-prohibition", {
+      const campfireBans = await strapi.documents("api::fire-ban-prohibition.fire-ban-prohibition").findMany({
         sort: { effectiveDate: 'DESC' },
         filters: {
           $or: [
@@ -51,7 +50,7 @@ module.exports = createCoreService(
             }
           ]
         },
-        publicationState: "live",
+        status: "published",
         populate: '*',
       });
 
