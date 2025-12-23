@@ -10,6 +10,20 @@ export const PARK_NAME_TYPE = {
   Historic: 6,
 }
 
+// dateTypeId from Strapi park-date-type
+export const PARK_DATE_TYPE = {
+  GATE: 1,
+  TIER_1: 2,
+  TIER_2: 3,
+  WINTER_FEE: 4,
+  DAY_USE_PASS: 5,
+  OPERATION: 6,
+  RESERVATION: 7,
+  BACKCOUNTRY_REGISTRATION: 8,
+  FIRST_COME_FIRST_SERVED: 9,
+  FULL_SERVICES_AND_FEES: 10,
+}
+
 export const countsList = [
   // Use this to configure which counts show and in what order
   // Don't show if isActive is false

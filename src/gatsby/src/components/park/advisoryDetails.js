@@ -203,4 +203,5 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
 AdvisoryDetails.propTypes = {
   advisories: PropTypes.array.isRequired,
   parkType: PropTypes.string,
+  parkAccessStatus: PropTypes.object,
 }

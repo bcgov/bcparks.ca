@@ -66,6 +66,8 @@ export default function SiteTemplate({ data }) {
   const [protectedAreaLoadError, setProtectedAreaLoadError] = useState(false)
   const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
   const [hasCampfireBan, setHasCampfireBan] = useState(false)
+  const [parkAccessStatus, setParkAccessStatus] = useState(null)
+  const [advisoriesWithSeasonal, setAdvisoriesWithSeasonal] = useState([])
   const [parkFeatures, setParkFeatures] = useState([])
   const [parkFeaturesLoadError, setParkFeaturesLoadError] = useState(false)
   const [isLoadingParkFeatures, setIsLoadingParkFeatures] = useState(true)
@@ -73,6 +75,8 @@ export default function SiteTemplate({ data }) {
   const [activeCampings, setActiveCampings] = useState([])
   // only one audio clip can be active at a time
   const [activeAudio, setActiveAudio] = useState("")
+  const [parkGate, setParkGate] = useState({})
+  const [parkGateDates, setParkGateDates] = useState([])
 
   const loadAdvisoriesData = async () => {
     setIsLoadingAdvisories(true)
@@ -103,10 +107,14 @@ export default function SiteTemplate({ data }) {
     try {
       const response = await getProtectedArea(apiBaseUrl, park.orcs)
       setHasCampfireBan(response.hasCampfireBan)
+      setParkGate(response.parkGate)
+      setParkGateDates(response.parkDates)
       setProtectedAreaLoadError(false)
     } catch (error) {
       console.error("Error loading protected area:", error)
       setHasCampfireBan(false)
+      setParkGate({})
+      setParkGateDates([])
       setProtectedAreaLoadError(true)
     } finally {
       setIsLoadingProtectedArea(false)
@@ -169,6 +177,13 @@ export default function SiteTemplate({ data }) {
         setActiveCampings(campings)
       }
     }, [site.parkCampingTypes, data.allStrapiCampingType.nodes, processedFeatures])
+
+  const handleAccessStatus = (statusObj) => {
+    setParkAccessStatus(statusObj);
+    if (statusObj?.advisoriesWithSeasonal) {
+      setAdvisoriesWithSeasonal(statusObj.advisoriesWithSeasonal);
+    }
+  };
 
   const parkOverviewRef = useRef("")
   const knowBeforeRef = useRef("")
@@ -286,10 +301,12 @@ export default function SiteTemplate({ data }) {
             isLoadingProtectedArea={isLoadingProtectedArea}
             searchArea={searchArea}
             parkOperation={operations}
-            operationDates={site?.parkOperationDates || park.parkOperationDates}
+            parkGate={parkGate}
+            operationDates={parkGateDates}
             parkFeatures={parkFeatures}
             isLoadingParkFeatures={isLoadingParkFeatures}
             parkFeaturesLoadError={parkFeaturesLoadError}
+            onStatusCalculated={handleAccessStatus}
             audioClips={site.audioClips}
             activeAudio={activeAudio}
             setActiveAudio={setActiveAudio}
@@ -352,7 +369,11 @@ export default function SiteTemplate({ data }) {
                     </div>
                   )}
                   {!isLoadingAdvisories && !advisoryLoadError && (
-                    <AdvisoryDetails advisories={advisories} parkType="site" />
+                    <AdvisoryDetails
+                      advisories={advisoriesWithSeasonal.length > 0 ? advisoriesWithSeasonal : advisories}
+                      parkType="site"
+                      parkAccessStatus={parkAccessStatus}
+                    />
                   )}
                   {hasSiteGuidelines &&
                     <Row>
