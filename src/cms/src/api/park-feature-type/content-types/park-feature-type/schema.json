@@ -37,6 +37,9 @@
       "relation": "oneToMany",
       "target": "api::park-feature.park-feature",
       "mappedBy": "parkFeatureType"
+    },
+    "rank": {
+      "type": "integer"
     }
   }
 }

@@ -37,6 +37,9 @@
       "relation": "oneToMany",
       "target": "api::park-area.park-area",
       "mappedBy": "parkAreaType"
+    },
+    "rank": {
+      "type": "integer"
     }
   }
 }

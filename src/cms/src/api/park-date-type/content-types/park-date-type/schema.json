@@ -22,6 +22,28 @@
     },
     "description": {
       "type": "text"
+    },
+    "rank": {
+      "type": "integer"
+    },
+    "parkAreaLevel": {
+      "type": "boolean",
+      "default": false
+    },
+    "featureLevel": {
+      "type": "boolean",
+      "default": false
+    },
+    "parkLevel": {
+      "type": "boolean",
+      "default": false
+    },
+    "startDateLabel": {
+      "type": "string",
+      "required": true
+    },
+    "endDateLabel": {
+      "type": "string"
     }
   }
 }
