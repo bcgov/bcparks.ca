@@ -141,49 +141,49 @@
     "openNote": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "serviceNote": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "reservationsNote": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "reservationNote": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "offSeasonNote": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "generalNote": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "adminNote": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
@@ -208,7 +208,7 @@
     "gateNote": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },

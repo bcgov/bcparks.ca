@@ -60,13 +60,7 @@
     },
     "typeCode": {
       "type": "enumeration",
-      "enum": [
-        "PK",
-        "PA",
-        "RA",
-        "ER",
-        "CS"
-      ]
+      "enum": ["PK", "PA", "RA", "ER", "CS"]
     },
     "latitude": {
       "type": "float"
@@ -146,77 +140,77 @@
     "description": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "safetyInfo": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "specialNotes": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "locationNotes": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "parkContact": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "reservations": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "maps": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "managementPlanning": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "partnerships": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "purpose": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "reconciliationNotes": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
@@ -327,28 +321,28 @@
     "conservation": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "culturalHeritage": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "history": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "wildlife": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },

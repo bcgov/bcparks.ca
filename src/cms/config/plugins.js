@@ -31,11 +31,11 @@ module.exports = ({ env }) => {
         },
       },
     },
-    // TODO: Temporarily disabled for v5 upgrade - needs v5 compatible ckeditor plugin
-    ckeditor5: {
-      enabled: false,
-      resolve: "./src/plugins/strapi-plugin-ckeditor",
-    },
+    // TODO: Temporarily disabled for v5 upgrade
+    // ckeditor5: {
+    //   enabled: true,
+    //   resolve: "./src/plugins/strapi-plugin-ckeditor",
+    // },
     // Step 1: Configure the redis connection
     // @see https://github.com/strapi-community/strapi-plugin-redis
     redis: {
