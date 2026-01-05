@@ -1,7 +1,8 @@
-"use strict"
+'use strict'
+
+const cheerio = require('cheerio');
 
 async function up(knex) {
-  const cheerio = require('cheerio');
   if (await knex.schema.hasColumn('protected_areas', 'history')) {
 
     const protectedAreas = await strapi.db.query("api::protected-area.protected-area").findMany();
