@@ -13,7 +13,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 702,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Birkenhead Lake Park",
@@ -22,7 +21,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 22,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Okanagan Mountain Park",
@@ -31,7 +29,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 27,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Mount Assiniboine Park",
@@ -40,7 +37,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 28,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "God's Pocket Marine Park",
@@ -49,7 +45,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 699,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Murrin Park",
@@ -58,7 +53,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 36,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Duu Guusd Heritage Site/Conservancy",
@@ -67,7 +61,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 40,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Top of the World Park",
@@ -76,7 +69,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 41,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "ȽÁU,WELṈEW̱/John Dean Park",
@@ -85,7 +77,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 705,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Tā Ch'ilā Park [a.k.a. Boya Lake Park]",
@@ -94,7 +85,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 62,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Foch-Gilttoyees Protected Area",
@@ -103,7 +93,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 693,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Champion Lakes Park",
@@ -112,7 +101,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 65,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Norbury Lake Park",
@@ -121,7 +109,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 66,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Skaha Bluffs Park",
@@ -130,7 +117,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 701,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Bridal Veil Falls Park",
@@ -139,7 +125,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 707,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Whiteswan Lake Park",
@@ -148,7 +133,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 70,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "James Chabot Park",
@@ -157,7 +141,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 704,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Paul Lake Park",
@@ -166,7 +149,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 75,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Roberts Creek Park",
@@ -175,7 +157,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 76,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Gitnadoiks River Park",
@@ -184,7 +165,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 698,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Cedar Point Park",
@@ -193,7 +173,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 80,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Ten Mile Lake Park",
@@ -202,7 +181,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 83,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Shuswap Lake Marine Park",
@@ -211,7 +189,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 695,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Cathedral Park",
@@ -220,7 +197,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 85,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Yard Creek Park",
@@ -229,7 +205,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 696,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Beatton Park",
@@ -238,7 +213,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 88,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Echo Bay Marine Park",
@@ -247,7 +221,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 688,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Beaver Creek Park",
@@ -256,7 +229,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 97,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kun⨱alas Heritage Site/Conservancy",
@@ -265,7 +237,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 694,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Brandywine Falls Park",
@@ -274,7 +245,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 703,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Tetrahedron Park",
@@ -283,7 +253,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 697,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Tsútswecw Park",
@@ -292,7 +261,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 706,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Omineca Park",
@@ -301,7 +269,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 691,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Myra-Bellevue Park",
@@ -310,7 +277,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 689,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Nisga'a Memorial Lava Bed Corridor Protected Area",
@@ -319,7 +285,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 690,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Momich Lakes Park",
@@ -328,7 +293,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 147,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Syringa Park",
@@ -337,7 +301,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 149,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Monck Park",
@@ -346,7 +309,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 152,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Driftwood Canyon Park",
@@ -355,7 +317,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 708,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Gladstone Park",
@@ -364,7 +325,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 159,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Moyie Lake Park",
@@ -373,7 +333,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 160,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Foch-Gilttoyees Park",
@@ -382,7 +341,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 700,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Juniper Beach Park",
@@ -391,7 +349,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 171,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Buckinghorse River Wayside Park",
@@ -400,7 +357,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 173,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Silver Beach Park",
@@ -409,7 +365,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 174,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Monkman Park",
@@ -418,7 +373,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 194,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Stawamus Chief Park",
@@ -427,7 +381,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 201,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Say Nuth Khaw Yum Park [a.k.a. Indian Arm Park]",
@@ -436,7 +389,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 199,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Dionisio Point Park",
@@ -445,7 +397,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 200,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kitty Coleman Beach Park",
@@ -454,7 +405,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 202,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Fintry Park",
@@ -463,7 +413,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 203,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kikomun Creek Park",
@@ -472,7 +421,6 @@ const rows = [
     hasTier2Dates: true,
     publishableId: 204,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Sx̱ótsaqel/Chilliwack Lake Park",
@@ -481,7 +429,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 206,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Roscoe Bay Park",
@@ -490,7 +437,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 207,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Halkett Bay Marine Park",
@@ -499,7 +445,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 208,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Callaghan Lake Park",
@@ -508,7 +453,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 692,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Bear Creek Park",
@@ -517,7 +461,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 219,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Gordon Bay Park",
@@ -526,7 +469,6 @@ const rows = [
     hasTier2Dates: true,
     publishableId: 220,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Lakelse Lake Park",
@@ -535,7 +477,6 @@ const rows = [
     hasTier2Dates: true,
     publishableId: 221,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Rathtrevor Beach Park",
@@ -544,7 +485,6 @@ const rows = [
     hasTier2Dates: true,
     publishableId: 222,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Cowichan River Park",
@@ -553,7 +493,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 223,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Fillongley Park",
@@ -562,7 +501,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 224,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Cultus Lake Park",
@@ -571,7 +509,6 @@ const rows = [
     hasTier2Dates: true,
     publishableId: 225,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Goldstream Park",
@@ -580,7 +517,6 @@ const rows = [
     hasTier2Dates: true,
     publishableId: 226,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Miracle Beach Park",
@@ -589,7 +525,6 @@ const rows = [
     hasTier2Dates: true,
     publishableId: 227,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Shuswap Lake Park",
@@ -598,7 +533,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 228,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Elk Lakes Park",
@@ -607,7 +541,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 21,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Crooked River Park",
@@ -616,7 +549,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 23,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Premier Lake Park",
@@ -625,7 +557,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 24,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Anhluut'ukwsim Lax̱mihl Angwinga'asanskwhl Nisg̱a'a Park [a.k.a. Nisg̱a'a Memorial Lava Bed Park]",
@@ -634,7 +565,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 25,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Green Lake Park",
@@ -643,7 +573,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 26,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kinaskan Lake Park",
@@ -652,7 +581,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 29,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Marble Canyon Park",
@@ -661,7 +589,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 30,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Bugaboo Park",
@@ -670,7 +597,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 31,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Mara Park",
@@ -679,7 +605,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 32,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Pilot Bay Park",
@@ -688,7 +613,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 33,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Loveland Bay Park",
@@ -697,7 +621,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 34,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Exchamsiks River Protected Area",
@@ -706,7 +629,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 35,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Naikoon Park",
@@ -715,7 +637,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 37,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Big Bar Lake Park",
@@ -724,7 +645,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 38,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Martha Creek Park",
@@ -733,7 +653,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 39,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Summit Lake Park",
@@ -742,7 +661,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 42,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Raft Cove Park",
@@ -751,7 +669,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 43,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Jedediah Island Marine Park",
@@ -760,7 +677,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 44,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kootenay Lake Park",
@@ -769,7 +685,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 45,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Whiskers Point Park",
@@ -778,7 +693,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 46,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Yahk Park",
@@ -787,7 +701,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 47,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Roche Lake Park",
@@ -796,7 +709,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 48,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Adams Lake Park – Bush Creek Site",
@@ -805,7 +717,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 49,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Plumper Cove Marine Park",
@@ -814,7 +725,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 50,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Silver Lake Park",
@@ -823,7 +733,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 51,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Lac La Hache Park",
@@ -832,7 +741,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 52,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "North Thompson River Park",
@@ -841,7 +749,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 53,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Exchamsiks River Park",
@@ -850,7 +757,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 54,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Wasa Lake Park",
@@ -859,7 +765,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 55,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Wallace Island Marine Park",
@@ -868,7 +773,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 56,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Tweedsmuir Park",
@@ -877,7 +781,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 57,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "West Lake Park",
@@ -886,7 +789,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 58,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Bull Canyon Park",
@@ -895,7 +797,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 59,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Akamina-Kishinena Park",
@@ -904,7 +805,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 60,
     hasWinterFeeDates: false,
-    inReservationSystem: true,
   },
   {
     name: "Shannon Falls Park",
@@ -913,7 +813,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 61,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Carp Lake Park",
@@ -922,7 +821,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 63,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Apodaca Park",
@@ -931,7 +829,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 64,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Dry Gulch Park",
@@ -940,7 +837,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 67,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Seeley Lake Park",
@@ -949,7 +845,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 103,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Babine Lake Marine Park",
@@ -958,7 +853,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 68,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Taylor Arm Park",
@@ -967,7 +861,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 69,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Prudhomme Lake Park",
@@ -976,7 +869,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 71,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Downing Park",
@@ -985,7 +877,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 72,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Pinecone Burke Park",
@@ -994,7 +885,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 73,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Sowchea Bay Park",
@@ -1003,7 +893,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 74,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Red Bluff Park",
@@ -1012,7 +901,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 77,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Ts'ilɂos Park",
@@ -1021,7 +909,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 78,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Garibaldi Park",
@@ -1030,7 +917,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 79,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Schoen Lake Park",
@@ -1039,7 +925,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 81,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Pirates Cove Marine Park",
@@ -1048,7 +933,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 82,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Herald Park",
@@ -1057,7 +941,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 84,
     hasWinterFeeDates: false,
-    inReservationSystem: true,
   },
   {
     name: "Saysutshun (Newcastle Island Marine) Park",
@@ -1066,7 +949,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 86,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Tyhee Lake Park",
@@ -1075,7 +957,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 87,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Peace Arch Park",
@@ -1084,7 +965,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 89,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Joffre Lakes Park",
@@ -1093,7 +973,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 90,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Nairn Falls Park",
@@ -1102,7 +981,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 91,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "One Island Lake Park",
@@ -1111,7 +989,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 92,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Saltery Bay Park",
@@ -1120,7 +997,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 93,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Silver Star Park",
@@ -1129,7 +1005,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 94,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Mabel Lake Park",
@@ -1138,7 +1013,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 95,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Gibson Marine Park",
@@ -1147,7 +1021,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 96,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kokanee Glacier Park",
@@ -1156,7 +1029,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 98,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Big Bunsby Marine Park",
@@ -1165,7 +1037,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 99,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Desolation Sound Marine Park",
@@ -1174,7 +1045,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 100,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Jewel Lake Park",
@@ -1183,7 +1053,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 101,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Denetiah Park",
@@ -1192,7 +1061,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 102,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Diana Lake Park",
@@ -1201,7 +1069,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 104,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Juan de Fuca Park",
@@ -1210,7 +1077,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 105,
     hasWinterFeeDates: false,
-    inReservationSystem: true,
   },
   {
     name: "Monashee Park",
@@ -1219,7 +1085,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 106,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Okeover Arm Park",
@@ -1228,7 +1093,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 107,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Mount Robson Park",
@@ -1237,7 +1101,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 108,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Discovery Island Marine Park",
@@ -1246,7 +1109,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 109,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Sugarbowl-Grizzly Den Park",
@@ -1255,7 +1117,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 110,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Cape Scott Park",
@@ -1264,7 +1125,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 111,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Smelt Bay Park",
@@ -1273,7 +1133,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 112,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Malaspina Park",
@@ -1282,7 +1141,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 113,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Moberly Lake Park",
@@ -1291,7 +1149,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 114,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kiskatinaw Park",
@@ -1300,7 +1157,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 115,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Bridge Lake Park",
@@ -1309,7 +1165,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 116,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Mount Fernie Park",
@@ -1318,7 +1173,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 117,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Stone Mountain Park",
@@ -1327,7 +1181,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 118,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Charlie Lake Park",
@@ -1336,7 +1189,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 119,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "sx̌ʷəx̌ʷnitkʷ Park",
@@ -1345,7 +1197,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 120,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Muncho Lake Park",
@@ -1354,7 +1205,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 121,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Conkle Lake Park",
@@ -1363,7 +1213,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 122,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Tudyah Lake Park",
@@ -1372,7 +1221,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 123,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Vaseux Lake Park",
@@ -1381,7 +1229,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 124,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Tplaqín / Enderby Cliffs Park",
@@ -1390,7 +1237,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 125,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kekuli Bay Park",
@@ -1399,7 +1245,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 126,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Swan Lake Park",
@@ -1408,7 +1253,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 127,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kalamalka Lake Park",
@@ -1417,7 +1261,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 128,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Purden Lake Park",
@@ -1426,7 +1269,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 129,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "McDonald Creek Park",
@@ -1435,7 +1277,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 130,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Beaumont Park",
@@ -1444,7 +1285,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 131,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Horsefly Lake Park",
@@ -1453,7 +1293,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 132,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Steelhead Park",
@@ -1462,7 +1301,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 133,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Otter Lake Park",
@@ -1471,7 +1309,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 134,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kettle River Recreation Area",
@@ -1480,7 +1317,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 135,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kickininee Park",
@@ -1489,7 +1325,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 136,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Arrow Lakes Park",
@@ -1498,7 +1333,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 137,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Inkaneep Park",
@@ -1507,7 +1341,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 138,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "sẁiẁs Park",
@@ -1516,7 +1349,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 139,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kleanza Creek Park",
@@ -1525,7 +1357,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 140,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Stemwinder Park",
@@ -1534,7 +1365,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 141,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Niskonlith Lake Park",
@@ -1543,7 +1373,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 142,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Gwillim Lake Park",
@@ -1552,7 +1381,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 143,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kentucky-Alleyne Park",
@@ -1561,7 +1389,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 144,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Wells Gray Park",
@@ -1570,7 +1397,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 145,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Goldpan Park",
@@ -1579,7 +1405,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 146,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Lac Le Jeune Park",
@@ -1588,7 +1413,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 148,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Johnstone Creek Park",
@@ -1597,7 +1421,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 150,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Nancy Greene Park",
@@ -1606,7 +1429,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 151,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Skihist Park",
@@ -1615,7 +1437,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 153,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Blue Earth Lake Park",
@@ -1624,7 +1445,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 154,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Flores Island Park",
@@ -1633,7 +1453,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 155,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Little Qualicum Falls Park",
@@ -1642,7 +1461,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 156,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Meziadin Lake Park",
@@ -1651,7 +1469,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 157,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Lockhart Beach Park",
@@ -1660,7 +1477,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 158,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Paarens Beach Park",
@@ -1669,7 +1485,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 161,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Stamp River Park",
@@ -1678,7 +1493,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 162,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Strathcona Park",
@@ -1687,7 +1501,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 163,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Tunkwa Park",
@@ -1696,7 +1509,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 164,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Jimsmith Lake Park",
@@ -1705,7 +1517,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 165,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Mᑫuqʷin/Brooks Peninsula Park",
@@ -1714,7 +1525,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 166,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Sproat Lake Park",
@@ -1723,7 +1533,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 167,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "White Lake Park",
@@ -1732,7 +1541,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 168,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Blanket Creek Park",
@@ -1741,7 +1549,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 169,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "E.C. Manning Park",
@@ -1750,7 +1557,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 170,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Bowron Lake Park",
@@ -1759,7 +1565,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 172,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Alexandra Bridge Park",
@@ -1768,7 +1573,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 175,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Rosebery Park",
@@ -1777,7 +1581,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 176,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kilby Park",
@@ -1786,7 +1589,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 177,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Ellison Park",
@@ -1795,7 +1597,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 178,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Alice Lake Park",
@@ -1804,7 +1605,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 179,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Main Lake Park",
@@ -1813,7 +1613,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 180,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Emory Creek Park",
@@ -1822,7 +1621,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 181,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Inland Lake Park",
@@ -1831,7 +1629,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 182,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Englishman River Falls Park",
@@ -1840,7 +1637,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 183,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Allison Lake Park",
@@ -1849,7 +1645,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 184,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Sun-Oka Beach Park",
@@ -1858,7 +1653,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 185,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Cinnemousun Narrows Park",
@@ -1867,7 +1661,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 186,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Bromley Rock Park",
@@ -1876,7 +1669,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 187,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Copeland Islands Marine Park",
@@ -1885,7 +1677,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 188,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Boundary Creek Park",
@@ -1894,7 +1685,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 189,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Porpoise Bay Park",
@@ -1903,7 +1693,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 190,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Christina Lake Park",
@@ -1912,7 +1701,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 191,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Kokanee Creek Park",
@@ -1921,7 +1709,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 192,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Mount Seymour Park",
@@ -1930,7 +1717,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 193,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Carmanah Walbran Park",
@@ -1939,7 +1725,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 195,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Skagit Valley Park",
@@ -1948,7 +1733,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 196,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Mansons Landing Park",
@@ -1957,7 +1741,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 197,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Sasquatch Park",
@@ -1966,7 +1749,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 198,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Okanagan Lake Park",
@@ -1975,7 +1757,6 @@ const rows = [
     hasTier2Dates: true,
     publishableId: 205,
     hasWinterFeeDates: false,
-    inReservationSystem: false,
   },
   {
     name: "Morton Lake Park",
@@ -1984,7 +1765,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 209,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Rolley Lake Park",
@@ -1993,7 +1773,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 210,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Elk Falls Park",
@@ -2002,7 +1781,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 211,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "French Beach Park",
@@ -2011,7 +1789,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 212,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Ruckle Park",
@@ -2020,7 +1797,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 213,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Liard River Hot Springs Park",
@@ -2029,7 +1805,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 214,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Montague Harbour Marine Park",
@@ -2038,7 +1813,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 215,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Bamberton Park",
@@ -2047,7 +1821,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 216,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Porteau Cove Park",
@@ -2056,7 +1829,6 @@ const rows = [
     hasTier2Dates: false,
     publishableId: 218,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
   {
     name: "Golden Ears Park",
@@ -2065,7 +1837,6 @@ const rows = [
     hasTier2Dates: true,
     publishableId: 217,
     hasWinterFeeDates: true,
-    inReservationSystem: false,
   },
 ];
 
@@ -2100,7 +1871,6 @@ module.exports = {
           has_tier_1_dates: dootParkData.hasTier1Dates,
           has_tier_2_dates: dootParkData.hasTier2Dates,
           has_winter_fee_dates: dootParkData.hasWinterFeeDates,
-          in_reservation_system: dootParkData.inReservationSystem,
         });
       }
     }
