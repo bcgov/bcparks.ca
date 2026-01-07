@@ -22,6 +22,17 @@
     },
     "description": {
       "type": "text"
+    },
+    "rank": {
+      "type": "integer"
+    },
+    "featureLevel": {
+      "type": "boolean",
+      "default": false
+    },
+    "parkLevel": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

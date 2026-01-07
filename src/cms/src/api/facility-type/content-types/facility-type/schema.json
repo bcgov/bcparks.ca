@@ -30,7 +30,7 @@
       "type": "string"
     },
     "rank": {
-      "type": "string"
+      "type": "integer"
     },
     "note": {
       "type": "string"
