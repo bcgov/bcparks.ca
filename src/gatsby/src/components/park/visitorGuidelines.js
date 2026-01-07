@@ -12,7 +12,7 @@ const formatDate = (str) => {
   return format(date, 'MMMM d, yyyy')
 }
 
-// Helper function to add cache buster to URL based on an ISO date
+// Helper function to add cache-buster to URL based on an ISO date
 const addCacheBuster = (url, isoDate) => {
   const cacheBuster = new Date(isoDate).getTime()
   const separator = url.includes("?") ? "&" : "?"
