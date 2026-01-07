@@ -12,6 +12,13 @@ const formatDate = (str) => {
   return format(date, 'MMMM d, yyyy')
 }
 
+// Helper function to add cache buster to URL based on an ISO date
+const addCacheBuster = (url, isoDate) => {
+  const cacheBuster = new Date(isoDate).getTime()
+  const separator = url.includes("?") ? "&" : "?"
+  return `${url}${separator}cb=${cacheBuster}`
+}
+
 export const Guideline = ({ guide, reports }) => {
   const guidelineType = guide.guidelineType
   const guidelineTypeIcon = guidelineType?.icon ? _.kebabCase(guidelineType.icon) : ""
@@ -30,7 +37,14 @@ export const Guideline = ({ guide, reports }) => {
         {(guidelineType.hasTrailReport && reports?.length > 0) &&
           reports.map((report, index) => (
             <p key={index}>
-              View the <a href={report.reportUrl}>{report.title} [PDF]</a>
+              View the{" "}
+              <a
+                href={addCacheBuster(report.reportUrl, report.updatedAt)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {report.title} [PDF]
+              </a>
               {` (${formatDate(report.reportDate)})`}.
             </p>
           ))}

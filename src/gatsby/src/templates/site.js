@@ -633,6 +633,7 @@ export const query = graphql`
         title
         reportUrl
         reportDate
+        updatedAt
       }
       parkOperationDates {
         operatingYear
