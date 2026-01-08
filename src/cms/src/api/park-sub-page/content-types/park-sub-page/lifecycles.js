@@ -1,56 +1,45 @@
 
 /*
- *
  * ============================================================
- * WARNING: THIS FILE HAS BEEN COMMENTED OUT
+ * STRAPI 5 LIFECYCLE HOOKS - MIGRATED TO DOCUMENT SERVICE
  * ============================================================
  *
- * CONTEXT:
+ * NOTE: This lifecycle logic has been migrated to Document Service Middleware
+ * in src/index.js as recommended by Strapi v5 migration guide.
  *
- * The lifecycles.js file has been commented out to prevent unintended side effects when starting Strapi 5 for the first time after migrating to the document service.
+ * This file is kept for reference but the main logic now runs through the
+ * centralized middleware to properly handle Draft & Publish and i18n features.
  *
- * STRAPI 5 introduces a new document service that handles lifecycles differently compared to previous versions. Without migrating your lifecycles to document service middlewares, you may experience issues such as:
- *
- * - `unpublish` actions triggering `delete` lifecycles for every locale with a published entity, which differs from the expected behavior in v4.
- * - `discardDraft` actions triggering both `create` and `delete` lifecycles, leading to potential confusion.
- *
- * MIGRATION GUIDE:
- *
- * For a thorough guide on migrating your lifecycles to document service middlewares, please refer to the following link:
- * [Document Services Middlewares Migration Guide](https://docs.strapi.io/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service)
- *
- * IMPORTANT:
- *
- * Simply uncommenting this file without following the migration guide may result in unexpected behavior and inconsistencies. Ensure that you have completed the migration process before re-enabling this file.
+ * Migration Guide: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service
+ * Document Service Middlewares: https://docs.strapi.io/cms/api/document-service/middlewares
  *
  * ============================================================
  */
 
-// "use strict";
-// 
-// /**
-//  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
-//  * to customize this model
-//  */
-// 
-// const validator = require("../../../../helpers/validator.js");
-// 
-// module.exports = {
-//     beforeCreate(event) {
-//         const { data, where, select, populate } = event.params;
-//         validator.protectedAreaConnectValidator(data.protectedArea)
-//         validator.slugCharacterValidator(data.slug)
-//         validator.slugNoLeadingSlashValidator(data.slug)
-//         validator.slugNoLeadingDashValidator(data.slug)
-//         validator.slugNoTrailingDashValidator(data.slug)
-//     },
-//     beforeUpdate(event) {
-//         const { data, where, select, populate } = event.params;
-//         validator.protectedAreaDisconnectValidator(data.protectedArea)
-//         validator.slugCharacterValidator(data.slug)
-//         validator.slugNoLeadingSlashValidator(data.slug)
-//         validator.slugNoLeadingDashValidator(data.slug)
-//         validator.slugNoTrailingDashValidator(data.slug)
-//     }
-// };
-// 
+"use strict";
+
+/**
+ * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
+ * to customize this model
+ */
+
+const validator = require("../../../../helpers/validator.js");
+
+module.exports = {
+    beforeCreate(event) {
+        const { data, where, select, populate } = event.params;
+        validator.protectedAreaConnectValidator(data.protectedArea)
+        validator.slugCharacterValidator(data.slug)
+        validator.slugNoLeadingSlashValidator(data.slug)
+        validator.slugNoLeadingDashValidator(data.slug)
+        validator.slugNoTrailingDashValidator(data.slug)
+    },
+    beforeUpdate(event) {
+        const { data, where, select, populate } = event.params;
+        validator.protectedAreaDisconnectValidator(data.protectedArea)
+        validator.slugCharacterValidator(data.slug)
+        validator.slugNoLeadingSlashValidator(data.slug)
+        validator.slugNoLeadingDashValidator(data.slug)
+        validator.slugNoTrailingDashValidator(data.slug)
+    }
+};
