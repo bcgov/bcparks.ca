@@ -1,4 +1,3 @@
-
 /*
  *
  * ============================================================
@@ -27,17 +26,17 @@
  */
 
 // "use strict";
-// 
+//
 // const updateName = async (data, where) => {
 // 	if (where) {
-// 		const id = where.id
-// 		const parkGuideline = await strapi.entityService.findOne(
-// 			"api::park-guideline.park-guideline", id, { populate: '*' }
-// 		)
+// 		const documentId = where.documentId
+// 		const parkGuideline = await strapi.documents("api::park-guideline.park-guideline").findOne({
+// 			documentId, populate: '*'
+// 		})
 // 		const protectedArea = parkGuideline.protectedArea
 // 		const site = parkGuideline.site
 // 		const guidelineType = parkGuideline.guidelineType
-// 
+//
 // 		data.name = ""
 // 		if (protectedArea) {
 // 			data.name = protectedArea.orcs
@@ -52,7 +51,7 @@
 // 	}
 // 	return data
 // };
-// 
+//
 // module.exports = {
 // 	async beforeCreate(event) {
 // 		let { data, where } = event.params;
@@ -63,4 +62,4 @@
 // 		data = await updateName(data, where);
 // 	},
 // };
-// 
+//

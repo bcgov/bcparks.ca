@@ -1,4 +1,3 @@
-
 /*
  *
  * ============================================================
@@ -27,26 +26,26 @@
  */
 
 // "use strict";
-// 
+//
 // const updateName = async (data, where) => {
 //     if (where) {
-//         const id = where.id
-//         const parkContact = await strapi.entityService.findOne(
-//             "api::park-contact.park-contact", id, { populate: '*' }
-//         )
+//         const documentId = where.documentId
+//         const parkContact = await strapi.documents("api::park-contact.park-contact").findOne({
+//             documentId, populate: '*'
+//         })
 //         let protectedArea = parkContact.protectedArea
 //         const parkOperatorContact = parkContact.parkOperatorContact
-// 
+//
 //         // Check if new protectedArea is being added
 //         if (data?.protectedArea?.connect?.length > 0) {
-//           protectedArea = await strapi.entityService.findOne(
-//             "api::protected-area.protected-area", data?.protectedArea.connect[0].id
-//           )
+//           protectedArea = await strapi.documents("api::protected-area.protected-area").findOne({
+//             documentId: data?.protectedArea.connect[0].documentId
+//           })
 //         // Check if current protectedArea is being removed
 //         } else if (data?.protectedArea?.disconnect?.length > 0) {
 //           protectedArea = { orcs: 0 }
 //         }
-// 
+//
 //         data.name = ""
 //         if (protectedArea) {
 //             data.name = protectedArea.orcs
@@ -63,7 +62,7 @@
 //     }
 //     return data
 // };
-// 
+//
 // module.exports = {
 //     async beforeCreate(event) {
 //         let { data, where } = event.params;
@@ -74,4 +73,4 @@
 //         data = await updateName(data, where);
 //     },
 // };
-// 
+//

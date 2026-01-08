@@ -1,4 +1,3 @@
-
 /*
  *
  * ============================================================
@@ -27,16 +26,16 @@
  */
 
 // "use strict";
-// 
+//
 // const { indexPark, removePark } = require("../../../../helpers/taskQueue.js");
-// 
+//
 // /**
 //  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
 //  * to customize this model
 //  */
-// 
+//
 // const validator = require("../../../../helpers/validator.js");
-// 
+//
 // const saveParkAccessStatus = async (ctx) => {
 //   try {
 //     if (ctx.result?.orcs) {
@@ -56,8 +55,7 @@
 //             }
 //           });
 //       if (updateResult.count === 0) {
-//         await strapi.entityService.create(
-//           "api::park-access-status.park-access-status", {
+//         await strapi.documents("api::park-access-status.park-access-status").create({
 //           data: {
 //             orcs: ctx.result.orcs,
 //             publishedAt: new Date()
@@ -72,7 +70,7 @@
 //     );
 //   }
 // };
-// 
+//
 // module.exports = {
 //   beforeCreate(event) {
 //     const { data, where, select, populate } = event.params;
@@ -100,4 +98,4 @@
 //     await removePark(ctx.params?.where?.id);
 //   },
 // };
-// 
+//

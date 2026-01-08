@@ -1,4 +1,3 @@
-
 /*
  *
  * ============================================================
@@ -27,25 +26,25 @@
  */
 
 // "use strict";
-// 
+//
 // const { indexPark } = require("../../../../helpers/taskQueue.js");
 // const validator = require("../../../../helpers/validator.js");
-// 
+//
 // /**
 //  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
 //  * to customize this model
 //  */
-// 
+//
 // const updateName = async (data, where) => {
 //   if (where) {
-//     const id = where.id
-//     const parkActivity = await strapi.entityService.findOne(
-//       "api::park-activity.park-activity", id, { populate: '*'}
-//     )
+//     const documentId = where.documentId
+//     const parkActivity = await strapi.documents("api::park-activity.park-activity").findOne({
+//       documentId, populate: '*'
+//     })
 //     const protectedArea = parkActivity.protectedArea
 //     const site = parkActivity.site
 //     const activityType = parkActivity.activityType
-//   
+//
 //     data.name = ""
 //     if (protectedArea) {
 //       data.name = protectedArea.orcs
@@ -60,7 +59,7 @@
 //   }
 //   return data
 // };
-// 
+//
 // module.exports = {
 //   async beforeCreate(event) {
 //     let { data, where } = event.params;
@@ -83,12 +82,12 @@
 //   },
 //   async beforeDelete(event) {
 //     let { where } = event.params;
-//     const parkActivity = await strapi.entityService.findOne(
-//       "api::park-activity.park-activity", where.id, {
+//     const parkActivity = await strapi.documents("api::park-activity.park-activity").findOne({
+//       documentId: where.documentId,
 //       fields: ['id'],
 //       populate: { protectedArea: { fields: ['id'] } }
 //     });
 //     await indexPark(parkActivity.protectedArea?.id)
 //   }
 // };
-// 
+//

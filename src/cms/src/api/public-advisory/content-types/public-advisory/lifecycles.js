@@ -1,4 +1,3 @@
-
 /*
  *
  * ============================================================
@@ -27,18 +26,18 @@
  */
 
 // "use strict";
-// 
+//
 // const { indexPark } = require("../../../../helpers/taskQueue.js");
-// 
+//
 // /**
 //  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
 //  * to customize this model
 //  */
-// 
+//
 // const indexParks = async function (ctx) {
 //     let { where } = ctx.params;
-//     const advisory = await strapi.entityService.findOne(
-//         "api::public-advisory.public-advisory", where.id, {
+//     const advisory = await strapi.documents("api::public-advisory.public-advisory").findOne({
+//         documentId: where.documentId,
 //         fields: ['id'],
 //         populate: { protectedAreas: { fields: ['id'] } }
 //     });
@@ -46,7 +45,7 @@
 //         await indexPark(pa.id);
 //     }
 // };
-// 
+//
 // const clearRestCache = async function () {
 //     const cachePlugin = strapi.plugins["rest-cache"];
 //     if (cachePlugin) {
@@ -55,7 +54,7 @@
 //         await cachePlugin.services.cacheStore.clearByUid('api::park-access-status.park-access-status');
 //     }
 // }
-// 
+//
 // // clear the public advisories from the rest cache after all crud operations
 // module.exports = {
 //     afterCreate: async (ctx) => {
@@ -89,4 +88,4 @@
 //         await clearRestCache();
 //     },
 // };
-// 
+//

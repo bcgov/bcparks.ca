@@ -26,12 +26,13 @@ module.exports = {
   async up(knex) {
     if (await knex.schema.hasTable("park_feature_types")) {
       // Fetch all records from park-operation-sub-area-type
-      const subAreaTypes = await strapi.entityService.findMany(
-        "api::park-operation-sub-area-type.park-operation-sub-area-type",
-        {
+      const subAreaTypes = await strapi
+        .documents(
+          "api::park-operation-sub-area-type.park-operation-sub-area-type",
+        )
+        .findMany({
           populate: ["facilityType", "campingType"],
-        }
-      );
+        });
 
       // Prepare data for park-feature-type
       const featureTypes = subAreaTypes.map((type) => {
@@ -52,10 +53,9 @@ module.exports = {
       // Insert data into park-feature-type
       if (featureTypes.length > 0) {
         for (const featureType of featureTypes) {
-          await strapi.entityService.create(
-            "api::park-feature-type.park-feature-type",
-            { data: featureType }
-          );
+          await strapi
+            .documents("api::park-feature-type.park-feature-type")
+            .create({ data: featureType });
         }
       }
     }

@@ -1967,29 +1967,29 @@ module.exports = {
           try {
             // Find matching parkOperationSubArea
             const protectedAreaId = pa[row.orcs];
-            let parkOperationSubArea = await strapi.entityService.findMany(
-              "api::park-operation-sub-area.park-operation-sub-area",
-              {
+            let parkOperationSubArea = await strapi
+              .documents("api::park-operation-sub-area.park-operation-sub-area")
+              .findMany({
                 filters: {
                   protectedArea: protectedAreaId,
                   parkSubArea: { $eqi: row.parkAreaName },
                 },
                 limit: 1,
-              }
-            );
+              });
 
             // If not found, try with parkSubArea
             if (parkOperationSubArea.length === 0 && row.parkSubArea) {
-              parkOperationSubArea = await strapi.entityService.findMany(
-                "api::park-operation-sub-area.park-operation-sub-area",
-                {
+              parkOperationSubArea = await strapi
+                .documents(
+                  "api::park-operation-sub-area.park-operation-sub-area",
+                )
+                .findMany({
                   filters: {
                     protectedArea: protectedAreaId,
                     parkSubArea: { $eqi: row.parkSubArea },
                   },
                   limit: 1,
-                }
-              );
+                });
             }
 
             const sa = parkOperationSubArea?.[0] || null;
@@ -2065,7 +2065,7 @@ module.exports = {
             }
 
             // Insert the park area
-            await strapi.entityService.create("api::park-area.park-area", {
+            await strapi.documents("api::park-area.park-area").create({
               data: area,
             });
           } catch (error) {

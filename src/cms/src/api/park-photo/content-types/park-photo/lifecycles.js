@@ -1,4 +1,3 @@
-
 /*
  *
  * ============================================================
@@ -27,50 +26,47 @@
  */
 
 // "use strict";
-// 
+//
 // const { indexPark } = require("../../../../helpers/taskQueue.js");
-// 
+//
 // /**
 //  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
 //  * to customize this model
 //  */
-// 
+//
 // const getOrcs = async function (event) {
 //   let { where } = event.params;
-//   if (!where.id) {
+//   if (!where.documentId) {
 //     return null;
 //   }
-//   const photo = await strapi.entityService.findOne(
-//     "api::park-photo.park-photo",
-//     where.id,
+//   const photo = await strapi.documents("api::park-photo.park-photo").findOne(
 //     {
+//       documentId: where.documentId,
 //       fields: ["orcs"],
 //     }
 //   );
 //   return photo?.orcs;
 // };
-// 
+//
 // const getOrcsSiteNumber = async function (event) {
 //   let { where } = event.params;
-//   if (!where.id) {
+//   if (!where.documentId) {
 //     return null;
 //   }
-//   const photo = await strapi.entityService.findOne(
-//     "api::park-photo.park-photo",
-//     where.id,
+//   const photo = await strapi.documents("api::park-photo.park-photo").findOne(
 //     {
+//       documentId: where.documentId,
 //       fields: ["orcsSiteNumber"],
 //     }
 //   );
 //   return photo?.orcsSiteNumber;
 // };
-// 
+//
 // const getProtectedAreaIdByOrcs = async function (orcs) {
 //   if (!orcs) {
 //     return null;
 //   }
-//   const parks = await strapi.entityService.findMany(
-//     "api::protected-area.protected-area",
+//   const parks = await strapi.documents("api::protected-area.protected-area").findMany(
 //     {
 //       fields: ["id"],
 //       filters: {
@@ -83,24 +79,24 @@
 //   }
 //   return parks[0]?.id;
 // };
-// 
+//
 // module.exports = {
 //   async afterCreate(event) {
 //     // If parkPhoto.protectedArea is selected, get that protectedArea.orcs in the parkPhoto.orcs
 //     if (event.result?.protectedArea) {
 //       const protectedAreaOrcs = event.result.protectedArea.orcs;
 //       event.result.orcs = protectedAreaOrcs;
-//       await strapi.entityService.update(
-//         "api::park-photo.park-photo", event.result.id, { data: { orcs: protectedAreaOrcs } }
-//       )
+//       await strapi.documents("api::park-photo.park-photo").update({
+//         documentId: event.result.documentId, data: { orcs: protectedAreaOrcs }
+//       })
 //     }
 //     // If parkPhoto.site is selected, get that site.orcsSiteNumber in the parkPhoto.orcsSiteNumber
 //     if (event.result?.site) {
 //       const siteOrcs = event.result.site.orcsSiteNumber;
 //       event.result.orcsSiteNumber = siteOrcs;
-//       await strapi.entityService.update(
-//         "api::park-photo.park-photo", event.result.id, { data: { orcsSiteNumber: siteOrcs } }
-//       )
+//       await strapi.documents("api::park-photo.park-photo").update({
+//         documentId: event.result.documentId, data: { orcsSiteNumber: siteOrcs }
+//       })
 //     }
 //     const protectedAreaId = await getProtectedAreaIdByOrcs(event.result?.orcs);
 //     await indexPark(protectedAreaId);
@@ -111,9 +107,9 @@
 //       const protectedAreaOrcs = event.result.protectedArea?.orcs;
 //       if (event.result.orcs !== protectedAreaOrcs) {
 //         event.result.orcs = protectedAreaOrcs;
-//         await strapi.entityService.update(
-//           "api::park-photo.park-photo", event.result.id, { data: { orcs: protectedAreaOrcs } }
-//         )
+//         await strapi.documents("api::park-photo.park-photo").update({
+//           documentId: event.result.documentId, data: { orcs: protectedAreaOrcs }
+//         })
 //       }
 //     }
 //     // If parkPhoto.site is selected, get that site.orcsSiteNumber in the parkPhoto.orcsSiteNumber
@@ -121,9 +117,9 @@
 //       const siteOrcs = event.result.site?.orcsSiteNumber;
 //       if (event.result.orcsSiteNumber !== siteOrcs) {
 //         event.result.orcsSiteNumber = siteOrcs;
-//         await strapi.entityService.update(
-//           "api::park-photo.park-photo", event.result.id, { data: { orcsSiteNumber: siteOrcs } }
-//         )
+//         await strapi.documents("api::park-photo.park-photo").update({
+//           documentId: event.result.documentId, data: { orcsSiteNumber: siteOrcs }
+//         })
 //       }
 //     }
 //     const newProtectedAreaId = await getProtectedAreaIdByOrcs(event.result?.orcs);
@@ -146,4 +142,4 @@
 //     await indexPark(protectedAreaId);
 //   }
 // };
-// 
+//

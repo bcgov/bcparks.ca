@@ -19,16 +19,15 @@ module.exports = {
       await strapi.db.transaction(async () => {
         for (const row of rows) {
           try {
-            await strapi.entityService.create(
-              "api::park-date-type.park-date-type",
-              {
+            await strapi
+              .documents("api::park-date-type.park-date-type")
+              .create({
                 data: {
                   dateTypeId: row.dateTypeId,
                   dateType: row.dateType,
                   publishedAt: new Date().toISOString(),
                 },
-              }
-            );
+              });
           } catch (error) {
             console.error(`Failed to insert: ${row}`, error);
           }

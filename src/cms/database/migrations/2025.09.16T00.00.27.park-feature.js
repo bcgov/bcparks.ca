@@ -4238,12 +4238,9 @@ const singleItemAreas = [
 
 // Helper function to find a parkArea by its orcsAreaNumber
 async function findAreaByOrcsAreaNumber(orcsAreaNumber) {
-  const areas = await strapi.entityService.findMany(
-    "api::park-area.park-area",
-    {
-      filters: { orcsAreaNumber: orcsAreaNumber },
-    }
-  );
+  const areas = await strapi.documents("api::park-area.park-area").findMany({
+    filters: { orcsAreaNumber: orcsAreaNumber },
+  });
   return areas.length > 0 ? areas[0] : null;
 }
 
@@ -4251,29 +4248,27 @@ module.exports = {
   async up(knex) {
     if (await knex.schema.hasTable("park_features")) {
       // Get all the records from park-feature-types and put them into a map by name
-      const featureTypes = await strapi.entityService.findMany(
-        "api::park-feature-type.park-feature-type",
-        {
+      const featureTypes = await strapi
+        .documents("api::park-feature-type.park-feature-type")
+        .findMany({
           fields: ["id", "parkFeatureType"],
-        }
-      );
+        });
       const featureTypeMap = new Map(
-        featureTypes.map((type) => [type.parkFeatureType, type.id])
+        featureTypes.map((type) => [type.parkFeatureType, type.id]),
       );
 
       // Fetch all records from park-operation-sub-area
       // Order by protectedArea.orcs and then by parkSubArea
       const parkSubAreas = (
-        await strapi.entityService.findMany(
-          "api::park-operation-sub-area.park-operation-sub-area",
-          {
+        await strapi
+          .documents("api::park-operation-sub-area.park-operation-sub-area")
+          .findMany({
             populate: {
               protectedArea: true,
               parkSubAreaType: true,
               site: true,
             },
-          }
-        )
+          })
       ).sort((a, b) => {
         const orcsA = Number(a.protectedArea?.orcs) || 0;
         const orcsB = Number(b.protectedArea?.orcs) || 0;
@@ -4350,7 +4345,7 @@ module.exports = {
         const sharedData = Object.fromEntries(
           sharedFields
             .filter((field) => record[field] !== undefined)
-            .map((field) => [field, record[field]])
+            .map((field) => [field, record[field]]),
         );
 
         let parkArea = undefined;
@@ -4363,7 +4358,7 @@ module.exports = {
         const multiItemArea = multiItemAreas.find(
           (area) =>
             area.orcs === record.protectedArea?.orcs &&
-            area.items.some((item) => item.featureId === record.featureId)
+            area.items.some((item) => item.featureId === record.featureId),
         );
 
         if (multiItemArea) {
@@ -4375,7 +4370,7 @@ module.exports = {
 
             // get the newName for the matching item
             featureName = multiItemArea.items.find(
-              (item) => item.featureId === record.featureId
+              (item) => item.featureId === record.featureId,
             )?.newName;
           }
         } else {
@@ -4383,7 +4378,7 @@ module.exports = {
           const singleItemArea = singleItemAreas.find(
             (area) =>
               area.orcs === record.protectedArea?.orcs &&
-              area.items.some((item) => item.featureId === record.featureId)
+              area.items.some((item) => item.featureId === record.featureId),
           );
 
           if (singleItemArea) {
@@ -4400,15 +4395,14 @@ module.exports = {
         }
 
         // get a list of all parkOperationSubAreas and populate the parkSubAreaType
-        const parkOperationSubAreas = await strapi.entityService.findMany(
-          "api::park-operation-sub-area.park-operation-sub-area",
-          {
+        const parkOperationSubAreas = await strapi
+          .documents("api::park-operation-sub-area.park-operation-sub-area")
+          .findMany({
             filters: {
               protectedArea: record.protectedArea.id,
             },
             populate: { parkSubAreaType: true },
-          }
-        );
+          });
 
         // Logic for orcsFeatureNumber. We will end up with slightly different values
         // on different environments, but eventually everything will be restored
@@ -4446,7 +4440,7 @@ module.exports = {
         };
 
         // Create the new park-feature record
-        await strapi.entityService.create("api::park-feature.park-feature", {
+        await strapi.documents("api::park-feature.park-feature").create({
           data: parkFeatureData,
         });
       }

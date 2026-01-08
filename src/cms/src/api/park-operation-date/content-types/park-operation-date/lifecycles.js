@@ -1,4 +1,3 @@
-
 /*
  *
  * ============================================================
@@ -27,14 +26,14 @@
  */
 
 // "use strict";
-// 
+//
 // const { indexPark } = require("../../../../helpers/taskQueue.js");
-// 
+//
 // /**
 //  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
 //  * to customize this model
 //  */
-// 
+//
 // module.exports = {
 //   async afterUpdate(event) {
 //     await indexPark(event.result.protectedArea?.id)
@@ -49,12 +48,12 @@
 //   },
 //   async beforeDelete(event) {
 //     let { where } = event.params;
-//     const parkDate = await strapi.entityService.findOne(
-//       "api::park-operation-date.park-operation-date", where.id, {
+//     const parkDate = await strapi.documents("api::park-operation-date.park-operation-date").findOne({
+//       documentId: where.documentId,
 //       fields: ['id'],
 //       populate: { protectedArea: { fields: ['id'] } }
 //     });
 //     await indexPark(parkDate.protectedArea.id)
 //   }
 // };
-// 
+//

@@ -1,4 +1,3 @@
-
 /*
  *
  * ============================================================
@@ -31,9 +30,9 @@
 //  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
 //  * to customize this model
 //  */
-// 
+//
 // const { queueAdvisoryEmail } = require("../../../../helpers/taskQueue.js");
-// 
+//
 // const getNextAdvisoryNumber = async () => {
 //   const result = await strapi.db.query('api::public-advisory-audit.public-advisory-audit').findOne({
 //     orderBy: {
@@ -44,7 +43,7 @@
 //   if (!maxAdvisoryNumber || maxAdvisoryNumber < 0) maxAdvisoryNumber = 0;
 //   return ++maxAdvisoryNumber;
 // };
-// 
+//
 // const getNextRevisionNumber = async (advisoryNumber) => {
 //   const result = await strapi.db.query('api::public-advisory-audit.public-advisory-audit').findOne({
 //     where: {
@@ -59,7 +58,7 @@
 //   if (!maxRevisionNumber || maxRevisionNumber < 0) maxRevisionNumber = 0;
 //   return ++maxRevisionNumber;
 // };
-// 
+//
 // const archiveOldPublicAdvisoryAudit = async (data) => {
 //   delete data.id;
 //   delete data.updatedBy;
@@ -67,9 +66,9 @@
 //   delete data.links; // keep links connected to the latest revision, not the archived version
 //   data.publishedAt = null;
 //   data.isLatestRevision = false;
-// 
+//
 //   try {
-//     await strapi.entityService.create('api::public-advisory-audit.public-advisory-audit', { data: data })
+//     await strapi.documents('api::public-advisory-audit.public-advisory-audit').create({ data: data })
 //   } catch (error) {
 //     strapi.log.error(
 //       `error creating public-advisory-audit ${data.advisoryNumber}...`,
@@ -77,7 +76,7 @@
 //     );
 //   }
 // };
-// 
+//
 // const savePublicAdvisory = async (publicAdvisory) => {
 //   delete publicAdvisory.updatedBy;
 //   delete publicAdvisory.createdBy;
@@ -91,7 +90,9 @@
 //     if (isExist) {
 //       try {
 //         publicAdvisory.id = isExist.id;
-//         await strapi.entityService.update('api::public-advisory.public-advisory', isExist.id, { data: publicAdvisory })
+//         await strapi.documents('api::public-advisory.public-advisory').update({
+//           documentId: isExist.documentId, data: publicAdvisory
+//         })
 //       } catch (error) {
 //         strapi.log.error(
 //           `error updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
@@ -101,7 +102,7 @@
 //     } else {
 //       try {
 //         delete publicAdvisory.id;
-//         await strapi.entityService.create('api::public-advisory.public-advisory', {
+//         await strapi.documents('api::public-advisory.public-advisory').create({
 //           data: publicAdvisory
 //         });
 //       } catch (error) {
@@ -113,7 +114,7 @@
 //     }
 //   } else if (isExist) {
 //     try {
-//       await strapi.entityService.delete('api::public-advisory.public-advisory', isExist.id);
+//       await strapi.documents('api::public-advisory.public-advisory').delete({ documentId: isExist.documentId });
 //     } catch (error) {
 //       strapi.log.error(
 //         `error deleting public-advisory ${publicAdvisory.id}...`,
@@ -122,7 +123,7 @@
 //     }
 //   }
 // };
-// 
+//
 // const copyToPublicAdvisory = async (newPublicAdvisory) => {
 //   if (newPublicAdvisory.isLatestRevision && newPublicAdvisory.advisoryStatus) {
 //     const publishedStatuses = ["PUB", "INA"];
@@ -131,7 +132,7 @@
 //     }
 //   }
 // };
-// 
+//
 // const isAdvisoryEqual = (newData, oldData) => {
 //   const fieldsToCompare = {
 //     title: null,
@@ -163,7 +164,7 @@
 //     isUpdatedDateDisplayed: null,
 //     modifiedBy: null,
 //   };
-// 
+//
 //   for (const key of Object.keys(fieldsToCompare)) {
 //     if (Array.isArray(oldData[key])) {
 //       oldData[key] = oldData[key].map((x) => x.id).sort();
@@ -177,7 +178,7 @@
 //   }
 //   return true;
 // };
-// 
+//
 // module.exports = {
 //   beforeCreate: async (ctx) => {
 //     let { data } = ctx.params;
@@ -189,12 +190,13 @@
 //     }
 //   },
 //   afterCreate: async (ctx) => {
-//     const newPublicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
+//     const newPublicAdvisoryAudit = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
+//       documentId: ctx.result.documentId,
 //       populate: "*"
 //     });
-// 
+//
 //     const newAdvisoryStatus = newPublicAdvisoryAudit.advisoryStatus?.code;
-// 
+//
 //     if (newAdvisoryStatus === "ARQ") {
 //       await queueAdvisoryEmail(
 //         "Approval requested",
@@ -203,7 +205,7 @@
 //         "public-advisory-audit::lifecycles::afterCreate()"
 //       );
 //     }
-// 
+//
 //     if (newAdvisoryStatus === "PUB" && newPublicAdvisoryAudit.isUrgentAfterHours) {
 //       await queueAdvisoryEmail(
 //         "After-hours advisory posted",
@@ -212,32 +214,33 @@
 //         "public-advisory-audit::lifecycles::afterCreate()"
 //       );
 //     }
-// 
+//
 //     copyToPublicAdvisory(newPublicAdvisoryAudit);
 //   },
 //   beforeUpdate: async (ctx) => {
 //     let { data, where } = ctx.params;
 //     const newPublicAdvisory = data;
 //     if (!newPublicAdvisory.publishedAt) return;
-// 
+//
 //     newPublicAdvisory.publishedAt = new Date();
 //     newPublicAdvisory.isLatestRevision = true;
-//     const oldPublicAdvisory = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', where.id, {
+//     const oldPublicAdvisory = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
+//       documentId: where.documentId,
 //       populate: "*"
 //     });
-// 
+//
 //     if (!oldPublicAdvisory) return;
 //     if (!oldPublicAdvisory.publishedAt) return;
-// 
+//
 //     // save the status of the old advisory so we can get it back in afterUpdate()
 //     ctx.state.oldStatus = oldPublicAdvisory.advisoryStatus?.code;
-// 
+//
 //     const oldAdvisoryStatus = oldPublicAdvisory.advisoryStatus
 //       ? oldPublicAdvisory.advisoryStatus.code
 //       : "DFT";
-// 
+//
 //     if (isAdvisoryEqual(newPublicAdvisory, oldPublicAdvisory)) return;
-// 
+//
 //     // flow 5: system updates
 //     if (newPublicAdvisory.modifiedBy === "system") {
 //       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
@@ -246,7 +249,7 @@
 //       );
 //       return;
 //     }
-// 
+//
 //     // flow 4: update inactive (set by system)
 //     if (
 //       oldAdvisoryStatus === "INA" &&
@@ -258,7 +261,7 @@
 //       );
 //       return;
 //     }
-// 
+//
 //     // flow 3: update published advisory
 //     if (oldAdvisoryStatus === "PUB") {
 //       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
@@ -269,13 +272,14 @@
 //     }
 //   },
 //   afterUpdate: async (ctx) => {
-//     const publicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
+//     const publicAdvisoryAudit = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
+//       documentId: ctx.result.documentId,
 //       populate: "*"
 //     });
-// 
+//
 //     const oldAdvisoryStatus = ctx.state.oldStatus; // saved by beforeUpdate() above
 //     const newAdvisoryStatus = publicAdvisoryAudit.advisoryStatus?.code;
-// 
+//
 //     if (newAdvisoryStatus === "ARQ" && oldAdvisoryStatus !== "ARQ") {
 //       await queueAdvisoryEmail(
 //         "Approval requested",
@@ -284,7 +288,7 @@
 //         "public-advisory-audit::lifecycles::afterUpdate()"
 //       );
 //     }
-// 
+//
 //     if (
 //       newAdvisoryStatus === "PUB" && oldAdvisoryStatus !== "PUB" &&
 //       publicAdvisoryAudit.modifiedByRole === "submitter" && publicAdvisoryAudit.isUrgentAfterHours
@@ -296,8 +300,8 @@
 //         "public-advisory-audit::lifecycles::afterUpdate()"
 //       );
 //     }
-// 
+//
 //     copyToPublicAdvisory(publicAdvisoryAudit);
 //   },
 // };
-// 
+//

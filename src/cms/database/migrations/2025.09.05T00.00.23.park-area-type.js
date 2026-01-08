@@ -36,16 +36,15 @@ module.exports = {
       await strapi.db.transaction(async () => {
         for (const name of typeNames) {
           try {
-            await strapi.entityService.create(
-              "api::park-area-type.park-area-type",
-              {
+            await strapi
+              .documents("api::park-area-type.park-area-type")
+              .create({
                 data: {
                   parkAreaType: name,
                   areaTypeId: typeNames.indexOf(name) + 1,
                   publishedAt: new Date().toISOString(),
                 },
-              }
-            );
+              });
           } catch (error) {
             console.error(`Failed to insert: ${name}`, error);
           }
