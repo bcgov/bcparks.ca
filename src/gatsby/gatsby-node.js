@@ -199,6 +199,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     title: String
     reportUrl: String
     reportDate: Date
+    updatedAt: Date
   }
 
   type STRAPI_PROTECTED_AREA implements Node {

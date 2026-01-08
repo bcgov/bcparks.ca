@@ -798,6 +798,7 @@ export const query = graphql`
         title
         reportUrl
         reportDate
+        updatedAt
       }
       parkContacts {
         rank
