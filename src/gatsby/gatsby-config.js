@@ -301,16 +301,16 @@ module.exports = {
       resolve: `gatsby-plugin-robots-txt`,
       options: {
         sitemap: "https://bcparks.ca/sitemap-index.xml",
-        resolveEnv: () => process.env.ENV_SUFFIX || 'dev',
+        resolveEnv: () => process.env.ENV_SUFFIX || "dev",
         env: {
-          'dev': {
-            policy: [{ userAgent: '*', disallow: ['/'] }]
+          dev: {
+            policy: [{ userAgent: "*", disallow: ["/"] }],
           },
-          'test': {
-            policy: [{ userAgent: '*', disallow: ['/'] }]
+          test: {
+            policy: [{ userAgent: "*", disallow: ["/"] }],
           },
-          'prod': {
-            policy: [{ userAgent: '*', allow: ['/'] }]
+          prod: {
+            policy: [{ userAgent: "*", allow: ["/"] }],
           },
         },
       },

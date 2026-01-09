@@ -7,21 +7,21 @@ on:
     inputs:
       branchName:
         description: "Publish gatsby for which branch?"
-        default: 'main'
+        default: "main"
         type: choice
         required: true
         options:
-        - alpha
-        - main
+          - alpha
+          - main
       buildEnv:
         description: "Publish gatsby for which environment?"
-        default: 'prod'
+        default: "prod"
         type: choice
         required: true
         options:
-        - prod
-        - test
-        - dev
+          - prod
+          - test
+          - dev
 
 concurrency:
   group: publish-gatsby-${{ github.event.client_payload.branch }}${{ github.event.inputs.branchName }}-${{ github.event.client_payload.env }}${{ github.event.inputs.buildEnv }}
@@ -103,7 +103,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "22"
 
       - run: mkdir -p gatsby/public && mkdir gatsby/.cache
 
@@ -156,7 +156,7 @@ jobs:
   #   runs-on: ubuntu-latest
   #   needs: [build]
   #   steps:
-  #     - name: Send alert if build fails 
+  #     - name: Send alert if build fails
   #       id: failure_alert
   #       run: |
   #         curl -X POST -H 'Content-Type: application/json' --data '{"workflow":"${{github.workflow}}","repo":"${{github.repository}}"}' https://chat.developer.gov.bc.ca/hooks/${{ secrets.ROCKETCHAT_TOKEN }}
