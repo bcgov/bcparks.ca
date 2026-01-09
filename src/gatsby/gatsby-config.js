@@ -1,5 +1,5 @@
 require("dotenv").config({
-  path: `.env`,
+  path: `.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
@@ -9,7 +9,8 @@ module.exports = {
     author: `@bcparks`,
     apiURL: process.env.REACT_APP_CMS_BASE_URL,
     siteUrl: process.env.REACT_APP_SITE_URL,
-    image: 'https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg'
+    image:
+      "https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg",
   },
   plugins: [
     {
@@ -30,8 +31,10 @@ module.exports = {
     {
       resolve: "gatsby-source-strapi",
       options: {
+        version: 5,
         skipFileDownloads: true,
-        apiURL: process.env.STRAPI_SOURCE_URL || process.env.REACT_APP_CMS_BASE_URL,
+        apiURL:
+          process.env.STRAPI_SOURCE_URL || process.env.REACT_APP_CMS_BASE_URL,
         accessToken: process.env.STRAPI_TOKEN,
         collectionTypes: [
           "access-status",
@@ -63,168 +66,206 @@ module.exports = {
             queryParams: {
               populate: {
                 PageHeader: {
-                  fields: "*"
+                  fields: "*",
                 },
                 Seo: {
-                  fields: "*"
+                  fields: "*",
                 },
                 Content: {
-                  populate: ["cards"]
-                }
-              }
-            }
+                  populate: ["cards"],
+                },
+              },
+            },
           },
           {
             singularName: "protected-area",
             queryParams: {
+              fields: "*",
               populate: {
                 parkActivities: {
-                  populate: ["activityType"]
+                  populate: ["activityType"],
                 },
                 parkFacilities: {
-                  populate: ["facilityType"]
+                  populate: ["facilityType"],
                 },
                 parkCampingTypes: {
-                  populate: ["campingType"]
+                  populate: ["campingType"],
                 },
                 parkGuidelines: {
-                  populate: ["guidelineType"]
+                  populate: ["guidelineType"],
                 },
                 parkOperation: {
-                  fields: "*"
+                  fields: "*",
                 },
                 parkOperationDates: {
-                  fields: "*"
+                  fields: "*",
                 },
+                description: "*",
+                safetyInfo: "*",
+                specialNotes: "*",
+                locationNotes: "*",
+                conservation: "*",
+                culturalHeritage: "*",
+                history: "*",
+                wildlife: "*",
+                reconciliationNotes: "*",
+                maps: "*",
+                parkContact: "*",
                 parkAreas: {
                   fields: "*",
                   populate: {
                     parkAreaType: {
-                      fields: "*"
-                    }
-                  }
+                      fields: "*",
+                    },
+                  },
                 },
                 parkFeatures: {
                   fields: "*",
                   populate: {
                     parkFeatureType: {
-                      fields: "*"
-                    }
-                  }
+                      fields: "*",
+                    },
+                  },
                 },
                 managementDocuments: {
-                  populate: ["documentType"]
+                  populate: ["documentType"],
                 },
                 biogeoclimaticZones: {
-                  fields: "*"
+                  fields: "*",
                 },
                 marineEcosections: {
-                  fields: "*"
+                  fields: "*",
                 },
                 terrestrialEcosections: {
-                  fields: "*"
+                  fields: "*",
                 },
                 seo: {
-                  populate: "*"
+                  populate: "*",
                 },
                 fireZones: {
-                  populate: ["fireCentre"]
+                  populate: ["fireCentre"],
                 },
                 naturalResourceDistricts: {
-                  fields: "*"
+                  fields: "*",
                 },
                 managementAreas: {
-                  populate: ["region", "section", "searchArea"]
+                  populate: ["region", "section", "searchArea"],
                 },
                 parkPhotos: {
-                  fields: "*"
+                  fields: "*",
                 },
                 audioClips: {
-                  fields: "*"
+                  fields: "*",
                 },
                 trailReports: {
-                  fields: "*"
+                  fields: "*",
                 },
                 nearbyParks: {
                   populate: ["orcs", "slug", "protectedAreaName"],
                   parkPhotos: {
-                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
+                    populate: [
+                      "isActive",
+                      "isFeatured",
+                      "sortOrder",
+                      "imageUrl",
+                    ],
                   },
                   parkActivities: {
-                    populate: ["isActive", {
-                      activityType: ["activityNumber", "activityCode", "isActive"]
-                    }]
+                    populate: [
+                      "isActive",
+                      {
+                        activityType: [
+                          "activityNumber",
+                          "activityCode",
+                          "isActive",
+                        ],
+                      },
+                    ],
                   },
                   parkFacilities: {
-                    populate: ["isActive", {
-                      facilityType: ["facilityNumber", "facilityCode", "isActive"]
-                    }]
+                    populate: [
+                      "isActive",
+                      {
+                        facilityType: [
+                          "facilityNumber",
+                          "facilityCode",
+                          "isActive",
+                        ],
+                      },
+                    ],
                   },
                   parkCampingTypes: {
-                    populate: ["isActive", {
-                      campingType: ["campingTypeNumber", "campingTypeCode", "isActive"]
-                    }]
+                    populate: [
+                      "isActive",
+                      {
+                        campingType: [
+                          "campingTypeNumber",
+                          "campingTypeCode",
+                          "isActive",
+                        ],
+                      },
+                    ],
                   },
                 },
                 parkContacts: {
-                  populate: ["parkOperatorContact"]
-                }
-              }
+                  populate: ["parkOperatorContact"],
+                },
+              },
             },
-            queryLimit: 100
+            queryLimit: 100,
           },
           {
             singularName: "site",
             queryParams: {
               populate: {
                 protectedArea: {
-                  fields: "*"
+                  fields: "*",
                 },
                 parkAreas: {
                   fields: "*",
                   populate: {
                     parkAreaType: {
-                      fields: "*"
-                    }
-                  }
+                      fields: "*",
+                    },
+                  },
                 },
                 parkFeatures: {
                   fields: "*",
                   populate: {
                     parkFeatureType: {
-                      fields: "*"
-                    }
-                  }
+                      fields: "*",
+                    },
+                  },
                 },
                 parkActivities: {
-                  populate: ["activityType"]
+                  populate: ["activityType"],
                 },
                 parkFacilities: {
-                  populate: ["facilityType"]
+                  populate: ["facilityType"],
                 },
                 parkCampingTypes: {
-                  populate: ["campingType"]
+                  populate: ["campingType"],
                 },
                 parkGuidelines: {
-                  populate: ["guidelineType"]
+                  populate: ["guidelineType"],
                 },
                 parkOperation: {
-                  fields: "*"
+                  fields: "*",
                 },
                 parkOperationDates: {
-                  fields: "*"
+                  fields: "*",
                 },
                 audioClips: {
-                  fields: "*"
+                  fields: "*",
                 },
                 trailReports: {
-                  fields: "*"
-                }
-              }
-            }
+                  fields: "*",
+                },
+              },
+            },
           },
-        ]
-      }
+        ],
+      },
     },
     `gatsby-transformer-sharp`,
     {
@@ -253,8 +294,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
-        output: '/'
-      }
+        output: "/",
+      },
     },
     {
       resolve: `gatsby-plugin-robots-txt`,

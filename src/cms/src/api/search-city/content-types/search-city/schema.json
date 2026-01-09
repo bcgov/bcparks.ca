@@ -7,7 +7,7 @@
     "displayName": "Search-city"
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "attributes": {
     "cityName": {
