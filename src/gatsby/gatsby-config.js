@@ -1,5 +1,5 @@
 require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
+  path: `.env`,
 })
 
 module.exports = {
@@ -64,15 +64,16 @@ module.exports = {
           {
             singularName: "page",
             queryParams: {
+              fields: "*",
               populate: {
                 PageHeader: {
-                  fields: "*",
+                  populate: "*",
                 },
                 Seo: {
-                  fields: "*",
+                  populate: "*",
                 },
                 Content: {
-                  populate: ["cards"],
+                  populate: "*",
                 },
               },
             },
@@ -100,17 +101,6 @@ module.exports = {
                 parkOperationDates: {
                   fields: "*",
                 },
-                description: "*",
-                safetyInfo: "*",
-                specialNotes: "*",
-                locationNotes: "*",
-                conservation: "*",
-                culturalHeritage: "*",
-                history: "*",
-                wildlife: "*",
-                reconciliationNotes: "*",
-                maps: "*",
-                parkContact: "*",
                 parkAreas: {
                   fields: "*",
                   populate: {
@@ -161,50 +151,52 @@ module.exports = {
                   fields: "*",
                 },
                 nearbyParks: {
-                  populate: ["orcs", "slug", "protectedAreaName"],
-                  parkPhotos: {
-                    populate: [
-                      "isActive",
-                      "isFeatured",
-                      "sortOrder",
-                      "imageUrl",
-                    ],
-                  },
-                  parkActivities: {
-                    populate: [
-                      "isActive",
-                      {
-                        activityType: [
-                          "activityNumber",
-                          "activityCode",
-                          "isActive",
-                        ],
+                  fields: ["orcs", "slug", "protectedAreaName"],
+                  populate: {
+                    parkPhotos: {
+                      fields: [
+                        "isActive",
+                        "isFeatured",
+                        "sortOrder",
+                        "imageUrl",
+                      ],
+                    },
+                    parkActivities: {
+                      fields: ["isActive"],
+                      populate: {
+                        activityType: {
+                          fields: [
+                            "activityNumber",
+                            "activityCode",
+                            "isActive",
+                          ],
+                        },
                       },
-                    ],
-                  },
-                  parkFacilities: {
-                    populate: [
-                      "isActive",
-                      {
-                        facilityType: [
-                          "facilityNumber",
-                          "facilityCode",
-                          "isActive",
-                        ],
+                    },
+                    parkFacilities: {
+                      fields: ["isActive"],
+                      populate: {
+                        facilityType: {
+                          fields: [
+                            "facilityNumber",
+                            "facilityCode",
+                            "isActive",
+                          ],
+                        },
                       },
-                    ],
-                  },
-                  parkCampingTypes: {
-                    populate: [
-                      "isActive",
-                      {
-                        campingType: [
-                          "campingTypeNumber",
-                          "campingTypeCode",
-                          "isActive",
-                        ],
+                    },
+                    parkCampingTypes: {
+                      fields: ["isActive"],
+                      populate: {
+                        campingType: {
+                          fields: [
+                            "campingTypeNumber",
+                            "campingTypeCode",
+                            "isActive",
+                          ],
+                        },
                       },
-                    ],
+                    },
                   },
                 },
                 parkContacts: {
