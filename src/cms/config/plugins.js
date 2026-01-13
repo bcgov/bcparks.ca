@@ -5,7 +5,7 @@ module.exports = ({ env }) => {
         shadowCRUD: true,
         amountLimit: 2500,
         depthLimit: 7,
-        playgroundAlways: process.env.ENABLE_GRAPHQL_PLAYGROUND || false,
+        landingPage: process.env.ENABLE_GRAPHQL_PLAYGROUND || false,
         apolloServer: {
           tracing: false,
           introspection: true,
@@ -31,13 +31,13 @@ module.exports = ({ env }) => {
         },
       },
     },
-    // TODO: Temporarily disabled for v5 upgrade
-    // ckeditor5: {
-    //   enabled: true,
-    //   resolve: "./src/plugins/strapi-plugin-ckeditor",
-    // },
-    // Step 1: Configure the redis connection
-    // @see https://github.com/strapi-community/strapi-plugin-redis
+    // custom field plugins must be configured before rest-cache
+    ckeditor5: {
+      // TODO: Temporarily using default/unforked version for v5 upgrade
+      // resolve: "./src/plugins/strapi-plugin-ckeditor",
+    },
+    "multi-select": {},
+    // redis must be configured before rest-cache
     redis: {
       // locally - off
       enabled: env.bool("STRAPI_CACHE_ENABLED", false),
@@ -58,7 +58,6 @@ module.exports = ({ env }) => {
         },
       },
     },
-    // Step 2: Configure the redis cache plugin
     "rest-cache": {
       // locally - off
       enabled: env.bool("STRAPI_CACHE_ENABLED", false),

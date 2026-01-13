@@ -17,6 +17,7 @@
     "@_sh/strapi-plugin-ckeditor": "^6.0.3",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@opensearch-project/opensearch": "^2.13.0",
+    "@strapi-community/plugin-redis": "^2.0.0",
     "@strapi-community/plugin-rest-cache": "5.0.0",
     "@strapi-community/provider-rest-cache-redis": "5.0.0",
     "@strapi/plugin-documentation": "5.33.0",
@@ -24,12 +25,12 @@
     "@strapi/plugin-users-permissions": "5.33.0",
     "@strapi/provider-upload-aws-s3": "5.33.0",
     "@strapi/strapi": "5.33.0",
+    "keyv": "^5.5.5",
     "pg": "^8.16.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.2",
     "strapi-plugin-multi-select": "^2.1.1",
-    "strapi-plugin-redis": "^1.1.0",
     "styled-components": "^6.0.0"
   },
   "engines": {
