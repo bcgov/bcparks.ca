@@ -72,7 +72,9 @@ module.exports = createCoreController(
       });
 
       if (queueList.length) {
-        await strapi.db.query("api::queued-task.queued-task").createMany({ data: queueList });
+        for (const task of queueList) {
+          await strapi.documents("api::queued-task.queued-task").create({ data: task });
+        }
       }
 
       const cachePlugin = strapi.plugins["rest-cache"];

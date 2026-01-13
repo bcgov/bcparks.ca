@@ -238,7 +238,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           .get(newApiCall)
           .then(function (data) {
             let results = data.data.data
-            console.log("results", results)
             results.sort(compareAdvisories)
             // Append new advisories to the existing list if 'Load more' button is clicked
             if (pageIndex > 1) {

@@ -24,27 +24,26 @@
 const { queueAdvisoryEmail } = require("../../../../helpers/taskQueue.js");
 
 const getNextAdvisoryNumber = async () => {
-  const result = await strapi.db.query('api::public-advisory-audit.public-advisory-audit').findOne({
-    orderBy: {
-      advisoryNumber: 'DESC'
-    }
+  const results = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findMany({
+    sort: { advisoryNumber: 'DESC' },
+    limit: 1,
+    fields: ['advisoryNumber']
   });
-  let { advisoryNumber: maxAdvisoryNumber } = result;
+  let maxAdvisoryNumber = results.length > 0 ? results[0].advisoryNumber : 0;
   if (!maxAdvisoryNumber || maxAdvisoryNumber < 0) maxAdvisoryNumber = 0;
   return ++maxAdvisoryNumber;
 };
 
 const getNextRevisionNumber = async (advisoryNumber) => {
-  const result = await strapi.db.query('api::public-advisory-audit.public-advisory-audit').findOne({
-    where: {
+  const results = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findMany({
+    filters: {
       advisoryNumber
     },
-    orderBy: {
-      revisionNumber: 'DESC'
-    }
+    sort: { revisionNumber: 'DESC' },
+    limit: 1,
+    fields: ['revisionNumber']
   });
-  let { revisionNumber } = result;
-  let maxRevisionNumber = revisionNumber;
+  let maxRevisionNumber = results.length > 0 ? results[0].revisionNumber : 0;
   if (!maxRevisionNumber || maxRevisionNumber < 0) maxRevisionNumber = 0;
   return ++maxRevisionNumber;
 };
@@ -70,10 +69,11 @@ const archiveOldPublicAdvisoryAudit = async (data) => {
 const savePublicAdvisory = async (publicAdvisory) => {
   delete publicAdvisory.updatedBy;
   delete publicAdvisory.createdBy;
-  const isExist = await strapi.db.query('api::public-advisory.public-advisory').findOne({
-    where: {
+  const isExist = await strapi.documents('api::public-advisory.public-advisory').findFirst({
+    filters: {
       advisoryNumber: publicAdvisory.advisoryNumber
-    }
+    },
+    fields: ['id']
   });
   if (publicAdvisory.advisoryStatus.code === "PUB") {
     publicAdvisory.publishedAt = new Date();
