@@ -29,22 +29,24 @@ const validator = require("../../../../helpers/validator.js");
 const saveParkAccessStatus = async (ctx) => {
   try {
     if (ctx.result?.orcs) {
-      const updateResult = await strapi.db
-        .query(
-          "api::park-access-status.park-access-status"
-        )
-        .updateMany(
-          {
-            where: {
-              orcs: ctx.result.orcs
-            },
+      const updateResult = await strapi.documents("api::park-access-status.park-access-status").findMany({
+        filters: {
+          orcs: ctx.result.orcs
+        }
+      });
+
+      if (updateResult.length > 0) {
+        for (const result of updateResult) {
+          await strapi.documents("api::park-access-status.park-access-status").update({
+            documentId: result.documentId,
             data: {
               orcs: ctx.result.orcs,
               publishedAt: new Date(),
               updatedAt: new Date()
             }
           });
-      if (updateResult.count === 0) {
+        }
+      } else {
         await strapi.documents("api::park-access-status.park-access-status").create({
           data: {
             orcs: ctx.result.orcs,
