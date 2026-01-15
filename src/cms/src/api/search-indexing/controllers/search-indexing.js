@@ -1,13 +1,8 @@
 "use strict";
 
-const { sanitize } = require("@strapi/utils");
-
 module.exports = ({ strapi }) => ({
   getParksForIndexing: async (ctx) => {
-    const contentType = strapi.contentType(
-      "api::protected-area.protected-area",
-    );
-    const query = await sanitize.contentAPI.query(ctx.query, contentType, {});
+    const query = ctx.query;
 
     query.fields = [
       "orcs",
@@ -129,8 +124,7 @@ module.exports = ({ strapi }) => ({
   },
 
   getParkPhotosForIndexing: async (ctx) => {
-    const contentType = strapi.contentType("api::park-photo.park-photo");
-    const query = await sanitize.contentAPI.query(ctx.query, contentType, {});
+    const query = ctx.query;
     query.fields = ["orcs", "sortOrder", "imageUrl"];
     query.pagination = { limit: -1 };
     query.filters = { isActive: true, ...query.filters };

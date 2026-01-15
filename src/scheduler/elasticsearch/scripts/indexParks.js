@@ -80,7 +80,7 @@ exports.indexParks = async function (options) {
       const orcs = task.numericData;
       logger.info(`removing park ${task.numericData}`);
       if (await removePark(orcs)) {
-        removed.push(taskId(queue, task.documentId));
+        removed.push(taskId(queue, task.numericData));
       } else {
         logger.error(`error removing park ${orcs}`);
       }
@@ -134,9 +134,9 @@ const indexPark = async function (park, photos) {
 /**
  *  Removes a single park from Elasticsearch
  */
-const removePark = async function (id) {
+const removePark = async function (orcs) {
   try {
-    await elasticClient.removePark({ itemId: id });
+    await elasticClient.removePark({ itemId: orcs });
   } catch (error) {
     getLogger().error(error);
     return false;
@@ -157,7 +157,7 @@ const getBatch = async function (queuedTasks, options) {
   const parksFilters = qs.stringify(
     {
       filters: {
-        id: {
+        orcs: {
           $in: queueParkIds,
         },
       },
@@ -201,5 +201,5 @@ const getPhotos = async function (orcsList) {
  * Looks up the id of a queued task based on the associated park id
  */
 const taskId = function (queue, parkId) {
-  return queue.find((f) => f.numericData === parkId)?.id;
+  return queue.find((f) => f.numericData === parkId)?.documentId;
 };
