@@ -12,7 +12,6 @@ module.exports = createCoreController(
   "api::fire-ban-prohibition.fire-ban-prohibition",
   ({ strapi }) => ({
     async propagate(ctx) {
-
       let before = [];
       let after = [];
 
@@ -23,7 +22,7 @@ module.exports = createCoreController(
       } catch (error) {
         return ctx.internalServerError(
           "Error in service fire-ban-prohibition:getAllProtectedAreaFireBans()",
-          error.message
+          error.message,
         );
       }
 
@@ -34,7 +33,7 @@ module.exports = createCoreController(
       } catch (error) {
         return ctx.internalServerError(
           "Error in service fire-ban-prohibition:rescindAllProtectedAreaFireBans()",
-          error.message
+          error.message,
         );
       }
 
@@ -47,7 +46,7 @@ module.exports = createCoreController(
       } catch (error) {
         return ctx.internalServerError(
           "Error in service fire-ban-prohibition:generateAllProtectedAreaFireBans()",
-          error.message
+          error.message,
         );
       }
 
@@ -58,35 +57,48 @@ module.exports = createCoreController(
       } catch (error) {
         return ctx.internalServerError(
           "Error in service fire-ban-prohibition:getAllProtectedAreaFireBans()",
-          error.message
+          error.message,
         );
       }
 
-      const updatedParks = _.difference(before, after).concat(_.difference(after, before))
+      const updatedParks = _.difference(before, after).concat(
+        _.difference(after, before),
+      );
 
-      const queueList = updatedParks.map(p => {
+      const queueList = updatedParks.map((orcs) => {
         return {
-          action: 'elastic index park',
-          numericData: p
-        }
+          action: "elastic index park",
+          numericData: orcs,
+        };
       });
 
       if (queueList.length) {
         for (const task of queueList) {
-          await strapi.documents("api::queued-task.queued-task").create({ data: task });
+          await strapi
+            .documents("api::queued-task.queued-task")
+            .create({ data: task });
         }
       }
 
       const cachePlugin = strapi.plugins["rest-cache"];
       if (cachePlugin) {
-        await cachePlugin.services.cacheStore.clearByUid('api::protected-area.protected-area');
-        await cachePlugin.services.cacheStore.clearByUid('api::park-access-status.park-access-status');
-        await cachePlugin.services.cacheStore.clearByUid('api::public-advisory.public-advisory');
+        await cachePlugin.services.cacheStore.clearByUid(
+          "api::protected-area.protected-area",
+        );
+        await cachePlugin.services.cacheStore.clearByUid(
+          "api::park-access-status.park-access-status",
+        );
+        await cachePlugin.services.cacheStore.clearByUid(
+          "api::public-advisory.public-advisory",
+        );
       }
 
-      ctx.send({
-        message: `Propagation complete! ${result.campfireBanCount} campfire bans impacting ${result.parkCount} protected areas.`
-      }, 201);
-    }
-  })
+      ctx.send(
+        {
+          message: `Propagation complete! ${result.campfireBanCount} campfire bans impacting ${result.parkCount} protected areas.`,
+        },
+        201,
+      );
+    },
+  }),
 );

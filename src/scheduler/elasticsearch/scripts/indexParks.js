@@ -1,12 +1,11 @@
-const qs = require('qs');
-const { getLogger } = require('../../shared/logging');
-const { createElasticPark } = require('../transformers/park/main');
-const { readQueue, removeFromQueue } = require('../../shared/taskQueue');
-const elasticClient = require('../utils/elasticClient');
+const qs = require("qs");
+const { getLogger } = require("../../shared/logging");
+const { createElasticPark } = require("../transformers/park/main");
+const { readQueue, removeFromQueue } = require("../../shared/taskQueue");
+const elasticClient = require("../utils/elasticClient");
 const { cmsAxios } = require("../../shared/axiosConfig");
 
 exports.indexParks = async function (options) {
-
   elasticClient.initializeESClient();
   const logger = getLogger();
 
@@ -19,9 +18,9 @@ exports.indexParks = async function (options) {
   do {
     indexed = [];
 
-    if (options?.id) {
-      // fake the readQueue response if we are indexing a specific park (by id).
-      queue = [{ attributes: { numericData: options.id } }];
+    if (options?.orcs) {
+      // fake the readQueue response if we are indexing a specific park (by orcs).
+      queue = [{ numericData: options.orcs }];
     } else {
       try {
         queue = await readQueue("elastic index park", options);
@@ -39,7 +38,9 @@ exports.indexParks = async function (options) {
     }
 
     try {
-      const orcsList = parkList.map(p => { return p.orcs });
+      const orcsList = parkList.map((p) => {
+        return p.orcs;
+      });
       photoList = await getPhotos(orcsList);
     } catch (error) {
       logger.error(`indexParks() failed while retrieving photos: ${error}`);
@@ -47,11 +48,13 @@ exports.indexParks = async function (options) {
     }
 
     for (const park of parkList) {
-      logger.info(`indexing park ${park.id}`);
+      logger.info(`indexing park ${park.orcs}`);
       if (await indexPark(park, photoList)) {
-        indexed.push(taskId(queue, park.id))
+        indexed.push(taskId(queue, park.orcs));
       } else {
-        logger.error(`error indexing park ${park.id} - ${park.protectedAreaName} ORCS=${park.orcs}`)
+        logger.error(
+          `error indexing park ${park.id} - ${park.protectedAreaName} ORCS=${park.orcs}`
+        );
       }
     }
     try {
@@ -60,7 +63,7 @@ exports.indexParks = async function (options) {
       logger.error(`Failed while removing queued 'elastic index park' tasks: ${error}`);
       return;
     }
-  } while (indexed.length > 0 && !options?.id)
+  } while (indexed.length > 0 && !options?.id);
 
   // process items from the queue with the action 'elastic remove park'
   let removed;
@@ -74,12 +77,12 @@ exports.indexParks = async function (options) {
     }
 
     for (const task of queue) {
-      const id = task.attributes.numericData;
-      logger.info(`removing park ${task.attributes.numericData}`);
-      if (await removePark(id)) {
-        removed.push(taskId(queue, id));
+      const orcs = task.numericData;
+      logger.info(`removing park ${task.numericData}`);
+      if (await removePark(orcs)) {
+        removed.push(taskId(queue, task.documentId));
       } else {
-        logger.error(`error removing park ${id}`);
+        logger.error(`error removing park ${orcs}`);
       }
     }
     try {
@@ -107,11 +110,11 @@ const indexPark = async function (park, photos) {
     return false;
   }
 
-  // if the park isn't visible on the website then remove it from 
+  // if the park isn't visible on the website then remove it from
   // Elasticsearch instead of adding it
   if (!park.isDisplayed || !park.publishedAt) {
     getLogger().warn(`removing park ${park.id} due to unpublished or undisplayed status`);
-    await removePark(park.id)
+    await removePark(park.id);
     return true;
   }
 
@@ -126,7 +129,7 @@ const indexPark = async function (park, photos) {
     return false;
   }
   return true;
-}
+};
 
 /**
  *  Removes a single park from Elasticsearch
@@ -139,7 +142,7 @@ const removePark = async function (id) {
     return false;
   }
   return true;
-}
+};
 
 /**
  * Gets multiple parks from Strapi for indexing based
@@ -150,47 +153,53 @@ const getBatch = async function (queuedTasks, options) {
     return [];
   }
   const sort = options?.descending ? "id:DESC" : "id";
-  const queueParkIds = queuedTasks.map(q => +q.attributes.numericData);
-  const parksFilters = qs.stringify({
-    filters: {
-      id: {
-        $in: queueParkIds,
+  const queueParkIds = queuedTasks.map((q) => +q.numericData);
+  const parksFilters = qs.stringify(
+    {
+      filters: {
+        id: {
+          $in: queueParkIds,
+        },
       },
+      sort: sort,
     },
-    sort: sort
-  }, {
-    encodeValuesOnly: true,
-  });
+    {
+      encodeValuesOnly: true,
+    }
+  );
   const parksQuery = `/api/search-indexing/parks?${parksFilters}`;
   const response = await cmsAxios.get(parksQuery);
   const parkList = response.data.data;
   getLogger().info(`Got ${parkList.length} protected areas from Strapi`);
   return parkList;
-}
+};
 
 const getPhotos = async function (orcsList) {
   if (orcsList.length === 0) {
     return [];
   }
-  const photoFilters = qs.stringify({
-    filters: {
-      orcs: {
-        $in: orcsList,
+  const photoFilters = qs.stringify(
+    {
+      filters: {
+        orcs: {
+          $in: orcsList,
+        },
       },
+    },
+    {
+      encodeValuesOnly: true,
     }
-  }, {
-    encodeValuesOnly: true,
-  });
+  );
   const photosQuery = `/api/search-indexing/photos?${photoFilters}`;
   const response = await cmsAxios.get(photosQuery);
   const photosList = response.data;
   getLogger().info(`Got ${photosList.length} park photo records from Strapi`);
   return photosList;
-}
+};
 
 /**
  * Looks up the id of a queued task based on the associated park id
  */
 const taskId = function (queue, parkId) {
-  return queue.find(f => f.attributes.numericData === parkId)?.id
-}
+  return queue.find((f) => f.numericData === parkId)?.id;
+};

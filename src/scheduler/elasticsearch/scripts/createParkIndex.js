@@ -1,8 +1,8 @@
-const { getLogger } = require('../../shared/logging');
-const elasticClient = require('../utils/elasticClient');
+const { getLogger } = require("../../shared/logging");
+const elasticClient = require("../utils/elasticClient");
 
 /**
- * Creates a new park index in Elasticsearch.  
+ * Creates a new park index in Elasticsearch.
  * Only fields with special settings need to be included in these mappings.
  */
 const createParkIndex = async function () {
@@ -16,11 +16,11 @@ const createParkIndex = async function () {
           analyzer: {
             parkname_analyzer: {
               tokenizer: "icu_tokenizer",
-              filter: ["icu_folding", "lowercase"]
-            }
-          }
-        }
-      }
+              filter: ["icu_folding", "lowercase"],
+            },
+          },
+        },
+      },
     },
     mappings: {
       properties: {
@@ -30,9 +30,9 @@ const createParkIndex = async function () {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
-            }
-          }
+              ignore_above: 256,
+            },
+          },
         },
         nameLowerCase: {
           type: "text",
@@ -40,9 +40,9 @@ const createParkIndex = async function () {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
-            }
-          }
+              ignore_above: 256,
+            },
+          },
         },
         parkNames: {
           type: "text",
@@ -50,18 +50,19 @@ const createParkIndex = async function () {
           fields: {
             keyword: {
               type: "keyword",
-              ignore_above: 256
-            }
-          }
+              ignore_above: 256,
+            },
+          },
         },
         location: {
-          type: "geo_point"
+          type: "geo_point",
         },
-        geoBoundary: {  // this is a work-around because you can't sort by distance to a shape in Elasticsearch
-          type: "geo_point"
+        geoBoundary: {
+          // this is a work-around because you can't sort by distance to a shape in Elasticsearch
+          type: "geo_point",
         },
-      }
-    }
+      },
+    },
   };
 
   try {
@@ -80,9 +81,9 @@ const createParkIndex = async function () {
 const parkIndexExists = async function () {
   elasticClient.initializeESClient();
   return await elasticClient.parkIndexExists();
-}
+};
 
 module.exports = {
   createParkIndex,
-  parkIndexExists
-}
+  parkIndexExists,
+};

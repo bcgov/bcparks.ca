@@ -26,7 +26,7 @@ exports.dootPublish = async function () {
   }
 
   for (const message of queue) {
-    let jsonData = message.attributes?.jsonData;
+    let jsonData = message?.jsonData;
     let errorProcessingMessage = false;
 
     // loop through each item in the jsonData array
@@ -234,7 +234,7 @@ exports.dootPublish = async function () {
     // for further testing
     if (!errorProcessingMessage && noCommandLineArgs()) {
       try {
-        await removeFromQueue([message.id]);
+        await removeFromQueue([message.documentId]);
       } catch (error) {
         logger.error(`dootPublish() failed while removing message from queue: ${error}`);
         continue;

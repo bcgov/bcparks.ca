@@ -5,7 +5,7 @@ exports.dootSplitMessage = async function (message) {
   let splitOk = true;
 
   // add the individual items back into the queue
-  for (const item of message.attributes?.jsonData) {
+  for (const item of message?.jsonData) {
     try {
       await addToQueue({
         data: {

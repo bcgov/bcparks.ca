@@ -13,13 +13,18 @@ exports.createElasticPark = async function (park, photos) {
   }
 
   // convert marineProtectedArea to bool
-  park.marineProtectedArea = park.marineProtectedArea === 'Y';
+  park.marineProtectedArea = park.marineProtectedArea === "Y";
 
   // get photos
-  park.parkPhotos = photos.filter((p) => p.orcs === park.orcs)
-    .sort((a, b) => { return a.sortOrder > b.sortOrder ? 1 : -1 })
+  park.parkPhotos = photos
+    .filter((p) => p.orcs === park.orcs)
+    .sort((a, b) => {
+      return a.sortOrder > b.sortOrder ? 1 : -1;
+    })
     .slice(0, 5)
-    .map(p => { return p.imageUrl });
+    .map((p) => {
+      return p.imageUrl;
+    });
 
   // convert managementAreas to parkLocations
   park.parkLocations = [];
@@ -33,7 +38,7 @@ exports.createElasticPark = async function (park, photos) {
         sectionNum: ma.section?.sectionNumber,
         section: ma.section?.sectionName,
         managementAreaNum: ma.managementAreaNumber,
-        managementArea: ma.managementAreaName
+        managementArea: ma.managementAreaName,
       });
     }
   }
@@ -42,8 +47,8 @@ exports.createElasticPark = async function (park, photos) {
   // convert parkNames
   if (park.parkNames?.length) {
     let parkNames = park.parkNames
-      .filter(n => n.parkNameType?.nameTypeId !== 2)
-      .map(n => {
+      .filter((n) => n.parkNameType?.nameTypeId !== 2)
+      .map((n) => {
         return n.parkName.toLowerCase();
       });
     park.parkNames = [...new Set(parkNames || [])];
@@ -52,46 +57,46 @@ exports.createElasticPark = async function (park, photos) {
   }
 
   // add the searchTerms to the parkNames
-  if (park.searchTerms && !park.parkNames.find(n => n === park.searchTerms.toLowerCase())) {
-    park.parkNames.push(park.searchTerms.toLowerCase())
+  if (park.searchTerms && !park.parkNames.find((n) => n === park.searchTerms.toLowerCase())) {
+    park.parkNames.push(park.searchTerms.toLowerCase());
   }
-  
+
   // store protectedAreaName as lowercase for sorting
-  park.nameLowerCase = park.protectedAreaName.toLowerCase().replace(/\./g, '');
+  park.nameLowerCase = park.protectedAreaName.toLowerCase().replace(/\./g, "");
 
   // convert parkCampingTypes
   park.hasCamping = false;
   if (park?.parkCampingTypes?.length) {
     const parkCampingTypes = park.parkCampingTypes
-      .filter(ct => {
+      .filter((ct) => {
         return ct.isActive && ct.campingType?.isActive && ct.publishedAt !== null;
       })
-      .map(ct => {
+      .map((ct) => {
         park.hasCamping = true;
         let campingTypeCode = ct.campingType.campingTypeCode;
         let campingTypeNumber = ct.campingType.campingTypeNumber;
-        if (campingTypeCode === 'wilderness-camping') {
-          campingTypeCode = 'backcountry-camping'
-          campingTypeNumber = 36
+        if (campingTypeCode === "wilderness-camping") {
+          campingTypeCode = "backcountry-camping";
+          campingTypeNumber = 36;
         }
         return {
           code: campingTypeCode,
-          num: campingTypeNumber
+          num: campingTypeNumber,
         };
       });
-    park.parkCampingTypes = _.uniqBy(parkCampingTypes, 'code');
+    park.parkCampingTypes = _.uniqBy(parkCampingTypes, "code");
   }
 
   // convert parkFacilities
   if (park?.parkFacilities?.length) {
     park.parkFacilities = park.parkFacilities
-      .filter(f => {
+      .filter((f) => {
         return f.isActive && f.facilityType?.isActive && f.publishedAt !== null;
       })
-      .map(f => {
+      .map((f) => {
         return {
           code: f.facilityType.facilityCode,
-          num: f.facilityType.facilityNumber
+          num: f.facilityType.facilityNumber,
         };
       });
   }
@@ -99,13 +104,13 @@ exports.createElasticPark = async function (park, photos) {
   // convert parkActivities
   if (park?.parkActivities?.length) {
     park.parkActivities = park.parkActivities
-      .filter(a => {
+      .filter((a) => {
         return a.isActive && a.activityType?.isActive && a.publishedAt !== null;
       })
-      .map(a => {
+      .map((a) => {
         return {
           code: a.activityType.activityCode,
-          num: a.activityType.activityNumber
+          num: a.activityType.activityNumber,
         };
       });
   }
@@ -114,15 +119,15 @@ exports.createElasticPark = async function (park, photos) {
   park.advisories = [];
   if (park?.publicAdvisories?.length) {
     const publicAdvisories = park.publicAdvisories
-      .filter(a => {
+      .filter((a) => {
         return a.advisoryStatus.code === "PUB";
       })
-      .map(a => {
+      .map((a) => {
         return {
           id: a.id,
           urgencyId: a.urgency?.id,
           advisoryStatusId: a.advisoryStatus?.id,
-          accessStatusId: a.accessStatus?.id
+          accessStatusId: a.accessStatus?.id,
         };
       });
     park.advisories = publicAdvisories;
@@ -137,14 +142,14 @@ exports.createElasticPark = async function (park, photos) {
 
   // add geo center point (this ensures we have at least one point for every park)
   if (park.latitude && park.longitude) {
-    park.location = `${park.latitude},${park.longitude}`
+    park.location = `${park.latitude},${park.longitude}`;
     flattenedGeometry = geo.appendPoint(flattenedGeometry, park.latitude, park.longitude, 2);
   }
 
   // add extra points for long line segments
   flattenedGeometry = geo.fillLongSegments(park.geoShape, flattenedGeometry, 2);
 
-  // add the park boundary points 
+  // add the park boundary points
   // this is a work-around because you can't sort by distance to a shape
   // in Elasticsearch
   park.geoBoundary = geo.outline(flattenedGeometry);
@@ -161,6 +166,6 @@ exports.createElasticPark = async function (park, photos) {
   delete park.longitude;
   delete park.geoShape;
   delete park.searchTerms;
-  
+
   return park;
 };

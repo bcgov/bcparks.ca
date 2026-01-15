@@ -84,8 +84,8 @@ const { dootPublish } = require("./doot/scripts/publish");
    * (manually triggered via terminal / mainly for local debugging)
    */
   if (idSpecified()) {
-    logger.info(`Indexing park id #${process.argv[2]}`);
-    await indexParks({ id: Number(process.argv[2]) });
+    logger.info(`Indexing park orcs #${process.argv[2]}`);
+    await indexParks({ orcs: Number(process.argv[2]) });
   }
 
   /**
@@ -135,7 +135,7 @@ const { dootPublish } = require("./doot/scripts/publish");
     console.log("deleteindex : delete the park index");
     console.log("once        : run the cron task one time");
     console.log("geoshapes   : populate the geo-shapes collection in Strapi");
-    console.log("[integer]   : re-index a specified protectedAreaId");
+    console.log("[integer]   : re-index a specified orcs");
     console.log("advisories  : trigger scheduled public advisory publishing & expiry");
     console.log("emailsend   : send queued emails");
     console.log("emailtest   : test email template (writes to file 'mail-test-[#].html')");

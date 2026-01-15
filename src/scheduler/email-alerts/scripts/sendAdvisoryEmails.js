@@ -26,17 +26,15 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
   try {
     queue = await readQueue("email advisory");
   } catch (error) {
-    logger.error(
-      `sendAdvisoryEmails() failed while retrieving 'email advisory' tasks: ${error}`
-    );
+    logger.error(`sendAdvisoryEmails() failed while retrieving 'email advisory' tasks: ${error}`);
     return;
   }
 
   for (const message of queue) {
-    const advisoryNumber = message.attributes?.numericData;
+    const advisoryNumber = message?.numericData;
     if (!recentAdvisoryEmails.find((e) => e.advisoryNumber === advisoryNumber)) {
       sent.push({ advisoryNumber: advisoryNumber, lastEmailSent: new Date().toISOString() });
-      const emailInfo = message.attributes?.jsonData;
+      const emailInfo = message?.jsonData;
 
       const advisory = (await getAdvisoryInfo(advisoryNumber))[0];
 
@@ -102,17 +100,14 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
       }
     }
     if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
-      await removeFromQueue([message.id]);
+      await removeFromQueue([message.documentId]);
     }
   }
 
   // prune the list of recentAdvisoryEmails to THROTTLE_MINUTES and return
   const throttleMinutesAgo = new Date(Date.now() - 1000 * 60 * THROTTLE_MINUTES).toISOString();
 
-  return [
-    ...recentAdvisoryEmails.filter((a) => a.lastEmailSent > throttleMinutesAgo),
-    ...sent,
-  ];
+  return [...recentAdvisoryEmails.filter((a) => a.lastEmailSent > throttleMinutesAgo), ...sent];
 };
 
 const getAdvisoryInfo = async function (advisoryNumber) {
