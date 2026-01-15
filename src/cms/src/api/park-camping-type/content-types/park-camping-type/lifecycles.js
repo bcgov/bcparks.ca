@@ -57,12 +57,12 @@ module.exports = {
   async beforeCreate(event) {
     let { data, where } = event.params;
     data = await updateName(data, where);
-    validator.campingTypeConnectValidator(data.campingType);
+    validator.campingTypeValidator(data.campingType);
   },
   async beforeUpdate(event) {
     let { data, where } = event.params;
     data = await updateName(data, where);
-    validator.campingTypeDisconnectValidator(data.campingType);
+    validator.campingTypeValidator(data.campingType);
     for (const park of event.params.data?.protectedArea?.disconnect || []) {
       await indexPark(park.id);
     }

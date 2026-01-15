@@ -27,57 +27,61 @@ const validator = require("../../../../helpers/validator.js");
 
 const updateName = async (data, where) => {
   if (where) {
-    const documentId = where.documentId
-    const parkFacility = await strapi.documents("api::park-facility.park-facility").findOne({
-      documentId, populate: '*'
-    })
-    const protectedArea = parkFacility.protectedArea
-    const site = parkFacility.site
-    const facilityType = parkFacility.facilityType
+    const documentId = where.documentId;
+    const parkFacility = await strapi
+      .documents("api::park-facility.park-facility")
+      .findOne({
+        documentId,
+        populate: "*",
+      });
+    const protectedArea = parkFacility.protectedArea;
+    const site = parkFacility.site;
+    const facilityType = parkFacility.facilityType;
 
-    data.name = ""
+    data.name = "";
     if (protectedArea) {
-      data.name = protectedArea.orcs
+      data.name = protectedArea.orcs;
     }
     if (site) {
-      data.name = site.orcsSiteNumber
+      data.name = site.orcsSiteNumber;
     }
     if (facilityType) {
-      data.name += ":"
+      data.name += ":";
       data.name += facilityType.facilityName;
     }
   }
-  return data
+  return data;
 };
 
 module.exports = {
   async beforeCreate(event) {
     let { data, where } = event.params;
     data = await updateName(data, where);
-    validator.facilityTypeConnectValidator(data.facilityType)
+    validator.facilityTypeValidator(data.facilityType);
   },
   async beforeUpdate(event) {
     let { data, where } = event.params;
     data = await updateName(data, where);
-    validator.facilityTypeDisconnectValidator(data.facilityType)
+    validator.facilityTypeValidator(data.facilityType);
     for (const park of event.params.data?.protectedArea?.disconnect || []) {
-      await indexPark(park.id)
+      await indexPark(park.id);
     }
   },
   async afterUpdate(event) {
-    await indexPark(event.result.protectedArea?.id)
+    await indexPark(event.result.protectedArea?.id);
   },
   async afterCreate(event) {
-    await indexPark(event.result.protectedArea?.id)
+    await indexPark(event.result.protectedArea?.id);
   },
   async beforeDelete(event) {
     let { where } = event.params;
-    const parkFacility = await strapi.documents("api::park-facility.park-facility").findOne({
-      documentId: where.documentId,
-      fields: ['id'],
-      populate: { protectedArea: { fields: ['id'] } }
-    });
-    await indexPark(parkFacility.protectedArea?.id)
-  }
+    const parkFacility = await strapi
+      .documents("api::park-facility.park-facility")
+      .findOne({
+        documentId: where.documentId,
+        fields: ["id"],
+        populate: { protectedArea: { fields: ["id"] } },
+      });
+    await indexPark(parkFacility.protectedArea?.id);
+  },
 };
-
