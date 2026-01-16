@@ -34,7 +34,7 @@ export default function ParkFeature({ data, showHeading = false }) {
   const reservationDescription =
     data.hasBackcountryReservations ?
     "Reservations must be made in advance. First come, first served camping is not available." : 
-    "Reservations are highly recommended. You can book up to four months in advance."
+    "Reservations are highly recommended. You can book up to three months in advance."
 
   const parkFeatureNotesList = [
     { noteVar: "operationNote", display: "Operation note" },
