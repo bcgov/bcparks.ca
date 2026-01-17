@@ -53,7 +53,7 @@ exports.indexParks = async function (options) {
         indexed.push(taskId(queue, park.orcs));
       } else {
         logger.error(
-          `error indexing park ${park.id} - ${park.protectedAreaName} ORCS=${park.orcs}`
+          `error indexing park ${park.orcs} - ${park.protectedAreaName} ORCS=${park.orcs}`
         );
       }
     }
@@ -63,7 +63,7 @@ exports.indexParks = async function (options) {
       logger.error(`Failed while removing queued 'elastic index park' tasks: ${error}`);
       return;
     }
-  } while (indexed.length > 0 && !options?.id);
+  } while (indexed.length > 0 && !options?.orcs);
 
   // process items from the queue with the action 'elastic remove park'
   let removed;
@@ -113,8 +113,8 @@ const indexPark = async function (park, photos) {
   // if the park isn't visible on the website then remove it from
   // Elasticsearch instead of adding it
   if (!park.isDisplayed || !park.publishedAt) {
-    getLogger().warn(`removing park ${park.id} due to unpublished or undisplayed status`);
-    await removePark(park.id);
+    getLogger().warn(`removing park ${park.orcs} due to unpublished or undisplayed status`);
+    await removePark(park.orcs);
     return true;
   }
 
@@ -123,7 +123,7 @@ const indexPark = async function (park, photos) {
 
   // send the data to elasticsearch
   try {
-    await elasticClient.indexPark({ itemId: doc.id, document: doc });
+    await elasticClient.indexPark({ itemId: doc.orcs, document: doc });
   } catch (error) {
     getLogger().error(error);
     return false;
@@ -152,7 +152,7 @@ const getBatch = async function (queuedTasks, options) {
   if (queuedTasks.length === 0) {
     return [];
   }
-  const sort = options?.descending ? "id:DESC" : "id";
+  const sort = options?.descending ? "orcs:DESC" : "orcs";
   const queueParkIds = queuedTasks.map((q) => +q.numericData);
   const parksFilters = qs.stringify(
     {
@@ -198,8 +198,8 @@ const getPhotos = async function (orcsList) {
 };
 
 /**
- * Looks up the id of a queued task based on the associated park id
+ * Looks up the documentId of a queued task based on the associated park orcs
  */
-const taskId = function (queue, parkId) {
-  return queue.find((f) => f.numericData === parkId)?.documentId;
+const taskId = function (queue, parkOrcs) {
+  return queue.find((f) => f.numericData === parkOrcs)?.documentId;
 };
