@@ -1,5 +1,7 @@
 cluster:
   ssoAuthUrl: https://loginproxy.gov.bc.ca/auth
+  publicUrl: https://bcparks.ca
+  staffPortalUrl: https://staff.bcparks.ca
 
 images:
   strapi:
@@ -33,11 +35,6 @@ cms:
     minReplicas: 2
     maxReplicas: 4
     cpuUtilizationThreshold: 65
-
-admin:
-  env:
-    externalUrl: https://staff.bcparks.ca
-    publicUrl: https://bcparks.ca
 
 patroni:
   resources:

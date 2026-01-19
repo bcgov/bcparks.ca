@@ -1,5 +1,7 @@
 cluster:
   ssoAuthUrl: https://test.loginproxy.gov.bc.ca/auth
+  publicUrl: https://alpha-test.bcparks.ca
+  staffPortalUrl: https://alpha-test-staff.bcparks.ca
 
 images:
   strapi:
@@ -29,11 +31,6 @@ cms:
   hpa:
     minReplicas: 1
     maxReplicas: 2
-
-admin:
-  env:
-    externalUrl: https://alpha-test-staff.bcparks.ca
-    publicUrl: https://alpha-test.bcparks.ca
 
 patroni:
   replicas: 1

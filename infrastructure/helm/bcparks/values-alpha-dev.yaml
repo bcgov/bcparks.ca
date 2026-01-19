@@ -1,5 +1,7 @@
 cluster:
   ssoAuthUrl: https://dev.loginproxy.gov.bc.ca/auth
+  publicUrl: https://alpha-dev.bcparks.ca
+  staffPortalUrl: https://alpha-dev-staff.bcparks.ca
 
 images:
   strapi:
@@ -19,11 +21,6 @@ cms:
   env:
     environment: alpha-dev
     externalUrl: https://alpha-dev-cms.bcparks.ca
-
-admin:
-  env:
-    externalUrl: https://alpha-dev-staff.bcparks.ca
-    publicUrl: https://alpha-dev.bcparks.ca
 
 patroni:
   replicas: 1

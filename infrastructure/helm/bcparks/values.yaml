@@ -3,6 +3,7 @@ cluster:
   ssoAuthUrl: https://dev.loginproxy.gov.bc.ca/auth
   ssoRealm: bcparks-service-transformation
   ssoClientId: staff-portal
+  staffPortalUrl: https://dev-staff.bcparks.ca
 
 images:
   strapi:
@@ -10,9 +11,6 @@ images:
     tag: latest
   pgbouncer:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/pgbouncer
-    tag: latest
-  admin:
-    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/admin-main
     tag: latest
   public:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/public-main
@@ -64,7 +62,7 @@ cms:
     cacheType: redis
     cacheTtl: "60000"
     enableGraphQLPlayground: true
-    indexName: bcparks-protected-areas    
+    indexName: bcparks-protected-areas
 
   service:
     portName: strapi
@@ -127,25 +125,9 @@ pgbouncer:
     port: 6432
 
 admin:
-  imagePullPolicy: Always
-
-  componentName: admin
-
   env:
     externalUrl: https://dev-staff.bcparks.ca
     statHolidayApi: https://canada-holidays.ca/api/v1/provinces/BC
-
-  resources:
-    limits:
-      cpu: 100m
-      memory: 100Mi
-    requests:
-      cpu: 50m
-      memory: 50Mi
-
-  service:
-    portName: admin
-    port: 3000
 
 public:
   imagePullPolicy: Always
