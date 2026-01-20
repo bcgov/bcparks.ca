@@ -29,54 +29,60 @@ const validator = require("../../../../helpers/validator.js");
 const saveParkAccessStatus = async (ctx) => {
   try {
     if (ctx.result?.orcs) {
-      const updateResult = await strapi.documents("api::park-access-status.park-access-status").findMany({
-        filters: {
-          orcs: ctx.result.orcs
-        }
-      });
+      const updateResult = await strapi
+        .documents("api::park-access-status.park-access-status")
+        .findMany({
+          filters: {
+            orcs: ctx.result.orcs,
+          },
+        });
 
       if (updateResult.length > 0) {
         for (const result of updateResult) {
-          await strapi.documents("api::park-access-status.park-access-status").update({
-            documentId: result.documentId,
+          await strapi
+            .documents("api::park-access-status.park-access-status")
+            .update({
+              documentId: result.documentId,
+              data: {
+                orcs: ctx.result.orcs,
+                publishedAt: new Date(),
+                updatedAt: new Date(),
+              },
+            });
+        }
+      } else {
+        await strapi
+          .documents("api::park-access-status.park-access-status")
+          .create({
             data: {
               orcs: ctx.result.orcs,
               publishedAt: new Date(),
-              updatedAt: new Date()
-            }
+            },
           });
-        }
-      } else {
-        await strapi.documents("api::park-access-status.park-access-status").create({
-          data: {
-            orcs: ctx.result.orcs,
-            publishedAt: new Date()
-          }
-        })
       }
     }
   } catch (error) {
     strapi.log.error(
       `error saving park-access-status for orcs ${ctx.result?.orcs}...`,
-      error
+      error,
     );
   }
 };
 
 module.exports = {
-  beforeCreate(event) {
-    const { data, where, select, populate } = event.params;
-    validator.slugCharacterValidator(data.slug)
-    validator.slugNoLeadingSlashValidator(data.slug)
-    validator.slugNoLeadingDashValidator(data.slug)
-    validator.slugNoTrailingDashValidator(data.slug)
+  async beforeCreate(event) {
+    const { data } = event.params;
+    validator.slugCharacterValidator(data.slug);
+    validator.slugNoLeadingSlashValidator(data.slug);
+    validator.slugNoLeadingDashValidator(data.slug);
+    validator.slugNoTrailingDashValidator(data.slug);
   },
-  beforeUpdate(event) {
-    const { data, where, select, populate } = event.params;
-    validator.slugCharacterValidator(data.slug)
-    validator.slugNoLeadingSlashValidator(data.slug)
-    validator.slugNoLeadingDashValidator(data.slug)
-    validator.slugNoTrailingDashValidator(data.slug)
+  async beforeUpdate(event) {
+    const { data } = event.params;
+    validator.slugCharacterValidator(data.slug);
+    validator.slugNoLeadingSlashValidator(data.slug);
+    validator.slugNoLeadingDashValidator(data.slug);
+    validator.slugNoTrailingDashValidator(data.slug);
   },
   afterCreate: async (ctx) => {
     await indexPark(ctx.params?.where?.id);
@@ -90,4 +96,3 @@ module.exports = {
     await removePark(ctx.params?.where?.id);
   },
 };
-

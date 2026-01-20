@@ -1,5 +1,5 @@
-'use strict';
-const elasticClient = require('./helpers/elasticClient');
+"use strict";
+const elasticClient = require("./helpers/elasticClient");
 
 module.exports = {
   /**

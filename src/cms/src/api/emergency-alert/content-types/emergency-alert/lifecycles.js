@@ -1,5 +1,11 @@
 "use strict";
 
+/**
+ * Strapi 5 lifecycle hooks for Document Service
+ * Migration Guide: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service
+ * Document Service API: https://docs.strapi.io/cms/api/document-service
+ */
+
 const format = require("date-fns/format");
 const utcToZonedTime = require("date-fns-tz/utcToZonedTime");
 
@@ -12,14 +18,14 @@ const formatDateToPacificTime = (dateString) => {
 };
 
 module.exports = {
-  beforeCreate(event) {
+  async beforeCreate(event) {
     const { data } = event.params;
     const createdDate = formatDateToPacificTime(data.createdAt);
     if (data.isActive === true) {
       data.activeDate = createdDate;
     }
   },
-  beforeUpdate(event) {
+  async beforeUpdate(event) {
     const { data } = event.params;
     const updatedDate = formatDateToPacificTime(data.updatedAt);
     if (data.isActive === true) {
