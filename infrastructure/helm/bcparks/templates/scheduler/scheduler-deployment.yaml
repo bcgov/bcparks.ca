@@ -60,9 +60,9 @@ spec:
             - name: EMAIL_RECIPIENT
               value: {{ .Values.scheduler.env.emailRecipient | quote }}
             - name: PUBLIC_URL
-              value: {{ .Values.admin.env.publicUrl | quote }}
+              value: {{ .Values.cluster.publicUrl | quote }}
             - name: ADMIN_URL
-              value: {{ .Values.admin.env.externalUrl | quote }}
+              value: {{ .Values.cluster.staffPortalUrl | quote }}
           livenessProbe:
             exec:
               command:

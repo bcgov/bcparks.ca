@@ -1,5 +1,7 @@
 cluster:
   ssoAuthUrl: https://test.loginproxy.gov.bc.ca/auth
+  publicUrl: https://test.bcparks.ca
+  staffPortalUrl: https://test-staff.bcparks.ca
 
 images:
   strapi:
@@ -19,11 +21,6 @@ cms:
   env:
     environment: test
     externalUrl: https://test-cms.bcparks.ca
-
-admin:
-  env:
-    externalUrl: https://test-staff.bcparks.ca
-    publicUrl: https://test.bcparks.ca
 
 patroni:
   replicas: 1

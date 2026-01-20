@@ -1,15 +1,12 @@
 cluster:
   ssoAuthUrl: https://dev.loginproxy.gov.bc.ca/auth
+  publicUrl: https://dev.bcparks.ca
+  staffPortalUrl: https://dev-staff.bcparks.ca
 
 cms:
   env:
     environment: dev
     externalUrl: https://dev-cms.bcparks.ca
-
-admin:
-  env:
-    externalUrl: https://dev-staff.bcparks.ca
-    publicUrl: https://dev.bcparks.ca
 
 patroni:
   replicas: 1
