@@ -65,13 +65,7 @@ module.exports = ({ strapi }) => ({
       publicAdvisories: {
         fields: ["id"],
         populate: {
-          "accessStatus": { fields: [
-              "id",
-              "accessStatus",
-              "precedence",
-              "color",
-              "groupLabel",
-              "hidesSeasonalAdvisory",] },
+          "accessStatus": { fields: ["id"] },
           "urgency": { fields: ["id"] },
           "advisoryStatus": { fields: ["id", "code"] }
         },
