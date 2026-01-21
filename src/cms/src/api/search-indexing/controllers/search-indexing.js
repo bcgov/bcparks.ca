@@ -68,7 +68,7 @@ module.exports = ({ strapi }) => ({
           "accessStatus": { fields: ["id"] },
           "urgency": { fields: ["id"] },
           "advisoryStatus": { fields: ["id", "code"] }
-        },
+        }
       },
       geoShape: {
         fields: ["geometry"],

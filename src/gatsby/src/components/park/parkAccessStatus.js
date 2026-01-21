@@ -254,7 +254,7 @@ export default function ParkAccessStatus({
       }
     } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [operationDates, parkFeatures, advisories, closureStatus]);
+  }, [operationDates, parkFeatures, advisories, closureStatus, advisoriesWithSeasonal]);
 
 
   return (
