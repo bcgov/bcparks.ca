@@ -65,10 +65,16 @@ module.exports = ({ strapi }) => ({
       publicAdvisories: {
         fields: ["id"],
         populate: {
-          "accessStatus": { fields: ["id"] },
+          "accessStatus": { fields: [
+              "id",
+              "accessStatus",
+              "precedence",
+              "color",
+              "groupLabel",
+              "hidesSeasonalAdvisory",] },
           "urgency": { fields: ["id"] },
           "advisoryStatus": { fields: ["id", "code"] }
-        }
+        },
       },
       geoShape: {
         fields: ["geometry"],

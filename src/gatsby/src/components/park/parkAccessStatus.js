@@ -99,7 +99,7 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
   return false;
 }
 
-function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData) {
+function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData, hidesSeasonalAdvisory) {
 
   let accessStatuses = []
   const accessStatusList = staticData?.allStrapiAccessStatus.nodes
@@ -145,7 +145,7 @@ function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, stat
     parkStatusColor = accessStatuses[0].color
   }
 
-  if (parkStatusText === "Open" && (mainGateClosure || areaClosure)) {
+  if (parkStatusText === "Open" && (mainGateClosure || areaClosure) && !hidesSeasonalAdvisory) {
     parkStatusText = "Seasonal restrictions";
   }
 
@@ -224,11 +224,16 @@ export default function ParkAccessStatus({
   }, [advisories, closureStatus])
 
   useEffect(() => {
+    const hidesSeasonalAdvisory = advisories?.some(
+      advisory => advisory.accessStatus?.hidesSeasonalAdvisory
+    ) || false;
+    
     const status = parkAccessFromAdvisories(
       advisoriesWithSeasonal, 
       closureStatus.mainGateClosure, 
       closureStatus.areaClosure, 
-      staticData
+      staticData,
+      hidesSeasonalAdvisory
     );
     // add advisoriesWithSeasonal to the status object
     status.advisoriesWithSeasonal = advisoriesWithSeasonal;
