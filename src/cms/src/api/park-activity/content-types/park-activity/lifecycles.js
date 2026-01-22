@@ -24,7 +24,7 @@ const validator = require("../../../../helpers/validator.js");
  * to customize this model
  */
 
-const updateName = async (data, where) => {
+const updateName = async (data) => {
   if (data.documentId) {
     const documentId = data.documentId;
 
@@ -61,8 +61,8 @@ const updateName = async (data, where) => {
 
 module.exports = {
   async beforeCreate(event) {
-    let { data, where } = event.params;
-    event.params.data = await updateName(data, where);
+    let { data } = event.params;
+    event.params.data = await updateName(data);
     validator.activityTypeValidator(event.params.data.activityType);
     validator.protectedAreaOrSiteValidator(
       event.params.data.protectedArea,
@@ -70,8 +70,8 @@ module.exports = {
     );
   },
   async beforeUpdate(event) {
-    let { data, where } = event.params;
-    event.params.data = await updateName(data, where);
+    let { data } = event.params;
+    event.params.data = await updateName(data);
     validator.activityTypeValidator(event.params.data.activityType);
     validator.protectedAreaOrSiteValidator(
       event.params.data.protectedArea,

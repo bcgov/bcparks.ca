@@ -17,50 +17,54 @@
 
 "use strict";
 
-const updateName = async (data, where) => {
-    if (where) {
-        const documentId = where.documentId
-        const parkContact = await strapi.documents("api::park-contact.park-contact").findOne({
-            documentId, populate: '*'
-        })
-        let protectedArea = parkContact.protectedArea
-        const parkOperatorContact = parkContact.parkOperatorContact
+const updateName = async (data) => {
+  if (data.documentId) {
+    const documentId = data.documentId;
+    const parkContact = await strapi
+      .documents("api::park-contact.park-contact")
+      .findOne({
+        documentId,
+        populate: "*",
+      });
+    let protectedArea = parkContact.protectedArea;
+    const parkOperatorContact = parkContact.parkOperatorContact;
 
-        // Check if new protectedArea is being added
-        if (data?.protectedArea?.connect?.length > 0) {
-          protectedArea = await strapi.documents("api::protected-area.protected-area").findOne({
-            documentId: data?.protectedArea.connect[0].documentId
-          })
-        // Check if current protectedArea is being removed
-        } else if (data?.protectedArea?.disconnect?.length > 0) {
-          protectedArea = { orcs: 0 }
-        }
-
-        data.name = ""
-        if (protectedArea) {
-            data.name = protectedArea.orcs
-        } else {
-            data.name = 0
-        }
-        if (parkOperatorContact) {
-            data.name += ":"
-            data.name += parkOperatorContact.defaultTitle
-        } else {
-            data.name += ":"
-            data.name += data.title || parkContact.title
-        }
+    // Check if new protectedArea is being added
+    if (data?.protectedArea?.connect?.length > 0) {
+      protectedArea = await strapi
+        .documents("api::protected-area.protected-area")
+        .findOne({
+          documentId: data?.protectedArea.connect[0].documentId,
+        });
+      // Check if current protectedArea is being removed
+    } else if (data?.protectedArea?.disconnect?.length > 0) {
+      protectedArea = { orcs: 0 };
     }
-    return data
+
+    data.name = "";
+    if (protectedArea) {
+      data.name = protectedArea.orcs;
+    } else {
+      data.name = 0;
+    }
+    if (parkOperatorContact) {
+      data.name += ":";
+      data.name += parkOperatorContact.defaultTitle;
+    } else {
+      data.name += ":";
+      data.name += data.title || parkContact.title;
+    }
+  }
+  return data;
 };
 
 module.exports = {
-    async beforeCreate(event) {
-        let { data, where } = event.params;
-        data = await updateName(data, where);
-    },
-    async beforeUpdate(event) {
-        let { data, where } = event.params;
-        data = await updateName(data, where);
-    },
+  async beforeCreate(event) {
+    let { data } = event.params;
+    data = await updateName(data);
+  },
+  async beforeUpdate(event) {
+    let { data } = event.params;
+    data = await updateName(data);
+  },
 };
-

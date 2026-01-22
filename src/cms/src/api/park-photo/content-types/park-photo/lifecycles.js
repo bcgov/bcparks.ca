@@ -23,12 +23,12 @@
  */
 
 const getOrcs = async function (event) {
-  let { where } = event.params;
-  if (!where.documentId) {
+  let { data } = event.params;
+  if (!data.documentId) {
     return null;
   }
   const photo = await strapi.documents("api::park-photo.park-photo").findOne({
-    documentId: where.documentId,
+    documentId: data.documentId,
     fields: ["orcs"],
   });
   return photo?.orcs;

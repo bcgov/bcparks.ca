@@ -24,7 +24,7 @@ const validator = require("../../../../helpers/validator.js");
  * to customize this model
  */
 
-const updateName = async (data, where) => {
+const updateName = async (data) => {
   if (data.documentId) {
     const documentId = data.documentId;
 
@@ -61,13 +61,13 @@ const updateName = async (data, where) => {
 
 module.exports = {
   async beforeCreate(event) {
-    let { data, where } = event.params;
-    data = await updateName(data, where);
+    let { data } = event.params;
+    data = await updateName(data);
     validator.facilityTypeValidator(data.facilityType);
   },
   async beforeUpdate(event) {
-    let { data, where } = event.params;
-    data = await updateName(data, where);
+    let { data } = event.params;
+    data = await updateName(data);
     validator.facilityTypeValidator(data.facilityType);
   },
 };

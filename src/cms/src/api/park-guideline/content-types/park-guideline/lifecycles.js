@@ -17,39 +17,41 @@
 
 "use strict";
 
-const updateName = async (data, where) => {
-	if (where) {
-		const documentId = where.documentId
-		const parkGuideline = await strapi.documents("api::park-guideline.park-guideline").findOne({
-			documentId, populate: '*'
-		})
-		const protectedArea = parkGuideline.protectedArea
-		const site = parkGuideline.site
-		const guidelineType = parkGuideline.guidelineType
+const updateName = async (data) => {
+  if (data.documentId) {
+    const documentId = data.documentId;
+    const parkGuideline = await strapi
+      .documents("api::park-guideline.park-guideline")
+      .findOne({
+        documentId,
+        populate: "*",
+      });
+    const protectedArea = parkGuideline.protectedArea;
+    const site = parkGuideline.site;
+    const guidelineType = parkGuideline.guidelineType;
 
-		data.name = ""
-		if (protectedArea) {
-			data.name = protectedArea.orcs
-		}
-		if (site) {
-			data.name = site.orcsSiteNumber
-		}
-		if (guidelineType) {
-			data.name += ":"
-			data.name += guidelineType.guidelineName;
-		}
-	}
-	return data
+    data.name = "";
+    if (protectedArea) {
+      data.name = protectedArea.orcs;
+    }
+    if (site) {
+      data.name = site.orcsSiteNumber;
+    }
+    if (guidelineType) {
+      data.name += ":";
+      data.name += guidelineType.guidelineName;
+    }
+  }
+  return data;
 };
 
 module.exports = {
-	async beforeCreate(event) {
-		let { data, where } = event.params;
-		data = await updateName(data, where);
-	},
-	async beforeUpdate(event) {
-		let { data, where } = event.params;
-		data = await updateName(data, where);
-	},
+  async beforeCreate(event) {
+    let { data } = event.params;
+    data = await updateName(data);
+  },
+  async beforeUpdate(event) {
+    let { data } = event.params;
+    data = await updateName(data);
+  },
 };
-
