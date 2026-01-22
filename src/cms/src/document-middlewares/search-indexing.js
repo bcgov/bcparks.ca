@@ -1,18 +1,17 @@
 const { indexPark, removePark } = require("../helpers/taskQueue.js");
 
 const protectedAreaCollectionType = "api::protected-area.protected-area";
-const photoCollectionType = ["api::park-photo.park-photo"];
+const photoCollectionType = "api::park-photo.park-photo";
+const publicAdvisoryCollectionType = "api::public-advisory.public-advisory";
 const relatedCollectionTypes = [
   "api::park-camping-type.park-camping-type",
   "api::park-facility.park-facility",
   "api::park-activity.park-activity",
   "api::park-name.park-name",
   "api::park-feature.park-feature",
-  "api::public-advisory.public-advisory",
   "api::geo-shape.geo-shape",
   "api::park-date.park-date",
 ];
-const publicAdvisoryCollectionType = "api::public-advisory.public-advisory";
 
 const pageActions = ["create", "update", "delete"];
 
