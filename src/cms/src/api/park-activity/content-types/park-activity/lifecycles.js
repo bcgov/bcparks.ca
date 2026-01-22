@@ -17,7 +17,6 @@
 
 "use strict";
 
-const { indexPark } = require("../../../../helpers/taskQueue.js");
 const validator = require("../../../../helpers/validator.js");
 
 /**
@@ -26,73 +25,37 @@ const validator = require("../../../../helpers/validator.js");
  */
 
 const updateName = async (data, where) => {
-  let protectedArea, site, activityType;
+  if (data.documentId) {
+    const documentId = data.documentId;
 
-  if (where?.documentId) {
     const parkActivity = await strapi
       .documents("api::park-activity.park-activity")
       .findOne({
-        documentId: where.documentId,
-        populate: "*",
+        documentId,
+        populate: ["protectedArea", "site", "activityType"],
+        status: data.status,
       });
 
-    if (parkActivity) {
-      protectedArea = parkActivity.protectedArea;
-      site = parkActivity.site;
-      activityType = parkActivity.activityType;
+    if (!parkActivity) {
+      return data;
     }
-  } else {
-    // Create: extract documentIds from data (handle connect syntax if present)
-    const getDocumentId = (relation) => {
-      if (!relation) return null;
-      if (typeof relation === "string") return relation;
-      if (relation.connect?.[0])
-        return typeof relation.connect[0] === "string"
-          ? relation.connect[0]
-          : relation.connect[0].documentId;
-      return null;
-    };
 
-    const protectedAreaId = getDocumentId(data.protectedArea);
-    const siteId = getDocumentId(data.site);
-    const activityTypeId = getDocumentId(data.activityType);
+    const protectedArea = parkActivity.protectedArea;
+    const site = parkActivity.site;
+    const activityType = parkActivity.activityType;
 
-    if (protectedAreaId) {
-      protectedArea = await strapi
-        .documents("api::protected-area.protected-area")
-        .findOne({
-          documentId: protectedAreaId,
-          fields: ["orcs"],
-        });
+    data.name = "";
+    if (protectedArea) {
+      data.name = protectedArea.orcs;
     }
-    if (siteId) {
-      site = await strapi.documents("api::site.site").findOne({
-        documentId: siteId,
-        fields: ["orcsSiteNumber"],
-      });
+    if (site) {
+      data.name = site.orcsSiteNumber;
     }
-    if (activityTypeId) {
-      activityType = await strapi
-        .documents("api::activity-type.activity-type")
-        .findOne({
-          documentId: activityTypeId,
-          fields: ["activityName"],
-        });
+    if (activityType) {
+      data.name += ":";
+      data.name += activityType.activityName;
     }
   }
-
-  data.name = "";
-  if (protectedArea) {
-    data.name = protectedArea.orcs;
-  }
-  if (site) {
-    data.name = site.orcsSiteNumber;
-  }
-  if (activityType) {
-    data.name += ":";
-    data.name += activityType.activityName;
-  }
-
   return data;
 };
 
@@ -114,25 +77,5 @@ module.exports = {
       event.params.data.protectedArea,
       event.params.data.site,
     );
-    for (const park of event.params.data?.protectedArea?.disconnect || []) {
-      await indexPark(park.id);
-    }
-  },
-  async afterUpdate(event) {
-    await indexPark(event.result.protectedArea?.id);
-  },
-  async afterCreate(event) {
-    await indexPark(event.result.protectedArea?.id);
-  },
-  async beforeDelete(event) {
-    let { where } = event.params;
-    const parkActivity = await strapi
-      .documents("api::park-activity.park-activity")
-      .findOne({
-        documentId: where.documentId,
-        fields: ["id"],
-        populate: { protectedArea: { fields: ["id"] } },
-      });
-    await indexPark(parkActivity.protectedArea?.id);
   },
 };

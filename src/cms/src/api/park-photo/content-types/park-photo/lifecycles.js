@@ -17,8 +17,6 @@
 
 "use strict";
 
-const { indexPark } = require("../../../../helpers/taskQueue.js");
-
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
  * to customize this model
@@ -29,45 +27,11 @@ const getOrcs = async function (event) {
   if (!where.documentId) {
     return null;
   }
-  const photo = await strapi.documents("api::park-photo.park-photo").findOne(
-    {
-      documentId: where.documentId,
-      fields: ["orcs"],
-    }
-  );
+  const photo = await strapi.documents("api::park-photo.park-photo").findOne({
+    documentId: where.documentId,
+    fields: ["orcs"],
+  });
   return photo?.orcs;
-};
-
-const getOrcsSiteNumber = async function (event) {
-  let { where } = event.params;
-  if (!where.documentId) {
-    return null;
-  }
-  const photo = await strapi.documents("api::park-photo.park-photo").findOne(
-    {
-      documentId: where.documentId,
-      fields: ["orcsSiteNumber"],
-    }
-  );
-  return photo?.orcsSiteNumber;
-};
-
-const getProtectedAreaIdByOrcs = async function (orcs) {
-  if (!orcs) {
-    return null;
-  }
-  const parks = await strapi.documents("api::protected-area.protected-area").findMany(
-    {
-      fields: ["id"],
-      filters: {
-        orcs: orcs,
-      },
-    }
-  );
-  if (!parks.length) {
-    return null;
-  }
-  return parks[0]?.id;
 };
 
 module.exports = {
@@ -77,19 +41,19 @@ module.exports = {
       const protectedAreaOrcs = event.result.protectedArea.orcs;
       event.result.orcs = protectedAreaOrcs;
       await strapi.documents("api::park-photo.park-photo").update({
-        documentId: event.result.documentId, data: { orcs: protectedAreaOrcs }
-      })
+        documentId: event.result.documentId,
+        data: { orcs: protectedAreaOrcs },
+      });
     }
     // If parkPhoto.site is selected, get that site.orcsSiteNumber in the parkPhoto.orcsSiteNumber
     if (event.result?.site) {
       const siteOrcs = event.result.site.orcsSiteNumber;
       event.result.orcsSiteNumber = siteOrcs;
       await strapi.documents("api::park-photo.park-photo").update({
-        documentId: event.result.documentId, data: { orcsSiteNumber: siteOrcs }
-      })
+        documentId: event.result.documentId,
+        data: { orcsSiteNumber: siteOrcs },
+      });
     }
-    const protectedAreaId = await getProtectedAreaIdByOrcs(event.result?.orcs);
-    await indexPark(protectedAreaId);
   },
   async afterUpdate(event) {
     // If parkPhoto.protectedArea is selected, get that protectedArea.orcs in the parkPhoto.orcs
@@ -98,8 +62,9 @@ module.exports = {
       if (event.result.orcs !== protectedAreaOrcs) {
         event.result.orcs = protectedAreaOrcs;
         await strapi.documents("api::park-photo.park-photo").update({
-          documentId: event.result.documentId, data: { orcs: protectedAreaOrcs }
-        })
+          documentId: event.result.documentId,
+          data: { orcs: protectedAreaOrcs },
+        });
       }
     }
     // If parkPhoto.site is selected, get that site.orcsSiteNumber in the parkPhoto.orcsSiteNumber
@@ -108,12 +73,11 @@ module.exports = {
       if (event.result.orcsSiteNumber !== siteOrcs) {
         event.result.orcsSiteNumber = siteOrcs;
         await strapi.documents("api::park-photo.park-photo").update({
-          documentId: event.result.documentId, data: { orcsSiteNumber: siteOrcs }
-        })
+          documentId: event.result.documentId,
+          data: { orcsSiteNumber: siteOrcs },
+        });
       }
     }
-    const newProtectedAreaId = await getProtectedAreaIdByOrcs(event.result?.orcs);
-    await indexPark(newProtectedAreaId);
   },
   async beforeUpdate(event) {
     if (event.params?.data?.protectedArea?.disconnect?.length > 0) {
@@ -122,14 +86,5 @@ module.exports = {
     if (event.params?.data?.site?.disconnect?.length > 0) {
       event.params.data.orcsSiteNumber = null;
     }
-    const oldOrcs = await getOrcs(event);
-    const oldProtectedAreaId = await getProtectedAreaIdByOrcs(oldOrcs);
-    await indexPark(oldProtectedAreaId);
   },
-  async beforeDelete(event) {
-    const orcs = await getOrcs(event);
-    const protectedAreaId = await getProtectedAreaIdByOrcs(orcs);
-    await indexPark(protectedAreaId);
-  }
 };
-

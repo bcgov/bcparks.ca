@@ -85,14 +85,9 @@ module.exports = {
     validator.slugNoTrailingDashValidator(data.slug);
   },
   afterCreate: async (ctx) => {
-    await indexPark(ctx.params?.where?.id);
     saveParkAccessStatus(ctx);
   },
   afterUpdate: async (ctx) => {
-    await indexPark(ctx.params?.where?.id);
     saveParkAccessStatus(ctx);
-  },
-  beforeDelete: async (ctx) => {
-    await removePark(ctx.params?.where?.id);
   },
 };

@@ -1,5 +1,8 @@
 "use strict";
 const elasticClient = require("./helpers/elasticClient");
+const {
+  searchIndexingMiddleware,
+} = require("./document-middlewares/search-indexing.js");
 
 module.exports = {
   /**
@@ -9,6 +12,7 @@ module.exports = {
    * This gives you an opportunity to extend code.
    */
   register({ strapi }) {
+    // configure the documentation plugin to ignore some content types
     strapi
       .plugin("documentation")
       .service("override")
@@ -22,6 +26,12 @@ module.exports = {
         "footer-menu",
         "menu",
       ]);
+
+    // register document service middlewares
+    const middlewares = [searchIndexingMiddleware];
+    middlewares.forEach((middleware) => {
+      strapi.documents.use(middleware());
+    });
   },
 
   /**

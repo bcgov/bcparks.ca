@@ -17,7 +17,6 @@
 
 "use strict";
 
-const { indexPark } = require("../../../../helpers/taskQueue.js");
 const validator = require("../../../../helpers/validator.js");
 
 /**
@@ -26,14 +25,21 @@ const validator = require("../../../../helpers/validator.js");
  */
 
 const updateName = async (data, where) => {
-  if (where) {
-    const documentId = where.documentId;
+  if (data.documentId) {
+    const documentId = data.documentId;
+
     const parkCampingType = await strapi
       .documents("api::park-camping-type.park-camping-type")
       .findOne({
         documentId,
-        populate: "*",
+        populate: ["protectedArea", "site", "campingType"],
+        status: data.status,
       });
+
+    if (!parkCampingType) {
+      return data;
+    }
+
     const protectedArea = parkCampingType.protectedArea;
     const site = parkCampingType.site;
     const campingType = parkCampingType.campingType;
@@ -63,25 +69,5 @@ module.exports = {
     let { data, where } = event.params;
     data = await updateName(data, where);
     validator.campingTypeValidator(data.campingType);
-    for (const park of event.params.data?.protectedArea?.disconnect || []) {
-      await indexPark(park.id);
-    }
-  },
-  async afterUpdate(event) {
-    await indexPark(event.result.protectedArea?.id);
-  },
-  async afterCreate(event) {
-    await indexPark(event.result.protectedArea?.id);
-  },
-  async beforeDelete(event) {
-    let { where } = event.params;
-    const parkCampingType = await strapi
-      .documents("api::park-camping-type.park-camping-type")
-      .findOne({
-        documentId: where.documentId,
-        fields: ["id"],
-        populate: { protectedArea: { fields: ["id"] } },
-      });
-    await indexPark(parkCampingType.protectedArea?.id);
   },
 };

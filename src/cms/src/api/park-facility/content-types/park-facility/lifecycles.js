@@ -17,7 +17,6 @@
 
 "use strict";
 
-const { indexPark } = require("../../../../helpers/taskQueue.js");
 const validator = require("../../../../helpers/validator.js");
 
 /**
@@ -26,14 +25,21 @@ const validator = require("../../../../helpers/validator.js");
  */
 
 const updateName = async (data, where) => {
-  if (where) {
-    const documentId = where.documentId;
+  if (data.documentId) {
+    const documentId = data.documentId;
+
     const parkFacility = await strapi
       .documents("api::park-facility.park-facility")
       .findOne({
         documentId,
-        populate: "*",
+        populate: ["protectedArea", "site", "facilityType"],
+        status: data.status,
       });
+
+    if (!parkFacility) {
+      return data;
+    }
+
     const protectedArea = parkFacility.protectedArea;
     const site = parkFacility.site;
     const facilityType = parkFacility.facilityType;
@@ -63,25 +69,5 @@ module.exports = {
     let { data, where } = event.params;
     data = await updateName(data, where);
     validator.facilityTypeValidator(data.facilityType);
-    for (const park of event.params.data?.protectedArea?.disconnect || []) {
-      await indexPark(park.id);
-    }
-  },
-  async afterUpdate(event) {
-    await indexPark(event.result.protectedArea?.id);
-  },
-  async afterCreate(event) {
-    await indexPark(event.result.protectedArea?.id);
-  },
-  async beforeDelete(event) {
-    let { where } = event.params;
-    const parkFacility = await strapi
-      .documents("api::park-facility.park-facility")
-      .findOne({
-        documentId: where.documentId,
-        fields: ["id"],
-        populate: { protectedArea: { fields: ["id"] } },
-      });
-    await indexPark(parkFacility.protectedArea?.id);
   },
 };
