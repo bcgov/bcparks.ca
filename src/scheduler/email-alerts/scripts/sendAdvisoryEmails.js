@@ -57,7 +57,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
         dateString = `${formatInTimeZone(effectiveDate, tz, fmt)} to ${formatInTimeZone(
           endDate,
           tz,
-          fmt
+          fmt,
         )}`;
       } else if (advisory.isEffectiveDateDisplayed) {
         dateLabel = "In effect";
@@ -78,7 +78,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
       // render the email template
       const htmlMessageBody = await ejs.renderFile(
         "./email-alerts/templates/public-advisory.ejs",
-        emailData
+        emailData,
       );
 
       if (scriptKeySpecified("emailtest")) {
@@ -113,7 +113,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 const getAdvisoryInfo = async function (advisoryNumber) {
   const advisoryFilter = qs.stringify(
     {
-      publicationState: "preview",
+      status: "draft",
       populate: {
         fireCentres: { fields: ["fireCentreName"] },
         fireZones: { fields: ["fireZoneName"] },
@@ -138,7 +138,7 @@ const getAdvisoryInfo = async function (advisoryNumber) {
     },
     {
       encodeValuesOnly: true,
-    }
+    },
   );
   const advisoryQuery = `/api/public-advisory-audits?${advisoryFilter}`;
   const response = await cmsAxios.get(advisoryQuery, {

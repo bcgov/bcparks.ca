@@ -24,12 +24,12 @@ exports.populateGeoShapes = async function (options) {
       pagination: {
         limit: -1,
       },
-      publicationState: "preview",
+      status: "draft",
       sort: "orcs",
     },
     {
       encodeValuesOnly: true,
-    }
+    },
   );
 
   let parks;
