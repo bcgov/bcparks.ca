@@ -104,13 +104,17 @@ const searchIndexingMiddleware = (strapi) => {
         // this is for cases where the record is already in the db and the
         // protected area relation is not being changed
         const documentId = context.params?.documentId;
-        const document = await strapi.documents(context.uid).findOne({
-          documentId,
-          fields: ["documentId"],
-          populate: { protectedArea: { fields: ["orcs"] } },
-        });
-        if (document.protectedArea?.orcs) {
-          await indexPark(document.protectedArea.orcs);
+
+        // documentId is not available in draft
+        if (documentId) {
+          const document = await strapi.documents(context.uid).findOne({
+            documentId,
+            fields: ["documentId"],
+            populate: { protectedArea: { fields: ["orcs"] } },
+          });
+          if (document.protectedArea?.orcs) {
+            await indexPark(document.protectedArea.orcs);
+          }
         }
       }
     }

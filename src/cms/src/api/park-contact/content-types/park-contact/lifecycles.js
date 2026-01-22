@@ -1,45 +1,30 @@
-/*
- * ============================================================
- * STRAPI 5 LIFECYCLE HOOKS - MIGRATED TO DOCUMENT SERVICE
- * ============================================================
- *
- * NOTE: This lifecycle logic has been migrated to Document Service Middleware
- * in src/index.js as recommended by Strapi v5 migration guide.
- *
- * This file is kept for reference but the main logic now runs through the
- * centralized middleware to properly handle Draft & Publish and i18n features.
- *
+/**
+ * Strapi 5 lifecycle hooks for Document Service
  * Migration Guide: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service
- * Document Service Middlewares: https://docs.strapi.io/cms/api/document-service/middlewares
- *
- * ============================================================
+ * Document Service API: https://docs.strapi.io/cms/api/document-service
  */
 
 "use strict";
 
+const validator = require("../../../../helpers/validator.js");
+
 const updateName = async (data) => {
   if (data.documentId) {
     const documentId = data.documentId;
+
     const parkContact = await strapi
       .documents("api::park-contact.park-contact")
       .findOne({
         documentId,
         populate: "*",
       });
-    let protectedArea = parkContact.protectedArea;
-    const parkOperatorContact = parkContact.parkOperatorContact;
 
-    // Check if new protectedArea is being added
-    if (data?.protectedArea?.connect?.length > 0) {
-      protectedArea = await strapi
-        .documents("api::protected-area.protected-area")
-        .findOne({
-          documentId: data?.protectedArea.connect[0].documentId,
-        });
-      // Check if current protectedArea is being removed
-    } else if (data?.protectedArea?.disconnect?.length > 0) {
-      protectedArea = { orcs: 0 };
+    if (!parkContact) {
+      return data;
     }
+
+    const protectedArea = parkContact.protectedArea;
+    const parkOperatorContact = parkContact.parkOperatorContact;
 
     data.name = "";
     if (protectedArea) {
@@ -62,9 +47,11 @@ module.exports = {
   async beforeCreate(event) {
     let { data } = event.params;
     data = await updateName(data);
+    validator.protectedAreaValidator(data.protectedArea);
   },
   async beforeUpdate(event) {
     let { data } = event.params;
     data = await updateName(data);
+    validator.protectedAreaValidator(data.protectedArea);
   },
 };

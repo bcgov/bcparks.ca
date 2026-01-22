@@ -1,18 +1,7 @@
-/*
- * ============================================================
- * STRAPI 5 LIFECYCLE HOOKS - MIGRATED TO DOCUMENT SERVICE
- * ============================================================
- *
- * NOTE: This lifecycle logic has been migrated to Document Service Middleware
- * in src/index.js as recommended by Strapi v5 migration guide.
- *
- * This file is kept for reference but the main logic now runs through the
- * centralized middleware to properly handle Draft & Publish and i18n features.
- *
+/**
+ * Strapi 5 lifecycle hooks for Document Service
  * Migration Guide: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service
- * Document Service Middlewares: https://docs.strapi.io/cms/api/document-service/middlewares
- *
- * ============================================================
+ * Document Service API: https://docs.strapi.io/cms/api/document-service
  */
 
 "use strict";
@@ -20,12 +9,18 @@
 const updateName = async (data) => {
   if (data.documentId) {
     const documentId = data.documentId;
+
     const parkGuideline = await strapi
       .documents("api::park-guideline.park-guideline")
       .findOne({
         documentId,
         populate: "*",
       });
+
+    if (!parkGuideline) {
+      return data;
+    }
+
     const protectedArea = parkGuideline.protectedArea;
     const site = parkGuideline.site;
     const guidelineType = parkGuideline.guidelineType;
