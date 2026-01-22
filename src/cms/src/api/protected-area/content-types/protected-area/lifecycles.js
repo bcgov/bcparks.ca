@@ -17,8 +17,6 @@
 
 "use strict";
 
-const { indexPark, removePark } = require("../../../../helpers/taskQueue.js");
-
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
  * to customize this model

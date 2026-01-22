@@ -28,7 +28,7 @@ const handleConnectOrDisconnect = async (documentId) => {
 };
 
 // The middleware function
-const searchIndexingMiddleware = () => {
+const searchIndexingMiddleware = (strapi) => {
   return async (context, next) => {
     // Early return if the document type or action is not relevant for indexing
     if (
@@ -81,9 +81,7 @@ const searchIndexingMiddleware = () => {
       }
     }
 
-    const result = await next(); // Call the next middleware in the stack
-
-    return result; // Return the result of the middleware chain
+    return await next(); // Call the next middleware in the stack
   };
 };
 

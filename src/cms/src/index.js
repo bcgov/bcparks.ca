@@ -3,6 +3,7 @@ const elasticClient = require("./helpers/elasticClient");
 const {
   searchIndexingMiddleware,
 } = require("./document-middlewares/search-indexing.js");
+const restCacheInvalidationMiddleware = require("./document-middlewares/rest-cache-invalidation.js");
 
 module.exports = {
   /**
@@ -28,9 +29,12 @@ module.exports = {
       ]);
 
     // register document service middlewares
-    const middlewares = [searchIndexingMiddleware];
+    const middlewares = [
+      searchIndexingMiddleware,
+      restCacheInvalidationMiddleware,
+    ];
     middlewares.forEach((middleware) => {
-      strapi.documents.use(middleware());
+      strapi.documents.use(middleware(strapi));
     });
   },
 
