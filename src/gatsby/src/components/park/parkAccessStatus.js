@@ -99,7 +99,7 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
   return false;
 }
 
-function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData) {
+function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, staticData, hidesSeasonalAdvisory) {
 
   let accessStatuses = []
   const accessStatusList = staticData?.allStrapiAccessStatus.nodes
@@ -109,26 +109,20 @@ function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, stat
   let parkStatusColor = "blue"
 
   for (let advisory of advisories) {
-    if (advisory.accessStatus) {
-      // data is coming from /api/public-advisories/items and already includes the accessStatus
+    // Lookup accessStatus from graphql
+    const accessStatusId = advisory.accessStatus?.id || advisory.accessStatusId
+    if (!accessStatusId) {
+      continue
+    }
+    const accessStatus = accessStatusList.find(status => {
+      return status.strapi_id === accessStatusId
+    })
+    if (accessStatus) {
       accessStatuses.push({
-        precedence: advisory.accessStatus.precedence,
-        color: advisory.accessStatus.color,
-        text: advisory.accessStatus.groupLabel,
+        precedence: accessStatus.precedence,
+        color: accessStatus.color,
+        text: accessStatus.groupLabel,
       })
-    } else {
-      let accessStatus = accessStatusList.find(status => {
-        return status.strapi_id === advisory.accessStatusId
-      })
-      if (!accessStatus) {
-        break
-      } else {
-        accessStatuses.push({
-          precedence: accessStatus.precedence,
-          color: accessStatus.color,
-          text: accessStatus.groupLabel,
-        })
-      }
     }
   }
 
@@ -145,7 +139,7 @@ function parkAccessFromAdvisories(advisories, mainGateClosure, areaClosure, stat
     parkStatusColor = accessStatuses[0].color
   }
 
-  if (parkStatusText === "Open" && (mainGateClosure || areaClosure)) {
+  if (parkStatusText === "Open" && (mainGateClosure || areaClosure) && !hidesSeasonalAdvisory) {
     parkStatusText = "Seasonal restrictions";
   }
 
@@ -180,6 +174,7 @@ export default function ParkAccessStatus({
             accessStatus
             groupLabel
             precedence
+            hidesSeasonalAdvisory
           }
         }
         allStrapiParkFeatureType {
@@ -201,15 +196,28 @@ export default function ParkAccessStatus({
     areaClosure: checkParkFeatureClosure(parkFeatures, staticData)
   }), [operationDates, parkFeatures, staticData])
 
+  // Check if any advisory has hidesSeasonalAdvisory=true
+  const hidesSeasonalAdvisory = useMemo(() => {
+    const accessStatusList = staticData?.allStrapiAccessStatus.nodes || []
+    return advisories?.some(advisory => {
+      const accessStatusId = advisory.accessStatus?.id || advisory.accessStatusId
+      if (!accessStatusId) return false
+      
+      const accessStatus = accessStatusList.find(status => 
+        status.strapi_id === accessStatusId
+      )
+      return accessStatus?.hidesSeasonalAdvisory === true
+    }) || false
+  }, [advisories, staticData])
+
   // Inject seasonal advisories based on closure status
   const advisoriesWithSeasonal = useMemo(() => {
     const newAdvisories = [...(advisories || [])]
     
     // Don't inject if already added or if another advisory hides seasonal advisories
     if (newAdvisories.some(
-      advisory => advisory.id === SEASONAL_ADVISORY_ID ||
-      advisory.accessStatus?.hidesSeasonalAdvisory
-    )) {
+      advisory => advisory.id === SEASONAL_ADVISORY_ID) || hidesSeasonalAdvisory
+    ) {
       return newAdvisories
     }
 
@@ -221,14 +229,15 @@ export default function ParkAccessStatus({
     }
 
     return newAdvisories
-  }, [advisories, closureStatus])
+  }, [advisories, closureStatus, hidesSeasonalAdvisory])
 
   useEffect(() => {
     const status = parkAccessFromAdvisories(
       advisoriesWithSeasonal, 
       closureStatus.mainGateClosure, 
       closureStatus.areaClosure, 
-      staticData
+      staticData,
+      hidesSeasonalAdvisory
     );
     // add advisoriesWithSeasonal to the status object
     status.advisoriesWithSeasonal = advisoriesWithSeasonal;
@@ -245,7 +254,7 @@ export default function ParkAccessStatus({
       }
     } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [operationDates, parkFeatures, advisories, closureStatus]);
+  }, [operationDates, parkFeatures, advisories, closureStatus, advisoriesWithSeasonal]);
 
 
   return (

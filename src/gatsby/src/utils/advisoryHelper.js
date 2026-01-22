@@ -45,7 +45,7 @@ const loadAllAdvisories = (apiBaseUrl) => {
     },
     fields: ["advisoryNumber"],
     populate: {
-      accessStatus: { fields: ["accessStatus", "precedence", "color", "groupLabel"] },
+      accessStatus: { fields: ["accessStatus", "precedence", "color", "groupLabel", "hidesSeasonalAdvisory"] },
       protectedAreas: { fields: ["orcs"] }
     },
     pagination: {
