@@ -17,41 +17,43 @@
 
 "use strict";
 
-const { indexPark } = require("../../../../helpers/taskQueue.js");
+// const { indexPark } = require("../../../../helpers/taskQueue.js");
 
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
  * to customize this model
  */
 
-const indexParks = async function (ctx) {
-    let { where } = ctx.params;
-    const advisory = await strapi.documents("api::public-advisory.public-advisory").findOne({
-        documentId: where.documentId,
-        fields: ['id'],
-        populate: { protectedAreas: { fields: ['id'] } }
-    });
-    for (const pa of advisory.protectedAreas) {
-        await indexPark(pa.id);
-    }
-};
+// const indexParks = async function (ctx) {
+//   let { where } = ctx.params;
+//   const advisory = await strapi
+//     .documents("api::public-advisory.public-advisory")
+//     .findOne({
+//       documentId: where.documentId,
+//       fields: ["id"],
+//       populate: { protectedAreas: { fields: ["id"] } },
+//     });
+//   for (const pa of advisory.protectedAreas) {
+//     await indexPark(pa.id);
+//   }
+// };
 
-// clear the public advisories from the rest cache after all crud operations
+// // clear the public advisories from the rest cache after all crud operations
 module.exports = {
-    afterCreate: async (ctx) => {
-        for (const pa of ctx.params?.data?.protectedAreas || []) {
-            await indexPark(pa?.id);
-        }
-    },
-    afterUpdate: async (ctx) => {
-        for (const pa of ctx.params?.data?.protectedAreas || []) {
-            await indexPark(pa?.id);
-        }
-    },
-    beforeUpdate: async (ctx) => {
-        await indexParks(ctx);
-    },
-    beforeDelete: async (ctx) => {
-        await indexParks(ctx);
-    },
+  //   afterCreate: async (ctx) => {
+  //     for (const pa of ctx.params?.data?.protectedAreas || []) {
+  //       await indexPark(pa?.id);
+  //     }
+  //   },
+  //   afterUpdate: async (ctx) => {
+  //     for (const pa of ctx.params?.data?.protectedAreas || []) {
+  //       await indexPark(pa?.id);
+  //     }
+  //   },
+  //   beforeUpdate: async (ctx) => {
+  //     await indexParks(ctx);
+  //   },
+  //   beforeDelete: async (ctx) => {
+  //     await indexParks(ctx);
+  //   },
 };

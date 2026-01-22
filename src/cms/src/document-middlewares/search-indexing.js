@@ -12,6 +12,7 @@ const relatedCollectionTypes = [
   "api::geo-shape.geo-shape",
   "api::park-date.park-date",
 ];
+const publicAdvisoryCollectionType = "api::public-advisory.public-advisory";
 
 const pageActions = ["create", "update", "delete"];
 
@@ -51,6 +52,40 @@ const searchIndexingMiddleware = (strapi) => {
           await removePark(orcs);
         } else {
           await indexPark(orcs);
+        }
+      }
+    }
+
+    // Handle public advisories
+    if (context.uid === publicAdvisoryCollectionType) {
+      // sometimes the protectedAreas are provided as part of the form data and sometimes
+      // they are part of the database object. The code below handles both scenarios.
+
+      // scenario 1: part of the form data
+      const connectParks = context.params.data?.protectedAreas?.connect || [];
+      const disconnectParks =
+        context.params.data?.protectedAreas?.disconnect || [];
+
+      if (connectParks.length || disconnectParks.length) {
+        for (const park of connectParks) {
+          await handleConnectOrDisconnect(park.documentId);
+        }
+        for (const park of disconnectParks) {
+          await handleConnectOrDisconnect(park.documentId);
+        }
+      } else {
+        // scenario 2: part of the existing database object
+        const protectedAreas = context.params.data?.protectedAreas || {
+          connect: [],
+          disconnect: [],
+        };
+
+        for (const doc of protectedAreas.connect || []) {
+          await handleConnectOrDisconnect(doc?.documentId);
+        }
+
+        for (const doc of protectedAreas.disconnect || []) {
+          await handleConnectOrDisconnect(doc?.documentId);
         }
       }
     }
