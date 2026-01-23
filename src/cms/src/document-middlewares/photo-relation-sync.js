@@ -63,7 +63,7 @@ async function syncRelatedIdentifiers(data, strapi) {
 }
 
 // The middleware function
-const photoRelationMiddleware = (strapi) => {
+const photoRelationSyncMiddleware = (strapi) => {
   return async (context, next) => {
     if (
       context.uid !== photoCollectionType ||
@@ -78,4 +78,4 @@ const photoRelationMiddleware = (strapi) => {
   };
 };
 
-module.exports = photoRelationMiddleware;
+module.exports = photoRelationSyncMiddleware;
