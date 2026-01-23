@@ -4,6 +4,7 @@ const {
   searchIndexingMiddleware,
 } = require("./document-middlewares/search-indexing.js");
 const restCacheInvalidationMiddleware = require("./document-middlewares/rest-cache-invalidation.js");
+const nameGeneratorMiddleware = require("./document-middlewares/name-generator.js");
 
 module.exports = {
   /**
@@ -32,6 +33,7 @@ module.exports = {
     const middlewares = [
       searchIndexingMiddleware,
       restCacheInvalidationMiddleware,
+      nameGeneratorMiddleware,
     ];
     middlewares.forEach((middleware) => {
       strapi.documents.use(middleware(strapi));

@@ -22,18 +22,6 @@
  * to customize this model
  */
 
-const getOrcs = async function (event) {
-  let { data } = event.params;
-  if (!data.documentId) {
-    return null;
-  }
-  const photo = await strapi.documents("api::park-photo.park-photo").findOne({
-    documentId: data.documentId,
-    fields: ["orcs"],
-  });
-  return photo?.orcs;
-};
-
 module.exports = {
   async afterCreate(event) {
     // If parkPhoto.protectedArea is selected, get that protectedArea.orcs in the parkPhoto.orcs
@@ -56,6 +44,8 @@ module.exports = {
     }
   },
   async afterUpdate(event) {
+    console.log(JSON.stringify(event));
+
     // If parkPhoto.protectedArea is selected, get that protectedArea.orcs in the parkPhoto.orcs
     if (event.result?.protectedArea !== undefined) {
       const protectedAreaOrcs = event.result.protectedArea?.orcs;
