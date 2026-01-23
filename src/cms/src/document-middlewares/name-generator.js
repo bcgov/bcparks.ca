@@ -21,7 +21,7 @@ async function standardRelationLabel(data, dbRecord, config) {
 }
 
 // Custom suffix generator for park-contact - example of extending standardRelationLabel
-// Falls back to the contact's title field. Injected via suffixGenerator in the config.
+// Falls back to the contact's title field.
 async function contactLabel(data, dbRecord, config) {
   const isRemovingParkOperatorContact =
     data.parkOperatorContact?.connect?.length <
@@ -35,6 +35,14 @@ async function contactLabel(data, dbRecord, config) {
 
   const poContactName = await standardRelationLabel(data, dbRecord, config);
   return poContactName || titleFallback;
+}
+
+// Custom suffix generator for park-date - combines operating year and date type
+// e.g.: "F-104-2: 2022 - Backcountry registration"
+async function parkDateLabel(data, dbRecord, config) {
+  const year = data.operatingYear || dbRecord?.operatingYear || "";
+  const dateType = await standardRelationLabel(data, dbRecord, config);
+  return ` ${year} - ${dateType}`;
 }
 
 // Configuration for each collection type that needs auto-generated names
@@ -91,6 +99,15 @@ const collections = [
       labelFieldName: "defaultTitle",
     },
   },
+  {
+    uid: "api::park-date.park-date",
+    suffixGenerator: parkDateLabel,
+    config: {
+      relatedContentType: "api::park-date-type.park-date-type",
+      relationName: "parkDateType",
+      labelFieldName: "dateType",
+    },
+  },
 ];
 const collectionTypes = collections.map((c) => c.uid);
 
@@ -131,6 +148,24 @@ const updateName = async (data, uid) => {
       })
     : recordInstance?.site;
 
+  // get park feature (if applicable)
+  const parkFeatureDocumentId = data.parkFeature?.connect?.[0]?.documentId;
+  const parkFeature = parkFeatureDocumentId
+    ? await strapi.documents("api::park-feature.park-feature").findOne({
+        documentId: parkFeatureDocumentId,
+        fields: ["orcsFeatureNumber"],
+      })
+    : recordInstance?.parkFeature;
+
+  // get park area (if applicable)
+  const parkAreaDocumentId = data.parkArea?.connect?.[0]?.documentId;
+  const parkArea = parkAreaDocumentId
+    ? await strapi.documents("api::park-area.park-area").findOne({
+        documentId: parkAreaDocumentId,
+        fields: ["orcsAreaNumber"],
+      })
+    : recordInstance?.parkArea;
+
   // get suffix of the label
   const nameSuffix = await suffixGenerator(data, recordInstance, config);
 
@@ -141,6 +176,12 @@ const updateName = async (data, uid) => {
   }
   if (site) {
     data.name = site.orcsSiteNumber;
+  }
+  if (parkArea) {
+    data.name = `PA-${parkArea.orcsAreaNumber}`;
+  }
+  if (parkFeature) {
+    data.name = `F-${parkFeature.orcsFeatureNumber}`;
   }
   if (nameSuffix) {
     data.name += `:${nameSuffix}`;
