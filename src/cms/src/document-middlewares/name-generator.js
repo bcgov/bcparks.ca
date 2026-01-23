@@ -1,7 +1,12 @@
-// Middleware to generate names various park-related collection types
+// Middleware to auto-generate human-readable display names for park-related collection types
+// These names appear as the display representation in Strapi's admin UI when viewing relations
+// Format: {orcs|orcsSiteNumber}:{typeName}
+// Example: "9508:Hiking" displays instead of just the database ID
+
 const pageActions = ["create", "update"];
 
-// Generic helper function to get type name label for various collections
+// Standard suffix generator that retrieves the name from a related content type
+// Uses the config to specify which relation to follow and which field to use as the suffix
 async function standardRelationLabel(data, dbRecord, config) {
   const { relationName, labelFieldName, relatedContentType } = config;
   const typeDocumentId = data[relationName]?.connect?.[0]?.documentId;
@@ -15,24 +20,35 @@ async function standardRelationLabel(data, dbRecord, config) {
     : (dbRecord?.[relationName]?.[labelFieldName] ?? "");
 }
 
-// Specialized helper function to get label for park-contact
+// Custom suffix generator for park-contact - example of extending standardRelationLabel
+// Falls back to the contact's title field. Injected via suffixGenerator in the config.
 async function contactLabel(data, dbRecord, config) {
-  // if the PO contact is being removed, just return the title
-  if (
+  const isRemovingParkOperatorContact =
     data.parkOperatorContact?.connect?.length <
-    data.parkOperatorContact?.disconnect?.length
-  ) {
-    return data.title || dbRecord?.title || "";
+    data.parkOperatorContact?.disconnect?.length;
+
+  const titleFallback = data.title || dbRecord?.title || "";
+
+  if (isRemovingParkOperatorContact) {
+    return titleFallback;
   }
+
   const poContactName = await standardRelationLabel(data, dbRecord, config);
-  return poContactName || data.title || dbRecord?.title || "";
+  return poContactName || titleFallback;
 }
 
-// each collection is a little bit different, so we use a config array to generalize the logic
+// Configuration for each collection type that needs auto-generated names
+// Each entry specifies:
+// - uid: the collection type identifier
+// - suffixGenerator: function that generates the suffix part of the name (after the colon)
+// - config: configuration for the suffixGenerator
+//   - relatedContentType: UID of the related content type to query
+//   - relationName: field name of the relation in the current document
+//   - labelFieldName: field name in the related document to use as the suffix
 const collections = [
   {
     uid: "api::park-facility.park-facility",
-    labelFunction: standardRelationLabel,
+    suffixGenerator: standardRelationLabel,
     config: {
       relatedContentType: "api::facility-type.facility-type",
       relationName: "facilityType",
@@ -41,7 +57,7 @@ const collections = [
   },
   {
     uid: "api::park-activity.park-activity",
-    labelFunction: standardRelationLabel,
+    suffixGenerator: standardRelationLabel,
     config: {
       relatedContentType: "api::activity-type.activity-type",
       relationName: "activityType",
@@ -50,7 +66,7 @@ const collections = [
   },
   {
     uid: "api::park-camping-type.park-camping-type",
-    labelFunction: standardRelationLabel,
+    suffixGenerator: standardRelationLabel,
     config: {
       relatedContentType: "api::camping-type.camping-type",
       relationName: "campingType",
@@ -59,7 +75,7 @@ const collections = [
   },
   {
     uid: "api::park-guideline.park-guideline",
-    labelFunction: standardRelationLabel,
+    suffixGenerator: standardRelationLabel,
     config: {
       relatedContentType: "api::guideline-type.guideline-type",
       relationName: "guidelineType",
@@ -68,7 +84,7 @@ const collections = [
   },
   {
     uid: "api::park-contact.park-contact",
-    labelFunction: contactLabel,
+    suffixGenerator: contactLabel,
     config: {
       relatedContentType: "api::park-operator-contact.park-operator-contact",
       relationName: "parkOperatorContact",
@@ -78,8 +94,9 @@ const collections = [
 ];
 const collectionTypes = collections.map((c) => c.uid);
 
-// Function to update the label based on protected area or site, and type name
-const updateLabel = async (data, uid) => {
+// Generates display name by combining prefix (ORCS/site number) and generated suffix
+// Modifies data.name in place with format: {orcs|orcsSiteNumber}:{suffix}
+const updateName = async (data, uid) => {
   let recordInstance = {};
 
   // fetch existing record if documentId is present
@@ -93,7 +110,7 @@ const updateLabel = async (data, uid) => {
   }
 
   // get config for this uid
-  const { labelFunction, config } =
+  const { suffixGenerator, config } =
     collections.find((c) => c.uid === uid) || {};
 
   // get protected area
@@ -105,7 +122,7 @@ const updateLabel = async (data, uid) => {
       })
     : recordInstance?.protectedArea;
 
-  // get site
+  // get site (if applicable)
   const siteDocumentId = data.site?.connect?.[0]?.documentId;
   const site = siteDocumentId
     ? await strapi.documents("api::site.site").findOne({
@@ -114,10 +131,10 @@ const updateLabel = async (data, uid) => {
       })
     : recordInstance?.site;
 
-  // get end of the label
-  const nameSuffix = await labelFunction(data, recordInstance, config);
+  // get suffix of the label
+  const nameSuffix = await suffixGenerator(data, recordInstance, config);
 
-  // generate label
+  // generate label and assign to data.name
   data.name = "";
   if (protectedArea) {
     data.name = String(protectedArea.orcs);
@@ -142,7 +159,7 @@ const nameGeneratorMiddleware = (strapi) => {
       return await next(); // Call the next middleware in the stack
     }
 
-    await updateLabel(context.params.data, context.uid);
+    await updateName(context.params.data, context.uid);
 
     return await next(); // Call the next middleware in the stack
   };
