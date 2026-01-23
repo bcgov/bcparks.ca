@@ -2,77 +2,77 @@
 const pageActions = ["create", "update"];
 
 // Generic helper function to get type name label for various collections
-async function typeNameLabel(data, dbRecord, config) {
-  const { typeAttributeName, typeNameField, typeCollectionUid } = config;
-  const typeDocumentId = data[typeAttributeName]?.connect?.[0]?.documentId;
+async function standardRelationLabel(data, dbRecord, config) {
+  const { relationName, labelFieldName, relatedContentType } = config;
+  const typeDocumentId = data[relationName]?.connect?.[0]?.documentId;
   return typeDocumentId
     ? (
-        await strapi.documents(typeCollectionUid).findOne({
+        await strapi.documents(relatedContentType).findOne({
           documentId: typeDocumentId,
-          fields: [typeNameField],
+          fields: [labelFieldName],
         })
-      )?.[typeNameField]
-    : (dbRecord?.[typeAttributeName]?.[typeNameField] ?? "");
+      )?.[labelFieldName]
+    : (dbRecord?.[relationName]?.[labelFieldName] ?? "");
 }
 
 // Specialized helper function to get label for park-contact
 async function contactLabel(data, dbRecord, config) {
-  // if the po contact is being removed, just return the title
+  // if the PO contact is being removed, just return the title
   if (
     data.parkOperatorContact?.connect?.length <
     data.parkOperatorContact?.disconnect?.length
   ) {
     return data.title || dbRecord?.title || "";
   }
-  const parkOperatorContactName = await typeNameLabel(data, dbRecord, config);
-  return parkOperatorContactName || data.title || dbRecord?.title || "";
+  const poContactName = await standardRelationLabel(data, dbRecord, config);
+  return poContactName || data.title || dbRecord?.title || "";
 }
 
 // each collection is a little bit different, so we use a config array to generalize the logic
 const collections = [
   {
     uid: "api::park-facility.park-facility",
-    labelFunction: typeNameLabel,
+    labelFunction: standardRelationLabel,
     config: {
-      typeCollectionUid: "api::facility-type.facility-type",
-      typeAttributeName: "facilityType",
-      typeNameField: "facilityName",
+      relatedContentType: "api::facility-type.facility-type",
+      relationName: "facilityType",
+      labelFieldName: "facilityName",
     },
   },
   {
     uid: "api::park-activity.park-activity",
-    labelFunction: typeNameLabel,
+    labelFunction: standardRelationLabel,
     config: {
-      typeCollectionUid: "api::activity-type.activity-type",
-      typeAttributeName: "activityType",
-      typeNameField: "activityName",
+      relatedContentType: "api::activity-type.activity-type",
+      relationName: "activityType",
+      labelFieldName: "activityName",
     },
   },
   {
     uid: "api::park-camping-type.park-camping-type",
-    labelFunction: typeNameLabel,
+    labelFunction: standardRelationLabel,
     config: {
-      typeCollectionUid: "api::camping-type.camping-type",
-      typeAttributeName: "campingType",
-      typeNameField: "campingTypeName",
+      relatedContentType: "api::camping-type.camping-type",
+      relationName: "campingType",
+      labelFieldName: "campingTypeName",
     },
   },
   {
     uid: "api::park-guideline.park-guideline",
-    labelFunction: typeNameLabel,
+    labelFunction: standardRelationLabel,
     config: {
-      typeCollectionUid: "api::guideline-type.guideline-type",
-      typeAttributeName: "guidelineType",
-      typeNameField: "guidelineName",
+      relatedContentType: "api::guideline-type.guideline-type",
+      relationName: "guidelineType",
+      labelFieldName: "guidelineName",
     },
   },
   {
     uid: "api::park-contact.park-contact",
     labelFunction: contactLabel,
     config: {
-      typeCollectionUid: "api::park-operator-contact.park-operator-contact",
-      typeAttributeName: "parkOperatorContact",
-      typeNameField: "defaultTitle",
+      relatedContentType: "api::park-operator-contact.park-operator-contact",
+      relationName: "parkOperatorContact",
+      labelFieldName: "defaultTitle",
     },
   },
 ];
@@ -120,15 +120,13 @@ const updateLabel = async (data, uid) => {
   // generate label
   data.name = "";
   if (protectedArea) {
-    data.name = protectedArea.orcs;
+    data.name = String(protectedArea.orcs);
   }
   if (site) {
     data.name = site.orcsSiteNumber;
   }
   if (nameSuffix) {
     data.name += `:${nameSuffix}`;
-  } else {
-    data.name += ":None";
   }
 
   return data;
