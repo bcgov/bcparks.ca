@@ -6,7 +6,9 @@ const boolToYN = (boolVar) => {
 };
 
 const getHasCampfiresFacility = (parkFacilities) => {
-  return parkFacilities.some((f) => f.facilityType.facilityName.toLowerCase().includes("campfires"));
+  return parkFacilities.some((f) =>
+    f.facilityType?.facilityName.toLowerCase().includes("campfires"),
+  );
 };
 
 const getPublicAdvisory = (publishedAdvisories, orcs) => {
@@ -251,34 +253,34 @@ const getProtectedAreaStatus = async (ctx) => {
 
     const parkActivities = protectedArea.parkActivities.map((a) => {
       return {
-        activityName: a.activityType.activityName,
-        activityCode: a.activityType.activityCode,
+        activityName: a.activityType?.activityName,
+        activityCode: a.activityType?.activityCode,
         description: a.description,
-        icon: a.activityType.icon,
-        iconNA: a.activityType.iconNA,
-        rank: a.activityType.rank,
+        icon: a.activityType?.icon,
+        iconNA: a.activityType?.iconNA,
+        rank: a.activityType?.rank,
       };
     });
 
     const parkFacilities = protectedArea.parkFacilities.map((a) => {
       return {
-        facilityName: a.facilityType.facilityName,
-        facilityCode: a.facilityType.facilityCode,
+        facilityName: a.facilityType?.facilityName,
+        facilityCode: a.facilityType?.facilityCode,
         description: a.description,
-        icon: a.facilityType.icon,
-        iconNA: a.facilityType.iconNA,
-        rank: a.facilityType.rank,
+        icon: a.facilityType?.icon,
+        iconNA: a.facilityType?.iconNA,
+        rank: a.facilityType?.rank,
       };
     });
 
     const parkCampingTypes = protectedArea.parkCampingTypes.map((a) => {
       return {
-        campingTypeName: a.campingType.campingTypeName,
-        campingTypeCode: a.campingType.campingTypeCode,
+        campingTypeName: a.campingType?.campingTypeName,
+        campingTypeCode: a.campingType?.campingTypeCode,
         description: a.description,
-        icon: a.campingType.icon,
-        iconNA: a.campingType.iconNA,
-        rank: a.campingType.rank,
+        icon: a.campingType?.icon,
+        iconNA: a.campingType?.iconNA,
+        rank: a.campingType?.rank,
       };
     });
 
@@ -299,7 +301,7 @@ const getProtectedAreaStatus = async (ctx) => {
     }
 
     return {
-      id: protectedArea.id,
+      documentId: protectedArea.documentId,
       orcs: protectedArea.orcs,
       orcsSiteNumber: null,
       protectedAreaName: protectedArea.protectedAreaName,

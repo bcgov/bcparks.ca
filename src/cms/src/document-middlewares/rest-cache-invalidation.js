@@ -1,7 +1,6 @@
 const cachedCollectionTypes = [
   "api::public-advisory.public-advisory",
   "api::protected-area.protected-area",
-  "api::park-access-status.park-access-status",
 ];
 
 const pageActions = ["create", "update", "delete"];
