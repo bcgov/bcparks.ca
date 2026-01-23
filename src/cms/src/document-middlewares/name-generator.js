@@ -1,34 +1,82 @@
-// Middleware to generate names for park facilities, activities, camping types, and guidelines.
+// Middleware to generate names various park-related collection types
+const pageActions = ["create", "update"];
+
+// Generic helper function to get type name label for various collections
+async function typeNameLabel(data, dbRecord, config) {
+  const { typeAttributeName, typeNameField, typeCollectionUid } = config;
+  const typeDocumentId = data[typeAttributeName]?.connect?.[0]?.documentId;
+  return typeDocumentId
+    ? (
+        await strapi.documents(typeCollectionUid).findOne({
+          documentId: typeDocumentId,
+          fields: [typeNameField],
+        })
+      )?.[typeNameField]
+    : (dbRecord?.[typeAttributeName]?.[typeNameField] ?? "");
+}
+
+// Specialized helper function to get label for park-contact
+async function contactLabel(data, dbRecord, config) {
+  // if the po contact is being removed, just return the title
+  if (
+    data.parkOperatorContact?.connect?.length <
+    data.parkOperatorContact?.disconnect?.length
+  ) {
+    return data.title || dbRecord?.title || "";
+  }
+  const parkOperatorContactName = await typeNameLabel(data, dbRecord, config);
+  return parkOperatorContactName || data.title || dbRecord?.title || "";
+}
 
 // each collection is a little bit different, so we use a config array to generalize the logic
-const config = [
+const collections = [
   {
     uid: "api::park-facility.park-facility",
-    typeCollectionUid: "api::facility-type.facility-type",
-    typeAttributeName: "facilityType",
-    typeNameField: "facilityName",
+    labelFunction: typeNameLabel,
+    config: {
+      typeCollectionUid: "api::facility-type.facility-type",
+      typeAttributeName: "facilityType",
+      typeNameField: "facilityName",
+    },
   },
   {
     uid: "api::park-activity.park-activity",
-    typeCollectionUid: "api::activity-type.activity-type",
-    typeAttributeName: "activityType",
-    typeNameField: "activityName",
+    labelFunction: typeNameLabel,
+    config: {
+      typeCollectionUid: "api::activity-type.activity-type",
+      typeAttributeName: "activityType",
+      typeNameField: "activityName",
+    },
   },
   {
     uid: "api::park-camping-type.park-camping-type",
-    typeCollectionUid: "api::camping-type.camping-type",
-    typeAttributeName: "campingType",
-    typeNameField: "campingTypeName",
+    labelFunction: typeNameLabel,
+    config: {
+      typeCollectionUid: "api::camping-type.camping-type",
+      typeAttributeName: "campingType",
+      typeNameField: "campingTypeName",
+    },
   },
   {
     uid: "api::park-guideline.park-guideline",
-    typeCollectionUid: "api::guideline-type.guideline-type",
-    typeAttributeName: "guidelineType",
-    typeNameField: "guidelineName",
+    labelFunction: typeNameLabel,
+    config: {
+      typeCollectionUid: "api::guideline-type.guideline-type",
+      typeAttributeName: "guidelineType",
+      typeNameField: "guidelineName",
+    },
+  },
+  {
+    uid: "api::park-contact.park-contact",
+    labelFunction: contactLabel,
+    config: {
+      typeCollectionUid: "api::park-operator-contact.park-operator-contact",
+      typeAttributeName: "parkOperatorContact",
+      typeNameField: "defaultTitle",
+    },
   },
 ];
-const pageActions = ["create", "update"];
-const collectionTypes = config.map((c) => c.uid);
+const collectionTypes = collections.map((c) => c.uid);
 
 // Function to update the label based on protected area or site, and type name
 const updateLabel = async (data, uid) => {
@@ -45,8 +93,8 @@ const updateLabel = async (data, uid) => {
   }
 
   // get config for this uid
-  const { typeAttributeName, typeNameField, typeCollectionUid } =
-    config.find((c) => c.uid === uid) || {};
+  const { labelFunction, config } =
+    collections.find((c) => c.uid === uid) || {};
 
   // get protected area
   const paDocumentId = data.protectedArea?.connect?.[0]?.documentId;
@@ -66,16 +114,8 @@ const updateLabel = async (data, uid) => {
       })
     : recordInstance?.site;
 
-  // get type name
-  const typeDocumentId = data[typeAttributeName]?.connect?.[0]?.documentId;
-  const typeName = typeDocumentId
-    ? (
-        await strapi.documents(typeCollectionUid).findOne({
-          documentId: typeDocumentId,
-          fields: [typeNameField],
-        })
-      )?.[typeNameField]
-    : (recordInstance?.[typeAttributeName]?.[typeNameField] ?? "");
+  // get end of the label
+  const nameSuffix = await labelFunction(data, recordInstance, config);
 
   // generate label
   data.name = "";
@@ -85,8 +125,8 @@ const updateLabel = async (data, uid) => {
   if (site) {
     data.name = site.orcsSiteNumber;
   }
-  if (typeName) {
-    data.name += `:${typeName}`;
+  if (nameSuffix) {
+    data.name += `:${nameSuffix}`;
   } else {
     data.name += ":None";
   }
@@ -94,7 +134,7 @@ const updateLabel = async (data, uid) => {
   return data;
 };
 
-// The middleware function
+// The main middleware function
 const nameGeneratorMiddleware = (strapi) => {
   return async (context, next) => {
     if (
