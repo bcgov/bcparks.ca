@@ -1,11 +1,11 @@
 "use strict";
 
-/*
- Renames the "status" column to "statusCode" in the "protected_areas"
- and "sites" tables. This migration only affects environments
- where the column is currently named "status". If the column
- already has the correct name, no changes will be made.
-*/
+/**
+ * Renames the "status" column to "statusCode" in the "protected_areas"
+ * and "sites" tables. This migration only affects environments
+ * where the column is currently named "status". If the column
+ * already has the correct name, no changes will be made.
+ */
 
 module.exports = {
   async up(knex) {
