@@ -22,7 +22,7 @@
     "siteNumber": {
       "type": "integer"
     },
-    "status": {
+    "statusCode": {
       "type": "string"
     },
     "isDisplayed": {

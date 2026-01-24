@@ -564,7 +564,7 @@ export const query = graphql`
           description
         }
       }
-      status
+      statusCode
       orcs
       marineArea
       type

@@ -47,7 +47,7 @@
     "repealedDate": {
       "type": "date"
     },
-    "status": {
+    "statusCode": {
       "type": "string"
     },
     "url": {
