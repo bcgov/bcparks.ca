@@ -22,6 +22,9 @@
       "type": "integer",
       "required": true
     },
+    "name": {
+      "type": "string"
+    },
     "startDate": {
       "type": "date",
       "required": true

@@ -22,8 +22,10 @@
     "siteNumber": {
       "type": "integer"
     },
-    "statusCode": {
-      "type": "string"
+    "legalStatus": {
+      "type": "enumeration",
+      "enum": ["Active", "Repealed", "Closed", "Transitioned"],
+      "default": "Active"
     },
     "isDisplayed": {
       "type": "boolean",
