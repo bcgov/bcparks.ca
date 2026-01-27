@@ -564,7 +564,7 @@ export const query = graphql`
           description
         }
       }
-      status
+      legalStatus
       orcs
       marineArea
       type

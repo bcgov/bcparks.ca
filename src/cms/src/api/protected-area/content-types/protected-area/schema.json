@@ -47,8 +47,10 @@
     "repealedDate": {
       "type": "date"
     },
-    "status": {
-      "type": "string"
+    "legalStatus": {
+      "type": "enumeration",
+      "enum": ["Active", "Repealed", "Closed", "Transitioned"],
+      "default": "Active"
     },
     "url": {
       "type": "string"
