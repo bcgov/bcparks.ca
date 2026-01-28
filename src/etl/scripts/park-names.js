@@ -58,8 +58,8 @@ const loadData = async function () {
   // get the list of park name types
   const parkNameTypes = (await axios.get(`${process.env.STRAPI_BASE_URL}/api/park-name-types`)).data
     .data;
-  const legalNameType = parkNameTypes.find((t) => t.attributes.nameType === LEGAL_NAME_TYPE);
-  const phoneticNameType = parkNameTypes.find((t) => t.attributes.nameType === PHONETIC_NAME_TYPE);
+  const legalNameType = parkNameTypes.find((t) => t.nameType === LEGAL_NAME_TYPE);
+  const phoneticNameType = parkNameTypes.find((t) => t.nameType === PHONETIC_NAME_TYPE);
 
   // convert the dataRegisterParks to a dictionary
   const parksDict = {};
@@ -89,21 +89,26 @@ const loadData = async function () {
 
     // join together and simplify the two lists
     for (const strapiPark of response.data.data) {
-      strapiPark.dataRegister = parksDict[strapiPark?.attributes?.orcs] || null;
-      strapiPark.orcs = strapiPark.attributes.orcs;
+      strapiPark.dataRegister = parksDict[strapiPark?.orcs] || null;
+      strapiPark.orcs = strapiPark.orcs;
       const legalName = getParkName(strapiPark, LEGAL_NAME_TYPE);
       const phoneticName = getParkName(strapiPark, PHONETIC_NAME_TYPE);
       strapiPark.strapi = {
-        protectedAreaName: strapiPark.attributes.protectedAreaName,
-        searchTerms: strapiPark.attributes.searchTerms,
+        protectedAreaName: strapiPark.protectedAreaName,
+        searchTerms: strapiPark.searchTerms,
         legalName: legalName.name,
-        legalNameId: legalName.id,
+        legalNameDocumentId: legalName.documentId,
         legalNameSource: legalName.source,
         phoneticName: phoneticName.name,
-        phoneticNameId: phoneticName.id,
+        phoneticNameDocumentId: phoneticName.documentId,
         phoneticNameSource: phoneticName.source,
       };
-      delete strapiPark.attributes;
+
+      // get rid of fields we don't need anymore
+      delete strapiPark.protectedAreaName;
+      delete strapiPark.searchTerms;
+      delete strapiPark.parkNames;
+
       strapiParks.push(strapiPark);
     }
     logger.info(`${strapiParks.length} parks found in Strapi.`);
@@ -120,8 +125,8 @@ const loadData = async function () {
     // update the legal name
     if (p.dataRegister?.legalName !== p.strapi.legalName) {
       errorCount += await updateParkName(
-        p.strapi.legalNameId,
-        p.id,
+        p.strapi.legalNameDocumentId,
+        p.documentId,
         legalNameType,
         p.orcs,
         p.dataRegister?.legalName,
@@ -133,8 +138,8 @@ const loadData = async function () {
     // update the phonetic name
     if (p.dataRegister?.phoneticName !== p.strapi.phoneticName) {
       errorCount += await updateParkName(
-        p.strapi.phoneticNameId,
-        p.id,
+        p.strapi.phoneticNameDocumentId,
+        p.documentId,
         phoneticNameType,
         p.orcs,
         p.dataRegister?.phoneticName,
@@ -151,7 +156,7 @@ const loadData = async function () {
         );
         try {
           await axios.put(
-            `${process.env.STRAPI_BASE_URL}/api/protected-areas/${p.id}`,
+            `${process.env.STRAPI_BASE_URL}/api/protected-areas/${p.documentId}`,
             {
               data: {
                 protectedAreaName: p.dataRegister.displayName,
@@ -178,7 +183,7 @@ const loadData = async function () {
       logger.info(`Updating the searchTerms for park ${p.orcs}`);
       try {
         await axios.put(
-          `${process.env.STRAPI_BASE_URL}/api/protected-areas/${p.id}`,
+          `${process.env.STRAPI_BASE_URL}/api/protected-areas/${p.documentId}`,
           {
             data: {
               searchTerms: p.dataRegister?.searchTerms || null,
@@ -203,13 +208,11 @@ const loadData = async function () {
  *  Gets a simlified park name from the list of park names associated with a protected area
  */
 const getParkName = function (strapiPark, nameType) {
-  const parkName = strapiPark.attributes.parkNames?.data.find(
-    (p) => p?.attributes?.parkNameType?.data?.attributes?.nameType === nameType,
-  );
+  const parkName = strapiPark.parkNames?.find((p) => p?.parkNameType?.nameType === nameType);
   return {
-    id: parkName?.id || null,
-    name: parkName?.attributes?.parkName || "",
-    source: parkName?.attributes?.source || "",
+    documentId: parkName?.documentId || null,
+    name: parkName?.parkName || "",
+    source: parkName?.source || "",
   };
 };
 
@@ -217,26 +220,26 @@ const getParkName = function (strapiPark, nameType) {
  *  Updates, inserts, or deletes a park name
  */
 const updateParkName = async function (
-  parkNameId,
-  protectedAreaId,
+  parkNameDocumentId,
+  protectedAreaDocumentId,
   nameTypeObj,
   orcs,
   newName,
   oldName,
   source,
 ) {
-  const nameType = `${nameTypeObj.attributes.nameType.toLowerCase()}Name`;
+  const nameType = `${nameTypeObj.nameType.toLowerCase()}Name`;
   const logger = getLogger();
   const httpReqHeaders = {
     Authorization: "Bearer " + process.env.STRAPI_API_TOKEN,
     "Content-Type": "application/json",
   };
   if (newName) {
-    if (parkNameId) {
+    if (parkNameDocumentId) {
       logger.info(`Updating ${nameType} for park ${orcs} from "${oldName}" to "${newName}"`);
       try {
         await axios.put(
-          `${process.env.STRAPI_BASE_URL}/api/park-names/${parkNameId}`,
+          `${process.env.STRAPI_BASE_URL}/api/park-names/${parkNameDocumentId}`,
           {
             data: {
               parkName: newName,
@@ -258,8 +261,8 @@ const updateParkName = async function (
             data: {
               parkName: newName,
               source: DR_SOURCE,
-              parkNameType: { connect: [{ id: nameTypeObj.id }] },
-              protectedArea: { connect: [{ id: protectedAreaId }] },
+              parkNameType: { connect: [{ documentId: nameTypeObj.documentId }] },
+              protectedArea: { connect: [{ documentId: protectedAreaDocumentId }] },
             },
           },
           { headers: httpReqHeaders },
@@ -274,7 +277,7 @@ const updateParkName = async function (
     if (oldName && source === DR_SOURCE) {
       logger.info(`Deleting ${nameType} "${oldName}" for park ${orcs}`);
       try {
-        await axios.delete(`${process.env.STRAPI_BASE_URL}/api/park-names/${parkNameId}`, {
+        await axios.delete(`${process.env.STRAPI_BASE_URL}/api/park-names/${parkNameDocumentId}`, {
           headers: httpReqHeaders,
         });
       } catch (error) {

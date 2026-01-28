@@ -57,7 +57,7 @@ const loadData = async function () {
 
     for (const zone of response.data.data) {
       const name = zone.fireZoneName.replace(/ fire zone(s?)$/gi, "");
-      fireZones[name] = zone.id;
+      fireZones[name] = zone.documentId;
     }
   } catch (error) {
     logger.error(error);
@@ -71,7 +71,7 @@ const loadData = async function () {
     );
     for (const centre of response.data.data) {
       const name = centre.fireCentreName.replace(/ fire centre$/gi, "");
-      fireCentres[name] = centre.id;
+      fireCentres[name] = centre.documentId;
     }
   } catch (error) {
     logger.error(error);
@@ -82,14 +82,12 @@ const loadData = async function () {
   for (const ban of bcwfsData.features) {
     const attribute = ban.properties;
     const bcwfsBan = {
-      attributes: {
-        type: attribute["TYPE"],
-        prohibitionDescription: attribute["ACCESS_PROHIBITION_DESCRIPTION"],
-        effectiveDate: parseISO(attribute["ACCESS_STATUS_EFFECTIVE_DATE"]).toISOString(),
-        fireCentre: fireCentres[attribute["FIRE_CENTRE_NAME"]] || null,
-        fireZone: fireZones[attribute["FIRE_ZONE_NAME"]] || null,
-        bulletinURL: attribute["BULLETIN_URL"],
-      },
+      type: attribute["TYPE"],
+      prohibitionDescription: attribute["ACCESS_PROHIBITION_DESCRIPTION"],
+      effectiveDate: parseISO(attribute["ACCESS_STATUS_EFFECTIVE_DATE"]).toISOString(),
+      fireCentre: fireCentres[attribute["FIRE_CENTRE_NAME"]] || null,
+      fireZone: fireZones[attribute["FIRE_ZONE_NAME"]] || null,
+      bulletinURL: attribute["BULLETIN_URL"],
     };
     bcwfsBans.push(bcwfsBan);
   }
@@ -98,10 +96,10 @@ const loadData = async function () {
   const strapiQuery = {
     populate: {
       fireCentre: {
-        fields: ["id"],
+        fields: ["documentId"],
       },
       fireZone: {
-        fields: ["id"],
+        fields: ["documentId"],
       },
     },
   };
@@ -122,9 +120,12 @@ const loadData = async function () {
   const deletions = _.differenceWith(strapiBans, bcwfsBans, compareBans);
   for (const ban of deletions) {
     try {
-      await axios.delete(`${process.env.STRAPI_BASE_URL}/api/fire-ban-prohibitions/${ban.id}`, {
-        headers: httpReqHeaders,
-      });
+      await axios.delete(
+        `${process.env.STRAPI_BASE_URL}/api/fire-ban-prohibitions/${ban.documentId}`,
+        {
+          headers: httpReqHeaders,
+        },
+      );
     } catch (error) {
       logger.error(error);
       process.exit(1);
@@ -138,7 +139,7 @@ const loadData = async function () {
     try {
       await axios.post(
         `${process.env.STRAPI_BASE_URL}/api/fire-ban-prohibitions/`,
-        { data: ban.attributes },
+        { data: ban },
         { headers: httpReqHeaders },
       );
     } catch (error) {
@@ -155,14 +156,14 @@ const loadData = async function () {
  */
 function compareBans(ban1, ban2) {
   return (
-    ban1.attributes.type === ban2.attributes.type &&
-    ban1.attributes.prohibitionDescription === ban2.attributes.prohibitionDescription &&
-    ban1.attributes.effectiveDate === ban2.attributes.effectiveDate &&
-    ban1.attributes.bulletinURL === ban2.attributes.bulletinURL &&
-    (ban1.attributes.fireCentre === (ban2.attributes.fireCentre?.data?.id || null) ||
-      ban2.attributes.fireCentre === (ban1.attributes.fireCentre?.data?.id || null)) &&
-    (ban1.attributes.fireZone === (ban2.attributes.fireZone?.data?.id || null) ||
-      ban2.attributes.fireZone === (ban1.attributes.fireZone?.data?.id || null))
+    ban1.type === ban2.type &&
+    ban1.prohibitionDescription === ban2.prohibitionDescription &&
+    ban1.effectiveDate === ban2.effectiveDate &&
+    ban1.bulletinURL === ban2.bulletinURL &&
+    (ban1.fireCentre === (ban2.fireCentre?.documentId || null) ||
+      ban2.fireCentre === (ban1.fireCentre?.documentId || null)) &&
+    (ban1.fireZone === (ban2.fireZone?.documentId || null) ||
+      ban2.fireZone === (ban1.fireZone?.documentId || null))
   );
 }
 
