@@ -42,7 +42,7 @@ export default function ParkTemplate({ data }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
   const park = data.strapiProtectedArea
-  const parkType = park.type.toLowerCase() ?? "park"
+  const parkType = (park.type || "park").toLowerCase()
   const operations = park.parkOperation || {}
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
 
