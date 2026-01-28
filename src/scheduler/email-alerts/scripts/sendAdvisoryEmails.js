@@ -113,7 +113,6 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 const getAdvisoryInfo = async function (advisoryNumber) {
   const advisoryFilter = qs.stringify(
     {
-      status: "draft",
       populate: {
         fireCentres: { fields: ["fireCentreName"] },
         fireZones: { fields: ["fireZoneName"] },

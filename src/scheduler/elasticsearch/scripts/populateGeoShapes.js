@@ -24,7 +24,6 @@ exports.populateGeoShapes = async function (options) {
       pagination: {
         limit: -1,
       },
-      status: "draft",
       sort: "orcs",
     },
     {

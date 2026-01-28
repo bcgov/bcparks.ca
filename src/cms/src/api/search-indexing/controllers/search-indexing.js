@@ -114,7 +114,6 @@ module.exports = ({ strapi }) => ({
         },
       },
     };
-    query.status = "draft";
 
     const { results, pagination } = await strapi
       .service("api::protected-area.protected-area")

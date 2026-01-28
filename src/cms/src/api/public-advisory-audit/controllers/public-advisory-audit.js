@@ -16,7 +16,6 @@ module.exports = createCoreController(
         .findMany({
           filters: { advisoryNumber: advisoryNumber },
           sort: ["revisionNumber:desc"],
-          status: "draft",
           populate: "*",
         });
 
