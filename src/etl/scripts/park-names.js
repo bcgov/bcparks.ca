@@ -90,7 +90,6 @@ const loadData = async function () {
     // join together and simplify the two lists
     for (const strapiPark of response.data.data) {
       strapiPark.dataRegister = parksDict[strapiPark?.orcs] || null;
-      strapiPark.orcs = strapiPark.orcs;
       const legalName = getParkName(strapiPark, LEGAL_NAME_TYPE);
       const phoneticName = getParkName(strapiPark, PHONETIC_NAME_TYPE);
       strapiPark.strapi = {
