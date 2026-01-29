@@ -35,13 +35,13 @@ module.exports = createCoreController(
       const entities = await strapi
         .documents("api::protected-area.protected-area")
         .findMany({
-          fields: ["id", "orcs", "protectedAreaName"],
+          fields: ["id", "documentId", "orcs", "protectedAreaName"],
           limit: 2000,
         });
 
       return entities.map((entity) => {
-        const { id, orcs, protectedAreaName } = entity;
-        return { id, orcs, protectedAreaName };
+        const { id, documentId, orcs, protectedAreaName } = entity;
+        return { id, documentId, orcs, protectedAreaName };
       });
     },
 
