@@ -92,9 +92,9 @@ const searchIndexingMiddleware = (strapi) => {
     // Handle other realatedCollectionTypes
     if (relatedCollectionTypes.includes(context.uid)) {
       const connectParkDocId =
-        context.params.data.protectedArea?.connect?.[0]?.documentId;
+        context?.params?.data?.protectedArea?.connect?.[0]?.documentId;
       const disconnectParkDocId =
-        context.params.data.protectedArea?.disconnect?.[0]?.documentId;
+        context?.params?.data?.protectedArea?.disconnect?.[0]?.documentId;
 
       if (connectParkDocId || disconnectParkDocId) {
         // this is for cases where the protected area relation is being changed
@@ -112,7 +112,7 @@ const searchIndexingMiddleware = (strapi) => {
             fields: ["documentId"],
             populate: { protectedArea: { fields: ["orcs"] } },
           });
-          if (document.protectedArea?.orcs) {
+          if (document?.protectedArea?.orcs) {
             await indexPark(document.protectedArea.orcs);
           }
         }
