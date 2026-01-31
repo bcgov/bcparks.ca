@@ -6,6 +6,7 @@ const {
 const restCacheInvalidationMiddleware = require("./document-middlewares/rest-cache-invalidation.js");
 const nameGeneratorMiddleware = require("./document-middlewares/name-generator.js");
 const photoRelationSyncMiddleware = require("./document-middlewares/photo-relation-sync.js");
+const authStrategyOverride = require("./extensions/users-permissions/strategies/keycloak-users-permissions");
 
 module.exports = {
   /**
@@ -51,5 +52,11 @@ module.exports = {
    */
   bootstrap({ strapi }) {
     elasticClient.initializeESClient();
+
+    // Register Keycloak authentication strategy
+    const authService = strapi.get("auth");
+    if (authService) {
+      authService.register("content-api", authStrategyOverride);
+    }
   },
 };

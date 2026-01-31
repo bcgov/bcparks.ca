@@ -16,45 +16,55 @@ const SSO_JWKSURI = SSO_ISSUER + "/protocol/openid-connect/certs";
 
 module.exports = ({ strapi }) => ({
   getKCToken(ctx) {
-    let token = ctx.request.header.authorization;
-    let tokenString = "";
+    const authHeader = ctx.request.header.authorization;
 
-    if (token && token.indexOf("Bearer ") == 0) {
-      tokenString = token.split(" ")[1];
-
-      const client = jwksClient({
-        structSsl: true,
-        jwksUri: SSO_JWKSURI,
-      });
-
-      const decoded = jwt.decode(tokenString, { complete: true });
-
-      if (!decoded) {
-        return;
-      }
-
-      const kid = decoded.header.kid;
-
-      return new Promise((resolve, reject) => {
-        client.getSigningKey(kid, (err, key) => {
-          if (err) {
-            reject("Signing Key Error:", err);
-          } else {
-            const signingKey = key.publicKey || key.rsaPublicKey;
-            resolve(this.keycloakVerify(tokenString, signingKey));
-          }
-        });
-      });
+    if (!authHeader || authHeader.indexOf("Bearer ") !== 0) {
+      return null;
     }
+
+    const tokenString = authHeader.split(" ")[1];
+
+    // Skip non-JWT tokens (e.g., Strapi API tokens without dots)
+    if (!tokenString.includes(".")) {
+      return null;
+    }
+
+    const jwksClientConfig = {
+      jwksUri: SSO_JWKSURI,
+      cache: true,
+      cacheMaxEntries: 10,
+      cacheMaxAge: 60 * 60 * 1000,
+    };
+
+    const client = jwksClient(jwksClientConfig);
+    const decoded = jwt.decode(tokenString, { complete: true });
+
+    if (!decoded || !decoded.header || !decoded.header.kid) {
+      return null;
+    }
+
+    const keyId = decoded.header.kid;
+
+    return new Promise((resolve, reject) => {
+      client.getSigningKey(keyId, (err, key) => {
+        if (err) {
+          strapi.log.error("Error fetching signing key:", err);
+          return reject(err);
+        }
+        const publicKey = key.publicKey || key.rsaPublicKey;
+        resolve(this.keycloakVerify(tokenString, publicKey));
+      });
+    });
   },
 
-  keycloakVerify(token, signingKey) {
-    return new Promise(function (resolve, reject) {
-      jwt.verify(token, signingKey, {}, function (err, tokenPayload = {}) {
+  keycloakVerify(token, publicKey) {
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, publicKey, { issuer: SSO_ISSUER }, (err, payload) => {
         if (err) {
-          return reject(new Error("Invalid token."));
+          strapi.log.error("Token verification failed:", err);
+          return reject(new Error("Invalid token"));
         }
-        resolve(tokenPayload);
+        resolve(payload || {});
       });
     });
   },
