@@ -2,7 +2,10 @@
 
 module.exports = ({ strapi }) => ({
   getParksForIndexing: async (ctx) => {
+    const thisYear = new Date().getFullYear();
     const query = ctx.query;
+    const OPERATION_DATE_TYPE_ID = 6;
+    const GATE_DATE_TYPE_ID = 1;
 
     query.fields = [
       "orcs",
@@ -74,8 +77,11 @@ module.exports = ({ strapi }) => ({
         filters: {
           parkDateType: {
             dateTypeId: {
-              $eq: 1,
+              $eq: GATE_DATE_TYPE_ID,
             },
+          },
+          operatingYear: {
+            $gte: thisYear,
           },
         },
       },
@@ -98,13 +104,11 @@ module.exports = ({ strapi }) => ({
             filters: {
               parkDateType: {
                 dateTypeId: {
-                  $eq: 6,
+                  $eq: OPERATION_DATE_TYPE_ID,
                 },
               },
-            },
-            populate: {
-              parkDateType: {
-                fields: ["dateTypeId"],
+              operatingYear: {
+                $gte: thisYear,
               },
             },
           },
@@ -125,7 +129,7 @@ module.exports = ({ strapi }) => ({
   getParkPhotosForIndexing: async (ctx) => {
     const query = ctx.query;
     query.fields = ["orcs", "sortOrder", "imageUrl"];
-    query.pagination = { limit: -1 };
+    query.pagination = { pageSize: 10000 };
     query.filters = { isActive: true, ...query.filters };
     const { results } = await strapi
       .service("api::park-photo.park-photo")

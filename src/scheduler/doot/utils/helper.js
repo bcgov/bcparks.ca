@@ -6,7 +6,7 @@ async function getEntityIds(item) {
   let protectedAreaId, parkAreaId, parkFeatureId, relationName;
 
   if (item.orcsFeatureNumber) {
-    parkFeatureId = await getParkFeatureId(item.orcsFeatureNumber);
+    parkFeatureId = await getParkFeatureDocId(item.orcsFeatureNumber);
     relationName = `feature:${item.orcsFeatureNumber}`;
   } else if (item.orcsAreaNumber) {
     parkAreaId = await getParkAreaId(item.orcsAreaNumber);
@@ -20,40 +20,40 @@ async function getEntityIds(item) {
 }
 
 // get the Strapi ID for a park feature based on the orcsFeatureNumber
-async function getParkFeatureId(orcsFeatureNumber) {
+async function getParkFeatureDocId(orcsFeatureNumber) {
   const params = {
     filters: { orcsFeatureNumber },
     fields: ["id"],
   };
   const response = await cmsAxios.get("/api/park-features", { params });
   if (response.data.data.length > 0) {
-    return response.data.data[0].id;
+    return response.data.data[0].documentId;
   }
   return undefined;
 }
 
 // get the Strapi ID for a park area based on the orcsAreaNumber
-async function getParkAreaId(orcsAreaNumber) {
+async function getParkAreaDocId(orcsAreaNumber) {
   const params = {
     filters: { orcsAreaNumber },
     fields: ["id"],
   };
   const response = await cmsAxios.get("/api/park-areas", { params });
   if (response.data.data.length > 0) {
-    return response.data.data[0].id;
+    return response.data.data[0].documentId;
   }
   return undefined;
 }
 
 // get the Strapi ID for a protected area based on the orcs
-async function getProtectedAreaId(orcs) {
+async function getProtectedAreaDocId(orcs) {
   const params = {
     filters: { orcs },
     fields: ["id"],
   };
   const response = await cmsAxios.get("/api/protected-areas", { params });
   if (response.data.data.length > 0) {
-    return response.data.data[0].id;
+    return response.data.data[0].documentId;
   }
   return undefined;
 }
@@ -64,7 +64,7 @@ async function getDateTypeMap() {
   let dateTypesResponse;
   dateTypesResponse = await cmsAxios.get("/api/park-date-types");
   for (const dateType of dateTypesResponse.data.data) {
-    dateTypeMap.set(dateType.dateTypeId, dateType.id);
+    dateTypeMap.set(dateType.dateTypeId, dateType.documentId);
   }
   return dateTypeMap;
 }

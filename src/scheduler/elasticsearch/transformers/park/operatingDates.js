@@ -11,6 +11,7 @@ const convertParkDates = function (parkDates) {
     )
     .map((d) => {
       delete d.id;
+      delete d.documentId;
       delete d.publishedAt;
       return d;
     });

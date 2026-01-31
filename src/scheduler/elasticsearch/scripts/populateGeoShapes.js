@@ -13,16 +13,14 @@ exports.populateGeoShapes = async function (options) {
       fields: ["orcs", "typeCode"],
       filters: {
         geoShape: {
-          geometry: {
-            $null: true,
-          },
+          $null: true,
         },
       },
       populate: {
-        geoShape: { fields: ["orcs"] },
+        geoShape: { fields: "orcs" },
       },
       pagination: {
-        limit: -1,
+        limit: 2000,
       },
       sort: "orcs",
     },
@@ -61,7 +59,7 @@ exports.populateGeoShapes = async function (options) {
 const processParkList = async function (parks) {
   const logger = getLogger();
   for (const park of parks.data.data) {
-    if (park.geoShape.data === null) {
+    if (park.geoShape === null) {
       const { orcs, typeCode } = park;
       if (orcs) {
         logger.info(`getting geo-shape for orcs ${orcs}`);
@@ -76,14 +74,14 @@ const processParkList = async function (parks) {
         let geoShape;
         if (shape !== null) {
           geoShape = {
-            protectedArea: park.id,
+            protectedArea: park.documentId,
             geometry: shape,
             orcs: park.orcs,
             isEmpty: false,
           };
         } else {
           geoShape = {
-            protectedArea: park.id,
+            protectedArea: park.documentId,
             geometry: [],
             orcs: park.orcs,
             isEmpty: true,
@@ -93,6 +91,7 @@ const processParkList = async function (parks) {
           await cmsAxios.post("/api/geo-shapes", { data: geoShape });
         } catch (error) {
           logger.error(`populateGeoShapes.js failed saving geoshape: ${error}`);
+          logger.error(error.response.data);
           continue;
         }
       }
