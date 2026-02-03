@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 
-const { scriptKeySpecified, idSpecified, noCommandLineArgs } = require("./shared/commandLine");
+const { scriptKeySpecified, idSpecified } = require("./shared/commandLine");
 const { getLogger } = require("./shared/logging");
 const { indexParks } = require("./elasticsearch/scripts/indexParks");
 const { createParkIndex, parkIndexExists } = require("./elasticsearch/scripts/createParkIndex");
@@ -32,6 +32,7 @@ const { dootPublish } = require("./doot/scripts/publish");
     await queueAll();
     // process the queue in the opposite order to the cron job to minimize duplication
     await indexParks({ descending: true });
+    return;
   }
 
   /**
@@ -45,6 +46,7 @@ const { dootPublish } = require("./doot/scripts/publish");
     await queueAll();
     // process the queue in the opposite order to the cron job to minimize duplication
     await indexParks({ descending: true });
+    return;
   }
 
   /**
@@ -54,6 +56,7 @@ const { dootPublish } = require("./doot/scripts/publish");
   if (scriptKeySpecified("deleteindex")) {
     logger.info("Deleting the park search index");
     await deleteParkIndex();
+    return;
   }
 
   /**
@@ -63,13 +66,14 @@ const { dootPublish } = require("./doot/scripts/publish");
   if (scriptKeySpecified("geoshapes")) {
     logger.info("Populating geoshapes");
     await populateGeoShapes();
+    return;
   }
 
   /**
    * Runs the cron task one time
    * (manually triggered via OpenShift terminal / mainly for debugging purposes)
    */
-  if (scriptKeySpecified("once")) {
+  if (scriptKeySpecified("indexparks")) {
     if (!(await parkIndexExists())) {
       logger.warn("The Elasticsearch index is missing. It will be recreated.");
       await createParkIndex();
@@ -77,6 +81,7 @@ const { dootPublish } = require("./doot/scripts/publish");
     logger.info("Reindexing protectedAreas based on queued-tasks");
     // process the queue in the opposite order to the cron job to minimize duplication
     await indexParks({ descending: true });
+    return;
   }
 
   /**
@@ -86,6 +91,7 @@ const { dootPublish } = require("./doot/scripts/publish");
   if (idSpecified()) {
     logger.info(`Indexing park orcs #${process.argv[2]}`);
     await indexParks({ orcs: Number(process.argv[2]) });
+    return;
   }
 
   /**
@@ -95,6 +101,7 @@ const { dootPublish } = require("./doot/scripts/publish");
   if (scriptKeySpecified("advisories")) {
     logger.info("Triggering scheduled public advisory publishing & expiry");
     await triggerAdvisories();
+    return;
   }
 
   /**
@@ -105,6 +112,7 @@ const { dootPublish } = require("./doot/scripts/publish");
     logger.info("Sending queued emails");
     await sendAdvisoryEmails([]);
     await sendParkNamesEmails();
+    return;
   }
 
   /**
@@ -114,6 +122,7 @@ const { dootPublish } = require("./doot/scripts/publish");
     logger.info("Writing rendered email templates to 'mail-test-[#].html'");
     await sendAdvisoryEmails([]);
     await sendParkNamesEmails();
+    return;
   }
 
   /**
@@ -123,22 +132,21 @@ const { dootPublish } = require("./doot/scripts/publish");
   if (scriptKeySpecified("dootpublish")) {
     logger.info("Publishing queued DOOT data to Strapi");
     await dootPublish();
+    return;
   }
 
-  if (noCommandLineArgs() || scriptKeySpecified("help")) {
-    console.log("\nUsage: \n");
-    console.log("node manage.js [command]\n");
-    console.log("Command options:\n");
-    console.log("help        : show this screen");
-    console.log("reindex     : re-index all parks");
-    console.log("rebuild     : re-create the park index and re-index all parks");
-    console.log("deleteindex : delete the park index");
-    console.log("once        : run the cron task one time");
-    console.log("geoshapes   : populate the geo-shapes collection in Strapi");
-    console.log("[integer]   : re-index a specified orcs");
-    console.log("advisories  : trigger scheduled public advisory publishing & expiry");
-    console.log("emailsend   : send queued emails");
-    console.log("emailtest   : test email template (writes to file 'mail-test-[#].html')");
-    console.log("dootpublish : publish queued DOOT data to Strapi\n");
-  }
+  console.log("\nUsage: \n");
+  console.log("node manage.js [command]\n");
+  console.log("Command options:\n");
+  console.log("help        : show this screen");
+  console.log("reindex     : re-index all parks");
+  console.log("rebuild     : re-create the park index and re-index all parks");
+  console.log("deleteindex : delete the park index");
+  console.log("indexparks  : run the indexParks task one time");
+  console.log("geoshapes   : populate the geo-shapes collection in Strapi");
+  console.log("[integer]   : re-index a specified orcs");
+  console.log("advisories  : trigger scheduled public advisory publishing & expiry");
+  console.log("emailsend   : send queued emails");
+  console.log("emailtest   : test email template (writes to file 'mail-test-[#].html')");
+  console.log("dootpublish : publish queued DOOT data to Strapi\n");
 })();
