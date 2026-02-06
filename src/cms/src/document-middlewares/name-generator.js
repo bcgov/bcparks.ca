@@ -5,11 +5,27 @@
 
 const pageActions = ["create", "update"];
 
+// Helper to extract documentId from either plain string or connect/disconnect format
+const getDocumentId = (relationData) => {
+  if (typeof relationData === "string") return relationData;
+  if (relationData?.connect?.[0]?.documentId)
+    return relationData.connect[0].documentId;
+  return null;
+};
+
+// Helper to fetch a related document by documentId or use existing record
+const fetchRelation = async (uid, documentId, fallback, fields) => {
+  if (documentId) {
+    return await strapi.documents(uid).findOne({ documentId, fields });
+  }
+  return fallback;
+};
+
 // Standard suffix generator that retrieves the name from a related content type
 // Uses the config to specify which relation to follow and which field to use as the suffix
 async function standardRelationLabel(data, dbRecord, config) {
   const { relationName, labelFieldName, relatedContentType } = config;
-  const typeDocumentId = data[relationName]?.connect?.[0]?.documentId;
+  const typeDocumentId = getDocumentId(data[relationName]);
   return typeDocumentId
     ? (
         await strapi.documents(relatedContentType).findOne({
@@ -130,41 +146,58 @@ const updateName = async (data, uid) => {
   const { suffixGenerator, config } =
     collections.find((c) => c.uid === uid) || {};
 
+  const nameAffectingFields = [
+    "protectedArea",
+    "site",
+    "parkFeature",
+    "parkArea",
+    config?.relationName,
+  ].filter(Boolean);
+
+  const isUpdatingNameFields = nameAffectingFields.some(
+    (field) => data[field] !== undefined,
+  );
+
+  // If this is an update and none of the name-affecting relations are changing,
+  // preserve the existing name
+  if (recordInstance.documentId && !isUpdatingNameFields) {
+    if (recordInstance.name && !data.name) {
+      data.name = recordInstance.name;
+      return data;
+    }
+  }
+
   // get protected area
-  const paDocumentId = data.protectedArea?.connect?.[0]?.documentId;
-  const protectedArea = paDocumentId
-    ? await strapi.documents("api::protected-area.protected-area").findOne({
-        documentId: paDocumentId,
-        fields: ["orcs"],
-      })
-    : recordInstance?.protectedArea;
+  const protectedArea = await fetchRelation(
+    "api::protected-area.protected-area",
+    getDocumentId(data.protectedArea),
+    recordInstance?.protectedArea,
+    ["orcs"],
+  );
 
   // get site (if applicable)
-  const siteDocumentId = data.site?.connect?.[0]?.documentId;
-  const site = siteDocumentId
-    ? await strapi.documents("api::site.site").findOne({
-        documentId: siteDocumentId,
-        fields: ["orcsSiteNumber"],
-      })
-    : recordInstance?.site;
+  const site = await fetchRelation(
+    "api::site.site",
+    getDocumentId(data.site),
+    recordInstance?.site,
+    ["orcsSiteNumber"],
+  );
 
   // get park feature (if applicable)
-  const parkFeatureDocumentId = data.parkFeature?.connect?.[0]?.documentId;
-  const parkFeature = parkFeatureDocumentId
-    ? await strapi.documents("api::park-feature.park-feature").findOne({
-        documentId: parkFeatureDocumentId,
-        fields: ["orcsFeatureNumber"],
-      })
-    : recordInstance?.parkFeature;
+  const parkFeature = await fetchRelation(
+    "api::park-feature.park-feature",
+    getDocumentId(data.parkFeature),
+    recordInstance?.parkFeature,
+    ["orcsFeatureNumber"],
+  );
 
   // get park area (if applicable)
-  const parkAreaDocumentId = data.parkArea?.connect?.[0]?.documentId;
-  const parkArea = parkAreaDocumentId
-    ? await strapi.documents("api::park-area.park-area").findOne({
-        documentId: parkAreaDocumentId,
-        fields: ["orcsAreaNumber"],
-      })
-    : recordInstance?.parkArea;
+  const parkArea = await fetchRelation(
+    "api::park-area.park-area",
+    getDocumentId(data.parkArea),
+    recordInstance?.parkArea,
+    ["orcsAreaNumber"],
+  );
 
   // get suffix of the label
   const nameSuffix = await suffixGenerator(data, recordInstance, config);
