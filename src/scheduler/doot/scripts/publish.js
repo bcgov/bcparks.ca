@@ -14,8 +14,7 @@ exports.dootPublish = async function () {
 
   // When we create/update date ranges from DOOT data, we will only delete existing
   // date ranges of these types to avoid removing date ranges managed manually in Strapi.
-  // @TODO: When `Winter fee` date publishing is enabled, add its type ID (4) to this list.
-  const DOOT_MANAGED_DATE_TYPE_IDS = [1, 2, 3, 6, 7, 8]; // Gate, Tier 1, Tier 2, Operation, Reservation, Backcountry registration
+  const DOOT_MANAGED_DATE_TYPE_IDS = [1, 2, 3, 4, 6, 7, 8]; // Gate, Tier 1, Tier 2, Winter fee, Operation, Reservation, Backcountry registration
 
   // get items from the queue with the action 'doot publish'
   try {
