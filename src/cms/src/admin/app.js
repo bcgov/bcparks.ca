@@ -7,8 +7,7 @@ import {
   defaultHtmlPreset,
 } from "@_sh/strapi-plugin-ckeditor";
 
-// TODO: Upgrade CKeditor
-// https://github.com/nshenderov/strapi-plugin-ckeditor/blob/master/MIGRATION.md#from-v4-to-v5
+// CKEditor plugin configuration
 const register = () => {
   defaultHtmlPreset.name = "default";
   setPluginConfig({ presets: [defaultHtmlPreset] });
