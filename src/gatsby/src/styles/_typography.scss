@@ -1,0 +1,25 @@
+@import "variables.scss";
+
+// Body and typography styles
+body {
+  color: $colorGrey;
+  letter-spacing: normal;
+  font-family: $globalFont;
+}
+
+h1, h2 {
+  color: $colorBlue;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h5 {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.no-mb {
+  margin-bottom: 0px !important;
+}

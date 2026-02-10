@@ -1,0 +1,20 @@
+@import "variables.scss";
+
+// Link styles
+// There is debate as to colours for links - this is where we start once that's settled
+// Based on the DigitalSpace Bootstrap 5 Theme
+// https://github.com/digitalspace/bcparks-bootstrap-theme/
+a {
+  color: $colorBlueMed;
+  text-decoration: none;
+  &:hover {
+    color: $colorBlue;
+    text-decoration: underline;
+  }
+  &:not(.btn):focus {
+    color: $colorBlue;
+  }
+  &:focus-visible {
+    box-shadow: none;
+  }
+}

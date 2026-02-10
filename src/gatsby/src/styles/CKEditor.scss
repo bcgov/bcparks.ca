@@ -1,0 +1,70 @@
+// This stylesheet imports body content and typography styles
+// for use in the CMS WYSIWYG editor (CKEditor).
+// All styles are scoped to .ck-content to only apply within the editor.
+
+// BC Sans font faces - from the @bcgov/bc-sans package
+@font-face {
+  font-family: "BC Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/BCSans-Regular.woff2") format("woff2"),
+       url("/fonts/BCSans-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "BC Sans";
+  font-style: italic;
+  font-weight: 400;
+  src: url("/fonts/BCSans-Italic.woff2") format("woff2"),
+       url("/fonts/BCSans-Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "BC Sans";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/fonts/BCSans-Bold.woff2") format("woff2"),
+       url("/fonts/BCSans-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "BC Sans";
+  font-style: italic;
+  font-weight: 700;
+  src: url("/fonts/BCSans-BoldItalic.woff2") format("woff2"),
+       url("/fonts/BCSans-BoldItalic.woff") format("woff");
+}
+
+@import "variables.scss";
+
+// Apply body styles directly to the editor container
+.ck-content {
+  background-color: $colorWhite;
+  color: $colorGrey;
+  letter-spacing: normal;
+  font-family: $globalFont;
+
+  // Typography
+  h1, h2 {
+    color: $colorBlue;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .no-mb {
+    margin-bottom: 0px !important;
+  }
+
+  // Links
+  @import "links";
+
+  // Content elements (tables, blockquotes, lists, etc)
+  @import "contentElements";
+}
