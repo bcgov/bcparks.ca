@@ -7,14 +7,17 @@
 "use strict";
 
 const validator = require("../../../../helpers/validator.js");
+const disabled = process.env.DISABLE_LIFECYCLES === "true";
 
 module.exports = {
   async beforeCreate(event) {
+    if (disabled) return;
     let { data } = event.params;
     validator.campingTypeValidator(data.campingType);
     validator.protectedAreaOrSiteValidator(data.protectedArea, data.site);
   },
   async beforeUpdate(event) {
+    if (disabled) return;
     let { data } = event.params;
     validator.campingTypeValidator(data.campingType);
     validator.protectedAreaOrSiteValidator(data.protectedArea, data.site);

@@ -7,9 +7,11 @@
 "use strict";
 
 const validator = require("../../../../helpers/validator.js");
+const disabled = process.env.DISABLE_LIFECYCLES === "true";
 
 module.exports = {
   async beforeCreate(event) {
+    if (disabled) return;
     const { data } = event.params;
     validator.protectedAreaValidator(data.protectedArea);
     validator.slugCharacterValidator(data.slug);
@@ -18,6 +20,7 @@ module.exports = {
     validator.slugNoTrailingDashValidator(data.slug);
   },
   async beforeUpdate(event) {
+    if (disabled) return;
     const { data } = event.params;
     validator.protectedAreaValidator(data.protectedArea);
     validator.slugCharacterValidator(data.slug);

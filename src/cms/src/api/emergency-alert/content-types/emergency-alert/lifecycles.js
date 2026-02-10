@@ -8,6 +8,7 @@
 
 const format = require("date-fns/format");
 const utcToZonedTime = require("date-fns-tz/utcToZonedTime");
+const disabled = process.env.DISABLE_LIFECYCLES === "true";
 
 const formatDateToPacificTime = (dateString) => {
   // Strapi returns the date in ISO format e.g. 2025-01-01T00:00:00.000Z
@@ -19,6 +20,7 @@ const formatDateToPacificTime = (dateString) => {
 
 module.exports = {
   async beforeCreate(event) {
+    if (disabled) return;
     const { data } = event.params;
     const createdDate = formatDateToPacificTime(data.createdAt);
     if (data.isActive === true) {
@@ -26,6 +28,7 @@ module.exports = {
     }
   },
   async beforeUpdate(event) {
+    if (disabled) return;
     const { data } = event.params;
     const updatedDate = formatDateToPacificTime(data.updatedAt);
     if (data.isActive === true) {

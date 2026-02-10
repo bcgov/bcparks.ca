@@ -31,6 +31,11 @@ module.exports = {
         "menu",
       ]);
 
+    if (process.env.DISABLE_LIFECYCLES === "true") {
+      strapi.log.warn("🚫 Lifecycles disabled via DISABLE_LIFECYCLES");
+      return; // Do not register any document service middleware
+    }
+
     // register document service middlewares
     const middlewares = [
       searchIndexingMiddleware,

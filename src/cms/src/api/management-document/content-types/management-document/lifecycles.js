@@ -7,13 +7,16 @@
  */
 
 const validator = require("../../../../helpers/validator.js");
+const disabled = process.env.DISABLE_LIFECYCLES === "true";
 
 module.exports = {
   async beforeCreate(event) {
+    if (disabled) return;
     const { data } = event.params;
     validator.documentTypeValidator(data.documentType);
   },
   async beforeUpdate(event) {
+    if (disabled) return;
     const { data } = event.params;
     validator.documentTypeValidator(data.documentType);
   },

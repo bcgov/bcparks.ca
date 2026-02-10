@@ -22,6 +22,7 @@
  */
 
 const { queueAdvisoryEmail } = require("../../../../helpers/taskQueue.js");
+const disabled = process.env.DISABLE_LIFECYCLES === "true";
 
 const getNextAdvisoryNumber = async () => {
   const results = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findMany({
@@ -171,6 +172,7 @@ const isAdvisoryEqual = (newData, oldData) => {
 
 module.exports = {
   beforeCreate: async (ctx) => {
+    if (disabled) return;
     let { data } = ctx.params;
     if (!data.revisionNumber && !data.advisoryNumber) {
       data.advisoryNumber = await getNextAdvisoryNumber();
@@ -180,6 +182,7 @@ module.exports = {
     }
   },
   afterCreate: async (ctx) => {
+    if (disabled) return;
     const newPublicAdvisoryAudit = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
       documentId: ctx.result.documentId,
       populate: "*"
@@ -208,6 +211,7 @@ module.exports = {
     copyToPublicAdvisory(newPublicAdvisoryAudit);
   },
   beforeUpdate: async (ctx) => {
+    if (disabled) return;
     let { data, where } = ctx.params;
     const newPublicAdvisory = data;
     if (!newPublicAdvisory.publishedAt) return;
@@ -262,6 +266,7 @@ module.exports = {
     }
   },
   afterUpdate: async (ctx) => {
+    if (disabled) return;
     const publicAdvisoryAudit = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
       documentId: ctx.result.documentId,
       populate: "*"

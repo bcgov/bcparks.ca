@@ -7,9 +7,11 @@
  */
 
 const validator = require("../../../../helpers/validator.js");
+const disabled = process.env.DISABLE_LIFECYCLES === "true";
 
 module.exports = {
   async beforeCreate(event) {
+    if (disabled) return;
     const { data } = event.params;
     validator.slugCharacterValidator(data.Slug);
     validator.slugLeadingSlashValidator(data.Slug);
@@ -17,6 +19,7 @@ module.exports = {
     validator.slugNoTrailingDashValidator(data.Slug);
   },
   async beforeUpdate(event) {
+    if (disabled) return;
     const { data } = event.params;
     validator.slugCharacterValidator(data.Slug);
     validator.slugLeadingSlashValidator(data.Slug);
