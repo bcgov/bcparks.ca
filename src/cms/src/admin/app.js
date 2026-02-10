@@ -25,6 +25,12 @@ const register = () => {
           { model: "heading4", view: "h4", title: "Heading 4", class: "ck-heading_heading4" },
         ],
       },
+      list: {
+        // Hide dropdown for alternate list styles
+        properties: {
+          styles: false
+        }
+      },
     }
   };
 
