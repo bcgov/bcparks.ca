@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@_sh/ckeditor5-font-with-picker": "0.0.1",
-    "@_sh/strapi-plugin-ckeditor": "^6.0.3",
+    "@_sh/strapi-plugin-ckeditor": "^7.0.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@opensearch-project/opensearch": "^2.13.0",
     "@strapi-community/plugin-redis": "^2.0.0",
