@@ -36,6 +36,7 @@ module.exports = createCoreController(
         .documents("api::protected-area.protected-area")
         .findMany({
           fields: ["id", "documentId", "orcs", "protectedAreaName"],
+          sort: "protectedAreaName:asc",
           limit: 2000,
         });
 
