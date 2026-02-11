@@ -37,6 +37,52 @@ const register = () => {
         // Show the embedded media in the editor instead of a placeholder
         previewsInData: true
       },
+
+      link: {
+        defaultProtocol: 'https://',
+        // Configure the link toolbar to include linkProperties for manual decorators
+        toolbar: [ 'linkPreview', '|', 'editLink', 'linkProperties', 'unlink' ],
+        decorators: {
+          openInNewTab: {
+            mode: "manual",
+            label: "Open in a new tab",
+            defaultValue: false,
+            attributes: {
+              target: "_blank",
+              rel: "noopener",
+            },
+          },
+          detectDownloadable: {
+            mode: 'automatic',
+            callback: url => url.endsWith( '.pdf' ),
+            attributes: {
+              target: "_blank",
+              rel: "noopener",
+            }
+          },
+          makeLinkWithIcon: {
+            mode: 'manual',
+            label: 'Learn more link',
+            classes: 'learn-more-link'
+          },
+          makeButton: {
+            mode: 'manual',
+            label: 'Primary button',
+            classes: 'btn btn-primary',
+            attributes: {
+                role: "button"
+            }
+          },
+          makeSecondaryButton: {
+            mode: 'manual',
+            label: 'Secondary button',
+            classes: 'btn btn-secondary',
+            attributes: {
+              role: "button"
+            }
+          },
+        },
+      },
     }
   };
 
