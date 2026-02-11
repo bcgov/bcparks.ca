@@ -16,7 +16,7 @@ const register = () => {
     editorConfig: {
       ...defaultHtmlPreset.editorConfig,
 
-      toolbar: ['heading', '|', 'bold', 'italic', 'underline', '|', 'link', '|', 'numberedList', 'bulletedList', '|', 'horizontalLine', 'blockQuote', 'insertTable', '|', 'removeFormat', 'sourceEditing'],
+      toolbar: ['heading', '|', 'bold', 'italic', 'underline', '|', 'link', '|', 'numberedList', 'bulletedList', '|', 'horizontalLine', 'blockQuote', 'insertTable', 'mediaEmbed', '|', 'removeFormat', 'sourceEditing'],
 
       heading: {
         options: [
@@ -30,6 +30,11 @@ const register = () => {
         properties: {
           styles: false
         }
+      },
+
+      mediaEmbed: {
+        // Show the embedded media in the editor instead of a placeholder
+        previewsInData: true
       },
     }
   };
