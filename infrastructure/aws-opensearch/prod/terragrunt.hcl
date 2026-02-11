@@ -7,7 +7,7 @@ include {
 }
 
 locals {
-  instance_type = "t3.medium.elasticsearch"
+  instance_type = "t3.medium.search"
   instance_count = 3
 }
 
