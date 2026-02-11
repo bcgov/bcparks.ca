@@ -15,30 +15,26 @@ resource "aws_opensearch_domain" "bcparks-opensearch" {
 		zone_awareness_enabled = false
 	}
 
-	access_policies = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "*"
-      },
-      "Action": "es:*",
-      "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/bcparks-opensearch/*",
-      "Condition": {
-        "IpAddress": {
-          "aws:SourceIp": [
-            "${local.opensearch_secrets.openshift_silver_ip}",
-            "${local.opensearch_secrets.openshift_gold_ip}",
-            "${local.opensearch_secrets.oxd_vpn_ip}"
-          ]
-        }
-      }
-    }
-  ]
-}
-EOF
+	access_policies = jsonencode({
+		"Version": "2012-10-17",
+		"Statement": [{
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "*"
+			},
+			"Action": "es:*",
+			"Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/bcparks-opensearch/*",
+			"Condition": {
+				"IpAddress": {
+					"aws:SourceIp": [
+						"${local.opensearch_secrets.openshift_silver_ip}",
+						"${local.opensearch_secrets.openshift_gold_ip}",
+						"${local.opensearch_secrets.oxd_vpn_ip}/32"
+					]
+				}
+			}
+		}]
+	})
 	
 	node_to_node_encryption {
 		enabled = true
