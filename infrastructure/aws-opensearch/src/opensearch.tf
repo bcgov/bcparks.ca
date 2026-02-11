@@ -5,9 +5,9 @@ resource "aws_iam_service_linked_role" "es" {
 	aws_service_name = "es.amazonaws.com"
 }
 
-resource "aws_elasticsearch_domain" "bcparks-opensearch" {
+resource "aws_opensearch_domain" "bcparks-opensearch" {
 	domain_name	= "bcparks-opensearch"
-	elasticsearch_version = "OpenSearch_2.7"
+	engine_version = "OpenSearch_2.7"
 	
 	cluster_config {
 		instance_count = var.instance_count

@@ -4,16 +4,20 @@ locals {
   environment      = reverse(split("/", get_terragrunt_dir()))[0]
 }
 
+inputs = {
+  environment = local.environment
+}
+
 generate "remote_state" {
   path      = "backend.tf"
   if_exists = "overwrite"
   contents  = <<EOF
 terraform {
   backend "s3" {
-    bucket         = "bcparks-opensearch-${local.environment}-terraform-remote-state"
+    bucket         = "bcparks-opensearch-terraform-remote-state-${local.environment}"
     key            = "remote.tfstate-admin"                              # Path and name of the state file within the bucket
     region         = "ca-central-1"                                      # AWS region where the bucket is located
-    dynamodb_table = "bcparks-opensearch-${local.environment}-terraform-remote-state-lock"      # Replace with either generated or custom DynamoDB table name
+    use_lockfile    = true
     encrypt        = true                                                # Enable encryption for the state file
   }
 }
