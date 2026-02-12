@@ -1,6 +1,6 @@
 variable "instance_type" {
   description = "Type of opensearch instance"
-  default     = "t3.small.elasticsearch"
+  default     = "t3.small.search"
 }
 
 variable "instance_count" {

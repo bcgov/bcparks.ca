@@ -3,7 +3,7 @@ variable "environment" {
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "bcparks-opensearch-${var.environment}-terraform-remote-state"
+  bucket = "bcparks-opensearch-terraform-remote-state-${var.environment}"
   force_destroy = true
 }
 
