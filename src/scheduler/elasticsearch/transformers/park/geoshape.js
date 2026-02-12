@@ -5,7 +5,7 @@
 const flatten = function (shape, decimalPlaces) {
   const result = [];
   if (shape) {
-    const flattened = shape.flat(Infinity)
+    const flattened = shape.flat(Infinity);
     for (let i = 0; i < flattened.length; i += 2) {
       const lat = flattened[i + 1];
       const lon = flattened[i];
@@ -16,7 +16,7 @@ const flatten = function (shape, decimalPlaces) {
     }
   }
   return result;
-}
+};
 
 /*
   Adds an new point to the array created by flatten with precision 
@@ -25,57 +25,53 @@ const flatten = function (shape, decimalPlaces) {
 const appendPoint = function (points, lat, lon, decimalPlaces) {
   const newPoint = `${lat.toFixed(decimalPlaces)},${lon.toFixed(decimalPlaces)}`;
   if (points.indexOf(newPoint) === -1) {
-    return [
-      ...[newPoint],
-      ...points
-    ];
+    return [...[newPoint], ...points];
   } else {
     return points;
   }
-}
+};
 
 /* 
    Reduces an array of geo-points to only include points from the 
    outer bounds 
 */
 const outline = function (points) {
-
   if (points.length < 3) {
     return points;
   }
 
-  const cols = {}
-  const rows = {}
+  const cols = {};
+  const rows = {};
 
   const strMax = function (a, b) {
     return a > b ? a : b;
-  }
+  };
 
   const strMin = function (a, b) {
     return a < b ? a : b;
-  }
+  };
 
   for (const point of points) {
-    const coords = point.split(',')
+    const coords = point.split(",");
     if (!rows[coords[0]]) {
-      rows[coords[0]] = { max: point, min: point }
+      rows[coords[0]] = { max: point, min: point };
     } else {
       const r = rows[coords[0]];
-      rows[coords[0]] = { max: strMax(point, r.max), min: strMin(point, r.min) }
+      rows[coords[0]] = { max: strMax(point, r.max), min: strMin(point, r.min) };
     }
 
     if (!cols[coords[1]]) {
-      cols[coords[1]] = { max: point, min: point }
+      cols[coords[1]] = { max: point, min: point };
     } else {
       const c = cols[coords[1]];
-      cols[coords[1]] = { max: strMax(point, c.max), min: strMin(point, c.min) }
+      cols[coords[1]] = { max: strMax(point, c.max), min: strMin(point, c.min) };
     }
   }
 
   const result = [];
 
   for (const key in rows) {
-    const item = rows[key]
+    const item = rows[key];
     if (result.indexOf(item.max) === -1) {
       result.push(item.max);
     }
@@ -85,7 +81,7 @@ const outline = function (points) {
   }
 
   for (const key in cols) {
-    const item = cols[key]
+    const item = cols[key];
     if (result.indexOf(item.max) === -1) {
       result.push(item.max);
     }
@@ -95,7 +91,7 @@ const outline = function (points) {
   }
 
   return result;
-}
+};
 
 /*
   Adds extra points along long lines
@@ -106,11 +102,11 @@ const fillLongSegments = function (shape, points, decimalPlaces) {
   let maxSegment = Math.pow(10, -1 * decimalPlaces);
   const increment = +(maxSegment * extraMultiplier).toFixed(decimalPlaces);
 
-  if (shape?.geometry?.type === 'Polygon') {
+  if (shape?.geometry?.type === "Polygon") {
     polygons = shape.geometry.coordinates;
   }
 
-  if (shape?.geometry?.type === 'MultiPolygon') {
+  if (shape?.geometry?.type === "MultiPolygon") {
     polygons = shape.geometry.coordinates.flat(1);
   }
 
@@ -162,11 +158,11 @@ const fillLongSegments = function (shape, points, decimalPlaces) {
     }
   }
   return points;
-}
+};
 
 module.exports = {
   outline,
   flatten,
   appendPoint,
-  fillLongSegments
-}
+  fillLongSegments,
+};

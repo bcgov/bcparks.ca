@@ -7,7 +7,7 @@
     "displayName": "Camping-type"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
     "campingTypeNumber": {
@@ -40,14 +40,14 @@
     "defaultDescription": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "appendStandardCalloutText": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     }

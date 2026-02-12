@@ -1,5 +1,5 @@
 const { cmsAxios } = require("../../shared/axiosConfig");
-const { getLogger } = require('../../shared/logging');
+const { getLogger } = require("../../shared/logging");
 
 /**
  * Updates public advisories set for automatic publishing or expiry

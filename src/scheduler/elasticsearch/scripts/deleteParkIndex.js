@@ -1,8 +1,8 @@
-const { getLogger } = require('../../shared/logging');
-const elasticClient = require('../utils/elasticClient');
+const { getLogger } = require("../../shared/logging");
+const elasticClient = require("../utils/elasticClient");
 
 /**
- * Deletes the park index from Elasticsearch so it can 
+ * Deletes the park index from Elasticsearch so it can
  * be recreated by createParkIndex.js
  */
 exports.deleteParkIndex = async function () {

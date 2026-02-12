@@ -1,4 +1,4 @@
-FROM image-registry.apps.gold.devops.gov.bc.ca/c1643c-tools/node:18-slim
+FROM image-registry.apps.gold.devops.gov.bc.ca/c1643c-tools/node:22-slim
 
 ENV GATSBY_HOME=/gatsby
 

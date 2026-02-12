@@ -1,11 +1,11 @@
-import axios from 'axios';
-import _ from 'lodash';
-import * as dotenv from 'dotenv';
-import { promises as fs } from 'fs';
-import * as qs from 'qs'
+import axios from "axios";
+import _ from "lodash";
+import * as dotenv from "dotenv";
+import { promises as fs } from "fs";
+import * as qs from "qs";
 
-import { dataFileSpecified, getDataFilePath } from '../utils/commandLine.js';
-import { getLogger } from '../utils/logging.js';
+import { dataFileSpecified, getDataFilePath } from "../utils/commandLine.js";
+import { getLogger } from "../utils/logging.js";
 
 const LEGAL_NAME_TYPE = "Legal";
 const PHONETIC_NAME_TYPE = "Phonetic";
@@ -20,8 +20,8 @@ const loadData = async function () {
   });
 
   const httpReqHeaders = {
-    'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
-    'Content-Type': 'application/json'
+    Authorization: "Bearer " + process.env.STRAPI_API_TOKEN,
+    "Content-Type": "application/json",
   };
 
   const logger = getLogger();
@@ -43,9 +43,9 @@ const loadData = async function () {
     try {
       const response = await axios.get(process.env.PARK_NAMES_API, {
         headers: {
-          'Authorization': 'None',
-          'x-api-key': process.env.PARK_NAMES_API_KEY
-        }
+          Authorization: "None",
+          "x-api-key": process.env.PARK_NAMES_API_KEY,
+        },
       });
       dataRegisterParks = response.data.data.items;
       logger.info(`${dataRegisterParks.length} parks found in the BC Parks Data Register.`);
@@ -56,9 +56,10 @@ const loadData = async function () {
   }
 
   // get the list of park name types
-  const parkNameTypes = (await axios.get(`${process.env.STRAPI_BASE_URL}/api/park-name-types`)).data.data;
-  const legalNameType = parkNameTypes.find(t => t.attributes.nameType === LEGAL_NAME_TYPE);
-  const phoneticNameType = parkNameTypes.find(t => t.attributes.nameType === PHONETIC_NAME_TYPE);
+  const parkNameTypes = (await axios.get(`${process.env.STRAPI_BASE_URL}/api/park-name-types`)).data
+    .data;
+  const legalNameType = parkNameTypes.find((t) => t.nameType === LEGAL_NAME_TYPE);
+  const phoneticNameType = parkNameTypes.find((t) => t.nameType === PHONETIC_NAME_TYPE);
 
   // convert the dataRegisterParks to a dictionary
   const parksDict = {};
@@ -68,43 +69,45 @@ const loadData = async function () {
 
   // get a list of existing parks from Strapi
   const strapiQuery = {
-    fields: [
-      "orcs",
-      "protectedAreaName",
-      "searchTerms"
-    ],
+    fields: ["orcs", "protectedAreaName", "searchTerms"],
     populate: {
       parkNames: {
         fields: ["parkName", "source"],
-        populate: { "parkNameType": { fields: ["nameType"] } }
-      }
+        populate: { parkNameType: { fields: ["nameType"] } },
+      },
     },
     pagination: {
-      limit: 2000
-    }
+      limit: 2000,
+    },
   };
 
   try {
     // get the list of protected areas and park names
-    const response = await axios.get(`${process.env.STRAPI_BASE_URL}/api/protected-areas?${qs.stringify(strapiQuery)}`);
+    const response = await axios.get(
+      `${process.env.STRAPI_BASE_URL}/api/protected-areas?${qs.stringify(strapiQuery)}`,
+    );
 
     // join together and simplify the two lists
     for (const strapiPark of response.data.data) {
-      strapiPark.dataRegister = parksDict[strapiPark?.attributes?.orcs] || null;
-      strapiPark.orcs = strapiPark.attributes.orcs;
+      strapiPark.dataRegister = parksDict[strapiPark?.orcs] || null;
       const legalName = getParkName(strapiPark, LEGAL_NAME_TYPE);
       const phoneticName = getParkName(strapiPark, PHONETIC_NAME_TYPE);
       strapiPark.strapi = {
-        protectedAreaName: strapiPark.attributes.protectedAreaName,
-        searchTerms: strapiPark.attributes.searchTerms,
+        protectedAreaName: strapiPark.protectedAreaName,
+        searchTerms: strapiPark.searchTerms,
         legalName: legalName.name,
-        legalNameId: legalName.id,
+        legalNameDocumentId: legalName.documentId,
         legalNameSource: legalName.source,
         phoneticName: phoneticName.name,
-        phoneticNameId: phoneticName.id,
-        phoneticNameSource: phoneticName.source
+        phoneticNameDocumentId: phoneticName.documentId,
+        phoneticNameSource: phoneticName.source,
       };
-      delete strapiPark.attributes;
+
+      // get rid of fields we don't need anymore
+      delete strapiPark.protectedAreaName;
+      delete strapiPark.searchTerms;
+      delete strapiPark.parkNames;
+
       strapiParks.push(strapiPark);
     }
     logger.info(`${strapiParks.length} parks found in Strapi.`);
@@ -121,50 +124,52 @@ const loadData = async function () {
     // update the legal name
     if (p.dataRegister?.legalName !== p.strapi.legalName) {
       errorCount += await updateParkName(
-        p.strapi.legalNameId,
-        p.id,
+        p.strapi.legalNameDocumentId,
+        p.documentId,
         legalNameType,
         p.orcs,
         p.dataRegister?.legalName,
         p.strapi.legalName,
-        p.strapi.legalNameSource
+        p.strapi.legalNameSource,
       );
-
     }
 
     // update the phonetic name
     if (p.dataRegister?.phoneticName !== p.strapi.phoneticName) {
       errorCount += await updateParkName(
-        p.strapi.phoneticNameId,
-        p.id,
+        p.strapi.phoneticNameDocumentId,
+        p.documentId,
         phoneticNameType,
         p.orcs,
         p.dataRegister?.phoneticName,
         p.strapi.phoneticName,
-        p.strapi.phoneticNameSource
+        p.strapi.phoneticNameSource,
       );
     }
 
     // update the protectedAreaName
     if (p.dataRegister?.displayName !== p.strapi.protectedAreaName) {
       if (p.dataRegister?.displayName) {
-        logger.info(`Updating the protectedAreaName for park ${p.orcs} from "${p.strapi.protectedAreaName}" to "${p.dataRegister.displayName}"`);
+        logger.info(
+          `Updating the protectedAreaName for park ${p.orcs} from "${p.strapi.protectedAreaName}" to "${p.dataRegister.displayName}"`,
+        );
         try {
-          await axios.put(`${process.env.STRAPI_BASE_URL}/api/protected-areas/${p.id}`,
+          await axios.put(
+            `${process.env.STRAPI_BASE_URL}/api/protected-areas/${p.documentId}`,
             {
-              "data": {
-                "protectedAreaName": p.dataRegister.displayName
-              }
+              data: {
+                protectedAreaName: p.dataRegister.displayName,
+              },
             },
-            { headers: httpReqHeaders }
+            { headers: httpReqHeaders },
           );
           await queueNameChangeNotification(
             {
               oldName: p.strapi.protectedAreaName,
-              newName: p.dataRegister?.displayName || ""
+              newName: p.dataRegister?.displayName || "",
             },
             p.orcs,
-            httpReqHeaders
+            httpReqHeaders,
           );
         } catch (error) {
           logger.error(`Error updating park ${p.orcs}\n${JSON.stringify(error)}`);
@@ -176,13 +181,14 @@ const loadData = async function () {
     if ((p.dataRegister?.searchTerms || null) !== p.strapi.searchTerms) {
       logger.info(`Updating the searchTerms for park ${p.orcs}`);
       try {
-        await axios.put(`${process.env.STRAPI_BASE_URL}/api/protected-areas/${p.id}`,
+        await axios.put(
+          `${process.env.STRAPI_BASE_URL}/api/protected-areas/${p.documentId}`,
           {
-            "data": {
-              "searchTerms": p.dataRegister?.searchTerms || null
-            }
+            data: {
+              searchTerms: p.dataRegister?.searchTerms || null,
+            },
           },
-          { headers: httpReqHeaders }
+          { headers: httpReqHeaders },
         );
       } catch (error) {
         logger.error(`Error updating searchTerms for park ${p.orcs}\n${JSON.stringify(error)}`);
@@ -194,45 +200,52 @@ const loadData = async function () {
     process.exit(1);
   }
 
-  logger.info("DONE!")
+  logger.info("DONE!");
 };
-
 
 /**
  *  Gets a simlified park name from the list of park names associated with a protected area
  */
 const getParkName = function (strapiPark, nameType) {
-  const parkName = strapiPark.attributes.parkNames?.data.find(p => p?.attributes?.parkNameType?.data?.attributes?.nameType === nameType)
+  const parkName = strapiPark.parkNames?.find((p) => p?.parkNameType?.nameType === nameType);
   return {
-    id: parkName?.id || null,
-    name: (parkName?.attributes?.parkName || ""),
-    source: (parkName?.attributes?.source || "")
+    documentId: parkName?.documentId || null,
+    name: parkName?.parkName || "",
+    source: parkName?.source || "",
   };
 };
-
 
 /**
  *  Updates, inserts, or deletes a park name
  */
-const updateParkName = async function (parkNameId, protectedAreaId, nameTypeObj, orcs, newName, oldName, source) {
-  const nameType = `${nameTypeObj.attributes.nameType.toLowerCase()}Name`;
+const updateParkName = async function (
+  parkNameDocumentId,
+  protectedAreaDocumentId,
+  nameTypeObj,
+  orcs,
+  newName,
+  oldName,
+  source,
+) {
+  const nameType = `${nameTypeObj.nameType.toLowerCase()}Name`;
   const logger = getLogger();
   const httpReqHeaders = {
-    'Authorization': 'Bearer ' + process.env.STRAPI_API_TOKEN,
-    'Content-Type': 'application/json'
+    Authorization: "Bearer " + process.env.STRAPI_API_TOKEN,
+    "Content-Type": "application/json",
   };
   if (newName) {
-    if (parkNameId) {
+    if (parkNameDocumentId) {
       logger.info(`Updating ${nameType} for park ${orcs} from "${oldName}" to "${newName}"`);
       try {
-        await axios.put(`${process.env.STRAPI_BASE_URL}/api/park-names/${parkNameId}`,
+        await axios.put(
+          `${process.env.STRAPI_BASE_URL}/api/park-names/${parkNameDocumentId}`,
           {
-            "data": {
-              "parkName": newName,
-              "source": DR_SOURCE
-            }
+            data: {
+              parkName: newName,
+              source: DR_SOURCE,
+            },
           },
-          { headers: httpReqHeaders }
+          { headers: httpReqHeaders },
         );
       } catch (error) {
         logger.error(`Error updating ${nameType} for park ${orcs}\n${JSON.stringify(error)}"`);
@@ -241,16 +254,17 @@ const updateParkName = async function (parkNameId, protectedAreaId, nameTypeObj,
     } else {
       logger.info(`Adding ${nameType} "${newName}" for park ${orcs}`);
       try {
-        await axios.post(`${process.env.STRAPI_BASE_URL}/api/park-names`,
+        await axios.post(
+          `${process.env.STRAPI_BASE_URL}/api/park-names`,
           {
-            "data": {
-              "parkName": newName,
-              "source": DR_SOURCE,
-              "parkNameType": { connect: [{ id: nameTypeObj.id }] },
-              "protectedArea": { connect: [{ id: protectedAreaId }] }
-            }
+            data: {
+              parkName: newName,
+              source: DR_SOURCE,
+              parkNameType: { connect: [{ documentId: nameTypeObj.documentId }] },
+              protectedArea: { connect: [{ documentId: protectedAreaDocumentId }] },
+            },
           },
-          { headers: httpReqHeaders }
+          { headers: httpReqHeaders },
         );
       } catch (error) {
         logger.error(`Error adding ${nameType} for park ${orcs}\n${JSON.stringify(error)}"`);
@@ -262,11 +276,13 @@ const updateParkName = async function (parkNameId, protectedAreaId, nameTypeObj,
     if (oldName && source === DR_SOURCE) {
       logger.info(`Deleting ${nameType} "${oldName}" for park ${orcs}`);
       try {
-        await axios.delete(`${process.env.STRAPI_BASE_URL}/api/park-names/${parkNameId}`,
-          { headers: httpReqHeaders }
-        );
+        await axios.delete(`${process.env.STRAPI_BASE_URL}/api/park-names/${parkNameDocumentId}`, {
+          headers: httpReqHeaders,
+        });
       } catch (error) {
-        logger.error(`Error deleting ${nameType} "${oldName}" for park ${orcs}\n${JSON.stringify(error)}"`);
+        logger.error(
+          `Error deleting ${nameType} "${oldName}" for park ${orcs}\n${JSON.stringify(error)}"`,
+        );
         return 1;
       }
     }
@@ -274,26 +290,28 @@ const updateParkName = async function (parkNameId, protectedAreaId, nameTypeObj,
   return 0;
 };
 
-
 /**
  * Adds a notification to the task queue
  */
 const queueNameChangeNotification = async function (changeInfo, orcs, httpReqHeaders) {
   try {
-    await axios.post(`${process.env.STRAPI_BASE_URL}/api/queued-tasks`,
+    await axios.post(
+      `${process.env.STRAPI_BASE_URL}/api/queued-tasks`,
       {
         data: {
-          action: 'email parkname change',
+          action: "email parkname change",
           numericData: orcs,
-          jsonData: changeInfo
-        }
+          jsonData: changeInfo,
+        },
       },
-      { headers: httpReqHeaders }
+      { headers: httpReqHeaders },
     );
   } catch (error) {
     const logger = getLogger();
-    logger.error(`Error queuing parkname change message for orcs ${orcs}\n${JSON.stringify(error)}`);
+    logger.error(
+      `Error queuing parkname change message for orcs ${orcs}\n${JSON.stringify(error)}`,
+    );
   }
-}
+};
 
 export default loadData;

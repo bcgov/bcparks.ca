@@ -1,7 +1,6 @@
 const nodemailer = require("nodemailer");
 
 exports.send = async function (subject, body, summary, fromName) {
-
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_SERVER,
     port: process.env.EMAIL_PORT,
@@ -21,9 +20,8 @@ exports.send = async function (subject, body, summary, fromName) {
     attachments: [
       {
         path: "./email-alerts/images/logo.png",
-        cid: "logo.png"
-      }
-    ]
+        cid: "logo.png",
+      },
+    ],
   });
-
 };

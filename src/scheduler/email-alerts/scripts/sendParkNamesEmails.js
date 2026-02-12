@@ -23,8 +23,8 @@ exports.sendParkNamesEmails = async function () {
   }
 
   for (const message of queue) {
-    const orcs = message.attributes?.numericData;
-    const jsonData = message.attributes?.jsonData;
+    const orcs = message?.numericData;
+    const jsonData = message?.jsonData;
 
     // render the email template
     const htmlMessageBody = await ejs.renderFile(
@@ -51,7 +51,7 @@ exports.sendParkNamesEmails = async function () {
     }
 
     if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
-      await removeFromQueue([message.id]);
+      await removeFromQueue([message.documentId]);
     }
   }
 };

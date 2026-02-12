@@ -12,7 +12,7 @@ export default {
     const {
       configs: userConfigs = baseConfigs,
       configsOverwrite: overwrite
-    } = await getEditorConfig() || {};
+    } = (await getEditorConfig()) || {};
 
     const setOptions = () => {
 

@@ -1,13 +1,12 @@
-
-const Strapi = require("@strapi/strapi");
+const { createStrapi } = require("@strapi/strapi");
 const fs = require("fs");
 
 let instance;
 
 async function setupStrapi() {
   if (!instance) {
-    await Strapi().load();
-    instance = strapi;
+    instance = createStrapi();
+    await instance.load();
 
     await instance.server.mount();
   }
@@ -15,13 +14,15 @@ async function setupStrapi() {
 }
 
 async function cleanupStrapi() {
-  const dbSettings = strapi.config.get("database.connection");
+  if (!instance) return;
+
+  const dbSettings = instance.config.get("database.connection");
 
   //close server to release the db-file
-  await strapi.server.httpServer.close();
+  await instance.server.httpServer.close();
 
   // close the connection to the database before deletion
-  await strapi.db.connection.destroy();
+  await instance.db.connection.destroy();
 
   //delete test database after all tests have completed
   if (dbSettings && dbSettings.connection && dbSettings.connection.filename) {
@@ -30,6 +31,8 @@ async function cleanupStrapi() {
       fs.unlinkSync(tmpDbFile);
     }
   }
+
+  instance = null;
 }
 
 module.exports = { setupStrapi, cleanupStrapi };

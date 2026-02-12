@@ -6,17 +6,16 @@
 const convertParkDates = function (parkDates) {
   const thisYear = new Date().getFullYear();
   return parkDates
-    .filter(d =>
-      d.operatingYear >= thisYear &&
-      d.publishedAt !== null &&
-      (d.startDate && d.endDate)
+    .filter(
+      (d) => d.operatingYear >= thisYear && d.publishedAt !== null && d.startDate && d.endDate
     )
-    .map(d => {
+    .map((d) => {
       delete d.id;
+      delete d.documentId;
       delete d.publishedAt;
       return d;
     });
-}
+};
 
 const convertParkFeatures = function (parkFeatures) {
   const thisYear = new Date().getFullYear();
@@ -27,35 +26,38 @@ const convertParkFeatures = function (parkFeatures) {
         isActive: true,
         isOpen: true,
         parkFeatureTypeId: feature?.parkFeatureType?.featureTypeId,
-        isIgnored: feature.closureAffectsAccessStatus === null ? null : !feature.closureAffectsAccessStatus,
+        isIgnored:
+          feature.closureAffectsAccessStatus === null ? null : !feature.closureAffectsAccessStatus,
         parkDates: feature.parkDates
-          .filter(d =>
-            d.operatingYear >= thisYear &&
-            d.isActive &&
-            d.publishedAt !== null &&
-            (d.startDate && d.endDate)
+          .filter(
+            (d) =>
+              d.operatingYear >= thisYear &&
+              d.isActive &&
+              d.publishedAt !== null &&
+              d.startDate &&
+              d.endDate
           )
-          .map(d => ({
+          .map((d) => ({
             isActive: d.isActive,
             operatingYear: d.operatingYear,
             startDate: d.startDate,
             endDate: d.endDate,
-            ...(d.parkDateType?.dateTypeId && { 
-              parkDateType: { 
-                dateTypeId: d.parkDateType.dateTypeId 
-              } 
-            })
-          }))
-      }
+            ...(d.parkDateType?.dateTypeId && {
+              parkDateType: {
+                dateTypeId: d.parkDateType.dateTypeId,
+              },
+            }),
+          })),
+      };
       if (f.parkDates.length > 0) {
         results.push(f);
       }
     }
   }
   return results;
-}
+};
 
 module.exports = {
   convertParkDates,
-  convertParkFeatures
-}
+  convertParkFeatures,
+};

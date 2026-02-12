@@ -12,6 +12,11 @@ module.exports = {
     },
     {
       method: "GET",
+      path: "/park-access-statuses",
+      handler: "protected-area.status",
+    },
+    {
+      method: "GET",
       path: "/protected-areas/search",
       handler: "protected-area.searchParks",
     },

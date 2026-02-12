@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react"
 import { graphql, Link } from "gatsby"
 import axios from "axios"
+import qs from "qs"
 import { ProgressBar } from "react-bootstrap"
 
 import Acknowledgment from "../components/acknowledgment"
@@ -54,7 +55,16 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   useEffect(() => {
     const fetchEvenType = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/event-types`);
+        const params = qs.stringify(
+          {
+            fields: ["eventType"],
+            sort: ["eventType:asc"],
+          },
+          {
+            encodeValuesOnly: true,
+          }
+        )
+        const response = await axios.get(`${apiUrl}/event-types?${params}`);
 
         const formattedEventTypes = response.data.data.map((obj) => ({
           label: obj.eventType,
@@ -136,19 +146,21 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     // This needs to be a separate call, because we need the
     // unfiltered count for the header
 
-    // exclude unpublished parks
-    // this filter has been removed as a temporary workaround for a Strapi bug.
-    // see https://github.com/bcgov/bcparks.ca/pull/505/files#r1067160153
-
-    // let q = "/public-advisories/count?protectedAreas.published_at_null=false&protectedAreas.isDisplayed=true"
-    let q =
-      "/public-advisories/count"
+    let queryObj = {}
 
     if (advisoryType !== "all") {
-      q += `?queryText&_eventType=${advisoryType}`
+      queryObj.queryText = ""
+      queryObj._eventType = advisoryType
     }
 
-    const newApiCountCall = apiUrl + q
+    const params = qs.stringify(queryObj, {
+      encodeValuesOnly: true,
+    })
+
+    const newApiCountCall = params 
+      ? `${apiUrl}/public-advisories/count?${params}`
+      : `${apiUrl}/public-advisories/count`
+      
     if (newApiCountCall !== apiCountCall) {
       setApiCountCall(newApiCountCall)
     }
@@ -156,8 +168,8 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
   const getApiQuery = useCallback(
     advisoryTypeFilter => {
-      // Order by date and exclude unpublished parks
-      let q = "?queryText"
+      // Build query object for Strapi v5
+      let queryObj = {}
 
       let useParksFilter = isParksFilter
       let useKeywordFilter = isKeywordFilter
@@ -186,16 +198,16 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           } else {
             searchType = "all"
           }
-          q += `=${searchText}`
-          q += `&_searchType=${searchType}`
+          queryObj.queryText = searchText
+          queryObj._searchType = searchType
         }
       }
 
       if (advisoryTypeFilter !== "all") {
-        q += `&_eventType=${advisoryTypeFilter}`
+        queryObj._eventType = advisoryTypeFilter
       }
 
-      return q
+      return queryObj
     },
     [isKeywordFilter, isParksFilter, searchText]
   )
@@ -203,10 +215,19 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const getAdvisories = useCallback(
     q => {
       // q = api query
-      const params = new URLSearchParams(q)
-      params.append("limit", pageLen)
-      params.append("start", pageLen * (pageIndex - 1))
-      const newApiCall = `${apiUrl}/public-advisories?${params.toString()}`
+      const params = qs.stringify(
+        {
+          pagination: {
+            limit: pageLen,
+            start: pageLen * (pageIndex - 1),
+          },
+          ...q,
+        },
+        {
+          encodeValuesOnly: true,
+        }
+      )
+      const newApiCall = `${apiUrl}/public-advisories?${params}`
 
       if (apiCall !== newApiCall) {
         // Don't repeat the same call
@@ -229,8 +250,15 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
             setIsSearchError(false)
 
             // Get count
-            const countParams = new URLSearchParams(q)
-            const apiCount = `${apiUrl}/public-advisories/count?${countParams.toString()}`
+            const countParams = qs.stringify(
+              {
+                ...q,
+              },
+              {
+                encodeValuesOnly: true,
+              }
+            )
+            const apiCount = `${apiUrl}/public-advisories/count?${countParams}`
 
             axios
               .get(apiCount)
@@ -270,10 +298,19 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     const aType = getAdvisoryTypeFromUrl()
     let q = getApiQuery(aType)
 
-    const params = new URLSearchParams(q)
-    params.append("limit", pageLen)
-    params.append("start", pageStart)
-    const newApiCall = `${apiUrl}/public-advisories?${params.toString()}`
+    const params = qs.stringify(
+      {
+        pagination: {
+          limit: pageLen,
+          start: pageStart,
+        },
+        ...q,
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    )
+    const newApiCall = `${apiUrl}/public-advisories?${params}`
 
     axios.get(newApiCall).then(resultResponse => {
       if (resultResponse.status === 200) {

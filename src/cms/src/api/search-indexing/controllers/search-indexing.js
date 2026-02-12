@@ -1,12 +1,11 @@
-'use strict';
-
-const { sanitize } = require('@strapi/utils');
+"use strict";
 
 module.exports = ({ strapi }) => ({
-
   getParksForIndexing: async (ctx) => {
-    const contentType = strapi.contentType("api::protected-area.protected-area");
-    const query = await sanitize.contentAPI.query(ctx.query, contentType, {});
+    const thisYear = new Date().getFullYear();
+    const query = ctx.query;
+    const OPERATION_DATE_TYPE_ID = 6;
+    const GATE_DATE_TYPE_ID = 1;
 
     query.fields = [
       "orcs",
@@ -19,56 +18,56 @@ module.exports = ({ strapi }) => ({
       "latitude",
       "longitude",
       "isDisplayed",
-      "publishedAt"
+      "publishedAt",
     ];
     query.populate = {
       parkNames: {
         fields: ["parkName"],
-        populate: { "parkNameType": { fields: ["nameTypeId"] } }
+        populate: { parkNameType: { fields: ["nameTypeId"] } },
       },
       parkFacilities: {
         fields: ["isFacilityOpen", "isActive", "publishedAt"],
         populate: {
-          "facilityType": {
-            fields: ["facilityCode", "isActive", "facilityNumber"]
-          }
-        }
+          facilityType: {
+            fields: ["facilityCode", "isActive", "facilityNumber"],
+          },
+        },
       },
       parkActivities: {
         fields: ["isActivityOpen", "isActive", "publishedAt"],
         populate: {
-          "activityType": {
-            fields: ["activityCode", "isActive", "activityNumber"]
-          }
-        }
+          activityType: {
+            fields: ["activityCode", "isActive", "activityNumber"],
+          },
+        },
       },
       parkCampingTypes: {
         fields: ["isCampingOpen", "isActive", "publishedAt"],
         populate: {
-          "campingType": {
-            fields: ["campingTypeCode", "isActive", "campingTypeNumber"]
-          }
-        }
+          campingType: {
+            fields: ["campingTypeCode", "isActive", "campingTypeNumber"],
+          },
+        },
       },
       managementAreas: {
         fields: ["managementAreaNumber", "managementAreaName"],
         populate: {
-          "searchArea": {
+          searchArea: {
             fields: ["searchAreaName"],
           },
-          "section": {
+          section: {
             fields: ["sectionNumber", "sectionName"],
-            populate: { "region": { fields: ["regionNumber", "regionName"] } }
-          }
-        }
+            populate: { region: { fields: ["regionNumber", "regionName"] } },
+          },
+        },
       },
       publicAdvisories: {
         fields: ["id"],
         populate: {
-          "accessStatus": { fields: ["id"] },
-          "urgency": { fields: ["id"] },
-          "advisoryStatus": { fields: ["id", "code"] }
-        }
+          accessStatus: { fields: ["id"] },
+          urgency: { fields: ["id"] },
+          advisoryStatus: { fields: ["id", "code"] },
+        },
       },
       geoShape: {
         fields: ["geometry"],
@@ -78,49 +77,63 @@ module.exports = ({ strapi }) => ({
         filters: {
           parkDateType: {
             dateTypeId: {
-              $eq: 1
-            }
-          }
-        }
+              $eq: GATE_DATE_TYPE_ID,
+            },
+          },
+          operatingYear: {
+            $gte: thisYear,
+          },
+        },
       },
       parkFeatures: {
-        fields: ["isActive", "isOpen", "closureAffectsAccessStatus", "publishedAt"],
+        fields: [
+          "isActive",
+          "isOpen",
+          "closureAffectsAccessStatus",
+          "publishedAt",
+        ],
         populate: {
-          "parkDates": {
-            fields: ["operatingYear", "startDate", "endDate", "isActive", "publishedAt"],
+          parkDates: {
+            fields: [
+              "operatingYear",
+              "startDate",
+              "endDate",
+              "isActive",
+              "publishedAt",
+            ],
             filters: {
               parkDateType: {
                 dateTypeId: {
-                  $eq: 6
-                }
-              }
+                  $eq: OPERATION_DATE_TYPE_ID,
+                },
+              },
+              operatingYear: {
+                $gte: thisYear,
+              },
             },
-            populate: {
-              "parkDateType": {
-                fields: ["dateTypeId"]
-              }
-            }
           },
-          "parkFeatureType": {
-            fields: ["featureTypeId"]
-          }
-        }
-      }
+          parkFeatureType: {
+            fields: ["featureTypeId"],
+          },
+        },
+      },
     };
-    query.publicationState = "preview";
 
-    const { results, pagination } = await strapi.service("api::protected-area.protected-area").find(query);
+    const { results, pagination } = await strapi
+      .service("api::protected-area.protected-area")
+      .find(query);
 
     return { data: results, meta: { pagination: pagination } };
   },
 
   getParkPhotosForIndexing: async (ctx) => {
-    const contentType = strapi.contentType("api::park-photo.park-photo");
-    const query = await sanitize.contentAPI.query(ctx.query, contentType, {});
+    const query = ctx.query;
     query.fields = ["orcs", "sortOrder", "imageUrl"];
-    query.pagination = { limit: -1 };
-    query.filters = { isActive: true, ...query.filters }
-    const { results } = await strapi.service("api::park-photo.park-photo").find(query);
+    query.pagination = { pageSize: 10000 };
+    query.filters = { isActive: true, ...query.filters };
+    const { results } = await strapi
+      .service("api::park-photo.park-photo")
+      .find(query);
     return results;
   },
 
@@ -132,12 +145,15 @@ module.exports = ({ strapi }) => ({
     } catch (error) {
       return ctx.internalServerError(
         "Error in service search:queueAllParksForIndexing()",
-        error.message
+        error.message,
       );
     }
 
-    ctx.send({
-      message: `Set all parks to be reindexed`
-    }, 201);
-  }
+    ctx.send(
+      {
+        message: `Set all parks to be reindexed`,
+      },
+      201,
+    );
+  },
 });

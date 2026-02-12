@@ -37,10 +37,7 @@
     },
     "audioClipType": {
       "type": "enumeration",
-      "enum": [
-        "Place name",
-        "Welcome message"
-      ]
+      "enum": ["Place name", "Welcome message"]
     },
     "displayLocation": {
       "type": "customField",
@@ -56,21 +53,21 @@
     "description": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "transcript": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "adminNote": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
@@ -90,9 +87,7 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": [
-        "audios"
-      ]
+      "allowedTypes": ["audios"]
     }
   }
 }

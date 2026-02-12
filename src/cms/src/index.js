@@ -1,5 +1,12 @@
-'use strict';
-const elasticClient = require('./helpers/elasticClient');
+"use strict";
+const elasticClient = require("./helpers/elasticClient");
+const {
+  searchIndexingMiddleware,
+} = require("./document-middlewares/search-indexing.js");
+const restCacheInvalidationMiddleware = require("./document-middlewares/rest-cache-invalidation.js");
+const nameGeneratorMiddleware = require("./document-middlewares/name-generator.js");
+const photoRelationSyncMiddleware = require("./document-middlewares/photo-relation-sync.js");
+const authStrategyOverride = require("./extensions/users-permissions/strategies/keycloak-users-permissions");
 
 module.exports = {
   /**
@@ -9,6 +16,7 @@ module.exports = {
    * This gives you an opportunity to extend code.
    */
   register({ strapi }) {
+    // configure the documentation plugin to ignore some content types
     strapi
       .plugin("documentation")
       .service("override")
@@ -22,6 +30,22 @@ module.exports = {
         "footer-menu",
         "menu",
       ]);
+
+    if (process.env.DISABLE_LIFECYCLES === "true") {
+      strapi.log.warn("🚫 Lifecycles disabled via DISABLE_LIFECYCLES");
+      return; // Do not register any document service middleware
+    }
+
+    // register document service middlewares
+    const middlewares = [
+      searchIndexingMiddleware,
+      restCacheInvalidationMiddleware,
+      nameGeneratorMiddleware,
+      photoRelationSyncMiddleware,
+    ];
+    middlewares.forEach((middleware) => {
+      strapi.documents.use(middleware(strapi));
+    });
   },
 
   /**
@@ -33,5 +57,11 @@ module.exports = {
    */
   bootstrap({ strapi }) {
     elasticClient.initializeESClient();
+
+    // Register Keycloak authentication strategy
+    const authService = strapi.get("auth");
+    if (authService) {
+      authService.register("content-api", authStrategyOverride);
+    }
   },
 };

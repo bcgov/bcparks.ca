@@ -1,8 +1,8 @@
 const { cmsAxios } = require("../../shared/axiosConfig");
-const { getLogger } = require('../../shared/logging');
+const { getLogger } = require("../../shared/logging");
 
 /**
- * Adds all protectedAreas to the queuedTasks so they will 
+ * Adds all protectedAreas to the queuedTasks so they will
  * be reindexed by the cron job
  */
 exports.queueAll = async function () {
@@ -13,5 +13,5 @@ exports.queueAll = async function () {
     logger.error(`queueAllParks.js failed: ${error}`);
   }
 
-  logger.info("Set all parks to require reindexing")
+  logger.info("Set all parks to require reindexing");
 };

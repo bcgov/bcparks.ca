@@ -1,8 +1,8 @@
-const jwtOverride = require('./services/keycloak-jwt');
-const authStrategyOverride = require("./strategies/keycloak-users-permissions")
+const jwtOverride = require("./services/keycloak-jwt");
 
-module.exports = async (plugin) => {
-    plugin.services.keycloakJwt = (ctx) => jwtOverride(ctx);
-    strapi.container.get('auth').register('content-api', authStrategyOverride);
-    return plugin;
+module.exports = (plugin) => {
+  // Register the keycloakJwt service
+  plugin.services.keycloakJwt = jwtOverride;
+
+  return plugin;
 };

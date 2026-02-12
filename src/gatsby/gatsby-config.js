@@ -9,7 +9,8 @@ module.exports = {
     author: `@bcparks`,
     apiURL: process.env.REACT_APP_CMS_BASE_URL,
     siteUrl: process.env.REACT_APP_SITE_URL,
-    image: 'https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg'
+    image:
+      "https://nrs.objectstore.gov.bc.ca/kuwyyf/generic_social_1146x600_603acfb441.jpg",
   },
   plugins: [
     {
@@ -30,8 +31,10 @@ module.exports = {
     {
       resolve: "gatsby-source-strapi",
       options: {
+        version: 5,
         skipFileDownloads: true,
-        apiURL: process.env.STRAPI_SOURCE_URL || process.env.REACT_APP_CMS_BASE_URL,
+        apiURL:
+          process.env.STRAPI_SOURCE_URL || process.env.REACT_APP_CMS_BASE_URL,
         accessToken: process.env.STRAPI_TOKEN,
         collectionTypes: [
           "access-status",
@@ -61,170 +64,200 @@ module.exports = {
           {
             singularName: "page",
             queryParams: {
+              fields: "*",
               populate: {
                 PageHeader: {
-                  fields: "*"
+                  populate: "*",
                 },
                 Seo: {
-                  fields: "*"
+                  populate: "*",
                 },
                 Content: {
-                  populate: ["cards"]
-                }
-              }
-            }
+                  populate: "*",
+                },
+              },
+            },
           },
           {
             singularName: "protected-area",
             queryParams: {
+              fields: "*",
               populate: {
                 parkActivities: {
-                  populate: ["activityType"]
+                  populate: ["activityType"],
                 },
                 parkFacilities: {
-                  populate: ["facilityType"]
+                  populate: ["facilityType"],
                 },
                 parkCampingTypes: {
-                  populate: ["campingType"]
+                  populate: ["campingType"],
                 },
                 parkGuidelines: {
-                  populate: ["guidelineType"]
+                  populate: ["guidelineType"],
                 },
                 parkOperation: {
-                  fields: "*"
+                  fields: "*",
                 },
                 parkOperationDates: {
-                  fields: "*"
+                  fields: "*",
                 },
                 parkAreas: {
                   fields: "*",
                   populate: {
                     parkAreaType: {
-                      fields: "*"
-                    }
-                  }
+                      fields: "*",
+                    },
+                  },
                 },
                 parkFeatures: {
                   fields: "*",
                   populate: {
                     parkFeatureType: {
-                      fields: "*"
-                    }
-                  }
+                      fields: "*",
+                    },
+                  },
                 },
                 managementDocuments: {
-                  populate: ["documentType"]
+                  populate: ["documentType"],
                 },
                 biogeoclimaticZones: {
-                  fields: "*"
+                  fields: "*",
                 },
                 marineEcosections: {
-                  fields: "*"
+                  fields: "*",
                 },
                 terrestrialEcosections: {
-                  fields: "*"
+                  fields: "*",
                 },
                 seo: {
-                  populate: "*"
+                  populate: "*",
                 },
                 fireZones: {
-                  populate: ["fireCentre"]
+                  populate: ["fireCentre"],
                 },
                 naturalResourceDistricts: {
-                  fields: "*"
+                  fields: "*",
                 },
                 managementAreas: {
-                  populate: ["region", "section", "searchArea"]
+                  populate: ["region", "section", "searchArea"],
                 },
                 parkPhotos: {
-                  fields: "*"
+                  fields: "*",
                 },
                 audioClips: {
-                  fields: "*"
+                  fields: "*",
                 },
                 trailReports: {
-                  fields: "*"
+                  fields: "*",
                 },
                 nearbyParks: {
-                  populate: ["orcs", "slug", "protectedAreaName"],
-                  parkPhotos: {
-                    populate: ["isActive", "isFeatured", "sortOrder", "imageUrl"]
-                  },
-                  parkActivities: {
-                    populate: ["isActive", {
-                      activityType: ["activityNumber", "activityCode", "isActive"]
-                    }]
-                  },
-                  parkFacilities: {
-                    populate: ["isActive", {
-                      facilityType: ["facilityNumber", "facilityCode", "isActive"]
-                    }]
-                  },
-                  parkCampingTypes: {
-                    populate: ["isActive", {
-                      campingType: ["campingTypeNumber", "campingTypeCode", "isActive"]
-                    }]
+                  fields: ["orcs", "slug", "protectedAreaName"],
+                  populate: {
+                    parkPhotos: {
+                      fields: [
+                        "isActive",
+                        "isFeatured",
+                        "sortOrder",
+                        "imageUrl",
+                      ],
+                    },
+                    parkActivities: {
+                      fields: ["isActive"],
+                      populate: {
+                        activityType: {
+                          fields: [
+                            "activityNumber",
+                            "activityCode",
+                            "isActive",
+                          ],
+                        },
+                      },
+                    },
+                    parkFacilities: {
+                      fields: ["isActive"],
+                      populate: {
+                        facilityType: {
+                          fields: [
+                            "facilityNumber",
+                            "facilityCode",
+                            "isActive",
+                          ],
+                        },
+                      },
+                    },
+                    parkCampingTypes: {
+                      fields: ["isActive"],
+                      populate: {
+                        campingType: {
+                          fields: [
+                            "campingTypeNumber",
+                            "campingTypeCode",
+                            "isActive",
+                          ],
+                        },
+                      },
+                    },
                   },
                 },
                 parkContacts: {
-                  populate: ["parkOperatorContact"]
-                }
-              }
+                  populate: ["parkOperatorContact"],
+                },
+              },
             },
-            queryLimit: 100
+            queryLimit: 100,
           },
           {
             singularName: "site",
             queryParams: {
               populate: {
                 protectedArea: {
-                  fields: "*"
+                  fields: "*",
                 },
                 parkAreas: {
                   fields: "*",
                   populate: {
                     parkAreaType: {
-                      fields: "*"
-                    }
-                  }
+                      fields: "*",
+                    },
+                  },
                 },
                 parkFeatures: {
                   fields: "*",
                   populate: {
                     parkFeatureType: {
-                      fields: "*"
-                    }
-                  }
+                      fields: "*",
+                    },
+                  },
                 },
                 parkActivities: {
-                  populate: ["activityType"]
+                  populate: ["activityType"],
                 },
                 parkFacilities: {
-                  populate: ["facilityType"]
+                  populate: ["facilityType"],
                 },
                 parkCampingTypes: {
-                  populate: ["campingType"]
+                  populate: ["campingType"],
                 },
                 parkGuidelines: {
-                  populate: ["guidelineType"]
+                  populate: ["guidelineType"],
                 },
                 parkOperation: {
-                  fields: "*"
+                  fields: "*",
                 },
                 parkOperationDates: {
-                  fields: "*"
+                  fields: "*",
                 },
                 audioClips: {
-                  fields: "*"
+                  fields: "*",
                 },
                 trailReports: {
-                  fields: "*"
-                }
-              }
-            }
+                  fields: "*",
+                },
+              },
+            },
           },
-        ]
-      }
+        ],
+      },
     },
     `gatsby-transformer-sharp`,
     {
@@ -253,23 +286,23 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
-        output: '/'
-      }
+        output: "/",
+      },
     },
     {
       resolve: `gatsby-plugin-robots-txt`,
       options: {
         sitemap: "https://bcparks.ca/sitemap-index.xml",
-        resolveEnv: () => process.env.ENV_SUFFIX || 'dev',
+        resolveEnv: () => process.env.ENV_SUFFIX || "dev",
         env: {
-          'dev': {
-            policy: [{ userAgent: '*', disallow: ['/'] }]
+          dev: {
+            policy: [{ userAgent: "*", disallow: ["/"] }],
           },
-          'test': {
-            policy: [{ userAgent: '*', disallow: ['/'] }]
+          test: {
+            policy: [{ userAgent: "*", disallow: ["/"] }],
           },
-          'prod': {
-            policy: [{ userAgent: '*', allow: ['/'] }]
+          prod: {
+            policy: [{ userAgent: "*", allow: ["/"] }],
           },
         },
       },

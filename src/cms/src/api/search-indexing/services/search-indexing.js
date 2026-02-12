@@ -1,52 +1,77 @@
-'use strict';
+"use strict";
 
 /**
  * search service
  */
 
 module.exports = ({ strapi }) => ({
-
   async queueAllParksForIndexing() {
-
     // clear items that are already queued to be indexed (they don't need to be indexed twice)
-    await strapi.db.query("api::queued-task.queued-task").deleteMany({
-      where: { action: 'elastic index park' }
-    });
+    const tasks = await strapi
+      .documents("api::queued-task.queued-task")
+      .findMany({
+        filters: { action: "elastic index park" },
+        fields: ["documentId"],
+      });
 
-    // items queued to be deleted are okay to be deleted twice because there is a big risk of 
+    for (const task of tasks) {
+      try {
+        await strapi
+          .documents("api::queued-task.queued-task")
+          .delete({ documentId: task.documentId });
+      } catch (error) {
+        strapi.log.error(
+          `Error deleting queued task ${task.documentId}:`,
+          error,
+        );
+      }
+    }
+
+    // items queued to be deleted are okay to be deleted twice because there is a big risk of
     // missing them if we delete them as well
 
-    const removeParks = await strapi.entityService.findMany("api::protected-area.protected-area", {
-      filters: { isDisplayed: { $ne: true } },
-      fields: ["id"]
-    });
+    const removeParks = await strapi
+      .documents("api::protected-area.protected-area")
+      .findMany({
+        filters: { isDisplayed: { $ne: true } },
+        fields: ["orcs"],
+      });
 
-    const addParks = await strapi.entityService.findMany("api::protected-area.protected-area", {
-      filters: { isDisplayed: true },
-      fields: ["id"]
-    });
+    const addParks = await strapi
+      .documents("api::protected-area.protected-area")
+      .findMany({
+        filters: { isDisplayed: true },
+        fields: ["orcs"],
+      });
 
-    const removeList = removeParks.map(p => {
+    const removeList = removeParks.map((p) => {
       return {
-        action: 'elastic remove park',
-        numericData: p.id
-      }
+        action: "elastic remove park",
+        numericData: p.orcs,
+      };
     });
 
-    const addList = addParks.map(p => {
+    const addList = addParks.map((p) => {
       return {
-        action: 'elastic index park',
-        numericData: p.id
-      }
+        action: "elastic index park",
+        numericData: p.orcs,
+      };
     });
 
     if (removeList.length) {
-      await strapi.db.query("api::queued-task.queued-task").createMany({ data: removeList });
+      for (const task of removeList) {
+        await strapi
+          .documents("api::queued-task.queued-task")
+          .create({ data: task });
+      }
     }
 
     if (addList.length) {
-      await strapi.db.query("api::queued-task.queued-task").createMany({ data: addList });
+      for (const task of addList) {
+        await strapi
+          .documents("api::queued-task.queued-task")
+          .create({ data: task });
+      }
     }
-  }
-
+  },
 });

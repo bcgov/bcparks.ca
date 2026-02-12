@@ -1,6 +1,6 @@
 {
   "name": "@_sh/strapi-plugin-ckeditor",
-  "version": "2.0.4",
+  "version": "6.0.3",
   "description": "Integrates CKEditor 5 into your Strapi project as a fully customizable custom field. (Unofficial integration)",
   "private": false,
   "keywords": [
@@ -65,7 +65,7 @@
     "@_sh/ckeditor5-font-with-picker": "^0.0.1"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4.4.0"
+    "@strapi/strapi": "^5.0.0"
   },
   "author": {
     "name": "nshenderov"
@@ -79,8 +79,8 @@
     "test": "echo \"Error: no tests specified\" && exit 1"
   },
   "engines": {
-    "node": ">=14.19.1 <=18.x.x",
-    "npm": ">=6.0.0"
+    "node": ">=22",
+    "npm": ">=8"
   },
   "license": "MIT"
 }

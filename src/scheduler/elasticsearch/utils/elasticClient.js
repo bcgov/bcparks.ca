@@ -11,14 +11,14 @@ function initializeESClient() {
     authConfig = {
       auth: {
         username: process.env.ELASTIC_USERNAME,
-        password: process.env.ELASTIC_PASSWORD
-      }
+        password: process.env.ELASTIC_PASSWORD,
+      },
     };
   }
   try {
     client = new Client({
       node: process.env.ELASTIC_HOST,
-      ...authConfig
+      ...authConfig,
     });
   } catch (err) {
     console.log("Error while initializing the connection to ElasticSearch.");
@@ -33,10 +33,10 @@ async function createParkIndex(config) {
   try {
     await client.indices.create({
       index: parkIndexName(),
-      body: config
+      body: config,
     });
     await client.indices.refresh({
-      index: parkIndexName()
+      index: parkIndexName(),
     });
   } catch (err) {
     console.log("Error encountered while creating the park index.");
@@ -59,11 +59,11 @@ async function indexPark({ itemId, document }) {
     await client.index({
       index: parkIndexName(),
       id: itemId,
-      body: document
+      body: document,
     });
 
     await client.indices.refresh({
-      index: parkIndexName()
+      index: parkIndexName(),
     });
   } catch (err) {
     console.log("Error encountered while sending data to ElasticSearch.");
@@ -78,10 +78,10 @@ async function removePark({ itemId }) {
   try {
     await client.delete({
       id: itemId,
-      index: parkIndexName()
+      index: parkIndexName(),
     });
     await client.indices.refresh({
-      index: parkIndexName()
+      index: parkIndexName(),
     });
   } catch (err) {
     if (!JSON.stringify(err).includes("not_found")) {
@@ -99,24 +99,21 @@ async function removePark({ itemId }) {
 async function parkIndexExists() {
   try {
     const result = await client.indices.exists({
-      index: parkIndexName()
+      index: parkIndexName(),
     });
     return result.statusCode === 200;
   } catch (err) {
-    console.log(
-      "Error encountered while checking if index exists in ElasticSearch."
-    );
+    console.log("Error encountered while checking if index exists in ElasticSearch.");
   }
   return false;
 }
-
 
 /**
  * Gets the park index name based on the BCPARKS_ENVIRONMENT environment variable
  */
 const parkIndexName = () => {
-  return `${process.env.ELASTIC_PARK_INDEX_NAME}-${process.env.BCPARKS_ENVIRONMENT || 'local'}`;
-}
+  return `${process.env.ELASTIC_PARK_INDEX_NAME}-${process.env.BCPARKS_ENVIRONMENT || "local"}`;
+};
 
 module.exports = {
   createParkIndex,
@@ -124,5 +121,5 @@ module.exports = {
   indexPark,
   initializeESClient,
   parkIndexExists,
-  removePark
+  removePark,
 };

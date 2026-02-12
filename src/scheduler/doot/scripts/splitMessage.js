@@ -5,7 +5,7 @@ exports.dootSplitMessage = async function (message) {
   let splitOk = true;
 
   // add the individual items back into the queue
-  for (const item of message.attributes?.jsonData) {
+  for (const item of message?.jsonData) {
     try {
       await addToQueue({
         data: {
@@ -24,7 +24,7 @@ exports.dootSplitMessage = async function (message) {
   // message from the queue
   if (splitOk) {
     try {
-      await removeFromQueue([message.id]);
+      await removeFromQueue([message.documentId]);
     } catch (error) {
       throw new Error(`dootPublish() failed removing original message from queue: ${error}`);
     }

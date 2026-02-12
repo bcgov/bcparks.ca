@@ -89,28 +89,28 @@
     "description": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "safetyInfo": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "locationNotes": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "reservations": {
       "type": "customField",
       "options": {
-        "preset": "toolbar"
+        "preset": "default"
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },

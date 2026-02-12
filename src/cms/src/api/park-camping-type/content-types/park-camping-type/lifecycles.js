@@ -1,65 +1,25 @@
-"use strict";
-
-const { indexPark } = require("../../../../helpers/taskQueue.js");
-const validator = require("../../../../helpers/validator.js");
-
 /**
- * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
- * to customize this model
+ * Strapi 5 lifecycle hooks for Document Service
+ * Migration Guide: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service
+ * Document Service API: https://docs.strapi.io/cms/api/document-service
  */
 
-const updateName = async (data, where) => {
-  if (where) {
-    const id = where.id
-    const parkCampingType = await strapi.entityService.findOne(
-      "api::park-camping-type.park-camping-type", id, { populate: '*'}
-    )
-    const protectedArea = parkCampingType.protectedArea
-    const site = parkCampingType.site
-    const campingType = parkCampingType.campingType
+"use strict";
 
-    data.name = ""
-    if (protectedArea) {
-      data.name = protectedArea.orcs
-    }
-    if (site) {
-      data.name = site.orcsSiteNumber
-    }
-    if (campingType) {
-      data.name += ":"
-      data.name += campingType.campingTypeName;
-    }
-  }
-  return data
-};
+const validator = require("../../../../helpers/validator.js");
+const disabled = process.env.DISABLE_LIFECYCLES === "true";
 
 module.exports = {
   async beforeCreate(event) {
-    let { data, where } = event.params;
-    data = await updateName(data, where);
-    validator.campingTypeConnectValidator(data.campingType)
+    if (disabled) return;
+    let { data } = event.params;
+    validator.campingTypeValidator(data.campingType);
+    validator.protectedAreaOrSiteValidator(data.protectedArea, data.site);
   },
   async beforeUpdate(event) {
-    let { data, where } = event.params;
-    data = await updateName(data, where);
-    validator.campingTypeDisconnectValidator(data.campingType)
-    for (const park of event.params.data?.protectedArea?.disconnect || []) {
-      await indexPark(park.id)
-    }
+    if (disabled) return;
+    let { data } = event.params;
+    validator.campingTypeValidator(data.campingType);
+    validator.protectedAreaOrSiteValidator(data.protectedArea, data.site);
   },
-  async afterUpdate(event) {
-    await indexPark(event.result.protectedArea?.id)
-  },
-  async afterCreate(event) {
-    await indexPark(event.result.protectedArea?.id)
-  },
-  async beforeDelete(event) {
-    let { where } = event.params;
-    const parkCampingType = await strapi.entityService.findOne(
-      "api::park-camping-type.park-camping-type", where.id, {
-      fields: ['id'],
-      populate: { protectedArea: { fields: ['id'] } }
-    });
-    await indexPark(parkCampingType.protectedArea?.id)
-  }
 };

@@ -1,3 +1,20 @@
+/*
+ * ============================================================
+ * STRAPI 5 LIFECYCLE HOOKS - MIGRATED TO DOCUMENT SERVICE
+ * ============================================================
+ *
+ * NOTE: This lifecycle logic has been migrated to Document Service Middleware
+ * in src/index.js as recommended by Strapi v5 migration guide.
+ *
+ * This file is kept for reference but the main logic now runs through the
+ * centralized middleware to properly handle Draft & Publish and i18n features.
+ *
+ * Migration Guide: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service
+ * Document Service Middlewares: https://docs.strapi.io/cms/api/document-service/middlewares
+ *
+ * ============================================================
+ */
+
 "use strict";
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
@@ -5,29 +22,29 @@
  */
 
 const { queueAdvisoryEmail } = require("../../../../helpers/taskQueue.js");
+const disabled = process.env.DISABLE_LIFECYCLES === "true";
 
 const getNextAdvisoryNumber = async () => {
-  const result = await strapi.db.query('api::public-advisory-audit.public-advisory-audit').findOne({
-    orderBy: {
-      advisoryNumber: 'DESC'
-    }
+  const results = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findMany({
+    sort: { advisoryNumber: 'DESC' },
+    limit: 1,
+    fields: ['advisoryNumber']
   });
-  let { advisoryNumber: maxAdvisoryNumber } = result;
+  let maxAdvisoryNumber = results.length > 0 ? results[0].advisoryNumber : 0;
   if (!maxAdvisoryNumber || maxAdvisoryNumber < 0) maxAdvisoryNumber = 0;
   return ++maxAdvisoryNumber;
 };
 
 const getNextRevisionNumber = async (advisoryNumber) => {
-  const result = await strapi.db.query('api::public-advisory-audit.public-advisory-audit').findOne({
-    where: {
+  const results = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findMany({
+    filters: {
       advisoryNumber
     },
-    orderBy: {
-      revisionNumber: 'DESC'
-    }
+    sort: { revisionNumber: 'DESC' },
+    limit: 1,
+    fields: ['revisionNumber']
   });
-  let { revisionNumber } = result;
-  let maxRevisionNumber = revisionNumber;
+  let maxRevisionNumber = results.length > 0 ? results[0].revisionNumber : 0;
   if (!maxRevisionNumber || maxRevisionNumber < 0) maxRevisionNumber = 0;
   return ++maxRevisionNumber;
 };
@@ -41,7 +58,7 @@ const archiveOldPublicAdvisoryAudit = async (data) => {
   data.isLatestRevision = false;
 
   try {
-    await strapi.entityService.create('api::public-advisory-audit.public-advisory-audit', { data: data })
+    await strapi.documents('api::public-advisory-audit.public-advisory-audit').create({ data: data })
   } catch (error) {
     strapi.log.error(
       `error creating public-advisory-audit ${data.advisoryNumber}...`,
@@ -53,17 +70,20 @@ const archiveOldPublicAdvisoryAudit = async (data) => {
 const savePublicAdvisory = async (publicAdvisory) => {
   delete publicAdvisory.updatedBy;
   delete publicAdvisory.createdBy;
-  const isExist = await strapi.db.query('api::public-advisory.public-advisory').findOne({
-    where: {
+  const isExist = await strapi.documents('api::public-advisory.public-advisory').findFirst({
+    filters: {
       advisoryNumber: publicAdvisory.advisoryNumber
-    }
+    },
+    fields: ['id']
   });
   if (publicAdvisory.advisoryStatus.code === "PUB") {
     publicAdvisory.publishedAt = new Date();
     if (isExist) {
       try {
         publicAdvisory.id = isExist.id;
-        await strapi.entityService.update('api::public-advisory.public-advisory', isExist.id, { data: publicAdvisory })
+        await strapi.documents('api::public-advisory.public-advisory').update({
+          documentId: isExist.documentId, data: publicAdvisory
+        })
       } catch (error) {
         strapi.log.error(
           `error updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
@@ -73,7 +93,7 @@ const savePublicAdvisory = async (publicAdvisory) => {
     } else {
       try {
         delete publicAdvisory.id;
-        await strapi.entityService.create('api::public-advisory.public-advisory', {
+        await strapi.documents('api::public-advisory.public-advisory').create({
           data: publicAdvisory
         });
       } catch (error) {
@@ -85,7 +105,7 @@ const savePublicAdvisory = async (publicAdvisory) => {
     }
   } else if (isExist) {
     try {
-      await strapi.entityService.delete('api::public-advisory.public-advisory', isExist.id);
+      await strapi.documents('api::public-advisory.public-advisory').delete({ documentId: isExist.documentId });
     } catch (error) {
       strapi.log.error(
         `error deleting public-advisory ${publicAdvisory.id}...`,
@@ -152,6 +172,7 @@ const isAdvisoryEqual = (newData, oldData) => {
 
 module.exports = {
   beforeCreate: async (ctx) => {
+    if (disabled) return;
     let { data } = ctx.params;
     if (!data.revisionNumber && !data.advisoryNumber) {
       data.advisoryNumber = await getNextAdvisoryNumber();
@@ -161,7 +182,9 @@ module.exports = {
     }
   },
   afterCreate: async (ctx) => {
-    const newPublicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
+    if (disabled) return;
+    const newPublicAdvisoryAudit = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
+      documentId: ctx.result.documentId,
       populate: "*"
     });
 
@@ -188,13 +211,15 @@ module.exports = {
     copyToPublicAdvisory(newPublicAdvisoryAudit);
   },
   beforeUpdate: async (ctx) => {
+    if (disabled) return;
     let { data, where } = ctx.params;
     const newPublicAdvisory = data;
     if (!newPublicAdvisory.publishedAt) return;
 
     newPublicAdvisory.publishedAt = new Date();
     newPublicAdvisory.isLatestRevision = true;
-    const oldPublicAdvisory = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', where.id, {
+    const oldPublicAdvisory = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
+      documentId: where.documentId,
       populate: "*"
     });
 
@@ -241,7 +266,9 @@ module.exports = {
     }
   },
   afterUpdate: async (ctx) => {
-    const publicAdvisoryAudit = await strapi.entityService.findOne('api::public-advisory-audit.public-advisory-audit', ctx.result.id, {
+    if (disabled) return;
+    const publicAdvisoryAudit = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
+      documentId: ctx.result.documentId,
       populate: "*"
     });
 
@@ -272,3 +299,4 @@ module.exports = {
     copyToPublicAdvisory(publicAdvisoryAudit);
   },
 };
+

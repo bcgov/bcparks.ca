@@ -212,6 +212,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkCampingTypes: [STRAPI_PARK_CAMPING_TYPE] @link(by: "id", from: "parkCampingTypes___NODE")
     parkGuidelines: [STRAPI_PARK_GUIDELINE] @link(by: "id", from: "parkGuidelines___NODE")
     seo: STRAPI__COMPONENT_PARKS_SEO
+    legalStatus: String
     hasDiscoverParksLink: Boolean
     nearbyParks: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "nearbyParks___NODE")
     trailReports: [STRAPI_TRAIL_REPORT] @link(by: "id", from: "trailReports___NODE")
