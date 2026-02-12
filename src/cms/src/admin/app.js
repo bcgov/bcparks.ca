@@ -40,9 +40,12 @@ const register = () => {
 
       link: {
         defaultProtocol: 'https://',
+
         // Configure the link toolbar to include linkProperties for manual decorators
         toolbar: [ 'linkPreview', '|', 'editLink', 'linkProperties', 'unlink' ],
+
         decorators: {
+          // Manual decorator for opening links in a new tab
           openInNewTab: {
             mode: "manual",
             label: "Open in a new tab",
@@ -52,19 +55,15 @@ const register = () => {
               rel: "noopener",
             },
           },
-          detectDownloadable: {
-            mode: 'automatic',
-            callback: url => url.endsWith( '.pdf' ),
-            attributes: {
-              target: "_blank",
-              rel: "noopener",
-            }
-          },
+
+          // Manual decorator for "learn more" link style
           makeLinkWithIcon: {
             mode: 'manual',
             label: 'Learn more link',
             classes: 'learn-more-link'
           },
+
+          // Manual decorator for primary button style
           makeButton: {
             mode: 'manual',
             label: 'Primary button',
@@ -73,12 +72,24 @@ const register = () => {
                 role: "button"
             }
           },
+
+          // Manual decorator for secondary button style
           makeSecondaryButton: {
             mode: 'manual',
             label: 'Secondary button',
             classes: 'btn btn-secondary',
             attributes: {
               role: "button"
+            }
+          },
+
+          // Automatically add target _blank and noopener for PDF links
+          detectDownloadable: {
+            mode: 'automatic',
+            callback: url => url.endsWith( '.pdf' ),
+            attributes: {
+              target: "_blank",
+              rel: "noopener",
             }
           },
         },
