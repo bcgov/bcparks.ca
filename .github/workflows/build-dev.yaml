@@ -35,6 +35,12 @@ jobs:
         uses: docker/setup-docker-action@v4
         with:
           version: "28.5.2"
+          set-host: true      # <— this sets DOCKER_HOST for all following steps
+
+      - name: Sanity check Docker version (should be 28.x / API < 1.44)
+        run: |
+          docker version
+          docker info
 
       - name: s2i Build
         id: build_image
@@ -140,6 +146,12 @@ jobs:
         uses: docker/setup-docker-action@v4
         with:
           version: "28.5.2"
+          set-host: true      # <— this sets DOCKER_HOST for all following steps
+
+      - name: Sanity check Docker version (should be 28.x / API < 1.44)
+        run: |
+          docker version
+          docker info
 
       - name: s2i Build
         id: build_image
@@ -175,7 +187,13 @@ jobs:
       - name: Set up Docker 28.x
         uses: docker/setup-docker-action@v4
         with:
-          version: "28.5.2" 
+          version: "28.5.2"
+          set-host: true      # <— this sets DOCKER_HOST for all following steps
+
+      - name: Sanity check Docker version (should be 28.x / API < 1.44)
+        run: |
+          docker version
+          docker info
 
       - name: s2i Build
         id: build_image
