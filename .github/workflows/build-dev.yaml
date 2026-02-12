@@ -30,6 +30,12 @@ jobs:
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
+      # Downgrade/pin Docker Engine to v28.x on the hosted runner
+      - name: Set up Docker 28.x
+        uses: docker/setup-docker-action@v4
+        with:
+          version: "28.5.2"
+
       - name: s2i Build
         id: build_image
         uses: redhat-actions/s2i-build@v2
@@ -129,6 +135,12 @@ jobs:
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
+      # Downgrade/pin Docker Engine to v28.x on the hosted runner
+      - name: Set up Docker 28.x
+        uses: docker/setup-docker-action@v4
+        with:
+          version: "28.5.2"
+
       - name: s2i Build
         id: build_image
         uses: redhat-actions/s2i-build@v2
@@ -158,6 +170,12 @@ jobs:
           registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
+
+      # Downgrade/pin Docker Engine to v28.x on the hosted runner
+      - name: Set up Docker 28.x
+        uses: docker/setup-docker-action@v4
+        with:
+          version: "28.5.2" 
 
       - name: s2i Build
         id: build_image
