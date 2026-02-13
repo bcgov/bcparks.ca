@@ -41,7 +41,6 @@ cms:
 
   resources:
     limits:
-      cpu: 400m
       memory: 1250Mi
     requests:
       cpu: 75m
