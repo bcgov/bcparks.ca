@@ -119,7 +119,7 @@ const copyToPublicAdvisory = async (newPublicAdvisory) => {
   if (newPublicAdvisory.isLatestRevision && newPublicAdvisory.advisoryStatus) {
     const publishedStatuses = ["PUB", "INA"];
     if (publishedStatuses.includes(newPublicAdvisory.advisoryStatus.code)) {
-      savePublicAdvisory(newPublicAdvisory);
+      await savePublicAdvisory(newPublicAdvisory);
     }
   }
 };
@@ -208,7 +208,7 @@ module.exports = {
       );
     }
 
-    copyToPublicAdvisory(newPublicAdvisoryAudit);
+    await copyToPublicAdvisory(newPublicAdvisoryAudit);
   },
   beforeUpdate: async (ctx) => {
     if (disabled) return;
@@ -296,7 +296,7 @@ module.exports = {
       );
     }
 
-    copyToPublicAdvisory(publicAdvisoryAudit);
+    await copyToPublicAdvisory(publicAdvisoryAudit);
   },
 };
 
