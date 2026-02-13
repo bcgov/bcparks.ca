@@ -64,7 +64,7 @@ module.exports = ({ env }) => {
       config: {
         provider: {
           name: env("STRAPI_CACHE_TYPE", "memory"),
-          getTimeout: env.int("REST_CACHE_GET_TIMEOUT", 2000),
+          getTimeout: env.int("REST_CACHE_GET_TIMEOUT", 5000),
           options: {
             max: 32767,
             connection: "default",
@@ -73,7 +73,7 @@ module.exports = ({ env }) => {
         },
         strategy: {
           enableEtagSupport: true,
-          debug: true,
+          debug: env.bool("REST_CACHE_DEBUG", false),
           clearRelatedCache: true,
           maxAge: env.int("STRAPI_CACHE_TTL", 300000),
           hitpass: false, // don't bypass the cache for requests with a cookie or authorization header
