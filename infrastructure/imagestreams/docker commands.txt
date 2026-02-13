@@ -1,7 +1,27 @@
+# STORING THIRD-PARTY IMAGES IN IMAGESTREAMS
+
+oc tag -n c1643c-tools --source=docker node:22-slim node:22-slim
+
+oc tag -n c1643c-tools --source=docker redis:6.2.14-alpine redis:6.2.14-alpine
+
+oc tag -n c1643c-tools --source=docker bitnami/pgbouncer:1.22.1 pgbouncer:1.22.1
+oc tag -n c1643c-tools pgbouncer:1.22.1 pgbouncer:latest
+
+oc tag -n c1643c-tools --source=docker caddy:2.6.2-alpine caddy:2.6.2-alpine
+oc tag -n c1643c-tools caddy:2.6.2-alpine caddy:latest
+
+oc tag -n c1643c-tools --source=docker bcgovimages/backup-container:2.9.0 backup-container:2.9.0
+oc tag -n c1643c-tools backup-container:2.9.0 backup-container:postgres-latest
+
+NOTE: backup-container has moved to GitHub Container Registry. The command will modification.
+
+
+# STORING LOCALLY BUILT (PUSHED) IMAGES IN IMAGESTREAMS
+
 docker login -u unused -p $(oc whoami -t) image-registry.apps.gold.devops.gov.bc.ca
 
-docker pull node:18-slim
+docker tag imagetag-pruner:latest image-registry.apps.gold.devops.gov.bc.ca/c1643c-tools/imagetag-pruner:latest
+docker push image-registry.apps.gold.devops.gov.bc.ca/c1643c-tools/imagetag-pruner:latest
 
-docker tag node:18-slim image-registry.apps.gold.devops.gov.bc.ca/c1643c-tools/node:18-slim
-
-docker push image-registry.apps.gold.devops.gov.bc.ca/c1643c-tools/node:18-slim
+docker tag patroni-postgres:2.1.7-12.19-latest image-registry.apps.gold.devops.gov.bc.ca/c1643c-tools/patroni-postgres:2.1.7-12.19-latest
+docker push image-registry.apps.gold.devops.gov.bc.ca/c1643c-tools/patroni-postgres:2.1.7-12.19-latest
