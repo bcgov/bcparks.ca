@@ -49,30 +49,26 @@ module.exports = createCoreController(
     async findOne(ctx) {
       const { id } = ctx.params;
 
-      // look up the public advisory id by the advisory number
-      const entities = await strapi
+      // look up the public advisory by the advisory number
+      const entity = await strapi
         .documents("api::public-advisory.public-advisory")
-        .findMany({
+        .findFirst({
           filters: { advisoryNumber: id },
-          fields: ["id"],
+          ...ctx.query
         });
 
-      if (entities.length === 0) {
-        return ctx.badRequest(404);
+      if (!entity) {
+        return ctx.notFound();
       }
 
       ctx.query = populateStandardMessages(ctx.query);
 
-      let entity = await strapi
-        .service("api::public-advisory.public-advisory")
-        .findOne(entities[0].id, ctx.query);
 
-      // append the standardMessages to the description and then delete them from the entity
-      entity = appendStandardMessages(entity);
-      delete entity.standardMessages;
+    // append the standardMessages to the description and then delete them from the entity
+      const result = appendStandardMessages(entity);
+      delete result.standardMessages;
 
-      const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
-      return sanitizedEntity;
+      return this.sanitizeOutput(result, ctx);
     },
     async find(ctx) {
       let entities;
