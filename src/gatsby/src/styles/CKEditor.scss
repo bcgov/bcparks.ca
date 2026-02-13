@@ -1,0 +1,9 @@
+// This stylesheet imports body content and typography styles
+// for use in the CMS WYSIWYG editor (CKEditor).
+// All styles are scoped to .ck-content to only apply within the editor.
+
+.ck-content {
+  @import "typography";
+  @import "links";
+  @import "contentElements";
+}

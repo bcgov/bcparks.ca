@@ -1,0 +1,161 @@
+// Body content and typography styles
+// Used by both the frontend (via global.scss) and backend CMS editor (via CKEditor.scss)
+
+@use "variables" as *;
+
+// Link styles
+// There is debate as to colours for links - this is where we start once that's settled
+// Based on the DigitalSpace Bootstrap 5 Theme
+// https://github.com/digitalspace/bcparks-bootstrap-theme/
+a {
+  color: $colorBlueMed;
+  text-decoration: none;
+  &:hover {
+    color: $colorBlue;
+    text-decoration: underline;
+  }
+  &:not(.btn):focus {
+    color: $colorBlue;
+  }
+  &:focus-visible {
+    box-shadow: none;
+  }
+}
+
+// Body and typography
+body {
+  color: $colorGrey;
+  letter-spacing: normal;
+  font-family: $globalFont;
+}
+
+h1, h2 {
+  color: $colorBlue;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h5 {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.no-mb {
+  margin-bottom: 0px !important;
+}
+
+// Content elements
+blockquote {
+  border-left: solid 8px $colorBrownMed;
+  margin: 16px 0 16px 24px;
+  padding: 16px 32px;
+  :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.callout-box {
+  color: $colorBlue;
+  background-color: $colorBlueLight;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 4px;
+  margin: 16px 0;
+  padding: 20px;
+  & > * {
+    max-width: 600px;
+  }
+}
+
+figure.media div[data-oembed-url] {
+  width: 100%;
+}
+
+img {
+  max-width: 100%;
+}
+
+// Tables
+figure.table {
+  color: $colorGrey;
+  table {
+    width: 100%;
+    tr {
+      &:first-of-type {
+        th, td {
+          border-top: 1px solid $colorGreyLight;
+        }
+      }
+    }
+    th, td {
+      vertical-align: top;
+      border-bottom: 1px solid $colorGreyLight;
+      padding: 12px;
+    }
+    th {
+      background: $colorBrownLight;
+    }
+    td {
+      & > p:last-of-type {
+        margin-bottom: 0;
+      }
+      svg {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  &.vertical-heading {
+    table {
+      tbody {
+        tr {
+          display: block;
+          width: 100%;
+          @media screen and (min-width: $mdBreakpoint) {
+            width: auto;
+            display: table-row;
+          }
+          th, td {
+            display: block;
+            width: 100%;
+            @media screen and (min-width: $mdBreakpoint) {
+              width: auto;
+              display: table-cell;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.horizontal-heading {
+    overflow-x: auto;
+    table {
+      min-width: 600px;
+    }
+    &::-webkit-scrollbar {
+      height: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba($colorBlack, .2);
+      border-radius: 5px;
+    }
+  }
+}
+
+// Lists
+ol li.lower-alpha {
+  list-style-type: lower-alpha;
+}
+
+ul {
+  list-style-type: disc;
+  ul {
+    list-style-type: circle;
+  }
+}

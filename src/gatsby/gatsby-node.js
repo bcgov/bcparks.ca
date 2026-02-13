@@ -17,6 +17,25 @@ const strapiApiRequest = (graphql, query) =>
 
 exports.onPostBuild = ({ reporter }) => {
   reporter.info(`Pages have been built!`)
+
+  // Compile CKEditor.scss to CSS for CMS use
+  const sass = require('sass')
+  const fs = require('fs')
+  const path = require('path')
+
+  try {
+    const result = sass.renderSync({
+      file: path.join(__dirname, 'src/styles/CKEditor.scss'),
+      outputStyle: 'compressed',
+      includePaths: [path.join(__dirname, 'src/styles')]
+    })
+
+    const outputPath = path.join(__dirname, 'public/ckeditor-styles.css')
+    fs.writeFileSync(outputPath, result.css)
+    reporter.info(`CKEditor styles compiled to: ${outputPath}`)
+  } catch (error) {
+    reporter.error(`Failed to compile CKEditor.scss: ${error.message}`)
+  }
 }
 
 exports.createSchemaCustomization = ({ actions }) => {
@@ -152,7 +171,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   type STRAPI_PARK_ACTIVITY implements Node {
     hideStandardCallout: Boolean
   }
-  
+
   type STRAPI_PARK_FACILITY implements Node {
     hideStandardCallout: Boolean
   }
@@ -160,7 +179,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   type STRAPI_PARK_CAMPING_TYPE implements Node {
     hideStandardCallout: Boolean
   }
-  
+
   type STRAPI_GUIDELINE_TYPE_DEFAULTDESCRIPTION_TEXTNODE implements Node @dontInfer {
     defaultDescription: String
   }
@@ -219,7 +238,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkContacts: [STRAPI_PARK_CONTACT] @link(by: "id", from: "parkContacts___NODE")
     audioClips: [STRAPI_AUDIO_CLIP] @link(by: "id", from: "audioClips___NODE")
   }
-  
+
   type STRAPI__COMPONENT_PARKS_RTE_LIST_CONTENT_TEXTNODE implements Node @dontInfer {
     content: String
   }
@@ -269,7 +288,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   type STRAPI__COMPONENT_PARKS_PAGE_HEADER_INTROHTML_TEXTNODE implements Node @dontInfer {
     introHtml: String
   }
-  
+
   type STRAPI__COMPONENT_PARKS_PAGE_HEADER_INTROHTML implements Node {
     data: STRAPI__COMPONENT_PARKS_PAGE_HEADER_INTROHTML_TEXTNODE @link(by: "id", from: "data___NODE")
   }
@@ -285,18 +304,18 @@ exports.createSchemaCustomization = ({ actions }) => {
   type STRAPI__COMPONENT_PARKS_PAGE_SECTION_SECTIONHTML_TEXTNODE implements Node @dontInfer {
     sectionHTML: String
   }
-  
+
   type STRAPI__COMPONENT_PARKS_PAGE_SECTION implements Node @derivedTypes @dontInfer {
     strapi_id: Int
     strapi_component: String
     sectionTitle: String
     sectionHTML: STRAPI__COMPONENT_PARKS_PAGE_SECTIONSectionHTML
   }
-  
+
   type STRAPI__COMPONENT_PARKS_PAGE_SECTIONSectionHTML {
     data: STRAPI__COMPONENT_PARKS_PAGE_SECTION_SECTIONHTML_TEXTNODE @link(by: "id", from: "data___NODE")
   }
-  
+
   type STRAPI__COMPONENT_PARKS_HTML_AREA_HTML_TEXTNODE implements Node @dontInfer {
     HTML: String
   }
@@ -309,7 +328,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     strapi_id: Int
     strapi_component: String
     HTML: STRAPI__COMPONENT_PARKS_HTML_AREA_HTML
-  }  
+  }
 
   type STRAPI__COMPONENT_PARKS_LINK_CARD implements Node @dontInfer {
     strapi_id: Int
@@ -551,7 +570,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
   `
   const redirectQuery = `
-  { 
+  {
     allStrapiLegacyRedirect {
       nodes {
         toPath
@@ -679,6 +698,7 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   }
   if (stage === 'build-javascript' || stage === 'develop') {
     const config = getConfig()
+
     const miniCssExtractPlugin = config.plugins.find(
       plugin => plugin.constructor.name === 'MiniCssExtractPlugin'
     )
