@@ -66,6 +66,7 @@ module.exports = ({ env }) => {
           name: env("STRAPI_CACHE_TYPE", "memory"),
           getTimeout: env.int("REST_CACHE_GET_TIMEOUT", 2000),
           options: {
+            max: 32767,
             connection: "default",
             ttl: env.int("STRAPI_CACHE_TTL", 300000),
           },
