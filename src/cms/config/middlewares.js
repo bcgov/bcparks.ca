@@ -9,6 +9,17 @@ module.exports = [
         directives: {
           "connect-src": ["'self'", "https:"],
           "script-src": ["'self'", "'unsafe-inline'"],
+          "style-src": [
+            "'self'",
+            "'unsafe-inline'",
+            "http://localhost:8000",
+            "https://bcparks.ca"
+          ],
+          "font-src": [
+            "'self'",
+            "http://localhost:8000",
+            "https://bcparks.ca"
+          ],
           "img-src": [
             "'self'",
             "data:",

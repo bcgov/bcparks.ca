@@ -27,7 +27,10 @@ exports.onPostBuild = ({ reporter }) => {
     const result = sass.renderSync({
       file: path.join(__dirname, 'src/styles/CKEditor.scss'),
       outputStyle: 'compressed',
-      includePaths: [path.join(__dirname, 'src/styles')]
+      includePaths: [
+        path.join(__dirname, 'src/styles'),
+        path.join(__dirname, 'node_modules')
+      ]
     })
 
     const outputPath = path.join(__dirname, 'public/ckeditor-styles.css')
