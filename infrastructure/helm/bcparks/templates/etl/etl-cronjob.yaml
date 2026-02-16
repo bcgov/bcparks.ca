@@ -29,6 +29,7 @@ spec:
               image: {{ .Values.images.etl.name }}:{{ .Values.images.etl.tag }}
               resources:
 {{ toYaml .Values.etl.resources | indent 16 }}
+              imagePullPolicy: Always
               env:
                 - name: BCWFS_BANS_API
                   value: {{ .Values.etl.env.bcwfsBansApi }}
