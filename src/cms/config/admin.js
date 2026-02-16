@@ -11,6 +11,6 @@ module.exports = ({ env }) => ({
     },
   },
   preview: {
-    enabled: false
-  }
+    enabled: false,
+  },
 });
