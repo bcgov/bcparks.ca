@@ -14,16 +14,22 @@ module.exports = [
             "https://apollo-server-landing-page.cdn.apollographql.com",
             "https://embeddable-sandbox.cdn.apollographql.com",
           ],
+          // For CKEditor, load frontend styles to use in the WYSIWYG editor
+          // Allow styles and fonts to be loaded from localhost (on dev) and from bcparks.ca (production)
           "style-src": [
             "'self'",
             "'unsafe-inline'",
             "http://localhost:8000",
-            "https://bcparks.ca"
+            "https://bcparks.ca",
+            "https://cdn.jsdelivr.net",
+            "https://cdnjs.cloudflare.com"
           ],
           "font-src": [
             "'self'",
             "http://localhost:8000",
-            "https://bcparks.ca"
+            "https://bcparks.ca",
+            "https://cdn.jsdelivr.net",
+            "https://cdnjs.cloudflare.com"
           ],
           "img-src": [
             "'self'",

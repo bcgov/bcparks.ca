@@ -1,4 +1,5 @@
 @import "variables.scss";
+@import "content-mixins";
 
 .bc-bg-yellow {
   background: $colorGold;
@@ -19,6 +20,10 @@
 html,
 body {
   scroll-behavior: smooth;
+}
+
+body {
+  @include base-content-styles;
 }
 
 head,
@@ -71,10 +76,17 @@ style {
 }
 
 /** Typography and body content styles **/
-@import "typography";
-@import "contentElements";
 
-/* end CKEeditor added styles */
+@include heading-styles;
+
+// Content styles for CMS-rendered HTML content
+@include content-link-styles;
+@include blockquote-styles;
+@include callout-styles;
+@include media-styles;
+@include table-base-styles;
+@include table-responsive-styles;
+@include list-type-styles;
 
 #home-header {
   .nav-item:not(:last-child) {
@@ -195,135 +207,8 @@ li.post-separator {
     we might want to split these out into individual files eventually
 **/
 
-// links
-a.underline-hover {
-  text-decoration: none;
-
-  &:hover, &:focus {
-    color: $colorBlue;
-    text-decoration: underline;
-  }
-}
-
-a.learn-more-link {
-  text-decoration: none !important;
-  position: relative;
-  padding-right: 14px;
-  &:hover, &:focus-visible {
-    text-decoration: underline !important;
-  }
-  &::after {
-    content: "\f054";
-    display: inline-block;
-    font-weight: 700;
-    font-size: 0.625rem;
-    font-family: "Font Awesome 5 Free";
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    position: absolute;
-    top: 4px;
-    right: 0;
-  }
-}
-
 //buttons
-a.btn,
-button.btn:not(.btn-link):not(.btn-tooltip) {
-  height: 48px;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  line-height: 1.5;
-  border-radius: 4px;
-  padding: 0 16px;
-
-  &.btn-primary {
-    color: $colorWhite !important;
-    background-color: $colorBlue;
-    border: $colorBlue 2px solid;
-    &:hover, &:focus-visible {
-      color: $colorWhite;
-      background-color: $colorBlueMed !important;
-    }
-    &:hover{
-      border: $colorBlueMed 2px solid !important;
-    }
-  }
-
-  &.btn-yellow,
-  &.btn-warning {
-    color: $colorBlue;
-    background-color: $colorGold;
-    border: $colorGold 2px solid;
-    &:hover, &:focus-visible {
-      color: $colorWhite;
-      background-color: $colorBlueMed;
-    }
-    &:hover {
-      border: $colorBlueMed solid 2px;
-    }
-  }
-
-  &.btn-white {
-    color: $colorBlue !important;
-    background-color: $colorWhite;
-    border: $colorWhite solid 2px;
-    &:hover, &:focus-visible {
-      background-color: $colorGold;
-    }
-    &:hover {
-      border: $colorGold solid 2px;
-    }
-  }
-
-  &.btn-secondary,
-  &.btn-light {
-    color: $colorBlue !important;
-    background-color: $colorWhite;
-    border: $colorBlue 1px solid;
-    &:hover, &:focus-visible {
-      background-color: $colorIceBlue !important;
-      border: $colorBlue 1px solid !important;
-    }
-    &:focus-visible {
-      outline: $colorBlueMed solid 2px;
-      outline-offset: 2px;
-    }
-  }
-
-  &.btn-light {
-    border: $colorBlue 2px solid !important;
-    &:hover, &:focus-visible {
-      border: $colorBlue 2px solid !important;
-    }
-  }
-
-  &.btn-icon {
-    &::after {
-      content: "\f138";
-      display: inline-block;
-      font-size: 0.875rem;
-      font-family: "Font Awesome 5 Free";
-      font-style: normal;
-      font-variant: normal;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-      margin-left: 8px;
-    }
-  }
-
-  &:focus {
-    box-shadow: none !important;
-  }
-  &:focus-visible {
-    border: $colorWhite solid 2px;
-    outline: $colorBlueMed solid 2px;
-    outline-offset: 0px;
-  }
-}
+@include button-styles;
 
 .parks-search-button {
   color: $colorBlue;

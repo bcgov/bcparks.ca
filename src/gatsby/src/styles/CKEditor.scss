@@ -2,69 +2,92 @@
 // for use in the CMS WYSIWYG editor (CKEditor).
 // All styles are scoped to .ck-content to only apply within the editor.
 
-// BC Sans font faces - from the @bcgov/bc-sans package
-@font-face {
-  font-family: "BC Sans";
-  font-style: normal;
-  font-weight: 400;
-  src: url("/fonts/BCSans-Regular.woff2") format("woff2"),
-       url("/fonts/BCSans-Regular.woff") format("woff");
-}
-
-@font-face {
-  font-family: "BC Sans";
-  font-style: italic;
-  font-weight: 400;
-  src: url("/fonts/BCSans-Italic.woff2") format("woff2"),
-       url("/fonts/BCSans-Italic.woff") format("woff");
-}
-
-@font-face {
-  font-family: "BC Sans";
-  font-style: normal;
-  font-weight: 700;
-  src: url("/fonts/BCSans-Bold.woff2") format("woff2"),
-       url("/fonts/BCSans-Bold.woff") format("woff");
-}
-
-@font-face {
-  font-family: "BC Sans";
-  font-style: italic;
-  font-weight: 700;
-  src: url("/fonts/BCSans-BoldItalic.woff2") format("woff2"),
-       url("/fonts/BCSans-BoldItalic.woff") format("woff");
-}
+// Font dependencies now loaded via <link> tags in src/cms/src/admin/app.js
+// @import url("https://cdn.jsdelivr.net/npm/@bcgov/bc-sans@2.1.0/css/BC_Sans.min.css");
+// @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
 
 @import "variables.scss";
+@import "content-mixins";
 
 // Apply body styles directly to the editor container
-.ck-content {
-  background-color: $colorWhite;
-  color: $colorGrey;
-  letter-spacing: normal;
-  font-family: $globalFont;
+// Using higher specificity to override CKEditor's rules which load inline, after our stylesheet
+// (Override CKEditor's built-in styles directly in ckeditor.js)
+.ck.ck-content.ck-editor__editable {
+  @include base-content-styles;
+  @include heading-styles;
 
-  // Typography
-  h1, h2 {
+  // Content element styles
+  @include blockquote-styles;
+  @include callout-styles;
+  @include media-styles;
+  @include table-base-styles;
+  @include list-type-styles;
+
+  /* Override CKEditor's built-in list styles with base styles from Bootstrap reboot */
+  ol, ul, dl {
+    padding-left: 2em;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 1em;
+    line-height: inherit;
+  }
+
+  @include button-styles;
+
+  // Content link styles (underlined for article content)
+  @include content-link-styles;
+
+  // Editor-specific style classes (not used on frontend)
+  .legacy-link {
+    background-color: #FFFF00;
+  }
+
+  .audio-clip {
+    outline: 1px dashed $colorBlue; // Add an outline to make the icon visible in the dropdown
+
+    &::after {
+      content: "\f028";  // Font Awesome speaker icon
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: "Font Awesome 5 Free";
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 0.25rem;
+    }
+  }
+}
+
+// Style dropdown preview - apply visual colors only (no spacing/sizing)
+.ck-style-dropdown {
+  .callout-box {
+    color: $colorBlue;
+    background-color: $colorBlueLight;
+    font-weight: 700;
+    border: none;
+    padding: 0.5em;
+  }
+
+  // Show the audio clip icon at the start instead of the end in the dropdown preview
+  .audio-clip {
+    &::before {
+      content: "\f028";  // Font Awesome speaker icon
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: "Font Awesome 5 Free";
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 0.25rem;
+    }
+  }
+
+  .legacy-link {
+    background-color: #FFFF00;
     color: $colorBlue;
   }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  h5 {
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-
-  .no-mb {
-    margin-bottom: 0px !important;
-  }
-
-  // Links
-  @import "links";
-
-  // Content elements (tables, blockquotes, lists, etc)
-  @import "contentElements";
 }
