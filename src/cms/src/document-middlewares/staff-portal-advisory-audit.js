@@ -1,28 +1,11 @@
-/*
- * ============================================================
- * STRAPI 5 LIFECYCLE HOOKS - MIGRATED TO DOCUMENT SERVICE
- * ============================================================
- *
- * NOTE: This lifecycle logic has been migrated to Document Service Middleware
- * in src/index.js as recommended by Strapi v5 migration guide.
- *
- * This file is kept for reference but the main logic now runs through the
- * centralized middleware to properly handle Draft & Publish and i18n features.
- *
- * Migration Guide: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service
- * Document Service Middlewares: https://docs.strapi.io/cms/api/document-service/middlewares
- *
- * ============================================================
- */
+// Middleware to handle public-advisory-audit business logic, replacing the Strapi 4 lifecycles.
+// This includes:
+// - Revisioning logic: auto-incrementing advisory and revision numbers, archiving old revisions
+// - Publishing workflow: syncing published advisories to the public-advisory collection
+// - Notifications: triggering email notifications for approval requests and after-hours postings
+// - Audit tracking: maintaining isLatestRevision flags and publishedAt timestamps
 
-"use strict";
-/**
- * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#lifecycle-hooks)
- * to customize this model
- */
-
-const { queueAdvisoryEmail } = require("../../../../helpers/taskQueue.js");
-const disabled = process.env.DISABLE_LIFECYCLES === "true";
+const { queueAdvisoryEmail } = require("../helpers/taskQueue.js");
 
 const getNextAdvisoryNumber = async () => {
   const results = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findMany({
@@ -51,6 +34,7 @@ const getNextRevisionNumber = async (advisoryNumber) => {
 
 const archiveOldPublicAdvisoryAudit = async (data) => {
   delete data.id;
+  delete data.documentId;
   delete data.updatedBy;
   delete data.createdBy;
   delete data.links; // keep links connected to the latest revision, not the archived version
@@ -74,13 +58,17 @@ const savePublicAdvisory = async (publicAdvisory) => {
     filters: {
       advisoryNumber: publicAdvisory.advisoryNumber
     },
-    fields: ['id']
+    fields: ["advisoryNumber"]
   });
   if (publicAdvisory.advisoryStatus.code === "PUB") {
     publicAdvisory.publishedAt = new Date();
     if (isExist) {
       try {
         publicAdvisory.id = isExist.id;
+        publicAdvisory.documentId = isExist.documentId;
+        strapi.log.info(
+          `updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
+        );
         await strapi.documents('api::public-advisory.public-advisory').update({
           documentId: isExist.documentId, data: publicAdvisory
         })
@@ -93,6 +81,10 @@ const savePublicAdvisory = async (publicAdvisory) => {
     } else {
       try {
         delete publicAdvisory.id;
+        delete publicAdvisory.documentId;
+        strapi.log.info(
+          `creating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
+        );
         await strapi.documents('api::public-advisory.public-advisory').create({
           data: publicAdvisory
         });
@@ -105,6 +97,9 @@ const savePublicAdvisory = async (publicAdvisory) => {
     }
   } else if (isExist) {
     try {
+      strapi.log.info(
+        `deleting public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
+      );
       await strapi.documents('api::public-advisory.public-advisory').delete({ documentId: isExist.documentId });
     } catch (error) {
       strapi.log.error(
@@ -117,8 +112,8 @@ const savePublicAdvisory = async (publicAdvisory) => {
 
 const copyToPublicAdvisory = async (newPublicAdvisory) => {
   if (newPublicAdvisory.isLatestRevision && newPublicAdvisory.advisoryStatus) {
-    const publishedStatuses = ["PUB", "INA"];
-    if (publishedStatuses.includes(newPublicAdvisory.advisoryStatus.code)) {
+    const triggerStatuses = ["PUB", "INA"];
+    if (triggerStatuses.includes(newPublicAdvisory.advisoryStatus.code)) {
       await savePublicAdvisory(newPublicAdvisory);
     }
   }
@@ -170,9 +165,8 @@ const isAdvisoryEqual = (newData, oldData) => {
   return true;
 };
 
-module.exports = {
-  beforeCreate: async (ctx) => {
-    if (disabled) return;
+const staffPortalAdvisoryAuditMiddleware = (strapi) => {
+  const beforeCreate = async (ctx) => {
     let { data } = ctx.params;
     if (!data.revisionNumber && !data.advisoryNumber) {
       data.advisoryNumber = await getNextAdvisoryNumber();
@@ -180,9 +174,9 @@ module.exports = {
       data.isLatestRevision = true;
       data.publishedAt = new Date();
     }
-  },
-  afterCreate: async (ctx) => {
-    if (disabled) return;
+  };
+
+  const afterCreate = async (ctx) => {
     const newPublicAdvisoryAudit = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
       documentId: ctx.result.documentId,
       populate: "*"
@@ -209,17 +203,21 @@ module.exports = {
     }
 
     await copyToPublicAdvisory(newPublicAdvisoryAudit);
-  },
-  beforeUpdate: async (ctx) => {
-    if (disabled) return;
-    let { data, where } = ctx.params;
+  };
+
+  const beforeUpdate = async (ctx) => {
+    let { data, documentId } = ctx.params;
+
+    documentId = documentId || data?.documentId;
+    if (!documentId) return;
+
     const newPublicAdvisory = data;
     if (!newPublicAdvisory.publishedAt) return;
 
     newPublicAdvisory.publishedAt = new Date();
     newPublicAdvisory.isLatestRevision = true;
     const oldPublicAdvisory = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
-      documentId: where.documentId,
+      documentId,
       populate: "*"
     });
 
@@ -227,6 +225,9 @@ module.exports = {
     if (!oldPublicAdvisory.publishedAt) return;
 
     // save the status of the old advisory so we can get it back in afterUpdate()
+    if (!ctx.state) {
+      ctx.state = {};
+    }
     ctx.state.oldStatus = oldPublicAdvisory.advisoryStatus?.code;
 
     const oldAdvisoryStatus = oldPublicAdvisory.advisoryStatus
@@ -264,9 +265,9 @@ module.exports = {
       );
       return;
     }
-  },
-  afterUpdate: async (ctx) => {
-    if (disabled) return;
+  };
+
+  const afterUpdate = async (ctx) => {
     const publicAdvisoryAudit = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
       documentId: ctx.result.documentId,
       populate: "*"
@@ -297,6 +298,46 @@ module.exports = {
     }
 
     await copyToPublicAdvisory(publicAdvisoryAudit);
-  },
+  };
+
+  // Middleware entry point
+  return async (context, next) => {
+    if (
+      context.uid !== "api::public-advisory-audit.public-advisory-audit" ||
+      !["update", "create"].includes(context.action)
+    ) {
+      return await next();
+    }
+
+    strapi.log.info(
+      `staffPortalAdvisoryAuditMiddleware triggered for action ${context.action}`,
+    );
+
+    /**
+     * This structure and the before/after functions above mimic Strapi 4 lifecycle
+     * hooks, enabling reuse of legacy code in Strapi 5 middleware. Keeping a similar
+     * layout helps Git track file history as a move/modify, preserving history
+     * and simplifying reviews.
+     */
+
+    // replicate beforeCreate/afterCreate lifecycles in Strapi 4
+    if (context.action === "create") {
+      await beforeCreate(context);
+      context.result = await next();
+      await afterCreate(context);
+      return context.result;
+    }
+
+    // replicate beforeUpdate/afterUpdate lifecycles in Strapi 4
+    if (context.action === "update") {
+      await beforeUpdate(context);
+      context.result = await next();
+      await afterUpdate(context);
+      return context.result;
+    }
+
+    return await next();
+  };
 };
 
+module.exports = staffPortalAdvisoryAuditMiddleware;

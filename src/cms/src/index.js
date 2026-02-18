@@ -6,6 +6,7 @@ const {
 const restCacheInvalidationMiddleware = require("./document-middlewares/rest-cache-invalidation.js");
 const nameGeneratorMiddleware = require("./document-middlewares/name-generator.js");
 const photoRelationSyncMiddleware = require("./document-middlewares/photo-relation-sync.js");
+const staffPortalAdvisoryAuditMiddleware = require("./document-middlewares/staff-portal-advisory-audit.js");
 const authStrategyOverride = require("./extensions/users-permissions/strategies/keycloak-users-permissions");
 
 module.exports = {
@@ -42,6 +43,7 @@ module.exports = {
       restCacheInvalidationMiddleware,
       nameGeneratorMiddleware,
       photoRelationSyncMiddleware,
+      staffPortalAdvisoryAuditMiddleware,
     ];
     middlewares.forEach((middleware) => {
       strapi.documents.use(middleware(strapi));
