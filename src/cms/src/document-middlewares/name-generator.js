@@ -233,6 +233,8 @@ const nameGeneratorMiddleware = (strapi) => {
       return await next(); // Call the next middleware in the stack
     }
 
+    strapi.log.info(`nameGeneratorMiddleware ${context.uid}-${context.action}`);
+
     await updateName(context.params.data, context.uid);
 
     return await next(); // Call the next middleware in the stack

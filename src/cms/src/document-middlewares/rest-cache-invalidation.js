@@ -3,7 +3,7 @@ const cachedCollectionTypes = [
   "api::protected-area.protected-area",
 ];
 
-const pageActions = ["create", "update", "delete"];
+const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 
 // The middleware function
 const restCacheInvalidationMiddleware = (strapi) => {
@@ -24,7 +24,7 @@ const restCacheInvalidationMiddleware = (strapi) => {
       return await next(); // Call the next middleware in the stack
     }
 
-    console.log(
+    strapi.log.info(
       `restCacheInvalidationMiddleware ${context.uid}->${context.action}`,
     );
     // @TODO: for bulk operations this will run once per doccument. Consider optimizing.
