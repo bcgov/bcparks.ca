@@ -47,9 +47,9 @@ exports.createElasticPark = async function (park, photos) {
   // convert parkNames
   if (park.parkNames?.length) {
     let parkNames = park.parkNames
-      .filter((n) => n.parkNameType?.nameTypeId !== 2)
+      .filter((n) => n.parkNameType && n.parkNameType?.nameTypeId !== 2)
       .map((n) => {
-        return n.parkName.toLowerCase();
+        return n.parkName ? n.parkName.toLowerCase() : "";
       });
     park.parkNames = [...new Set(parkNames || [])];
   } else {
