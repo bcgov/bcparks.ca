@@ -45,20 +45,20 @@ const searchIndexingMiddleware = (strapi) => {
       `Search indexing middleware trigered: ${context.uid}, action: ${context.action}`,
     );
 
-    // Get the data so we have the orcs
-    let data = context.params.data;
-    if (!data) {
-      data = await strapi.documents(context.uid).findOne({
-        documentId: context.params.documentId,
-        fields: ["orcs"],
-      });
-    }
-
     // Handle protectedAreas and parkPhotos
     if (
       context.uid === protectedAreaCollectionType ||
       context.uid === photoCollectionType
     ) {
+      // ensure we have the data so we can get the orcs
+      let data = context.params.data;
+      if (!data) {
+        data = await strapi.documents(context.uid).findOne({
+          documentId: context.params.documentId,
+          fields: ["orcs"],
+        });
+      }
+      // if we have the orcs, queue the park for indexing or removal from index
       const orcs = data?.orcs;
       if (orcs) {
         if (context.action === "delete" || context.action === "unpublish") {
