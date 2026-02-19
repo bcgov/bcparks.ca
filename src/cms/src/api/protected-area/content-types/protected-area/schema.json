@@ -72,7 +72,8 @@
       "type": "integer"
     },
     "isFogZone": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "featureId": {
       "type": "integer"
@@ -108,7 +109,8 @@
       "mappedBy": "protectedArea"
     },
     "hasCampfireBan": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "fireZones": {
       "type": "relation",
@@ -129,7 +131,8 @@
       "mappedBy": "protectedAreas"
     },
     "hasCampfireBanOverride": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "campfireBanEffectiveDate": {
       "type": "date"

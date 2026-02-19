@@ -40,7 +40,8 @@
       "type": "string"
     },
     "isActive": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "imageUrl": {
       "type": "string"
@@ -71,7 +72,8 @@
       "type": "integer"
     },
     "showPhotoCredit": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     }
   }
 }

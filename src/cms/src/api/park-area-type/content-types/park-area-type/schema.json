@@ -30,7 +30,8 @@
       "target": "api::facility-type.facility-type"
     },
     "closureAffectsAccessStatus": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "parkAreas": {
       "type": "relation",

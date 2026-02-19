@@ -81,7 +81,8 @@
       "mappedBy": "site"
     },
     "isUnofficialSite": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "note": {
       "type": "string"

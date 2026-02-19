@@ -36,7 +36,8 @@
       "type": "string"
     },
     "isActive": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "defaultDescription": {
       "type": "customField",

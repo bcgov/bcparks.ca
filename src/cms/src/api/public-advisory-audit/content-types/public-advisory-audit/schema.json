@@ -20,7 +20,8 @@
       "type": "integer"
     },
     "isLatestRevision": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "title": {
       "type": "string"
@@ -29,7 +30,8 @@
       "type": "text"
     },
     "isSafetyRelated": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "listingRank": {
       "type": "integer",
@@ -49,19 +51,24 @@
       "type": "integer"
     },
     "isReservationsAffected": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "isAdvisoryDateDisplayed": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "isEffectiveDateDisplayed": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "isEndDateDisplayed": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "isUpdatedDateDisplayed": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "submittedBy": {
       "type": "string"
@@ -174,7 +181,8 @@
       "type": "string"
     },
     "isUrgentAfterHours": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     }
   }
 }
