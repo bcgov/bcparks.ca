@@ -97,6 +97,7 @@ const getAllParkFeatures = async (apiBaseUrl, startingLetter = null) => {
 
   const params = qs.stringify(
     {
+      status: "published",
       filters,
       fields: [
         "isActive",
@@ -152,6 +153,7 @@ const getAllParkFeatures = async (apiBaseUrl, startingLetter = null) => {
 const getParkFeatures = async (apiBaseUrl, orcs) => {
   const params = qs.stringify(
     {
+      status: "published",
       filters: {
         isActive: true,
         protectedArea: {
@@ -210,6 +212,7 @@ const getParkFeatures = async (apiBaseUrl, orcs) => {
 const getParkFeaturesByOrcsSiteNumber = async (apiBaseUrl, orcsSiteNumber) => {
   const params = qs.stringify(
     {
+      status: "published",
       filters: {
         isActive: true,
         site: {
@@ -268,6 +271,7 @@ const getParkFeaturesByOrcsSiteNumber = async (apiBaseUrl, orcsSiteNumber) => {
 const getProtectedArea = async (apiBaseUrl, orcs) => {
   const params = qs.stringify(
     {
+      status: "published",
       fields: ["hasCampfireBan"],
       populate: {
         parkGate: PARK_GATE,
