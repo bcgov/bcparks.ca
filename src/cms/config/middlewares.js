@@ -29,7 +29,12 @@ module.exports = [
             "'self'",
             "youtube.com",
             "www.youtube.com"
-          ]
+          ],
+          "script-src": [
+            "'self'",
+            "https://apollo-server-landing-page.cdn.apollographql.com",
+            "https://embeddable-sandbox.cdn.apollographql.com",
+          ],
         },
       },
     },
@@ -49,13 +54,14 @@ module.exports = [
   "strapi::favicon",
   "strapi::public",
   {
-    name: 'strapi::body',
+    name: "strapi::body",
     config: {
-      jsonLimit: '2mb',
+      jsonLimit: "2mb",
       formLimit: "2mb",
       textLimit: "2mb",
       formidable: {
         maxFileSize: 250 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
       },
     },
-  },];
+  },
+];
