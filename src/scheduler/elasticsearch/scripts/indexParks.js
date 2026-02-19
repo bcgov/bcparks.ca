@@ -48,7 +48,6 @@ exports.indexParks = async function (options) {
     }
 
     for (const park of parkList) {
-      logger.info(`indexing park ${park.orcs}`);
       if (await indexPark(park, photoList)) {
         indexed.push(taskId(queue, park.orcs));
       } else {
@@ -123,6 +122,7 @@ const indexPark = async function (park, photos) {
 
   // send the data to elasticsearch
   try {
+    getLogger().info(`indexing park ${park.orcs}`);
     await elasticClient.indexPark({ itemId: doc.orcs, document: doc });
   } catch (error) {
     getLogger().error(error);
@@ -171,6 +171,27 @@ const getBatch = async function (queuedTasks, options) {
   const response = await cmsAxios.get(parksQuery);
   const parkList = response.data.data;
   getLogger().info(`Got ${parkList.length} protected areas from Strapi`);
+
+  // if the number of parks retrieved is less than the number of parks in the
+  // queue, append missing draft parks
+  if (parkList.length < queueParkIds.length) {
+    const draftParksQuery = parksQuery + "&status=draft";
+    const draftResponse = await cmsAxios.get(draftParksQuery);
+    const draftParkList = draftResponse.data.data;
+
+    // get the documentIds from the draft parks that aren't in the published parks
+    const publishedParkDocIds = parkList.map((p) => p.documentId);
+
+    // get all the draft parks that aren't in the published parks
+    const extraDrafts = draftParkList.filter((p) => !publishedParkDocIds.includes(p.documentId));
+
+    getLogger().warn(
+      `Adding ${extraDrafts.length} draft protected areas to the list (to be removed from index).`,
+    );
+
+    parkList.push(...extraDrafts);
+  }
+
   return parkList;
 };
 

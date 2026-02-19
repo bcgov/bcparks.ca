@@ -13,7 +13,7 @@ const relatedCollectionTypes = [
   "api::park-date.park-date",
 ];
 
-const pageActions = ["create", "update", "delete"];
+const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 
 // Helper function to handle connect/disconnect logic
 const handleConnectOrDisconnect = async (documentId) => {
@@ -23,6 +23,7 @@ const handleConnectOrDisconnect = async (documentId) => {
     fields: ["orcs"],
   });
   if (pa?.orcs) {
+    strapi.log.info(`queuing park ${pa.orcs} for indexing...`);
     await indexPark(pa.orcs);
   }
 };
@@ -40,16 +41,31 @@ const searchIndexingMiddleware = (strapi) => {
       return await next(); // Call the next middleware in the stack
     }
 
+    strapi.log.info(
+      `Search indexing middleware trigered: ${context.uid}, action: ${context.action}`,
+    );
+
+    // Get the data so we have the orcs
+    let data = context.params.data;
+    if (!data) {
+      data = await strapi.documents(context.uid).findOne({
+        documentId: context.params.documentId,
+        fields: ["orcs"],
+      });
+    }
+
     // Handle protectedAreas and parkPhotos
     if (
       context.uid === protectedAreaCollectionType ||
       context.uid === photoCollectionType
     ) {
-      const orcs = context.params.data?.orcs;
+      const orcs = data?.orcs;
       if (orcs) {
-        if (context.action === "delete") {
+        if (context.action === "delete" || context.action === "unpublish") {
+          strapi.log.info(`queuing park ${orcs} for removal from index...`);
           await removePark(orcs);
         } else {
+          strapi.log.info(`queuing park ${orcs} for indexing...`);
           await indexPark(orcs);
         }
       }
@@ -113,7 +129,9 @@ const searchIndexingMiddleware = (strapi) => {
             populate: { protectedArea: { fields: ["orcs"] } },
           });
           if (document?.protectedArea?.orcs) {
-            await indexPark(document.protectedArea.orcs);
+            const orcs = document.protectedArea.orcs;
+            strapi.log.info(`queuing park ${orcs} for indexing...`);
+            await indexPark(orcs);
           }
         }
       }
