@@ -24,61 +24,80 @@
       "required": true
     },
     "isActive": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "isOpen": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "closureAffectsAccessStatus": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "inReservationSystem": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasReservations": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasFirstComeFirstServed": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasFrontcountryReservations": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasFrontcountryGroupReservations": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasFrontcountryCabinReservations": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasBackcountryReservations": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasBackcountryGroupReservations": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasBackcountryShelterReservations": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasBackcountryPermits": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasBackcountryWildernessReservations": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasGroupPicnicReservations": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasCanoeCircuitReservations": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hasWinterFee": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "isCleanAirSite": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "offSeasonUse": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "totalCapacity": {
       "type": "string"

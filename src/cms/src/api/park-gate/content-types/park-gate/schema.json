@@ -11,7 +11,8 @@
   },
   "attributes": {
     "hasGate": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "gateOpenHoursStartTime": {
       "type": "time"
@@ -20,13 +21,16 @@
       "type": "time"
     },
     "gateOpensAtDawn": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "gateClosesAtDusk": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "gateOpen24Hours": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "gateNote": {
       "type": "customField",

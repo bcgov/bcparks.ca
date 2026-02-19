@@ -11,7 +11,8 @@
   },
   "attributes": {
     "isActive": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "operatingYear": {
       "type": "integer",

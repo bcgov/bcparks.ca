@@ -20,7 +20,8 @@
       "unique": true
     },
     "closureAffectsAccessStatus": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "campingType": {
       "type": "relation",

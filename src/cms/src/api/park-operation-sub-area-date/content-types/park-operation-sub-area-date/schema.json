@@ -23,7 +23,8 @@
       "inversedBy": "parkOperationSubAreaDates"
     },
     "isActive": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "openDate": {
       "type": "date"

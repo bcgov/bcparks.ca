@@ -19,14 +19,12 @@
       "default": true
     },
     "isDateAnnual": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "operatingYear": {
       "type": "integer",
       "required": true
-    },
-    "name": {
-      "type": "string"
     },
     "startDate": {
       "type": "date",

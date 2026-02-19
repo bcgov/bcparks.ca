@@ -25,10 +25,12 @@
       "customField": "plugin::ckeditor5.CKEditor"
     },
     "isFacilityOpen": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "isActive": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": null
     },
     "hideStandardCallout": {
       "type": "boolean",
