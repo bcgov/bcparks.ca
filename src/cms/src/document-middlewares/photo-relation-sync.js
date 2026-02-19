@@ -72,6 +72,9 @@ const photoRelationSyncMiddleware = (strapi) => {
       return await next(); // Call the next middleware in the stack
     }
 
+    strapi.log.info(
+      `photoRelationSyncMiddleware ${context.uid}-${context.action}`,
+    );
     await syncRelatedIdentifiers(context.params.data, strapi);
 
     return await next(); // Call the next middleware in the stack

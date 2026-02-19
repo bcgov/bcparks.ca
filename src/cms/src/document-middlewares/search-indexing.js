@@ -42,7 +42,7 @@ const searchIndexingMiddleware = (strapi) => {
     }
 
     strapi.log.info(
-      `Search indexing middleware trigered: ${context.uid}, action: ${context.action}`,
+      `searchIndexingMiddleware ${context.uid}-${context.action}`,
     );
 
     // Handle protectedAreas and parkPhotos

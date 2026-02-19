@@ -310,7 +310,7 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
     }
 
     strapi.log.info(
-      `staffPortalAdvisoryAuditMiddleware triggered for action ${context.action}`,
+      `staffPortalAdvisoryAuditMiddleware ${context.uid}-${context.action}`,
     );
 
     /**
