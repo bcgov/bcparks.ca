@@ -97,7 +97,7 @@ export default function ParkHeader({
   const parkDates = getParkDates(operationDates)
   const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
   const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
-  const gateNote = parkGate.gateNote ?? parkOperation?.openNote?.data?.openNote ?? null
+  const gateNote = parkGate?.gateNote ?? parkOperation?.openNote?.data?.openNote ?? null
   const hasParkDates = parkDates && parkDates.length > 0
   const hasGateNote = gateNote && gateNote.length > 0
   
