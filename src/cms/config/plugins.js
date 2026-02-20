@@ -5,7 +5,7 @@ module.exports = ({ env }) => {
         shadowCRUD: true,
         amountLimit: 2500,
         depthLimit: 7,
-        landingPage: process.env.ENABLE_GRAPHQL_PLAYGROUND || false,
+        landingPage: env.bool("ENABLE_GRAPHQL_PLAYGROUND", false),
         apolloServer: {
           tracing: false,
           introspection: true,
