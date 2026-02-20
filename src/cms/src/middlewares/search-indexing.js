@@ -141,4 +141,4 @@ const searchIndexingMiddleware = (strapi) => {
   };
 };
 
-module.exports = { searchIndexingMiddleware };
+module.exports = searchIndexingMiddleware;
