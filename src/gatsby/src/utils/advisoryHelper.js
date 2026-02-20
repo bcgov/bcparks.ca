@@ -60,13 +60,13 @@ const loadAllAdvisories = (apiBaseUrl) => {
 
 // Get advisory displayed date
 const getAdvisoryDate = (advisory) => {
-  if (advisory.isAdvisoryDateDisplayed) {
+  if (advisory.isAdvisoryDateDisplayed && advisory.advisoryDate) {
     return new Date(advisory.advisoryDate)
   }
-  if (advisory.isEffectiveDateDisplayed) {
+  if (advisory.isEffectiveDateDisplayed && advisory.effectiveDate) {
     return new Date(advisory.effectiveDate)
   }
-  if (advisory.isUpdatedDateDisplayed) {
+  if (advisory.isUpdatedDateDisplayed && advisory.updatedDate) {
     return new Date(advisory.updatedDate)
   }
   // If none of the above conditions are met

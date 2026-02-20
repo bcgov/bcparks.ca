@@ -217,6 +217,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       // q = api query
       const params = qs.stringify(
         {
+          sort: ["advisoryDate:desc"],
           pagination: {
             limit: pageLen,
             start: pageLen * (pageIndex - 1),
