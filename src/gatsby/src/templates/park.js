@@ -745,11 +745,6 @@ export const query = graphql`
           }
         }
       }
-      parkGate {
-        gateNote {
-          data
-        }
-      }
       biogeoclimaticZones {
         zone
       }
