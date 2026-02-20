@@ -97,9 +97,9 @@ export default function ParkHeader({
   const parkDates = getParkDates(operationDates)
   const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
   const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
-  const openNote = parkOperation?.openNote?.data?.openNote || null
+  const gateNote = parkGate?.gateNote || parkOperation?.openNote?.data?.openNote || null
   const hasParkDates = parkDates && parkDates.length > 0
-  const hasOpenNote = openNote && openNote.length > 0
+  const hasGateNote = gateNote && gateNote.length > 0
   
   // Check if park access status is "Closed"
   const [isParkOpen, setIsParkOpen] = useState(null)
@@ -122,7 +122,7 @@ export default function ParkHeader({
   }, [parkFeatures])
 
   const hasFeatureDates = hasCampingWithDates || hasFacilitiesWithDates
-  const hasDatesSection = isParkOpen !== false && (hasParkDates || hasOpenNote || hasFeatureDates)
+  const hasDatesSection = isParkOpen !== false && (hasParkDates || hasGateNote || hasFeatureDates)
 
   // Check if array contains a "tldr"
   const hasTldr = (array) => array?.includes("tldr") || false
@@ -182,8 +182,8 @@ export default function ParkHeader({
                   {renderGateTimes(parkGate)}
                 </p>
               }
-              {hasOpenNote &&
-                <HtmlContent>{openNote}</HtmlContent>
+              {hasGateNote &&
+                <HtmlContent>{gateNote}</HtmlContent>
               }
               {hasFeatureDates && (
                 <p>
