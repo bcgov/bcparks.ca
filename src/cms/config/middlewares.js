@@ -8,14 +8,19 @@ module.exports = [
         useDefaults: true,
         directives: {
           "connect-src": ["'self'", "https:"],
-          "script-src": ["'self'", "'unsafe-inline'"],
+          "script-src": [
+            "'self'",
+            "'unsafe-inline'",
+            "https://apollo-server-landing-page.cdn.apollographql.com",
+            "https://embeddable-sandbox.cdn.apollographql.com",
+          ],
           "img-src": [
             "'self'",
             "data:",
             "blob:",
             "dl.airtable.com",
             "market-assets.strapi.io",
-            "nrs.objectstore.gov.bc.ca"
+            "nrs.objectstore.gov.bc.ca",
           ],
           "media-src": [
             "'self'",
@@ -23,13 +28,9 @@ module.exports = [
             "blob:",
             "dl.airtable.com",
             "market-assets.strapi.io",
-            "nrs.objectstore.gov.bc.ca"
+            "nrs.objectstore.gov.bc.ca",
           ],
-          "frame-src": [
-            "'self'",
-            "youtube.com",
-            "www.youtube.com"
-          ]
+          "frame-src": ["'self'", "youtube.com", "www.youtube.com"],
         },
       },
     },
@@ -49,13 +50,14 @@ module.exports = [
   "strapi::favicon",
   "strapi::public",
   {
-    name: 'strapi::body',
+    name: "strapi::body",
     config: {
-      jsonLimit: '2mb',
+      jsonLimit: "2mb",
       formLimit: "2mb",
       textLimit: "2mb",
       formidable: {
         maxFileSize: 250 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
       },
     },
-  },];
+  },
+];
