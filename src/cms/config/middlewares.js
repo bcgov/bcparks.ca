@@ -8,12 +8,7 @@ module.exports = [
         useDefaults: true,
         directives: {
           "connect-src": ["'self'", "https:"],
-          "script-src": [
-            "'self'",
-            "'unsafe-inline'",
-            "https://apollo-server-landing-page.cdn.apollographql.com",
-            "https://embeddable-sandbox.cdn.apollographql.com",
-          ],
+          "script-src": ["'self'", "'unsafe-inline'"],
           "img-src": [
             "'self'",
             "data:",
@@ -35,6 +30,7 @@ module.exports = [
       },
     },
   },
+  { name: "global::graphql-security" },
   "strapi::poweredBy",
   {
     // doc https://docs.strapi.io/dev-docs/configurations/middlewares#cors

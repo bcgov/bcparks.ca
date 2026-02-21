@@ -1,6 +1,6 @@
 /**
  * Lifecycle hooks for content-type specific validation and simple logic
- * Complex logic has been moved to src/document-middlewares/
+ * Complex logic has been moved to src/middlewares/
  * see https://docs.strapi.io/dev-docs/backend-customization/models#lifecycle-hooks
  */
 
