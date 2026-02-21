@@ -60,4 +60,5 @@ module.exports = [
       },
     },
   },
+  { name: "global::draft-read-blocker" },
 ];
