@@ -55,13 +55,23 @@ module.exports = {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap({ strapi }) {
+  async bootstrap({ strapi }) {
     elasticClient.initializeESClient();
 
     // Register Keycloak authentication strategy
     const authService = strapi.get("auth");
     if (authService) {
       authService.register("content-api", authStrategyOverride);
+    }
+
+    // Trigger API documentation generation in production.
+    // Automatic generation was disabled in Strapi PR #21950.
+    // Note: The documentation plugin is not officially supported in Strapi 5.
+    if (process.env.NODE_ENV === "production") {
+      const svc = strapi.plugin("documentation")?.service("documentation");
+      if (svc) {
+        await svc.generateFullDoc();
+      }
     }
   },
 };
