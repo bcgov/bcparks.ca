@@ -45,16 +45,17 @@ const draftReadBlockerMiddleware = (_config, { strapi }) => {
   return async (ctx, next) => {
     // Only check for status query parameter
     const status = ctx.query?.status;
-    const isGraphQL = ctx.request.url.toLowerCase().startsWith("/graphql");
+    const url = (ctx.request?.url || "").toLowerCase();
 
+    const isGraphQL = url.startsWith("/graphql");
     if (!isGraphQL && (status === undefined || status === "published")) {
       return await next();
     }
 
     // Allow access by the Content Manager, which is for the Strapi admin UI
-    const isContentManager = ctx.request.url
-      .toLowerCase()
-      .startsWith("/admin/content-manager");
+    const isContentManager =
+      url.startsWith("/admin/content-manager") ||
+      url.startsWith("/content-manager");
     if (isContentManager) {
       return await next();
     }
