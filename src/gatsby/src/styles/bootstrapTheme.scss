@@ -6,7 +6,7 @@
 @import "variables.scss";
 @import "content-mixins";
 
-@include base-link-styles;
+@include theme-link-styles;
 
 .btn, .nav-link {
   &:focus-visible {

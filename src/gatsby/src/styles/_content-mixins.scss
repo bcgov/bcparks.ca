@@ -28,26 +28,7 @@
   }
 }
 
-// Base link styles for global use (nav, UI, etc)
 @mixin base-link-styles {
-  a {
-    color: $colorBlueMed;
-    text-decoration: none;
-    &:hover {
-      color: $colorBlue;
-      text-decoration: underline;
-    }
-    &:not(.btn):focus {
-      color: $colorBlue;
-    }
-    &:focus-visible {
-      box-shadow: none;
-    }
-  }
-}
-
-// Content link styles (for article/page content)
-@mixin content-link-styles {
   a {
     color: $colorBlue;
     text-decoration: underline;
@@ -91,6 +72,24 @@
       position: absolute;
       top: 4px;
       right: 0;
+    }
+  }
+}
+
+// Base link styles for global use (nav, UI, etc)
+@mixin theme-link-styles {
+  a {
+    color: $colorBlueMed;
+    text-decoration: none;
+    &:hover {
+      color: $colorBlue;
+      text-decoration: underline;
+    }
+    &:not(.btn):focus {
+      color: $colorBlue;
+    }
+    &:focus-visible {
+      box-shadow: none;
     }
   }
 }
@@ -284,6 +283,7 @@
       &:hover, &:focus-visible {
         background-color: $colorIceBlue !important;
         border: $colorBlue 1px solid !important;
+        text-decoration: none;
       }
       &:focus-visible {
         outline: $colorBlueMed solid 2px;

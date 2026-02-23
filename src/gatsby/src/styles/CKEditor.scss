@@ -14,10 +14,40 @@
 // (Override CKEditor's built-in styles directly in ckeditor.js)
 .ck.ck-content.ck-editor__editable {
   @include base-content-styles;
+
+  // Paragraph styles (match Bootstrap defaults)
+  p {
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
   @include heading-styles;
+
+  // Additional heading styles for h3 and h4 (match Bootstrap defaults from frontend)
+  h3, h4 {
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.25em;
+    margin-top: 0;
+  }
+
+  h3 {
+    font-size: 1.25em;
+    margin-bottom: 1.17em;
+  }
+
+  h4 {
+    font-size: 1em;
+  }
 
   // Content element styles
   @include blockquote-styles;
+
+  blockquote {
+    // Override CKEditor's default italic style for blockquotes
+    font-style: normal;
+  }
+
   @include callout-styles;
   @include media-styles;
   @include table-base-styles;
@@ -34,8 +64,12 @@
 
   @include button-styles;
 
-  // Content link styles (underlined for article content)
-  @include content-link-styles;
+  @include base-link-styles;
+  @include theme-link-styles;
+
+  a {
+    text-decoration: underline;
+  }
 
   // Editor-specific style classes (not used on frontend)
   .legacy-link {

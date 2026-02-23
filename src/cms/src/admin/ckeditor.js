@@ -21,8 +21,6 @@ import { lightTheme } from "@strapi/design-system";
 
 export const registerCKEditor = async (_app) => {
   const customTheme = {
-    ...defaultTheme,
-
     // Dark-only fixes: extend the plugin's dark theme rather than applying these globally.
     dark: [
       defaultTheme.dark,

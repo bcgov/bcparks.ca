@@ -78,9 +78,7 @@ style {
 /** Typography and body content styles **/
 
 @include heading-styles;
-
-// Content styles for CMS-rendered HTML content
-@include content-link-styles;
+@include base-link-styles;
 @include blockquote-styles;
 @include callout-styles;
 @include media-styles;
