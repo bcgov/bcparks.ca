@@ -54,7 +54,7 @@ const draftReadBlockerMiddleware = (_config, { strapi }) => {
     // Allow access by the Content Manager, which is for the Strapi admin UI
     const isContentManager = ctx.request.url
       .toLowerCase()
-      .startsWith("/content-manager");
+      .startsWith("/admin/content-manager");
     if (isContentManager) {
       return await next();
     }
