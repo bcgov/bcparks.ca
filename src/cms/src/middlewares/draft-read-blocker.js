@@ -5,7 +5,7 @@
 
 const { parse, visit } = require("graphql");
 
-module.exports = (_config, { strapi }) => {
+module.exports = () => {
   return async (ctx, next) => {
     // Only check for status query parameter
     const status = ctx.query?.status;

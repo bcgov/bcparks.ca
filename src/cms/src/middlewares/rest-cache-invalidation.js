@@ -14,7 +14,7 @@ const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 
 // MAIN MIDDLEWARE FUNCTION (scaffolding)
 
-module.exports = (strapi) => {
+module.exports = () => {
   return async (context, next) => {
     if (
       !cachedCollectionTypes.includes(context.uid) ||

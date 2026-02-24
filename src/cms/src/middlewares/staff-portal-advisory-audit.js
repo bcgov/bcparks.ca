@@ -6,7 +6,7 @@
 
 const { queueAdvisoryEmail } = require("../helpers/taskQueue.js");
 
-module.exports = (strapi) => {
+module.exports = () => {
   async function beforeCreate(ctx) {
     let { data } = ctx.params;
     if (!data.revisionNumber && !data.advisoryNumber) {

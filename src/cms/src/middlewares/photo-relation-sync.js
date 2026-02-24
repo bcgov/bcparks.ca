@@ -11,7 +11,7 @@ const photoCollectionType = "api::park-photo.park-photo";
 
 // MAIN MIDDLEWARE FUNCTION (scaffolding)
 
-module.exports = (strapi) => {
+module.exports = () => {
   return async (context, next) => {
     if (
       context.uid !== photoCollectionType ||

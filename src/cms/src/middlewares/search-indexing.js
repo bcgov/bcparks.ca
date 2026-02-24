@@ -24,7 +24,7 @@ const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 
 // MAIN MIDDLEWARE FUNCTION
 
-module.exports = (strapi) => {
+module.exports = () => {
   return async (context, next) => {
     // Early return if the document type or action is not relevant for indexing
     if (

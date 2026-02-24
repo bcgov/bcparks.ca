@@ -76,7 +76,7 @@ const collectionTypes = collections.map((c) => c.uid);
 
 // MAIN MIDDLEWARE FUNCTION (scaffolding)
 
-module.exports = (strapi) => {
+module.exports = () => {
   return async (context, next) => {
     if (
       !collectionTypes.includes(context.uid) ||
