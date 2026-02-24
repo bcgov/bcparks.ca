@@ -62,7 +62,7 @@
     &::after {
       content: "\f054";
       display: inline-block;
-      font-weight: 700;
+      font-weight: 900;
       font-size: 0.625em;
       font-family: "Font Awesome 5 Free";
       font-style: normal;
@@ -309,6 +309,7 @@
         text-rendering: auto;
         -webkit-font-smoothing: antialiased;
         margin-left: 8px;
+        font-weight: 900;
       }
     }
 
