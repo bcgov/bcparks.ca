@@ -1,7 +1,15 @@
-const { getGatsbyUrl } = require("../src/admin/extensions/admin-styles/admin-styles.js");
+const devTestEnvironments = [
+  "http://localhost:8000",
+  "https://alpha-dev.bcparks.ca",
+  "https://dev.bcparks.ca/",
+  "https://alpha-test.bcparks.ca",
+  "https://test.bcparks.ca",
+];
 
-// Resolve the URL of the Gatsby frontend for this environment
-const frontendUrl = getGatsbyUrl(process.env);
+const cdnUrls = [
+  "https://cdn.jsdelivr.net",
+  "https://cdnjs.cloudflare.com",
+];
 
 module.exports = [
   "strapi::logger",
@@ -24,17 +32,15 @@ module.exports = [
           "style-src": [
             "'self'",
             "'unsafe-inline'",
-            frontendUrl,
+            ...devTestEnvironments,
             "https://bcparks.ca",
-            "https://cdn.jsdelivr.net",
-            "https://cdnjs.cloudflare.com"
+            ...cdnUrls,
           ],
           "font-src": [
             "'self'",
-            frontendUrl,
+            ...devTestEnvironments,
             "https://bcparks.ca",
-            "https://cdn.jsdelivr.net",
-            "https://cdnjs.cloudflare.com"
+            ...cdnUrls,
           ],
           "img-src": [
             "'self'",
