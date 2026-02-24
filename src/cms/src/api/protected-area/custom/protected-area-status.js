@@ -355,7 +355,7 @@ const getProtectedAreaStatus = async (ctx) => {
       pepRegionId: null,
       pepRegionName: null,
       publicAdvisoryId: publicAdvisory.id,
-      publicAdvisoryAuditId: publicAdvisoryAudit?.id
+      publicAdvisoryAuditId: publicAdvisoryAudit?.documentId,
     };
   });
 
