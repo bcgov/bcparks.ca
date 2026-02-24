@@ -95,64 +95,9 @@ module.exports = () => {
 
 // HELPER FUNCTIONS
 
-// Extracts documentId from either plain string or connect/disconnect format
-function getDocumentId(relationData) {
-  if (typeof relationData === "string") return relationData;
-  if (relationData?.connect?.[0]?.documentId)
-    return relationData.connect[0].documentId;
-  return null;
-}
-
-// Fetches a related document by documentId or use existing record
-async function fetchRelation(uid, documentId, fallback, fields) {
-  if (documentId) {
-    return await strapi.documents(uid).findOne({ documentId, fields });
-  }
-  return fallback;
-}
-
-// Standard suffix generator that retrieves the name from a related content type
-// Uses the config to specify which relation to follow and which field to use as the suffix
-async function standardRelationLabel(data, dbRecord, config) {
-  const { relationName, labelFieldName, relatedContentType } = config;
-  const typeDocumentId = getDocumentId(data[relationName]);
-  return typeDocumentId
-    ? (
-        await strapi.documents(relatedContentType).findOne({
-          documentId: typeDocumentId,
-          fields: [labelFieldName],
-        })
-      )?.[labelFieldName]
-    : (dbRecord?.[relationName]?.[labelFieldName] ?? "");
-}
-
-// Custom suffix generator for park-contact - example of extending standardRelationLabel
-// Falls back to the contact's title field.
-async function contactLabel(data, dbRecord, config) {
-  const isRemovingParkOperatorContact =
-    data.parkOperatorContact?.connect?.length <
-    data.parkOperatorContact?.disconnect?.length;
-
-  const titleFallback = data.title || dbRecord?.title || "";
-
-  if (isRemovingParkOperatorContact) {
-    return titleFallback;
-  }
-
-  const poContactName = await standardRelationLabel(data, dbRecord, config);
-  return poContactName || titleFallback;
-}
-
-// Custom suffix generator for park-date - combines operating year and date type
-// e.g.: "F-104-2: 2022 - Backcountry registration"
-async function parkDateLabel(data, dbRecord, config) {
-  const year = data.operatingYear || dbRecord?.operatingYear || "";
-  const dateType = await standardRelationLabel(data, dbRecord, config);
-  return ` ${year} - ${dateType}`;
-}
-
-// Generates display name by combining prefix (ORCS/site number) and generated suffix
-// Modifies data.name in place with format: {orcs|orcsSiteNumber}:{suffix}
+// This is the main workhorse function that generates display name by combining a prefix
+// (orcs, orcsSiteNumber, PA-orcsAreaNumber, F-orcsFeatureNumber) and a generated suffix.
+// Modifies data.name in place with format: {prefix}:{suffix}
 async function updateName(data, uid) {
   let recordInstance = {};
 
@@ -245,4 +190,62 @@ async function updateName(data, uid) {
   }
 
   return data;
+}
+
+// Extracts documentId from either plain string or connect/disconnect format
+function getDocumentId(relationData) {
+  if (typeof relationData === "string") return relationData;
+  if (relationData?.connect?.[0]?.documentId)
+    return relationData.connect[0].documentId;
+  return null;
+}
+
+// Fetches a related document by documentId or use existing record
+async function fetchRelation(uid, documentId, fallback, fields) {
+  if (documentId) {
+    return await strapi.documents(uid).findOne({ documentId, fields });
+  }
+  return fallback;
+}
+
+// SUFFIX GENERATOR FUNCTIONS
+
+// Standard suffix generator that retrieves the name from a related content type
+// Uses the config to specify which relation to follow and which field to use as the suffix
+async function standardRelationLabel(data, dbRecord, config) {
+  const { relationName, labelFieldName, relatedContentType } = config;
+  const typeDocumentId = getDocumentId(data[relationName]);
+  return typeDocumentId
+    ? (
+        await strapi.documents(relatedContentType).findOne({
+          documentId: typeDocumentId,
+          fields: [labelFieldName],
+        })
+      )?.[labelFieldName]
+    : (dbRecord?.[relationName]?.[labelFieldName] ?? "");
+}
+
+// Custom suffix generator for park-contact - example of extending standardRelationLabel
+// Falls back to the contact's title field.
+async function contactLabel(data, dbRecord, config) {
+  const isRemovingParkOperatorContact =
+    data.parkOperatorContact?.connect?.length <
+    data.parkOperatorContact?.disconnect?.length;
+
+  const titleFallback = data.title || dbRecord?.title || "";
+
+  if (isRemovingParkOperatorContact) {
+    return titleFallback;
+  }
+
+  const poContactName = await standardRelationLabel(data, dbRecord, config);
+  return poContactName || titleFallback;
+}
+
+// Custom suffix generator for park-date - combines operating year and date type
+// e.g.: "F-104-2: 2022 - Backcountry registration"
+async function parkDateLabel(data, dbRecord, config) {
+  const year = data.operatingYear || dbRecord?.operatingYear || "";
+  const dateType = await standardRelationLabel(data, dbRecord, config);
+  return ` ${year} - ${dateType}`;
 }
