@@ -23,7 +23,7 @@ module.exports = () => {
     strapi.log.info(
       `photoRelationSyncMiddleware ${context.uid}-${context.action}`,
     );
-    await syncRelatedIdentifiers(context.params.data, strapi);
+    await syncRelatedIdentifiers(context.params.data);
 
     return await next(); // Call the next middleware in the stack
   };
@@ -33,7 +33,7 @@ module.exports = () => {
 
 // This is the main workhorse function that handles the logic of syncing
 // related identifiers based on connected/disconnected relations
-async function syncRelatedIdentifiers(data, strapi) {
+async function syncRelatedIdentifiers(data) {
   let recordInstance = {};
 
   // fetch existing record if documentId is present
