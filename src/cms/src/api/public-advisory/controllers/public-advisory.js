@@ -53,6 +53,7 @@ module.exports = createCoreController(
       const entity = await strapi
         .documents("api::public-advisory.public-advisory")
         .findFirst({
+          status: "published",
           filters: { advisoryNumber: id },
           ...ctx.query
         });
