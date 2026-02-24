@@ -16,7 +16,7 @@ const getDocumentId = (relationData) => {
 // Helper to fetch a related document by documentId or use existing record
 const fetchRelation = async (uid, documentId, fallback, fields) => {
   if (documentId) {
-    return await strapi.documents(uid).findOne({ documentId, status: "published", fields });
+    return await strapi.documents(uid).findOne({ documentId, fields });
   }
   return fallback;
 };
@@ -30,7 +30,6 @@ async function standardRelationLabel(data, dbRecord, config) {
     ? (
         await strapi.documents(relatedContentType).findOne({
           documentId: typeDocumentId,
-          status: "published",
           fields: [labelFieldName],
         })
       )?.[labelFieldName]
