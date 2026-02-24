@@ -53,6 +53,7 @@ module.exports = createCoreController(
       const entity = await strapi
         .documents("api::public-advisory.public-advisory")
         .findFirst({
+          status: "published",
           filters: { advisoryNumber: id },
           ...ctx.query
         });
@@ -74,6 +75,7 @@ module.exports = createCoreController(
       let entities;
       let pagination;
 
+      ctx.query.status = "published";
       ctx.query = populateStandardMessages(ctx.query);
 
       if (ctx.query.queryText !== undefined) {
@@ -101,6 +103,7 @@ module.exports = createCoreController(
       };
     },
     async count(ctx) {
+      ctx.query.status = "published";
       if (ctx.query.queryText !== undefined) {
         return await strapi
           .service("api::public-advisory.search")
@@ -116,6 +119,7 @@ module.exports = createCoreController(
       let entities;
       let pagination;
 
+      ctx.query.status = "published";
       ctx.query.populate = {
         accessStatus: {
           fields: [
