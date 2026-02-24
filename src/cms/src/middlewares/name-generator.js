@@ -1,7 +1,7 @@
-// Middleware to auto-generate human-readable display names for park-related collection types
-// These names appear as the display representation in Strapi's admin UI when viewing relations
-// Format: {orcs|orcsSiteNumber}:{typeName}
-// Example: "9508:Hiking" displays instead of just the database ID
+/**
+ *  NAME GENERATOR (Document Services Middleware)
+ *  Generates human-readable names for park-related collections (example: "9508:Hiking")
+ */
 
 const pageActions = ["create", "update"];
 

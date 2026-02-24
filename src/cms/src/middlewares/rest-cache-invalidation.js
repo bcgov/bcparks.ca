@@ -1,3 +1,8 @@
+/**
+ *  REST CACHE INVALIDATION (Document Services Middleware)
+ *  Invalidates all rest-cache entries when any cached content changes
+ */
+
 const cachedCollectionTypes = [
   "api::public-advisory.public-advisory",
   "api::protected-area.protected-area",

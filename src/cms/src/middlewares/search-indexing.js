@@ -1,3 +1,8 @@
+/**
+ *  SEARCH INDEXING (Document Services Middleware)
+ *  Queues jobs to refresh the search index when relevant park data changes
+ */
+
 const { indexPark, removePark } = require("../helpers/taskQueue.js");
 
 const protectedAreaCollectionType = "api::protected-area.protected-area";

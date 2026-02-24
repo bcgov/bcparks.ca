@@ -1,12 +1,6 @@
 /**
- * Strapi's draft/publish system allows access to drafts via ?status=draft, but
- * does not restrict unauthenticated users by default.
- *
- * This middleware blocks unauthenticated access to draft content in Strapi.
- * For REST requests, it checks for the presence of the 'status' query parameter
- * and blocks access if it's set to anything other than 'published'.
- * For GraphQL requests, it inspects the query string for any usage of the
- * 'status' argument and blocks access if found.
+ *  DRAFT READ BLOCKER (Request Middleware)
+ *  Blocks unauthenticated draft access (REST + GraphQL)
  */
 
 const { parse, visit } = require("graphql");
@@ -41,7 +35,7 @@ function hasGraphQLArgument(queryString, argumentName = "status") {
   return found;
 }
 
-const draftReadBlockerMiddleware = (_config, { strapi }) => {
+module.exports = (_config, { strapi }) => {
   return async (ctx, next) => {
     // Only check for status query parameter
     const status = ctx.query?.status;
@@ -101,5 +95,3 @@ const draftReadBlockerMiddleware = (_config, { strapi }) => {
     }
   };
 };
-
-module.exports = draftReadBlockerMiddleware;
