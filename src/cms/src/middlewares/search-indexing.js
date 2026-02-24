@@ -21,7 +21,7 @@ const relatedCollectionTypes = [
 const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 
 // Helper function to handle connect/disconnect logic
-const handleConnectOrDisconnect = async (documentId) => {
+async function handleConnectOrDisconnect(documentId) {
   if (!documentId) return;
   const pa = await strapi.documents(protectedAreaCollectionType).findOne({
     documentId,
@@ -32,7 +32,7 @@ const handleConnectOrDisconnect = async (documentId) => {
     strapi.log.info(`queuing park ${pa.orcs} for indexing...`);
     await indexPark(pa.orcs);
   }
-};
+}
 
 // The middleware function
 const searchIndexingMiddleware = (strapi) => {

@@ -6,7 +6,7 @@
 
 const { queueAdvisoryEmail } = require("../helpers/taskQueue.js");
 
-const getNextAdvisoryNumber = async () => {
+async function getNextAdvisoryNumber() {
   const results = await strapi
     .documents("api::public-advisory-audit.public-advisory-audit")
     .findMany({
@@ -17,9 +17,9 @@ const getNextAdvisoryNumber = async () => {
   let maxAdvisoryNumber = results.length > 0 ? results[0].advisoryNumber : 0;
   if (!maxAdvisoryNumber || maxAdvisoryNumber < 0) maxAdvisoryNumber = 0;
   return ++maxAdvisoryNumber;
-};
+}
 
-const getNextRevisionNumber = async (advisoryNumber) => {
+async function getNextRevisionNumber(advisoryNumber) {
   const results = await strapi
     .documents("api::public-advisory-audit.public-advisory-audit")
     .findMany({
@@ -33,9 +33,9 @@ const getNextRevisionNumber = async (advisoryNumber) => {
   let maxRevisionNumber = results.length > 0 ? results[0].revisionNumber : 0;
   if (!maxRevisionNumber || maxRevisionNumber < 0) maxRevisionNumber = 0;
   return ++maxRevisionNumber;
-};
+}
 
-const archiveOldPublicAdvisoryAudit = async (data) => {
+async function archiveOldPublicAdvisoryAudit(data) {
   delete data.id;
   delete data.documentId;
   delete data.updatedBy;
@@ -54,9 +54,9 @@ const archiveOldPublicAdvisoryAudit = async (data) => {
       error,
     );
   }
-};
+}
 
-const savePublicAdvisory = async (publicAdvisory) => {
+async function savePublicAdvisory(publicAdvisory) {
   delete publicAdvisory.updatedBy;
   delete publicAdvisory.createdBy;
   const isExist = await strapi
@@ -118,18 +118,18 @@ const savePublicAdvisory = async (publicAdvisory) => {
       );
     }
   }
-};
+}
 
-const copyToPublicAdvisory = async (newPublicAdvisory) => {
+async function copyToPublicAdvisory(newPublicAdvisory) {
   if (newPublicAdvisory.isLatestRevision && newPublicAdvisory.advisoryStatus) {
     const triggerStatuses = ["PUB", "INA"];
     if (triggerStatuses.includes(newPublicAdvisory.advisoryStatus.code)) {
       await savePublicAdvisory(newPublicAdvisory);
     }
   }
-};
+}
 
-const isAdvisoryEqual = (newData, oldData) => {
+function isAdvisoryEqual(newData, oldData) {
   const fieldsToCompare = {
     title: null,
     description: null,
@@ -173,10 +173,10 @@ const isAdvisoryEqual = (newData, oldData) => {
       return false;
   }
   return true;
-};
+}
 
 const staffPortalAdvisoryAuditMiddleware = (strapi) => {
-  const beforeCreate = async (ctx) => {
+  async function beforeCreate(ctx) {
     let { data } = ctx.params;
     if (!data.revisionNumber && !data.advisoryNumber) {
       data.advisoryNumber = await getNextAdvisoryNumber();
@@ -184,9 +184,9 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
       data.isLatestRevision = true;
       data.publishedAt = new Date();
     }
-  };
+  }
 
-  const afterCreate = async (ctx) => {
+  async function afterCreate(ctx) {
     const newPublicAdvisoryAudit = await strapi
       .documents("api::public-advisory-audit.public-advisory-audit")
       .findOne({
@@ -218,9 +218,9 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
     }
 
     await copyToPublicAdvisory(newPublicAdvisoryAudit);
-  };
+  }
 
-  const beforeUpdate = async (ctx) => {
+  async function beforeUpdate(ctx) {
     let { data, documentId } = ctx.params;
 
     documentId = documentId || data?.documentId;
@@ -282,9 +282,9 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
       );
       return;
     }
-  };
+  }
 
-  const afterUpdate = async (ctx) => {
+  async function afterUpdate(ctx) {
     const publicAdvisoryAudit = await strapi
       .documents("api::public-advisory-audit.public-advisory-audit")
       .findOne({
@@ -319,7 +319,7 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
     }
 
     await copyToPublicAdvisory(publicAdvisoryAudit);
-  };
+  }
 
   // Middleware entry point
   return async (context, next) => {
