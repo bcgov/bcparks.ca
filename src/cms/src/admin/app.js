@@ -4,13 +4,16 @@
 import { registerCKEditor } from "./ckeditor";
 import { injectAdminStylesheets } from "./admin-styles";
 
-// Register admin plugins
+// Register admin plugins and customizations here.
+
+// register() hook runs before the app is initialized
 const register = async (app) => {
   await registerCKEditor(app);
 };
 
 const config = {};
 
+// bootstrap() hook runs after the app is initialized, before the server starts
 const bootstrap = (_app) => {
   injectAdminStylesheets();
 };

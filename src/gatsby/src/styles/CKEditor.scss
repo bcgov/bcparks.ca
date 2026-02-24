@@ -1,17 +1,13 @@
 // This stylesheet imports body content and typography styles
 // for use in the CMS WYSIWYG editor (CKEditor).
-// All styles are scoped to .ck-content to only apply within the editor.
 
-// Font dependencies now loaded via <link> tags in src/cms/src/admin/app.js
-// @import url("https://cdn.jsdelivr.net/npm/@bcgov/bc-sans@2.1.0/css/BC_Sans.min.css");
-// @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
+// BC Sans and FontAwesome font dependencies loaded via <link> tags
+// in src/cms/src/admin/app.js
 
 @import "variables.scss";
 @import "content-mixins";
 
-// Apply body styles directly to the editor container
-// Using higher specificity to override CKEditor's rules which load inline, after our stylesheet
-// (Override CKEditor's built-in styles directly in ckeditor.js)
+// Apply body styles CKEditor WYSIWYG content
 .ck.ck-content.ck-editor__editable {
   @include base-content-styles;
 
@@ -53,7 +49,7 @@
   @include table-base-styles;
   @include list-type-styles;
 
-  /* Override CKEditor's built-in list styles with base styles from Bootstrap reboot */
+  // Override CKEditor's built-in list styles with base styles from Bootstrap reboot
   ol, ul, dl {
     padding-left: 2em;
     margin-left: 0;
