@@ -174,6 +174,7 @@ const getProtectedAreaStatus = async (ctx) => {
     populate: "*",
   });
   const parkNamesAliases = await strapi.documents("api::park-name.park-name").findMany({
+    status: "published",
     limit: -1,
     populate: "*",
     filters: {

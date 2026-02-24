@@ -20,6 +20,7 @@ const handleConnectOrDisconnect = async (documentId) => {
   if (!documentId) return;
   const pa = await strapi.documents(protectedAreaCollectionType).findOne({
     documentId,
+    status: "published",
     fields: ["orcs"],
   });
   if (pa?.orcs) {
@@ -125,6 +126,7 @@ const searchIndexingMiddleware = (strapi) => {
         if (documentId) {
           const document = await strapi.documents(context.uid).findOne({
             documentId,
+            status: "published",
             fields: ["documentId"],
             populate: { protectedArea: { fields: ["orcs"] } },
           });

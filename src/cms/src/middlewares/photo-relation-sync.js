@@ -25,6 +25,7 @@ async function syncRelatedIdentifiers(data, strapi) {
   const protectedArea = paDocumentId
     ? await strapi.documents("api::protected-area.protected-area").findOne({
         documentId: paDocumentId,
+        status: "published",
         fields: ["orcs"],
       })
     : recordInstance?.protectedArea;
@@ -34,6 +35,7 @@ async function syncRelatedIdentifiers(data, strapi) {
   const site = siteDocumentId
     ? await strapi.documents("api::site.site").findOne({
         documentId: siteDocumentId,
+        status: "published",
         fields: ["orcsSiteNumber"],
       })
     : recordInstance?.site;
