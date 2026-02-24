@@ -4,7 +4,7 @@
   This migration generates name fields for park dates based on related park date
   types, operating years, and park entities. In the future these will be generated
   by the name-generator middleware, but this one-time migration is needed to populate
-  existing records that are missing name values.
+  all existing records with name values.
 */
 
 module.exports = {
