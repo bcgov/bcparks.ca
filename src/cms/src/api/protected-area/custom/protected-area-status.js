@@ -74,6 +74,7 @@ const getPublishedPublicAdvisories = async () => {
 
 const getPublicAdvisoryAudits = async () => {
   return await strapi.documents("api::public-advisory-audit.public-advisory-audit").findMany({
+    status: "published",
     fields: ["advisoryNumber"],
     filters: {
       isLatestRevision: true
@@ -147,12 +148,14 @@ const getProtectedAreaStatus = async (ctx) => {
   ) {
     entities = await strapi.documents("api::protected-area.protected-area").findMany({
       ...query,
+      status: "published",
       limit: -1,
       populate: protectedAreaPopulateSettings,
     });
   } else {
     entities = await strapi.documents("api::protected-area.protected-area").findMany({
       ...ctx.query,
+      status: "published",
       populate: protectedAreaPopulateSettings
     });
   }
