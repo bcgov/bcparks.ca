@@ -73,6 +73,7 @@ const getPublishedPublicAdvisories = async () => {
 
 const getPublicAdvisoryAudits = async () => {
   return await strapi.documents("api::public-advisory-audit.public-advisory-audit").findMany({
+    status: "published",
     fields: ["advisoryNumber"],
     filters: {
       isLatestRevision: true
