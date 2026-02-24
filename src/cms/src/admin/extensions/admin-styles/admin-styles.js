@@ -9,10 +9,33 @@
  * Called from `src/admin/app.js` during the admin panel `bootstrap` lifecycle.
  */
 
+/**
+ * Reads environment variables to return the URL of the Gatsby frontend.
+ *
+ * @returns {string} The URL of the Gatsby frontend.
+ */
+export function getGatsbyUrl() {
+  const { DEV, STRAPI_ADMIN_ENVIRONMENT } = import.meta.env;
+
+  // For local development, use the Gatsby development server URL
+  if (DEV || STRAPI_ADMIN_ENVIRONMENT === "local") {
+    return "http://localhost:8000";
+  }
+
+  // For dev and test environments, use the environment-specific URL
+  // (e.g. https://alpha-test.bcparks.ca)
+  if (STRAPI_ADMIN_ENVIRONMENT) {
+    return `https://${STRAPI_ADMIN_ENVIRONMENT}.bcparks.ca`;
+  }
+
+
+  // Use the production URL, or fall back to the production URL if
+  // STRAPI_ADMIN_ENVIRONMENT is undefined
+  return "https://bcparks.ca";
+}
+
 // CKEditor content styles URL - points to Gatsby frontend
-const contentStylesUrl = import.meta.env.DEV
-  ? "http://localhost:8000/ckeditor-styles.css"
-  : "https://bcparks.ca/ckeditor-styles.css";
+const editorStylesUrl = `${getGatsbyUrl()}/ckeditor-styles.css`;
 
 const injectAdminStylesheet = (href, dataAttr) => {
   if (typeof document === "undefined") return;
@@ -42,5 +65,5 @@ export const injectAdminStylesheets = () => {
   );
 
   // Then inject CKEditor content styles
-  injectAdminStylesheet(contentStylesUrl, "ckeditor-content-styles");
+  injectAdminStylesheet(editorStylesUrl, "ckeditor-content-styles");
 };
