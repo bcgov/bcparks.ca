@@ -1,6 +1,7 @@
 /**
- *  PUBLIC ADVISORY AUDIT (Document Services Middleware)
- *  Staff Portal logic for advisory revisioning, publishing, and notifications
+ *  STAFF PORTAL ADVISORY AUDIT (Document Services Middleware)
+ *  Provides advisory version history, publishing logic, and notifications using
+ *  a custom dual‑collection model
  */
 
 const { queueAdvisoryEmail } = require("../helpers/taskQueue.js");
