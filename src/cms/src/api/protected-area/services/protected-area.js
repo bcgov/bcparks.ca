@@ -14,6 +14,7 @@ module.exports = createCoreService(
         .documents("api::protected-area.protected-area")
         .findMany({
           fields: ["id", "orcs", "protectedAreaName"],
+          status: "published",
           limit: 2000,
           sort: ["protectedAreaName"],
         });

@@ -57,6 +57,7 @@ const searchIndexingMiddleware = (strapi) => {
         data = await strapi.documents(context.uid).findOne({
           documentId: context.params.documentId,
           fields: ["orcs"],
+          status: "published",
         });
       }
       // if we have the orcs, queue the park for indexing or removal from index
