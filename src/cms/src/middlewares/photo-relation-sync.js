@@ -1,6 +1,7 @@
 /**
  *  PHOTO RELATION SYNC (Document Services Middleware)
- *  Stores `orcs` and `orcsSiteNumber` on park-photo records for backward compatibility
+ *  Stores `orcs` and `orcsSiteNumber` on park-photo records for backward
+ *  compatibility
  */
 
 const pageActions = ["create", "update"];

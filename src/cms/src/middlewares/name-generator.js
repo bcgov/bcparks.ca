@@ -1,6 +1,7 @@
 /**
  *  NAME GENERATOR (Document Services Middleware)
- *  Generates human-readable names for park-related collections (example: "9508:Hiking")
+ *  Creates display names for park-related collections using ORCS-based
+ *  well-known keys (example: "9508:Hiking")
  */
 
 const pageActions = ["create", "update"];
