@@ -53,7 +53,6 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
 };
 const getPublishedPublicAdvisories = async () => {
   return await strapi.documents("api::public-advisory.public-advisory").findMany({
-    status: "published",
     sort: "id",
     limit: -1,
     populate: {

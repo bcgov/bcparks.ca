@@ -21,7 +21,6 @@ module.exports = ({ strapi }) => ({
             },
             advisoryStatus: advisoryStatusMap["PUB"].id,
           },
-          status: "published",
           populate: "*",
         });
 
@@ -108,7 +107,6 @@ module.exports = ({ strapi }) => ({
             },
             advisoryStatus: advisoryStatusMap["APR"].id,
           },
-          status: "published",
           populate: "*",
         });
 
@@ -185,7 +183,6 @@ module.exports = ({ strapi }) => ({
               },
             ],
           },
-          status: "published",
         });
       expiringSoon.forEach(async (advisory) => {
         strapi.log.info(
@@ -242,7 +239,6 @@ module.exports = ({ strapi }) => ({
                 },
               ],
             },
-            status: "published",
           });
         publishingSoon.forEach(async (advisory) => {
           strapi.log.info(

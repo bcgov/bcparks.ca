@@ -53,7 +53,6 @@ module.exports = createCoreController(
       const entity = await strapi
         .documents("api::public-advisory.public-advisory")
         .findFirst({
-          status: "published",
           filters: { advisoryNumber: id },
           ...ctx.query
         });
@@ -167,7 +166,6 @@ module.exports = createCoreController(
             accessStatus: { fields: ["id"] },
             protectedAreas: { fields: ["id"] },
           },
-          status: "published",
         });
       const results = {};
       for (const advisory of entries) {
