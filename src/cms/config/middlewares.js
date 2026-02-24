@@ -1,7 +1,7 @@
 const devTestEnvironments = [
   "http://localhost:8000",
   "https://alpha-dev.bcparks.ca",
-  "https://dev.bcparks.ca/",
+  "https://dev.bcparks.ca",
   "https://alpha-test.bcparks.ca",
   "https://test.bcparks.ca",
 ];
