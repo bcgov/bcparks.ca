@@ -5,36 +5,6 @@
 
 const { parse, visit } = require("graphql");
 
-// helper function to check if a GraphQL query string contains a specific argument
-function hasGraphQLArgument(queryString, argumentName = "status") {
-  if (typeof queryString !== "string" || queryString.trim() === "") {
-    return false;
-  }
-  let found = false;
-  try {
-    const ast = parse(queryString);
-    visit(ast, {
-      Field(node) {
-        if (found) return;
-        if (node.arguments && node.arguments.length > 0) {
-          for (const arg of node.arguments) {
-            if (
-              (arg?.name?.value || "").toLowerCase() ===
-              argumentName.toLowerCase()
-            ) {
-              found = true;
-              return;
-            }
-          }
-        }
-      },
-    });
-  } catch {
-    return false;
-  }
-  return found;
-}
-
 module.exports = (_config, { strapi }) => {
   return async (ctx, next) => {
     // Only check for status query parameter
@@ -95,3 +65,35 @@ module.exports = (_config, { strapi }) => {
     }
   };
 };
+
+// HELPER FUNCTIONS
+
+// Checks if a GraphQL query string contains a specific argument
+function hasGraphQLArgument(queryString, argumentName = "status") {
+  if (typeof queryString !== "string" || queryString.trim() === "") {
+    return false;
+  }
+  let found = false;
+  try {
+    const ast = parse(queryString);
+    visit(ast, {
+      Field(node) {
+        if (found) return;
+        if (node.arguments && node.arguments.length > 0) {
+          for (const arg of node.arguments) {
+            if (
+              (arg?.name?.value || "").toLowerCase() ===
+              argumentName.toLowerCase()
+            ) {
+              found = true;
+              return;
+            }
+          }
+        }
+      },
+    });
+  } catch {
+    return false;
+  }
+  return found;
+}

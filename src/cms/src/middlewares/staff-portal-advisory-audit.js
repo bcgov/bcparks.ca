@@ -6,6 +6,194 @@
 
 const { queueAdvisoryEmail } = require("../helpers/taskQueue.js");
 
+module.exports = (strapi) => {
+  async function beforeCreate(ctx) {
+    let { data } = ctx.params;
+    if (!data.revisionNumber && !data.advisoryNumber) {
+      data.advisoryNumber = await getNextAdvisoryNumber();
+      data.revisionNumber = 1;
+      data.isLatestRevision = true;
+      data.publishedAt = new Date();
+    }
+  }
+
+  async function afterCreate(ctx) {
+    const newPublicAdvisoryAudit = await strapi
+      .documents("api::public-advisory-audit.public-advisory-audit")
+      .findOne({
+        documentId: ctx.result.documentId,
+        populate: "*",
+      });
+
+    const newAdvisoryStatus = newPublicAdvisoryAudit.advisoryStatus?.code;
+
+    if (newAdvisoryStatus === "ARQ") {
+      await queueAdvisoryEmail(
+        "Approval requested",
+        "Approval requested for the following advisory",
+        newPublicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterCreate()",
+      );
+    }
+
+    if (
+      newAdvisoryStatus === "PUB" &&
+      newPublicAdvisoryAudit.isUrgentAfterHours
+    ) {
+      await queueAdvisoryEmail(
+        "After-hours advisory posted",
+        "An after-hours advisory was posted",
+        newPublicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterCreate()",
+      );
+    }
+
+    await copyToPublicAdvisory(newPublicAdvisoryAudit);
+  }
+
+  async function beforeUpdate(ctx) {
+    let { data, documentId } = ctx.params;
+
+    documentId = documentId || data?.documentId;
+    if (!documentId) return;
+
+    const newPublicAdvisory = data;
+    if (!newPublicAdvisory.publishedAt) return;
+
+    newPublicAdvisory.publishedAt = new Date();
+    newPublicAdvisory.isLatestRevision = true;
+    const oldPublicAdvisory = await strapi
+      .documents("api::public-advisory-audit.public-advisory-audit")
+      .findOne({
+        documentId,
+        populate: "*",
+      });
+
+    if (!oldPublicAdvisory) return;
+    if (!oldPublicAdvisory.publishedAt) return;
+
+    // save the status of the old advisory so we can get it back in afterUpdate()
+    if (!ctx.state) {
+      ctx.state = {};
+    }
+    ctx.state.oldStatus = oldPublicAdvisory.advisoryStatus?.code;
+
+    const oldAdvisoryStatus = oldPublicAdvisory.advisoryStatus
+      ? oldPublicAdvisory.advisoryStatus.code
+      : "DFT";
+
+    if (isAdvisoryEqual(newPublicAdvisory, oldPublicAdvisory)) return;
+
+    // flow 5: system updates
+    if (newPublicAdvisory.modifiedBy === "system") {
+      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
+      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+        oldPublicAdvisory.advisoryNumber,
+      );
+      return;
+    }
+
+    // flow 4: update inactive (set by system)
+    if (
+      oldAdvisoryStatus === "INA" &&
+      oldPublicAdvisory.modifiedBy === "system"
+    ) {
+      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
+      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+        oldPublicAdvisory.advisoryNumber,
+      );
+      return;
+    }
+
+    // flow 3: update published advisory
+    if (oldAdvisoryStatus === "PUB") {
+      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
+      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+        oldPublicAdvisory.advisoryNumber,
+      );
+      return;
+    }
+  }
+
+  async function afterUpdate(ctx) {
+    const publicAdvisoryAudit = await strapi
+      .documents("api::public-advisory-audit.public-advisory-audit")
+      .findOne({
+        documentId: ctx.result.documentId,
+        populate: "*",
+      });
+
+    const oldAdvisoryStatus = ctx.state.oldStatus; // saved by beforeUpdate() above
+    const newAdvisoryStatus = publicAdvisoryAudit.advisoryStatus?.code;
+
+    if (newAdvisoryStatus === "ARQ" && oldAdvisoryStatus !== "ARQ") {
+      await queueAdvisoryEmail(
+        "Approval requested",
+        "Approval requested for the following advisory",
+        publicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterUpdate()",
+      );
+    }
+
+    if (
+      newAdvisoryStatus === "PUB" &&
+      oldAdvisoryStatus !== "PUB" &&
+      publicAdvisoryAudit.modifiedByRole === "submitter" &&
+      publicAdvisoryAudit.isUrgentAfterHours
+    ) {
+      await queueAdvisoryEmail(
+        "After-hours advisory posted",
+        "An after-hours advisory was posted",
+        publicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterUpdate()",
+      );
+    }
+
+    await copyToPublicAdvisory(publicAdvisoryAudit);
+  }
+
+  // Middleware entry point
+  return async (context, next) => {
+    if (
+      context.uid !== "api::public-advisory-audit.public-advisory-audit" ||
+      !["update", "create"].includes(context.action)
+    ) {
+      return await next();
+    }
+
+    strapi.log.info(
+      `staffPortalAdvisoryAuditMiddleware ${context.uid}-${context.action}`,
+    );
+
+    /**
+     * This structure mimics Strapi 4 lifecycle hooks, allowing legacy code reuse
+     * in Strapi 5 middleware.
+     * Keeping a similar layout preserves Git history and eases code reviews.
+     * For the original pattern, see the earliest git commit of this file.
+     */
+
+    // replicate beforeCreate/afterCreate lifecycles in Strapi 4
+    if (context.action === "create") {
+      await beforeCreate(context);
+      context.result = await next();
+      await afterCreate(context);
+      return context.result;
+    }
+
+    // replicate beforeUpdate/afterUpdate lifecycles in Strapi 4
+    if (context.action === "update") {
+      await beforeUpdate(context);
+      context.result = await next();
+      await afterUpdate(context);
+      return context.result;
+    }
+
+    return await next();
+  };
+};
+
+// HELPER FUNCTIONS
+
 async function getNextAdvisoryNumber() {
   const results = await strapi
     .documents("api::public-advisory-audit.public-advisory-audit")
@@ -174,191 +362,3 @@ function isAdvisoryEqual(newData, oldData) {
   }
   return true;
 }
-
-const staffPortalAdvisoryAuditMiddleware = (strapi) => {
-  async function beforeCreate(ctx) {
-    let { data } = ctx.params;
-    if (!data.revisionNumber && !data.advisoryNumber) {
-      data.advisoryNumber = await getNextAdvisoryNumber();
-      data.revisionNumber = 1;
-      data.isLatestRevision = true;
-      data.publishedAt = new Date();
-    }
-  }
-
-  async function afterCreate(ctx) {
-    const newPublicAdvisoryAudit = await strapi
-      .documents("api::public-advisory-audit.public-advisory-audit")
-      .findOne({
-        documentId: ctx.result.documentId,
-        populate: "*",
-      });
-
-    const newAdvisoryStatus = newPublicAdvisoryAudit.advisoryStatus?.code;
-
-    if (newAdvisoryStatus === "ARQ") {
-      await queueAdvisoryEmail(
-        "Approval requested",
-        "Approval requested for the following advisory",
-        newPublicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterCreate()",
-      );
-    }
-
-    if (
-      newAdvisoryStatus === "PUB" &&
-      newPublicAdvisoryAudit.isUrgentAfterHours
-    ) {
-      await queueAdvisoryEmail(
-        "After-hours advisory posted",
-        "An after-hours advisory was posted",
-        newPublicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterCreate()",
-      );
-    }
-
-    await copyToPublicAdvisory(newPublicAdvisoryAudit);
-  }
-
-  async function beforeUpdate(ctx) {
-    let { data, documentId } = ctx.params;
-
-    documentId = documentId || data?.documentId;
-    if (!documentId) return;
-
-    const newPublicAdvisory = data;
-    if (!newPublicAdvisory.publishedAt) return;
-
-    newPublicAdvisory.publishedAt = new Date();
-    newPublicAdvisory.isLatestRevision = true;
-    const oldPublicAdvisory = await strapi
-      .documents("api::public-advisory-audit.public-advisory-audit")
-      .findOne({
-        documentId,
-        populate: "*",
-      });
-
-    if (!oldPublicAdvisory) return;
-    if (!oldPublicAdvisory.publishedAt) return;
-
-    // save the status of the old advisory so we can get it back in afterUpdate()
-    if (!ctx.state) {
-      ctx.state = {};
-    }
-    ctx.state.oldStatus = oldPublicAdvisory.advisoryStatus?.code;
-
-    const oldAdvisoryStatus = oldPublicAdvisory.advisoryStatus
-      ? oldPublicAdvisory.advisoryStatus.code
-      : "DFT";
-
-    if (isAdvisoryEqual(newPublicAdvisory, oldPublicAdvisory)) return;
-
-    // flow 5: system updates
-    if (newPublicAdvisory.modifiedBy === "system") {
-      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber,
-      );
-      return;
-    }
-
-    // flow 4: update inactive (set by system)
-    if (
-      oldAdvisoryStatus === "INA" &&
-      oldPublicAdvisory.modifiedBy === "system"
-    ) {
-      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber,
-      );
-      return;
-    }
-
-    // flow 3: update published advisory
-    if (oldAdvisoryStatus === "PUB") {
-      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber,
-      );
-      return;
-    }
-  }
-
-  async function afterUpdate(ctx) {
-    const publicAdvisoryAudit = await strapi
-      .documents("api::public-advisory-audit.public-advisory-audit")
-      .findOne({
-        documentId: ctx.result.documentId,
-        populate: "*",
-      });
-
-    const oldAdvisoryStatus = ctx.state.oldStatus; // saved by beforeUpdate() above
-    const newAdvisoryStatus = publicAdvisoryAudit.advisoryStatus?.code;
-
-    if (newAdvisoryStatus === "ARQ" && oldAdvisoryStatus !== "ARQ") {
-      await queueAdvisoryEmail(
-        "Approval requested",
-        "Approval requested for the following advisory",
-        publicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterUpdate()",
-      );
-    }
-
-    if (
-      newAdvisoryStatus === "PUB" &&
-      oldAdvisoryStatus !== "PUB" &&
-      publicAdvisoryAudit.modifiedByRole === "submitter" &&
-      publicAdvisoryAudit.isUrgentAfterHours
-    ) {
-      await queueAdvisoryEmail(
-        "After-hours advisory posted",
-        "An after-hours advisory was posted",
-        publicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterUpdate()",
-      );
-    }
-
-    await copyToPublicAdvisory(publicAdvisoryAudit);
-  }
-
-  // Middleware entry point
-  return async (context, next) => {
-    if (
-      context.uid !== "api::public-advisory-audit.public-advisory-audit" ||
-      !["update", "create"].includes(context.action)
-    ) {
-      return await next();
-    }
-
-    strapi.log.info(
-      `staffPortalAdvisoryAuditMiddleware ${context.uid}-${context.action}`,
-    );
-
-    /**
-     * This structure and the before/after functions above mimic Strapi 4 lifecycle
-     * hooks, enabling reuse of legacy code in Strapi 5 middleware. Keeping a similar
-     * layout helps Git track file history as a move/modify, preserving history
-     * and simplifying reviews.
-     */
-
-    // replicate beforeCreate/afterCreate lifecycles in Strapi 4
-    if (context.action === "create") {
-      await beforeCreate(context);
-      context.result = await next();
-      await afterCreate(context);
-      return context.result;
-    }
-
-    // replicate beforeUpdate/afterUpdate lifecycles in Strapi 4
-    if (context.action === "update") {
-      await beforeUpdate(context);
-      context.result = await next();
-      await afterUpdate(context);
-      return context.result;
-    }
-
-    return await next();
-  };
-};
-
-module.exports = staffPortalAdvisoryAuditMiddleware;

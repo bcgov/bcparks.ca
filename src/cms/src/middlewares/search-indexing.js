@@ -5,6 +5,8 @@
 
 const { indexPark, removePark } = require("../helpers/taskQueue.js");
 
+// CONFIGURATION
+
 const protectedAreaCollectionType = "api::protected-area.protected-area";
 const photoCollectionType = "api::park-photo.park-photo";
 const publicAdvisoryCollectionType = "api::public-advisory.public-advisory";
@@ -20,22 +22,9 @@ const relatedCollectionTypes = [
 
 const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 
-// Helper function to handle connect/disconnect logic
-async function handleConnectOrDisconnect(documentId) {
-  if (!documentId) return;
-  const pa = await strapi.documents(protectedAreaCollectionType).findOne({
-    documentId,
-    status: "published",
-    fields: ["orcs"],
-  });
-  if (pa?.orcs) {
-    strapi.log.info(`queuing park ${pa.orcs} for indexing...`);
-    await indexPark(pa.orcs);
-  }
-}
+// MAIN MIDDLEWARE FUNCTION
 
-// The middleware function
-const searchIndexingMiddleware = (strapi) => {
+module.exports = (strapi) => {
   return async (context, next) => {
     // Early return if the document type or action is not relevant for indexing
     if (
@@ -149,4 +138,18 @@ const searchIndexingMiddleware = (strapi) => {
   };
 };
 
-module.exports = searchIndexingMiddleware;
+// HELPER FUNCTIONS
+
+// Handles orcs lookup and triggers indexing for related collections.
+async function handleConnectOrDisconnect(documentId) {
+  if (!documentId) return;
+  const pa = await strapi.documents(protectedAreaCollectionType).findOne({
+    documentId,
+    status: "published",
+    fields: ["orcs"],
+  });
+  if (pa?.orcs) {
+    strapi.log.info(`queuing park ${pa.orcs} for indexing...`);
+    await indexPark(pa.orcs);
+  }
+}

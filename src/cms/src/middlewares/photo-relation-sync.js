@@ -4,9 +4,35 @@
  *  compatibility
  */
 
+// CONFIGURATION
+
 const pageActions = ["create", "update"];
 const photoCollectionType = "api::park-photo.park-photo";
 
+// MAIN MIDDLEWARE FUNCTION (scaffolding)
+
+module.exports = (strapi) => {
+  return async (context, next) => {
+    if (
+      context.uid !== photoCollectionType ||
+      !pageActions.includes(context.action)
+    ) {
+      return await next(); // Call the next middleware in the stack
+    }
+
+    strapi.log.info(
+      `photoRelationSyncMiddleware ${context.uid}-${context.action}`,
+    );
+    await syncRelatedIdentifiers(context.params.data, strapi);
+
+    return await next(); // Call the next middleware in the stack
+  };
+};
+
+// HELPER FUNCTIONS
+
+// This is the main workhorse function that handles the logic of syncing
+// related identifiers based on connected/disconnected relations
 async function syncRelatedIdentifiers(data, strapi) {
   let recordInstance = {};
 
@@ -63,24 +89,3 @@ async function syncRelatedIdentifiers(data, strapi) {
 
   return data;
 }
-
-// The middleware function
-const photoRelationSyncMiddleware = (strapi) => {
-  return async (context, next) => {
-    if (
-      context.uid !== photoCollectionType ||
-      !pageActions.includes(context.action)
-    ) {
-      return await next(); // Call the next middleware in the stack
-    }
-
-    strapi.log.info(
-      `photoRelationSyncMiddleware ${context.uid}-${context.action}`,
-    );
-    await syncRelatedIdentifiers(context.params.data, strapi);
-
-    return await next(); // Call the next middleware in the stack
-  };
-};
-
-module.exports = photoRelationSyncMiddleware;

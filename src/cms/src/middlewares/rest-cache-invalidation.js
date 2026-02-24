@@ -3,6 +3,8 @@
  *  Invalidates all rest-cache entries when any cached content changes
  */
 
+// CONFIGURATION
+
 const cachedCollectionTypes = [
   "api::public-advisory.public-advisory",
   "api::protected-area.protected-area",
@@ -10,17 +12,9 @@ const cachedCollectionTypes = [
 
 const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 
-// The middleware function
-const restCacheInvalidationMiddleware = (strapi) => {
-  async function clearRestCache() {
-    const cachePlugin = strapi.plugins["rest-cache"];
-    if (cachePlugin) {
-      for (const collectionType of cachedCollectionTypes) {
-        await cachePlugin.services.cacheStore.clearByUid(collectionType);
-      }
-    }
-  }
+// MAIN MIDDLEWARE FUNCTION (scaffolding)
 
+module.exports = (strapi) => {
   return async (context, next) => {
     if (
       !cachedCollectionTypes.includes(context.uid) ||
@@ -39,4 +33,14 @@ const restCacheInvalidationMiddleware = (strapi) => {
   };
 };
 
-module.exports = restCacheInvalidationMiddleware;
+// HELPER FUNCTIONS
+
+// This is the main workhorse function that handles the logic of clearing rest-cache entries
+async function clearRestCache() {
+  const cachePlugin = strapi.plugins["rest-cache"];
+  if (cachePlugin) {
+    for (const collectionType of cachedCollectionTypes) {
+      await cachePlugin.services.cacheStore.clearByUid(collectionType);
+    }
+  }
+}
