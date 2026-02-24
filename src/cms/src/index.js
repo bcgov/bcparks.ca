@@ -44,7 +44,7 @@ module.exports = {
       staffPortalAdvisoryAuditMiddleware,
     ];
     middlewares.forEach((middleware) => {
-      strapi.documents.use(middleware(strapi));
+      strapi.documents.use(middleware());
     });
   },
 
