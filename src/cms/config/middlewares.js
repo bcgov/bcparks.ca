@@ -6,10 +6,7 @@ const devTestEnvironments = [
   "https://test.bcparks.ca",
 ];
 
-const cdnUrls = [
-  "https://cdn.jsdelivr.net",
-  "https://cdnjs.cloudflare.com",
-];
+const cdnUrls = ["https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"];
 
 module.exports = [
   "strapi::logger",

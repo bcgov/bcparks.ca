@@ -19,21 +19,21 @@ exports.onPostBuild = ({ reporter }) => {
   reporter.info(`Pages have been built!`)
 
   // Compile CKEditor.scss to CSS for CMS use
-  const sass = require('sass')
-  const fs = require('fs')
-  const path = require('path')
+  const sass = require("sass")
+  const fs = require("fs")
+  const path = require("path")
 
   try {
     const result = sass.renderSync({
-      file: path.join(__dirname, 'src/styles/CKEditor.scss'),
-      outputStyle: 'compressed',
+      file: path.join(__dirname, "src/styles/CKEditor.scss"),
+      outputStyle: "compressed",
       includePaths: [
-        path.join(__dirname, 'src/styles'),
-        path.join(__dirname, 'node_modules')
-      ]
+        path.join(__dirname, "src/styles"),
+        path.join(__dirname, "node_modules"),
+      ],
     })
 
-    const outputPath = path.join(__dirname, 'public/ckeditor-styles.css')
+    const outputPath = path.join(__dirname, "public/ckeditor-styles.css")
     fs.writeFileSync(outputPath, result.css)
     reporter.info(`CKEditor styles compiled to: ${outputPath}`)
   } catch (error) {

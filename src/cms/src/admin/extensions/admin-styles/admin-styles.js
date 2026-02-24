@@ -29,7 +29,6 @@ export function getGatsbyUrl(env) {
     return `https://${STRAPI_ADMIN_ENVIRONMENT}.bcparks.ca`;
   }
 
-
   // Use the production URL, or fall back to the production URL if
   // STRAPI_ADMIN_ENVIRONMENT is undefined
   return "https://bcparks.ca";
@@ -42,7 +41,7 @@ const injectAdminStylesheet = (href, dataAttr) => {
   if (typeof document === "undefined") return;
 
   // Use a data attribute to prevent injecting the same stylesheet multiple times
-  const dataAttrKey = 'data-custom-admin-styles';
+  const dataAttrKey = "data-custom-admin-styles";
 
   const existing = document.querySelector(`link[${dataAttrKey}="${dataAttr}"]`);
   if (existing) return;
@@ -58,11 +57,11 @@ export const injectAdminStylesheets = () => {
   // Inject font dependencies first
   injectAdminStylesheet(
     "https://cdn.jsdelivr.net/npm/@bcgov/bc-sans@2.1.0/css/BC_Sans.min.css",
-    "bc-sans-font"
+    "bc-sans-font",
   );
   injectAdminStylesheet(
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css",
-    "font-awesome"
+    "font-awesome",
   );
 
   // Then inject CKEditor content styles
