@@ -1,3 +1,8 @@
+const { getGatsbyUrl } = require("../src/admin/extensions/admin-styles/admin-styles.js");
+
+// Resolve the URL of the Gatsby frontend for this environment
+const frontendUrl = getGatsbyUrl(process.env);
+
 module.exports = [
   "strapi::logger",
   "strapi::errors",
@@ -19,14 +24,14 @@ module.exports = [
           "style-src": [
             "'self'",
             "'unsafe-inline'",
-            "http://localhost:8000",
+            frontendUrl,
             "https://bcparks.ca",
             "https://cdn.jsdelivr.net",
             "https://cdnjs.cloudflare.com"
           ],
           "font-src": [
             "'self'",
-            "http://localhost:8000",
+            frontendUrl,
             "https://bcparks.ca",
             "https://cdn.jsdelivr.net",
             "https://cdnjs.cloudflare.com"

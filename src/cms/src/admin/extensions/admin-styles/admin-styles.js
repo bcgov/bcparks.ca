@@ -12,10 +12,11 @@
 /**
  * Reads environment variables to return the URL of the Gatsby frontend.
  *
+ * @param {Object} env - Environment variables object
  * @returns {string} The URL of the Gatsby frontend.
  */
-export function getGatsbyUrl() {
-  const { DEV, STRAPI_ADMIN_ENVIRONMENT } = import.meta.env;
+export function getGatsbyUrl(env) {
+  const { DEV, STRAPI_ADMIN_ENVIRONMENT } = env ?? {};
 
   // For local development, use the Gatsby development server URL
   if (DEV || STRAPI_ADMIN_ENVIRONMENT === "local") {
@@ -35,7 +36,7 @@ export function getGatsbyUrl() {
 }
 
 // CKEditor content styles URL - points to Gatsby frontend
-const editorStylesUrl = `${getGatsbyUrl()}/ckeditor-styles.css`;
+const editorStylesUrl = `${getGatsbyUrl(import.meta.env)}/ckeditor-styles.css`;
 
 const injectAdminStylesheet = (href, dataAttr) => {
   if (typeof document === "undefined") return;
