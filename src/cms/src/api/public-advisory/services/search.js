@@ -18,6 +18,7 @@ module.exports = ({ strapi }) => ({
     }
 
     query.sort = ["advisoryDate:DESC"];
+    query.status = "published";
 
     const results = await strapi.documents("api::public-advisory.public-advisory").findMany(query);
     return { results: results };
@@ -25,6 +26,7 @@ module.exports = ({ strapi }) => ({
   countSearch: async (query) => {
     query = buildQuery(query);
     query.fields = ["id"];
+    query.status = "published";
     const results = await strapi.documents("api::public-advisory.public-advisory").findMany(query);
     return results.length;
   },

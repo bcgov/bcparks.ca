@@ -53,7 +53,6 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
 };
 const getPublishedPublicAdvisories = async () => {
   return await strapi.documents("api::public-advisory.public-advisory").findMany({
-    status: "published",
     sort: "id",
     limit: -1,
     populate: {
@@ -147,12 +146,14 @@ const getProtectedAreaStatus = async (ctx) => {
   ) {
     entities = await strapi.documents("api::protected-area.protected-area").findMany({
       ...query,
+      status: "published",
       limit: -1,
       populate: protectedAreaPopulateSettings,
     });
   } else {
     entities = await strapi.documents("api::protected-area.protected-area").findMany({
       ...ctx.query,
+      status: "published",
       populate: protectedAreaPopulateSettings
     });
   }
@@ -174,6 +175,7 @@ const getProtectedAreaStatus = async (ctx) => {
     populate: "*",
   });
   const parkNamesAliases = await strapi.documents("api::park-name.park-name").findMany({
+    status: "published",
     limit: -1,
     populate: "*",
     filters: {

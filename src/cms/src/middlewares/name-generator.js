@@ -1,25 +1,26 @@
-// Middleware to auto-generate human-readable display names for park-related collection types
-// These names appear as the display representation in Strapi's admin UI when viewing relations
-// Format: {orcs|orcsSiteNumber}:{typeName}
-// Example: "9508:Hiking" displays instead of just the database ID
+/**
+ *  NAME GENERATOR (Document Services Middleware)
+ *  Creates display names for park-related collections using ORCS-based
+ *  well-known keys (example: "9508:Hiking")
+ */
 
 const pageActions = ["create", "update"];
 
 // Helper to extract documentId from either plain string or connect/disconnect format
-const getDocumentId = (relationData) => {
+function getDocumentId(relationData) {
   if (typeof relationData === "string") return relationData;
   if (relationData?.connect?.[0]?.documentId)
     return relationData.connect[0].documentId;
   return null;
-};
+}
 
 // Helper to fetch a related document by documentId or use existing record
-const fetchRelation = async (uid, documentId, fallback, fields) => {
+async function fetchRelation(uid, documentId, fallback, fields) {
   if (documentId) {
     return await strapi.documents(uid).findOne({ documentId, fields });
   }
   return fallback;
-};
+}
 
 // Standard suffix generator that retrieves the name from a related content type
 // Uses the config to specify which relation to follow and which field to use as the suffix
@@ -129,7 +130,7 @@ const collectionTypes = collections.map((c) => c.uid);
 
 // Generates display name by combining prefix (ORCS/site number) and generated suffix
 // Modifies data.name in place with format: {orcs|orcsSiteNumber}:{suffix}
-const updateName = async (data, uid) => {
+async function updateName(data, uid) {
   let recordInstance = {};
 
   // fetch existing record if documentId is present
@@ -221,7 +222,7 @@ const updateName = async (data, uid) => {
   }
 
   return data;
-};
+}
 
 // The main middleware function
 const nameGeneratorMiddleware = (strapi) => {

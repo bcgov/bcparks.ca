@@ -1,3 +1,8 @@
+/**
+ *  SEARCH INDEXING (Document Services Middleware)
+ *  Queues jobs to refresh the search index when relevant park data changes
+ */
+
 const { indexPark, removePark } = require("../helpers/taskQueue.js");
 
 const protectedAreaCollectionType = "api::protected-area.protected-area";
@@ -16,17 +21,18 @@ const relatedCollectionTypes = [
 const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 
 // Helper function to handle connect/disconnect logic
-const handleConnectOrDisconnect = async (documentId) => {
+async function handleConnectOrDisconnect(documentId) {
   if (!documentId) return;
   const pa = await strapi.documents(protectedAreaCollectionType).findOne({
     documentId,
+    status: "published",
     fields: ["orcs"],
   });
   if (pa?.orcs) {
     strapi.log.info(`queuing park ${pa.orcs} for indexing...`);
     await indexPark(pa.orcs);
   }
-};
+}
 
 // The middleware function
 const searchIndexingMiddleware = (strapi) => {
@@ -56,6 +62,7 @@ const searchIndexingMiddleware = (strapi) => {
         data = await strapi.documents(context.uid).findOne({
           documentId: context.params.documentId,
           fields: ["orcs"],
+          status: "published",
         });
       }
       // if we have the orcs, queue the park for indexing or removal from index
@@ -125,6 +132,7 @@ const searchIndexingMiddleware = (strapi) => {
         if (documentId) {
           const document = await strapi.documents(context.uid).findOne({
             documentId,
+            status: "published",
             fields: ["documentId"],
             populate: { protectedArea: { fields: ["orcs"] } },
           });

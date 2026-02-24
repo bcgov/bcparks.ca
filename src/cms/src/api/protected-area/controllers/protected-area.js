@@ -19,6 +19,7 @@ module.exports = createCoreController(
       const entity = await strapi
         .documents("api::protected-area.protected-area")
         .findFirst({
+          status: "published",
           filters: { orcs: id },
           ...ctx.query,
         });
@@ -35,6 +36,7 @@ module.exports = createCoreController(
       const entities = await strapi
         .documents("api::protected-area.protected-area")
         .findMany({
+          status: "published",
           fields: ["id", "documentId", "orcs", "protectedAreaName"],
           sort: "protectedAreaName:asc",
           limit: 2000,

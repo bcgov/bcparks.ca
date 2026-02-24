@@ -1,3 +1,8 @@
+/**
+ *  REST CACHE INVALIDATION (Document Services Middleware)
+ *  Invalidates all rest-cache entries when any cached content changes
+ */
+
 const cachedCollectionTypes = [
   "api::public-advisory.public-advisory",
   "api::protected-area.protected-area",
@@ -7,14 +12,14 @@ const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 
 // The middleware function
 const restCacheInvalidationMiddleware = (strapi) => {
-  const clearRestCache = async function () {
+  async function clearRestCache() {
     const cachePlugin = strapi.plugins["rest-cache"];
     if (cachePlugin) {
       for (const collectionType of cachedCollectionTypes) {
         await cachePlugin.services.cacheStore.clearByUid(collectionType);
       }
     }
-  };
+  }
 
   return async (context, next) => {
     if (

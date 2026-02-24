@@ -1,8 +1,8 @@
-// Middleware to denormalize ORCS and orcsSiteNumber in park-photo records
-// This is a legacy pattern from the initial implementation that avoided proper joins.
-// When a photo is linked to a protected-area, it populates the orcs field.
-// When a photo is linked to a site, it populates the orcsSiteNumber field.
-// This allows direct querying of photos by ORCS/site number without joining related tables.
+/**
+ *  PHOTO RELATION SYNC (Document Services Middleware)
+ *  Stores `orcs` and `orcsSiteNumber` on park-photo records for backward
+ *  compatibility
+ */
 
 const pageActions = ["create", "update"];
 const photoCollectionType = "api::park-photo.park-photo";
@@ -25,6 +25,7 @@ async function syncRelatedIdentifiers(data, strapi) {
   const protectedArea = paDocumentId
     ? await strapi.documents("api::protected-area.protected-area").findOne({
         documentId: paDocumentId,
+        status: "published",
         fields: ["orcs"],
       })
     : recordInstance?.protectedArea;
@@ -34,6 +35,7 @@ async function syncRelatedIdentifiers(data, strapi) {
   const site = siteDocumentId
     ? await strapi.documents("api::site.site").findOne({
         documentId: siteDocumentId,
+        status: "published",
         fields: ["orcsSiteNumber"],
       })
     : recordInstance?.site;

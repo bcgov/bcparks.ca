@@ -35,6 +35,7 @@ module.exports = ({ strapi }) => ({
       .findMany({
         filters: { isDisplayed: { $ne: true } },
         fields: ["orcs"],
+        status: "published",
       });
 
     const addParks = await strapi
@@ -42,6 +43,7 @@ module.exports = ({ strapi }) => ({
       .findMany({
         filters: { isDisplayed: true },
         fields: ["orcs"],
+        status: "published",
       });
 
     const removeList = removeParks.map((p) => {

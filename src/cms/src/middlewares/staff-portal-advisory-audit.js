@@ -1,38 +1,41 @@
-// Middleware to handle public-advisory-audit business logic, replacing the Strapi 4 lifecycles.
-// This includes:
-// - Revisioning logic: auto-incrementing advisory and revision numbers, archiving old revisions
-// - Publishing workflow: syncing published advisories to the public-advisory collection
-// - Notifications: triggering email notifications for approval requests and after-hours postings
-// - Audit tracking: maintaining isLatestRevision flags and publishedAt timestamps
+/**
+ *  STAFF PORTAL ADVISORY AUDIT (Document Services Middleware)
+ *  Provides advisory version history, publishing logic, and notifications using
+ *  a custom dual‑collection model
+ */
 
 const { queueAdvisoryEmail } = require("../helpers/taskQueue.js");
 
-const getNextAdvisoryNumber = async () => {
-  const results = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findMany({
-    sort: { advisoryNumber: 'DESC' },
-    limit: 1,
-    fields: ['advisoryNumber']
-  });
+async function getNextAdvisoryNumber() {
+  const results = await strapi
+    .documents("api::public-advisory-audit.public-advisory-audit")
+    .findMany({
+      sort: { advisoryNumber: "DESC" },
+      limit: 1,
+      fields: ["advisoryNumber"],
+    });
   let maxAdvisoryNumber = results.length > 0 ? results[0].advisoryNumber : 0;
   if (!maxAdvisoryNumber || maxAdvisoryNumber < 0) maxAdvisoryNumber = 0;
   return ++maxAdvisoryNumber;
-};
+}
 
-const getNextRevisionNumber = async (advisoryNumber) => {
-  const results = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findMany({
-    filters: {
-      advisoryNumber
-    },
-    sort: { revisionNumber: 'DESC' },
-    limit: 1,
-    fields: ['revisionNumber']
-  });
+async function getNextRevisionNumber(advisoryNumber) {
+  const results = await strapi
+    .documents("api::public-advisory-audit.public-advisory-audit")
+    .findMany({
+      filters: {
+        advisoryNumber,
+      },
+      sort: { revisionNumber: "DESC" },
+      limit: 1,
+      fields: ["revisionNumber"],
+    });
   let maxRevisionNumber = results.length > 0 ? results[0].revisionNumber : 0;
   if (!maxRevisionNumber || maxRevisionNumber < 0) maxRevisionNumber = 0;
   return ++maxRevisionNumber;
-};
+}
 
-const archiveOldPublicAdvisoryAudit = async (data) => {
+async function archiveOldPublicAdvisoryAudit(data) {
   delete data.id;
   delete data.documentId;
   delete data.updatedBy;
@@ -42,24 +45,28 @@ const archiveOldPublicAdvisoryAudit = async (data) => {
   data.isLatestRevision = false;
 
   try {
-    await strapi.documents('api::public-advisory-audit.public-advisory-audit').create({ data: data })
+    await strapi
+      .documents("api::public-advisory-audit.public-advisory-audit")
+      .create({ data: data });
   } catch (error) {
     strapi.log.error(
       `error creating public-advisory-audit ${data.advisoryNumber}...`,
-      error
+      error,
     );
   }
-};
+}
 
-const savePublicAdvisory = async (publicAdvisory) => {
+async function savePublicAdvisory(publicAdvisory) {
   delete publicAdvisory.updatedBy;
   delete publicAdvisory.createdBy;
-  const isExist = await strapi.documents('api::public-advisory.public-advisory').findFirst({
-    filters: {
-      advisoryNumber: publicAdvisory.advisoryNumber
-    },
-    fields: ["advisoryNumber"]
-  });
+  const isExist = await strapi
+    .documents("api::public-advisory.public-advisory")
+    .findFirst({
+      filters: {
+        advisoryNumber: publicAdvisory.advisoryNumber,
+      },
+      fields: ["advisoryNumber"],
+    });
   if (publicAdvisory.advisoryStatus.code === "PUB") {
     publicAdvisory.publishedAt = new Date();
     if (isExist) {
@@ -69,13 +76,14 @@ const savePublicAdvisory = async (publicAdvisory) => {
         strapi.log.info(
           `updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
         );
-        await strapi.documents('api::public-advisory.public-advisory').update({
-          documentId: isExist.documentId, data: publicAdvisory
-        })
+        await strapi.documents("api::public-advisory.public-advisory").update({
+          documentId: isExist.documentId,
+          data: publicAdvisory,
+        });
       } catch (error) {
         strapi.log.error(
           `error updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
-          error
+          error,
         );
       }
     } else {
@@ -85,13 +93,13 @@ const savePublicAdvisory = async (publicAdvisory) => {
         strapi.log.info(
           `creating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
         );
-        await strapi.documents('api::public-advisory.public-advisory').create({
-          data: publicAdvisory
+        await strapi.documents("api::public-advisory.public-advisory").create({
+          data: publicAdvisory,
         });
       } catch (error) {
         strapi.log.error(
           `error creating public-advisory ${publicAdvisory.id}...`,
-          error
+          error,
         );
       }
     }
@@ -100,26 +108,28 @@ const savePublicAdvisory = async (publicAdvisory) => {
       strapi.log.info(
         `deleting public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
       );
-      await strapi.documents('api::public-advisory.public-advisory').delete({ documentId: isExist.documentId });
+      await strapi
+        .documents("api::public-advisory.public-advisory")
+        .delete({ documentId: isExist.documentId });
     } catch (error) {
       strapi.log.error(
         `error deleting public-advisory ${publicAdvisory.id}...`,
-        error
+        error,
       );
     }
   }
-};
+}
 
-const copyToPublicAdvisory = async (newPublicAdvisory) => {
+async function copyToPublicAdvisory(newPublicAdvisory) {
   if (newPublicAdvisory.isLatestRevision && newPublicAdvisory.advisoryStatus) {
     const triggerStatuses = ["PUB", "INA"];
     if (triggerStatuses.includes(newPublicAdvisory.advisoryStatus.code)) {
       await savePublicAdvisory(newPublicAdvisory);
     }
   }
-};
+}
 
-const isAdvisoryEqual = (newData, oldData) => {
+function isAdvisoryEqual(newData, oldData) {
   const fieldsToCompare = {
     title: null,
     description: null,
@@ -163,10 +173,10 @@ const isAdvisoryEqual = (newData, oldData) => {
       return false;
   }
   return true;
-};
+}
 
 const staffPortalAdvisoryAuditMiddleware = (strapi) => {
-  const beforeCreate = async (ctx) => {
+  async function beforeCreate(ctx) {
     let { data } = ctx.params;
     if (!data.revisionNumber && !data.advisoryNumber) {
       data.advisoryNumber = await getNextAdvisoryNumber();
@@ -174,13 +184,15 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
       data.isLatestRevision = true;
       data.publishedAt = new Date();
     }
-  };
+  }
 
-  const afterCreate = async (ctx) => {
-    const newPublicAdvisoryAudit = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
-      documentId: ctx.result.documentId,
-      populate: "*"
-    });
+  async function afterCreate(ctx) {
+    const newPublicAdvisoryAudit = await strapi
+      .documents("api::public-advisory-audit.public-advisory-audit")
+      .findOne({
+        documentId: ctx.result.documentId,
+        populate: "*",
+      });
 
     const newAdvisoryStatus = newPublicAdvisoryAudit.advisoryStatus?.code;
 
@@ -189,23 +201,26 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
         "Approval requested",
         "Approval requested for the following advisory",
         newPublicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterCreate()"
+        "public-advisory-audit::lifecycles::afterCreate()",
       );
     }
 
-    if (newAdvisoryStatus === "PUB" && newPublicAdvisoryAudit.isUrgentAfterHours) {
+    if (
+      newAdvisoryStatus === "PUB" &&
+      newPublicAdvisoryAudit.isUrgentAfterHours
+    ) {
       await queueAdvisoryEmail(
         "After-hours advisory posted",
         "An after-hours advisory was posted",
         newPublicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterCreate()"
+        "public-advisory-audit::lifecycles::afterCreate()",
       );
     }
 
     await copyToPublicAdvisory(newPublicAdvisoryAudit);
-  };
+  }
 
-  const beforeUpdate = async (ctx) => {
+  async function beforeUpdate(ctx) {
     let { data, documentId } = ctx.params;
 
     documentId = documentId || data?.documentId;
@@ -216,10 +231,12 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
 
     newPublicAdvisory.publishedAt = new Date();
     newPublicAdvisory.isLatestRevision = true;
-    const oldPublicAdvisory = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
-      documentId,
-      populate: "*"
-    });
+    const oldPublicAdvisory = await strapi
+      .documents("api::public-advisory-audit.public-advisory-audit")
+      .findOne({
+        documentId,
+        populate: "*",
+      });
 
     if (!oldPublicAdvisory) return;
     if (!oldPublicAdvisory.publishedAt) return;
@@ -240,7 +257,7 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
     if (newPublicAdvisory.modifiedBy === "system") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber
+        oldPublicAdvisory.advisoryNumber,
       );
       return;
     }
@@ -252,7 +269,7 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
     ) {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber
+        oldPublicAdvisory.advisoryNumber,
       );
       return;
     }
@@ -261,17 +278,19 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
     if (oldAdvisoryStatus === "PUB") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber
+        oldPublicAdvisory.advisoryNumber,
       );
       return;
     }
-  };
+  }
 
-  const afterUpdate = async (ctx) => {
-    const publicAdvisoryAudit = await strapi.documents('api::public-advisory-audit.public-advisory-audit').findOne({
-      documentId: ctx.result.documentId,
-      populate: "*"
-    });
+  async function afterUpdate(ctx) {
+    const publicAdvisoryAudit = await strapi
+      .documents("api::public-advisory-audit.public-advisory-audit")
+      .findOne({
+        documentId: ctx.result.documentId,
+        populate: "*",
+      });
 
     const oldAdvisoryStatus = ctx.state.oldStatus; // saved by beforeUpdate() above
     const newAdvisoryStatus = publicAdvisoryAudit.advisoryStatus?.code;
@@ -281,24 +300,26 @@ const staffPortalAdvisoryAuditMiddleware = (strapi) => {
         "Approval requested",
         "Approval requested for the following advisory",
         publicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterUpdate()"
+        "public-advisory-audit::lifecycles::afterUpdate()",
       );
     }
 
     if (
-      newAdvisoryStatus === "PUB" && oldAdvisoryStatus !== "PUB" &&
-      publicAdvisoryAudit.modifiedByRole === "submitter" && publicAdvisoryAudit.isUrgentAfterHours
+      newAdvisoryStatus === "PUB" &&
+      oldAdvisoryStatus !== "PUB" &&
+      publicAdvisoryAudit.modifiedByRole === "submitter" &&
+      publicAdvisoryAudit.isUrgentAfterHours
     ) {
       await queueAdvisoryEmail(
         "After-hours advisory posted",
         "An after-hours advisory was posted",
         publicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterUpdate()"
+        "public-advisory-audit::lifecycles::afterUpdate()",
       );
     }
 
     await copyToPublicAdvisory(publicAdvisoryAudit);
-  };
+  }
 
   // Middleware entry point
   return async (context, next) => {

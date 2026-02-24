@@ -17,6 +17,7 @@ module.exports = createCoreService(
       const protectedAreas = await strapi
         .documents("api::protected-area.protected-area")
         .findMany({
+          status: "published",
           filters: {
             hasCampfireBan: true,
             $or: [
@@ -143,6 +144,7 @@ module.exports = createCoreService(
       const bans = await strapi
         .documents("api::protected-area.protected-area")
         .findMany({
+          status: "published",
           filters: {
             hasCampfireBan: true,
           },
@@ -163,6 +165,7 @@ const getProtectedAreasByNaturalResourceDistrictToAddBan = async (
   const protectedAreas = await strapi
     .documents("api::protected-area.protected-area")
     .findMany({
+      status: "published",
       filters: {
         naturalResourceDistricts: {
           id: { $in: naturalResourceDistricts },
@@ -183,6 +186,7 @@ const getProtectedAreasByFireZoneToAddBan = async (fireZones) => {
   const protectedAreas = await strapi
     .documents("api::protected-area.protected-area")
     .findMany({
+      status: "published",
       filters: {
         fireZones: {
           id: { $in: fireZones },
@@ -204,6 +208,7 @@ const addProtectedAreaFireBans = async (protectedAreaIds, effectiveDate) => {
   const protectedAreas = await strapi
     .documents("api::protected-area.protected-area")
     .findMany({
+      status: "published",
       filters: {
         id: { $in: protectedAreaIds },
       },
