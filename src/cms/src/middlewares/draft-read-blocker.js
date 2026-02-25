@@ -8,20 +8,30 @@ const { parse, visit } = require("graphql");
 module.exports = () => {
   return async (ctx, next) => {
     // Only check for status query parameter
-    const status = ctx.query?.status;
     const url = (ctx.request?.url || "").toLowerCase();
-
     const isGraphQL = url.startsWith("/graphql");
-    if (!isGraphQL && (status === undefined || status === "published")) {
-      return await next();
-    }
 
-    // Allow access by the Content Manager, which is for the Strapi admin UI
-    const isContentManager =
-      url.startsWith("/admin/content-manager") ||
-      url.startsWith("/content-manager");
-    if (isContentManager) {
-      return await next();
+    // Initial lighweight checks
+    if (!isGraphQL) {
+      // For REST, only check read requests. Other requests require auth
+      const method = (ctx.request?.method || "").toUpperCase();
+      if (!["GET", "HEAD", "OPTIONS"].includes(method)) {
+        return await next();
+      }
+
+      // Allow access if status is not specified or explicitly set to published
+      const status = ctx.query?.status;
+      if (status === undefined || status === "published") {
+        return await next();
+      }
+
+      // Allow access by the Content Manager, which is for the Strapi admin UI
+      const isContentManager =
+        url.startsWith("/admin/content-manager") ||
+        url.startsWith("/content-manager");
+      if (isContentManager) {
+        return await next();
+      }
     }
 
     // Call next() to ensure ctx.request.body & ctx.state.auth are populated
