@@ -33,6 +33,8 @@ module.exports = ({ env }) => {
     },
     // custom field plugins must be configured before rest-cache
     "multi-select": {},
+    // CKEditor is configured via extensions in admin/extensions
+    ckeditor5: {},
     // redis must be configured before rest-cache
     redis: {
       // locally - off
