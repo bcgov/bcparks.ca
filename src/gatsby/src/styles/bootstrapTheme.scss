@@ -4,26 +4,9 @@
 **/
 
 @import "variables.scss";
+@import "content-mixins";
 
-// There is debate as to colours for links
-// This is where we start once that's settled
-// These are based on the DigitalSpace Bootstrap 5 Theme
-// https://github.com/digitalspace/bcparks-bootstrap-theme/
-
-a {
-  color: $colorBlueMed;
-  text-decoration: none;
-  &:hover {
-    color: $colorBlue;
-    text-decoration: underline;
-  }
-  &:not(.btn):focus {
-    color: $colorBlue;
-  }
-  &:focus-visible {
-    box-shadow: none;
-  }
-}
+@include theme-link-styles;
 
 .btn, .nav-link {
   &:focus-visible {

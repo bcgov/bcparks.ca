@@ -1,0 +1,326 @@
+@import "variables.scss";
+
+// Shared content typography and element styles
+// Used by both global body styles and CKEditor .ck-content
+
+@mixin base-content-styles {
+  color: $colorGrey;
+  letter-spacing: normal;
+  font-family: $globalFont;
+}
+
+@mixin heading-styles {
+  h1, h2 {
+    color: $colorBlue;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .no-mb {
+    margin-bottom: 0px !important;
+  }
+}
+
+@mixin base-link-styles {
+  a {
+    color: $colorBlue;
+    text-decoration: underline;
+    &:hover {
+      color: $colorBlueMed;
+    }
+    &:not(.btn):focus {
+      color: $colorBlue;
+    }
+    &:focus-visible {
+      box-shadow: none;
+    }
+  }
+
+  a.underline-hover {
+    text-decoration: none;
+
+    &:hover, &:focus {
+      color: $colorBlue;
+      text-decoration: underline;
+    }
+  }
+
+  a.learn-more-link {
+    text-decoration: none !important;
+    position: relative;
+    padding-right: 14px;
+    &:hover, &:focus-visible {
+      text-decoration: underline !important;
+    }
+    &::after {
+      content: "\f054";
+      display: inline-block;
+      font-weight: 900;
+      font-size: 0.625em;
+      font-family: "Font Awesome 5 Free";
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      position: absolute;
+      top: 4px;
+      right: 0;
+    }
+  }
+}
+
+// Base link styles for global use (nav, UI, etc)
+@mixin theme-link-styles {
+  a {
+    color: $colorBlueMed;
+    text-decoration: none;
+    &:hover {
+      color: $colorBlue;
+      text-decoration: underline;
+    }
+    &:not(.btn):focus {
+      color: $colorBlue;
+    }
+    &:focus-visible {
+      box-shadow: none;
+    }
+  }
+}
+
+@mixin blockquote-styles {
+  blockquote {
+    border-left: solid 8px $colorBrownMed;
+    margin: 16px 0 16px 24px;
+    padding: 16px 32px;
+    :first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+    :last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+@mixin callout-styles {
+  .callout-box {
+    color: $colorBlue;
+    background-color: $colorBlueLight;
+    font-size: 1em;
+    font-weight: 700;
+    border: none;
+    border-radius: 4px;
+    margin: 16px 0;
+    padding: 20px;
+    & > * {
+      max-width: 600px;
+    }
+  }
+}
+
+@mixin media-styles {
+  figure.media div[data-oembed-url] {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+@mixin table-base-styles {
+  figure.table {
+    color: $colorGrey;
+    table {
+      width: 100%;
+      tr {
+        &:first-of-type {
+          th, td {
+            border-top: 1px solid $colorGreyLight;
+          }
+        }
+      }
+      th, td {
+        vertical-align: top;
+        border-bottom: 1px solid $colorGreyLight;
+        padding: 12px;
+      }
+      th {
+        background: $colorBrownLight;
+      }
+      td {
+        & > p:last-of-type {
+          margin-bottom: 0;
+        }
+        svg {
+          width: 16px;
+          height: 16px;
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+@mixin table-responsive-styles {
+  figure.table {
+    &.vertical-heading {
+      table {
+        tbody {
+          tr {
+            display: block;
+            width: 100%;
+            @media screen and (min-width: $mdBreakpoint) {
+              width: auto;
+              display: table-row;
+            }
+            th, td {
+              display: block;
+              width: 100%;
+              @media screen and (min-width: $mdBreakpoint) {
+                width: auto;
+                display: table-cell;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.horizontal-heading {
+      overflow-x: auto;
+      table {
+        min-width: 600px;
+      }
+      &::-webkit-scrollbar {
+        height: 5px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba($colorBlack, .2);
+        border-radius: 5px;
+      }
+    }
+  }
+}
+
+@mixin list-type-styles {
+  ol li.lower-alpha {
+    list-style-type: lower-alpha;
+  }
+
+  ul {
+    list-style-type: disc;
+    ul {
+      list-style-type: circle;
+    }
+  }
+}
+
+@mixin button-styles {
+  a.btn, button.btn:not(.btn-link):not(.btn-tooltip) {
+    height: 48px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    line-height: 1.5;
+    border-radius: 4px;
+    padding: 0 16px;
+    text-decoration: none;
+
+    &.btn-primary {
+      color: $colorWhite !important;
+      background-color: $colorBlue;
+      border: $colorBlue 2px solid;
+      &:hover, &:focus-visible {
+        color: $colorWhite;
+        background-color: $colorBlueMed !important;
+        text-decoration: none;
+      }
+      &:hover{
+        border: $colorBlueMed 2px solid !important;
+      }
+    }
+
+    &.btn-yellow,
+    &.btn-warning {
+      color: $colorBlue;
+      background-color: $colorGold;
+      border: $colorGold 2px solid;
+      &:hover, &:focus-visible {
+        color: $colorWhite;
+        background-color: $colorBlueMed;
+      }
+      &:hover {
+        border: $colorBlueMed solid 2px;
+      }
+    }
+
+    &.btn-white {
+      color: $colorBlue !important;
+      background-color: $colorWhite;
+      border: $colorWhite solid 2px;
+      &:hover, &:focus-visible {
+        background-color: $colorGold;
+      }
+      &:hover {
+        border: $colorGold solid 2px;
+      }
+    }
+
+    &.btn-secondary,
+    &.btn-light {
+      color: $colorBlue !important;
+      background-color: $colorWhite;
+      border: $colorBlue 1px solid;
+      &:hover, &:focus-visible {
+        background-color: $colorIceBlue !important;
+        border: $colorBlue 1px solid !important;
+        text-decoration: none;
+      }
+      &:focus-visible {
+        outline: $colorBlueMed solid 2px;
+        outline-offset: 2px;
+      }
+    }
+
+    &.btn-light {
+      border: $colorBlue 2px solid !important;
+      &:hover, &:focus-visible {
+        border: $colorBlue 2px solid !important;
+      }
+    }
+
+    &.btn-icon {
+      &::after {
+        content: "\f138";
+        display: inline-block;
+        font-size: 0.875rem;
+        font-family: "Font Awesome 5 Free";
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        margin-left: 8px;
+        font-weight: 900;
+      }
+    }
+
+    &:focus {
+      box-shadow: none !important;
+    }
+
+    &:focus-visible {
+      border: $colorWhite solid 2px;
+      outline: $colorBlueMed solid 2px;
+      outline-offset: 0px;
+    }
+  }
+}

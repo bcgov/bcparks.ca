@@ -1,22 +1,22 @@
 // The admin panel can be tailored to match your branding, by editing src/admin/app
-// and using an extensions folder to swap logos, favicon, locales, translations, themes, bundlers, or editors.
 // https://docs.strapi.io/cms/admin-panel-customization#general-considerations
 
-import {
-  setPluginConfig,
-  defaultHtmlPreset,
-} from "@_sh/strapi-plugin-ckeditor";
+import { registerCKEditor } from "./extensions/ckeditor/ckeditor-config";
+import { injectAdminStylesheets } from "./extensions/admin-styles/admin-styles";
 
-// TODO: Upgrade CKeditor
-// https://github.com/nshenderov/strapi-plugin-ckeditor/blob/master/MIGRATION.md#from-v4-to-v5
-const register = () => {
-  defaultHtmlPreset.name = "default";
-  setPluginConfig({ presets: [defaultHtmlPreset] });
+// Register admin plugins and customizations here.
+
+// register() hook runs before the app is initialized
+const register = async (app) => {
+  await registerCKEditor(app);
 };
 
 const config = {};
 
-const bootstrap = (app) => {};
+// bootstrap() hook runs after the app is initialized, before the server starts
+const bootstrap = (_app) => {
+  injectAdminStylesheets();
+};
 
 export default {
   register,

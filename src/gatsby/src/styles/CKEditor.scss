@@ -1,0 +1,123 @@
+// This stylesheet imports body content and typography styles
+// for use in the CMS WYSIWYG editor (CKEditor).
+
+// BC Sans and FontAwesome font dependencies loaded via <link> tags
+// in src/cms/src/admin/app.js
+
+@import "variables.scss";
+@import "content-mixins";
+
+// Apply body styles CKEditor WYSIWYG content
+.ck.ck-content.ck-editor__editable {
+  @include base-content-styles;
+
+  // Paragraph styles (match Bootstrap defaults)
+  p {
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  @include heading-styles;
+
+  // Additional heading styles for h3 and h4 (match Bootstrap defaults from frontend)
+  h3, h4 {
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.25em;
+    margin-top: 0;
+  }
+
+  h3 {
+    font-size: 1.25em;
+    margin-bottom: 1.17em;
+  }
+
+  h4 {
+    font-size: 1em;
+  }
+
+  // Content element styles
+  @include blockquote-styles;
+
+  blockquote {
+    // Override CKEditor's default italic style for blockquotes
+    font-style: normal;
+  }
+
+  @include callout-styles;
+  @include media-styles;
+  @include table-base-styles;
+  @include list-type-styles;
+
+  // Override CKEditor's built-in list styles with base styles from Bootstrap reboot
+  ol, ul, dl {
+    padding-left: 2em;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 1em;
+    line-height: inherit;
+  }
+
+  @include button-styles;
+
+  @include base-link-styles;
+  @include theme-link-styles;
+
+  a {
+    text-decoration: underline;
+  }
+
+  // Editor-specific style classes (not used on frontend)
+  .legacy-link {
+    background-color: #FFFF00;
+  }
+
+  .audio-clip {
+    outline: 1px dashed $colorBlue; // Add an outline to make the icon visible in the dropdown
+
+    &::after {
+      content: "\f028";  // Font Awesome speaker icon
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 900;
+      font-family: "Font Awesome 5 Free";
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 0.25rem;
+    }
+  }
+}
+
+// Style dropdown preview - apply visual colors only (no spacing/sizing)
+.ck-style-dropdown {
+  .callout-box {
+    color: $colorBlue;
+    background-color: $colorBlueLight;
+    font-weight: 700;
+    border: none;
+    padding: 0.5em;
+  }
+
+  // Show the audio clip icon at the start instead of the end in the dropdown preview
+  .audio-clip {
+    &::before {
+      content: "\f028";  // Font Awesome speaker icon
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 900;
+      font-family: "Font Awesome 5 Free";
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 0.25rem;
+    }
+  }
+
+  .legacy-link {
+    background-color: #FFFF00;
+    color: $colorBlue;
+  }
+}

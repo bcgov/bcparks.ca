@@ -1,3 +1,13 @@
+const devTestEnvironments = [
+  "http://localhost:8000",
+  "https://alpha-dev.bcparks.ca",
+  "https://dev.bcparks.ca",
+  "https://alpha-test.bcparks.ca",
+  "https://test.bcparks.ca",
+];
+
+const cdnUrls = ["https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"];
+
 module.exports = [
   "strapi::logger",
   "strapi::errors",
@@ -8,7 +18,27 @@ module.exports = [
         useDefaults: true,
         directives: {
           "connect-src": ["'self'", "https:"],
-          "script-src": ["'self'", "'unsafe-inline'"],
+          "script-src": [
+            "'self'",
+            "'unsafe-inline'",
+            "https://apollo-server-landing-page.cdn.apollographql.com",
+            "https://embeddable-sandbox.cdn.apollographql.com",
+          ],
+          // For CKEditor, load frontend styles to use in the WYSIWYG editor
+          // Allow styles and fonts to be loaded from localhost (on dev) and from bcparks.ca (production)
+          "style-src": [
+            "'self'",
+            "'unsafe-inline'",
+            ...devTestEnvironments,
+            "https://bcparks.ca",
+            ...cdnUrls,
+          ],
+          "font-src": [
+            "'self'",
+            ...devTestEnvironments,
+            "https://bcparks.ca",
+            ...cdnUrls,
+          ],
           "img-src": [
             "'self'",
             "data:",

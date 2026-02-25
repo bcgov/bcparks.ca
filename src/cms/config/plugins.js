@@ -32,11 +32,9 @@ module.exports = ({ env }) => {
       },
     },
     // custom field plugins must be configured before rest-cache
-    ckeditor5: {
-      // TODO: Temporarily using default/unforked version for v5 upgrade
-      // resolve: "./src/plugins/strapi-plugin-ckeditor",
-    },
     "multi-select": {},
+    // CKEditor is configured via extensions in admin/extensions
+    ckeditor5: {},
     // redis must be configured before rest-cache
     redis: {
       // locally - off
