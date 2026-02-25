@@ -24,12 +24,15 @@ module.exports = () => {
       return await next();
     }
 
+    // Call next() to ensure ctx.request.body & ctx.state.auth are populated
+    await next();
+
     // Allow draft access for authenticated users
     const isUser = !!ctx.state?.user;
     const isApiToken = ctx.state?.auth?.strategy?.name === "api-token";
 
     if (isUser || isApiToken) {
-      return await next();
+      return;
     }
 
     // Block draft access for unauthenticated users
@@ -46,11 +49,10 @@ module.exports = () => {
           message: "draftReadBlocker: Bearer token required",
         },
       };
-      return; // Don't call next()
+      return;
     }
 
     // For GraphQL requests
-    await next(); // Call next() to ensure ctx.request.body is populated
     const body = ctx.request?.body ?? {};
     if (body && hasGraphQLArgument(body.query, "status")) {
       strapi.log.warn(`draftReadBlockerMiddleware blocked GraphQL request`);
