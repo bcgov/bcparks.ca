@@ -1,8 +1,7 @@
 const { getLogger } = require("../../shared/logging");
 const { readQueue, removeFromQueue } = require("../../shared/taskQueue");
-const { noCommandLineArgs } = require("../../shared/commandLine");
 const { cmsAxios } = require("../../shared/axiosConfig");
-const { getEntityIds, getDateTypeMap, getParkGateDocIds } = require("../utils/helper");
+const { getEntityDocIds, getDateTypeMap, getParkGateDocIds } = require("../utils/helper");
 const { dootSplitMessage } = require("./splitMessage");
 
 /**
@@ -46,18 +45,23 @@ exports.dootPublish = async function () {
       }
 
       for (const item of jsonData) {
-        let protectedAreaId, parkAreaId, parkFeatureId, relationName;
+        let protectedAreaDocId, parkAreaDocId, parkFeatureDocId, relationName;
         try {
-          ({ protectedAreaId, parkAreaId, parkFeatureId, relationName } = await getEntityIds(item));
+          ({ protectedAreaDocId, parkAreaDocId, parkFeatureDocId, relationName } =
+            await getEntityDocIds(item));
         } catch (error) {
           logger.error(`dootPublish() failed while retrieving entity IDs: ${error}`);
           errorProcessingMessage = true;
           break;
         }
-        const parkGateDocIds = await getParkGateDocIds(protectedAreaId, parkAreaId, parkFeatureId);
+        const parkGateDocIds = await getParkGateDocIds(
+          protectedAreaDocId,
+          parkAreaDocId,
+          parkFeatureDocId,
+        );
         if (item.gateInfo) {
           // check the park-gates collection to see if there is an existing record
-          // matching the protectedAreaId, parkAreaId, or parkFeatureId
+          // matching the protectedAreaDocId, parkAreaDocId, or parkFeatureDocId
           if (parkGateDocIds.length > 0) {
             // update the existing park-gates record
             const updateData = {
@@ -68,6 +72,7 @@ exports.dootPublish = async function () {
               gateOpen24Hours: item.gateInfo.gateOpen24Hours,
               gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
               gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
+              publishedAt: new Date(),
             };
             try {
               await cmsAxios.put(`/api/park-gates/${parkGateDocIds[0]}`, { data: updateData });
@@ -87,9 +92,10 @@ exports.dootPublish = async function () {
               gateOpen24Hours: item.gateInfo.gateOpen24Hours,
               gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
               gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
-              protectedArea: protectedAreaId ? protectedAreaId : undefined,
-              parkArea: parkAreaId ? parkAreaId : undefined,
-              parkFeature: parkFeatureId ? parkFeatureId : undefined,
+              protectedArea: protectedAreaDocId ? protectedAreaDocId : undefined,
+              parkArea: parkAreaDocId ? parkAreaDocId : undefined,
+              parkFeature: parkFeatureDocId ? parkFeatureDocId : undefined,
+              publishedAt: new Date(),
             };
             try {
               await cmsAxios.post("/api/park-gates", { data: createData });
@@ -114,6 +120,7 @@ exports.dootPublish = async function () {
                   gateOpen24Hours: null,
                   gateOpensAtDawn: null,
                   gateClosesAtDusk: null,
+                  publishedAt: new Date(),
                 },
               });
 
@@ -145,14 +152,14 @@ exports.dootPublish = async function () {
         }
 
         // delete any existing date ranges for the same operating year
-        if (item.operatingYear && (protectedAreaId || parkFeatureId)) {
+        if (item.operatingYear && (protectedAreaDocId || parkFeatureDocId)) {
           const deleteParams = {
             filters: {
-              protectedArea: protectedAreaId ? { id: protectedAreaId } : undefined,
-              parkFeature: parkFeatureId ? { id: parkFeatureId } : undefined,
+              protectedArea: protectedAreaDocId ? { documentId: protectedAreaDocId } : undefined,
+              parkFeature: parkFeatureDocId ? { documentId: parkFeatureDocId } : undefined,
               operatingYear: item.operatingYear,
             },
-            fields: ["id"],
+            fields: ["documentId"],
             populate: {
               parkDateType: {
                 fields: ["dateTypeId"],
@@ -212,8 +219,9 @@ exports.dootPublish = async function () {
                   parkDateType: dateTypeMap.get(dootDateRange.dateTypeId),
                   isDateAnnual: dootDateRange.isDateAnnual,
                   operatingYear: item.operatingYear,
-                  protectedArea: protectedAreaId ? protectedAreaId : undefined,
-                  parkFeature: parkFeatureId ? parkFeatureId : undefined,
+                  protectedArea: protectedAreaDocId ? protectedAreaDocId : undefined,
+                  parkFeature: parkFeatureDocId ? parkFeatureDocId : undefined,
+                  publishedAt: new Date(),
                 };
                 await cmsAxios.post("/api/park-dates", { data: createDateRangeData });
               }
