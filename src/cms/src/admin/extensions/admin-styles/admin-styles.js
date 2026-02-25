@@ -37,7 +37,7 @@ export function getGatsbyUrl(env) {
 // CKEditor content styles URL - points to Gatsby frontend
 const editorStylesUrl = `${getGatsbyUrl(import.meta.env)}/ckeditor-styles.css`;
 
-const injectAdminStylesheet = (href, dataAttr) => {
+const injectAdminStylesheet = (href, dataAttr, integrity = null) => {
   if (typeof document === "undefined") return;
 
   // Use a data attribute to prevent injecting the same stylesheet multiple times
@@ -48,6 +48,10 @@ const injectAdminStylesheet = (href, dataAttr) => {
 
   const link = document.createElement("link");
   link.setAttribute("rel", "stylesheet");
+  if (integrity) {
+    link.setAttribute("integrity", integrity);
+    link.setAttribute("crossorigin", "anonymous");
+  }
   link.setAttribute("href", href);
   link.setAttribute(dataAttrKey, dataAttr);
   document.head.appendChild(link);
@@ -58,10 +62,12 @@ export const injectAdminStylesheets = () => {
   injectAdminStylesheet(
     "https://cdn.jsdelivr.net/npm/@bcgov/bc-sans@2.1.0/css/BC_Sans.min.css",
     "bc-sans-font",
+    "sha384-AK+SldBmwNGzhuCscvxxZx4O0hDR2M5z5BdD8NSOAeWyVzRHMXINWpTiBjt9gM2+",
   );
   injectAdminStylesheet(
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css",
     "font-awesome",
+    "sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm",
   );
 
   // Then inject CKEditor content styles
