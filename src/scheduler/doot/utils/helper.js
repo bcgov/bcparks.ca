@@ -71,12 +71,21 @@ async function getDateTypeMap() {
 
 // Get all park-gates IDs matching the provided entity IDs.
 // Returns an array of IDs.
+// Uses exact matching - only finds gates at the specific level (park/area/feature)
 async function getParkGateIds(protectedAreaId, parkAreaId, parkFeatureId) {
   const gateParams = {
     filters: {
-      protectedArea: protectedAreaId ? { id: protectedAreaId } : undefined,
-      parkArea: parkAreaId ? { id: parkAreaId } : undefined,
-      parkFeature: parkFeatureId ? { id: parkFeatureId } : undefined,
+      $and: [
+        protectedAreaId 
+          ? { protectedArea: { id: protectedAreaId } }
+          : { protectedArea: { id: { $null: true } } },
+        parkAreaId 
+          ? { parkArea: { id: parkAreaId } }
+          : { parkArea: { id: { $null: true } } },
+        parkFeatureId 
+          ? { parkFeature: { id: parkFeatureId } }
+          : { parkFeature: { id: { $null: true } } },
+      ],
     },
     fields: ["id"],
   };
