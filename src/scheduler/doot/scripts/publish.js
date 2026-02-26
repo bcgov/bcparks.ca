@@ -175,7 +175,7 @@ exports.dootPublish = async function () {
 
         try {
           for (const dateRange of datesToDelete.data.data) {
-\            if (DOOT_MANAGED_DATE_TYPE_IDS.includes(dateRange.parkDateType.dateTypeId) &&
+            if (DOOT_MANAGED_DATE_TYPE_IDS.includes(dateRange.parkDateType.dateTypeId) &&
                 incomingDateTypeIds.has(dateRange.parkDateType.dateTypeId)) {
               await cmsAxios.delete(`/api/park-dates/${dateRange.id}`);
             }
