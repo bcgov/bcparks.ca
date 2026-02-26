@@ -36,7 +36,6 @@ export function getGatsbyUrl() {
 }
 
 // CKEditor content styles URL - points to Gatsby frontend
-// This is evaluated at module load time, but getGatsbyUrl() reads window.location at runtime
 const editorStylesUrl = `${getGatsbyUrl()}/ckeditor-styles.css`;
 
 const injectAdminStylesheet = (href, dataAttr, integrity = null) => {
