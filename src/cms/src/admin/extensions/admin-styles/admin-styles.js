@@ -10,32 +10,34 @@
  */
 
 /**
- * Reads environment variables to return the URL of the Gatsby frontend.
+ * Maps CMS hostnames to their corresponding Gatsby frontend URLs.
+ * Determines the frontend URL at runtime based on the current hostname.
  *
- * @param {Object} env - Environment variables object
  * @returns {string} The URL of the Gatsby frontend.
  */
-export function getGatsbyUrl(env) {
-  const { DEV, STRAPI_ADMIN_ENVIRONMENT } = env ?? {};
+export function getGatsbyUrl() {
+  // Get Strapi's hostname
+  const hostname = typeof window !== "undefined"
+    ? window.location.hostname
+    : "bcparks.ca";
 
-  // For local development, use the Gatsby development server URL
-  if (DEV || STRAPI_ADMIN_ENVIRONMENT === "local") {
-    return "http://localhost:8000";
-  }
+  // Map CMS subdomains to frontend subdomains
+  const hostnameMap = new Map([
+    ["localhost", "http://localhost:8000"],
+    ["cms.bcparks.ca", "https://bcparks.ca"],
+    ["alpha-dev-cms.bcparks.ca", "https://alpha-dev.bcparks.ca"],
+    ["alpha-test-cms.bcparks.ca", "https://alpha-test.bcparks.ca"],
+    ["dev-cms.bcparks.ca", "https://dev.bcparks.ca"],
+    ["test-cms.bcparks.ca", "https://test.bcparks.ca"],
+  ]);
 
-  // For dev and test environments, use the environment-specific URL
-  // (e.g. https://alpha-test.bcparks.ca)
-  if (STRAPI_ADMIN_ENVIRONMENT) {
-    return `https://${STRAPI_ADMIN_ENVIRONMENT}.bcparks.ca`;
-  }
-
-  // Use the production URL, or fall back to the production URL if
-  // STRAPI_ADMIN_ENVIRONMENT is undefined
-  return "https://bcparks.ca";
+  // Return mapped URL or default to production
+  return hostnameMap.get(hostname) || "https://bcparks.ca";
 }
 
 // CKEditor content styles URL - points to Gatsby frontend
-const editorStylesUrl = `${getGatsbyUrl(import.meta.env)}/ckeditor-styles.css`;
+// This is evaluated at module load time, but getGatsbyUrl() reads window.location at runtime
+const editorStylesUrl = `${getGatsbyUrl()}/ckeditor-styles.css`;
 
 const injectAdminStylesheet = (href, dataAttr, integrity = null) => {
   if (typeof document === "undefined") return;
