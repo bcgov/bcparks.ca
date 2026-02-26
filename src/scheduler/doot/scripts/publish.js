@@ -53,7 +53,21 @@ exports.dootPublish = async function () {
         errorProcessingMessage = true;
         break;
       }
+
       const parkGateIds = await getParkGateIds(protectedAreaId, parkAreaId, parkFeatureId);
+
+      let disconnectInvalidRelations = {};
+      if (protectedAreaDocId) {
+        // disconnect parkArea and parkFeature relations
+        disconnectInvalidRelations = { parkArea: { set: [] }, parkFeature: { set: [] } };
+      } else if (parkAreaDocId) {
+        // disconnect protectedArea and parkFeature relations
+        disconnectInvalidRelations = { protectedArea: { set: [] }, parkFeature: { set: [] } };
+      } else if (parkFeatureDocId) {
+        // disconnect protectedArea and parkArea relations
+        disconnectInvalidRelations = { protectedArea: { set: [] }, parkArea: { set: [] } };
+      }
+
       if (item.gateInfo) {
         // check the park-gates collection to see if there is an existing record
         // matching the protectedAreaId, parkAreaId, or parkFeatureId
@@ -67,6 +81,7 @@ exports.dootPublish = async function () {
             gateOpen24Hours: item.gateInfo.gateOpen24Hours,
             gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
             gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
+            ...disconnectInvalidRelations, // clear invalid relations added by human error
           };
           try {
             await cmsAxios.put(`/api/park-gates/${parkGateIds[0]}`, { data: updateData });
@@ -113,6 +128,7 @@ exports.dootPublish = async function () {
                 gateOpen24Hours: null,
                 gateOpensAtDawn: null,
                 gateClosesAtDusk: null,
+                ...disconnectInvalidRelations, // clear invalid relations added by human error
               },
             });
 
