@@ -143,7 +143,7 @@ exports.dootPublish = async function () {
         }
       }
 
-      // delete any existing date ranges for the same operating year
+      // delete any existing date ranges for the same operating year and date type
       if (item.operatingYear && (protectedAreaId || parkFeatureId)) {
         const deleteParams = {
           filters: {
@@ -167,9 +167,16 @@ exports.dootPublish = async function () {
           errorProcessingMessage = true;
           break;
         }
+
+        // collect incoming date type IDs to prevent deleting other seasons/types
+        const incomingDateTypeIds = new Set(
+          item.dateRanges?.map(dateRange => dateRange.dateTypeId).filter(Boolean) || []
+        );
+
         try {
           for (const dateRange of datesToDelete.data.data) {
-            if (DOOT_MANAGED_DATE_TYPE_IDS.includes(dateRange.parkDateType.dateTypeId)) {
+\            if (DOOT_MANAGED_DATE_TYPE_IDS.includes(dateRange.parkDateType.dateTypeId) &&
+                incomingDateTypeIds.has(dateRange.parkDateType.dateTypeId)) {
               await cmsAxios.delete(`/api/park-dates/${dateRange.id}`);
             }
           }
