@@ -85,13 +85,6 @@ jobs:
       - name: Push Docker image
         run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}
 
-      - name: Trigger Gatsby static build workflow
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          event-type: publish-gatsby
-          client-payload: '{"env": "dev", "branch": "${{ github.ref_name }}" }'
-
   build-maintenance:
     runs-on: ubuntu-latest
     env:
@@ -230,3 +223,10 @@ jobs:
           oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-cms
           oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-maintenance
           oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-scheduler
+
+      - name: Trigger Gatsby static build workflow
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: publish-gatsby
+          client-payload: '{"env": "dev", "branch": "${{ github.ref_name }}" }'
