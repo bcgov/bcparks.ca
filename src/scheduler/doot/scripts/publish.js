@@ -57,13 +57,13 @@ exports.dootPublish = async function () {
       const parkGateIds = await getParkGateIds(protectedAreaId, parkAreaId, parkFeatureId);
 
       let disconnectInvalidRelations = {};
-      if (protectedAreaDocId) {
+      if (protectedAreaId) {
         // disconnect parkArea and parkFeature relations
         disconnectInvalidRelations = { parkArea: { set: [] }, parkFeature: { set: [] } };
-      } else if (parkAreaDocId) {
+      } else if (parkAreaId) {
         // disconnect protectedArea and parkFeature relations
         disconnectInvalidRelations = { protectedArea: { set: [] }, parkFeature: { set: [] } };
-      } else if (parkFeatureDocId) {
+      } else if (parkFeatureId) {
         // disconnect protectedArea and parkArea relations
         disconnectInvalidRelations = { protectedArea: { set: [] }, parkArea: { set: [] } };
       }
