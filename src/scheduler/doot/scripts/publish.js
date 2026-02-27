@@ -59,6 +59,16 @@ exports.dootPublish = async function () {
           parkAreaDocId,
           parkFeatureDocId,
         );
+
+        let singleRelationFix = {};
+        if (protectedAreaDocId) {
+          singleRelationFix = { parkArea: null, parkFeature: null };
+        } else if (parkAreaDocId) {
+          singleRelationFix = { protectedArea: null, parkFeature: null };
+        } else if (parkFeatureDocId) {
+          singleRelationFix = { protectedArea: null, parkArea: null };
+        }
+
         if (item.gateInfo) {
           // check the park-gates collection to see if there is an existing record
           // matching the protectedAreaDocId, parkAreaDocId, or parkFeatureDocId
@@ -67,11 +77,12 @@ exports.dootPublish = async function () {
             const updateData = {
               hasGate: item.gateInfo.hasGate,
               gateNote: item.gateInfo.gateNote,
-              gateOpenHoursStartTime: item.gateInfo.gateOpenHoursStartTime,
-              gateOpenHoursEndTime: item.gateInfo.gateOpenHoursEndTime,
+              gateOpenHoursStartTime: item.gateInfo.gateOpenTime,
+              gateOpenHoursEndTime: item.gateInfo.gateCloseTime,
               gateOpen24Hours: item.gateInfo.gateOpen24Hours,
               gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
               gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
+              ...singleRelationFix, // clear invalid relations added by human error
               publishedAt: new Date(),
             };
             try {
@@ -87,8 +98,8 @@ exports.dootPublish = async function () {
             const createData = {
               hasGate: item.gateInfo.hasGate,
               gateNote: item.gateInfo.gateNote,
-              gateOpenHoursStartTime: item.gateInfo.gateOpenHoursStartTime,
-              gateOpenHoursEndTime: item.gateInfo.gateOpenHoursEndTime,
+              gateOpenHoursStartTime: item.gateInfo.gateOpenTime,
+              gateOpenHoursEndTime: item.gateInfo.gateCloseTime,
               gateOpen24Hours: item.gateInfo.gateOpen24Hours,
               gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
               gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
@@ -120,6 +131,7 @@ exports.dootPublish = async function () {
                   gateOpen24Hours: null,
                   gateOpensAtDawn: null,
                   gateClosesAtDusk: null,
+                  ...singleRelationFix, // clear invalid relations added by human error
                   publishedAt: new Date(),
                 },
               });
