@@ -125,7 +125,7 @@ export default function ParkHeader({
   }, [parkFeatures])
 
   const hasFeatureDates = hasCampingWithDates || hasFacilitiesWithDates
-  const hasDatesSection = isParkOpen !== false && (hasParkDates || hasGateNote || hasFeatureDates)
+  const hasDatesSection = isParkOpen !== false && (hasParkDates || hasNote || hasFeatureDates)
 
   // Check if array contains a "tldr"
   const hasTldr = (array) => array?.includes("tldr") || false
