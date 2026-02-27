@@ -28,10 +28,11 @@ exports.populateGeoShapes = async function (options) {
       encodeValuesOnly: true,
     },
   );
+  const cacheBuster = +new Date();
 
   let parks;
   try {
-    const allParks = `/api/protected-areas?${query}&filters[typeCode][$ne]=CS`;
+    const allParks = `/api/protected-areas?${query}&filters[typeCode][$ne]=CS&cb=${cacheBuster}`;
     parks = await cmsAxios.get(allParks);
     if (parks.data.data.length > 0 || !options?.silent) {
       logger.info(`found ${parks.data.data.length} parks, pa's and er's without geo-shapes`);
@@ -44,7 +45,7 @@ exports.populateGeoShapes = async function (options) {
 
   let conservancies;
   try {
-    const allConservancies = `/api/protected-areas?${query}&filters[typeCode][$eq]=CS`;
+    const allConservancies = `/api/protected-areas?${query}&filters[typeCode][$eq]=CS&cb=${cacheBuster}`;
     conservancies = await cmsAxios.get(allConservancies);
     if (conservancies.data.data.length > 0 || !options?.silent) {
       logger.info(`found ${conservancies.data.data.length} conservancies without geo-shapes`);
