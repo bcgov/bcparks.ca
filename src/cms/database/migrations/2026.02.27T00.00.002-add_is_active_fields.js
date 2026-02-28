@@ -17,7 +17,7 @@ module.exports = {
 
       // set all null is_active records to true on local/alpha-dev/alpha-test environments
       // they will already be populated on test and production via CMS-1461
-      await knex("standard_messages")
+      await knex("access_statuses")
         .whereNull("is_active")
         .update({ is_active: true });
     }
