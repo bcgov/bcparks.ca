@@ -33,6 +33,11 @@
       "required": false,
       "default": 0,
       "min": 0
+    },
+    "isActive": {
+      "type": "boolean",
+      "required": true,
+      "default": true
     }
   }
 }
