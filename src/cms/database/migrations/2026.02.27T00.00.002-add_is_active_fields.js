@@ -15,7 +15,11 @@ module.exports = {
         });
       }
 
-      await knex("access_statuses").update({ is_active: true });
+      // set all null is_active records to true on local/alpha-dev/alpha-test environments
+      // they will already be populated on test and production via CMS-1461
+      await knex("standard_messages")
+        .whereNull("is_active")
+        .update({ is_active: true });
     }
 
     if (await knex.schema.hasTable("standard_messages")) {
@@ -25,7 +29,11 @@ module.exports = {
         });
       }
 
-      await knex("standard_messages").update({ is_active: true });
+      // set all null is_active records to true on local/alpha-dev/alpha-test environments
+      // they will already be populated on test and production via CMS-1461
+      await knex("standard_messages")
+        .whereNull("is_active")
+        .update({ is_active: true });
     }
   },
 };
