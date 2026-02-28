@@ -19,6 +19,12 @@ const relatedCollectionTypes = [
   "api::geo-shape.geo-shape",
   "api::park-date.park-date",
 ];
+const allRelevantCollections = [
+  protectedAreaCollectionType,
+  photoCollectionType,
+  publicAdvisoryCollectionType,
+  ...relatedCollectionTypes,
+];
 
 const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 
@@ -28,9 +34,7 @@ module.exports = () => {
   return async (context, next) => {
     // Early return if the document type or action is not relevant for indexing
     if (
-      (context.uid !== protectedAreaCollectionType &&
-        photoCollectionType !== context.uid &&
-        !relatedCollectionTypes.includes(context.uid)) ||
+      !allRelevantCollections.includes(context.uid) ||
       !pageActions.includes(context.action)
     ) {
       return await next(); // Call the next middleware in the stack
@@ -58,10 +62,8 @@ module.exports = () => {
       const orcs = data?.orcs;
       if (orcs) {
         if (context.action === "delete" || context.action === "unpublish") {
-          strapi.log.info(`queuing park ${orcs} for removal from index...`);
           await removePark(orcs);
         } else {
-          strapi.log.info(`queuing park ${orcs} for indexing...`);
           await indexPark(orcs);
         }
       }
@@ -69,10 +71,11 @@ module.exports = () => {
 
     // Handle public advisories
     if (context.uid === publicAdvisoryCollectionType) {
-      // sometimes the protectedAreas are provided as part of the form data and sometimes
-      // they are part of the database object. The code below handles both scenarios.
+      // sometimes the protectedAreas are included in the data, sometimes not.
+      // If not, we need to fetch the advisory to get them. The code below handles
+      // all scenarios.
 
-      // scenario 1: part of the form data
+      // scenario 1: connect or disconnect
       const connectParks = context.params.data?.protectedAreas?.connect || [];
       const disconnectParks =
         context.params.data?.protectedAreas?.disconnect || [];
@@ -84,19 +87,32 @@ module.exports = () => {
         for (const park of disconnectParks) {
           await handleConnectOrDisconnect(park.documentId);
         }
-      } else {
-        // scenario 2: part of the existing database object
-        const protectedAreas = context.params.data?.protectedAreas || {
-          connect: [],
-          disconnect: [],
-        };
-
-        for (const doc of protectedAreas.connect || []) {
-          await handleConnectOrDisconnect(doc?.documentId);
+      } else if (Array.isArray(context.params.data?.protectedAreas)) {
+        // scenario 2: protected areas are directly included in the data
+        const parks = context.params.data?.protectedAreas || [];
+        if (parks.length) {
+          for (const park of parks) {
+            const orcs = park?.orcs;
+            if (orcs) {
+              await indexPark(orcs);
+            }
+          }
         }
-
-        for (const doc of protectedAreas.disconnect || []) {
-          await handleConnectOrDisconnect(doc?.documentId);
+      } else if (context.params?.documentId) {
+        // scenario 3: fallback – lookup advisory by documentId when protectedAreas are not in the payload
+        const advisoryDocId = context.params?.documentId;
+        const advisory = await strapi.documents(context.uid).findOne({
+          documentId: advisoryDocId,
+          fields: ["documentId"],
+          status: "published",
+          populate: { protectedAreas: { fields: ["orcs"] } },
+        });
+        const protectedAreas = advisory?.protectedAreas || [];
+        for (const park of protectedAreas) {
+          const orcs = park?.orcs;
+          if (orcs) {
+            await indexPark(orcs);
+          }
         }
       }
     }
@@ -127,7 +143,6 @@ module.exports = () => {
           });
           if (document?.protectedArea?.orcs) {
             const orcs = document.protectedArea.orcs;
-            strapi.log.info(`queuing park ${orcs} for indexing...`);
             await indexPark(orcs);
           }
         }
@@ -149,7 +164,6 @@ async function handleConnectOrDisconnect(documentId) {
     fields: ["orcs"],
   });
   if (pa?.orcs) {
-    strapi.log.info(`queuing park ${pa.orcs} for indexing...`);
     await indexPark(pa.orcs);
   }
 }
