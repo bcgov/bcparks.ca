@@ -3,21 +3,36 @@
  *  Queues jobs to refresh the search index when relevant park data changes
  */
 
-const { indexPark, removePark } = require("../helpers/taskQueue.js");
+const {
+  indexPark,
+  removePark,
+  batchQueueParks,
+} = require("../helpers/taskQueue.js");
+const getImpactedRelations = require("./helpers/getImpactedRelations.js");
 
 // CONFIGURATION
 
+// any collection that has data cloned in the Elasticsearch index should
+// be listed here so that we can trigger re-indexing of the relevant parks
+// when that data changes. (excluding lookup tables which rarely change)
 const protectedAreaCollectionType = "api::protected-area.protected-area";
 const photoCollectionType = "api::park-photo.park-photo";
 const publicAdvisoryCollectionType = "api::public-advisory.public-advisory";
-const relatedCollectionTypes = [
+const parkDateCollectionType = "api::park-date.park-date";
+const otherRelatedCollectionTypes = [
+  "api::geo-shape.geo-shape",
+  "api::park-activity.park-activity",
   "api::park-camping-type.park-camping-type",
   "api::park-facility.park-facility",
-  "api::park-activity.park-activity",
-  "api::park-name.park-name",
   "api::park-feature.park-feature",
-  "api::geo-shape.geo-shape",
-  "api::park-date.park-date",
+  "api::park-name.park-name",
+];
+const allRelevantCollections = [
+  protectedAreaCollectionType,
+  photoCollectionType,
+  publicAdvisoryCollectionType,
+  parkDateCollectionType,
+  ...otherRelatedCollectionTypes,
 ];
 
 const pageActions = ["create", "update", "delete", "publish", "unpublish"];
@@ -28,9 +43,7 @@ module.exports = () => {
   return async (context, next) => {
     // Early return if the document type or action is not relevant for indexing
     if (
-      (context.uid !== protectedAreaCollectionType &&
-        photoCollectionType !== context.uid &&
-        !relatedCollectionTypes.includes(context.uid)) ||
+      !allRelevantCollections.includes(context.uid) ||
       !pageActions.includes(context.action)
     ) {
       return await next(); // Call the next middleware in the stack
@@ -57,99 +70,92 @@ module.exports = () => {
       // if we have the orcs, queue the park for indexing or removal from index
       const orcs = data?.orcs;
       if (orcs) {
-        if (context.action === "delete" || context.action === "unpublish") {
-          strapi.log.info(`queuing park ${orcs} for removal from index...`);
+        if (
+          context.uid == protectedAreaCollectionType &&
+          (context.action === "delete" || context.action === "unpublish")
+        ) {
           await removePark(orcs);
         } else {
-          strapi.log.info(`queuing park ${orcs} for indexing...`);
           await indexPark(orcs);
         }
       }
     }
 
+    // Handle park dates
+    if (context.uid === parkDateCollectionType) {
+      let linkedParksBefore = await getDateRelations(context.params.documentId);
+      const result = await next();
+      let linkedParksAfter = await getDateRelations(result.documentId);
+
+      // Combine and deduplicate the impacted parks before and after the change
+      const impactedParks = [
+        ...new Set([...linkedParksBefore, ...linkedParksAfter]),
+      ];
+
+      await batchQueueParks(
+        Array.from(impactedParks),
+        context.uid,
+        context.action,
+      );
+
+      return result;
+    }
+
     // Handle public advisories
     if (context.uid === publicAdvisoryCollectionType) {
-      // sometimes the protectedAreas are provided as part of the form data and sometimes
-      // they are part of the database object. The code below handles both scenarios.
-
-      // scenario 1: part of the form data
-      const connectParks = context.params.data?.protectedAreas?.connect || [];
-      const disconnectParks =
-        context.params.data?.protectedAreas?.disconnect || [];
-
-      if (connectParks.length || disconnectParks.length) {
-        for (const park of connectParks) {
-          await handleConnectOrDisconnect(park.documentId);
-        }
-        for (const park of disconnectParks) {
-          await handleConnectOrDisconnect(park.documentId);
-        }
-      } else {
-        // scenario 2: part of the existing database object
-        const protectedAreas = context.params.data?.protectedAreas || {
-          connect: [],
-          disconnect: [],
-        };
-
-        for (const doc of protectedAreas.connect || []) {
-          await handleConnectOrDisconnect(doc?.documentId);
-        }
-
-        for (const doc of protectedAreas.disconnect || []) {
-          await handleConnectOrDisconnect(doc?.documentId);
-        }
-      }
+      const impactedParks = await getImpactedRelations({
+        mainDocumentUid: context.uid,
+        relationFieldName: "protectedAreas",
+        data: context.params.data,
+        documentId: context.params.documentId,
+        action: context.action,
+      });
+      await batchQueueParks(impactedParks, context.uid, context.action);
     }
 
-    // Handle other realatedCollectionTypes
-    if (relatedCollectionTypes.includes(context.uid)) {
-      const connectParkDocId =
-        context?.params?.data?.protectedArea?.connect?.[0]?.documentId;
-      const disconnectParkDocId =
-        context?.params?.data?.protectedArea?.disconnect?.[0]?.documentId;
-
-      if (connectParkDocId || disconnectParkDocId) {
-        // this is for cases where the protected area relation is being changed
-        await handleConnectOrDisconnect(connectParkDocId);
-        await handleConnectOrDisconnect(disconnectParkDocId);
-      } else {
-        // this is for cases where the record is already in the db and the
-        // protected area relation is not being changed
-        const documentId = context.params?.documentId;
-
-        // documentId is not available in draft
-        if (documentId) {
-          const document = await strapi.documents(context.uid).findOne({
-            documentId,
-            status: "published",
-            fields: ["documentId"],
-            populate: { protectedArea: { fields: ["orcs"] } },
-          });
-          if (document?.protectedArea?.orcs) {
-            const orcs = document.protectedArea.orcs;
-            strapi.log.info(`queuing park ${orcs} for indexing...`);
-            await indexPark(orcs);
-          }
-        }
-      }
+    // Handle other realated collection types
+    if (otherRelatedCollectionTypes.includes(context.uid)) {
+      const impactedParks = await getImpactedRelations({
+        mainDocumentUid: context.uid,
+        relationFieldName: "protectedArea",
+        data: context.params.data,
+        documentId: context.params.documentId,
+        action: context.action,
+      });
+      await batchQueueParks(impactedParks, context.uid, context.action);
     }
 
-    return await next(); // Call the next middleware in the stack
+    return await next();
   };
 };
 
 // HELPER FUNCTIONS
 
-// Handles orcs lookup and triggers indexing for related collections.
-async function handleConnectOrDisconnect(documentId) {
-  if (!documentId) return;
-  const pa = await strapi.documents(protectedAreaCollectionType).findOne({
-    documentId,
-    status: "published",
-    fields: ["orcs"],
-  });
-  if (pa?.orcs) {
-    strapi.log.info(`queuing park ${pa.orcs} for indexing...`);
-    await indexPark(pa.orcs);
+async function getDateRelations(documentId) {
+  if (!documentId) {
+    return [];
   }
+  const parkDate = await strapi.documents(parkDateCollectionType).findOne({
+    documentId: documentId,
+    fields: ["documentId"],
+    populate: {
+      protectedArea: {
+        fields: ["documentId"],
+      },
+      parkFeature: {
+        fields: ["documentId"],
+        populate: {
+          protectedArea: {
+            fields: ["documentId"],
+          },
+        },
+      },
+    },
+    status: "published",
+  });
+
+  return [
+    parkDate?.protectedArea?.orcs,
+    parkDate?.parkFeature?.protectedArea?.orcs,
+  ].filter(Boolean);
 }
