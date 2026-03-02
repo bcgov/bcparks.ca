@@ -30,6 +30,11 @@
     "hidesSeasonalAdvisory": {
       "type": "boolean",
       "default": false
+    },
+    "isActive": {
+      "type": "boolean",
+      "required": true,
+      "default": true
     }
   }
 }
