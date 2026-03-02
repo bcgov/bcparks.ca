@@ -17,9 +17,9 @@ module.exports = async function getImpactedRelations({
   if (value && Array.isArray(value)) {
     // for multiple relations provided as an array of objects with documentIds
     for (const item of value) {
-      const documentId = extractDocumentId(item);
-      if (documentId) {
-        impacted.add(documentId);
+      const docId = extractDocumentId(item);
+      if (docId) {
+        impacted.add(docId);
       }
     }
   } else if (
@@ -35,25 +35,25 @@ module.exports = async function getImpactedRelations({
       // object using connect/disconnect/set format
       if (Array.isArray(value.connect)) {
         for (const item of value.connect) {
-          const documentId = extractDocumentId(item);
-          if (documentId) {
-            impacted.add(documentId);
+          const docId = extractDocumentId(item);
+          if (docId) {
+            impacted.add(docId);
           }
         }
       }
       if (Array.isArray(value.disconnect)) {
         for (const item of value.disconnect) {
-          const documentId = extractDocumentId(item);
-          if (documentId) {
-            impacted.add(documentId);
+          const docId = extractDocumentId(item);
+          if (docId) {
+            impacted.add(docId);
           }
         }
       }
       if (Array.isArray(value.set)) {
         for (const item of value.set) {
-          const documentId = extractDocumentId(item);
-          if (documentId) {
-            impacted.add(documentId);
+          const docId = extractDocumentId(item);
+          if (docId) {
+            impacted.add(docId);
           }
         }
       }
