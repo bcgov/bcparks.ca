@@ -51,9 +51,13 @@ const removeFromQueue = async function (queueIds) {
 const existsInQueue = async function (actionName, numericData) {
   const query = qs.stringify(
     {
+      fields: ["documentId"],
       filters: {
         action: `${actionName}`,
         numericData: numericData,
+      },
+      pagination: {
+        limit: 1,
       },
     },
     {

@@ -71,7 +71,7 @@ module.exports = () => {
       const orcs = data?.orcs;
       if (orcs) {
         if (
-          context.uid == protectedAreaCollectionType &&
+          context.uid === protectedAreaCollectionType &&
           (context.action === "delete" || context.action === "unpublish")
         ) {
           await removePark(orcs);
@@ -113,7 +113,7 @@ module.exports = () => {
       await batchQueueParks(impactedParks, context.uid, context.action);
     }
 
-    // Handle other realated collection types
+    // Handle other related collection types
     if (otherRelatedCollectionTypes.includes(context.uid)) {
       const impactedParks = await getImpactedRelations({
         mainDocumentUid: context.uid,
@@ -155,7 +155,7 @@ async function getDateRelations(documentId) {
   });
 
   return [
-    parkDate?.protectedArea?.orcs,
-    parkDate?.parkFeature?.protectedArea?.orcs,
+    parkDate?.protectedArea?.documentId,
+    parkDate?.parkFeature?.protectedArea?.documentId,
   ].filter(Boolean);
 }

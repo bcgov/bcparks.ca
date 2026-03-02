@@ -4,11 +4,12 @@ const { readQueue, removeFromQueue, addToQueue, existsInQueue } = require("../..
 const qs = require("qs");
 
 /**
- * Looks up the orcs values for a list if documentIds and
+ * Looks up the orcs values for a list of documentIds and
  * creates "elastic index park" tasks for each
  */
 exports.batchQueueParks = async function () {
   const logger = getLogger();
+  let queue;
 
   // get items from the queue with the action 'elastic batch-queue parks'
   try {
@@ -43,9 +44,12 @@ exports.batchQueueParks = async function () {
     for (const park of parks?.data?.data || []) {
       try {
         if (!(await existsInQueue("elastic index park", park.orcs))) {
-          isError = !(await addToQueue({
+          const addedToQueue = await addToQueue({
             data: { action: "elastic index park", numericData: park.orcs },
-          }));
+          });
+          if (!addedToQueue) {
+            isError = true;
+          }
         }
       } catch (error) {
         isError = true;
@@ -56,7 +60,7 @@ exports.batchQueueParks = async function () {
       try {
         await removeFromQueue([task.documentId]);
       } catch (error) {
-        logger.error(`batchQueue() failed while removing batch-queue task from queue: ${error}`);
+        logger.error(`batchQueueParks() failed while removing batch-queue task from queue: ${error}`);
         return;
       }
     }

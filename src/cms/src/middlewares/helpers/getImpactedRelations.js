@@ -1,7 +1,7 @@
 /**
  * Document Service middleware helper function to parse the incoming request
  * payload and collect a unique list of impacted related documentIds for a
- * a specified relation field.
+ * specified relation field.
  */
 
 module.exports = async function getImpactedRelations({
@@ -73,13 +73,17 @@ module.exports = async function getImpactedRelations({
 
   if (action !== "create" && documentId) {
     if (action !== "update" || (!value?.connect && !value?.disconnect)) {
-      impacted.add(
-        ...(await getExistingRelatedDocIds({
-          mainDocumentUid,
-          relationFieldName,
-          documentId,
-        })),
-      );
+      // note: `delete` always ends up with two tasks in the queue because
+      // the middleware runs for both the draft and published versions of the document
+      // just ignore the duplicates and let the scheduler handle it.
+      // The `update` and `publish` combo behaves similarly because there are two actions
+      for (const docId of await getExistingRelatedDocIds({
+        mainDocumentUid,
+        relationFieldName,
+        documentId,
+      })) {
+        impacted.add(docId);
+      }
     }
   }
 
@@ -97,23 +101,23 @@ async function getExistingRelatedDocIds({
 }) {
   const impacted = new Set();
 
-  impacted.add(
-    ...(await getExistingRelatedDocIdsByStatus({
-      mainDocumentUid,
-      relationFieldName,
-      documentId,
-      status: "draft",
-    })),
-  );
+  for (const docId of await getExistingRelatedDocIdsByStatus({
+    mainDocumentUid,
+    relationFieldName,
+    documentId,
+    status: "draft",
+  })) {
+    impacted.add(docId);
+  }
 
-  impacted.add(
-    ...(await getExistingRelatedDocIdsByStatus({
-      mainDocumentUid,
-      relationFieldName,
-      documentId,
-      status: "published",
-    })),
-  );
+  for (const docId of await getExistingRelatedDocIdsByStatus({
+    mainDocumentUid,
+    relationFieldName,
+    documentId,
+    status: "published",
+  })) {
+    impacted.add(docId);
+  }
 
   return Array.from(impacted);
 }
@@ -138,9 +142,10 @@ async function getExistingRelatedDocIdsByStatus({
     } else if (rel && typeof rel === "object" && rel.documentId) {
       return [rel.documentId];
     }
-  } catch {
-    console.warn(
+  } catch (error) {
+    strapi.log.warn(
       `Failed to fetch existing relations for ${mainDocumentUid} documentId ${documentId} and relation field ${relationFieldName}`,
+      { error },
     );
   }
 
