@@ -13,7 +13,6 @@ module.exports = {
         })
       ).length > 0;
     if (!exists) {
-      strapi.log.info(`queued protectedArea ${orcs} for reindexing`);
       try {
         await strapi.documents("api::queued-task.queued-task").create({
           data: {
@@ -21,6 +20,7 @@ module.exports = {
             numericData: orcs,
           },
         });
+        strapi.log.info(`queued protectedArea ${orcs} for reindexing`);
       } catch (error) {
         strapi.log.error(error);
       }
@@ -40,7 +40,6 @@ module.exports = {
         })
       ).length > 0;
     if (!exists) {
-      strapi.log.info(`queued protectedArea ${orcs} for removal`);
       try {
         await strapi.documents("api::queued-task.queued-task").create({
           data: {
@@ -48,9 +47,32 @@ module.exports = {
             numericData: orcs,
           },
         });
+        strapi.log.info(`queued protectedArea ${orcs} for removal`);
       } catch (error) {
         strapi.log.error(error);
       }
+    }
+  },
+  batchQueueParks: async function (documentIds) {
+    if (
+      !documentIds ||
+      !Array.isArray(documentIds) ||
+      documentIds.length === 0
+    ) {
+      return;
+    }
+    try {
+      await strapi.documents("api::queued-task.queued-task").create({
+        data: {
+          action: "elastic batch-queue parks",
+          jsonData: documentIds,
+        },
+      });
+      strapi.log.info(
+        `queued ${documentIds.length} documentIds for ORCS lookup and 'elastic index park' task creation`,
+      );
+    } catch (error) {
+      strapi.log.error(error);
     }
   },
   queueAdvisoryEmail: async function (
