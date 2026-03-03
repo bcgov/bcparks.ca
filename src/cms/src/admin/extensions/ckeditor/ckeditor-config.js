@@ -21,9 +21,12 @@ import { lightTheme } from "@strapi/design-system";
 
 export const registerCKEditor = async (_app) => {
   const customTheme = {
+    // Extend the default theme
+    ...defaultTheme,
+
     // Dark-only fixes: extend the plugin's dark theme rather than applying these globally.
     dark: [
-      defaultTheme.dark,
+      ...defaultTheme.dark,
       `
         /* Link context-toolbar preview text needs higher contrast in dark mode */
         a.ck.ck-button.ck-link-toolbar__preview {
@@ -32,10 +35,11 @@ export const registerCKEditor = async (_app) => {
       `,
     ],
 
-    // Override CKEditor's built-in styles
-    additional: `
-      /* Content styles are loaded into the admin panel via <link> in admin-styles.js */
-
+    // Override CKEditor's built-in styles to suit the CKEditor's lighter canvas and darker text
+    // Site content styles are loaded into the admin panel via <link> in admin-styles.js
+    additional: [
+      ...defaultTheme.additional,
+      `
       /*
         Keep CKEditor aligned with Strapi's theme (light/dark), but force a
         white content canvas for WYSIWYG parity with the public site.
@@ -44,8 +48,8 @@ export const registerCKEditor = async (_app) => {
       /* Ensure white background and dark text in the editable content area */
       .ck.ck-content.ck-editor__editable,
       .ck.ck-editor__main > .ck.ck-content.ck-editor__editable {
-        background-color: #fff !important;
-        color: #1a1a1a !important;
+        background-color: #fff;
+        color: #1a1a1a;
         font-size: 16px;
         line-height: 1.6;
         font-family: "BC Sans", sans-serif;
@@ -57,7 +61,8 @@ export const registerCKEditor = async (_app) => {
         --ck-color-link-selected-background: ${lightTheme.colors.primary200} !important;
         --ck-color-link-fake-selection: ${lightTheme.colors.primary200} !important;
       }
-    `,
+      `,
+    ],
   };
 
   const customPreset = {
