@@ -1,7 +1,13 @@
 /**
- * Document Service middleware helper function to parse the incoming request
- * payload and collect a unique list of impacted related documentIds for a
- * specified relation field.
+ * Parses the incoming request payload to collect a unique list of impacted related documentIds
+ * for a specified relation field. Handles multiple input formats, including arrays of strings,
+ * arrays of objects, and objects with `connect`, `disconnect`, or `set` arrays.
+ *
+ * For update and delete actions, this helper also fetches existing related documentIds for both
+ * draft and published states to ensure all impacted documents are captured, unless the action is
+ * an update with explicit `connect` or `disconnect` arrays. In those cases, only the documentIds
+ * explicitly listed in the `connect` or `disconnect` arrays are impacted, and there is no need
+ * to look up the existing relations prior to the update.
  */
 
 module.exports = async function getImpactedRelations({
@@ -15,7 +21,12 @@ module.exports = async function getImpactedRelations({
   const impacted = new Set();
 
   if (value && Array.isArray(value)) {
-    // for multiple relations provided as an array of objects with documentIds
+    // for multiple relations provided as an array of strings or objects with documentIds
+    // example formats:
+    // - "protectedAreas": ["k8dmbeytobxmclbqnq2mbe4e", "j9dereyfobxghlbqnq2mge4f"]
+    // - "protectedAreas": [{ documentId: "k8dmbeytobxmclbqnq2mbe4e" },
+    //                      { documentId: "j9dereyfobxghlbqnq2mge4f" }]
+
     for (const item of value) {
       const docId = extractDocumentId(item);
       if (docId) {
@@ -33,6 +44,13 @@ module.exports = async function getImpactedRelations({
       Array.isArray(value.disconnect)
     ) {
       // object using connect/disconnect/set format
+      // example formats (not exhaustive):
+      // - "protectedAreas": { connect: ["k8dmbeytobxmclbqnq2mbe4e", "j9dereyfobxghlbqnq2mge4f"] }
+      // - "protectedAreas": { connect:[{ documentId: "k8dmbeytobxmclbqnq2mbe4e" },
+      //                              { documentId: "j9dereyfobxghlbqnq2mge4f" }] }
+      // - "protectedArea": { disconnect: [{ documentId: "k8dmbeytobxmclbqnq2mbe4e" }] }
+      // - "protectedArea": { set: ["k8dmbeytobxmclbqnq2mbe4e"] }
+
       if (Array.isArray(value.connect)) {
         for (const item of value.connect) {
           const docId = extractDocumentId(item);
@@ -59,6 +77,10 @@ module.exports = async function getImpactedRelations({
       }
     } else {
       // other objects or plain string format
+      // example formats:
+      // - "protectedArea": "k8dmbeytobxmclbqnq2mbe4e"
+      // - "protectedArea": { documentId: "k8dmbeytobxmclbqnq2mbe4e" }
+
       if (typeof value === "string") {
         impacted.add(value);
       } else if (
@@ -72,11 +94,15 @@ module.exports = async function getImpactedRelations({
   }
 
   if (action !== "create" && documentId) {
+    // examples (not exhaustive):
+    // - DELETE /api/park-activities/k8dmbeytobxmclbqnq2mbe4e
+    // - PUT /api/park-activities/k8dmbeytobxmclbqnq2mbe4e
+
     if (action !== "update" || (!value?.connect && !value?.disconnect)) {
-      // note: `delete` always ends up with two tasks in the queue because
-      // the middleware runs for both the draft and published versions of the document
-      // just ignore the duplicates and let the scheduler handle it.
-      // The `update` and `publish` combo behaves similarly because there are two actions
+      // exclude update actions that have explicit connect/disconnect arrays,
+      // since those already specify the impacted documentIds and there is no
+      // need to look up existing relations
+
       for (const docId of await getExistingRelatedDocIds({
         mainDocumentUid,
         relationFieldName,
@@ -156,9 +182,11 @@ async function getExistingRelatedDocIdsByStatus({
 // of relation inputs.
 function extractDocumentId(item) {
   if (typeof item === "string") {
+    // e.g. "k8dmbeytobxmclbqnq2mbe4e"
     return item;
   }
   if (item && typeof item === "object" && typeof item.documentId === "string") {
+    // e.g. { documentId: "k8dmbeytobxmclbqnq2mbe4e" }
     return item.documentId;
   }
   return null;

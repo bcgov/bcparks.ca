@@ -1,6 +1,11 @@
 /**
  *  SEARCH INDEXING (Document Services Middleware)
  *  Queues jobs to refresh the search index when relevant park data changes
+ *
+ *  NOTE: `delete` actions always result in two tasks in the queue because the middleware
+ *  runs for both the draft and published versions of the document. Just ignore the
+ *  duplicates and let the scheduler handle them. The `update` and `publish` combo
+ *  has similar behavior because the update action runs separately from the publish action.
  */
 
 const {
