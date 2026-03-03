@@ -17,7 +17,7 @@ const readQueue = async function (actionName, options) {
     },
     {
       encodeValuesOnly: true,
-    }
+    },
   );
   const queueResponse = await cmsAxios.get(`/api/queued-tasks?${query}`);
   const queuedTasks = queueResponse.data.data;
@@ -30,8 +30,10 @@ const readQueue = async function (actionName, options) {
 const addToQueue = async function (task) {
   try {
     await cmsAxios.post("/api/queued-tasks", task);
+    return true;
   } catch (error) {
     getLogger().error(error);
+    return false;
   }
 };
 
@@ -46,8 +48,30 @@ const removeFromQueue = async function (queueIds) {
   }
 };
 
+const existsInQueue = async function (actionName, numericData) {
+  const query = qs.stringify(
+    {
+      fields: ["documentId"],
+      filters: {
+        action: `${actionName}`,
+        numericData: numericData,
+      },
+      pagination: {
+        limit: 1,
+      },
+    },
+    {
+      encodeValuesOnly: true,
+    },
+  );
+  const queueResponse = await cmsAxios.get(`/api/queued-tasks?${query}`);
+  const queuedTasks = queueResponse.data.data;
+  return queuedTasks.length > 0;
+};
+
 module.exports = {
   readQueue,
   removeFromQueue,
   addToQueue,
+  existsInQueue,
 };

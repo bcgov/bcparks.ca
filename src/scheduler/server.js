@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const { exec } = require("child_process");
 
 const { getLogger } = require("./shared/logging");
+const { batchQueueParks } = require("./elasticsearch/scripts/batchQueueParks");
 const { indexParks } = require("./elasticsearch/scripts/indexParks");
 const { createParkIndex, parkIndexExists } = require("./elasticsearch/scripts/createParkIndex");
 const { queueAll } = require("./elasticsearch/scripts/queueAllParks");
@@ -44,6 +45,7 @@ const { dootPublish } = require("./doot/scripts/publish");
       recentAdvisoryEmails = await sendAdvisoryEmails(recentAdvisoryEmails);
       await sendParkNamesEmails();
       await populateGeoShapes({ silent: true });
+      await batchQueueParks();
       if (!(await parkIndexExists())) {
         logger.warn("The Elasticsearch index is missing. It will be recreated and repopulated");
         await createParkIndex();

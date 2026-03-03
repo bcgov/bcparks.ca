@@ -2,6 +2,7 @@ const dotenv = require("dotenv");
 
 const { scriptKeySpecified, idSpecified } = require("./shared/commandLine");
 const { getLogger } = require("./shared/logging");
+const { batchQueueParks } = require("./elasticsearch/scripts/batchQueueParks");
 const { indexParks } = require("./elasticsearch/scripts/indexParks");
 const { createParkIndex, parkIndexExists } = require("./elasticsearch/scripts/createParkIndex");
 const { deleteParkIndex } = require("./elasticsearch/scripts/deleteParkIndex");
@@ -135,6 +136,16 @@ const { dootPublish } = require("./doot/scripts/publish");
     return;
   }
 
+  /**
+   * Batch queue parks for Elasticsearch indexing
+   * (manually triggered via OpenShift terminal / mainly for debugging purposes)
+   */
+  if (scriptKeySpecified("batchindex")) {
+    logger.info("Batch queuing parks for Elasticsearch indexing");
+    await batchQueueParks();
+    return;
+  }
+
   console.log("\nUsage: \n");
   console.log("node manage.js [command]\n");
   console.log("Command options:\n");
@@ -143,6 +154,7 @@ const { dootPublish } = require("./doot/scripts/publish");
   console.log("rebuild     : re-create the park index and re-index all parks");
   console.log("deleteindex : delete the park index");
   console.log("indexparks  : run the indexParks task one time");
+  console.log("batchindex  : batch queue parks for indexing by documentId");
   console.log("geoshapes   : populate the geo-shapes collection in Strapi");
   console.log("[integer]   : re-index a specified orcs");
   console.log("advisories  : trigger scheduled public advisory publishing & expiry");
