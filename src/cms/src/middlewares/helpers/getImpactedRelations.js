@@ -159,6 +159,7 @@ async function getExistingRelatedDocIdsByStatus({
     const current = await strapi.documents(mainDocumentUid).findOne({
       documentId,
       status: status,
+      fields: ["documentId"],
       populate: { [relationFieldName]: { fields: ["documentId"] } },
     });
 
