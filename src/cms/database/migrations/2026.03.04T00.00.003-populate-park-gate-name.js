@@ -8,7 +8,10 @@
 
 module.exports = {
   async up(knex) {
-    if (await knex.schema.hasTable("park_gates")) {
+    if (
+      (await knex.schema.hasTable("park_gates")) &&
+      (await knex.schema.hasColumn("park_gates", "name"))
+    ) {
       await knex.raw(`
         WITH name_build AS (
           SELECT

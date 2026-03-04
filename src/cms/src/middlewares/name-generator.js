@@ -183,28 +183,33 @@ async function updateName(data, uid) {
   if (protectedArea) {
     data.name = String(protectedArea.orcs);
     if (nameSuffix === USE_RELATION_NAME) {
-      nameSuffix = ` ${protectedArea.protectedAreaName}`;
+      const relationName = protectedArea.protectedAreaName ?? "";
+      nameSuffix = relationName ? ` ${relationName}` : "";
     }
   }
   if (site) {
     data.name = site.orcsSiteNumber;
     if (nameSuffix === USE_RELATION_NAME) {
-      nameSuffix = ` ${site.siteName}`;
+      const relationName = site.siteName ?? "";
+      nameSuffix = relationName ? ` ${relationName}` : "";
     }
   }
   if (parkArea) {
     data.name = `PA-${parkArea.orcsAreaNumber}`;
     if (nameSuffix === USE_RELATION_NAME) {
-      nameSuffix = ` ${parkArea.parkAreaName}`;
+      const relationName = parkArea.parkAreaName ?? "";
+      nameSuffix = relationName ? ` ${relationName}` : "";
     }
   }
   if (parkFeature) {
     data.name = `F-${parkFeature.orcsFeatureNumber}`;
     if (nameSuffix === USE_RELATION_NAME) {
-      nameSuffix = ` ${parkFeature.parkFeatureName}`;
+      const relationName = parkFeature.parkFeatureName ?? "";
+      nameSuffix = relationName ? ` ${relationName}` : "";
     }
   }
-  if (nameSuffix.trim()) {
+  const trimmedNameSuffix = (nameSuffix ?? "").trim();
+  if (trimmedNameSuffix) {
     data.name += `:${nameSuffix}`;
   }
 
@@ -244,7 +249,8 @@ async function standardRelationLabel(data, dbRecord, config) {
     : (dbRecord?.[relationName]?.[labelFieldName] ?? "");
 }
 
-// Standard suffix generator that uses the entity's own name field as the suffix
+// Suffix generator that returns a sentinel indicating the suffix should use a related
+// entity's name (via USE_RELATION_NAME), rather than the current entity's own name field.
 async function entityNameLabel() {
   return USE_RELATION_NAME;
 }
