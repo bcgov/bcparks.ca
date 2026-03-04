@@ -71,8 +71,15 @@ const collections = [
       labelFieldName: "dateType",
     },
   },
+  {
+    uid: "api::park-gate.park-gate",
+    suffixGenerator: entityNameLabel,
+  },
 ];
 const collectionTypes = collections.map((c) => c.uid);
+
+// special return value from suffixGenerator to relation name as suffix
+const USE_RELATION_NAME = "use-relation-name";
 
 // MAIN MIDDLEWARE FUNCTION (scaffolding)
 
@@ -141,7 +148,7 @@ async function updateName(data, uid) {
     "api::protected-area.protected-area",
     getDocumentId(data.protectedArea),
     recordInstance?.protectedArea,
-    ["orcs"],
+    ["orcs", "protectedAreaName"]
   );
 
   // get site (if applicable)
@@ -149,7 +156,7 @@ async function updateName(data, uid) {
     "api::site.site",
     getDocumentId(data.site),
     recordInstance?.site,
-    ["orcsSiteNumber"],
+    ["orcsSiteNumber", "siteName"]
   );
 
   // get park feature (if applicable)
@@ -157,7 +164,7 @@ async function updateName(data, uid) {
     "api::park-feature.park-feature",
     getDocumentId(data.parkFeature),
     recordInstance?.parkFeature,
-    ["orcsFeatureNumber"],
+    ["orcsFeatureNumber", "parkFeatureName"]
   );
 
   // get park area (if applicable)
@@ -165,27 +172,39 @@ async function updateName(data, uid) {
     "api::park-area.park-area",
     getDocumentId(data.parkArea),
     recordInstance?.parkArea,
-    ["orcsAreaNumber"],
+    ["orcsAreaNumber", "parkAreaName"]
   );
 
   // get suffix of the label
-  const nameSuffix = await suffixGenerator(data, recordInstance, config);
+  let nameSuffix = await suffixGenerator(data, recordInstance, config);
 
   // generate label and assign to data.name
   data.name = "";
   if (protectedArea) {
     data.name = String(protectedArea.orcs);
+    if (nameSuffix === USE_RELATION_NAME) {
+      nameSuffix = ` ${protectedArea.protectedAreaName}`;
+    }
   }
   if (site) {
     data.name = site.orcsSiteNumber;
+    if (nameSuffix === USE_RELATION_NAME) {
+      nameSuffix = ` ${site.siteName}`;
+    }
   }
   if (parkArea) {
     data.name = `PA-${parkArea.orcsAreaNumber}`;
+    if (nameSuffix === USE_RELATION_NAME) {
+      nameSuffix = ` ${parkArea.parkAreaName}`;
+    }
   }
   if (parkFeature) {
     data.name = `F-${parkFeature.orcsFeatureNumber}`;
+    if (nameSuffix === USE_RELATION_NAME) {
+      nameSuffix = ` ${parkFeature.parkFeatureName}`;
+    }
   }
-  if (nameSuffix) {
+  if (nameSuffix.trim()) {
     data.name += `:${nameSuffix}`;
   }
 
@@ -223,6 +242,11 @@ async function standardRelationLabel(data, dbRecord, config) {
         })
       )?.[labelFieldName]
     : (dbRecord?.[relationName]?.[labelFieldName] ?? "");
+}
+
+// Standard suffix generator that uses the entity's own name field as the suffix
+async function entityNameLabel() {
+  return USE_RELATION_NAME;
 }
 
 // Custom suffix generator for park-contact - example of extending standardRelationLabel
