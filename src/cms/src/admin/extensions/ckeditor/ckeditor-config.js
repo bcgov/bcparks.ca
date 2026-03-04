@@ -196,7 +196,7 @@ export const registerCKEditor = async (_app) => {
 
           detectDownloadable: {
             mode: "automatic",
-            callback: (url) => url.endsWith(".pdf"),
+            callback: (url) => !!url?.endsWith(".pdf"),
             attributes: {
               target: "_blank",
               rel: "noopener",
