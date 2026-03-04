@@ -35,8 +35,8 @@ export const registerCKEditor = async (_app) => {
       `,
     ],
 
-    // Override CKEditor's built-in styles to suit the CKEditor's lighter canvas and darker text
-    // Site content styles are loaded into the admin panel via <link> in admin-styles.js
+    // Override CKEditor's built-in styles to suit the frontend's lighter canvas and darker text
+    // Frontend content styles are loaded into the admin panel via <link> in admin-styles.js
     additional: [
       ...defaultTheme.additional,
       `
