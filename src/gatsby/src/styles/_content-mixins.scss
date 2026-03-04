@@ -132,6 +132,72 @@
 
   img {
     max-width: 100%;
+    // auto height to allow variable width and maintain aspect ratio
+    height: auto;
+  }
+
+  figure {
+    margin: 0 0 1em;
+
+    figcaption {
+      background-color: transparent;
+      text-align: center;
+      color: $colorGrey;
+      font-size: 0.875em;
+      line-height: 1.4;
+      margin-top: 0.25em;
+    }
+  }
+
+  // CKeditor alignment classes
+  // These classes can be added to a figre element, or directly to an img.
+  // In the editor, they may be added to a span element that wraps the image.
+  // Just select the classes because we can't guarantee the structure of the HTML in the editor.
+
+  // Break text: centered image
+  .image_resized {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1em;
+  }
+
+  // Break text: left aligned image
+  .image-style-block-align-left {
+    margin-right: auto;
+    margin-left: 0;
+    margin-bottom: 1em;
+  }
+
+  // Break text: right aligned image
+  .image-style-block-align-right {
+    margin-left: auto;
+    margin-right: 0;
+    margin-bottom: 1em;
+  }
+
+  // Wrap text: left aligned image
+  .image-style-align-left {
+    float: left;
+    margin-right: 1em;
+    margin-left: 0;
+    margin-bottom: 1em;
+  }
+
+  // Wrap text: right aligned image
+  .image-style-align-right {
+    float: right;
+    margin-left: 1em;
+    margin-right: 0;
+    margin-bottom: 1em;
+  }
+
+  // Side image
+  .image-style-side {
+    float: right;
+    margin-left: 1em;
+    margin-right: 0;
+    max-width: 50%; // Copied from CKEditor styles
+    margin-bottom: 1em;
   }
 }
 
