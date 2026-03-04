@@ -131,7 +131,7 @@ async function updateName(data, uid) {
   ].filter(Boolean);
 
   const isUpdatingNameFields = nameAffectingFields.some(
-    (field) => data[field] !== undefined,
+    (field) => data[field] !== undefined
   );
 
   // If this is an update and none of the name-affecting relations are changing,
@@ -246,11 +246,10 @@ async function standardRelationLabel(data, dbRecord, config) {
           fields: [labelFieldName],
         })
       )?.[labelFieldName]
-    : (dbRecord?.[relationName]?.[labelFieldName] ?? "");
+    : dbRecord?.[relationName]?.[labelFieldName] ?? "";
 }
 
-// Suffix generator that returns a sentinel indicating the suffix should use a related
-// entity's name (via USE_RELATION_NAME), rather than the current entity's own name field.
+// Suffix generator that signals to use the related entity's name as suffix.
 async function entityNameLabel() {
   return USE_RELATION_NAME;
 }
