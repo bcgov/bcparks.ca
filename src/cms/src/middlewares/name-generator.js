@@ -223,7 +223,7 @@ function combineName(suffix, protectedArea, site, parkArea, parkFeature) {
   }
 }
 
-// Extracts documentId from either plain string or connect/disconnect format
+// Extracts documentId from plain string, object format or connect/set format
 function getDocumentId(relationData) {
   if (typeof relationData === "string") {
     return relationData;
