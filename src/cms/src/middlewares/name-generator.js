@@ -223,23 +223,28 @@ function combineName(suffix, protectedArea, site, parkArea, parkFeature) {
   }
 }
 
-// Extracts documentId from either plain string or connect/disconnect format
+// Extracts documentId from plain string, object format or connect/set format
 function getDocumentId(relationData) {
   if (typeof relationData === "string") {
     return relationData;
   }
-  if (typeof relationData === "object") {
+  if (relationData && typeof relationData === "object") {
     if (relationData.documentId) {
       return relationData.documentId;
     }
     if (relationData?.connect?.[0]?.documentId) {
       return relationData.connect[0].documentId;
     }
+    if (typeof relationData?.connect === "string") {
+      return relationData.connect;
+    }
+    if (relationData?.set?.[0]?.documentId) {
+      return relationData.set[0].documentId;
+    }
+    if (typeof relationData?.set === "string") {
+      return relationData.set;
+    }
   }
-  if (typeof relationData?.connect === "string") {
-    return relationData.connect;
-  }
-
   return null;
 }
 
