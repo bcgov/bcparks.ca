@@ -19,7 +19,7 @@ Access to the web UI for creating service accounts can be requested in the `#aps
 ## Kong Config Update
 
 1. Visit [Strapi admin](http://localhost:1337/admin/plugins/documentation) and under Plugins -> Documentation,
-   click the circular arrow icon which says "Regenerate 1.0.0".
+   click the "Regenerate" icon (circular arrow) to regenerate the API documentation.
 2. Copy the content of `src/cms/src/extensions/documentation/documentation/1.0.0/full_documentation.json` to
    `infrastructure/kong/public-documentation.json` (overwriting the existing content).
 3. Run `node clean.js` to remove any private API endpoints from the file.
