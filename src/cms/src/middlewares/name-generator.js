@@ -71,8 +71,15 @@ const collections = [
       labelFieldName: "dateType",
     },
   },
+  {
+    uid: "api::park-gate.park-gate",
+    suffixGenerator: relationNameLabel,
+  },
 ];
 const collectionTypes = collections.map((c) => c.uid);
+
+// special return value from suffixGenerator to relation name as suffix
+const USE_RELATION_NAME = "use-relation-name";
 
 // MAIN MIDDLEWARE FUNCTION (scaffolding)
 
@@ -87,9 +94,9 @@ module.exports = () => {
 
     strapi.log.info(`nameGeneratorMiddleware ${context.uid}-${context.action}`);
 
-    await updateName(context.params.data, context.uid);
+    await updateName(context.params.data || result, context.uid);
 
-    return await next(); // Call the next middleware in the stack
+    return await next(); // Call the next middleware in the stack again to save changes
   };
 };
 
@@ -124,7 +131,7 @@ async function updateName(data, uid) {
   ].filter(Boolean);
 
   const isUpdatingNameFields = nameAffectingFields.some(
-    (field) => data[field] !== undefined,
+    (field) => data[field] !== undefined
   );
 
   // If this is an update and none of the name-affecting relations are changing,
@@ -141,7 +148,7 @@ async function updateName(data, uid) {
     "api::protected-area.protected-area",
     getDocumentId(data.protectedArea),
     recordInstance?.protectedArea,
-    ["orcs"],
+    ["orcs", "protectedAreaName"]
   );
 
   // get site (if applicable)
@@ -149,7 +156,7 @@ async function updateName(data, uid) {
     "api::site.site",
     getDocumentId(data.site),
     recordInstance?.site,
-    ["orcsSiteNumber"],
+    ["orcsSiteNumber", "siteName"]
   );
 
   // get park feature (if applicable)
@@ -157,7 +164,7 @@ async function updateName(data, uid) {
     "api::park-feature.park-feature",
     getDocumentId(data.parkFeature),
     recordInstance?.parkFeature,
-    ["orcsFeatureNumber"],
+    ["orcsFeatureNumber", "parkFeatureName"]
   );
 
   // get park area (if applicable)
@@ -165,38 +172,74 @@ async function updateName(data, uid) {
     "api::park-area.park-area",
     getDocumentId(data.parkArea),
     recordInstance?.parkArea,
-    ["orcsAreaNumber"],
+    ["orcsAreaNumber", "parkAreaName"]
   );
 
-  // get suffix of the label
-  const nameSuffix = await suffixGenerator(data, recordInstance, config);
+  // get initial suffix of the label
+  let suffix = await suffixGenerator(data, recordInstance, config);
 
-  // generate label and assign to data.name
-  data.name = "";
-  if (protectedArea) {
-    data.name = String(protectedArea.orcs);
-  }
-  if (site) {
-    data.name = site.orcsSiteNumber;
-  }
-  if (parkArea) {
-    data.name = `PA-${parkArea.orcsAreaNumber}`;
-  }
-  if (parkFeature) {
-    data.name = `F-${parkFeature.orcsFeatureNumber}`;
-  }
-  if (nameSuffix) {
-    data.name += `:${nameSuffix}`;
-  }
+  // generate full label
+  data.name = combineName(suffix, protectedArea, site, parkArea, parkFeature);
 
   return data;
 }
 
+// Priority for prefix: protected area > site > park area > park feature
+// Fallbacks get lower priority because they are based on pre-updated data
+function combineName(suffix, protectedArea, site, parkArea, parkFeature) {
+  let prefix = "";
+  suffix = suffix || "";
+
+  if (protectedArea && !protectedArea.isFallback) {
+    prefix = String(protectedArea.orcs);
+    suffix = tryGetRelationSuffix(suffix, protectedArea, "protectedAreaName");
+  } else if (site && !site.isFallback) {
+    prefix = site.orcsSiteNumber;
+    suffix = tryGetRelationSuffix(suffix, site, "siteName");
+  } else if (parkArea && !parkArea.isFallback) {
+    prefix = `PA-${parkArea.orcsAreaNumber}`;
+    suffix = tryGetRelationSuffix(suffix, parkArea, "parkAreaName");
+  } else if (parkFeature && !parkFeature.isFallback) {
+    prefix = `F-${parkFeature.orcsFeatureNumber}`;
+    suffix = tryGetRelationSuffix(suffix, parkFeature, "parkFeatureName");
+  } else if (protectedArea) {
+    prefix = String(protectedArea.orcs);
+    suffix = tryGetRelationSuffix(suffix, protectedArea, "protectedAreaName");
+  } else if (site) {
+    prefix = site.orcsSiteNumber;
+    suffix = tryGetRelationSuffix(suffix, site, "siteName");
+  } else if (parkArea) {
+    prefix = `PA-${parkArea.orcsAreaNumber}`;
+    suffix = tryGetRelationSuffix(suffix, parkArea, "parkAreaName");
+  } else if (parkFeature) {
+    prefix = `F-${parkFeature.orcsFeatureNumber}`;
+    suffix = tryGetRelationSuffix(suffix, parkFeature, "parkFeatureName");
+  }
+
+  if (prefix && suffix && suffix !== USE_RELATION_NAME) {
+    return `${prefix}:${suffix}`;
+  } else {
+    return prefix || "";
+  }
+}
+
 // Extracts documentId from either plain string or connect/disconnect format
 function getDocumentId(relationData) {
-  if (typeof relationData === "string") return relationData;
-  if (relationData?.connect?.[0]?.documentId)
-    return relationData.connect[0].documentId;
+  if (typeof relationData === "string") {
+    return relationData;
+  }
+  if (typeof relationData === "object") {
+    if (relationData.documentId) {
+      return relationData.documentId;
+    }
+    if (relationData?.connect?.[0]?.documentId) {
+      return relationData.connect[0].documentId;
+    }
+  }
+  if (typeof relationData?.connect === "string") {
+    return relationData.connect;
+  }
+
   return null;
 }
 
@@ -205,7 +248,21 @@ async function fetchRelation(uid, documentId, fallback, fields) {
   if (documentId) {
     return await strapi.documents(uid).findOne({ documentId, fields });
   }
-  return fallback;
+  if (fallback) {
+    return { isFallback: true, ...fallback };
+  }
+  return null;
+}
+
+// Returns a suffix for the entityNameLabel() generator. The
+// The USE_RELATION_NAME constant is a special signal to the main function to
+// use the related entity's name field as the suffix.
+function tryGetRelationSuffix(currentSuffix, entity, fieldName) {
+  if (currentSuffix !== USE_RELATION_NAME) {
+    return currentSuffix;
+  }
+  const relationName = entity?.[fieldName] ?? "";
+  return relationName ? ` ${relationName}` : "";
 }
 
 // SUFFIX GENERATOR FUNCTIONS
@@ -222,7 +279,12 @@ async function standardRelationLabel(data, dbRecord, config) {
           fields: [labelFieldName],
         })
       )?.[labelFieldName]
-    : (dbRecord?.[relationName]?.[labelFieldName] ?? "");
+    : dbRecord?.[relationName]?.[labelFieldName] ?? "";
+}
+
+// Suffix generator that signals to use the related entity's name as suffix.
+async function relationNameLabel() {
+  return USE_RELATION_NAME;
 }
 
 // Custom suffix generator for park-contact - example of extending standardRelationLabel

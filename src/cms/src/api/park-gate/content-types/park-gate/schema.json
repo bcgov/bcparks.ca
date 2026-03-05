@@ -10,6 +10,9 @@
     "draftAndPublish": true
   },
   "attributes": {
+    "name": {
+      "type": "string"
+    },
     "hasGate": {
       "type": "boolean",
       "default": null
