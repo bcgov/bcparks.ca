@@ -175,39 +175,71 @@ async function updateName(data, uid) {
     ["orcsAreaNumber", "parkAreaName"]
   );
 
-  // get suffix of the label
+  // get initial suffix of the label
   let suffix = await suffixGenerator(data, recordInstance, config);
 
-  // generate label and assign to data.name
-  data.name = "";
-  if (protectedArea) {
-    data.name = String(protectedArea.orcs);
-    suffix = tryGetRelationSuffix(suffix, protectedArea, "protectedAreaName");
-  }
-  if (site) {
-    data.name = site.orcsSiteNumber;
-    suffix = tryGetRelationSuffix(suffix, site, "siteName");
-  }
-  if (parkArea) {
-    data.name = `PA-${parkArea.orcsAreaNumber}`;
-    suffix = tryGetRelationSuffix(suffix, parkArea, "parkAreaName");
-  }
-  if (parkFeature) {
-    data.name = `F-${parkFeature.orcsFeatureNumber}`;
-    suffix = tryGetRelationSuffix(suffix, parkFeature, "parkFeatureName");
-  }
-
-  data.name =
-    suffix && suffix !== USE_RELATION_NAME ? `${data.name}:${suffix}` : "";
+  // generate full label
+  data.name = combineName(suffix, protectedArea, site, parkArea, parkFeature);
 
   return data;
 }
 
+// Priority for prefix: protected area > site > park area > park feature
+// Fallbacks get lower priority because they are based on pre-updated data
+function combineName(suffix, protectedArea, site, parkArea, parkFeature) {
+  let prefix = "";
+  suffix = suffix || "";
+
+  if (protectedArea && !protectedArea.isFallback) {
+    prefix = String(protectedArea.orcs);
+    suffix = tryGetRelationSuffix(suffix, protectedArea, "protectedAreaName");
+  } else if (site && !site.isFallback) {
+    prefix = site.orcsSiteNumber;
+    suffix = tryGetRelationSuffix(suffix, site, "siteName");
+  } else if (parkArea && !parkArea.isFallback) {
+    prefix = `PA-${parkArea.orcsAreaNumber}`;
+    suffix = tryGetRelationSuffix(suffix, parkArea, "parkAreaName");
+  } else if (parkFeature && !parkFeature.isFallback) {
+    prefix = `F-${parkFeature.orcsFeatureNumber}`;
+    suffix = tryGetRelationSuffix(suffix, parkFeature, "parkFeatureName");
+  } else if (protectedArea) {
+    prefix = String(protectedArea.orcs);
+    suffix = tryGetRelationSuffix(suffix, protectedArea, "protectedAreaName");
+  } else if (site) {
+    prefix = site.orcsSiteNumber;
+    suffix = tryGetRelationSuffix(suffix, site, "siteName");
+  } else if (parkArea) {
+    prefix = `PA-${parkArea.orcsAreaNumber}`;
+    suffix = tryGetRelationSuffix(suffix, parkArea, "parkAreaName");
+  } else if (parkFeature) {
+    prefix = `F-${parkFeature.orcsFeatureNumber}`;
+    suffix = tryGetRelationSuffix(suffix, parkFeature, "parkFeatureName");
+  }
+
+  if (prefix && suffix && suffix !== USE_RELATION_NAME) {
+    return `${prefix}:${suffix}`;
+  } else {
+    return prefix || "";
+  }
+}
+
 // Extracts documentId from either plain string or connect/disconnect format
 function getDocumentId(relationData) {
-  if (typeof relationData === "string") return relationData;
-  if (relationData?.connect?.[0]?.documentId)
-    return relationData.connect[0].documentId;
+  if (typeof relationData === "string") {
+    return relationData;
+  }
+  if (typeof relationData === "object") {
+    if (relationData.documentId) {
+      return relationData.documentId;
+    }
+    if (relationData?.connect?.[0]?.documentId) {
+      return relationData.connect[0].documentId;
+    }
+  }
+  if (typeof relationData?.connect === "string") {
+    return relationData.connect;
+  }
+
   return null;
 }
 
@@ -216,7 +248,10 @@ async function fetchRelation(uid, documentId, fallback, fields) {
   if (documentId) {
     return await strapi.documents(uid).findOne({ documentId, fields });
   }
-  return fallback;
+  if (fallback) {
+    return { isFallback: true, ...fallback };
+  }
+  return null;
 }
 
 // Returns a suffix for the entityNameLabel() generator. The
