@@ -139,6 +139,11 @@
   figure {
     margin: 0 0 1em;
 
+    // Position table captions below the table to match the image captions
+    &.table figcaption {
+      caption-side: bottom;
+    }
+
     figcaption {
       background-color: transparent;
       text-align: center;
