@@ -82,6 +82,8 @@ module.exports = ({ env }) => {
               contentType: "api::protected-area.protected-area",
               routes: ["/api/protected-areas", "/api/park-access-statuses"],
             },
+            "api::park-date.park-date",
+            "api::park-gate.park-gate",
           ],
         },
       },
