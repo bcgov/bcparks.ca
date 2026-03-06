@@ -36,6 +36,7 @@ module.exports = {
         apiURL:
           process.env.STRAPI_SOURCE_URL || process.env.REACT_APP_CMS_BASE_URL,
         accessToken: process.env.STRAPI_TOKEN,
+        maxParallelRequests: 5,
         collectionTypes: [
           "access-status",
           "activity-type",
