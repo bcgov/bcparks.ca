@@ -151,7 +151,7 @@ module.exports = {
                   fields: "*",
                 },
                 nearbyParks: {
-                  fields: ["orcs", "slug", "protectedAreaName"],
+                  fields: ["orcs", "slug", "protectedAreaName", "updatedAt"],
                   populate: {
                     parkPhotos: {
                       fields: [
@@ -159,40 +159,44 @@ module.exports = {
                         "isFeatured",
                         "sortOrder",
                         "imageUrl",
+                        "updatedAt",
                       ],
                     },
                     parkActivities: {
-                      fields: ["isActive"],
+                      fields: ["isActive", "updatedAt"],
                       populate: {
                         activityType: {
                           fields: [
                             "activityNumber",
                             "activityCode",
                             "isActive",
+                            "updatedAt",
                           ],
                         },
                       },
                     },
                     parkFacilities: {
-                      fields: ["isActive"],
+                      fields: ["isActive", "updatedAt"],
                       populate: {
                         facilityType: {
                           fields: [
                             "facilityNumber",
                             "facilityCode",
                             "isActive",
+                            "updatedAt",
                           ],
                         },
                       },
                     },
                     parkCampingTypes: {
-                      fields: ["isActive"],
+                      fields: ["isActive", "updatedAt"],
                       populate: {
                         campingType: {
                           fields: [
                             "campingTypeNumber",
                             "campingTypeCode",
                             "isActive",
+                            "updatedAt",
                           ],
                         },
                       },
