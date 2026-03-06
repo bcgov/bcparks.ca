@@ -8,8 +8,7 @@
 const cachedCollectionTypes = [
   "api::public-advisory.public-advisory",
   "api::protected-area.protected-area",
-  "api::park-date.park-date",
-  "api::park-gate.park-gate",
+  "api::park-feature.park-feature",
 ];
 
 const pageActions = ["create", "update", "delete", "publish", "unpublish"];
