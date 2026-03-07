@@ -130,19 +130,27 @@ spec:
                 name: bcparks-object-storage
           readinessProbe:
             httpGet:
-              path: /
+              path: /health
               port: {{ .Values.cms.service.portName }}
             initialDelaySeconds: 10
             timeoutSeconds: 10
             periodSeconds: 5
-            successThreshold: 1
+            successThreshold: 2
             failureThreshold: 20
           startupProbe:
             httpGet:
-              path: /
+              path: /health
               port: {{ .Values.cms.service.portName }}
             initialDelaySeconds: 10
             timeoutSeconds: 10
             periodSeconds: 5
             successThreshold: 1
             failureThreshold: 20
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.cms.service.portName }}
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
