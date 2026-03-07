@@ -54,8 +54,6 @@
 
   a.learn-more-link {
     text-decoration: none !important;
-    position: relative;
-    padding-right: 14px;
     &:hover, &:focus-visible {
       text-decoration: underline !important;
     }
@@ -69,9 +67,11 @@
       font-variant: normal;
       text-rendering: auto;
       -webkit-font-smoothing: antialiased;
-      position: absolute;
-      top: 4px;
-      right: 0;
+      margin-left: 0.85em;
+      vertical-align: middle;
+      // nudge the icon up slightly from the baseline
+      position: relative;
+      bottom: 0.1em;
     }
   }
 }
