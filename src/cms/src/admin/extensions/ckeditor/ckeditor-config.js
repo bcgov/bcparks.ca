@@ -41,6 +41,14 @@ export const registerCKEditor = async (_app) => {
       ...defaultTheme.additional,
       `
       /*
+        Add vertical padding to the editor canvas itself.
+        We don't use top margins on paragraphs, etc. so we need space above the content.
+      */
+      .ck-editor .ck.ck-editor__editable_inline {
+        padding: var(--ck-spacing-standard);
+      }
+
+      /*
         Keep CKEditor aligned with Strapi's theme (light/dark), but force a
         white content canvas for WYSIWYG parity with the public site.
       */

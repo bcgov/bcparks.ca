@@ -20,7 +20,8 @@
   @include heading-styles;
 
   // Additional heading styles for h3 and h4 (match Bootstrap defaults from frontend)
-  h3, h4 {
+  h3,
+  h4 {
     font-weight: 700;
     line-height: 1.1;
     margin-bottom: 1.25em;
@@ -50,7 +51,9 @@
   @include list-type-styles;
 
   // Override CKEditor's built-in list styles with base styles from Bootstrap reboot
-  ol, ul, dl {
+  ol,
+  ul,
+  dl {
     padding-left: 2em;
     margin-left: 0;
     margin-top: 0;
@@ -77,14 +80,14 @@
 
   // Editor-specific style classes (not used on frontend)
   .legacy-link {
-    background-color: #FFFF00;
+    background-color: #ffff00;
   }
 
   .audio-clip {
     outline: 1px dashed $colorBlue; // Add an outline to make the icon visible in the dropdown
 
     &::after {
-      content: "\f028";  // Font Awesome speaker icon
+      content: "\f028"; // Font Awesome speaker icon
       display: inline-block;
       font-size: 1rem;
       font-weight: 900;
@@ -111,7 +114,7 @@
   // Show the audio clip icon at the start instead of the end in the dropdown preview
   .audio-clip {
     &::before {
-      content: "\f028";  // Font Awesome speaker icon
+      content: "\f028"; // Font Awesome speaker icon
       display: inline-block;
       font-size: 1rem;
       font-weight: 900;
@@ -125,7 +128,7 @@
   }
 
   .legacy-link {
-    background-color: #FFFF00;
+    background-color: #ffff00;
     color: $colorBlue;
   }
 }
