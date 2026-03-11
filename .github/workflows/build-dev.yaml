@@ -1,10 +1,9 @@
-name: Build dev on develop & main branch push
+name: Build alpha-dev on staff-portal-advisories branch push
 
 on:
   push:
     branches:
-      - alpha
-      - main
+      - staff-portal-advisories
 
 concurrency:
   group: build-dev-${{ github.ref_name }}
@@ -14,7 +13,7 @@ jobs:
   build-cms:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: strapi-${{ github.ref_name }}
+      IMAGE_NAME: strapi-alpha
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
@@ -35,7 +34,7 @@ jobs:
         uses: docker/setup-docker-action@v4
         with:
           version: "28.5.2"
-          set-host: true      # <— this sets DOCKER_HOST for all following steps
+          set-host: true # <— this sets DOCKER_HOST for all following steps
 
       - name: Sanity check Docker version (should be 28.x / API < 1.44)
         run: |
@@ -58,7 +57,7 @@ jobs:
   build-public-builder:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: public-builder-${{ github.ref_name }}
+      IMAGE_NAME: public-builder-alpha
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
@@ -88,7 +87,7 @@ jobs:
   build-maintenance:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: maintenance-${{ github.ref_name }}
+      IMAGE_NAME: maintenance-alpha
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
@@ -118,7 +117,7 @@ jobs:
   build-etl:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: etl-${{ github.ref_name }}
+      IMAGE_NAME: etl-alpha
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
@@ -139,7 +138,7 @@ jobs:
         uses: docker/setup-docker-action@v4
         with:
           version: "28.5.2"
-          set-host: true      # <— this sets DOCKER_HOST for all following steps
+          set-host: true # <— this sets DOCKER_HOST for all following steps
 
       - name: Sanity check Docker version (should be 28.x / API < 1.44)
         run: |
@@ -160,7 +159,7 @@ jobs:
   build-scheduler:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: scheduler-${{ github.ref_name }}
+      IMAGE_NAME: scheduler-alpha
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
@@ -181,7 +180,7 @@ jobs:
         uses: docker/setup-docker-action@v4
         with:
           version: "28.5.2"
-          set-host: true      # <— this sets DOCKER_HOST for all following steps
+          set-host: true # <— this sets DOCKER_HOST for all following steps
 
       - name: Sanity check Docker version (should be 28.x / API < 1.44)
         run: |
@@ -220,13 +219,13 @@ jobs:
 
       - name: Trigger rollout
         run: |
-          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-cms
-          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-maintenance
-          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-scheduler
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment alpha-cms
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment alpha-maintenance
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment alpha-scheduler
 
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: publish-gatsby
-          client-payload: '{"env": "dev", "branch": "${{ github.ref_name }}" }'
+          client-payload: '{"env": "dev", "branch": "alpha" }'
