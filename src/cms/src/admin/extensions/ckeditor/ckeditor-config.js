@@ -45,15 +45,21 @@ export const registerCKEditor = async (_app) => {
         white content canvas for WYSIWYG parity with the public site.
       */
 
-      /* Ensure white background and dark text in the editable content area */
-      .ck.ck-content.ck-editor__editable,
-      .ck.ck-editor__main > .ck.ck-content.ck-editor__editable {
+    .ck.ck-content.ck-editor__editable,
+    .ck.ck-editor__main > .ck.ck-content.ck-editor__editable {
+        /* Ensure white background and dark text in the editable content area */
         background-color: #fff;
         color: #1a1a1a;
         font-size: 16px;
         line-height: 1.6;
         font-family: "BC Sans", sans-serif;
         font-weight: 400;
+
+        /*
+          Add vertical padding to the editor canvas itself.
+          We don't use top margins on paragraphs, etc. so we need space above the content.
+        */
+        padding: var(--ck-spacing-standard, 0.6em);
       }
 
       /* Selected link highlight: keep the light-mode highlight on the white canvas */
