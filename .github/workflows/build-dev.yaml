@@ -1,4 +1,4 @@
-name: Build dev on staff-portal-advisories branch push
+name: Build alpha-dev on staff-portal-advisories branch push
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
         uses: docker/setup-docker-action@v4
         with:
           version: "28.5.2"
-          set-host: true      # <— this sets DOCKER_HOST for all following steps
+          set-host: true # <— this sets DOCKER_HOST for all following steps
 
       - name: Sanity check Docker version (should be 28.x / API < 1.44)
         run: |
@@ -138,7 +138,7 @@ jobs:
         uses: docker/setup-docker-action@v4
         with:
           version: "28.5.2"
-          set-host: true      # <— this sets DOCKER_HOST for all following steps
+          set-host: true # <— this sets DOCKER_HOST for all following steps
 
       - name: Sanity check Docker version (should be 28.x / API < 1.44)
         run: |
@@ -180,7 +180,7 @@ jobs:
         uses: docker/setup-docker-action@v4
         with:
           version: "28.5.2"
-          set-host: true      # <— this sets DOCKER_HOST for all following steps
+          set-host: true # <— this sets DOCKER_HOST for all following steps
 
       - name: Sanity check Docker version (should be 28.x / API < 1.44)
         run: |
