@@ -204,6 +204,29 @@ export const registerCKEditor = async (_app) => {
           },
         },
       },
+
+      image: {
+        ...defaultHtmlPreset.editorConfig.image,
+
+        // Override the default image toolbar with a custom set of controls:
+        // - Remove "Side image"
+        // - Expand wrapText/breakText dropdowns into individual buttons
+        toolbar: [
+          "imageTextAlternative",
+          "toggleImageCaption",
+          "linkImage",
+          "|",
+          "imageStyle:inline",
+          "imageStyle:alignLeft",
+          "imageStyle:alignRight",
+          "|",
+          "imageStyle:alignBlockLeft",
+          "imageStyle:alignCenter",
+          "imageStyle:alignBlockRight",
+          "|",
+          "resizeImage",
+        ],
+      },
     },
   };
 
