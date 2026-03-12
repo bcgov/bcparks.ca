@@ -153,9 +153,8 @@
     },
     "protectedAreas": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::protected-area.protected-area",
-      "inversedBy": "publicAdvisories"
+      "relation": "oneToMany",
+      "target": "api::protected-area.protected-area"
     },
     "recreationDistricts": {
       "type": "relation",
