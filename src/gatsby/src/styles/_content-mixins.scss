@@ -10,7 +10,8 @@
 }
 
 @mixin heading-styles {
-  h1, h2 {
+  h1,
+  h2 {
     color: $colorBlue;
   }
 
@@ -46,7 +47,8 @@
   a.underline-hover {
     text-decoration: none;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       color: $colorBlue;
       text-decoration: underline;
     }
@@ -54,7 +56,8 @@
 
   a.learn-more-link {
     text-decoration: none !important;
-    &:hover, &:focus-visible {
+    &:hover,
+    &:focus-visible {
       text-decoration: underline !important;
     }
     &::after {
@@ -223,12 +226,14 @@
       width: 100%;
       tr {
         &:first-of-type {
-          th, td {
+          th,
+          td {
             border-top: 1px solid $colorGreyLight;
           }
         }
       }
-      th, td {
+      th,
+      td {
         vertical-align: top;
         border-bottom: 1px solid $colorGreyLight;
         padding: 12px;
@@ -262,7 +267,8 @@
               width: auto;
               display: table-row;
             }
-            th, td {
+            th,
+            td {
               display: block;
               width: 100%;
               @media screen and (min-width: $mdBreakpoint) {
@@ -284,7 +290,7 @@
         height: 5px;
       }
       &::-webkit-scrollbar-thumb {
-        background-color: rgba($colorBlack, .2);
+        background-color: rgba($colorBlack, 0.2);
         border-radius: 5px;
       }
     }
@@ -305,7 +311,8 @@
 }
 
 @mixin button-styles {
-  a.btn, button.btn:not(.btn-link):not(.btn-tooltip) {
+  a.btn,
+  button.btn:not(.btn-link):not(.btn-tooltip) {
     height: 48px;
     display: inline-flex !important;
     align-items: center;
@@ -320,12 +327,13 @@
       color: $colorWhite !important;
       background-color: $colorBlue;
       border: $colorBlue 2px solid;
-      &:hover, &:focus-visible {
+      &:hover,
+      &:focus-visible {
         color: $colorWhite;
         background-color: $colorBlueMed !important;
         text-decoration: none;
       }
-      &:hover{
+      &:hover {
         border: $colorBlueMed 2px solid !important;
       }
     }
@@ -335,7 +343,8 @@
       color: $colorBlue;
       background-color: $colorGold;
       border: $colorGold 2px solid;
-      &:hover, &:focus-visible {
+      &:hover,
+      &:focus-visible {
         color: $colorWhite;
         background-color: $colorBlueMed;
       }
@@ -348,7 +357,8 @@
       color: $colorBlue !important;
       background-color: $colorWhite;
       border: $colorWhite solid 2px;
-      &:hover, &:focus-visible {
+      &:hover,
+      &:focus-visible {
         background-color: $colorGold;
       }
       &:hover {
@@ -361,7 +371,8 @@
       color: $colorBlue !important;
       background-color: $colorWhite;
       border: $colorBlue 1px solid;
-      &:hover, &:focus-visible {
+      &:hover,
+      &:focus-visible {
         background-color: $colorIceBlue !important;
         border: $colorBlue 1px solid !important;
         text-decoration: none;
@@ -374,7 +385,8 @@
 
     &.btn-light {
       border: $colorBlue 2px solid !important;
-      &:hover, &:focus-visible {
+      &:hover,
+      &:focus-visible {
         border: $colorBlue 2px solid !important;
       }
     }
