@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recreation_access_statuses",
+  "info": {
+    "singularName": "recreation-access-status",
+    "pluralName": "recreation-access-statuses",
+    "displayName": "Recreation-access-status"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "statusNumber": {
+      "type": "integer",
+      "required": true,
+      "unique": true
+    },
+    "accessStatus": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
