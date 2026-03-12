@@ -26,6 +26,11 @@
     "latitude": {
       "type": "decimal"
     },
+    "isDisplayed": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
     "recreationResourceType": {
       "type": "relation",
       "relation": "oneToOne",
