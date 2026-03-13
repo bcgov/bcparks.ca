@@ -3,13 +3,14 @@ import * as dotenv from 'dotenv';
 import bcwfsLoadData from './scripts/bcwfs-bans.js';
 import bcwfsPropagateData from './scripts/bcwfs-propagate.js';
 import parkNamesLoadData from './scripts/park-names.js';
+import rstResourcesLoadData from './scripts/rst-resources.js';
 import { noCommandLineArgs, scriptKeySpecified } from './utils/commandLine.js';
 
 // The cron schedule is set to "15 * * * *" in the /infrastructure/helm/bcparks/values.yaml
 // Hourly jobs will run at 15 minutes past the hour. 
 
-// Daily jobs will run at 12:15am PST or 1:15am PDT (depending on the time of year)
-const DAILY_RUN_HOUR_UTC = 8;
+// Daily jobs will run at 12:15am PT
+const DAILY_RUN_HOUR_UTC = 7;
 
 (async () => {
     dotenv.config({
@@ -28,6 +29,12 @@ const DAILY_RUN_HOUR_UTC = 8;
         await parkNamesLoadData();
     }
 
+    // Check if the command line arg 'rst' was entered.
+    // e.g. `node index.js rst`
+    if (scriptKeySpecified("rst")) {
+        await rstResourcesLoadData();
+    }
+
     // If no arg was entered then run all the scripts
     // (the cron will run all the scripts)
     if (noCommandLineArgs()) {
@@ -43,12 +50,17 @@ const DAILY_RUN_HOUR_UTC = 8;
 
         // add more hourly jobs here
 
-        // Run these jobs daily at 12:15am PST or 1:15am PDT
+        // Run these jobs daily at 12:15am PT
         if (new Date().getUTCHours() === DAILY_RUN_HOUR_UTC) {
             if (process.env.DISABLE_PARK_NAMES_CRON !== "true") {
                 await parkNamesLoadData();
             }
-            // add more daily jobs here
+
+            if (process.env.DISABLE_RST_CRON !== "true") {
+                await rstResourcesLoadData();
+            }
+
+            // add more daily jobs 
         }
     }
 })();
