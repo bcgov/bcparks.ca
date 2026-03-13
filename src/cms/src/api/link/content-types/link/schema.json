@@ -44,6 +44,18 @@
       "relation": "manyToOne",
       "target": "api::public-advisory.public-advisory",
       "inversedBy": "links"
+    },
+    "recreationAdvisoryAudit": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::recreation-advisory-audit.recreation-advisory-audit",
+      "inversedBy": "links"
+    },
+    "recreationAdvisory": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::recreation-advisory.recreation-advisory",
+      "inversedBy": "links"
     }
   }
 }
