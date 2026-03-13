@@ -74,16 +74,6 @@ const loadData = async function () {
     resourceTypeLookup[resourceType.resourceTypeCode] = resourceType.documentId;
   }
 
-  // get a lookup object for closest communities by recResourceId from the RST API
-  // TODO: This will be added to the summary endpoint in the RST API in the future
-  let closestCommunities;
-  try {
-    closestCommunities = await fetchRSTClosestCommunities();
-  } catch (error) {
-    logger.error(error);
-    process.exit(1);
-  }
-
   let errorCount = 0;
 
   // loop through the RST resources and update or create them in Strapi
@@ -102,9 +92,6 @@ const loadData = async function () {
       rstResource.latitude = latitude;
       rstResource.longitude = longitude;
     }
-
-    // add the closest community to the resource object
-    rstResource.closest_community = titleCase(closestCommunities[rstResource.rec_resource_id]);
 
     if (matchingStrapiResource) {
       // update the existing resource in Strapi if any of the fields have changed
@@ -201,24 +188,6 @@ async function fetchRSTResources() {
     rstResources.push(...data.data);
   }
   return rstResources;
-}
-
-// Fetches a lookup object for closest communities by recResourceId from the RST API
-// TODO: This field will be added to the summary endpoint in the RST API in the future
-async function fetchRSTClosestCommunities() {
-  const rstAlphaUrl = `${process.env.RST_API}/recreation-resource/alphabetical?letter=`;
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#".split("");
-  const closestCommunities = {};
-  for (const letter of letters) {
-    const urlEncodedLetter = encodeURIComponent(letter);
-    const { data } = await axios.get(`${rstAlphaUrl}${urlEncodedLetter}`);
-    for (const resource of data) {
-      if (resource.closest_community) {
-        closestCommunities[resource.rec_resource_id] = resource.closest_community;
-      }
-    }
-  }
-  return closestCommunities;
 }
 
 // Fetches all recreation resources from Strapi, handling pagination
