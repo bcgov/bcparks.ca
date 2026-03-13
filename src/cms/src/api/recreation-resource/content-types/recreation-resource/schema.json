@@ -20,11 +20,14 @@
       "type": "string",
       "required": true
     },
+    "closestCommunity": {
+      "type": "string"
+    },
     "longitude": {
-      "type": "decimal"
+      "type": "float"
     },
     "latitude": {
-      "type": "decimal"
+      "type": "float"
     },
     "isDisplayed": {
       "type": "boolean",
