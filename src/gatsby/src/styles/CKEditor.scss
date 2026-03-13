@@ -61,6 +61,19 @@
     line-height: inherit;
   }
 
+  // Override CKEditor's selectors for deeply nested OL elements to always use decimal markers
+  :is(ol, ul) ol,
+  :is(ol, ul) :is(ol, ul) ol,
+  :is(ol, ul) :is(ol, ul) :is(ol, ul) ol,
+  :is(ol, ul) :is(ol, ul) :is(ol, ul) :is(ol, ul) ol {
+    list-style-type: decimal;
+  }
+
+  // Remove bottom margin for nested lists
+  :is(ol, ul) :is(ol, ul) {
+    margin-bottom: 0;
+  }
+
   // Prevent a display issue for learn-more-links when CKEditor breaks a link into multiple elements
   .ck-list-bogus-paragraph {
     // Only show the ::after pseudo-element for the last .learn-more-link
