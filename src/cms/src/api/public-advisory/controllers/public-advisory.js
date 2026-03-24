@@ -76,7 +76,7 @@ module.exports = createCoreController(
 
       ctx.query = populateStandardMessages(ctx.query);
 
-      if (ctx.query.queryText !== undefined) {
+      if (ctx.query.queryText !== undefined || ctx.query._eventType !== undefined) {
         ({ results: entities } = await strapi
           .service("api::public-advisory.search")
           .search(ctx.query));
@@ -101,7 +101,7 @@ module.exports = createCoreController(
       };
     },
     async count(ctx) {
-      if (ctx.query.queryText !== undefined) {
+      if (ctx.query.queryText !== undefined || ctx.query._eventType !== undefined) {
         return await strapi
           .service("api::public-advisory.search")
           .countSearch(ctx.query);
