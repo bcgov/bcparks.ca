@@ -155,7 +155,6 @@ const AdvisoryCard = ({ advisory, parkInfoHash }) => {
             <div className="d-flex flex-wrap">
               {open && (
                 advisory.protectedAreas
-                  .filter(park => park.publishedAt && park.isDisplayed)
                   .map((par, index) => (
                     <Link
                       className="park-link badge rounded-pill badge-light"
@@ -184,7 +183,6 @@ const AdvisoryCard = ({ advisory, parkInfoHash }) => {
             <div className="d-flex flex-wrap">
               {advisory.protectedAreas.length > 0 &&
                 advisory.protectedAreas
-                  .filter(park => park.publishedAt && park.isDisplayed)
                   .map((par, index) => (
                     <Link
                       className="park-link badge rounded-pill badge-light"
@@ -197,7 +195,6 @@ const AdvisoryCard = ({ advisory, parkInfoHash }) => {
               }
               {advisory.sites.length > 0 &&
                 advisory.sites
-                  .filter(site => site.publishedAt && site.isDisplayed)
                   .map((site, index) => (
                     advisory.protectedAreas.map((park, index) => (
                       checkRelation(park.orcs, site.orcsSiteNumber) &&
