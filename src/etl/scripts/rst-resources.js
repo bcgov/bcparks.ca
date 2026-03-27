@@ -10,6 +10,11 @@ dotenv.config({
   path: `.env`,
 });
 
+const httpReqHeaders = {
+  Authorization: "Bearer " + process.env.STRAPI_API_TOKEN,
+  "Content-Type": "application/json",
+};
+
 // Define BC Albers (EPSG:3005) once at module scope to avoid repeated registration
 proj4.defs(
   "EPSG:3005",
@@ -45,7 +50,10 @@ const loadData = async function () {
   // get a list of recreation districts from Strapi
   let strapiDistrictData;
   try {
-    strapiDistrictData = await axios.get(`${process.env.STRAPI_BASE_URL}/api/recreation-districts`);
+    strapiDistrictData = await axios.get(
+      `${process.env.STRAPI_BASE_URL}/api/recreation-districts`,
+      { headers: httpReqHeaders },
+    );
   } catch (error) {
     logger.error(error);
     process.exit(1);
@@ -62,6 +70,7 @@ const loadData = async function () {
   try {
     strapiResourceTypeData = await axios.get(
       `${process.env.STRAPI_BASE_URL}/api/recreation-resource-types`,
+      { headers: httpReqHeaders },
     );
   } catch (error) {
     logger.error(error);
@@ -124,12 +133,7 @@ const loadData = async function () {
                 closestCommunity: rstResource.closest_community,
               },
             },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-              },
-            },
+            { headers: httpReqHeaders },
           );
           logger.info(`Updated recreation resource ${rstResource.rec_resource_id} in Strapi.`);
         } catch (error) {
@@ -154,18 +158,39 @@ const loadData = async function () {
               closestCommunity: rstResource.closest_community,
             },
           },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-            },
-          },
+          { headers: httpReqHeaders },
         );
         logger.info(`Created recreation resource ${rstResource.rec_resource_id} in Strapi.`);
       } catch (error) {
         logger.error(error);
         errorCount++;
       }
+    }
+  }
+
+  // get a list of recreation resource IDs that were only in Strapi and not
+  // in the RST API response and set isDisplayed to false
+  const rstResourceIds = rstResources.map((r) => r.rec_resource_id);
+  const tombstonedStrapiResources = strapiResources.filter(
+    (r) => !rstResourceIds.includes(r.recResourceId) && r.isDisplayed !== false,
+  );
+  for (const resource of tombstonedStrapiResources) {
+    try {
+      await axios.put(
+        `${strapiResourcesUrl}/${resource.documentId}`,
+        {
+          data: {
+            isDisplayed: false,
+          },
+        },
+        { headers: httpReqHeaders },
+      );
+      logger.info(
+        `Soft-deleted recreation resource ${resource.recResourceId} in Strapi by setting isDisplayed to false.`,
+      );
+    } catch (error) {
+      logger.error(error);
+      errorCount++;
     }
   }
 
@@ -217,6 +242,7 @@ async function fetchStrapiResources(strapiResourcesUrl) {
 
     const { data: strapiPageData } = await axios.get(
       `${strapiResourcesUrl}?${qs.stringify(queryParams, { encodeValuesOnly: true })}`,
+      { headers: httpReqHeaders },
     );
     strapiResources.push(...strapiPageData.data);
   }
