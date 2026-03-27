@@ -56,9 +56,6 @@ module.exports = createCoreService(
           );
         }
       }
-
-      // Clear rest-cache manually because this bypasses document middleware.
-      await clearRestCache();
     },
     /* Loops through all fire-ban-prohibition records and sets the protectedArea.hasCampfireBan
      * to true for all Protected Areas in firezones associated with a fire ban. Protected Areas
@@ -257,17 +254,5 @@ const addProtectedAreaFireBans = async (protectedAreaIds, effectiveDate) => {
     }
   }
 
-  // Clear rest-cache manually because this bypasses document middleware.
-  await clearRestCache();
-
   return count;
 };
-
-async function clearRestCache() {
-  const cachePlugin = strapi.plugins["rest-cache"];
-  if (cachePlugin) {
-    await cachePlugin.services.cacheStore.clearByUid(
-      "api::protected-area.protected-area"
-    );
-  }
-}
