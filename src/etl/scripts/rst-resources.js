@@ -93,10 +93,14 @@ const loadData = async function () {
       rstResource.longitude = longitude;
     }
 
+    // apply title casing to fields known to contain badly formatted data
+    rstResource.name = titleCase(rstResource.name);
+    rstResource.closest_community = titleCase(rstResource.closest_community);
+
     if (matchingStrapiResource) {
       // update the existing resource in Strapi if any of the fields have changed
       if (
-        matchingStrapiResource.resourceName !== titleCase(rstResource.name) ||
+        matchingStrapiResource.resourceName !== rstResource.name ||
         matchingStrapiResource.isDisplayed !== rstResource.display_on_public_site ||
         matchingStrapiResource.recreationDistrict?.documentId !== districtDocId ||
         matchingStrapiResource.recreationResourceType?.documentId !== resourceTypeDocId ||
@@ -111,7 +115,7 @@ const loadData = async function () {
             `${strapiResourcesUrl}/${matchingStrapiResource.documentId}`,
             {
               data: {
-                resourceName: titleCase(rstResource.name),
+                resourceName: rstResource.name,
                 isDisplayed: rstResource.display_on_public_site,
                 recreationDistrict: districtDocId,
                 recreationResourceType: resourceTypeDocId,
