@@ -5,6 +5,7 @@
  */
 
 const { createCoreService } = require("@strapi/strapi").factories;
+const { indexPark } = require("../../../helpers/taskQueue.js");
 
 module.exports = createCoreService(
   "api::fire-ban-prohibition.fire-ban-prohibition",
@@ -25,19 +26,29 @@ module.exports = createCoreService(
               { hasCampfireBanOverride: { $null: true } },
             ],
           },
-          fields: ["id", "orcs"],
+          fields: ["documentId", "orcs"],
         });
 
       for (const protectedArea of protectedAreas) {
         try {
-          await strapi.documents("api::protected-area.protected-area").update({
-            documentId: protectedArea.documentId,
-            data: {
-              campfireBanRescindedDate: new Date().toISOString().split("T")[0],
-              campfireBanEffectiveDate: null,
-              hasCampfireBan: false,
-            },
-          });
+          // Update the draft and published rows directly so fire-ban fields stay in sync
+          // without publishing any in-progress editor changes.
+          await strapi.db
+            .query("api::protected-area.protected-area")
+            .updateMany({
+              where: {
+                documentId: protectedArea.documentId,
+              },
+              data: {
+                campfireBanRescindedDate: new Date()
+                  .toISOString()
+                  .split("T")[0],
+                campfireBanEffectiveDate: null,
+                hasCampfireBan: false,
+              },
+            });
+          // Reindex manually because this bypasses document middleware.
+          await indexPark(protectedArea.orcs);
         } catch (error) {
           strapi.log.error(
             `Error updating protected area ${protectedArea.orcs}:`,
@@ -45,6 +56,9 @@ module.exports = createCoreService(
           );
         }
       }
+
+      // Clear rest-cache manually because this bypasses document middleware.
+      await clearRestCache();
     },
     /* Loops through all fire-ban-prohibition records and sets the protectedArea.hasCampfireBan
      * to true for all Protected Areas in firezones associated with a fire ban. Protected Areas
@@ -90,7 +104,7 @@ module.exports = createCoreService(
           // get a list of protectedAreaIds to have firebans added.
           const protectedAreaIds =
             await getProtectedAreasByNaturalResourceDistrictToAddBan([
-              ban.naturalResourceDistrict.id,
+              ban.naturalResourceDistrict.documentId,
             ]);
 
           // add the campfire ban to all protectedAreas matching the natural resource district
@@ -108,20 +122,23 @@ module.exports = createCoreService(
           const zones = await strapi
             .documents("api::fire-zone.fire-zone")
             .findMany({
-              filters: { fireCentre: ban.fireCentre.id },
-              fields: ["id"],
+              filters: {
+                fireCentre: { documentId: ban.fireCentre.documentId },
+              },
+              fields: ["documentId"],
             });
-          fireZones = zones.map((z) => z.id);
+          fireZones = zones.map((z) => z.documentId);
         }
 
-        if (ban.fireZone && !fireZones.includes(ban.fireZone.id)) {
-          fireZones = [...[ban.fireZone.id], ...fireZones];
+        if (ban.fireZone && !fireZones.includes(ban.fireZone.documentId)) {
+          fireZones = [...[ban.fireZone.documentId], ...fireZones];
         }
 
         if (fireZones.length) {
           // get a list of protectedAreaIds to have firebans added.
-          const protectedAreaIds =
-            await getProtectedAreasByFireZoneToAddBan(fireZones);
+          const protectedAreaIds = await getProtectedAreasByFireZoneToAddBan(
+            fireZones
+          );
 
           // add the campfire ban to all protectedAreas matching the firezones
           const count = await addProtectedAreaFireBans(
@@ -168,16 +185,16 @@ const getProtectedAreasByNaturalResourceDistrictToAddBan = async (
       status: "published",
       filters: {
         naturalResourceDistricts: {
-          id: { $in: naturalResourceDistricts },
+          documentId: { $in: naturalResourceDistricts },
         },
         $or: [
           { hasCampfireBanOverride: false },
           { hasCampfireBanOverride: { $null: true } },
         ],
       },
-      fields: ["id"],
+      fields: ["documentId"],
     });
-  return protectedAreas.map((p) => p.id);
+  return protectedAreas.map((p) => p.documentId);
 };
 
 /* get a list of protectedAreaIds in a list of firzones to have firebans added
@@ -189,16 +206,16 @@ const getProtectedAreasByFireZoneToAddBan = async (fireZones) => {
       status: "published",
       filters: {
         fireZones: {
-          id: { $in: fireZones },
+          documentId: { $in: fireZones },
         },
         $or: [
           { hasCampfireBanOverride: false },
           { hasCampfireBanOverride: { $null: true } },
         ],
       },
-      fields: ["id"],
+      fields: ["documentId"],
     });
-  return protectedAreas.map((p) => p.id);
+  return protectedAreas.map((p) => p.documentId);
 };
 
 /* Adds fire bans to a list of protected areas
@@ -210,21 +227,27 @@ const addProtectedAreaFireBans = async (protectedAreaIds, effectiveDate) => {
     .findMany({
       status: "published",
       filters: {
-        id: { $in: protectedAreaIds },
+        documentId: { $in: protectedAreaIds },
       },
-      fields: ["id", "orcs"],
+      fields: ["documentId", "orcs"],
     });
 
   for (const protectedArea of protectedAreas) {
     try {
-      await strapi.documents("api::protected-area.protected-area").update({
-        documentId: protectedArea.documentId,
+      // Update the draft and published rows directly so fire-ban fields stay in sync
+      // without publishing any in-progress editor changes.
+      await strapi.db.query("api::protected-area.protected-area").updateMany({
+        where: {
+          documentId: protectedArea.documentId,
+        },
         data: {
           campfireBanEffectiveDate: effectiveDate?.split("T")[0],
           campfireBanRescindedDate: null,
           hasCampfireBan: true,
         },
       });
+      // Reindex manually because this bypasses document middleware.
+      await indexPark(protectedArea.orcs);
       count++;
     } catch (error) {
       strapi.log.error(
@@ -233,5 +256,18 @@ const addProtectedAreaFireBans = async (protectedAreaIds, effectiveDate) => {
       );
     }
   }
+
+  // Clear rest-cache manually because this bypasses document middleware.
+  await clearRestCache();
+
   return count;
 };
+
+async function clearRestCache() {
+  const cachePlugin = strapi.plugins["rest-cache"];
+  if (cachePlugin) {
+    await cachePlugin.services.cacheStore.clearByUid(
+      "api::protected-area.protected-area"
+    );
+  }
+}
