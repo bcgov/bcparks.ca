@@ -5,7 +5,6 @@
  */
 
 const { createCoreService } = require("@strapi/strapi").factories;
-const { indexPark } = require("../../../helpers/taskQueue.js");
 
 module.exports = createCoreService(
   "api::fire-ban-prohibition.fire-ban-prohibition",
@@ -47,12 +46,10 @@ module.exports = createCoreService(
                 hasCampfireBan: false,
               },
             });
-          // Reindex manually because this bypasses document middleware.
-          await indexPark(protectedArea.orcs);
         } catch (error) {
           strapi.log.error(
             `Error updating protected area ${protectedArea.orcs}:`,
-            error,
+            error
           );
         }
       }
@@ -168,13 +165,13 @@ module.exports = createCoreService(
         return b.orcs;
       });
     },
-  }),
+  })
 );
 
 /* get a list of protectedArea documentIds in a list of natural resource districts to have firebans added
  */
 const getProtectedAreasByNaturalResourceDistrictToAddBan = async (
-  naturalResourceDistricts,
+  naturalResourceDistricts
 ) => {
   const protectedAreas = await strapi
     .documents("api::protected-area.protected-area")
@@ -243,13 +240,11 @@ const addProtectedAreaFireBans = async (protectedAreaDocIds, effectiveDate) => {
           hasCampfireBan: true,
         },
       });
-      // Reindex manually because this bypasses document middleware.
-      await indexPark(protectedArea.orcs);
       count++;
     } catch (error) {
       strapi.log.error(
         `Error updating protected area ${protectedArea.orcs}:`,
-        error,
+        error
       );
     }
   }
