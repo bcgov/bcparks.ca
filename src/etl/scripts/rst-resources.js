@@ -170,9 +170,10 @@ const loadData = async function () {
 
   // get a list of recreation resource IDs that were only in Strapi and not
   // in the RST API response and set isDisplayed to false
-  const rstResourceIds = rstResources.map((r) => r.rec_resource_id);
+  const rstResourceIdSet = new Set(rstResources.map((r) => r.rec_resource_id));
+
   const tombstonedStrapiResources = strapiResources.filter(
-    (r) => !rstResourceIds.includes(r.recResourceId) && r.isDisplayed !== false,
+    (r) => !rstResourceIdSet.has(r.recResourceId) && r.isDisplayed !== false,
   );
   for (const resource of tombstonedStrapiResources) {
     try {
