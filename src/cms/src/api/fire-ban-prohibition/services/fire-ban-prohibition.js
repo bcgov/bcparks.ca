@@ -98,16 +98,16 @@ module.exports = createCoreService(
         }
 
         if (ban.naturalResourceDistrict) {
-          // get a list of protectedAreaIds to have firebans added.
-          const protectedAreaIds =
+          // get a list of protectedArea documentIds to have firebans added.
+          const protectedAreaDocIds =
             await getProtectedAreasByNaturalResourceDistrictToAddBan([
               ban.naturalResourceDistrict.documentId,
             ]);
 
           // add the campfire ban to all protectedAreas matching the natural resource district
           const count = await addProtectedAreaFireBans(
-            protectedAreaIds,
-            ban.effectiveDate,
+            protectedAreaDocIds,
+            ban.effectiveDate
           );
           rowsUpdated += count;
         }
@@ -132,15 +132,15 @@ module.exports = createCoreService(
         }
 
         if (fireZones.length) {
-          // get a list of protectedAreaIds to have firebans added.
-          const protectedAreaIds = await getProtectedAreasByFireZoneToAddBan(
+          // get a list of protectedArea documentIds to have firebans added.
+          const protectedAreaDocIds = await getProtectedAreasByFireZoneToAddBan(
             fireZones
           );
 
           // add the campfire ban to all protectedAreas matching the firezones
           const count = await addProtectedAreaFireBans(
-            protectedAreaIds,
-            ban.effectiveDate,
+            protectedAreaDocIds,
+            ban.effectiveDate
           );
           rowsUpdated += count;
         }
@@ -171,7 +171,7 @@ module.exports = createCoreService(
   }),
 );
 
-/* get a list of protectedAreaIds in a list of natural resource districts to have firebans added
+/* get a list of protectedArea documentIds in a list of natural resource districts to have firebans added
  */
 const getProtectedAreasByNaturalResourceDistrictToAddBan = async (
   naturalResourceDistricts,
@@ -194,7 +194,7 @@ const getProtectedAreasByNaturalResourceDistrictToAddBan = async (
   return protectedAreas.map((p) => p.documentId);
 };
 
-/* get a list of protectedAreaIds in a list of firzones to have firebans added
+/* get a list of protectedArea documentIds in a list of firezones to have firebans added
  */
 const getProtectedAreasByFireZoneToAddBan = async (fireZones) => {
   const protectedAreas = await strapi
@@ -217,14 +217,14 @@ const getProtectedAreasByFireZoneToAddBan = async (fireZones) => {
 
 /* Adds fire bans to a list of protected areas
  */
-const addProtectedAreaFireBans = async (protectedAreaIds, effectiveDate) => {
+const addProtectedAreaFireBans = async (protectedAreaDocIds, effectiveDate) => {
   let count = 0;
   const protectedAreas = await strapi
     .documents("api::protected-area.protected-area")
     .findMany({
       status: "published",
       filters: {
-        documentId: { $in: protectedAreaIds },
+        documentId: { $in: protectedAreaDocIds },
       },
       fields: ["documentId", "orcs"],
     });
