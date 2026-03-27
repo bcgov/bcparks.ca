@@ -59,6 +59,8 @@ const buildQuery = function (query) {
     typeSearch = { eventType: { eventType: { $startsWith: query._eventType } } };
   }
 
+  query.status = "published";
+
   query.filters = {
     ...query.filters,
     ...{
@@ -84,10 +86,22 @@ const buildQuery = function (query) {
     naturalResourceDistricts: true,
     links: true,
     managementAreas: true,
-    protectedAreas: { fields: ["protectedAreaName", "slug", "isDisplayed", "publishedAt", "orcs"] },
+    protectedAreas: {
+      fields: ["protectedAreaName", "slug", "isDisplayed", "publishedAt", "orcs"],
+      filters: {
+        publishedAt: { $null: false },
+        isDisplayed: { $eq: true }
+      }
+    },
     regions: true,
     sections: true,
-    sites: { fields: ["siteName", "slug", "isDisplayed", "publishedAt", "orcsSiteNumber"] },
+    sites: {
+      fields: ["siteName", "slug", "isDisplayed", "publishedAt", "orcsSiteNumber"],
+      filters: {
+        publishedAt: { $null: false },
+        isDisplayed: { $eq: true }
+      }
+    },
     standardMessages: true,
     urgency: true
   };
