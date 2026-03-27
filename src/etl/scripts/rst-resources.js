@@ -233,6 +233,7 @@ async function fetchStrapiResources(strapiResourcesUrl) {
 
   const { data: strapiData } = await axios.get(
     `${strapiResourcesUrl}?${qs.stringify(queryParams, { encodeValuesOnly: true })}`,
+    { headers: httpReqHeaders },
   );
   const strapiResources = strapiData.data;
   const strapiTotalPages = strapiData.meta.pagination.pageCount;
