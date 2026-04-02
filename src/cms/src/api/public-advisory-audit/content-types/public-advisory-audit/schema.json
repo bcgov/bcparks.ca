@@ -183,6 +183,16 @@
     "isUrgentAfterHours": {
       "type": "boolean",
       "default": null
+    },
+    "recreationDistricts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::recreation-district.recreation-district"
+    },
+    "recreationResources": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::recreation-resource.recreation-resource"
     }
   }
 }

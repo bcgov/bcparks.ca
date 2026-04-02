@@ -44,10 +44,10 @@
       "relation": "oneToOne",
       "target": "api::recreation-district.recreation-district"
     },
-    "recreationAdvisories": {
+    "publicAdvisories": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::recreation-advisory.recreation-advisory",
+      "target": "api::public-advisory.public-advisory",
       "mappedBy": "recreationResources"
     }
   }
