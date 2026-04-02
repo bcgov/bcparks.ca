@@ -1,0 +1,232 @@
+name: Build dev on alpha & main branch push
+
+on:
+  push:
+    branches:
+      - alpha
+      - main
+
+concurrency:
+  group: build-dev-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  build-cms:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: strapi-${{ github.ref_name }}
+      BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+
+      - name: Set env
+        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Login to OpenShift Container Repository
+        uses: docker/login-action@v2
+        with:
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
+
+      # Downgrade/pin Docker Engine to v28.x on the hosted runner
+      - name: Set up Docker 28.x
+        uses: docker/setup-docker-action@v4
+        with:
+          version: "28.5.2"
+          set-host: true # <— this sets DOCKER_HOST for all following steps
+
+      - name: Sanity check Docker version (should be 28.x / API < 1.44)
+        run: |
+          docker version
+          docker info
+
+      - name: s2i Build
+        id: build_image
+        uses: redhat-actions/s2i-build@v2
+        with:
+          path_context: "src/cms"
+          builder_image: ${{ env.BUILDER_IMAGE }}
+          image: ${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
+          tags: latest ${{ env.SHORT_SHA }}
+          env_vars: STRAPI_ADMIN_BACKEND_URL=
+
+      - name: Push Docker image
+        run: docker push --all-tags ${{ steps.build_image.outputs.image }}
+
+  build-public-builder:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: public-builder-${{ github.ref_name }}
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+
+      - name: Set env
+        run: |
+          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
+
+      - name: Login to OpenShift Container Repository
+        uses: docker/login-action@v2
+        with:
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
+
+      - name: Build and push builder image
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }} -f Builder.Dockerfile .
+          docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:latest
+          docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:${{ env.SHORT_SHA }}
+        working-directory: src/gatsby
+
+      - name: Push Docker image
+        run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}
+
+  build-maintenance:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: maintenance-${{ github.ref_name }}
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+
+      - name: Set env
+        run: |
+          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
+
+      - name: Login to OpenShift Container Repository
+        uses: docker/login-action@v2
+        with:
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
+
+      - name: Docker build
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }} .
+          docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:latest
+          docker tag ${{ env.IMAGE_NAME }} ${{ env.REGISTRY_IMAGE }}:${{ env.SHORT_SHA }}
+        working-directory: src/maintenance
+
+      - name: Push Docker image
+        run: docker push --all-tags ${{ env.REGISTRY_IMAGE }}
+
+  build-etl:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: etl-${{ github.ref_name }}
+      BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+
+      - name: Set env
+        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Login to OpenShift Container Repository
+        uses: docker/login-action@v2
+        with:
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
+
+      # Downgrade/pin Docker Engine to v28.x on the hosted runner
+      - name: Set up Docker 28.x
+        uses: docker/setup-docker-action@v4
+        with:
+          version: "28.5.2"
+          set-host: true # <— this sets DOCKER_HOST for all following steps
+
+      - name: Sanity check Docker version (should be 28.x / API < 1.44)
+        run: |
+          docker version
+          docker info
+
+      - name: s2i Build
+        id: build_image
+        uses: redhat-actions/s2i-build@v2
+        with:
+          path_context: "src/etl"
+          builder_image: ${{ env.BUILDER_IMAGE }}
+          image: ${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
+          tags: latest ${{ env.SHORT_SHA }}
+
+      - name: Push Docker image
+        run: docker push --all-tags ${{ steps.build_image.outputs.image }}
+  build-scheduler:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: scheduler-${{ github.ref_name }}
+      BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+
+      - name: Set env
+        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Login to OpenShift Container Repository
+        uses: docker/login-action@v2
+        with:
+          registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
+
+      # Downgrade/pin Docker Engine to v28.x on the hosted runner
+      - name: Set up Docker 28.x
+        uses: docker/setup-docker-action@v4
+        with:
+          version: "28.5.2"
+          set-host: true # <— this sets DOCKER_HOST for all following steps
+
+      - name: Sanity check Docker version (should be 28.x / API < 1.44)
+        run: |
+          docker version
+          docker info
+
+      - name: s2i Build
+        id: build_image
+        uses: redhat-actions/s2i-build@v2
+        with:
+          path_context: "src/scheduler"
+          builder_image: ${{ env.BUILDER_IMAGE }}
+          image: ${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}
+          tags: latest ${{ env.SHORT_SHA }}
+
+      - name: Push Docker image
+        run: docker push --all-tags ${{ steps.build_image.outputs.image }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build-cms]
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+
+      - name: Install OpenShift CLI tools
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          oc: "4.14"
+
+      - name: Login OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ secrets.OPENSHIFT_GOLD_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_GOLD_SERVICE_TOKEN }}
+
+      - name: Trigger rollout
+        run: |
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-cms
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-maintenance
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-scheduler
+
+      - name: Trigger Gatsby static build workflow
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: publish-gatsby
+          client-payload: '{"env": "dev", "branch": "${{ github.ref_name }}" }'
