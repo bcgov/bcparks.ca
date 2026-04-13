@@ -983,6 +983,7 @@ const closures = [
     rec_resource_id: "REC2683",
     closure_description:
       "The Recreation Site is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca",
+    headline: "Recreation reserve is closed",
   },
   {
     rec_resource_id: "REC270705",
@@ -1161,6 +1162,7 @@ const closures = [
     rec_resource_id: "REC32116",
     closure_description:
       "NOTICE:   Starr Creek Cabin is currently CLOSED until further notice - due to avalanche risk at current location.",
+    headline: "Recreation reserve is closed",
   },
   {
     rec_resource_id: "REC3258",
@@ -1373,6 +1375,7 @@ const closures = [
     rec_resource_id: "REC5758",
     closure_description:
       "The Recreation Site/Trail is closed due to an active wildfire in the area. The area is \r\ncurrently under Evacuation Alert. Find further information at www.bcwildfire.ca",
+    headline: "Recreation reserve is closed",
   },
   {
     rec_resource_id: "REC5762",
@@ -1683,6 +1686,7 @@ const closures = [
     rec_resource_id: "REC6591",
     closure_description:
       "The Recreation Site is closed due to an active  wildfire in the area. For further information visit www.bcwildfire.ca",
+    headline: "Recreatiion reserve is closed",
   },
   {
     rec_resource_id: "REC6613",
@@ -1888,7 +1892,7 @@ module.exports = {
 
         if (!recreationResourceDocumentId) {
           strapi.log.warn(
-            `Skipping closure for recreation resource ${closure.rec_resource_id}: no matching recreation resource was found in this environment.`,
+            `Skipping closure for recreation resource ${closure.rec_resource_id}: no matching recreation resource was found in this environment.`
           );
           continue;
         }
