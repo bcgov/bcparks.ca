@@ -384,6 +384,10 @@
       "relation": "oneToMany",
       "target": "api::park-area.park-area",
       "mappedBy": "protectedArea"
+    },
+    "hasDates": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
