@@ -58,7 +58,7 @@ export default function StaticContent1({ pageContext }) {
   // New non-repeatable page header component
   const pageHeader = page?.PageHeader || null
   const hasPageHeader =
-    pageHeader?.pageTitle &&
+    pageHeader?.pageTitle ||
     pageHeader?.introHtml?.data?.introHtml.length > 0
   const hasPageHeaderIntro = (
     pageHeader?.introHtml?.data?.introHtml.length > 0 || headerContent?.introHtml?.data?.introHtml.length > 0)
