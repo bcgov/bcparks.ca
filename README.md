@@ -3,21 +3,31 @@
 >
 > Our API will be upgraded from **Strapi 4 to Strapi 5** on **Monday, April 20 between 2:00–3:00 PM Pacific Time**.
 >
-> Expect a **short outage (up to 30–60 minutes)** during the update. Afterward, the REST API may be **incompatible** with existing Strapi 4 integrations.
+> Expect a short outage (up to 30–60 minutes) during the update. Afterward, the API may be incompatible with existing Strapi 4 integrations.
 >
 > **Key REST API changes**
 > - Responses are **[flattened](https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/new-response-format)** (no `attributes` wrapper)
 > - **[documentId](https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/use-document-id) replaces `id`** for single‑record requests
 >
->   - Example:
+> Example:
 >
->     - ✅ `https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca/api/regions/hkqzjvpwf3155wwg5bxi3yy7`
->     
->     - ❌ `https://bcparks.api.gov.bc.ca/api/regions/2`
->
+>   - ❌ Strapi 4: `https://bcparks.api.gov.bc.ca/api/regions/2`
+>   - ✅ Strapi 5: `https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca/api/regions/hkqzjvpwf3155wwg5bxi3yy7`
 > 
-> Test Strapi 5 now at:  
-> `https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca/api/`
+> **Key GraphQL API changes**
+> - Responses are flattened (no attributes wrapper)
+> - documentId replaces id as the primary identifier
+> - Pagination responses use nodes and pageInfo instead of meta.pagination
+> - Some collection queries may require using _connection queries for pagination
+> - Existing queries that reference data.attributes will need to be updated
+>
+> Test Strapi 5 now:  
+> - REST REST: https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca/api/
+> - GraphQL: https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca/graphql
+>
+> Check full Strapi 5 API documentation
+> - https://docs.strapi.io/cms/api/rest
+> - https://docs.strapi.io/cms/api/graphql
 
 # BC Parks CMS <!-- omit in toc -->
 
