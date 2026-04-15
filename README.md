@@ -1,3 +1,24 @@
+> [!WARNING]
+> **Upcoming API change – Strapi 5 upgrade**
+>
+> Our API will be upgraded from **Strapi 4 to Strapi 5** on **Monday, April 20 between 2:00–3:00 PM Pacific Time**.
+>
+> Expect a **short outage (up to 30–60 minutes)** during the update. Afterward, the REST API may be **incompatible** with existing Strapi 4 integrations.
+>
+> **Key REST API changes**
+> - Responses are **[flattened](https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/new-response-format)** (no `attributes` wrapper)
+> - **[documentId](https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes/use-document-id) replaces `id`** for single‑record requests
+>
+>   - Example:
+>
+>     - ✅ `https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca/api/regions/hkqzjvpwf3155wwg5bxi3yy7`
+>     
+>     - ❌ `https://bcparks.api.gov.bc.ca/api/regions/2`
+>
+> 
+> Test Strapi 5 now at:  
+> `https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca/api/`
+
 # BC Parks CMS <!-- omit in toc -->
 
 [![Lifecycle:Stable](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](<Redirect-URL>)
