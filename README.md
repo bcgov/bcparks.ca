@@ -22,7 +22,7 @@
 > - Existing queries that reference data.attributes will need to be updated
 >
 > Test Strapi 5 now:  
-> - REST REST: https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca/api/
+> - REST: https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca/api/
 > - GraphQL: https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca/graphql
 >
 > Check full Strapi 5 API documentation
