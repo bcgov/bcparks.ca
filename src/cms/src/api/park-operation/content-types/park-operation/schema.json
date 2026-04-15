@@ -304,6 +304,10 @@
       "type": "boolean",
       "default": false,
       "required": false
+    },
+    "hasDates": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
