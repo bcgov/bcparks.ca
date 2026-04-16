@@ -52,10 +52,11 @@ const LandingPage = ({ pageContext }) => {
   // New non-repeatable page header component
   const pageHeader = page?.PageHeader || null
   const breadcrumbs = renderBreadcrumbs(menuContents, pageContext?.page)
-  const hasPageHeader =
+  const hasPageHeader = Boolean(
     pageHeader?.pageTitle &&
     pageHeader?.imageUrl &&
     pageHeader?.introHtml.data.introHtml.length > 0
+  )
 
   return (
     <>
@@ -63,7 +64,7 @@ const LandingPage = ({ pageContext }) => {
       <div id="intro-content" className="bcp-landing-intro">
         {/* Display new non-repeatable pageHeader component if exists */}
         {/* Otherwise, display old repeatable pageHeader component */}
-        {(hasPageHeader && hasPageHeader !== null) ? (
+        {hasPageHeader ? (
           <>
             <div
               className="bcp-landing-intro__image"

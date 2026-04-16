@@ -57,9 +57,10 @@ export default function StaticContent1({ pageContext }) {
   const headerContent = pageContents.find(c => c.strapi_component === "parks.page-header") || {}
   // New non-repeatable page header component
   const pageHeader = page?.PageHeader || null
-  const hasPageHeader =
+  const hasPageHeader = Boolean(
     pageHeader?.pageTitle ||
     pageHeader?.introHtml?.data?.introHtml.length > 0
+  )
   const hasPageHeaderIntro = (
     pageHeader?.introHtml?.data?.introHtml.length > 0 || headerContent?.introHtml?.data?.introHtml.length > 0)
   const sectionContents = pageContents.filter(c => c.strapi_component === "parks.page-section") || []
@@ -133,7 +134,7 @@ export default function StaticContent1({ pageContext }) {
         </div>
         {/* Display new non-repeatable pageHeader component if exists */}
         {/* Otherwise, display old repeatable seo/pageHeader component */}
-        {(hasPageHeader && hasPageHeader !== null) ? (
+        {hasPageHeader ? (
           <>
             {pageHeader?.imageUrl &&
               <div className="header-image-wrapper">
@@ -179,7 +180,7 @@ export default function StaticContent1({ pageContext }) {
                 {/* Otherwise, display old repeatable seo/pageHeader component */}
                 {hasPageHeaderIntro && (
                   <div className="header-content">
-                    {(hasPageHeader && hasPageHeader !== null) ? (
+                    {hasPageHeader ? (
                       <HtmlContent>{pageHeader.introHtml.data.introHtml}</HtmlContent>
                     ) : (
                       <HtmlContent>{headerContent.introHtml.data.introHtml}</HtmlContent>
@@ -205,7 +206,7 @@ export default function StaticContent1({ pageContext }) {
               {/* Otherwise, display old repeatable seo/pageHeader component */}
               {hasPageHeaderIntro && (
                 <div className="header-content">
-                  {(hasPageHeader && hasPageHeader !== null) ? (
+                  {hasPageHeader ? (
                     <HtmlContent>{pageHeader.introHtml.data.introHtml}</HtmlContent>
                   ) : (
                     <HtmlContent>{headerContent.introHtml.data.introHtml}</HtmlContent>
