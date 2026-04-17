@@ -141,11 +141,8 @@
 
   figure {
     margin: 0 0 1em;
-
-    // Position table captions below the table to match the image captions
-    &.table figcaption {
-      caption-side: bottom;
-    }
+    // Use table display to match what CKEditor does with figures and captions
+    display: table;
 
     figcaption {
       background-color: transparent;
@@ -153,7 +150,11 @@
       color: $colorGrey;
       font-size: 0.875em;
       line-height: 1.4;
-      margin-top: 0.25em;
+      padding: 0.25em;
+      // Use table-caption display to match what CKEditor does with figures and captions
+      display: table-caption;
+      // Position table captions below the table to match the image captions
+      caption-side: bottom;
     }
   }
 
@@ -163,58 +164,66 @@
   // Just select the classes because we can't guarantee the structure of the HTML in the editor.
 
   // Break text: centered image
-  .image_resized {
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1em;
-    min-width: 100%;
+  // Strapi CKEditor sometimes uses a span wrapper around images in the editor,
+  // but it ultimately renders as a figure element.
+  figure.image,
+  span.image {
+    max-width: 100%;
+    // Prevent percentage-scaled images from becoming too small
+    min-width: 200px;
+    // If an image is less than 200px wide, it should be centered when the figure element is 200px because of the rule above
+    text-align: center;
+
+    // Default image position: center-aligned and breaking text
+    // (.image-style-align-center, or any image without an alignment class)
+    margin: 0 auto 1em;
 
     @media screen and (min-width: $smBreakpoint) {
       min-width: auto;
     }
-  }
 
-  // Break text: left aligned image
-  .image-style-block-align-left {
-    margin-bottom: 1em;
+    // Break text: left aligned image
+    &.image-style-block-align-left {
+      margin-bottom: 1em;
 
-    @media screen and (min-width: $smBreakpoint) {
-      margin-right: auto;
-      margin-left: 0;
-      clear: both;
+      @media screen and (min-width: $smBreakpoint) {
+        margin-right: auto;
+        margin-left: 0;
+        clear: both;
+      }
     }
-  }
 
-  // Break text: right aligned image
-  .image-style-block-align-right {
-    margin-bottom: 1em;
+    // Break text: right aligned image
+    &.image-style-block-align-right {
+      margin-bottom: 1em;
 
-    @media screen and (min-width: $smBreakpoint) {
-      margin-left: auto;
-      margin-right: 0;
-      clear: both;
+      @media screen and (min-width: $smBreakpoint) {
+        margin-left: auto;
+        margin-right: 0;
+        clear: both;
+      }
     }
-  }
 
-  // Wrap text: left aligned image
-  .image-style-align-left {
-    margin-bottom: 1em;
+    // Wrap text: left aligned image
+    &.image-style-align-left {
+      margin-bottom: 1em;
 
-    @media screen and (min-width: $smBreakpoint) {
-      float: left;
-      margin-right: 1em;
-      margin-left: 0;
+      @media screen and (min-width: $smBreakpoint) {
+        float: left;
+        margin-right: 1em;
+        margin-left: 0;
+      }
     }
-  }
 
-  // Wrap text: right aligned image
-  .image-style-align-right {
-    margin-bottom: 1em;
+    // Wrap text: right aligned image
+    &.image-style-align-right {
+      margin-bottom: 1em;
 
-    @media screen and (min-width: $smBreakpoint) {
-      float: right;
-      margin-left: 1em;
-      margin-right: 0;
+      @media screen and (min-width: $smBreakpoint) {
+        float: right;
+        margin-left: 1em;
+        margin-right: 0;
+      }
     }
   }
 }
