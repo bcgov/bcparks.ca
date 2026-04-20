@@ -42,7 +42,9 @@ const loadData = async function () {
     try {
       const response = await axios.get(process.env.BCWFS_BANS_API);
       bcwfsData = response.data;
-      logger.info(`${response.data.features.length} bans found in BC Map Services.`);
+      logger.info(
+        `${response.data.features.length} bans found in BC Map Services.`,
+      );
     } catch (error) {
       logger.error(error);
       process.exit(1);
@@ -84,7 +86,9 @@ const loadData = async function () {
     const bcwfsBan = {
       type: attribute["TYPE"],
       prohibitionDescription: attribute["ACCESS_PROHIBITION_DESCRIPTION"],
-      effectiveDate: parseISO(attribute["ACCESS_STATUS_EFFECTIVE_DATE"]).toISOString(),
+      effectiveDate: parseISO(
+        attribute["ACCESS_STATUS_EFFECTIVE_DATE"],
+      ).toISOString(),
       fireCentre: fireCentres[attribute["FIRE_CENTRE_NAME"]] || null,
       fireZone: fireZones[attribute["FIRE_ZONE_NAME"]] || null,
       bulletinURL: attribute["BULLETIN_URL"],
