@@ -4,13 +4,24 @@ const { scriptKeySpecified, idSpecified } = require("./shared/commandLine");
 const { getLogger } = require("./shared/logging");
 const { batchQueueParks } = require("./elasticsearch/scripts/batchQueueParks");
 const { indexParks } = require("./elasticsearch/scripts/indexParks");
-const { createParkIndex, parkIndexExists } = require("./elasticsearch/scripts/createParkIndex");
+const {
+  createParkIndex,
+  parkIndexExists,
+} = require("./elasticsearch/scripts/createParkIndex");
 const { deleteParkIndex } = require("./elasticsearch/scripts/deleteParkIndex");
 const { queueAll } = require("./elasticsearch/scripts/queueAllParks");
-const { populateGeoShapes } = require("./elasticsearch/scripts/populateGeoShapes");
-const { triggerAdvisories } = require("./advisory-scheduling/scripts/triggerScheduled");
-const { sendAdvisoryEmails } = require("./email-alerts/scripts/sendAdvisoryEmails");
-const { sendParkNamesEmails } = require("./email-alerts/scripts/sendParkNamesEmails");
+const {
+  populateGeoShapes,
+} = require("./elasticsearch/scripts/populateGeoShapes");
+const {
+  triggerAdvisories,
+} = require("./advisory-scheduling/scripts/triggerScheduled");
+const {
+  sendAdvisoryEmails,
+} = require("./email-alerts/scripts/sendAdvisoryEmails");
+const {
+  sendParkNamesEmails,
+} = require("./email-alerts/scripts/sendParkNamesEmails");
 const { dootPublish } = require("./doot/scripts/publish");
 
 (async () => {
@@ -41,7 +52,9 @@ const { dootPublish } = require("./doot/scripts/publish");
    * (manually triggered via OpenShift terminal)
    */
   if (scriptKeySpecified("rebuild")) {
-    logger.info("Recreating the park search index and reindexing all protectedAreas");
+    logger.info(
+      "Recreating the park search index and reindexing all protectedAreas",
+    );
     await deleteParkIndex();
     await createParkIndex();
     await queueAll();
@@ -157,8 +170,12 @@ const { dootPublish } = require("./doot/scripts/publish");
   console.log("batchindex  : batch queue parks for indexing by documentId");
   console.log("geoshapes   : populate the geo-shapes collection in Strapi");
   console.log("[integer]   : re-index a specified orcs");
-  console.log("advisories  : trigger scheduled public advisory publishing & expiry");
+  console.log(
+    "advisories  : trigger scheduled public advisory publishing & expiry",
+  );
   console.log("emailsend   : send queued emails");
-  console.log("emailtest   : test email template (writes to file 'mail-test-[#].html')");
+  console.log(
+    "emailtest   : test email template (writes to file 'mail-test-[#].html')",
+  );
   console.log("dootpublish : publish queued DOOT data to Strapi\n");
 })();

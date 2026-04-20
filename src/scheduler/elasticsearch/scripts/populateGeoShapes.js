@@ -35,10 +35,14 @@ exports.populateGeoShapes = async function (options) {
     const allParks = `/api/protected-areas?${query}&filters[typeCode][$ne]=CS&cb=${cacheBuster}`;
     parks = await cmsAxios.get(allParks);
     if (parks.data.data.length > 0 || !options?.silent) {
-      logger.info(`found ${parks.data.data.length} parks, pa's and er's without geo-shapes`);
+      logger.info(
+        `found ${parks.data.data.length} parks, pa's and er's without geo-shapes`,
+      );
     }
   } catch (error) {
-    logger.error(`populateGeoShapes.js failed while getting parks, pa's and er's: ${error}`);
+    logger.error(
+      `populateGeoShapes.js failed while getting parks, pa's and er's: ${error}`,
+    );
     return;
   }
   await processParkList(parks);
@@ -48,10 +52,14 @@ exports.populateGeoShapes = async function (options) {
     const allConservancies = `/api/protected-areas?${query}&filters[typeCode][$eq]=CS&cb=${cacheBuster}`;
     conservancies = await cmsAxios.get(allConservancies);
     if (conservancies.data.data.length > 0 || !options?.silent) {
-      logger.info(`found ${conservancies.data.data.length} conservancies without geo-shapes`);
+      logger.info(
+        `found ${conservancies.data.data.length} conservancies without geo-shapes`,
+      );
     }
   } catch (error) {
-    logger.error(`populateGeoShapes.js failed while getting conservancies: ${error}`);
+    logger.error(
+      `populateGeoShapes.js failed while getting conservancies: ${error}`,
+    );
     return;
   }
   await processParkList(conservancies);
@@ -104,9 +112,15 @@ const getGeoShape = async function (orcs, typeCode) {
   orcs = orcs.toString().padStart(4, "0");
   let shapeQuery = process.env.GEOSHAPE_URL.replace("{0}", orcs);
   if (typeCode === "CS") {
-    shapeQuery = shapeQuery.replace("{1}", "WHSE_TANTALIS.TA_CONSERVANCY_AREAS_SVW");
+    shapeQuery = shapeQuery.replace(
+      "{1}",
+      "WHSE_TANTALIS.TA_CONSERVANCY_AREAS_SVW",
+    );
   } else {
-    shapeQuery = shapeQuery.replace("{1}", "WHSE_TANTALIS.TA_PARK_ECORES_PA_SVW");
+    shapeQuery = shapeQuery.replace(
+      "{1}",
+      "WHSE_TANTALIS.TA_PARK_ECORES_PA_SVW",
+    );
   }
   const response = await axios.get(shapeQuery, { timeout: 10000 });
   if (response.data.features.length) {

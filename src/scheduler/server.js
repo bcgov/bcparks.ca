@@ -5,12 +5,23 @@ const { exec } = require("child_process");
 const { getLogger } = require("./shared/logging");
 const { batchQueueParks } = require("./elasticsearch/scripts/batchQueueParks");
 const { indexParks } = require("./elasticsearch/scripts/indexParks");
-const { createParkIndex, parkIndexExists } = require("./elasticsearch/scripts/createParkIndex");
+const {
+  createParkIndex,
+  parkIndexExists,
+} = require("./elasticsearch/scripts/createParkIndex");
 const { queueAll } = require("./elasticsearch/scripts/queueAllParks");
-const { populateGeoShapes } = require("./elasticsearch/scripts/populateGeoShapes");
-const { triggerAdvisories } = require("./advisory-scheduling/scripts/triggerScheduled");
-const { sendAdvisoryEmails } = require("./email-alerts/scripts/sendAdvisoryEmails");
-const { sendParkNamesEmails } = require("./email-alerts/scripts/sendParkNamesEmails");
+const {
+  populateGeoShapes,
+} = require("./elasticsearch/scripts/populateGeoShapes");
+const {
+  triggerAdvisories,
+} = require("./advisory-scheduling/scripts/triggerScheduled");
+const {
+  sendAdvisoryEmails,
+} = require("./email-alerts/scripts/sendAdvisoryEmails");
+const {
+  sendParkNamesEmails,
+} = require("./email-alerts/scripts/sendParkNamesEmails");
 const { dootPublish } = require("./doot/scripts/publish");
 
 (async () => {
@@ -47,7 +58,9 @@ const { dootPublish } = require("./doot/scripts/publish");
       await populateGeoShapes({ silent: true });
       await batchQueueParks();
       if (!(await parkIndexExists())) {
-        logger.warn("The Elasticsearch index is missing. It will be recreated and repopulated");
+        logger.warn(
+          "The Elasticsearch index is missing. It will be recreated and repopulated",
+        );
         await createParkIndex();
         await queueAll();
         // the cron job and the one-time indexing tasks process the queue in opposite order

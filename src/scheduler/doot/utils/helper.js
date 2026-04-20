@@ -71,28 +71,46 @@ async function getDateTypeMap() {
 
 // Get all park-gates documentIds matching the provided entity documentIds.
 // Returns an array of documentIds.
-async function getParkGateDocIds(protectedAreaDocId, parkAreaDocId, parkFeatureDocId) {
+async function getParkGateDocIds(
+  protectedAreaDocId,
+  parkAreaDocId,
+  parkFeatureDocId,
+) {
   const gateParams = {
     filters: {
-      protectedArea: protectedAreaDocId ? { documentId: protectedAreaDocId } : undefined,
+      protectedArea: protectedAreaDocId
+        ? { documentId: protectedAreaDocId }
+        : undefined,
       parkArea: parkAreaDocId ? { documentId: parkAreaDocId } : undefined,
-      parkFeature: parkFeatureDocId ? { documentId: parkFeatureDocId } : undefined,
+      parkFeature: parkFeatureDocId
+        ? { documentId: parkFeatureDocId }
+        : undefined,
     },
     fields: ["documentId"],
   };
   let gateResponse;
   try {
-    gateResponse = await cmsAxios.get("/api/park-gates", { params: gateParams });
+    gateResponse = await cmsAxios.get("/api/park-gates", {
+      params: gateParams,
+    });
   } catch (error) {
-    throw new Error(`getParkGateDocIds() failed while retrieving park-gates: ${error}`);
+    throw new Error(
+      `getParkGateDocIds() failed while retrieving park-gates: ${error}`,
+    );
   }
   return gateResponse.data.data.map((gate) => gate.documentId);
 }
 
 // Try to get the orcs from the orcs, orcsAreaNumber or orcsFeatureNumber fields
 function tryGetOrcs(item) {
-  const wellKnownKey = item.orcs || item.orcsAreaNumber || item.orcsFeatureNumber;
+  const wellKnownKey =
+    item.orcs || item.orcsAreaNumber || item.orcsFeatureNumber;
   return wellKnownKey ? parseInt(wellKnownKey, 10) : undefined;
 }
 
-module.exports = { getEntityDocIds, getDateTypeMap, getParkGateDocIds, tryGetOrcs };
+module.exports = {
+  getEntityDocIds,
+  getDateTypeMap,
+  getParkGateDocIds,
+  tryGetOrcs,
+};

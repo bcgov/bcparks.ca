@@ -16,7 +16,9 @@ exports.dootSplitMessage = async function (message) {
       });
     } catch (error) {
       splitOk = false;
-      throw new Error(`dootPublish() failed adding split message to queue failed: ${error}`);
+      throw new Error(
+        `dootPublish() failed adding split message to queue failed: ${error}`,
+      );
     }
   }
 
@@ -26,7 +28,9 @@ exports.dootSplitMessage = async function (message) {
     try {
       await removeFromQueue([message.documentId]);
     } catch (error) {
-      throw new Error(`dootPublish() failed removing original message from queue: ${error}`);
+      throw new Error(
+        `dootPublish() failed removing original message from queue: ${error}`,
+      );
     }
   }
 };

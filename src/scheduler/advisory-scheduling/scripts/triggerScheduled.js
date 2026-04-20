@@ -9,6 +9,8 @@ exports.triggerAdvisories = async function () {
   try {
     await cmsAxios.post("/api/public-advisories/trigger-scheduled", {});
   } catch (error) {
-    logger.error(`advisory-scheduling/scripts/triggerScheduled.js failed: ${error}`);
+    logger.error(
+      `advisory-scheduling/scripts/triggerScheduled.js failed: ${error}`,
+    );
   }
 };

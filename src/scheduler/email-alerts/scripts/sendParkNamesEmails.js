@@ -2,7 +2,10 @@ const { getLogger } = require("../../shared/logging");
 const { readQueue, removeFromQueue } = require("../../shared/taskQueue");
 const ejs = require("ejs");
 const { writeFile } = require("fs");
-const { scriptKeySpecified, noCommandLineArgs } = require("../../shared/commandLine");
+const {
+  scriptKeySpecified,
+  noCommandLineArgs,
+} = require("../../shared/commandLine");
 const { send } = require("./mailer");
 
 /**
@@ -17,7 +20,7 @@ exports.sendParkNamesEmails = async function () {
     queue = await readQueue("email parkname change");
   } catch (error) {
     logger.error(
-      `sendParkNamesEmails() failed while retrieving 'email parkname change' tasks: ${error}`
+      `sendParkNamesEmails() failed while retrieving 'email parkname change' tasks: ${error}`,
     );
     return;
   }
@@ -29,7 +32,7 @@ exports.sendParkNamesEmails = async function () {
     // render the email template
     const htmlMessageBody = await ejs.renderFile(
       "./email-alerts/templates/parkname-change.ejs",
-      jsonData
+      jsonData,
     );
 
     if (scriptKeySpecified("emailtest")) {
