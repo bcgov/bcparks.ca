@@ -61,7 +61,7 @@
     "babel-preset-gatsby": "^3.16.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
-    "prettier": "^3.8.2",
+    "prettier": "^3.8.3",
     "react-test-renderer": "^18.3.1"
   },
   "keywords": [
