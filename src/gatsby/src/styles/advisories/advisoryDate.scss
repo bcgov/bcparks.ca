@@ -1,6 +1,7 @@
 @import "../variables.scss";
 
-.date, .type {
+.date,
+.type {
   display: flex;
   small {
     color: $colorGreyMed;

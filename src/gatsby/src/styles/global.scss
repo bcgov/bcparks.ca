@@ -174,7 +174,8 @@ li.post-separator {
     display: block;
     color: $colorBlueMed;
     text-decoration: none;
-    &:hover, &:focus-visible {
+    &:hover,
+    &:focus-visible {
       color: $colorBlueMed;
       text-decoration: underline;
     }
@@ -213,7 +214,9 @@ li.post-separator {
   background-color: $colorWhite;
   margin: 24px 0 0 0 !important;
   padding: 0 !important;
-  &:hover, &:active, &:focus-visible {
+  &:hover,
+  &:active,
+  &:focus-visible {
     color: $colorBlue !important;
     background-color: $colorGold !important;
     border-color: $colorGold !important;
@@ -245,7 +248,7 @@ li.post-separator {
     align-items: center;
     justify-content: center;
     color: $colorWhite;
-    background-color: rgba($colorBlue, .75);
+    background-color: rgba($colorBlue, 0.75);
     border: $colorWhite solid 2px;
     border-radius: 50%;
   }
@@ -286,7 +289,9 @@ li.post-separator {
     width: 28px;
     color: $colorBlue;
   }
-  &:hover, &:focus, &:focus-visible {
+  &:hover,
+  &:focus,
+  &:focus-visible {
     background-color: $colorBlueLight;
     border: $colorBlue solid 1px;
   }
@@ -307,7 +312,9 @@ nav.breadcrumbs {
       display: flex;
       line-height: 2rem;
       a {
-        &:hover, &:focus, &:focus-visible {
+        &:hover,
+        &:focus,
+        &:focus-visible {
           color: $colorBlueMed;
           text-decoration: underline;
         }
@@ -331,7 +338,7 @@ nav.breadcrumbs {
   height: 100%;
   &:hover {
     a.carousel-control-prev,
-    a.carousel-control-next{
+    a.carousel-control-next {
       display: flex;
     }
   }
@@ -366,7 +373,7 @@ nav.breadcrumbs {
     height: 100%;
     .carousel-item {
       height: 100%;
-      &:focus-visible{
+      &:focus-visible {
         outline: none;
       }
     }

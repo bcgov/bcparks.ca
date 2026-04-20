@@ -1,40 +1,47 @@
-import React from "react"
-import { Form } from "react-bootstrap"
+import React from "react";
+import { Form } from "react-bootstrap";
 
 const shortenFilterLabel = (label, filterType) => {
   if (filterType === "popular") {
     if (label.includes("-accessible")) {
-      return label.replace("-accessible", "")
+      return label.replace("-accessible", "");
     } else {
-      return label
+      return label;
     }
   } else {
     if (label.includes("-accessible camping")) {
-      return label.replace("-accessible camping", "")
+      return label.replace("-accessible camping", "");
     } else if (label.includes("camping")) {
-      return label.replace("camping", "")
+      return label.replace("camping", "");
     } else {
-      return label
+      return label;
     }
   }
-}
+};
 
 const uniqueId = (id, filterType) => {
   if (filterType === "popular") {
-    return `popular-${id}`
+    return `popular-${id}`;
   } else {
-    return id
+    return id;
   }
-}
+};
 
-const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterType }) => {
+const Filter = ({
+  filterItems,
+  selectedFilterItems,
+  handleFilterCheck,
+  filterType,
+}) => {
   return (
     <Form.Group className="filter-options-container">
-      {filterItems.map(item => {
-        const checked = selectedFilterItems.filter(
-          selectedFilterItem =>
-            selectedFilterItem.value === item.value
-        ).length === 1 ? true : false
+      {filterItems.map((item) => {
+        const checked =
+          selectedFilterItems.filter(
+            (selectedFilterItem) => selectedFilterItem.value === item.value,
+          ).length === 1
+            ? true
+            : false;
         return (
           <Form.Check
             id={uniqueId(item.code, filterType)}
@@ -42,21 +49,23 @@ const Filter = ({ filterItems, selectedFilterItems, handleFilterCheck, filterTyp
             aria-controls={uniqueId(item.code, filterType)}
             type="checkbox"
             checked={checked}
-            onChange={event => {
-              handleFilterCheck(item, event)
+            onChange={(event) => {
+              handleFilterCheck(item, event);
             }}
             label={`${shortenFilterLabel(item.label, filterType)} (${item.count})`}
             className={
               selectedFilterItems.filter(
-                selectedFilterItem => selectedFilterItem.value === item.value
-              ).length === 1 ? "text-light-blue" : ""
+                (selectedFilterItem) => selectedFilterItem.value === item.value,
+              ).length === 1
+                ? "text-light-blue"
+                : ""
             }
             disabled={item.count === 0 && !checked}
           />
-        )
+        );
       })}
     </Form.Group>
-  )
-}
+  );
+};
 
-export default Filter
+export default Filter;

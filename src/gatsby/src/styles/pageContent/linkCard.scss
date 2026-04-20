@@ -118,49 +118,44 @@
     }
   }
 
-  &--footer-wrapper{
-      margin:0px 0px 30px 0px;
+  &--footer-wrapper {
+    margin: 0px 0px 30px 0px;
 
     .link-card--footer {
-        .card-body {
-
-            height:unset;
-        }
+      .card-body {
+        height: unset;
+      }
     }
   }
 
   &--footer {
-
-    border:solid 1px $colorGreyLight;
+    border: solid 1px $colorGreyLight;
     background: $colorWhite;
-    
-      .card-img {
-        height:200px;
 
+    .card-img {
+      height: 200px;
+    }
+    .card-body {
+      background: $colorWhite;
+
+      .card-body-header {
+        color: $colorBlue;
+        font-size: 1.5rem;
+        line-height: 2.5rem;
+        font-weight: 700;
+        padding: 10px 30px;
+        margin-top: 10px;
       }
-      .card-body {
-        
-        background:$colorWhite;
-
-        .card-body-header {
-            color:$colorBlue;
-            font-size: 1.5rem;
-            line-height: 2.5rem;
-            font-weight: 700;
-            padding:10px 30px;
-            margin-top:10px;
-        }
-        .card-body-subtitle {
-            color: $colorGrey;
-            padding:10px 30px;
-        }
-        .card-button {
-          color: $colorWhite;
-          background-color: $colorBlue;
-          margin: 10px 30px;
-        }
+      .card-body-subtitle {
+        color: $colorGrey;
+        padding: 10px 30px;
       }
-
+      .card-button {
+        color: $colorWhite;
+        background-color: $colorBlue;
+        margin: 10px 30px;
+      }
+    }
   }
 
   &--landing-page {
@@ -189,17 +184,14 @@
     }
   }
   &:hover {
-
-    &.link-card--footer{
-
-        .card-body-header {
-            color:$colorBlue;
-        }
-        .card-button {
-          color: $colorBlue;
-          background-color: $colorGold;
-        }
-        
+    &.link-card--footer {
+      .card-body-header {
+        color: $colorBlue;
+      }
+      .card-button {
+        color: $colorBlue;
+        background-color: $colorGold;
+      }
     }
 
     text-decoration: none;

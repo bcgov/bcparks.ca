@@ -1,207 +1,224 @@
-import { navigate } from "gatsby"
-import React, { useState, useEffect, useRef } from "react"
-import Form from "react-bootstrap/Form"
-import { Typeahead, ClearButton, Menu, MenuItem } from "react-bootstrap-typeahead"
+import { navigate } from "gatsby";
+import React, { useState, useEffect, useRef } from "react";
+import Form from "react-bootstrap/Form";
+import {
+  Typeahead,
+  ClearButton,
+  Menu,
+  MenuItem,
+} from "react-bootstrap-typeahead";
 
 import { getAdvisoryTypeFromUrl } from "../../utils/advisoryHelper";
-import "../../styles/advisories/advisoryFilter.scss"
+import "../../styles/advisories/advisoryFilter.scss";
 
 const HighlightText = ({ event, input }) => {
-  const regex = new RegExp(input, 'gi')
-  const highlightedText = event.replace(regex, match => `<b>${match}</b>`)
-  return <span dangerouslySetInnerHTML={{ __html: highlightedText }} />
-}
+  const regex = new RegExp(input, "gi");
+  const highlightedText = event.replace(regex, (match) => `<b>${match}</b>`);
+  return <span dangerouslySetInnerHTML={{ __html: highlightedText }} />;
+};
 
 const AdvisoryFilter = ({
   eventTypes = [],
   defaultEventType = { label: getAdvisoryTypeFromUrl() },
-  filterFunctions
+  filterFunctions,
 }) => {
   // Get parent's filter functions
-  const { getSearchText, setSearchText, setFilter, getFilter, setType } = filterFunctions
+  const { getSearchText, setSearchText, setFilter, getFilter, setType } =
+    filterFunctions;
   // useState
-  const [filterText, setFilterText] = useState(getSearchText())
-  const [isParksFilter, setIsParksFilter] = useState(getFilter("parks"))
-  const [isKeywordFilter, setIsKeywordsFilter] = useState(getFilter("keyword"))
-  const [eventText, setEventText] = useState("")
-  const [selectedEventType, setSelectedEventType] = useState([defaultEventType])
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const typeaheadRef = useRef(null)
-  const hasDefaultEventType = selectedEventType[0]?.label === "All"
+  const [filterText, setFilterText] = useState(getSearchText());
+  const [isParksFilter, setIsParksFilter] = useState(getFilter("parks"));
+  const [isKeywordFilter, setIsKeywordsFilter] = useState(getFilter("keyword"));
+  const [eventText, setEventText] = useState("");
+  const [selectedEventType, setSelectedEventType] = useState([
+    defaultEventType,
+  ]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const typeaheadRef = useRef(null);
+  const hasDefaultEventType = selectedEventType[0]?.label === "All";
 
   // functions
   const hasResult = (text) => {
-    const eventTextLower = text.toLowerCase()
-    const results = eventTypes.filter(type =>
-      type.label.toLowerCase().includes(eventTextLower)
-    )
-    return results.length > 0
-  }
-  const updateAdvisoriesSearchText = str => {
-    setSearchText(str)
-  }
+    const eventTextLower = text.toLowerCase();
+    const results = eventTypes.filter((type) =>
+      type.label.toLowerCase().includes(eventTextLower),
+    );
+    return results.length > 0;
+  };
+  const updateAdvisoriesSearchText = (str) => {
+    setSearchText(str);
+  };
   const resetResults = () => {
-    setSelectedEventType([])
-    setType("all")
-    navigate(`/active-advisories`)
-  }
+    setSelectedEventType([]);
+    setType("all");
+    navigate(`/active-advisories`);
+  };
   const filterBy = (option, props) => {
-    const input = props.text.toLowerCase()
+    const input = props.text.toLowerCase();
     if (input === "all") {
-      return true
+      return true;
     } else {
-      return option.label.toLowerCase().includes(input)
+      return option.label.toLowerCase().includes(input);
     }
-  }
+  };
   // event handlers
   const handleFocusInput = () => {
-    setIsDropdownOpen(true)
-  }
+    setIsDropdownOpen(true);
+  };
   const handleSearch = () => {
-    setSearchText(filterText)
-  }
-  const handleTypeaheadChange = selected => {
+    setSearchText(filterText);
+  };
+  const handleTypeaheadChange = (selected) => {
     if (selected.length > 0) {
-      setSelectedEventType(selected)
-      setType(selected[0].value)
-      navigate(`/active-advisories/?type=${selected[0].value}`)
+      setSelectedEventType(selected);
+      setType(selected[0].value);
+      navigate(`/active-advisories/?type=${selected[0].value}`);
     } else {
-      resetResults()
+      resetResults();
     }
-  }
+  };
   const handleParksFilterChange = () => {
-    setIsParksFilter(!isParksFilter)
-    setFilter("parks", !isParksFilter)
-  }
+    setIsParksFilter(!isParksFilter);
+    setFilter("parks", !isParksFilter);
+  };
   const handleKeywordsFilterChange = () => {
-    setIsKeywordsFilter(!isKeywordFilter)
-    setFilter("keywords", !isKeywordFilter)
-  }
-  const handleInputChange = text => {
-    setEventText(text)
+    setIsKeywordsFilter(!isKeywordFilter);
+    setFilter("keywords", !isKeywordFilter);
+  };
+  const handleInputChange = (text) => {
+    setEventText(text);
     if (text === "") {
-      resetResults()
+      resetResults();
     }
-  }
+  };
   const handleClearType = () => {
-    setEventText("")
-    resetResults()
-  }
+    setEventText("");
+    resetResults();
+  };
   const handleClearKeyword = () => {
-    setFilterText("")
-    updateAdvisoriesSearchText("")
-  }
+    setFilterText("");
+    updateAdvisoriesSearchText("");
+  };
   const handleKeyDownInput = (e) => {
-    const optionsLength = typeaheadRef.current.items.length
-    let activeIndex = typeaheadRef.current.state.activeIndex
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-      e.preventDefault()
-      if (e.key === 'ArrowUp') {
-        activeIndex = activeIndex - 1
-      } else if (e.key === 'ArrowDown') {
-        activeIndex = activeIndex + 1
+    const optionsLength = typeaheadRef.current.items.length;
+    let activeIndex = typeaheadRef.current.state.activeIndex;
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      e.preventDefault();
+      if (e.key === "ArrowUp") {
+        activeIndex = activeIndex - 1;
+      } else if (e.key === "ArrowDown") {
+        activeIndex = activeIndex + 1;
       }
       if (activeIndex > optionsLength) {
-        activeIndex = -1 // go to the text input
+        activeIndex = -1; // go to the text input
       }
       if (activeIndex < -1) {
-        activeIndex = optionsLength - 1 // go to the last item
+        activeIndex = optionsLength - 1; // go to the last item
       }
-      typeaheadRef.current.setState({ activeIndex })
-    } else if (e.key === 'Enter') {
-      e.preventDefault()
-      const activeOption = typeaheadRef.current.items[activeIndex]
+      typeaheadRef.current.setState({ activeIndex });
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      const activeOption = typeaheadRef.current.items[activeIndex];
       if (activeOption !== undefined) {
-        handleTypeaheadChange([activeOption])
+        handleTypeaheadChange([activeOption]);
       } else {
-        handleSearch()
+        handleSearch();
       }
-      setIsDropdownOpen(false)
-    } else if (e.key === 'Tab') {
-      setIsDropdownOpen(false)
+      setIsDropdownOpen(false);
+    } else if (e.key === "Tab") {
+      setIsDropdownOpen(false);
     }
-  }
+  };
 
   // useEffect
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (typeaheadRef.current && !typeaheadRef.current.inputNode.contains(e.target)) {
-        setIsDropdownOpen(false)
+      if (
+        typeaheadRef.current &&
+        !typeaheadRef.current.inputNode.contains(e.target)
+      ) {
+        setIsDropdownOpen(false);
       }
-    }
-    document.body.addEventListener("click", handleClickOutside)
+    };
+    document.body.addEventListener("click", handleClickOutside);
     return () => {
-      document.body.removeEventListener("click", handleClickOutside)
-    }
-  }, [])
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
   useEffect(() => {
     // clear input field if text does not exist in options
     if (!isDropdownOpen && eventText.length > 0 && !hasResult(eventText)) {
-      setEventText("")
+      setEventText("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDropdownOpen, eventText])
+  }, [isDropdownOpen, eventText]);
   useEffect(() => {
     if (eventText && !selectedEventType.length) {
-      setIsDropdownOpen(true)
+      setIsDropdownOpen(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventText, selectedEventType])
+  }, [eventText, selectedEventType]);
   useEffect(() => {
-    const advisoryTypeFromUrl = getAdvisoryTypeFromUrl()
+    const advisoryTypeFromUrl = getAdvisoryTypeFromUrl();
     if (advisoryTypeFromUrl) {
-      const eventType = eventTypes.find((o) => o.value === advisoryTypeFromUrl) || defaultEventType
-      setSelectedEventType([eventType])
-      setType(advisoryTypeFromUrl)
+      const eventType =
+        eventTypes.find((o) => o.value === advisoryTypeFromUrl) ||
+        defaultEventType;
+      setSelectedEventType([eventType]);
+      setType(advisoryTypeFromUrl);
     }
-  }, [eventTypes, defaultEventType, setType])
+  }, [eventTypes, defaultEventType, setType]);
   useEffect(() => {
-    if (selectedEventType.length > 0 && !hasDefaultEventType && eventText !== selectedEventType[0].value) {
-      setEventText(selectedEventType[0].value)
+    if (
+      selectedEventType.length > 0 &&
+      !hasDefaultEventType &&
+      eventText !== selectedEventType[0].value
+    ) {
+      setEventText(selectedEventType[0].value);
     }
-  }, [selectedEventType, hasDefaultEventType, eventText])
+  }, [selectedEventType, hasDefaultEventType, eventText]);
 
   return (
     <div className="advisory-filter-container">
       <div className="row">
         <div className="col-12 col-md-6">
-          <Form.Label><b>Search</b></Form.Label>
+          <Form.Label>
+            <b>Search</b>
+          </Form.Label>
           <div
-            className={`advisory-search has-text--${filterText.length > 0 ? 'true' : 'false'}`}
+            className={`advisory-search has-text--${filterText.length > 0 ? "true" : "false"}`}
           >
             <Form.Group controlId="advisory-search">
               <Form.Control
                 placeholder=" "
                 value={filterText}
-                onChange={e =>
-                  setFilterText(e.target.value)
-                }
-                onKeyDown={e => {
+                onChange={(e) => setFilterText(e.target.value)}
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    updateAdvisoriesSearchText(filterText)
-                    e.preventDefault()
+                    updateAdvisoriesSearchText(filterText);
+                    e.preventDefault();
                   }
                 }}
               />
-              {filterText.length > 0 &&
+              {filterText.length > 0 && (
                 <div className="rbt-aux">
-                  <button 
-                    area-label="Clear" 
-                    className="close btn-close rbt-close" 
+                  <button
+                    area-label="Clear"
+                    className="close btn-close rbt-close"
                     onClick={handleClearKeyword}
                   >
                     ×
                   </button>
                 </div>
-              }
-              <label htmlFor="advisory-search">
-                Search
-              </label>
+              )}
+              <label htmlFor="advisory-search">Search</label>
             </Form.Group>
           </div>
         </div>
         <div className="col-12 col-sm-7 col-md-4 mt-4 mt-md-0">
-          <Form.Label><b>Advisory type</b></Form.Label>
+          <Form.Label>
+            <b>Advisory type</b>
+          </Form.Label>
           <Typeahead
             ref={typeaheadRef}
             id="event-search-typeahead"
@@ -211,63 +228,66 @@ const AdvisoryFilter = ({
             options={eventTypes}
             selected={selectedEventType}
             onChange={(selected) => handleTypeaheadChange(selected)}
-            onInputChange={e => handleInputChange(e)}
+            onInputChange={(e) => handleInputChange(e)}
             onFocus={handleFocusInput}
             open={isDropdownOpen}
             placeholder=" "
-            className={`has-text--${(selectedEventType.length > 0 || eventText.length > 0) ? 'true' : 'false'
-              } event-search-typeahead`
-            }
+            className={`has-text--${
+              selectedEventType.length > 0 || eventText.length > 0
+                ? "true"
+                : "false"
+            } event-search-typeahead`}
             renderInput={({ inputRef, referenceElementRef, ...props }) => (
               <Form.Group controlId="event-search-typeahead">
                 <Form.Control
                   {...props}
-                  value={selectedEventType.length > 0 ?
-                    (hasDefaultEventType ? "" : selectedEventType[0].label)
-                    : eventText}
+                  value={
+                    selectedEventType.length > 0
+                      ? hasDefaultEventType
+                        ? ""
+                        : selectedEventType[0].label
+                      : eventText
+                  }
                   ref={(node) => {
-                    inputRef(node)
-                    referenceElementRef(node)
+                    inputRef(node);
+                    referenceElementRef(node);
                   }}
                   onKeyDown={handleKeyDownInput}
                   enterKeyHint="search"
                 />
-                <label htmlFor="event-search-typeahead">
-                  Select a type
-                </label>
+                <label htmlFor="event-search-typeahead">Select a type</label>
               </Form.Group>
             )}
-            renderMenu={results => (
+            renderMenu={(results) => (
               <Menu id="event-search-typeahead">
-                {(!results.length && eventText) &&
+                {!results.length && eventText && (
                   <MenuItem
                     tabIndex={-1}
                     key={0}
                     className="no-suggestion-text"
                   >
                     <span role="alert" aria-live="assertive">
-                      No match. Please check your spelling or select from the list.
+                      No match. Please check your spelling or select from the
+                      list.
                     </span>
                   </MenuItem>
-                }
-                {results.map((event, index) => 
-                  <MenuItem option={event} position={index} key={index}>
-                    <HighlightText
-                      event={event.label}
-                      input={eventText}
-                    />
-                  </MenuItem>
                 )}
+                {results.map((event, index) => (
+                  <MenuItem option={event} position={index} key={index}>
+                    <HighlightText event={event.label} input={eventText} />
+                  </MenuItem>
+                ))}
               </Menu>
             )}
           >
             {({ onClear }) =>
-              (eventText.length > 0 && eventText !== "all") && (
+              eventText.length > 0 &&
+              eventText !== "all" && (
                 <div className="rbt-aux">
                   <ClearButton
                     onClick={() => {
-                      onClear()
-                      handleClearType()
+                      onClear();
+                      handleClearType();
                     }}
                   />
                 </div>
@@ -312,6 +332,6 @@ const AdvisoryFilter = ({
       </div>
     </div>
   );
-}
+};
 
-export default AdvisoryFilter
+export default AdvisoryFilter;

@@ -1,104 +1,115 @@
-import React, { useState } from "react"
-import { Link } from "gatsby"
-import Carousel from "react-bootstrap/Carousel"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBan, faCircleChevronRight, faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons"
+import React, { useState } from "react";
+import { Link } from "gatsby";
+import Carousel from "react-bootstrap/Carousel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBan,
+  faCircleChevronRight,
+  faCircleChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
-import FeatureIcons from "./featureIcons"
-import ParkAccessStatus from "../../components/park/parkAccessStatus"
+import FeatureIcons from "./featureIcons";
+import ParkAccessStatus from "../../components/park/parkAccessStatus";
 
-import parksLogo from "../../images/park-card.png"
+import parksLogo from "../../images/park-card.png";
 
-import { addSmallImagePrefix, handleImgError } from "../../utils/helpers"
+import { addSmallImagePrefix, handleImgError } from "../../utils/helpers";
 
 const locationLabel = (parkLocations) => {
   if (!parkLocations || !parkLocations.length) {
     return "";
   }
-  const arrList = parkLocations.map(p => { return p.searchArea });
-  const distinctLocations = [...new Set(arrList)]
+  const arrList = parkLocations.map((p) => {
+    return p.searchArea;
+  });
+  const distinctLocations = [...new Set(arrList)];
   return distinctLocations.join(", ");
-}
+};
 
 const ParkCard = ({ r }) => {
-  const [index, setIndex] = useState(0)
-  const [isTabFocused, setIsTabFocused] = useState(false)
-  const [errorStates, setErrorStates] = useState(Array(r.parkPhotos.length).fill(false))
+  const [index, setIndex] = useState(0);
+  const [isTabFocused, setIsTabFocused] = useState(false);
+  const [errorStates, setErrorStates] = useState(
+    Array(r.parkPhotos.length).fill(false),
+  );
 
   // event handlers
   const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex)
-  }
+    setIndex(selectedIndex);
+  };
   const handleKeyDown = (e, photos) => {
-    if (e.key === 'ArrowRight') {
-      setIndex((oldIndex) => (oldIndex + 1) % photos.length)
-    } else if (e.key === 'ArrowLeft') {
-      setIndex((oldIndex) => (oldIndex - 1 + photos.length) % photos.length)
+    if (e.key === "ArrowRight") {
+      setIndex((oldIndex) => (oldIndex + 1) % photos.length);
+    } else if (e.key === "ArrowLeft") {
+      setIndex((oldIndex) => (oldIndex - 1 + photos.length) % photos.length);
     }
-  }
+  };
 
   return (
     <div className="m20t">
       {/* card for pc */}
       <div className="d-none d-lg-block park-card park-card-desktop">
         <div className="row g-0">
-          {r.parkPhotos &&
-            r.parkPhotos.length === 0 && (
-              <div className="col-lg-auto park-image-div">
-                <img
-                  alt="logo"
-                  className="search-result-logo-image"
-                  src={parksLogo}
-                />
-              </div>
-            )}
-          {r.parkPhotos &&
-            r.parkPhotos.length === 1 && (
-              <div className="col-lg-auto park-image-div">
-                <img
-                  alt="park"
-                  className={`${errorStates[0] ? "search-result-logo-image" : "search-result-image"}`}
-                  src={errorStates[0] ? parksLogo : addSmallImagePrefix(r.parkPhotos[0])}
-                  onError={() => handleImgError(setErrorStates, 0)}
-                />
-              </div>
-            )}
-          {r.parkPhotos &&
-            r.parkPhotos.length > 1 && (
-              <div className="col-lg-auto park-image-div">
-                <Carousel
-                  fade
-                  interval={null}
-                  nextIcon={<FontAwesomeIcon icon={faCircleChevronRight} />}
-                  prevIcon={<FontAwesomeIcon icon={faCircleChevronLeft} />}
-                  onSelect={handleSelect}
-                  activeIndex={index}
-                  className={`park-carousel tab-focus-${isTabFocused}`}
-                >
-                  {r.parkPhotos.map(
-                    (item, index) => {
-                      return (
-                        <Carousel.Item
-                          key={index}
-                          tabIndex={0}
-                          onFocus={() => setIsTabFocused(true)}
-                          onBlur={() => setIsTabFocused(false)}
-                          onKeyDown={() => handleKeyDown(r.parkPhotos)}
-                        >
-                          <img
-                            alt="park carousel"
-                            key={index}
-                            className={`${errorStates[index] ? "search-result-logo-image" : "search-result-image"}`}
-                            src={errorStates[index] ? parksLogo : addSmallImagePrefix(item)}
-                            onError={() => handleImgError(setErrorStates, index)}
-                          />
-                        </Carousel.Item>
-                      )
-                    }
-                  )}
-                </Carousel>
-              </div>
-            )}
+          {r.parkPhotos && r.parkPhotos.length === 0 && (
+            <div className="col-lg-auto park-image-div">
+              <img
+                alt="logo"
+                className="search-result-logo-image"
+                src={parksLogo}
+              />
+            </div>
+          )}
+          {r.parkPhotos && r.parkPhotos.length === 1 && (
+            <div className="col-lg-auto park-image-div">
+              <img
+                alt="park"
+                className={`${errorStates[0] ? "search-result-logo-image" : "search-result-image"}`}
+                src={
+                  errorStates[0]
+                    ? parksLogo
+                    : addSmallImagePrefix(r.parkPhotos[0])
+                }
+                onError={() => handleImgError(setErrorStates, 0)}
+              />
+            </div>
+          )}
+          {r.parkPhotos && r.parkPhotos.length > 1 && (
+            <div className="col-lg-auto park-image-div">
+              <Carousel
+                fade
+                interval={null}
+                nextIcon={<FontAwesomeIcon icon={faCircleChevronRight} />}
+                prevIcon={<FontAwesomeIcon icon={faCircleChevronLeft} />}
+                onSelect={handleSelect}
+                activeIndex={index}
+                className={`park-carousel tab-focus-${isTabFocused}`}
+              >
+                {r.parkPhotos.map((item, index) => {
+                  return (
+                    <Carousel.Item
+                      key={index}
+                      tabIndex={0}
+                      onFocus={() => setIsTabFocused(true)}
+                      onBlur={() => setIsTabFocused(false)}
+                      onKeyDown={() => handleKeyDown(r.parkPhotos)}
+                    >
+                      <img
+                        alt="park carousel"
+                        key={index}
+                        className={`${errorStates[index] ? "search-result-logo-image" : "search-result-image"}`}
+                        src={
+                          errorStates[index]
+                            ? parksLogo
+                            : addSmallImagePrefix(item)
+                        }
+                        onError={() => handleImgError(setErrorStates, index)}
+                      />
+                    </Carousel.Item>
+                  );
+                })}
+              </Carousel>
+            </div>
+          )}
 
           <div className="col park-content">
             <div className="park-content-top">
@@ -109,7 +120,10 @@ const ParkCard = ({ r }) => {
                 >
                   {r.protectedAreaName}
                 </Link>
-                <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
+                <FontAwesomeIcon
+                  icon={faCircleChevronRight}
+                  className="park-heading-icon"
+                />
               </h2>
             </div>
             <div className="park-content-bottom">
@@ -134,12 +148,12 @@ const ParkCard = ({ r }) => {
                   operationDates={r.parkDates}
                   hideComma={true}
                 />
-                {r.hasCampfireBan &&
+                {r.hasCampfireBan && (
                   <div className="campfire-ban-icon">
                     <FontAwesomeIcon icon={faBan} />
                     No campfires
                   </div>
-                }
+                )}
               </div>
             </div>
           </div>
@@ -147,55 +161,58 @@ const ParkCard = ({ r }) => {
       </div>
       {/* card for mobile */}
       <div className="d-block d-lg-none park-card">
-        {r.parkPhotos &&
-          r.parkPhotos.length === 0 && (
-            <div className="park-image-div-mobile">
-              <img
-                alt="logo"
-                className="search-result-logo-image"
-                src={parksLogo}
-              />
-            </div>
-          )}
-        {r.parkPhotos &&
-          r.parkPhotos.length === 1 && (
-            <div className="park-image-div-mobile">
-              <img
-                alt="park"
-                className={`${errorStates[0] ? "search-result-logo-image" : "search-result-image"}`}
-                src={errorStates[0] ? parksLogo : addSmallImagePrefix(r.parkPhotos[0])}
-                onError={() => handleImgError(setErrorStates, 0)}
-              />
-            </div>
-          )}
-        {r.parkPhotos &&
-          r.parkPhotos.length > 1 && (
-            <div className="park-image-div-mobile">
-              <Carousel
-                fade
-                interval={null}
-                nextIcon={<FontAwesomeIcon icon={faCircleChevronRight} />}
-                prevIcon={<FontAwesomeIcon icon={faCircleChevronLeft} />}
-                className="park-carousel-mobile"
-              >
-                {r.parkPhotos.map(
-                  (item, index) => {
-                    return (
-                      <Carousel.Item key={index} tabIndex={0}>
-                        <img
-                          alt="park carousel"
-                          key={index}
-                          className={`${errorStates[index] ? "search-result-logo-image" : "search-result-image"}`}
-                          src={errorStates[index] ? parksLogo : addSmallImagePrefix(item)}
-                          onError={() => handleImgError(setErrorStates, index)}
-                        />
-                      </Carousel.Item>
-                    )
-                  }
-                )}
-              </Carousel>
-            </div>
-          )}
+        {r.parkPhotos && r.parkPhotos.length === 0 && (
+          <div className="park-image-div-mobile">
+            <img
+              alt="logo"
+              className="search-result-logo-image"
+              src={parksLogo}
+            />
+          </div>
+        )}
+        {r.parkPhotos && r.parkPhotos.length === 1 && (
+          <div className="park-image-div-mobile">
+            <img
+              alt="park"
+              className={`${errorStates[0] ? "search-result-logo-image" : "search-result-image"}`}
+              src={
+                errorStates[0]
+                  ? parksLogo
+                  : addSmallImagePrefix(r.parkPhotos[0])
+              }
+              onError={() => handleImgError(setErrorStates, 0)}
+            />
+          </div>
+        )}
+        {r.parkPhotos && r.parkPhotos.length > 1 && (
+          <div className="park-image-div-mobile">
+            <Carousel
+              fade
+              interval={null}
+              nextIcon={<FontAwesomeIcon icon={faCircleChevronRight} />}
+              prevIcon={<FontAwesomeIcon icon={faCircleChevronLeft} />}
+              className="park-carousel-mobile"
+            >
+              {r.parkPhotos.map((item, index) => {
+                return (
+                  <Carousel.Item key={index} tabIndex={0}>
+                    <img
+                      alt="park carousel"
+                      key={index}
+                      className={`${errorStates[index] ? "search-result-logo-image" : "search-result-image"}`}
+                      src={
+                        errorStates[index]
+                          ? parksLogo
+                          : addSmallImagePrefix(item)
+                      }
+                      onError={() => handleImgError(setErrorStates, index)}
+                    />
+                  </Carousel.Item>
+                );
+              })}
+            </Carousel>
+          </div>
+        )}
 
         <div className="park-content-mobile">
           <h2 className="park-heading-text">
@@ -205,7 +222,10 @@ const ParkCard = ({ r }) => {
             >
               {r.protectedAreaName}
             </Link>
-            <FontAwesomeIcon icon={faCircleChevronRight} className="park-heading-icon" />
+            <FontAwesomeIcon
+              icon={faCircleChevronRight}
+              className="park-heading-icon"
+            />
           </h2>
           <p>{locationLabel(r.parkLocations)}</p>
           <div className="park-icons">
@@ -226,17 +246,17 @@ const ParkCard = ({ r }) => {
               operationDates={r.parkDates}
               hideComma={true}
             />
-            {r.hasCampfireBan &&
+            {r.hasCampfireBan && (
               <div className="campfire-ban-icon">
                 <FontAwesomeIcon icon={faBan} />
                 No campfires
               </div>
-            }
+            )}
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ParkCard
+export default ParkCard;

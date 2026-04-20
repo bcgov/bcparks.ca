@@ -1,64 +1,95 @@
-import React, { useState, useMemo } from "react"
-import HtmlContent from "../htmlContent"
-import ParkAccessStatus from "./parkAccessStatus"
-import AudioButton from "../audioButton"
-import CampfireBan from "../campfireBan"
-import FontAwesome from "../fontAwesome"
-import { formattedTime, getParkDates } from "../../utils/parkDatesHelper"
-import { mapUrl } from "../../utils/constants"
+import React, { useState, useMemo } from "react";
+import HtmlContent from "../htmlContent";
+import ParkAccessStatus from "./parkAccessStatus";
+import AudioButton from "../audioButton";
+import CampfireBan from "../campfireBan";
+import FontAwesome from "../fontAwesome";
+import { formattedTime, getParkDates } from "../../utils/parkDatesHelper";
+import { mapUrl } from "../../utils/constants";
 
-import PropTypes from "prop-types"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCalendar } from "@fortawesome/free-regular-svg-icons"
-import lowerMainland from "../../images/area-maps/area-maps-with-labels/1-lower-mainland-label.svg"
-import southIsland from "../../images/area-maps/area-maps-with-labels/2-south-island-label.svg"
-import okanagan from "../../images/area-maps/area-maps-with-labels/3-okanagan-label.svg"
-import seaToSky from "../../images/area-maps/area-maps-with-labels/4-sea-to-sky-label.svg"
-import kootenay from "../../images/area-maps/area-maps-with-labels/5-kootenay-label.svg"
-import thompson from "../../images/area-maps/area-maps-with-labels/6-thompson-label.svg"
-import cariboo from "../../images/area-maps/area-maps-with-labels/7-cariboo-label.svg"
-import haidaGwaii from "../../images/area-maps/area-maps-with-labels/8-haida-gwaii-label.svg"
-import northIsland from "../../images/area-maps/area-maps-with-labels/9-north-island-label.svg"
-import omineca from "../../images/area-maps/area-maps-with-labels/10-omineca-label.svg"
-import peace from "../../images/area-maps/area-maps-with-labels/11-peace-label.svg"
-import skeenaEast from "../../images/area-maps/area-maps-with-labels/12-skeena-east-label.svg"
-import skeenaWest from "../../images/area-maps/area-maps-with-labels/13-skeena-west-label.svg"
-import southCentralCoast from "../../images/area-maps/area-maps-with-labels/14-south-central-coast-label.svg"
+import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar } from "@fortawesome/free-regular-svg-icons";
+import lowerMainland from "../../images/area-maps/area-maps-with-labels/1-lower-mainland-label.svg";
+import southIsland from "../../images/area-maps/area-maps-with-labels/2-south-island-label.svg";
+import okanagan from "../../images/area-maps/area-maps-with-labels/3-okanagan-label.svg";
+import seaToSky from "../../images/area-maps/area-maps-with-labels/4-sea-to-sky-label.svg";
+import kootenay from "../../images/area-maps/area-maps-with-labels/5-kootenay-label.svg";
+import thompson from "../../images/area-maps/area-maps-with-labels/6-thompson-label.svg";
+import cariboo from "../../images/area-maps/area-maps-with-labels/7-cariboo-label.svg";
+import haidaGwaii from "../../images/area-maps/area-maps-with-labels/8-haida-gwaii-label.svg";
+import northIsland from "../../images/area-maps/area-maps-with-labels/9-north-island-label.svg";
+import omineca from "../../images/area-maps/area-maps-with-labels/10-omineca-label.svg";
+import peace from "../../images/area-maps/area-maps-with-labels/11-peace-label.svg";
+import skeenaEast from "../../images/area-maps/area-maps-with-labels/12-skeena-east-label.svg";
+import skeenaWest from "../../images/area-maps/area-maps-with-labels/13-skeena-west-label.svg";
+import southCentralCoast from "../../images/area-maps/area-maps-with-labels/14-south-central-coast-label.svg";
 
 // URLs
-const reservationsURL = "https://camping.bcparks.ca"
-const dayUsePassURL = "https://reserve.bcparks.ca/dayuse"
+const reservationsURL = "https://camping.bcparks.ca";
+const dayUsePassURL = "https://reserve.bcparks.ca/dayuse";
 // Helper function to get the area map image
 const convertToCamelCase = (str) => {
-  return str.split(" ").map((word, index) =>
-    index === 0 ? word.toLowerCase() : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join("")
-}
+  return str
+    .split(" ")
+    .map((word, index) =>
+      index === 0
+        ? word.toLowerCase()
+        : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+    )
+    .join("");
+};
 const mapImages = {
-  lowerMainland, southIsland, okanagan, seaToSky, kootenay, thompson, cariboo, haidaGwaii, northIsland, omineca, peace, skeenaEast, skeenaWest, southCentralCoast
-}
+  lowerMainland,
+  southIsland,
+  okanagan,
+  seaToSky,
+  kootenay,
+  thompson,
+  cariboo,
+  haidaGwaii,
+  northIsland,
+  omineca,
+  peace,
+  skeenaEast,
+  skeenaWest,
+  southCentralCoast,
+};
 // Helper function to render the gate open/close times
 const renderGateTimes = (parkGate) => {
-  if (!parkGate) return null
-  const { gateOpenHoursStartTime, gateOpenHoursEndTime, gateOpensAtDawn, gateClosesAtDusk, gateOpen24Hours } = parkGate
+  if (!parkGate) return null;
+  const {
+    gateOpenHoursStartTime,
+    gateOpenHoursEndTime,
+    gateOpensAtDawn,
+    gateClosesAtDusk,
+    gateOpen24Hours,
+  } = parkGate;
 
   if (gateOpen24Hours) {
-    return <>, 24 hours a day.</>
+    return <>, 24 hours a day.</>;
     // Either gateOpenHoursStartTime or gateOpensAtDawn is available, then either gateOpenHoursEndTime or gateClosesAtDusk must also be available
-  } else if ((gateOpenHoursStartTime || gateOpensAtDawn) && (gateOpenHoursEndTime || gateClosesAtDusk)) {
+  } else if (
+    (gateOpenHoursStartTime || gateOpensAtDawn) &&
+    (gateOpenHoursEndTime || gateClosesAtDusk)
+  ) {
     return (
       <>
-        , from <span className="no-wrap">
+        , from{" "}
+        <span className="no-wrap">
           {gateOpensAtDawn ? "dawn" : formattedTime(gateOpenHoursStartTime)}
         </span>{" "}
-        to <span className="no-wrap">
+        to{" "}
+        <span className="no-wrap">
           {gateClosesAtDusk ? "dusk" : formattedTime(gateOpenHoursEndTime)}
-        </span>, daily.
+        </span>
+        , daily.
       </>
-    )
+    );
   } else {
-    return <>.</>
+    return <>.</>;
   }
-}
+};
 
 export default function ParkHeader({
   orcs,
@@ -88,79 +119,95 @@ export default function ParkHeader({
   onStatusCalculated,
   audioClips,
   activeAudio,
-  setActiveAudio
+  setActiveAudio,
 }) {
-  const linkZoom = mapZoom + 1
-  const externalLink =
-    `${mapUrl}&center=${longitude},${latitude}&level=${linkZoom}`
+  const linkZoom = mapZoom + 1;
+  const externalLink = `${mapUrl}&center=${longitude},${latitude}&level=${linkZoom}`;
   // Get the park operation dates
-  const parkDates = getParkDates(operationDates)
-  const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
-  const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
-  const hasParkDates = parkDates && parkDates.length > 0
-  const openNote = parkOperation?.openNote?.data?.openNote || null
-  const gateNote = parkGate?.gateNote || null
+  const parkDates = getParkDates(operationDates);
+  const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL;
+  const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL;
+  const hasParkDates = parkDates && parkDates.length > 0;
+  const openNote = parkOperation?.openNote?.data?.openNote || null;
+  const gateNote = parkGate?.gateNote || null;
   // Use openNote for site pages and gateNote for park pages
-  const note = parkType === "site" ? openNote : gateNote
-  const hasNote = note && note.length > 0
-  
+  const note = parkType === "site" ? openNote : gateNote;
+  const hasNote = note && note.length > 0;
+
   // Check if park access status is "Closed"
-  const [isParkOpen, setIsParkOpen] = useState(null)
+  const [isParkOpen, setIsParkOpen] = useState(null);
 
   // Check if park features have dates for camping
   const hasCampingWithDates = useMemo(() => {
-    return parkFeatures?.some(feature => 
-      feature.parkFeatureType?.campingType && 
-      feature.parkDates && 
-      feature.parkDates.length > 0
-    ) || false
-  }, [parkFeatures])
+    return (
+      parkFeatures?.some(
+        (feature) =>
+          feature.parkFeatureType?.campingType &&
+          feature.parkDates &&
+          feature.parkDates.length > 0,
+      ) || false
+    );
+  }, [parkFeatures]);
   // Check if park features have dates for facilities
   const hasFacilitiesWithDates = useMemo(() => {
-    return parkFeatures?.some(feature => 
-      feature.parkFeatureType?.facilityType && 
-      feature.parkDates && 
-      feature.parkDates.length > 0
-    ) || false
-  }, [parkFeatures])
+    return (
+      parkFeatures?.some(
+        (feature) =>
+          feature.parkFeatureType?.facilityType &&
+          feature.parkDates &&
+          feature.parkDates.length > 0,
+      ) || false
+    );
+  }, [parkFeatures]);
 
-  const hasFeatureDates = hasCampingWithDates || hasFacilitiesWithDates
-  const hasDatesSection = isParkOpen !== false && (hasParkDates || hasNote || hasFeatureDates)
+  const hasFeatureDates = hasCampingWithDates || hasFacilitiesWithDates;
+  const hasDatesSection =
+    isParkOpen !== false && (hasParkDates || hasNote || hasFeatureDates);
 
   // Check if array contains a "tldr"
-  const hasTldr = (array) => array?.includes("tldr") || false
+  const hasTldr = (array) => array?.includes("tldr") || false;
   // Filter audio clips if it has a "tldr" displayLocation
   const audioClip = useMemo(() => {
-    return audioClips?.filter(audio => 
-      hasTldr(audio.displayLocation?.strapi_json_value) && audio.url
-    ) || []
-  }, [audioClips])
+    return (
+      audioClips?.filter(
+        (audio) =>
+          hasTldr(audio.displayLocation?.strapi_json_value) && audio.url,
+      ) || []
+    );
+  }, [audioClips]);
 
   return (
     <div id="park-header-container" className="d-flex park-info-container">
       <div className="park-header park-header--left">
         <div className="d-flex">
           <h1>{parkName}</h1>
-          {audioClip.length ? 
+          {audioClip.length ? (
             <AudioButton
               audio={audioClip[0]}
               location="tldr"
               activeAudio={activeAudio}
-              setActiveAudio={setActiveAudio} 
+              setActiveAudio={setActiveAudio}
             />
-          : ""}
+          ) : (
+            ""
+          )}
         </div>
         {searchArea?.searchAreaName && (
           <div className="park-header-child">
             <FontAwesome icon="location-dot" />
             {searchArea.searchAreaName}.&nbsp;
             {latitude && longitude && (
-              <><a href={externalLink}>View detailed map</a>.</>
+              <>
+                <a href={externalLink}>View detailed map</a>.
+              </>
             )}
           </div>
         )}
         <div className="park-header-child">
-          {(!isLoadingAdvisories && !advisoryLoadError && !isLoadingParkFeatures && !parkFeaturesLoadError) ?
+          {!isLoadingAdvisories &&
+          !advisoryLoadError &&
+          !isLoadingParkFeatures &&
+          !parkFeaturesLoadError ? (
             <ParkAccessStatus
               advisories={advisories}
               slug={slug}
@@ -170,53 +217,63 @@ export default function ParkHeader({
               punctuation="."
               setIsParkOpen={setIsParkOpen}
             />
-            :
+          ) : (
             // Display a space if it's loading advisories
             <>&nbsp;</>
-          }
+          )}
         </div>
         {hasDatesSection && (
           <div className="park-header-child">
             <FontAwesomeIcon icon={faCalendar} />
             <div>
-              {hasParkDates &&
+              {hasParkDates && (
                 <p>
-                  The {parkType} {parkGate?.hasGate === true && "gate"} is open {parkDates}
+                  The {parkType} {parkGate?.hasGate === true && "gate"} is open{" "}
+                  {parkDates}
                   {renderGateTimes(parkGate)}
                 </p>
-              }
-              {hasNote &&
-                <HtmlContent>{note}</HtmlContent>
-              }
+              )}
+              {hasNote && <HtmlContent>{note}</HtmlContent>}
               {hasFeatureDates && (
                 <p>
-                  {hasCampingWithDates && <>Check <a href="#camping">camping</a></>}
-                  {hasFacilitiesWithDates &&
+                  {hasCampingWithDates && (
+                    <>
+                      Check <a href="#camping">camping</a>
+                    </>
+                  )}
+                  {hasFacilitiesWithDates && (
                     <>
                       {hasCampingWithDates ? " and " : "Check "}
                       <a href="#facilities">facilities</a>
                     </>
-                  } for {hasParkDates ? "additional " : ""}dates.
+                  )}{" "}
+                  for {hasParkDates ? "additional " : ""}dates.
                 </p>
               )}
             </div>
           </div>
         )}
-        {(!isLoadingProtectedArea && !protectedAreaLoadError && hasCampfireBan) &&
-          <div className="park-header-child">
-            <CampfireBan />
-          </div>
-        }
-        {(hasReservations || hasDayUsePass) &&
+        {!isLoadingProtectedArea &&
+          !protectedAreaLoadError &&
+          hasCampfireBan && (
+            <div className="park-header-child">
+              <CampfireBan />
+            </div>
+          )}
+        {(hasReservations || hasDayUsePass) && (
           <div>
             {hasReservations && (
-              <a href={parkReservationsURL} className="btn btn-secondary">Book camping</a>
+              <a href={parkReservationsURL} className="btn btn-secondary">
+                Book camping
+              </a>
             )}
             {hasDayUsePass && (
-              <a href={parkDayUsePassURL} className="btn btn-secondary">Get a day-use pass</a>
+              <a href={parkDayUsePassURL} className="btn btn-secondary">
+                Get a day-use pass
+              </a>
             )}
           </div>
-        }
+        )}
       </div>
       <div className="park-header--right">
         {searchArea?.searchAreaName && (
@@ -226,8 +283,8 @@ export default function ParkHeader({
           />
         )}
       </div>
-    </div >
-  )
+    </div>
+  );
 }
 
 ParkHeader.propTypes = {
@@ -235,7 +292,7 @@ ParkHeader.propTypes = {
   slug: PropTypes.string.isRequired,
   parkName: PropTypes.oneOfType([
     PropTypes.object.isRequired,
-    PropTypes.string.isRequired
+    PropTypes.string.isRequired,
   ]),
   parkType: PropTypes.string.isRequired,
   mapZoom: PropTypes.number.isRequired,
@@ -262,4 +319,4 @@ ParkHeader.propTypes = {
   audioClips: PropTypes.array,
   activeAudio: PropTypes.string,
   setActiveAudio: PropTypes.func,
-}
+};

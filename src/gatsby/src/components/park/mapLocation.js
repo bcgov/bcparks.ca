@@ -1,5 +1,5 @@
-import React from "react"
-import HtmlContent from "../htmlContent"
+import React from "react";
+import HtmlContent from "../htmlContent";
 
 export default function MapLocation({ maps, locationNotes }) {
   return (
@@ -16,5 +16,5 @@ export default function MapLocation({ maps, locationNotes }) {
         </>
       )}
     </div>
-  )
+  );
 }

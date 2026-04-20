@@ -42,7 +42,7 @@
           display: flex;
         }
       }
-      
+
       .raw-html-content {
         & > div {
           margin-bottom: 16px;
@@ -58,7 +58,7 @@
   height: 30px;
   display: -webkit-box;
   -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;  
+  -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 0.9rem;
   font-weight: 400;
@@ -78,7 +78,9 @@
 .badge-light {
   color: $colorBlueMed;
   background-color: transparent;
-  &:hover, &:focus, &:focus-visible {
+  &:hover,
+  &:focus,
+  &:focus-visible {
     color: $colorWhite !important;
     text-decoration: underline;
     background-color: $colorBlueMed;
@@ -101,7 +103,8 @@
 .btn-link {
   margin-bottom: 8px;
   padding: 0;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     color: $colorBlue !important;
   }
   &:focus {

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react"
-import PropTypes from "prop-types"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
-import Filter from "./filter"
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import Filter from "./filter";
 
-import "../../styles/search.scss"
+import "../../styles/search.scss";
 
 const DesktopFilters = ({
   data: {
@@ -21,87 +21,86 @@ const DesktopFilters = ({
     handleAreaCheck,
     handleCampingTypeCheck,
     handleActivityCheck,
-    handleFacilityCheck
+    handleFacilityCheck,
   },
-
 }) => {
-  const [showMoreActivities, setMoreActivites] = useState(true)
-  const [showMoreFacilities, setMoreFacilities] = useState(true)
-  const [showMoreAreas, setMoreAreas] = useState(true)
-  const [truncatedActivityFilterLength, setTruncatedActivityFilterLength] = useState(5)
-  const [truncatedFacilityFilterLength, setTruncatedFacilityFilterLength] = useState(5)
-  const [truncatedAreaFilterLength, setTruncatedAreaFilterLength] = useState(6)
+  const [showMoreActivities, setMoreActivites] = useState(true);
+  const [showMoreFacilities, setMoreFacilities] = useState(true);
+  const [showMoreAreas, setMoreAreas] = useState(true);
+  const [truncatedActivityFilterLength, setTruncatedActivityFilterLength] =
+    useState(5);
+  const [truncatedFacilityFilterLength, setTruncatedFacilityFilterLength] =
+    useState(5);
+  const [truncatedAreaFilterLength, setTruncatedAreaFilterLength] = useState(6);
 
   useEffect(() => {
-    setFilters()
+    setFilters();
   }, [
     searchText,
     selectedAreas,
     selectedParkCampingTypes,
     selectedActivities,
     selectedFacilities,
-    setFilters
-  ])
+    setFilters,
+  ]);
 
   useEffect(() => {
     if (showMoreActivities) {
-      setTruncatedActivityFilterLength(5)
+      setTruncatedActivityFilterLength(5);
     } else {
-      setTruncatedActivityFilterLength(activityItems.length)
+      setTruncatedActivityFilterLength(activityItems.length);
     }
     if (showMoreFacilities) {
-      setTruncatedFacilityFilterLength(5)
+      setTruncatedFacilityFilterLength(5);
     } else {
-      setTruncatedFacilityFilterLength(facilityItems.length)
+      setTruncatedFacilityFilterLength(facilityItems.length);
     }
     if (showMoreAreas) {
-      setTruncatedAreaFilterLength(6)
+      setTruncatedAreaFilterLength(6);
     } else {
-      setTruncatedAreaFilterLength(areaItems.length)
+      setTruncatedAreaFilterLength(areaItems.length);
     }
   }, [
-    showMoreActivities, activityItems.length, showMoreFacilities,
-    facilityItems.length, showMoreAreas, areaItems.length
-  ])
+    showMoreActivities,
+    activityItems.length,
+    showMoreFacilities,
+    facilityItems.length,
+    showMoreAreas,
+    areaItems.length,
+  ]);
 
   return (
     <div className="">
       <fieldset className="mb-2">
         <legend className="filter-heading">Popular</legend>
         <Filter
-          filterItems={campingTypeItems.filter(
-            c => c.value === 36
-          )}
+          filterItems={campingTypeItems.filter((c) => c.value === 36)}
           selectedFilterItems={selectedParkCampingTypes}
           handleFilterCheck={handleCampingTypeCheck}
           filterType="popular"
         />
         <Filter
           filterItems={activityItems.filter(
-            a => a.value === 1 || a.value === 8 || a.value === 9
+            (a) => a.value === 1 || a.value === 8 || a.value === 9,
           )}
           selectedFilterItems={selectedActivities}
           handleFilterCheck={handleActivityCheck}
           filterType="popular"
         />
         <Filter
-          filterItems={facilityItems.filter(f => f.value === 6)}
+          filterItems={facilityItems.filter((f) => f.value === 6)}
           selectedFilterItems={selectedFacilities}
           handleFilterCheck={handleFacilityCheck}
           filterType="popular"
         />
         <Filter
-          filterItems={activityItems.filter(
-            a => a.value === 3
-          )}
+          filterItems={activityItems.filter((a) => a.value === 3)}
           selectedFilterItems={selectedActivities}
           handleFilterCheck={handleActivityCheck}
           filterType="popular"
         />
         <Filter
-          filterItems={campingTypeItems.filter(
-            c => c.value === 1
-          )}
+          filterItems={campingTypeItems.filter((c) => c.value === 1)}
           selectedFilterItems={selectedParkCampingTypes}
           handleFilterCheck={handleCampingTypeCheck}
           filterType="popular"
@@ -117,10 +116,13 @@ const DesktopFilters = ({
         />
         <button
           className="btn btn-link show-all-link"
-          aria-label={showMoreAreas ?
-            `Show all ${areaItems.length} areas` : "Show fewer areas"}
+          aria-label={
+            showMoreAreas
+              ? `Show all ${areaItems.length} areas`
+              : "Show fewer areas"
+          }
           onClick={() => {
-            setMoreAreas(!showMoreAreas)
+            setMoreAreas(!showMoreAreas);
           }}
         >
           {showMoreAreas ? (
@@ -155,10 +157,13 @@ const DesktopFilters = ({
         />
         <button
           className="btn btn-link show-all-link"
-          aria-label={showMoreActivities ? 
-            `Show all ${activityItems.length} things to do` : "Show fewer things to do"}
+          aria-label={
+            showMoreActivities
+              ? `Show all ${activityItems.length} things to do`
+              : "Show fewer things to do"
+          }
           onClick={() => {
-            setMoreActivites(!showMoreActivities)
+            setMoreActivites(!showMoreActivities);
           }}
         >
           {showMoreActivities ? (
@@ -184,10 +189,13 @@ const DesktopFilters = ({
         />
         <button
           className="btn btn-link show-all-link"
-          aria-label={showMoreFacilities ? 
-            `Show all ${facilityItems.length} facilities` : "Show fewer facilities"}
+          aria-label={
+            showMoreFacilities
+              ? `Show all ${facilityItems.length} facilities`
+              : "Show fewer facilities"
+          }
           onClick={() => {
-            setMoreFacilities(!showMoreFacilities)
+            setMoreFacilities(!showMoreFacilities);
           }}
         >
           {showMoreFacilities ? (
@@ -205,7 +213,7 @@ const DesktopFilters = ({
       </fieldset>
     </div>
   );
-}
+};
 
 DesktopFilters.propTypes = {
   data: PropTypes.shape({
@@ -222,8 +230,8 @@ DesktopFilters.propTypes = {
     handleAreaCheck: PropTypes.func.isRequired,
     handleCampingTypeCheck: PropTypes.func.isRequired,
     handleActivityCheck: PropTypes.func.isRequired,
-    handleFacilityCheck: PropTypes.func.isRequired
+    handleFacilityCheck: PropTypes.func.isRequired,
   }),
-}
+};
 
-export default DesktopFilters
+export default DesktopFilters;

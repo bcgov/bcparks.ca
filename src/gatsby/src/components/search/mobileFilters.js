@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react"
-import PropTypes from "prop-types"
-import { Modal, Collapse } from "react-bootstrap"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronUp, faChevronDown, faXmark } from "@fortawesome/free-solid-svg-icons"
-import Filter from "./filter"
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Modal, Collapse } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronUp,
+  faChevronDown,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
+import Filter from "./filter";
 
-import "../../styles/search.scss"
+import "../../styles/search.scss";
 
 const MobileFilters = ({
   data: {
@@ -27,48 +31,55 @@ const MobileFilters = ({
     handleCampingTypeCheck,
     handleActivityCheck,
     handleFacilityCheck,
-    handleClearFilter
+    handleClearFilter,
   },
-
 }) => {
-  const [showFilters, setShowFilter] = useState([false, false, false, false, false])
-  const [expandAll, setExpandAll] = useState(false)
+  const [showFilters, setShowFilter] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [expandAll, setExpandAll] = useState(false);
 
-  const alphabeticAreaItems = areaItems.slice(0)
-  alphabeticAreaItems.sort((a, b) => { return a.label > b.label ? 1 : -1 })
+  const alphabeticAreaItems = areaItems.slice(0);
+  alphabeticAreaItems.sort((a, b) => {
+    return a.label > b.label ? 1 : -1;
+  });
 
   const handleExpandAll = () => {
-    const newShowFilters = Array.from(showFilters, (filter) => !expandAll)
-    setShowFilter(newShowFilters)
-    setExpandAll(!expandAll)
-  }
+    const newShowFilters = Array.from(showFilters, (filter) => !expandAll);
+    setShowFilter(newShowFilters);
+    setExpandAll(!expandAll);
+  };
 
   const handleCloseFilter = () => {
-    setOpenFilter(false)
-  }
+    setOpenFilter(false);
+  };
 
   // event handlers
-  const handleShowFilterClick = index => {
-    const tempShowFilter = showFilters
-    tempShowFilter[index] = !tempShowFilter[index]
-    setShowFilter([...tempShowFilter])
-  }
+  const handleShowFilterClick = (index) => {
+    const tempShowFilter = showFilters;
+    tempShowFilter[index] = !tempShowFilter[index];
+    setShowFilter([...tempShowFilter]);
+  };
 
   const searchParkFilter = () => {
     setCurrentPage(1);
-    setOpenFilter(false)
-  }
+    setOpenFilter(false);
+  };
 
   useEffect(() => {
-    setFilters()
+    setFilters();
   }, [
     searchText,
     selectedAreas,
     selectedParkCampingTypes,
     selectedActivities,
     selectedFacilities,
-    setFilters
-  ])
+    setFilters,
+  ]);
 
   return (
     <Modal
@@ -104,62 +115,51 @@ const MobileFilters = ({
           <div
             className="park-filter-option-label pointer p-3"
             onClick={() => {
-              handleShowFilterClick(0)
+              handleShowFilterClick(0);
             }}
             tabIndex="0"
             role="button"
             onKeyDown={() => {
-              handleShowFilterClick(0)
+              handleShowFilterClick(0);
             }}
           >
-            <div className="park-select-label">
-              Popular
-            </div>
+            <div className="park-select-label">Popular</div>
             {showFilters[0] ? (
               <FontAwesomeIcon icon={faChevronUp} />
             ) : (
               <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
-          <Collapse
-            in={showFilters[0]}
-            className="p-3"
-          >
+          <Collapse in={showFilters[0]} className="p-3">
             <div>
               <Filter
-                filterItems={campingTypeItems.filter(
-                  c => c.value === 36
-                )}
+                filterItems={campingTypeItems.filter((c) => c.value === 36)}
                 selectedFilterItems={selectedParkCampingTypes}
                 handleFilterCheck={handleCampingTypeCheck}
                 filterType="popular"
               />
               <Filter
                 filterItems={activityItems.filter(
-                  a => a.value === 1 || a.value === 8 || a.value === 9
+                  (a) => a.value === 1 || a.value === 8 || a.value === 9,
                 )}
                 selectedFilterItems={selectedActivities}
                 handleFilterCheck={handleActivityCheck}
                 filterType="popular"
               />
               <Filter
-                filterItems={facilityItems.filter(f => f.value === 6)}
+                filterItems={facilityItems.filter((f) => f.value === 6)}
                 selectedFilterItems={selectedFacilities}
                 handleFilterCheck={handleFacilityCheck}
                 filterType="popular"
               />
               <Filter
-                filterItems={activityItems.filter(
-                  a => a.value === 3
-                )}
+                filterItems={activityItems.filter((a) => a.value === 3)}
                 selectedFilterItems={selectedActivities}
                 handleFilterCheck={handleActivityCheck}
                 filterType="popular"
               />
               <Filter
-                filterItems={campingTypeItems.filter(
-                  c => c.value === 1
-                )}
+                filterItems={campingTypeItems.filter((c) => c.value === 1)}
                 selectedFilterItems={selectedParkCampingTypes}
                 handleFilterCheck={handleCampingTypeCheck}
                 filterType="popular"
@@ -171,27 +171,22 @@ const MobileFilters = ({
           <div
             className="park-filter-option-label pointer p-3"
             onClick={() => {
-              handleShowFilterClick(1)
+              handleShowFilterClick(1);
             }}
             tabIndex="0"
             role="button"
             onKeyDown={() => {
-              handleShowFilterClick(1)
+              handleShowFilterClick(1);
             }}
           >
-            <div className="park-select-label">
-              Area
-            </div>
+            <div className="park-select-label">Area</div>
             {showFilters[1] ? (
               <FontAwesomeIcon icon={faChevronUp} />
             ) : (
               <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
-          <Collapse
-            in={showFilters[1]}
-            className="p-3"
-          >
+          <Collapse in={showFilters[1]} className="p-3">
             <div>
               <Filter
                 filterItems={alphabeticAreaItems}
@@ -206,27 +201,22 @@ const MobileFilters = ({
           <div
             className="park-filter-option-label pointer p-3"
             onClick={() => {
-              handleShowFilterClick(2)
+              handleShowFilterClick(2);
             }}
             tabIndex="0"
             role="button"
             onKeyDown={() => {
-              handleShowFilterClick(2)
+              handleShowFilterClick(2);
             }}
           >
-            <div className="park-select-label">
-              Camping
-            </div>
+            <div className="park-select-label">Camping</div>
             {showFilters[2] ? (
               <FontAwesomeIcon icon={faChevronUp} />
             ) : (
               <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
-          <Collapse
-            in={showFilters[2]}
-            className="p-3"
-          >
+          <Collapse in={showFilters[2]} className="p-3">
             <div>
               <Filter
                 filterItems={campingTypeItems}
@@ -241,27 +231,22 @@ const MobileFilters = ({
           <div
             className="park-filter-option-label  pointer p-3"
             onClick={() => {
-              handleShowFilterClick(3)
+              handleShowFilterClick(3);
             }}
             tabIndex="0"
             role="button"
             onKeyDown={() => {
-              handleShowFilterClick(3)
+              handleShowFilterClick(3);
             }}
           >
-            <div className="park-select-label">
-              Things to do
-            </div>
+            <div className="park-select-label">Things to do</div>
             {showFilters[3] ? (
               <FontAwesomeIcon icon={faChevronUp} />
             ) : (
               <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
-          <Collapse
-            in={showFilters[3]}
-            className="p-3"
-          >
+          <Collapse in={showFilters[3]} className="p-3">
             <div>
               <Filter
                 filterItems={activityItems}
@@ -276,27 +261,22 @@ const MobileFilters = ({
           <div
             className="park-filter-option-label pointer p-3"
             onClick={() => {
-              handleShowFilterClick(4)
+              handleShowFilterClick(4);
             }}
             tabIndex="0"
             role="button"
             onKeyDown={() => {
-              handleShowFilterClick(4)
+              handleShowFilterClick(4);
             }}
           >
-            <div className="park-select-label">
-              Facilities
-            </div>
+            <div className="park-select-label">Facilities</div>
             {showFilters[4] ? (
               <FontAwesomeIcon icon={faChevronUp} />
             ) : (
               <FontAwesomeIcon icon={faChevronDown} />
             )}
           </div>
-          <Collapse
-            in={showFilters[4]}
-            className="p-3"
-          >
+          <Collapse in={showFilters[4]} className="p-3">
             <div>
               <Filter
                 filterItems={facilityItems}
@@ -312,7 +292,7 @@ const MobileFilters = ({
         <button
           aria-label="Show parks"
           onClick={() => {
-            searchParkFilter()
+            searchParkFilter();
           }}
           className="btn btn-primary w-100 mx-0 mb-2"
         >
@@ -327,7 +307,7 @@ const MobileFilters = ({
       </Modal.Footer>
     </Modal>
   );
-}
+};
 
 MobileFilters.propTypes = {
   data: PropTypes.shape({
@@ -349,8 +329,8 @@ MobileFilters.propTypes = {
     handleCampingTypeCheck: PropTypes.func.isRequired,
     handleActivityCheck: PropTypes.func.isRequired,
     handleFacilityCheck: PropTypes.func.isRequired,
-    handleClearFilter: PropTypes.func.isRequired
+    handleClearFilter: PropTypes.func.isRequired,
   }),
-}
+};
 
-export default MobileFilters
+export default MobileFilters;

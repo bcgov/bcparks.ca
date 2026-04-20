@@ -33,7 +33,8 @@
   text-decoration: none;
   cursor: pointer;
   margin-bottom: 16px;
-  &:hover, &:focus-visible {
+  &:hover,
+  &:focus-visible {
     color: $colorBlue !important;
     text-decoration: underline;
   }
@@ -51,13 +52,14 @@
 
 .expand-link.expand-icon {
   text-decoration: none !important;
-  &:hover, &:focus-visible {
+  &:hover,
+  &:focus-visible {
     text-decoration: underline !important;
   }
 }
 
 .park-overview-link.expand-icon,
-.park-camping-link.expand-icon{
+.park-camping-link.expand-icon {
   margin-top: 16px;
 }
 

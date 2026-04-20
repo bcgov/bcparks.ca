@@ -1,13 +1,13 @@
-import axios from "axios"
-import qs from "qs"
+import axios from "axios";
+import qs from "qs";
 
-import { countsList } from "./constants"
+import { countsList } from "./constants";
 
 // Constants
-const currentYear = new Date().getFullYear()
+const currentYear = new Date().getFullYear();
 const campsites = countsList
-  .filter(count => count.isActive)
-  .map(count => count.countVar)
+  .filter((count) => count.isActive)
+  .map((count) => count.countVar);
 
 const PARK_GATE = {
   fields: [
@@ -19,13 +19,13 @@ const PARK_GATE = {
     "gateOpen24Hours",
     "gateNote",
   ],
-}
+};
 const PARK_AREA = {
   fields: ["parkAreaName"],
   populate: {
     parkGate: PARK_GATE,
   },
-}
+};
 const PARK_DATES = {
   fields: ["isActive", "operatingYear", "startDate", "endDate"],
   filters: {
@@ -41,14 +41,14 @@ const PARK_DATES = {
   populate: {
     parkDateType: { fields: ["dateTypeId", "dateType"] },
   },
-}
+};
 const PARK_FEATURE_TYPE = {
   fields: ["parkFeatureType", "closureAffectsAccessStatus"],
   populate: {
     campingType: { fields: ["campingTypeCode", "icon"] },
     facilityType: { fields: ["facilityCode", "icon"] },
   },
-}
+};
 const PARK_GATE_DATES = {
   fields: ["isActive", "operatingYear", "startDate", "endDate"],
   filters: {
@@ -66,7 +66,7 @@ const PARK_GATE_DATES = {
       },
     ],
   },
-}
+};
 
 /**
  * Retrieves all park features from the API, optionally filtered by starting letter
@@ -84,7 +84,7 @@ const PARK_GATE_DATES = {
 const getAllParkFeatures = async (apiBaseUrl, startingLetter = null) => {
   const filters = {
     isActive: true,
-  }
+  };
 
   // Add starting letter filter, if provided
   if (startingLetter) {
@@ -92,7 +92,7 @@ const getAllParkFeatures = async (apiBaseUrl, startingLetter = null) => {
       protectedAreaName: {
         $startsWith: startingLetter,
       },
-    }
+    };
   }
 
   const params = qs.stringify(
@@ -127,17 +127,17 @@ const getAllParkFeatures = async (apiBaseUrl, startingLetter = null) => {
     },
     {
       encodeValuesOnly: true,
-    }
-  )
+    },
+  );
 
   try {
-    const response = await axios.get(`${apiBaseUrl}/park-features?${params}`)
-    return response.data
+    const response = await axios.get(`${apiBaseUrl}/park-features?${params}`);
+    return response.data;
   } catch (error) {
-    console.error("Error fetching park features:", error)
-    throw error
+    console.error("Error fetching park features:", error);
+    throw error;
   }
-}
+};
 
 /**
  * Retrieves park features for a specific protected area by ORCS number
@@ -185,17 +185,17 @@ const getParkFeatures = async (apiBaseUrl, orcs) => {
     },
     {
       encodeValuesOnly: true,
-    }
-  )
+    },
+  );
 
   try {
-    const response = await axios.get(`${apiBaseUrl}/park-features?${params}`)
-    return response.data
+    const response = await axios.get(`${apiBaseUrl}/park-features?${params}`);
+    return response.data;
   } catch (error) {
-    console.error("Error fetching park features:", error)
-    throw error
+    console.error("Error fetching park features:", error);
+    throw error;
   }
-}
+};
 
 /**
  * Retrieves park features for a specific site by orcsSiteNumber
@@ -243,17 +243,17 @@ const getParkFeaturesByOrcsSiteNumber = async (apiBaseUrl, orcsSiteNumber) => {
     },
     {
       encodeValuesOnly: true,
-    }
-  )
+    },
+  );
 
   try {
-    const response = await axios.get(`${apiBaseUrl}/park-features?${params}`)
-    return response.data
+    const response = await axios.get(`${apiBaseUrl}/park-features?${params}`);
+    return response.data;
   } catch (error) {
-    console.error("Error fetching park features:", error)
-    throw error
+    console.error("Error fetching park features:", error);
+    throw error;
   }
-}
+};
 
 /**
  * Retrieves protected area data with gate information and filtered park dates
@@ -279,23 +279,23 @@ const getProtectedArea = async (apiBaseUrl, orcs) => {
     },
     {
       encodeValuesOnly: true,
-    }
-  )
+    },
+  );
 
   try {
     const response = await axios.get(
-      `${apiBaseUrl}/protected-areas/${orcs}?${params}`
-    )
-    return response.data
+      `${apiBaseUrl}/protected-areas/${orcs}?${params}`,
+    );
+    return response.data;
   } catch (error) {
-    console.error(`Error fetching protected area ${orcs}:`, error)
-    throw new Error(`Failed to fetch protected area ${orcs}: ${error.message}`)
+    console.error(`Error fetching protected area ${orcs}:`, error);
+    throw new Error(`Failed to fetch protected area ${orcs}: ${error.message}`);
   }
-}
+};
 
 export {
   getAllParkFeatures,
   getParkFeatures,
   getParkFeaturesByOrcsSiteNumber,
   getProtectedArea,
-}
+};

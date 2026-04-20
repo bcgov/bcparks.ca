@@ -1,5 +1,5 @@
-export const mapUrl = 
-  "https://governmentofbc.maps.arcgis.com/apps/instant/basic/index.html?appid=4b3eb47c25ff45fa9f6bff45e3f2a389"
+export const mapUrl =
+  "https://governmentofbc.maps.arcgis.com/apps/instant/basic/index.html?appid=4b3eb47c25ff45fa9f6bff45e3f2a389";
 
 export const PARK_NAME_TYPE = {
   Legal: 1,
@@ -8,7 +8,7 @@ export const PARK_NAME_TYPE = {
   Basic: 4,
   Alias: 5,
   Historic: 6,
-}
+};
 
 // dateTypeId from Strapi park-date-type
 export const PARK_DATE_TYPE = {
@@ -22,7 +22,7 @@ export const PARK_DATE_TYPE = {
   BACKCOUNTRY_REGISTRATION: 8,
   FIRST_COME_FIRST_SERVED: 9,
   FULL_SERVICES_AND_FEES: 10,
-}
+};
 
 export const countsList = [
   // Use this to configure which counts show and in what order
@@ -113,4 +113,4 @@ export const countsList = [
     isActive: false,
   },
   { display: "TOTAL", countVar: "totalCapacity", isActive: false },
-]
+];

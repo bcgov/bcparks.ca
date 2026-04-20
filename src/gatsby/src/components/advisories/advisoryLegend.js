@@ -1,8 +1,8 @@
-import React from "react"
-import "../../styles/advisories/advisoryLegend.scss"
-import redAlertIcon from "../../images/park/red-alert.svg"
-import yellowAlertIcon from "../../images/park/yellow-alert.svg"
-import blueAlertIcon from "../../images/park/blue-alert.svg"
+import React from "react";
+import "../../styles/advisories/advisoryLegend.scss";
+import redAlertIcon from "../../images/park/red-alert.svg";
+import yellowAlertIcon from "../../images/park/yellow-alert.svg";
+import blueAlertIcon from "../../images/park/blue-alert.svg";
 
 const AdvisoryLegend = () => {
   const legendItems = [
@@ -21,7 +21,7 @@ const AdvisoryLegend = () => {
       description: "Discretion and warnings",
       icon: blueAlertIcon,
     },
-  ]
+  ];
 
   return (
     <div className="advisory-legend">
@@ -38,34 +38,35 @@ const AdvisoryLegend = () => {
                   />
                 </div>
                 <div>
-                  <strong>
-                    {legendItem.label}
-                  </strong>
-                  <p className="mb-0">
-                    {legendItem.description}
-                  </p>
+                  <strong>{legendItem.label}</strong>
+                  <p className="mb-0">{legendItem.description}</p>
                 </div>
               </div>
             </div>
-          )
+          );
         })}
       </div>
       <div className="mb-4 mt-3 px-md-5 mx-md-5 text-center">
-        Advisories are updated Monday to Friday 8:30am to 4:30pm, excluding statutory holidays.<br />
-        Get up-to-date provincial emergency information for wildfires, floods, and highways from:<br />
+        Advisories are updated Monday to Friday 8:30am to 4:30pm, excluding
+        statutory holidays.
+        <br />
+        Get up-to-date provincial emergency information for wildfires, floods,
+        and highways from:
+        <br />
         <a href="https://www2.gov.bc.ca/gov/content/safety/wildfire-status">
           BC Wildfire Service
-        </a>{", "}
+        </a>
+        {", "}
         <a href="https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/drought-flooding-dikes-dams/river-forecast-centre">
           BC River Forecast Centre
-        </a>{", "}
-        <a href="https://drivebc.ca">DriveBC</a>{", "}
-        <a href="https://www.emergencyinfobc.gov.bc.ca">
-          EmergencyInfoBC
         </a>
+        {", "}
+        <a href="https://drivebc.ca">DriveBC</a>
+        {", "}
+        <a href="https://www.emergencyinfobc.gov.bc.ca">EmergencyInfoBC</a>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdvisoryLegend
+export default AdvisoryLegend;

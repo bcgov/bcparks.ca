@@ -35,7 +35,7 @@ p.subtitle {
     position: static;
     margin-bottom: 8px;
     padding: 0;
-    input[type=checkbox] {
+    input[type="checkbox"] {
       // reset default styles
       -webkit-appearance: none;
       appearance: none;
@@ -131,7 +131,7 @@ p.subtitle {
         }
       }
     }
-  
+
     .modal-footer {
       .clear-filter-link {
         margin: 0 !important;
@@ -292,7 +292,6 @@ div[class$="-singleValue"] {
   object-position: center;
 }
 
-
 .search-result-image {
   width: 100% !important;
   object-fit: cover !important;
@@ -317,7 +316,7 @@ div[class$="-singleValue"] {
   a.mobile-park-link {
     display: -webkit-box;
     -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;  
+    -webkit-box-orient: vertical;
     overflow: hidden;
   }
   svg.park-heading-icon {
@@ -351,7 +350,7 @@ div[class$="-singleValue"] {
         border: $colorWhite solid 2px;
         outline: $colorBlueMed solid 2px;
         outline-offset: 0px;
-        border-radius: 4px; 
+        border-radius: 4px;
       }
       &.map-link {
         svg.link-icon {
@@ -366,7 +365,8 @@ div[class$="-singleValue"] {
     .show-all-link {
       color: $colorBlueMed;
       text-decoration: none;
-      &:hover, &:focus-visible {
+      &:hover,
+      &:focus-visible {
         color: $colorBlue;
         text-decoration: underline;
       }
@@ -433,7 +433,7 @@ div[class$="-singleValue"] {
     }
     &-bottom {
       display: flex;
-      flex: 1;      
+      flex: 1;
       justify-content: space-between;
       &--left {
         display: flex;
@@ -455,7 +455,7 @@ div[class$="-singleValue"] {
             border: $colorWhite solid 2px;
             outline: $colorBlueMed solid 2px;
             outline-offset: 0px;
-            border-radius: 4px; 
+            border-radius: 4px;
           }
         }
       }
@@ -471,7 +471,8 @@ div[class$="-singleValue"] {
   }
 
   // park card icon
-  .access-status-icon, .campfire-ban-icon {
+  .access-status-icon,
+  .campfire-ban-icon {
     font-size: 0.875rem;
     line-height: 1.5rem;
     color: $colorGrey;
@@ -482,10 +483,11 @@ div[class$="-singleValue"] {
         border: $colorWhite solid 2px;
         outline: $colorBlueMed solid 2px;
         outline-offset: 0px;
-        border-radius: 4px; 
+        border-radius: 4px;
       }
     }
-    svg, img {
+    svg,
+    img {
       width: 24px;
       height: 24px;
     }
@@ -553,7 +555,8 @@ div[class$="-singleValue"] {
   p {
     margin-bottom: 0;
   }
-  a, button {
+  a,
+  button {
     color: $colorBlueMed;
     &:hover {
       color: $colorBlue;
@@ -607,7 +610,7 @@ a.desktop-park-link,
 a.mobile-park-link {
   color: $colorBlue;
   &:focus-visible {
-    outline: 2px auto $colorBlueMed;     
+    outline: 2px auto $colorBlueMed;
     outline-offset: 2px;
   }
 }
@@ -628,15 +631,18 @@ a.mobile-park-link {
     &:hover {
       border-width: 2px;
     }
-    &:focus, &:focus-visible {
+    &:focus,
+    &:focus-visible {
       border-width: 3px;
-      box-shadow: 0px 0px 0px 2px $colorWhite, 0px 0px 0px 4px $colorBlueMed;
+      box-shadow:
+        0px 0px 0px 2px $colorWhite,
+        0px 0px 0px 4px $colorBlueMed;
       padding: 18px 48px 0 16px;
     }
-    &:focus~label, 
-    &:not(:placeholder-shown)~label {
+    &:focus ~ label,
+    &:not(:placeholder-shown) ~ label {
       font-size: 0.75rem;
-      opacity: .65;
+      opacity: 0.65;
       transform: translateY(-0.5rem) translateX(0.15rem);
     }
   }
@@ -651,9 +657,12 @@ a.mobile-park-link {
     padding: 0;
     pointer-events: none;
     transform-origin: 0 0;
-    transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+    transition:
+      opacity 0.1s ease-in-out,
+      transform 0.1s ease-in-out;
   }
-  &.has-text--true, &.is-dropdown-open--true {
+  &.has-text--true,
+  &.is-dropdown-open--true {
     input.form-control {
       padding: 18px 16px 0;
     }
@@ -661,7 +670,9 @@ a.mobile-park-link {
   &.is-dropdown-open--true {
     input.form-control {
       border-width: 3px;
-      box-shadow: 0px 0px 0px 2px $colorWhite, 0px 0px 0px 4px $colorBlueMed;
+      box-shadow:
+        0px 0px 0px 2px $colorWhite,
+        0px 0px 0px 4px $colorBlueMed;
     }
   }
   .dropdown-menu {
@@ -684,7 +695,10 @@ a.mobile-park-link {
       &:first-of-type {
         margin-top: 0;
       }
-      &:hover, &:focus, &:active, &.active {
+      &:hover,
+      &:focus,
+      &:active,
+      &.active {
         background-color: transparent;
         text-decoration: underline !important;
       }
@@ -729,8 +743,8 @@ a.mobile-park-link {
     .spinner-border {
       width: 32px;
       height: 32px;
-      color: rgba($colorGreyMed, .5);
-      border-right-color: rgba($colorGreyMed, .2);
+      color: rgba($colorGreyMed, 0.5);
+      border-right-color: rgba($colorGreyMed, 0.2);
       border-width: 4px;
       margin-right: 6px;
     }
@@ -794,7 +808,8 @@ a.mobile-park-link {
             margin: 0 24px;
           }
         }
-        .park-search-typeahead, .city-search-typeahead {
+        .park-search-typeahead,
+        .city-search-typeahead {
           width: 100%;
           @media screen and (min-width: $mdBreakpoint) {
             width: calc((100% - 150px) / 2);
@@ -831,7 +846,7 @@ a.mobile-park-link {
   z-index: 10;
   border: none;
   border-radius: 0;
-  box-shadow: 0px 4px 8px 0px rgba($colorBlack, .2);
+  box-shadow: 0px 4px 8px 0px rgba($colorBlack, 0.2);
   @media screen and (min-width: $smBreakpoint) {
     width: 360px;
     right: 24px;

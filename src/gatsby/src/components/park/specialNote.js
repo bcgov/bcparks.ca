@@ -1,5 +1,5 @@
-import React from "react"
-import HtmlContent from "../htmlContent"
+import React from "react";
+import HtmlContent from "../htmlContent";
 
 export default function SpecialNote({ specialNotes }) {
   return (
@@ -8,5 +8,5 @@ export default function SpecialNote({ specialNotes }) {
       <h3 id="park-special-notes-container">Special notes</h3>
       <HtmlContent>{specialNotes}</HtmlContent>
     </div>
-  )
+  );
 }

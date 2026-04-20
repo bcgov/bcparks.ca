@@ -1,7 +1,8 @@
 @import "../variables.scss";
 
 // both desktop and mobile menu
-.page-menu--desktop, .page-menu--mobile {
+.page-menu--desktop,
+.page-menu--mobile {
   .page-menu--container {
     padding-top: 64px;
     .menu-header {
@@ -14,7 +15,8 @@
         color: $colorBlueMed;
         font-size: 1rem;
         line-height: 1.5;
-        &:hover, &:focus-visible {
+        &:hover,
+        &:focus-visible {
           color: $colorBlue;
         }
         &:focus-visible {
@@ -35,7 +37,7 @@
   align-self: flex-start;
   margin-bottom: 80px;
   padding-left: 0px;
-  padding-right: 20px;  
+  padding-right: 20px;
   .page-menu--container {
     ul {
       list-style: none;

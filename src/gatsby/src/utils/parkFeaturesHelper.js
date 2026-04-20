@@ -1,4 +1,4 @@
-import { groupParkFeatureDates, getFeatureDates } from "./parkDatesHelper"
+import { groupParkFeatureDates, getFeatureDates } from "./parkDatesHelper";
 
 /**
  * Processes raw park features data by grouping dates, formatting date ranges, and adding computed properties
@@ -10,12 +10,12 @@ import { groupParkFeatureDates, getFeatureDates } from "./parkDatesHelper"
  * const processedFeatures = preProcessParkFeatures(rawFeatures)
  * // Returns features with formatted dates: gateDates, operationDates, etc.
  */
-const preProcessParkFeatures = parkFeatures => {
+const preProcessParkFeatures = (parkFeatures) => {
   const processedParkFeatures = parkFeatures
-    .filter(feature => feature.isActive)
-    .map(feature => {
-      const facilityType = feature.parkFeatureType?.facilityType || {}
-      const campingType = feature.parkFeatureType?.campingType || {}
+    .filter((feature) => feature.isActive)
+    .map((feature) => {
+      const facilityType = feature.parkFeatureType?.facilityType || {};
+      const campingType = feature.parkFeatureType?.campingType || {};
 
       let processed = {
         ...feature,
@@ -24,16 +24,16 @@ const preProcessParkFeatures = parkFeatures => {
         typeCode:
           facilityType.facilityCode || campingType.campingTypeCode || "",
         typeIcon: facilityType.icon || campingType.icon || "",
-      }
+      };
 
-      processed = groupParkFeatureDates(processed)
+      processed = groupParkFeatureDates(processed);
 
       // Format date ranges
-      processed.gateDates = getFeatureDates(processed.gateDates)
-      processed.winterFeeDates = getFeatureDates(processed.winterFeeDates)
-      processed.operationDates = getFeatureDates(processed.operationDates)
-      processed.reservationDates = getFeatureDates(processed.reservationDates)
-      processed.backcountryDates = getFeatureDates(processed.backcountryDates)
+      processed.gateDates = getFeatureDates(processed.gateDates);
+      processed.winterFeeDates = getFeatureDates(processed.winterFeeDates);
+      processed.operationDates = getFeatureDates(processed.operationDates);
+      processed.reservationDates = getFeatureDates(processed.reservationDates);
+      processed.backcountryDates = getFeatureDates(processed.backcountryDates);
 
       // Commented out dates are not currently used
       // Comment them back in if needed in the future
@@ -54,14 +54,14 @@ const preProcessParkFeatures = parkFeatures => {
         processed.reservationDates.length === 0 &&
         processed.winterFeeDates.length === 0
       ) {
-        processed.operationDates.push("Dates unavailable")
+        processed.operationDates.push("Dates unavailable");
       }
 
-      return processed
-    })
+      return processed;
+    });
 
-  return processedParkFeatures
-}
+  return processedParkFeatures;
+};
 
 /**
  * Groups park features by their type code (facilityCode or campingTypeCode)
@@ -73,19 +73,19 @@ const preProcessParkFeatures = parkFeatures => {
  * const grouped = groupParkFeaturesByType(features)
  * // Returns: { "RV": { parkFeatures: [{ typeCode: "RV", ... }] } }
  */
-const groupParkFeaturesByType = parkFeatures => {
-  const result = {}
-  const features = preProcessParkFeatures(parkFeatures)
+const groupParkFeaturesByType = (parkFeatures) => {
+  const result = {};
+  const features = preProcessParkFeatures(parkFeatures);
 
   for (const feature of features) {
-    const typeCode = feature.typeCode
+    const typeCode = feature.typeCode;
     if (!result[typeCode]) {
-      result[typeCode] = { parkFeatures: [] }
+      result[typeCode] = { parkFeatures: [] };
     }
-    result[typeCode].parkFeatures.push(feature)
+    result[typeCode].parkFeatures.push(feature);
   }
-  return result
-}
+  return result;
+};
 
 /**
  * Combines park camping data with camping types and park features into a unified structure
@@ -101,30 +101,30 @@ const groupParkFeaturesByType = parkFeatures => {
  * const combined = combineCampingTypes(campings, campingTypes, parkFeatures)
  */
 const combineCampingTypes = (campings, campingTypes, parkFeatures) => {
-  let arr = []
+  let arr = [];
   // Create a copy to avoid mutation
-  const obj = JSON.parse(JSON.stringify(parkFeatures))
+  const obj = JSON.parse(JSON.stringify(parkFeatures));
 
   // Filter the campings to include only active
-  const parkCampingTypes = campings.filter(camping => camping.isActive)
+  const parkCampingTypes = campings.filter((camping) => camping.isActive);
 
   // Add the parkCampingTypes to the common object
   for (const parkCampingType of parkCampingTypes) {
-    const campingTypeCode = parkCampingType.campingType?.campingTypeCode
-    if (!campingTypeCode) continue
+    const campingTypeCode = parkCampingType.campingType?.campingTypeCode;
+    if (!campingTypeCode) continue;
 
     if (!obj[campingTypeCode]) {
-      obj[campingTypeCode] = { parkFeatures: [] }
+      obj[campingTypeCode] = { parkFeatures: [] };
     }
-    obj[campingTypeCode] = { ...parkCampingType, ...obj[campingTypeCode] }
+    obj[campingTypeCode] = { ...parkCampingType, ...obj[campingTypeCode] };
   }
 
   // Add the campingTypes to the common object and convert it to an array
   for (const campingTypeCode in obj) {
-    const parkCampingType = obj[campingTypeCode]
+    const parkCampingType = obj[campingTypeCode];
     parkCampingType.campingType = campingTypes.find(
-      ct => ct.campingTypeCode === campingTypeCode
-    )
+      (ct) => ct.campingTypeCode === campingTypeCode,
+    );
 
     // Only include camping, not facilities
     if (parkCampingType.campingType) {
@@ -133,15 +133,15 @@ const combineCampingTypes = (campings, campingTypes, parkFeatures) => {
         parkCampingType.campingType.isActive ||
         parkCampingType.parkFeatures.length > 0
       ) {
-        arr.push(parkCampingType)
+        arr.push(parkCampingType);
       }
     }
   }
 
   return arr.sort((a, b) =>
-    a.campingType.campingTypeName.localeCompare(b.campingType.campingTypeName)
-  )
-}
+    a.campingType.campingTypeName.localeCompare(b.campingType.campingTypeName),
+  );
+};
 
 /**
  * Combines park facilities data with facility types and park features into a unified structure
@@ -157,30 +157,30 @@ const combineCampingTypes = (campings, campingTypes, parkFeatures) => {
  * const combined = combineFacilities(facilities, facilityTypes, parkFeatures)
  */
 const combineFacilities = (facilities, facilityTypes, parkFeatures) => {
-  let arr = []
+  let arr = [];
   // Create a copy to avoid mutation
-  const obj = JSON.parse(JSON.stringify(parkFeatures))
+  const obj = JSON.parse(JSON.stringify(parkFeatures));
 
   // Filter the facilities to include only active
-  const parkFacilities = facilities.filter(facility => facility.isActive)
+  const parkFacilities = facilities.filter((facility) => facility.isActive);
 
   // Add the parkFacilities to the common object
   for (const parkFacility of parkFacilities) {
-    const facilityCode = parkFacility.facilityType?.facilityCode
-    if (!facilityCode) continue
+    const facilityCode = parkFacility.facilityType?.facilityCode;
+    if (!facilityCode) continue;
 
     if (!obj[facilityCode]) {
-      obj[facilityCode] = { parkFeatures: [] }
+      obj[facilityCode] = { parkFeatures: [] };
     }
-    obj[facilityCode] = { ...parkFacility, ...obj[facilityCode] }
+    obj[facilityCode] = { ...parkFacility, ...obj[facilityCode] };
   }
 
   // Add the facilityTypes to the common object and convert it to an array
   for (const facilityCode in obj) {
-    const parkFacility = obj[facilityCode]
+    const parkFacility = obj[facilityCode];
     parkFacility.facilityType = facilityTypes.find(
-      f => f.facilityCode === facilityCode
-    )
+      (f) => f.facilityCode === facilityCode,
+    );
 
     // Only include facilities, not camping
     if (parkFacility.facilityType) {
@@ -189,15 +189,15 @@ const combineFacilities = (facilities, facilityTypes, parkFeatures) => {
         parkFacility.facilityType.isActive ||
         parkFacility.parkFeatures.length > 0
       ) {
-        arr.push(parkFacility)
+        arr.push(parkFacility);
       }
     }
   }
 
   return arr.sort((a, b) =>
-    a.facilityType.facilityName.localeCompare(b.facilityType.facilityName)
-  )
-}
+    a.facilityType.facilityName.localeCompare(b.facilityType.facilityName),
+  );
+};
 
 /**
  * Generates a display name for a park feature based on its area and feature name
@@ -227,22 +227,22 @@ const combineFacilities = (facilities, facilityTypes, parkFeatures) => {
  * })
  * // Returns: "Campground A: Site 1"
  */
-const getDisplayName = feature => {
+const getDisplayName = (feature) => {
   // If no park area, just display the feature name
   if (feature.parkArea == null) {
-    return feature.parkFeatureName || ""
+    return feature.parkFeatureName || "";
   }
 
   // If feature name is "All sites", just display the area name
   if (feature.parkFeatureName === "All sites") {
-    return feature.parkArea.parkAreaName || ""
+    return feature.parkArea.parkAreaName || "";
   }
 
   // Normal case: display both area and feature name
   return `${feature.parkArea?.parkAreaName || ""}: ${
     feature.parkFeatureName || ""
-  }`
-}
+  }`;
+};
 
 /**
  * Gets park gate data with fallback logic
@@ -252,24 +252,24 @@ const getDisplayName = feature => {
  * @param {Object} [feature.parkGate] - The park gate data from feature level
  * @returns {Object|null} The park gate data or null if none available
  */
-const getDisplayGate = feature => {
+const getDisplayGate = (feature) => {
   // If park area exists and has gate data, use area gate
   if (feature.parkArea?.parkGate) {
-    return feature.parkArea.parkGate
+    return feature.parkArea.parkGate;
   }
 
   // If no area gate but feature has gate data, use feature gate
   if (feature.parkGate) {
-    return feature.parkGate
+    return feature.parkGate;
   }
 
   // No gate data available
-  return null
-}
+  return null;
+};
 
 export {
   combineFacilities,
   combineCampingTypes,
   groupParkFeaturesByType,
   preProcessParkFeatures,
-}
+};

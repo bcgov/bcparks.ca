@@ -1,29 +1,48 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react"
-import Accordion from "react-bootstrap/Accordion"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import Accordion from "react-bootstrap/Accordion";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-import HtmlContent from "../htmlContent"
-import CustomToggle from "./customToggle"
-import AudioButton from "../audioButton"
-import { isNullOrWhiteSpace } from "../../utils/helpers"
-import { trackSnowplowEvent } from "../../utils/snowplowHelper"
-import "../../styles/cmsSnippets/parkInfoPage.scss"
+import HtmlContent from "../htmlContent";
+import CustomToggle from "./customToggle";
+import AudioButton from "../audioButton";
+import { isNullOrWhiteSpace } from "../../utils/helpers";
+import { trackSnowplowEvent } from "../../utils/snowplowHelper";
+import "../../styles/cmsSnippets/parkInfoPage.scss";
 
-export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion, audioClips, activeAudio, setActiveAudio }) => {
+export const AccordionList = ({
+  eventKey,
+  data,
+  openAccordions,
+  toggleAccordion,
+  audioClips,
+  activeAudio,
+  setActiveAudio,
+}) => {
   // Filter function for audio clips
-  const findAudioClipsByLocation = useCallback((location) => {
-    return audioClips?.find(audio => 
-      audio.displayLocation?.strapi_json_value?.includes(location) && audio.url
-    ) || null
-  }, [audioClips])
+  const findAudioClipsByLocation = useCallback(
+    (location) => {
+      return (
+        audioClips?.find(
+          (audio) =>
+            audio.displayLocation?.strapi_json_value?.includes(location) &&
+            audio.url,
+        ) || null
+      );
+    },
+    [audioClips],
+  );
   // Filtered audio clips
-  const heritageAudioClip = useMemo(() =>
-    findAudioClipsByLocation("heritage"), [findAudioClipsByLocation])
-  const historyAudioClip = useMemo(() =>
-    findAudioClipsByLocation("history"), [findAudioClipsByLocation])
+  const heritageAudioClip = useMemo(
+    () => findAudioClipsByLocation("heritage"),
+    [findAudioClipsByLocation],
+  );
+  const historyAudioClip = useMemo(
+    () => findAudioClipsByLocation("history"),
+    [findAudioClipsByLocation],
+  );
 
   return (
     <Accordion
@@ -36,14 +55,14 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion,
         handleClick={() => toggleAccordion(eventKey, data.title)}
       >
         <div className="d-flex align-items-center">
-          <HtmlContent className="accordion-header">
-            {data.title}
-          </HtmlContent>
+          <HtmlContent className="accordion-header">{data.title}</HtmlContent>
         </div>
         <div className="d-flex align-items-center">
-          {openAccordions[eventKey] ?
-            <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-          }
+          {openAccordions[eventKey] ? (
+            <FontAwesomeIcon icon={faChevronUp} />
+          ) : (
+            <FontAwesomeIcon icon={faChevronDown} />
+          )}
         </div>
       </CustomToggle>
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
@@ -70,91 +89,107 @@ export const AccordionList = ({ eventKey, data, openAccordions, toggleAccordion,
         </div>
       </Accordion.Collapse>
     </Accordion>
-  )
-}
+  );
+};
 
 export default function About({
-  parkType, conservation, culturalHeritage, history, wildlife, biogeoclimaticZones, terrestrialEcosections, marineEcosections, audioClips, activeAudio, setActiveAudio
+  parkType,
+  conservation,
+  culturalHeritage,
+  history,
+  wildlife,
+  biogeoclimaticZones,
+  terrestrialEcosections,
+  marineEcosections,
+  audioClips,
+  activeAudio,
+  setActiveAudio,
 }) {
   const dataList = [
-    { "title": "Cultural heritage", "code": "heritage", "description": culturalHeritage },
-    { "title": "History", "code": "history", "description": history },
-    { "title": "Conservation", "code": "conservation", "description": conservation },
-    { "title": "Wildlife", "code": "wildlife", "description": wildlife }
-  ].filter(data => data.description)
+    {
+      title: "Cultural heritage",
+      code: "heritage",
+      description: culturalHeritage,
+    },
+    { title: "History", code: "history", description: history },
+    { title: "Conservation", code: "conservation", description: conservation },
+    { title: "Wildlife", code: "wildlife", description: wildlife },
+  ].filter((data) => data.description);
 
-  const [hash, setHash] = useState("")
-  const [openAccordions, setOpenAccordions] = useState({})
+  const [hash, setHash] = useState("");
+  const [openAccordions, setOpenAccordions] = useState({});
 
   const toggleAccordion = (index, accordionName) => {
     setOpenAccordions((prev) => ({
       ...prev,
       [index]: !prev[index],
-    }))
+    }));
     trackSnowplowEvent(
       openAccordions[index] ? "accordion_close" : "accordion_open",
       null,
       null,
       null,
       accordionName,
-      {}
-    )
-  }
+      {},
+    );
+  };
 
   const toggleExpandAll = () => {
-    const newExpandAll = !allExpanded
+    const newExpandAll = !allExpanded;
     const newOpenAccordions = dataList.reduce((acc, _, index) => {
-      acc[index] = newExpandAll
-      return acc
-    }, {})
-    setOpenAccordions(newOpenAccordions)
-  }
+      acc[index] = newExpandAll;
+      return acc;
+    }, {});
+    setOpenAccordions(newOpenAccordions);
+  };
 
   const allExpanded = useMemo(() => {
-    return dataList.length > 0 &&
+    return (
+      dataList.length > 0 &&
       Object.keys(openAccordions).length === dataList.length &&
       Object.values(openAccordions).every((isOpen) => isOpen)
-  }, [openAccordions, dataList.length])
+    );
+  }, [openAccordions, dataList.length]);
 
   const checkHash = useCallback(() => {
     // Check hash in url
     // if we find a matching activityCode, open that activity accordion
-    let h = ""
-    let idx = 0
+    let h = "";
+    let idx = 0;
     if (typeof window !== "undefined") {
-      h = window.location.hash
+      h = window.location.hash;
       if (h !== undefined && h !== hash) {
-        dataList.forEach(data => {
+        dataList.forEach((data) => {
           if (h === "#" + data.code) {
             if (!openAccordions[idx]) {
               setOpenAccordions((prev) => ({
                 ...prev,
                 [idx]: true,
-              }))
+              }));
             }
           }
-          idx++
-        })
-        setHash(h)
+          idx++;
+        });
+        setHash(h);
       }
     }
-  }, [dataList, hash, openAccordions])
+  }, [dataList, hash, openAccordions]);
 
   useEffect(() => {
     window.addEventListener("hashchange", function (e) {
-      checkHash()
-    })
-    checkHash()
-  }, [dataList, checkHash])
+      checkHash();
+    });
+    checkHash();
+  }, [dataList, checkHash]);
 
   useEffect(() => {
     if (dataList.length === 1) {
-      setOpenAccordions({ 0: true })
+      setOpenAccordions({ 0: true });
     }
-  }, [dataList.length])
+  }, [dataList.length]);
 
   return (
-    <div id="about-this-park" className="anchor-link" >
+    <div id="about-this-park" className="anchor-link">
       {/* id="park-about-container" should be removed once it's removed from the contents */}
       <span id="park-about-container"></span>
       {/* id="park-nature-and-culture-container" should be removed once it's removed from the contents */}
@@ -170,7 +205,9 @@ export default function About({
             {biogeoclimaticZones.map((bioZone, index) => (
               <span key={index}>
                 {bioZone.zone}
-                {biogeoclimaticZones.length > 1 && index + 1 !== biogeoclimaticZones.length && (", ")}
+                {biogeoclimaticZones.length > 1 &&
+                  index + 1 !== biogeoclimaticZones.length &&
+                  ", "}
               </span>
             ))}
           </p>
@@ -183,7 +220,9 @@ export default function About({
             {terrestrialEcosections.map((terreSection, index) => (
               <span key={index}>
                 {terreSection.terrestrialEcosection}
-                {terrestrialEcosections.length > 1 && index + 1 !== terrestrialEcosections.length && (",")}
+                {terrestrialEcosections.length > 1 &&
+                  index + 1 !== terrestrialEcosections.length &&
+                  ","}
               </span>
             ))}
           </p>
@@ -196,15 +235,17 @@ export default function About({
             {marineEcosections.map((marineSection, index) => (
               <span key={index}>
                 {marineSection.marineEcosection}
-                {marineEcosections.length > 1 && index + 1 !== marineEcosections.length && (",")}
+                {marineEcosections.length > 1 &&
+                  index + 1 !== marineEcosections.length &&
+                  ","}
               </span>
             ))}
           </p>
         )}
       </div>
-      {dataList.length > 0 && (
+      {dataList.length > 0 &&
         // if parkType is ecological reserve, display conservation description without accordion
-        parkType === "ecological reserve" ? (
+        (parkType === "ecological reserve" ? (
           <HtmlContent>{dataList[0].description}</HtmlContent>
         ) : (
           <Row>
@@ -212,14 +253,24 @@ export default function About({
               {dataList.length > 1 && (
                 <button
                   onClick={toggleExpandAll}
-                  aria-label={allExpanded ? "Collapse all about this park" : "Expand all about this park"}
+                  aria-label={
+                    allExpanded
+                      ? "Collapse all about this park"
+                      : "Expand all about this park"
+                  }
                   className="btn btn-link expand-link expand-icon"
                 >
-                  {allExpanded ?
-                    <>Collapse all about this park <FontAwesomeIcon icon={faChevronUp} /></>
-                    :
-                    <>Expand all about this park <FontAwesomeIcon icon={faChevronDown} /></>
-                  }
+                  {allExpanded ? (
+                    <>
+                      Collapse all about this park{" "}
+                      <FontAwesomeIcon icon={faChevronUp} />
+                    </>
+                  ) : (
+                    <>
+                      Expand all about this park{" "}
+                      <FontAwesomeIcon icon={faChevronDown} />
+                    </>
+                  )}
                 </button>
               )}
               {dataList.map((data, index) => (
@@ -236,8 +287,7 @@ export default function About({
               ))}
             </Col>
           </Row>
-        )
-      )}
+        ))}
     </div>
-  )
+  );
 }

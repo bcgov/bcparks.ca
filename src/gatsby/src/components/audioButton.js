@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faVolumeHigh,
   faChevronUp,
   faChevronDown,
   faXmark,
-} from "@fortawesome/free-solid-svg-icons"
+} from "@fortawesome/free-solid-svg-icons";
 
-import HtmlContent from "./htmlContent"
-import AudioPlayer from "./audioPlayer"
-import "../styles/audioButton.scss"
+import HtmlContent from "./htmlContent";
+import AudioPlayer from "./audioPlayer";
+import "../styles/audioButton.scss";
 
 function Credit({ audio }) {
   const hasCredit =
     audio?.languageName &&
     audio?.speakerName &&
     audio?.speakerTitle &&
-    audio?.firstNationName
+    audio?.firstNationName;
 
   return (
     <div className="credit">
@@ -34,60 +34,65 @@ function Credit({ audio }) {
         </p>
       )}
     </div>
-  )
+  );
 }
 
-export default function AudioButton({ audio, location, activeAudio, setActiveAudio }) {
+export default function AudioButton({
+  audio,
+  location,
+  activeAudio,
+  setActiveAudio,
+}) {
   // refs and states
-  const [trackSrc, setTrackSrc] = useState("")
-  const [expanded, setExpanded] = useState(false)
-  const audioId = location + "-" + audio.id
-  const isActiveAudio = activeAudio === audioId
-  const hasTranscript = audio?.transcript.data?.transcript.length > 0
-  const hasDescription = audio?.description.data?.description.length > 0
+  const [trackSrc, setTrackSrc] = useState("");
+  const [expanded, setExpanded] = useState(false);
+  const audioId = location + "-" + audio.id;
+  const isActiveAudio = activeAudio === audioId;
+  const hasTranscript = audio?.transcript.data?.transcript.length > 0;
+  const hasDescription = audio?.description.data?.description.length > 0;
 
   // functions
-  const stripHtmlTags = html => {
-    const div = document.createElement("div")
-    div.innerHTML = html
-    return div.textContent || div.innerText || ""
-  }
+  const stripHtmlTags = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+  };
   const createVttContent = (transcript, duration) => {
-    const plainTextTranscript = stripHtmlTags(transcript)
-    return `WEBVTT\n\n1\n00:00:00.000 --> ${duration}\n${plainTextTranscript}`
-  }
-  const createBlobUrl = content => {
-    const blob = new Blob([content], { type: "text/vtt" })
-    return URL.createObjectURL(blob)
-  }
+    const plainTextTranscript = stripHtmlTags(transcript);
+    return `WEBVTT\n\n1\n00:00:00.000 --> ${duration}\n${plainTextTranscript}`;
+  };
+  const createBlobUrl = (content) => {
+    const blob = new Blob([content], { type: "text/vtt" });
+    return URL.createObjectURL(blob);
+  };
   // format duration in seconds to HH:MM:SS:mmm
   // e.g. 14.689... > 00:00:14.690
-  const formatDuration = time => {
-    const minutes = Math.floor(time / 60)
-    const seconds = time % 60
+  const formatDuration = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
     return `00:${minutes.toString().padStart(2, "0")}:
-      ${seconds.toFixed(3).padStart(6, "0")}`
-  }
+      ${seconds.toFixed(3).padStart(6, "0")}`;
+  };
 
   // effects
   useEffect(() => {
     if (hasTranscript && audio?.url) {
-      const audioElement = new Audio(audio.url)
+      const audioElement = new Audio(audio.url);
       audioElement.addEventListener("loadedmetadata", () => {
-        const duration = formatDuration(audioElement.duration)
+        const duration = formatDuration(audioElement.duration);
         const vttContent = createVttContent(
           audio.transcript.data.transcript,
-          duration
-        )
-        const url = createBlobUrl(vttContent)
-        setTrackSrc(url)
+          duration,
+        );
+        const url = createBlobUrl(vttContent);
+        setTrackSrc(url);
         return () => {
-          URL.revokeObjectURL(url)
-        }
-      })
+          URL.revokeObjectURL(url);
+        };
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasTranscript, audio?.url])
+  }, [hasTranscript, audio?.url]);
 
   return (
     <>
@@ -181,5 +186,5 @@ export default function AudioButton({ audio, location, activeAudio, setActiveAud
         </div>
       )}
     </>
-  )
+  );
 }

@@ -42,7 +42,7 @@
     .footer-menu-list {
       font-size: 1.05rem;
       margin-bottom: 0;
-  
+
       .footer-menu-divider {
         margin: 1rem 0;
         height: 1px;
@@ -55,7 +55,8 @@
   a {
     color: $colorWhite;
     text-decoration: none;
-    &:hover, &:focus-visible {
+    &:hover,
+    &:focus-visible {
       text-decoration: underline;
     }
     &:focus-visible {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "../../styles/advisories/advisoryDate.scss";
 
 const AdvisoryDate = ({
@@ -11,12 +11,12 @@ const AdvisoryDate = ({
   advisoryDate,
   hasUpdatedDateDisplay,
   updatedDate,
-  hasDisplayedDate
+  hasDisplayedDate,
 }) => {
   return (
     <>
-      {hasEffectiveDateDisplay && (
-        hasEndDateDisplay ? (
+      {hasEffectiveDateDisplay &&
+        (hasEndDateDisplay ? (
           <div className="date">
             <small>In effect</small>
             <small>
@@ -29,20 +29,25 @@ const AdvisoryDate = ({
         ) : (
           <div className="date">
             <small>Starts</small>
-            <small><b>{effectiveDate}</b></small>
+            <small>
+              <b>{effectiveDate}</b>
+            </small>
           </div>
-        )
-      )}
+        ))}
       {hasAdvisoryDateDisplay && (
         <div className="date">
           <small>Posted</small>
-          <small><b>{advisoryDate}</b></small>
+          <small>
+            <b>{advisoryDate}</b>
+          </small>
         </div>
       )}
       {hasUpdatedDateDisplay && (
         <div className="date">
           <small>Updated</small>
-          <small><b>{updatedDate}</b></small>
+          <small>
+            <b>{updatedDate}</b>
+          </small>
         </div>
       )}
     </>

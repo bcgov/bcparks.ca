@@ -1,6 +1,6 @@
-import React from "react"
+import React from "react";
 
-import "../../styles/pageContent/pageMenu.scss"
+import "../../styles/pageContent/pageMenu.scss";
 
 export default function PageMenu({ pageSections, activeSection, menuStyle }) {
   return (
@@ -10,8 +10,8 @@ export default function PageMenu({ pageSections, activeSection, menuStyle }) {
       </div>
       <ul>
         {pageSections
-          .filter(section => section.visible)
-          .map(section => (
+          .filter((section) => section.visible)
+          .map((section) => (
             <li key={section.sectionIndex}>
               {menuStyle === "nav" && (
                 <a
@@ -31,5 +31,5 @@ export default function PageMenu({ pageSections, activeSection, menuStyle }) {
           ))}
       </ul>
     </div>
-  )
+  );
 }

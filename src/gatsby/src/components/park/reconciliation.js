@@ -1,6 +1,6 @@
-import React from "react"
+import React from "react";
 
-import HtmlContent from "../htmlContent"
+import HtmlContent from "../htmlContent";
 
 export default function Reconciliation({ data }) {
   return (
@@ -11,5 +11,5 @@ export default function Reconciliation({ data }) {
       </h2>
       <HtmlContent>{data}</HtmlContent>
     </div>
-  )
+  );
 }

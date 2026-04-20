@@ -8,11 +8,11 @@
   .home-advisory-buttons {
     display: flex;
     margin-top: 20px;
-    
+
     @media screen and (min-width: $lgBreakpoint) {
       flex-grow: 0;
       justify-content: center;
-      padding: 0 20px 0 20px;    
+      padding: 0 20px 0 20px;
     }
     @media screen and (max-width: $lgBreakpoint) {
       flex-grow: 1;
@@ -23,9 +23,10 @@
     a.btn {
       width: 100%;
       &.btn-primary {
-        &:hover, &:focus-visible {
+        &:hover,
+        &:focus-visible {
           color: $colorBlue !important;
-          background-color: $colorGold !important; 
+          background-color: $colorGold !important;
           .text-white {
             color: $colorBlue !important;
           }
@@ -55,14 +56,14 @@
   }
 
   @media screen and (max-width: $lgBreakpoint) {
-    padding:20px;
+    padding: 20px;
   }
 }
 
 .home-content-width-override {
   max-width: 1100px !important;
-  margin:0px auto;
-  padding:0px 24px;
+  margin: 0px auto;
+  padding: 0px 24px;
 
   @media screen and (max-width: $lgBreakpoint) {
     padding: 0px;
@@ -86,7 +87,7 @@
     text-align: center;
     padding: 24px;
     @media screen and (min-width: $mdBreakpoint) {
-      text-align: left;      
+      text-align: left;
       padding: 40px;
     }
     @media screen and (min-width: $lgBreakpoint) {
@@ -96,8 +97,8 @@
       font-size: 1.5rem;
       margin-bottom: 0;
     }
-    .parks-search-field{
-      display: flex; 
+    .parks-search-field {
+      display: flex;
       flex-grow: 1;
       flex-direction: column;
       margin-top: 24px;
@@ -113,7 +114,8 @@
           margin: 0 24px;
         }
       }
-      .park-search-typeahead, .city-search-typeahead {
+      .park-search-typeahead,
+      .city-search-typeahead {
         width: 100%;
         @media screen and (min-width: $mdBreakpoint) {
           width: 300px;
