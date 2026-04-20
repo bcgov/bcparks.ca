@@ -1,8 +1,8 @@
-version: '3'
+version: "3"
 name: bcparks-website
 services:
   postgres:
-    container_name: postgres-docker  
+    container_name: postgres-docker
     image: postgres
     environment:
       - POSTGRES_PASSWORD=postgres
@@ -15,7 +15,7 @@ services:
     command: >
       /bin/sh -c "/usr/share/opensearch/bin/opensearch-plugin list | grep -q analysis-icu 
       || /usr/share/opensearch/bin/opensearch-plugin install analysis-icu; 
-      /usr/share/opensearch/opensearch-docker-entrypoint.sh"    
+      /usr/share/opensearch/opensearch-docker-entrypoint.sh"
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping

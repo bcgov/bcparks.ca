@@ -26,10 +26,7 @@
     },
     "colour": {
       "type": "enumeration",
-      "enum": [
-        "Red",
-        "Yellow"
-      ],
+      "enum": ["Red", "Yellow"],
       "required": true
     },
     "description": {

@@ -24,10 +24,7 @@
     },
     "Template": {
       "type": "enumeration",
-      "enum": [
-        "staticLanding1",
-        "staticContent1"
-      ],
+      "enum": ["staticLanding1", "staticContent1"],
       "required": true
     },
     "PageHeader": {

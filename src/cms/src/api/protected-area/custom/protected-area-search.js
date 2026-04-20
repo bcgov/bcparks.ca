@@ -1,16 +1,16 @@
 "use strict";
 
-
 const searchParks = async function (ctx) {
-
   const filters = parseSearchFilters(ctx.query);
   const offset = parseSearchOffset(ctx.query);
 
   try {
-    const resp = await strapi.service("api::protected-area.search").searchParks({
-      ...filters,
-      ...offset,
-    });
+    const resp = await strapi
+      .service("api::protected-area.search")
+      .searchParks({
+        ...filters,
+        ...offset,
+      });
 
     const result = resp?.body?.hits;
 
@@ -18,9 +18,13 @@ const searchParks = async function (ctx) {
       const filteredMatches = result.hits;
 
       const data = filteredMatches.map((data) => {
-        const parkResult = data['_source'];
-        if (!isNaN(filters.latitude) && !isNaN(filters.longitude) && data["sort"]?.length > 0) {
-          parkResult.distance = Math.round(data["sort"][0] * 1000) / 1000
+        const parkResult = data["_source"];
+        if (
+          !isNaN(filters.latitude) &&
+          !isNaN(filters.longitude) &&
+          data["sort"]?.length > 0
+        ) {
+          parkResult.distance = Math.round(data["sort"][0] * 1000) / 1000;
         }
         return parkResult;
       });
@@ -31,40 +35,44 @@ const searchParks = async function (ctx) {
           pagination: {
             start: offset.offset,
             limit: offset.limit,
-            total: result.total?.value || 0
+            total: result.total?.value || 0,
           },
-          aggregations: offset.limit === 0
-            ? {}
-            : cleanUpAggregations(resp?.body?.aggregations)
-        }
+          aggregations:
+            offset.limit === 0
+              ? {}
+              : cleanUpAggregations(resp?.body?.aggregations),
+        },
       };
-    }
-    else {
+    } else {
       ctx.body = {
         data: [],
         meta: {
           pagination: {
             start: 1,
             limit: 10,
-            total: 0
+            total: 0,
           },
-          aggregations: {}
-        }
-      }
+          aggregations: {},
+        },
+      };
     }
   } catch (err) {
     ctx.response.status = 500;
-    ctx.body = "An error was encountered while processing the search request."
-    console.log('An error was encountered while processing the search request.')
+    ctx.body = "An error was encountered while processing the search request.";
+    console.log(
+      "An error was encountered while processing the search request."
+    );
     console.log(err);
   }
 };
 
 const parkAutocomplete = async function (ctx) {
   try {
-    const resp = await strapi.service("api::protected-area.search").parkAutocomplete({
-      searchText: (ctx.query.queryText || '').trim(),
-    });
+    const resp = await strapi
+      .service("api::protected-area.search")
+      .parkAutocomplete({
+        searchText: (ctx.query.queryText || "").trim(),
+      });
 
     const result = resp?.body?.hits;
 
@@ -72,22 +80,23 @@ const parkAutocomplete = async function (ctx) {
       const filteredMatches = result.hits;
 
       const data = filteredMatches.map((data) => {
-        return data['_source'];
+        return data["_source"];
       });
 
       return {
         data: data,
       };
-    }
-    else {
+    } else {
       ctx.body = {
         data: [],
-      }
+      };
     }
   } catch (err) {
     ctx.response.status = 500;
-    ctx.body = "An error was encountered while processing the search request."
-    console.log(`An error was encountered by search autocomplete: ${ctx.query.queryText}`)
+    ctx.body = "An error was encountered while processing the search request.";
+    console.log(
+      `An error was encountered by search autocomplete: ${ctx.query.queryText}`
+    );
     console.log(err);
   }
 };
@@ -131,18 +140,14 @@ function parseSearchFilters(query) {
   }
   if (query.areas) {
     if (typeof query.areas === "object") {
-      areaNumbers = query.areas.map((area) =>
-        parseInt(area, 10)
-      );
+      areaNumbers = query.areas.map((area) => parseInt(area, 10));
     } else {
       areaNumbers = [parseInt(query.areas, 10)];
     }
   }
   if (query.campings) {
     if (typeof query.campings === "object") {
-      campingNumbers = query.campings.map((camping) =>
-        parseInt(camping, 10)
-      );
+      campingNumbers = query.campings.map((camping) => parseInt(camping, 10));
     } else {
       campingNumbers = [parseInt(query.campings, 10)];
     }
@@ -161,7 +166,7 @@ function parseSearchFilters(query) {
     }
   }
   if (query.radius) {
-    radius = parseInt(query.radius)
+    radius = parseInt(query.radius);
   }
 
   return {
@@ -176,7 +181,7 @@ function parseSearchFilters(query) {
     campingNumbers,
     latitude,
     longitude,
-    radius
+    radius,
   };
 }
 
@@ -184,7 +189,7 @@ function parseSearchOffset(query) {
   const offset = parseInt(query._start, 10) || 0;
   let limit = parseInt(query._limit, 10);
   if (!limit && limit !== 0) {
-    limit = 10
+    limit = 10;
   }
   return {
     limit,
@@ -205,6 +210,5 @@ function cleanUpAggregations(aggs) {
 
 module.exports = {
   parkAutocomplete,
-  searchParks
+  searchParks,
 };
-

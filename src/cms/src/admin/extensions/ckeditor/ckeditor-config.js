@@ -82,7 +82,7 @@ export const registerCKEditor = async (_app) => {
       balloonToolbar: (
         defaultHtmlPreset.editorConfig.balloonToolbar || []
       ).filter(
-        (item) => item !== "fontColor" && item !== "fontBackgroundColor",
+        (item) => item !== "fontColor" && item !== "fontBackgroundColor"
       ),
 
       toolbar: [

@@ -22,7 +22,7 @@ module.exports = ({ strapi }) => ({
       } catch (error) {
         strapi.log.error(
           `Error deleting queued task ${task.documentId}:`,
-          error,
+          error
         );
       }
     }

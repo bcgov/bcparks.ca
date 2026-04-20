@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require("fs");
 const { setupStrapi, cleanupStrapi } = require("./helpers/strapi");
 
 beforeAll(async () => {

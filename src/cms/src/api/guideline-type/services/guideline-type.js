@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /**
  * guideline-type service
  */
 
-const { createCoreService } = require('@strapi/strapi').factories;
+const { createCoreService } = require("@strapi/strapi").factories;
 
-module.exports = createCoreService('api::guideline-type.guideline-type');
+module.exports = createCoreService("api::guideline-type.guideline-type");

@@ -172,7 +172,7 @@ async function getExistingRelatedDocIdsByStatus({
   } catch (error) {
     strapi.log.warn(
       `Failed to fetch existing relations for ${mainDocumentUid} documentId ${documentId} and relation field ${relationFieldName}`,
-      { error },
+      { error }
     );
   }
 

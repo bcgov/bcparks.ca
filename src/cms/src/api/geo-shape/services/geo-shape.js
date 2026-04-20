@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /**
  * geo-shape service
  */
 
-const { createCoreService } = require('@strapi/strapi').factories;
+const { createCoreService } = require("@strapi/strapi").factories;
 
-module.exports = createCoreService('api::geo-shape.geo-shape');
+module.exports = createCoreService("api::geo-shape.geo-shape");

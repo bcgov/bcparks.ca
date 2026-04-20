@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /**
  * emergency-alert service
  */
 
-const { createCoreService } = require('@strapi/strapi').factories;
+const { createCoreService } = require("@strapi/strapi").factories;
 
-module.exports = createCoreService('api::emergency-alert.emergency-alert');
+module.exports = createCoreService("api::emergency-alert.emergency-alert");

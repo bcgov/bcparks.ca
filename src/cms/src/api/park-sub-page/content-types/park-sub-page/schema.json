@@ -36,10 +36,7 @@
     },
     "content": {
       "type": "dynamiczone",
-      "components": [
-        "parks.html-area",
-        "parks.page-section"
-      ]
+      "components": ["parks.html-area", "parks.page-section"]
     },
     "protectedArea": {
       "type": "relation",

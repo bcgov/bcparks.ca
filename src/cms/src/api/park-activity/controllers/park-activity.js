@@ -13,10 +13,12 @@ module.exports = createCoreController(
       const cachePlugin = strapi.plugins["rest-cache"];
       if (cachePlugin) {
         // clear the redis rest-cache when updates are made from the staff portal
-        await cachePlugin.services.cacheStore.clearByUid('api::protected-area.protected-area')
+        await cachePlugin.services.cacheStore.clearByUid(
+          "api::protected-area.protected-area"
+        );
       }
       const response = await super.update(ctx);
       return response;
-    }
+    },
   })
 );

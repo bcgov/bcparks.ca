@@ -1,18 +1,27 @@
 {
   "name": "backend",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
   "description": "BC Parks CMS",
   "scripts": {
-    "develop": "strapi develop",
-    "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi",
-    "test": "jest --forceExit --detectOpenHandles",
-    "lint": "eslint ./ && prettier --check .",
+    "develop": "strapi develop",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "loaddates": "node scripts/refresh-dates.js"
+    "lint": "eslint ./ && prettier --check .",
+    "loaddates": "node scripts/refresh-dates.js",
+    "start": "strapi start",
+    "strapi": "strapi",
+    "test": "jest --forceExit --detectOpenHandles"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      ".tmp",
+      ".cache"
+    ],
+    "testTimeout": 60000
   },
   "dependencies": {
     "@_sh/ckeditor5-font-with-picker": "0.0.1",
@@ -36,23 +45,14 @@
     "strapi-plugin-multi-select": "^2.1.1",
     "styled-components": "^6.3.12"
   },
-  "engines": {
-    "node": "^20.0.0 || ^22.0.0",
-    "npm": ">=6.0.0"
-  },
   "devDependencies": {
     "better-sqlite3": "^11.10.0",
     "jest": "^29.7.0",
     "koa": "^2.15.2",
     "prettier": "^3.8.2"
   },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      ".tmp",
-      ".cache"
-    ],
-    "testEnvironment": "node",
-    "testTimeout": 60000
+  "engines": {
+    "node": "^20.0.0 || ^22.0.0",
+    "npm": ">=6.0.0"
   }
 }

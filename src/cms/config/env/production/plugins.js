@@ -17,6 +17,6 @@ module.exports = ({ env }) => ({
       breakpoints: {
         small: 720,
       },
-    }
+    },
   },
 });

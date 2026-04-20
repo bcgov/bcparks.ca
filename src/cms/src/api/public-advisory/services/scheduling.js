@@ -27,7 +27,7 @@ module.exports = ({ strapi }) => ({
       // delete advisories - public advisory table
       advisoryToUnpublish.forEach(async (advisory) => {
         strapi.log.info(
-          `unpublishing public-advisory [advisoryNumber:${advisory.advisoryNumber}]`,
+          `unpublishing public-advisory [advisoryNumber:${advisory.advisoryNumber}]`
         );
         await strapi
           .documents("api::public-advisory.public-advisory")
@@ -43,13 +43,13 @@ module.exports = ({ strapi }) => ({
               "Expired advisory removed",
               "An expired advisory was removed",
               advisory.advisoryNumber,
-              "public-advisory-audit::services::scheduling::expire()",
+              "public-advisory-audit::services::scheduling::expire()"
             );
           })
           .catch((error) => {
             strapi.log.error(
               `error updating public-advisory #${advisory.advisoryNumber}`,
-              error,
+              error
             );
           });
       });
@@ -85,7 +85,7 @@ module.exports = ({ strapi }) => ({
             .catch((error) => {
               strapi.log.error(
                 `error updating public-advisory-audit #${advisory.advisoryNumber}`,
-                error,
+                error
               );
             });
         }
@@ -137,13 +137,13 @@ module.exports = ({ strapi }) => ({
               "Scheduled advisory posted",
               "A scheduled advisory was posted",
               advisory.advisoryNumber,
-              "public-advisory-audit::services::scheduling::publish()",
+              "public-advisory-audit::services::scheduling::publish()"
             );
           })
           .catch((error) => {
             strapi.log.error(
               `error updating public-advisory-audit #${advisory.advisoryNumber}`,
-              error,
+              error
             );
           });
       });
@@ -156,13 +156,13 @@ module.exports = ({ strapi }) => ({
     if (Object.keys(advisoryStatusMap).length > 0) {
       const today = new Date();
       const nextWeek = new Date(
-        today.setTime(today.getTime() + 7 * 24 * 60 * 60 * 1000),
+        today.setTime(today.getTime() + 7 * 24 * 60 * 60 * 1000)
       );
       const rangeStart = new Date(
-        nextWeek.setTime(nextWeek.getTime() - 60 * 1000),
+        nextWeek.setTime(nextWeek.getTime() - 60 * 1000)
       ).toISOString();
       const rangeEnd = new Date(
-        nextWeek.setTime(nextWeek.getTime() + 120 * 1000),
+        nextWeek.setTime(nextWeek.getTime() + 120 * 1000)
       ).toISOString();
       const expiringSoon = await strapi
         .documents("api::public-advisory-audit.public-advisory-audit")
@@ -186,13 +186,13 @@ module.exports = ({ strapi }) => ({
         });
       expiringSoon.forEach(async (advisory) => {
         strapi.log.info(
-          `advisory expiring soon [advisoryNumber:${advisory.advisoryNumber}]`,
+          `advisory expiring soon [advisoryNumber:${advisory.advisoryNumber}]`
         );
         await queueAdvisoryEmail(
           "Advisory expiring soon",
           "This advisory will be expiring in one week",
           advisory.advisoryNumber,
-          "public-advisory-audit::services::scheduling::expiringSoon()",
+          "public-advisory-audit::services::scheduling::expiringSoon()"
         );
       });
       return expiringSoon.length;
@@ -211,14 +211,14 @@ module.exports = ({ strapi }) => ({
         const today = new Date();
         const reminderDate = new Date(
           today.setTime(
-            today.getTime() + reminder.daysBefore * 24 * 60 * 60 * 1000,
-          ),
+            today.getTime() + reminder.daysBefore * 24 * 60 * 60 * 1000
+          )
         );
         const rangeStart = new Date(
-          reminderDate.setTime(reminderDate.getTime() - 60 * 1000),
+          reminderDate.setTime(reminderDate.getTime() - 60 * 1000)
         ).toISOString();
         const rangeEnd = new Date(
-          reminderDate.setTime(reminderDate.getTime() + 120 * 1000),
+          reminderDate.setTime(reminderDate.getTime() + 120 * 1000)
         ).toISOString();
         const publishingSoon = await strapi
           .documents("api::public-advisory-audit.public-advisory-audit")
@@ -242,13 +242,13 @@ module.exports = ({ strapi }) => ({
           });
         publishingSoon.forEach(async (advisory) => {
           strapi.log.info(
-            `advisory going live soon [advisoryNumber:${advisory.advisoryNumber}]`,
+            `advisory going live soon [advisoryNumber:${advisory.advisoryNumber}]`
           );
           await queueAdvisoryEmail(
             "Advisory going live soon",
             reminder.message,
             advisory.advisoryNumber,
-            "public-advisory-audit::services::scheduling::publishingSoon()",
+            "public-advisory-audit::services::scheduling::publishingSoon()"
           );
         });
         totalPublishingSoon += publishingSoon.length;

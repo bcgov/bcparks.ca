@@ -18,15 +18,15 @@ module.exports = createCoreController(
       } catch (error) {
         return ctx.internalServerError(
           "Error in service queued-task:deleteMany()",
-          error.message,
+          error.message
         );
       }
       ctx.send(
         {
           message: `Deleted ${result.count} items from queued-tasks`,
         },
-        201,
+        201
       );
     },
-  }),
+  })
 );

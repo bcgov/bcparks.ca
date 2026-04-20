@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /**
  * camping-type controller
  */
 
-const { createCoreController } = require('@strapi/strapi').factories;
+const { createCoreController } = require("@strapi/strapi").factories;
 
-module.exports = createCoreController('api::camping-type.camping-type');
+module.exports = createCoreController("api::camping-type.camping-type");

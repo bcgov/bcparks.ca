@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /**
  * park-contact service
  */
 
-const { createCoreService } = require('@strapi/strapi').factories;
+const { createCoreService } = require("@strapi/strapi").factories;
 
-module.exports = createCoreService('api::park-contact.park-contact');
+module.exports = createCoreService("api::park-contact.park-contact");

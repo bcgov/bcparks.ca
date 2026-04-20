@@ -55,7 +55,7 @@ module.exports = () => {
     }
 
     strapi.log.info(
-      `searchIndexingMiddleware ${context.uid}-${context.action}`,
+      `searchIndexingMiddleware ${context.uid}-${context.action}`
     );
 
     // Handle protectedAreas and parkPhotos
@@ -100,7 +100,7 @@ module.exports = () => {
       await batchQueueParks(
         Array.from(impactedParks),
         context.uid,
-        context.action,
+        context.action
       );
 
       return result;

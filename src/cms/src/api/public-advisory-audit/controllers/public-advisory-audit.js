@@ -28,5 +28,5 @@ module.exports = createCoreController(
 
       return this.sanitizeOutput(entities, ctx);
     },
-  }),
+  })
 );

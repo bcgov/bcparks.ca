@@ -1,11 +1,10 @@
-'use strict';
+"use strict";
 
 /**
  * public advisory search service
  */
 
 module.exports = ({ strapi }) => ({
-
   search: async (query) => {
     query = buildQuery(query);
 
@@ -19,13 +18,17 @@ module.exports = ({ strapi }) => ({
 
     query.sort = ["advisoryDate:DESC"];
 
-    const results = await strapi.documents("api::public-advisory.public-advisory").findMany(query);
+    const results = await strapi
+      .documents("api::public-advisory.public-advisory")
+      .findMany(query);
     return { results: results };
   },
   countSearch: async (query) => {
     query = buildQuery(query);
     query.fields = ["id"];
-    const results = await strapi.documents("api::public-advisory.public-advisory").findMany(query);
+    const results = await strapi
+      .documents("api::public-advisory.public-advisory")
+      .findMany(query);
     return results.length;
   },
 });
@@ -39,24 +42,32 @@ const buildQuery = function (query) {
       textSearch = {
         $or: [
           { title: { $containsi: query.queryText } },
-          { description: { $containsi: query.queryText } }
-        ]
+          { description: { $containsi: query.queryText } },
+        ],
       };
     } else if (query._searchType === "park") {
-      textSearch = { protectedAreas: { protectedAreaName: { $containsi: query.queryText } } };
+      textSearch = {
+        protectedAreas: { protectedAreaName: { $containsi: query.queryText } },
+      };
     } else {
       textSearch = {
         $or: [
           { title: { $containsi: query.queryText } },
           { description: { $containsi: query.queryText } },
-          { protectedAreas: { protectedAreaName: { $containsi: query.queryText } } }
-        ]
+          {
+            protectedAreas: {
+              protectedAreaName: { $containsi: query.queryText },
+            },
+          },
+        ],
       };
     }
   }
 
   if (query._eventType && query._eventType.length > 0) {
-    typeSearch = { eventType: { eventType: { $startsWith: query._eventType } } };
+    typeSearch = {
+      eventType: { eventType: { $startsWith: query._eventType } },
+    };
   }
 
   query.status = "published";
@@ -68,13 +79,13 @@ const buildQuery = function (query) {
         {
           protectedAreas: {
             publishedAt: { $null: false },
-            isDisplayed: { $eq: true }
-          }
+            isDisplayed: { $eq: true },
+          },
         },
         ...[typeSearch],
-        ...[textSearch]
-      ]
-    }
+        ...[textSearch],
+      ],
+    },
   };
 
   query.populate = {
@@ -87,23 +98,35 @@ const buildQuery = function (query) {
     links: true,
     managementAreas: true,
     protectedAreas: {
-      fields: ["protectedAreaName", "slug", "isDisplayed", "publishedAt", "orcs"],
+      fields: [
+        "protectedAreaName",
+        "slug",
+        "isDisplayed",
+        "publishedAt",
+        "orcs",
+      ],
       filters: {
         publishedAt: { $null: false },
-        isDisplayed: { $eq: true }
-      }
+        isDisplayed: { $eq: true },
+      },
     },
     regions: true,
     sections: true,
     sites: {
-      fields: ["siteName", "slug", "isDisplayed", "publishedAt", "orcsSiteNumber"],
+      fields: [
+        "siteName",
+        "slug",
+        "isDisplayed",
+        "publishedAt",
+        "orcsSiteNumber",
+      ],
       filters: {
         publishedAt: { $null: false },
-        isDisplayed: { $eq: true }
-      }
+        isDisplayed: { $eq: true },
+      },
     },
     standardMessages: true,
-    urgency: true
+    urgency: true,
   };
 
   return query;

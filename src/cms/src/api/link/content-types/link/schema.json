@@ -26,10 +26,7 @@
     },
     "file": {
       "type": "media",
-      "allowedTypes": [
-        "images",
-        "files"
-      ],
+      "allowedTypes": ["images", "files"],
       "multiple": false,
       "required": false
     },

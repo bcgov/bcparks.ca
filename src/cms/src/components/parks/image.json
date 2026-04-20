@@ -8,11 +8,7 @@
   "attributes": {
     "Media": {
       "type": "media",
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
+      "allowedTypes": ["images", "files", "videos"],
       "multiple": false,
       "required": false
     }

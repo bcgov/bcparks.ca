@@ -21,7 +21,7 @@ module.exports = () => {
     }
 
     strapi.log.info(
-      `photoRelationSyncMiddleware ${context.uid}-${context.action}`,
+      `photoRelationSyncMiddleware ${context.uid}-${context.action}`
     );
     await syncRelatedIdentifiers(context.params.data);
 
