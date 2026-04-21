@@ -1,5 +1,7 @@
 "use strict";
 
+// THIS IS TEST DATA FOR V2.5.0 and this migration can be removed for future releases
+
 const closures = [
   {
     rec_resource_id: "REC0002",
