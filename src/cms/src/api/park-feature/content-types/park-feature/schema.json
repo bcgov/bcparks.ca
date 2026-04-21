@@ -247,6 +247,10 @@
       "relation": "oneToOne",
       "target": "api::park-gate.park-gate",
       "mappedBy": "parkFeature"
+    },
+    "hasDates": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
