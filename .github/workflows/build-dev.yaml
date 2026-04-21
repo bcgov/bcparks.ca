@@ -1,9 +1,10 @@
-name: Build alpha-dev on staff-portal-advisories branch push
+name: Build dev on alpha & main branch push
 
 on:
   push:
     branches:
-      - staff-portal-advisories
+      - alpha
+      - main
 
 concurrency:
   group: build-dev-${{ github.ref_name }}
@@ -13,7 +14,7 @@ jobs:
   build-cms:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: strapi-alpha
+      IMAGE_NAME: strapi-${{ github.ref_name }}
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
@@ -57,7 +58,7 @@ jobs:
   build-public-builder:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: public-builder-alpha
+      IMAGE_NAME: public-builder-${{ github.ref_name }}
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
@@ -87,7 +88,7 @@ jobs:
   build-maintenance:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: maintenance-alpha
+      IMAGE_NAME: maintenance-${{ github.ref_name }}
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
@@ -117,7 +118,7 @@ jobs:
   build-etl:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: etl-alpha
+      IMAGE_NAME: etl-${{ github.ref_name }}
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
@@ -159,7 +160,7 @@ jobs:
   build-scheduler:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: scheduler-alpha
+      IMAGE_NAME: scheduler-${{ github.ref_name }}
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
@@ -219,13 +220,13 @@ jobs:
 
       - name: Trigger rollout
         run: |
-          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment alpha-cms
-          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment alpha-maintenance
-          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment alpha-scheduler
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-cms
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-maintenance
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-scheduler
 
       - name: Trigger Gatsby static build workflow
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: publish-gatsby
-          client-payload: '{"env": "dev", "branch": "alpha" }'
+          client-payload: '{"env": "dev", "branch": "${{ github.ref_name }}" }'
