@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recreation_resources",
+  "info": {
+    "singularName": "recreation-resource",
+    "pluralName": "recreation-resources",
+    "displayName": "Recreation-resource"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "recResourceId": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "resourceName": {
+      "type": "string",
+      "required": true
+    },
+    "closestCommunity": {
+      "type": "string"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "isDisplayed": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "recreationResourceType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::recreation-resource-type.recreation-resource-type"
+    },
+    "recreationDistrict": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::recreation-district.recreation-district"
+    },
+    "publicAdvisories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::public-advisory.public-advisory",
+      "mappedBy": "recreationResources"
+    }
+  }
+}

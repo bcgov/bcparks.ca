@@ -37,6 +37,8 @@ spec:
                   value: {{ .Values.etl.env.parkNamesApi }}
                 - name: STRAPI_BASE_URL
                   value: {{ .Values.cms.env.externalUrl }}
+                - name: RST_API
+                  value: {{ .Values.etl.env.rstApi }}
                 - name: STRAPI_API_TOKEN
                   valueFrom:
                     secretKeyRef:
@@ -53,6 +55,8 @@ spec:
                   value: {{ .Values.etl.enableBcwfsStandalonePropagation | quote }}
                 - name: DISABLE_PARK_NAMES_CRON
                   value: {{ .Values.etl.disableParkNamesCron | quote }}
+                - name: DISABLE_RST_CRON
+                  value: {{ .Values.etl.disableRstCron | quote }}
           restartPolicy: "Never"
           terminationGracePeriodSeconds: 30
           activeDeadlineSeconds: 1600

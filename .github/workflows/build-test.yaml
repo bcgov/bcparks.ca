@@ -13,7 +13,7 @@ jobs:
   build-cms:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: strapi-${{ github.ref_name }}
+      IMAGE_NAME: strapi-alpha
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
@@ -57,7 +57,7 @@ jobs:
   build-public-builder:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: public-builder-${{ github.ref_name }}
+      IMAGE_NAME: public-builder-alpha
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
@@ -87,7 +87,7 @@ jobs:
   build-maintenance:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: maintenance-${{ github.ref_name }}
+      IMAGE_NAME: maintenance-alpha
     steps:
       - name: Git Checkout
         uses: actions/checkout@v3
@@ -117,7 +117,7 @@ jobs:
   build-etl:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: etl-${{ github.ref_name }}
+      IMAGE_NAME: etl-alpha
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
@@ -159,7 +159,7 @@ jobs:
   build-scheduler:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: scheduler-${{ github.ref_name }}
+      IMAGE_NAME: scheduler-alpha
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout

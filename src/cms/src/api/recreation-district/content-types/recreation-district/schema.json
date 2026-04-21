@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recreation_districts",
+  "info": {
+    "singularName": "recreation-district",
+    "pluralName": "recreation-districts",
+    "displayName": "Recreation-district"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "districtCode": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "district": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

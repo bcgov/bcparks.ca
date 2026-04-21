@@ -75,6 +75,7 @@ public:
 etl:
   env:
     parkNamesApi: https://data.bcparks.ca/api/parks/names?status=established
+    rstApi: https://dj2qs6gf0wkg3.cloudfront.net/api/v1
 
 scheduler:
   env:

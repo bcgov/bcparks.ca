@@ -166,6 +166,17 @@
       "relation": "manyToMany",
       "target": "api::protected-area.protected-area",
       "inversedBy": "publicAdvisories"
+    },
+    "recreationDistricts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::recreation-district.recreation-district"
+    },
+    "recreationResources": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::recreation-resource.recreation-resource",
+      "inversedBy": "publicAdvisories"
     }
   }
 }

@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recreation_resource_types",
+  "info": {
+    "singularName": "recreation-resource-type",
+    "pluralName": "recreation-resource-types",
+    "displayName": "Recreation-resource-type"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "resourceTypeCode": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "resourceType": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

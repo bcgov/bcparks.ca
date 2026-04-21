@@ -11,6 +11,7 @@
   "options": {
     "draftAndPublish": false
   },
+  "pluginOptions": {},
   "attributes": {
     "accessStatus": {
       "type": "string"
@@ -35,6 +36,13 @@
       "type": "boolean",
       "required": true,
       "default": true
+    },
+    "recreationStatusCode": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "min": 1,
+      "max": 2
     }
   }
 }
