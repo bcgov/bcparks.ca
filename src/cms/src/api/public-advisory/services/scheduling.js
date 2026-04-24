@@ -75,7 +75,7 @@ module.exports = ({ strapi }) => ({
               data: {
                 publishedAt: new Date(),
                 advisoryStatus: {
-                  id: advisoryStatusMap["INA"].id,
+                  id: advisoryStatusMap["UNP"].id,
                 },
                 removalDate: new Date(),
                 modifiedBy: "system",
@@ -105,7 +105,7 @@ module.exports = ({ strapi }) => ({
             advisoryDate: {
               $lte: new Date().toISOString(),
             },
-            advisoryStatus: advisoryStatusMap["APR"].id,
+            advisoryStatus: advisoryStatusMap["SCH"].id,
           },
           populate: "*",
         });
@@ -235,7 +235,7 @@ module.exports = ({ strapi }) => ({
                   advisoryDate: { $lte: rangeEnd },
                 },
                 {
-                  advisoryStatus: advisoryStatusMap["APR"].id,
+                  advisoryStatus: advisoryStatusMap["SCH"].id,
                 },
               ],
             },

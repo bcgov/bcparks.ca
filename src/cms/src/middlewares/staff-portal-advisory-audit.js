@@ -27,7 +27,7 @@ module.exports = () => {
 
     const newAdvisoryStatus = newPublicAdvisoryAudit.advisoryStatus?.code;
 
-    if (newAdvisoryStatus === "ARQ") {
+    if (newAdvisoryStatus === "HQR") {
       await queueAdvisoryEmail(
         "Approval requested",
         "Approval requested for the following advisory",
@@ -95,7 +95,7 @@ module.exports = () => {
 
     // flow 4: update inactive (set by system)
     if (
-      oldAdvisoryStatus === "INA" &&
+      oldAdvisoryStatus === "UNP" &&
       oldPublicAdvisory.modifiedBy === "system"
     ) {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
@@ -126,7 +126,7 @@ module.exports = () => {
     const oldAdvisoryStatus = ctx.state.oldStatus; // saved by beforeUpdate() above
     const newAdvisoryStatus = publicAdvisoryAudit.advisoryStatus?.code;
 
-    if (newAdvisoryStatus === "ARQ" && oldAdvisoryStatus !== "ARQ") {
+    if (newAdvisoryStatus === "HQR" && oldAdvisoryStatus !== "HQR") {
       await queueAdvisoryEmail(
         "Approval requested",
         "Approval requested for the following advisory",
@@ -310,7 +310,7 @@ async function savePublicAdvisory(publicAdvisory) {
 
 async function copyToPublicAdvisory(newPublicAdvisory) {
   if (newPublicAdvisory.isLatestRevision && newPublicAdvisory.advisoryStatus) {
-    const triggerStatuses = ["PUB", "INA"];
+    const triggerStatuses = ["PUB", "UNP"];
     if (triggerStatuses.includes(newPublicAdvisory.advisoryStatus.code)) {
       await savePublicAdvisory(newPublicAdvisory);
     }
