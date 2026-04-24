@@ -66,7 +66,7 @@ module.exports = ({ strapi }) => ({
           });
         if (advisoryAudit.length) {
           strapi.log.info(
-            `setting public-advisory-audit to inactive [advisoryNumber:${advisory.advisoryNumber}]`,
+            `setting public-advisory-audit to unpublished [advisoryNumber:${advisory.advisoryNumber}]`
           );
           await strapi
             .documents("api::public-advisory-audit.public-advisory-audit")
@@ -75,7 +75,7 @@ module.exports = ({ strapi }) => ({
               data: {
                 publishedAt: new Date(),
                 advisoryStatus: {
-                  id: advisoryStatusMap["INA"].id,
+                  id: advisoryStatusMap["UNP"].id,
                 },
                 removalDate: new Date(),
                 modifiedBy: "system",
@@ -97,7 +97,7 @@ module.exports = ({ strapi }) => ({
   publish: async (advisoryStatusMap) => {
     if (Object.keys(advisoryStatusMap).length > 0) {
       // fetch advisories to publish - audit table
-      const draftAdvisoryToPublishAudit = await strapi
+      const scheduledAdvisoryToPublishAudit = await strapi
         .documents("api::public-advisory-audit.public-advisory-audit")
         .findMany({
           filters: {
@@ -105,17 +105,17 @@ module.exports = ({ strapi }) => ({
             advisoryDate: {
               $lte: new Date().toISOString(),
             },
-            advisoryStatus: advisoryStatusMap["APR"].id,
+            advisoryStatus: advisoryStatusMap["SCH"].id,
           },
           populate: "*",
         });
 
-      let publishedAdviosryCount = 0;
+      let publishedAdvisoryCount = 0;
 
       // publish advisories - audit table
-      draftAdvisoryToPublishAudit.forEach(async (advisory) => {
+      scheduledAdvisoryToPublishAudit.forEach(async (advisory) => {
         strapi.log.info(
-          `publishing approved public-advisory-audit [advisoryNumber:${advisory.advisoryNumber}]`,
+          `publishing scheduled public-advisory-audit [advisoryNumber:${advisory.advisoryNumber}]`
         );
         await strapi
           .documents("api::public-advisory-audit.public-advisory-audit")
@@ -132,7 +132,7 @@ module.exports = ({ strapi }) => ({
             },
           })
           .then(async (advisory) => {
-            publishedAdviosryCount++;
+            publishedAdvisoryCount++;
             await queueAdvisoryEmail(
               "Scheduled advisory posted",
               "A scheduled advisory was posted",
@@ -235,7 +235,7 @@ module.exports = ({ strapi }) => ({
                   advisoryDate: { $lte: rangeEnd },
                 },
                 {
-                  advisoryStatus: advisoryStatusMap["APR"].id,
+                  advisoryStatus: advisoryStatusMap["SCH"].id,
                 },
               ],
             },
