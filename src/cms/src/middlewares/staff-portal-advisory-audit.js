@@ -93,7 +93,7 @@ module.exports = () => {
       return;
     }
 
-    // flow 4: update inactive (set by system)
+    // flow 4: update unpublished (set by system)
     if (
       oldAdvisoryStatus === "UNP" &&
       oldPublicAdvisory.modifiedBy === "system"
