@@ -1,7 +1,7 @@
 # Static Maintenance Page
 
-This is a static maintenance page to be used for openShift outages. To activate the maintenance page, edit the 
-`vanity-bcparks.ca` route to use the `main-maintenance` service. Change the service back to `main-public` to turn 
+This is a static maintenance page to be used for openShift outages. To activate the maintenance page, edit the
+`vanity-bcparks.ca` route to use the `main-maintenance` service. Change the service back to `main-public` to turn
 off the maintenace page.
 
 ## Development

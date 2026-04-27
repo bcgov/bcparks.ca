@@ -7,7 +7,11 @@ const convertParkDates = function (parkDates) {
   const thisYear = new Date().getFullYear();
   return parkDates
     .filter(
-      (d) => d.operatingYear >= thisYear && d.publishedAt !== null && d.startDate && d.endDate
+      (d) =>
+        d.operatingYear >= thisYear &&
+        d.publishedAt !== null &&
+        d.startDate &&
+        d.endDate,
     )
     .map((d) => {
       delete d.id;
@@ -27,7 +31,9 @@ const convertParkFeatures = function (parkFeatures) {
         isOpen: true,
         parkFeatureTypeId: feature?.parkFeatureType?.featureTypeId,
         isIgnored:
-          feature.closureAffectsAccessStatus === null ? null : !feature.closureAffectsAccessStatus,
+          feature.closureAffectsAccessStatus === null
+            ? null
+            : !feature.closureAffectsAccessStatus,
         parkDates: feature.parkDates
           .filter(
             (d) =>
@@ -35,7 +41,7 @@ const convertParkFeatures = function (parkFeatures) {
               d.isActive &&
               d.publishedAt !== null &&
               d.startDate &&
-              d.endDate
+              d.endDate,
           )
           .map((d) => ({
             isActive: d.isActive,

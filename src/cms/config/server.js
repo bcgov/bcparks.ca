@@ -3,6 +3,6 @@ module.exports = ({ env }) => ({
   port: env.int("STRAPI_PORT", 1337),
   url: env("STRAPI_EXTERNAL_URL", "http://localhost:1337"),
   app: {
-    keys: env.array('APP_KEYS'),
+    keys: env.array("APP_KEYS"),
   },
 });

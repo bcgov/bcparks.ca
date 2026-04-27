@@ -1,4 +1,4 @@
-const { Client } = require('@opensearch-project/opensearch')
+const { Client } = require("@opensearch-project/opensearch");
 
 let client = null;
 
@@ -8,18 +8,17 @@ function initializeESClient() {
     authConfig = {
       auth: {
         username: process.env.ELASTIC_USERNAME,
-        password: process.env.ELASTIC_PASSWORD
-      }
-    }
+        password: process.env.ELASTIC_PASSWORD,
+      },
+    };
   }
   try {
     client = new Client({
       node: process.env.ELASTIC_HOST,
-      ...authConfig
+      ...authConfig,
     });
-  }
-  catch (err) {
-    console.log('Error while initializing the connection to ElasticSearch.')
+  } catch (err) {
+    console.log("Error while initializing the connection to ElasticSearch.");
     console.log(err);
   }
 }
@@ -30,5 +29,5 @@ function doElasticSearch(params, options, callback) {
 
 module.exports = {
   initializeESClient,
-  doElasticSearch
-}
+  doElasticSearch,
+};

@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react"
-import { graphql, useStaticQuery, Link } from "gatsby"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons"
-import { ProgressBar } from "react-bootstrap"
+import React, { useState, useEffect } from "react";
+import { graphql, useStaticQuery, Link } from "gatsby";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { ProgressBar } from "react-bootstrap";
 
-import Acknowledgment from "../../components/acknowledgment"
-import Breadcrumbs from "../../components/breadcrumbs"
-import Header from "../../components/header"
-import Footer from "../../components/footer"
-import Seo from "../../components/seo"
-import ScrollToTop from "../../components/scrollToTop"
-import ParkAccessStatus from "../../components/park/parkAccessStatus"
-import StaticIcon from "../../components/park/staticIcon"
-import NoSearchResults from "../../components/search/noSearchResults"
-import { preProcessParkFeatures } from "../../utils/parkFeaturesHelper"
-import { getAllParkFeatures } from "../../utils/apiHelper"
-import { getParkDates } from "../../utils/parkDatesHelper"
-import { loadAllAdvisories } from "../../utils/advisoryHelper"
-import "../../styles/listPage.scss"
+import Acknowledgment from "../../components/acknowledgment";
+import Breadcrumbs from "../../components/breadcrumbs";
+import Header from "../../components/header";
+import Footer from "../../components/footer";
+import Seo from "../../components/seo";
+import ScrollToTop from "../../components/scrollToTop";
+import ParkAccessStatus from "../../components/park/parkAccessStatus";
+import StaticIcon from "../../components/park/staticIcon";
+import NoSearchResults from "../../components/search/noSearchResults";
+import { preProcessParkFeatures } from "../../utils/parkFeaturesHelper";
+import { getAllParkFeatures } from "../../utils/apiHelper";
+import { getParkDates } from "../../utils/parkDatesHelper";
+import { loadAllAdvisories } from "../../utils/advisoryHelper";
+import "../../styles/listPage.scss";
 
 const ParkLink = ({
   park,
@@ -27,16 +27,18 @@ const ParkLink = ({
   isLoadingAdvisories,
 }) => {
   // Check if park access status is "Closed"
-  const [isParkOpen, setIsParkOpen] = useState(null)
+  const [isParkOpen, setIsParkOpen] = useState(null);
 
-  const protectedArea = parkFeatures[0]?.protectedArea || {}
-  const parkDates = protectedArea.parkDates || []
-  const parkGate = protectedArea.parkGate || {}
-  const parkGateDates = getParkDates(parkDates)
+  const protectedArea = parkFeatures[0]?.protectedArea || {};
+  const parkDates = protectedArea.parkDates || [];
+  const parkGate = protectedArea.parkGate || {};
+  const parkGateDates = getParkDates(parkDates);
 
-  const getReservationName = hasBackcountryReservations => {
-    return hasBackcountryReservations ? "Reservations required" : "Reservations"
-  }
+  const getReservationName = (hasBackcountryReservations) => {
+    return hasBackcountryReservations
+      ? "Reservations required"
+      : "Reservations";
+  };
 
   return (
     <div className="park-list operating-dates-list">
@@ -68,8 +70,7 @@ const ParkLink = ({
           {parkGateDates && isParkOpen !== false && (
             <span className="gate-text">
               The {park.type.toLowerCase()}{" "}
-              {parkGate.hasGate !== false && "gate"} is open{" "}
-              {parkGateDates}.
+              {parkGate.hasGate !== false && "gate"} is open {parkGateDates}.
             </span>
           )}
         </>
@@ -120,37 +121,38 @@ const ParkLink = ({
                 )}
               </td>
               <td>
-              {feature.reservationDates.length > 0 || feature.backcountryDates.length > 0 ? (
-                <>
-                {feature.reservationDates.length > 0 && (
+                {feature.reservationDates.length > 0 ||
+                feature.backcountryDates.length > 0 ? (
                   <>
-                    <div>
-                      <small>
-                        {getReservationName(feature.hasBackcountryReservations)}
-                      </small>
-                    </div>
-                    <ul>
-                      {feature.reservationDates.map((dateRange, index) => (
-                        <li key={index}>{dateRange}</li>
-                      ))}
-                    </ul>
+                    {feature.reservationDates.length > 0 && (
+                      <>
+                        <div>
+                          <small>
+                            {getReservationName(
+                              feature.hasBackcountryReservations,
+                            )}
+                          </small>
+                        </div>
+                        <ul>
+                          {feature.reservationDates.map((dateRange, index) => (
+                            <li key={index}>{dateRange}</li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+                    {feature.backcountryDates.length > 0 && (
+                      <>
+                        <div>
+                          <small>Registration required</small>
+                        </div>
+                        <ul>
+                          {feature.backcountryDates.map((dateRange, index) => (
+                            <li key={index}>{dateRange}</li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
                   </>
-                )}
-                {feature.backcountryDates.length > 0 && (
-                  <>
-                    <div>
-                      <small>
-                        Registration required
-                      </small>
-                    </div>
-                    <ul>
-                      {feature.backcountryDates.map((dateRange, index) => (
-                        <li key={index}>{dateRange}</li>
-                      ))}
-                    </ul>
-                  </>
-                  )}
-                </>
                 ) : (
                   <>
                     No {"("}first come, first served{")"}
@@ -201,31 +203,38 @@ const ParkLink = ({
                   )}
                 </div>
                 <div className="list-group-item--container">
-                  {feature.reservationDates.length > 0 || feature.backcountryDates.length > 0 ? (
-                  <>
-                  {feature.reservationDates.length > 0 && (
+                  {feature.reservationDates.length > 0 ||
+                  feature.backcountryDates.length > 0 ? (
                     <>
-                      <b>
-                        {getReservationName(feature.hasBackcountryReservations)}
-                      </b>
-                      <ul>
-                        {feature.reservationDates.map((dateRange, index) => (
-                          <li key={index}>{dateRange}</li>
-                        ))}
-                      </ul>
+                      {feature.reservationDates.length > 0 && (
+                        <>
+                          <b>
+                            {getReservationName(
+                              feature.hasBackcountryReservations,
+                            )}
+                          </b>
+                          <ul>
+                            {feature.reservationDates.map(
+                              (dateRange, index) => (
+                                <li key={index}>{dateRange}</li>
+                              ),
+                            )}
+                          </ul>
+                        </>
+                      )}
+                      {feature.backcountryDates.length > 0 && (
+                        <>
+                          <b>Registration required</b>
+                          <ul>
+                            {feature.backcountryDates.map(
+                              (dateRange, index) => (
+                                <li key={index}>{dateRange}</li>
+                              ),
+                            )}
+                          </ul>
+                        </>
+                      )}
                     </>
-                  )}
-                  {feature.backcountryDates.length > 0 && (
-                    <>
-                      <b>Registration required</b>
-                      <ul>
-                        {feature.backcountryDates.map((dateRange, index) => (
-                          <li key={index}>{dateRange}</li>
-                        ))}
-                      </ul>
-                    </>
-                    )}
-                  </>
                   ) : (
                     <>
                       <b>Reservations / registration</b>
@@ -240,8 +249,8 @@ const ParkLink = ({
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const ParkOperatingDatesPage = () => {
   const queryData = useStaticQuery(graphql`
@@ -289,99 +298,126 @@ const ParkOperatingDatesPage = () => {
         }
       }
     }
-  `)
+  `);
 
   // constants
-  const apiBaseUrl = `${queryData.site.siteMetadata.apiURL}/api`
-  const menuContent = queryData?.allStrapiMenu?.nodes || []
-  const parks = queryData?.allStrapiProtectedArea?.nodes || []
+  const apiBaseUrl = `${queryData.site.siteMetadata.apiURL}/api`;
+  const menuContent = queryData?.allStrapiMenu?.nodes || [];
+  const parks = queryData?.allStrapiProtectedArea?.nodes || [];
   const filters = [
-    "All", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-    "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
-  ]
+    "All",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ];
 
   // states
-  const [advisories, setAdvisories] = useState([])
-  const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
-  const [parkFeatures, setParkFeatures] = useState([])
-  const [parkFeaturesLoadError, setParkFeaturesLoadError] = useState(false)
-  const [isLoadingParkFeatures, setIsLoadingParkFeatures] = useState(true)
-  const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
-  const [isInitialLoading, setIsInitialLoading] = useState(true)
-  const initialFilter = "A"
-  const [currentFilter, setCurrentFilter] = useState(initialFilter)
+  const [advisories, setAdvisories] = useState([]);
+  const [advisoryLoadError, setAdvisoryLoadError] = useState(false);
+  const [parkFeatures, setParkFeatures] = useState([]);
+  const [parkFeaturesLoadError, setParkFeaturesLoadError] = useState(false);
+  const [isLoadingParkFeatures, setIsLoadingParkFeatures] = useState(true);
+  const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const initialFilter = "A";
+  const [currentFilter, setCurrentFilter] = useState(initialFilter);
 
   // functions
-  const handleClick = e => {
-    setCurrentFilter(e.target.value)
-  }
-  const filtering = char =>
-    parks.filter(park => park.slug.charAt(0).toUpperCase() === char)
-  const hasResult = filtering(currentFilter).length > 0
-  const filterAdvisoriesByOrcs = orcs => {
-    return advisories.filter(advisory =>
-      advisory.protectedAreas.some(protectedArea => protectedArea.orcs === orcs)
-    )
-  }
-  const filterParkFeaturesByOrcs = orcs => {
+  const handleClick = (e) => {
+    setCurrentFilter(e.target.value);
+  };
+  const filtering = (char) =>
+    parks.filter((park) => park.slug.charAt(0).toUpperCase() === char);
+  const hasResult = filtering(currentFilter).length > 0;
+  const filterAdvisoriesByOrcs = (orcs) => {
+    return advisories.filter((advisory) =>
+      advisory.protectedAreas.some(
+        (protectedArea) => protectedArea.orcs === orcs,
+      ),
+    );
+  };
+  const filterParkFeaturesByOrcs = (orcs) => {
     return parkFeatures.filter(
-      parkFeature => parkFeature.protectedArea.orcs === orcs
-    )
-  }
+      (parkFeature) => parkFeature.protectedArea.orcs === orcs,
+    );
+  };
   // Pre-process park features to format dates
-  const getProcessedParkFeatures = orcs => {
-    const filteredParkFeatures = filterParkFeaturesByOrcs(orcs)
-    return preProcessParkFeatures(filteredParkFeatures)
-  }
+  const getProcessedParkFeatures = (orcs) => {
+    const filteredParkFeatures = filterParkFeaturesByOrcs(orcs);
+    return preProcessParkFeatures(filteredParkFeatures);
+  };
   const fetchAdvisories = () => {
-    setIsLoadingAdvisories(true)
+    setIsLoadingAdvisories(true);
     loadAllAdvisories(apiBaseUrl)
-      .then(response => {
-        setAdvisories(response.data.data)
-        setAdvisoryLoadError(false)
+      .then((response) => {
+        setAdvisories(response.data.data);
+        setAdvisoryLoadError(false);
       })
-      .catch(error => {
-        setAdvisories([])
-        setAdvisoryLoadError(true)
-        console.error("Error fetching advisories:", error)
+      .catch((error) => {
+        setAdvisories([]);
+        setAdvisoryLoadError(true);
+        console.error("Error fetching advisories:", error);
       })
       .finally(() => {
-        setIsLoadingAdvisories(false)
-      })
-  }
+        setIsLoadingAdvisories(false);
+      });
+  };
 
   // Fetches park feature data for the default filter, then fetches the full dataset
   const fetchParkFeatures = async () => {
-    setIsInitialLoading(true)
-    setIsLoadingParkFeatures(true)
-    setParkFeaturesLoadError(false)
+    setIsInitialLoading(true);
+    setIsLoadingParkFeatures(true);
+    setParkFeaturesLoadError(false);
 
     try {
       // Initially, load just the visible data for the default filters
       const { data: initialData } = await getAllParkFeatures(
         apiBaseUrl,
-        initialFilter
-      )
-      setParkFeatures(initialData)
-      setIsInitialLoading(false)
+        initialFilter,
+      );
+      setParkFeatures(initialData);
+      setIsInitialLoading(false);
 
       // Once the initial data is loaded, begin loading the full dataset in the background
-      const { data: allData } = await getAllParkFeatures(apiBaseUrl)
-      setParkFeatures(allData)
-      setIsLoadingParkFeatures(false)
+      const { data: allData } = await getAllParkFeatures(apiBaseUrl);
+      setParkFeatures(allData);
+      setIsLoadingParkFeatures(false);
     } catch (error) {
-      setParkFeatures([])
-      setParkFeaturesLoadError(true)
-      console.error("Error fetching park features:", error)
+      setParkFeatures([]);
+      setParkFeaturesLoadError(true);
+      console.error("Error fetching park features:", error);
     }
-  }
+  };
 
   // effects
   useEffect(() => {
-    fetchAdvisories()
-    fetchParkFeatures()
+    fetchAdvisories();
+    fetchParkFeatures();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiBaseUrl])
+  }, [apiBaseUrl]);
 
   // components
   const breadcrumbs = [
@@ -394,7 +430,7 @@ const ParkOperatingDatesPage = () => {
     <div key="3" className="breadcrumb-text">
       Park operating dates
     </div>,
-  ]
+  ];
 
   return (
     <div className="list-page">
@@ -414,12 +450,11 @@ const ParkOperatingDatesPage = () => {
       <div className="static-content-container">
         <div className="intro-text-container">
           <p>
-            This page provides a list of planned operating dates for BC Parks campgrounds
-            and other facilities. All dates are subject to change without
-            notice. For full details, check the{" "}
-            <Link to="/find-a-park">park page</Link>.
-            For warnings and closures, check{" "}
-            <Link to="/active-advisories">active advisories</Link>.
+            This page provides a list of planned operating dates for BC Parks
+            campgrounds and other facilities. All dates are subject to change
+            without notice. For full details, check the{" "}
+            <Link to="/find-a-park">park page</Link>. For warnings and closures,
+            check <Link to="/active-advisories">active advisories</Link>.
           </p>
           <ul>
             <li>
@@ -457,7 +492,7 @@ const ParkOperatingDatesPage = () => {
                   key={index}
                   value={filter}
                   aria-label={filter}
-                  onClick={e => handleClick(e, filter)}
+                  onClick={(e) => handleClick(e, filter)}
                   className={`btn btn-selected--${
                     currentFilter === filter ? "true" : "false"
                   }`}
@@ -531,14 +566,14 @@ const ParkOperatingDatesPage = () => {
       <ScrollToTop />
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default ParkOperatingDatesPage
+export default ParkOperatingDatesPage;
 
 export const Head = () => (
   <Seo
     title="Park operating dates"
     description="This page provides a list of planned operating dates for BC Parks and their facilities."
   />
-)
+);

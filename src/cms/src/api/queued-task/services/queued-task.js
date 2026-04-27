@@ -23,5 +23,5 @@ module.exports = createCoreService(
       }
       return { count };
     },
-  }),
+  })
 );

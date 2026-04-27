@@ -57,14 +57,20 @@ const outline = function (points) {
       rows[coords[0]] = { max: point, min: point };
     } else {
       const r = rows[coords[0]];
-      rows[coords[0]] = { max: strMax(point, r.max), min: strMin(point, r.min) };
+      rows[coords[0]] = {
+        max: strMax(point, r.max),
+        min: strMin(point, r.min),
+      };
     }
 
     if (!cols[coords[1]]) {
       cols[coords[1]] = { max: point, min: point };
     } else {
       const c = cols[coords[1]];
-      cols[coords[1]] = { max: strMax(point, c.max), min: strMin(point, c.min) };
+      cols[coords[1]] = {
+        max: strMax(point, c.max),
+        min: strMin(point, c.min),
+      };
     }
   }
 

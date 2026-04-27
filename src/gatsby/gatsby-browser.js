@@ -1,35 +1,41 @@
-import "@bcgov/bootstrap-v5-theme/css/bootstrap-theme.min.css"
-import "@bcgov/bc-sans/css/BC_Sans.css"
-import "jquery/dist/jquery.slim"
-import "bootstrap/dist/js/bootstrap.bundle"
-import "@fortawesome/fontawesome-free/css/all.min.css"
-import "./src/styles/style.scss"
+import "@bcgov/bootstrap-v5-theme/css/bootstrap-theme.min.css";
+import "@bcgov/bc-sans/css/BC_Sans.css";
+import "jquery/dist/jquery.slim";
+import "bootstrap/dist/js/bootstrap.bundle";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "./src/styles/style.scss";
 
-import React from "react"
-import useSnowplowTracking from "./src/utils/useSnowplowTracking"
+import React from "react";
+import useSnowplowTracking from "./src/utils/useSnowplowTracking";
 
 export const onRouteUpdate = ({ location, prevLocation }) => {
   if (typeof window.snowplow === "function") {
-    window.snowplow("trackPageView")
-    window.snowplow("refreshLinkClickTracking")
+    window.snowplow("trackPageView");
+    window.snowplow("refreshLinkClickTracking");
   }
-  sessionStorage.setItem("prevPath", prevLocation ? prevLocation.pathname : null);
-}
+  sessionStorage.setItem(
+    "prevPath",
+    prevLocation ? prevLocation.pathname : null,
+  );
+};
 
 const SnowplowWrapper = ({ element }) => {
-  useSnowplowTracking()
-  return element
-}
+  useSnowplowTracking();
+  return element;
+};
 
 export const wrapPageElement = ({ element }) => {
-  return <SnowplowWrapper element={element} />
-}
+  return <SnowplowWrapper element={element} />;
+};
 
 // work-around for gatsby issue -- fix scroll restoration
 // see https://github.com/gatsbyjs/gatsby/issues/38201#issuecomment-1658071105
-export const shouldUpdateScroll = ({ routerProps: { location }, getSavedScrollPosition }) => {
+export const shouldUpdateScroll = ({
+  routerProps: { location },
+  getSavedScrollPosition,
+}) => {
   if (!window.location.hash) {
-    window.history.scrollRestoration = 'manual';
+    window.history.scrollRestoration = "manual";
     const currentPosition = getSavedScrollPosition(location, location.key);
     // minimum timeout needs to be somewhat greater than zero the avoid map loading
     // interferance on park pages
@@ -37,7 +43,7 @@ export const shouldUpdateScroll = ({ routerProps: { location }, getSavedScrollPo
     // use a longer timeout for longer pages so they can finish rendering first
     if (currentPosition && currentPosition.length > 1 && currentPosition[1]) {
       const y = currentPosition[1];
-      if (y > (2 * window.innerHeight)) {
+      if (y > 2 * window.innerHeight) {
         timeout = 750;
       }
     }

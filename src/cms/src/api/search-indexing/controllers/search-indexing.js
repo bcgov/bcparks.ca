@@ -145,7 +145,7 @@ module.exports = ({ strapi }) => ({
     } catch (error) {
       return ctx.internalServerError(
         "Error in service search:queueAllParksForIndexing()",
-        error.message,
+        error.message
       );
     }
 
@@ -153,7 +153,7 @@ module.exports = ({ strapi }) => ({
       {
         message: `Set all parks to be reindexed`,
       },
-      201,
+      201
     );
   },
 });

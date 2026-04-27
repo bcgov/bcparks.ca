@@ -4,7 +4,10 @@ const idSpecified = function () {
 };
 
 const scriptKeySpecified = function (scriptKey) {
-  return process.argv.length >= 3 && process.argv[2].toLowerCase() === scriptKey.toLowerCase();
+  return (
+    process.argv.length >= 3 &&
+    process.argv[2].toLowerCase() === scriptKey.toLowerCase()
+  );
 };
 
 const noCommandLineArgs = function () {

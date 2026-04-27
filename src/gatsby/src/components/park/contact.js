@@ -1,44 +1,48 @@
-import React from "react"
-import FontAwesome from "../fontAwesome"
-import HtmlContent from "../htmlContent"
+import React from "react";
+import FontAwesome from "../fontAwesome";
+import HtmlContent from "../htmlContent";
 
 // Helper function to get href prefix based on the contactType
 const getPrefix = (contactType) => {
   switch (contactType) {
     case "Email":
-      return "mailto:"
+      return "mailto:";
     case "Phone":
-      return "tel:"
+      return "tel:";
     default:
-      return ""
+      return "";
   }
-}
+};
 // Helper function to get the icon based on the contactType
 const getIcon = (contactType) => {
   switch (contactType) {
     case "Email":
-      return "envelope"
+      return "envelope";
     case "Phone":
-      return "phone"
+      return "phone";
     case "Website":
-      return "laptop"
+      return "laptop";
     case "Chat":
-      return "messages"
+      return "messages";
     case "Facebook":
-      return "facebook"
+      return "facebook";
     case "Instagram":
-      return "instagram"
+      return "instagram";
     case "X-twitter":
-      return "x-twitter"
+      return "x-twitter";
     default:
-      return ""
+      return "";
   }
-}
+};
 
 export const ParkContact = ({ contact }) => {
-  const parkOperatorContact = contact.parkOperatorContact
-  const links = contact.contactInformation.length > 0 ? contact.contactInformation :
-    parkOperatorContact?.defaultContactInformation?.length > 0 ? parkOperatorContact.defaultContactInformation : []
+  const parkOperatorContact = contact.parkOperatorContact;
+  const links =
+    contact.contactInformation.length > 0
+      ? contact.contactInformation
+      : parkOperatorContact?.defaultContactInformation?.length > 0
+        ? parkOperatorContact.defaultContactInformation
+        : [];
 
   return (
     <tr>
@@ -47,35 +51,39 @@ export const ParkContact = ({ contact }) => {
       </th>
       <td>
         {(contact.description.data.description ||
-          parkOperatorContact?.defaultDescription?.data?.defaultDescription) &&
+          parkOperatorContact?.defaultDescription?.data
+            ?.defaultDescription) && (
           <HtmlContent>
             {contact.description.data.description ||
               parkOperatorContact?.defaultDescription?.data?.defaultDescription}
           </HtmlContent>
-        }
-        {links.length > 0 && links.map((link, index) => (
-          <p key={index}>
-            <FontAwesome icon={getIcon(link.contactType)} />
-            {link.contactUrl !== null ?
-              <a href={`${getPrefix(link.contactType)}${link.contactUrl}`}>
-                <span className="visually-hidden">{link.contactType}: </span>{link.contactText}
-              </a>
-              :
-              link.contactText
-            }
-          </p>
-        ))}
+        )}
+        {links.length > 0 &&
+          links.map((link, index) => (
+            <p key={index}>
+              <FontAwesome icon={getIcon(link.contactType)} />
+              {link.contactUrl !== null ? (
+                <a href={`${getPrefix(link.contactType)}${link.contactUrl}`}>
+                  <span className="visually-hidden">{link.contactType}: </span>
+                  {link.contactText}
+                </a>
+              ) : (
+                link.contactText
+              )}
+            </p>
+          ))}
       </td>
     </tr>
-  )
-}
+  );
+};
 
 export default function Contact({ contact, parkContacts, operations }) {
   // Filter contacts by isActive and sort by rank
-  const sortedContacts =
-    parkContacts.filter(contact => contact.isActive).sort((a, b) => {
-      return a.rank - b.rank
-    })
+  const sortedContacts = parkContacts
+    .filter((contact) => contact.isActive)
+    .sort((a, b) => {
+      return a.rank - b.rank;
+    });
   const hasAnyReservations =
     operations.hasCanoeCircuitReservations ||
     operations.hasGroupPicnicReservations ||
@@ -85,7 +93,7 @@ export default function Contact({ contact, parkContacts, operations }) {
     operations.hasBackcountryReservations ||
     operations.hasBackcountryGroupReservations ||
     operations.hasBackcountryShelterReservations ||
-    operations.hasBackcountryWildernessReservations
+    operations.hasBackcountryWildernessReservations;
 
   return (
     <div id="contact" className="anchor-link">
@@ -101,19 +109,24 @@ export default function Contact({ contact, parkContacts, operations }) {
                   <td>
                     <p>
                       Our call centre is open from 7 am to 7 pm Pacific Time.
-                      There is a $5 fee for reservations, changes, or cancellations made by phone.
+                      There is a $5 fee for reservations, changes, or
+                      cancellations made by phone.
                     </p>
                     <p>
                       <FontAwesome icon="phone" />
                       <a href="tel:+18006899025">
-                        <span className="visually-hidden">Phone number: </span>1-800-689-9025
-                      </a> (toll-free from Canada or the US)
+                        <span className="visually-hidden">Phone number: </span>
+                        1-800-689-9025
+                      </a>{" "}
+                      (toll-free from Canada or the US)
                     </p>
                     <p>
                       <FontAwesome icon="phone" />
                       <a href="tel:+15198586161">
-                        <span className="visually-hidden">Phone number: </span>1-519-858-6161
-                      </a> (international)
+                        <span className="visually-hidden">Phone number: </span>
+                        1-519-858-6161
+                      </a>{" "}
+                      (international)
                     </p>
                     <p>
                       <FontAwesome icon="laptop" />
@@ -124,9 +137,10 @@ export default function Contact({ contact, parkContacts, operations }) {
                   </td>
                 </tr>
               )}
-              {sortedContacts.length > 0 && sortedContacts.map((contact, index) => (
-                <ParkContact key={index} contact={contact} />
-              ))}
+              {sortedContacts.length > 0 &&
+                sortedContacts.map((contact, index) => (
+                  <ParkContact key={index} contact={contact} />
+                ))}
               {/* display it always */}
               <tr>
                 <th scope="row">General questions and feedback for BC Parks</th>
@@ -137,7 +151,8 @@ export default function Contact({ contact, parkContacts, operations }) {
                   <p>
                     <FontAwesome icon="envelope" />
                     <a href="mailto:parkinfo@gov.bc.ca">
-                      <span className="visually-hidden">Email: </span>parkinfo@gov.bc.ca
+                      <span className="visually-hidden">Email: </span>
+                      parkinfo@gov.bc.ca
                     </a>
                   </p>
                 </td>
@@ -149,5 +164,5 @@ export default function Contact({ contact, parkContacts, operations }) {
         <HtmlContent>{contact}</HtmlContent>
       )}
     </div>
-  )
+  );
 }

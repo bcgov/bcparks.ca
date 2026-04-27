@@ -25,7 +25,7 @@ module.exports = () => {
     }
 
     strapi.log.info(
-      `restCacheInvalidationMiddleware ${context.uid}->${context.action}`,
+      `restCacheInvalidationMiddleware ${context.uid}->${context.action}`
     );
     // @TODO: for bulk operations this will run once per doccument. Consider optimizing.
     await clearRestCache();

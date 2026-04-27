@@ -1,57 +1,55 @@
-import React from "react"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import Tooltip from "react-bootstrap/Tooltip"
-import OverlayTrigger from "react-bootstrap/OverlayTrigger"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCalendar } from "@fortawesome/free-regular-svg-icons"
+import React from "react";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 
-import HtmlContent from "../htmlContent"
-import FontAwesome from "../fontAwesome"
-import { countsList } from "../../utils/constants"
-import { formattedTime } from "../../utils/parkDatesHelper"
+import HtmlContent from "../htmlContent";
+import FontAwesome from "../fontAwesome";
+import { countsList } from "../../utils/constants";
+import { formattedTime } from "../../utils/parkDatesHelper";
 
 const DateTypeTooltip = ({ dateType, description }) => {
   return (
-  <OverlayTrigger
-    placement="top"
-    overlay={
-      <Tooltip id={`${dateType}-tooltip`}>
-        {description}
-      </Tooltip>
-    }
-  >
-    <button className="btn-tooltip btn">
-      <FontAwesome icon="generic-information" />
-    </button>
-  </OverlayTrigger>
-  )
-}
+    <OverlayTrigger
+      placement="top"
+      overlay={<Tooltip id={`${dateType}-tooltip`}>{description}</Tooltip>}
+    >
+      <button className="btn-tooltip btn">
+        <FontAwesome icon="generic-information" />
+      </button>
+    </OverlayTrigger>
+  );
+};
 
 export default function ParkFeature({ data, showHeading = false }) {
-  const reservationName = 
-    data.hasBackcountryReservations ? "Reservations required" : "Reservations"
-  const reservationDescription =
-    data.hasBackcountryReservations ?
-    "Reservations must be made in advance. First come, first served camping is not available." : 
-    "Reservations are highly recommended. You can book up to three months in advance."
+  const reservationName = data.hasBackcountryReservations
+    ? "Reservations required"
+    : "Reservations";
+  const reservationDescription = data.hasBackcountryReservations
+    ? "Reservations must be made in advance. First come, first served camping is not available."
+    : "Reservations are highly recommended. You can book up to three months in advance.";
 
   const parkFeatureNotesList = [
     { noteVar: "operationNote", display: "Operation note" },
     { noteVar: "reservationNote", display: "Booking note" },
     { noteVar: "offSeasonNote", display: "Off-season note" },
     { noteVar: "registrationNote", display: "Registration note" },
-  ]
+  ];
 
   const isShown = (count, countGroup) => {
-    return countGroup[count.countVar] &&
+    return (
+      countGroup[count.countVar] &&
       countGroup[count.countVar] !== "0" &&
       countGroup[count.countVar] !== "*" &&
-      count.isActive;
-  }
+      count.isActive
+    );
+  };
 
-  const renderGateTimes = gate => {
-    if (!gate) return null
+  const renderGateTimes = (gate) => {
+    if (!gate) return null;
     const {
       hasGate,
       gateOpenHoursStartTime,
@@ -60,12 +58,12 @@ export default function ParkFeature({ data, showHeading = false }) {
       gateClosesAtDusk,
       gateOpen24Hours,
       gateNote,
-    } = gate
+    } = gate;
 
-    if (!hasGate) return null
-    let message = ""
+    if (!hasGate) return null;
+    let message = "";
     if (gateOpen24Hours) {
-      message += "Gates are open 24 hours a day."
+      message += "Gates are open 24 hours a day.";
     } else if (
       (gateOpenHoursStartTime || gateOpensAtDawn) &&
       (gateOpenHoursEndTime || gateClosesAtDusk)
@@ -74,15 +72,15 @@ export default function ParkFeature({ data, showHeading = false }) {
         gateOpensAtDawn ? "dawn" : formattedTime(gateOpenHoursStartTime)
       } to ${
         gateClosesAtDusk ? "dusk" : formattedTime(gateOpenHoursEndTime)
-      }, daily.`
+      }, daily.`;
     }
     return (
       <>
         {message}
         {gateNote && <HtmlContent>{gateNote}</HtmlContent>}
       </>
-    )
-  }
+    );
+  };
 
   return (
     <div>
@@ -92,14 +90,14 @@ export default function ParkFeature({ data, showHeading = false }) {
             <FontAwesomeIcon icon={faCalendar} />
           </div>
           <div className="subarea-lists">
-            {showHeading && (<h4>{data.displayName}</h4>)}
+            {showHeading && <h4>{data.displayName}</h4>}
             {data.operationDates.length > 0 && (
               <div className="subarea-list">
                 <h4>Operating season</h4>
                 <ul>
-                  {data.operationDates.map((dateRange, index) =>
+                  {data.operationDates.map((dateRange, index) => (
                     <li key={index}>{dateRange}</li>
-                  )}
+                  ))}
                 </ul>
                 <small>{renderGateTimes(data.displayGate)}</small>
               </div>
@@ -114,9 +112,9 @@ export default function ParkFeature({ data, showHeading = false }) {
                   />
                 </h4>
                 <ul>
-                  {data.reservationDates.map((dateRange, index) =>
+                  {data.reservationDates.map((dateRange, index) => (
                     <li key={index}>{dateRange}</li>
-                  )}
+                  ))}
                 </ul>
               </div>
             )}
@@ -124,9 +122,9 @@ export default function ParkFeature({ data, showHeading = false }) {
               <div className="subarea-list">
                 <h4>Registration required</h4>
                 <ul>
-                  {data.backcountryDates.map((dateRange, index) =>
+                  {data.backcountryDates.map((dateRange, index) => (
                     <li key={index}>{dateRange}</li>
-                  )}
+                  ))}
                 </ul>
               </div>
             )}
@@ -136,58 +134,52 @@ export default function ParkFeature({ data, showHeading = false }) {
                   Winter rate{" "}
                   <DateTypeTooltip
                     dateType="winter-rate"
-                    description="Shoulder season with reduced fees and services" 
+                    description="Shoulder season with reduced fees and services"
                   />
                 </h4>
                 <ul>
-                  {data.winterFeeDates.map((dateRange, index) =>
+                  {data.winterFeeDates.map((dateRange, index) => (
                     <li key={index}>{dateRange}</li>
-                  )}
+                  ))}
                 </ul>
               </div>
             )}
           </div>
         </Col>
-        {countsList
-          .filter(count => isShown(count, data)).length > 0 && (
-            <Col className="subarea-container--right" xs={12} lg={6}>
-              <div className="subarea-icon">
-                <FontAwesome icon="campground" />
+        {countsList.filter((count) => isShown(count, data)).length > 0 && (
+          <Col className="subarea-container--right" xs={12} lg={6}>
+            <div className="subarea-icon">
+              <FontAwesome icon="campground" />
+            </div>
+            <div className="subarea-lists">
+              <div className="subarea-list">
+                <h4>Number of campsites</h4>
+                <ul>
+                  {countsList
+                    .filter((count) => isShown(count, data))
+                    .map((count, index) => (
+                      <li key={index}>
+                        {count.display}: {data[count.countVar]}
+                      </li>
+                    ))}
+                </ul>
               </div>
-              <div className="subarea-lists">
-                <div className="subarea-list">
-                  <h4>Number of campsites</h4>
-                  <ul>
-                    {countsList
-                      .filter(count => isShown(count, data))
-                      .map((count, index) => (
-                        <li key={index}>
-                          {count.display}:{" "}
-                          {data[count.countVar]}
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              </div>
-            </Col>
-          )}
+            </div>
+          </Col>
+        )}
       </Row>
       <Row className="subarea-container mt-3">
         <Col>
           {parkFeatureNotesList
-            .filter(note => data[note.noteVar])
+            .filter((note) => data[note.noteVar])
             .map((note, index) => (
               <div key={index} className="subarea-list subarea-note">
-                {note.display && (
-                  <h4>{note.display}</h4>
-                )}
-                <HtmlContent>
-                  {data[note.noteVar]}
-                </HtmlContent>
+                {note.display && <h4>{note.display}</h4>}
+                <HtmlContent>{data[note.noteVar]}</HtmlContent>
               </div>
             ))}
         </Col>
       </Row>
     </div>
-  )
+  );
 }

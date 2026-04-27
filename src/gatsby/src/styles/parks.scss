@@ -31,7 +31,9 @@
     a:not(.btn) {
       color: $colorBlueMed;
       text-decoration: underline;
-      &:hover, &:active, &:focus {
+      &:hover,
+      &:active,
+      &:focus {
         color: $colorBlue;
       }
       &:focus-visible {
@@ -158,8 +160,6 @@
   }
 }
 
-
-
 // Photo gallery display
 .park-photo-gallery {
   hr {
@@ -214,7 +214,8 @@
     color: $colorWhite;
     background-color: rgba($colorGrey, 0.5);
     border: transparent solid 2px;
-    &:hover, &:focus-visible {
+    &:hover,
+    &:focus-visible {
       color: $colorWhite;
       background-color: $colorGrey;
     }
@@ -253,17 +254,18 @@
       display: inline-flex;
     }
     .photo-credit {
-      color: rgba($colorWhite, .72);
+      color: rgba($colorWhite, 0.72);
       margin-left: 6px;
     }
   }
 }
 .yarl__thumbnails_thumbnail {
   &:not(.yarl__thumbnails_thumbnail_active) {
-    opacity: .5;
+    opacity: 0.5;
   }
 }
-.yarl__navigation_prev, .yarl__navigation_next {
+.yarl__navigation_prev,
+.yarl__navigation_next {
   color: $colorWhite;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 50%;
@@ -293,7 +295,7 @@ h2.section-heading {
   padding-bottom: 2rem;
   &:after {
     position: absolute;
-    content: '';
+    content: "";
     height: 3px;
     bottom: 9px;
     margin: 0;
@@ -335,7 +337,8 @@ h2.section-heading {
       a:not(.btn) {
         text-decoration: underline;
       }
-      svg, img {
+      svg,
+      img {
         width: 24px;
         height: 24px;
         margin-right: 12px;
@@ -356,7 +359,7 @@ h2.section-heading {
         width: 250px;
       }
       @media (min-width: $mdBreakpoint) {
-        display: flex;;
+        display: flex;
       }
     }
     .btn.btn-secondary {
@@ -377,7 +380,8 @@ h2.section-heading {
       a {
         flex: 1 1 100%;
         font-size: 0.875rem;
-        &:hover, &:focus-visible {
+        &:hover,
+        &:focus-visible {
           color: $colorBlue;
           text-decoration: underline;
         }
@@ -397,12 +401,12 @@ h2.section-heading {
   }
 
   .button-parent {
-    a.btn  {
-      &+.btn {
+    a.btn {
+      & + .btn {
         margin-top: 16px;
         @media (min-width: $lgBreakpoint) {
           margin-top: 0;
-        };
+        }
       }
     }
   }
@@ -429,7 +433,11 @@ h2.section-heading {
       position: absolute;
       bottom: 0;
       left: 0;
-      background: linear-gradient(180deg, rgba($colorWhite, 0) 0%, $colorWhite 100%);
+      background: linear-gradient(
+        180deg,
+        rgba($colorWhite, 0) 0%,
+        $colorWhite 100%
+      );
     }
   }
   &.expanded {
@@ -522,7 +530,8 @@ h2.section-heading {
 .guideline {
   margin-bottom: 8px;
   &--left {
-    svg, img {
+    svg,
+    img {
       width: 48px;
       height: 48px;
       padding: 6px;
@@ -558,11 +567,13 @@ h2.section-heading {
 
 // camping (subarea)
 .subarea-container {
-  &--left, &--right {
+  &--left,
+  &--right {
     display: flex;
     .subarea-icon {
       padding-right: 16px;
-      svg, img {
+      svg,
+      img {
         width: 16px;
         height: 16px;
       }

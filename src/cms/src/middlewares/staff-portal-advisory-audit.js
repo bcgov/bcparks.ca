@@ -32,7 +32,7 @@ module.exports = () => {
         "Approval requested",
         "Approval requested for the following advisory",
         newPublicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterCreate()",
+        "public-advisory-audit::lifecycles::afterCreate()"
       );
     }
 
@@ -44,7 +44,7 @@ module.exports = () => {
         "After-hours advisory posted",
         "An after-hours advisory was posted",
         newPublicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterCreate()",
+        "public-advisory-audit::lifecycles::afterCreate()"
       );
     }
 
@@ -88,7 +88,7 @@ module.exports = () => {
     if (newPublicAdvisory.modifiedBy === "system") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber,
+        oldPublicAdvisory.advisoryNumber
       );
       return;
     }
@@ -100,7 +100,7 @@ module.exports = () => {
     ) {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber,
+        oldPublicAdvisory.advisoryNumber
       );
       return;
     }
@@ -109,7 +109,7 @@ module.exports = () => {
     if (oldAdvisoryStatus === "PUB") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber,
+        oldPublicAdvisory.advisoryNumber
       );
       return;
     }
@@ -131,7 +131,7 @@ module.exports = () => {
         "Approval requested",
         "Approval requested for the following advisory",
         publicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterUpdate()",
+        "public-advisory-audit::lifecycles::afterUpdate()"
       );
     }
 
@@ -145,7 +145,7 @@ module.exports = () => {
         "After-hours advisory posted",
         "An after-hours advisory was posted",
         publicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterUpdate()",
+        "public-advisory-audit::lifecycles::afterUpdate()"
       );
     }
 
@@ -162,7 +162,7 @@ module.exports = () => {
     }
 
     strapi.log.info(
-      `staffPortalAdvisoryAuditMiddleware ${context.uid}-${context.action}`,
+      `staffPortalAdvisoryAuditMiddleware ${context.uid}-${context.action}`
     );
 
     /**
@@ -239,7 +239,7 @@ async function archiveOldPublicAdvisoryAudit(data) {
   } catch (error) {
     strapi.log.error(
       `error creating public-advisory-audit ${data.advisoryNumber}...`,
-      error,
+      error
     );
   }
 }
@@ -262,7 +262,7 @@ async function savePublicAdvisory(publicAdvisory) {
         publicAdvisory.id = isExist.id;
         publicAdvisory.documentId = isExist.documentId;
         strapi.log.info(
-          `updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
+          `updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`
         );
         await strapi.documents("api::public-advisory.public-advisory").update({
           documentId: isExist.documentId,
@@ -271,7 +271,7 @@ async function savePublicAdvisory(publicAdvisory) {
       } catch (error) {
         strapi.log.error(
           `error updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
-          error,
+          error
         );
       }
     } else {
@@ -279,7 +279,7 @@ async function savePublicAdvisory(publicAdvisory) {
         delete publicAdvisory.id;
         delete publicAdvisory.documentId;
         strapi.log.info(
-          `creating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
+          `creating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`
         );
         await strapi.documents("api::public-advisory.public-advisory").create({
           data: publicAdvisory,
@@ -287,14 +287,14 @@ async function savePublicAdvisory(publicAdvisory) {
       } catch (error) {
         strapi.log.error(
           `error creating public-advisory ${publicAdvisory.id}...`,
-          error,
+          error
         );
       }
     }
   } else if (isExist) {
     try {
       strapi.log.info(
-        `deleting public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
+        `deleting public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`
       );
       await strapi
         .documents("api::public-advisory.public-advisory")
@@ -302,7 +302,7 @@ async function savePublicAdvisory(publicAdvisory) {
     } catch (error) {
       strapi.log.error(
         `error deleting public-advisory ${publicAdvisory.id}...`,
-        error,
+        error
       );
     }
   }

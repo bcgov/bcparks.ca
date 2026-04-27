@@ -1,5 +1,5 @@
-import React from "react"
-import HtmlContent from "../htmlContent"
+import React from "react";
+import HtmlContent from "../htmlContent";
 
 export default function SafetyInfo({ safetyInfo }) {
   return (
@@ -8,5 +8,5 @@ export default function SafetyInfo({ safetyInfo }) {
       <h3 id="park-safety-info-container">Safety information</h3>
       <HtmlContent>{safetyInfo}</HtmlContent>
     </div>
-  )
+  );
 }

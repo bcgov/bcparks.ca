@@ -38,7 +38,8 @@ a.btn.book-campsite-btn {
   color: $colorBlue;
   background-color: $colorWhite;
   border: $colorWhite solid 2px;
-  &:hover, &:focus-visible {
+  &:hover,
+  &:focus-visible {
     background-color: $colorGold;
   }
   &:hover {
@@ -95,7 +96,6 @@ a.btn.book-campsite-btn {
     box-shadow: 0px 5px 3px 3px rgba(0, 0, 0, 0.3);
 
     .menu-button {
-      
       width: 100%;
       transition: background-color 0.1s;
       cursor: pointer;
@@ -252,13 +252,16 @@ a.btn.book-campsite-btn {
             padding: 0px 12px;
             color: #fff;
             font-size: 1rem;
-            transition: background 0.2s, color 0.2s;
+            transition:
+              background 0.2s,
+              color 0.2s;
             position: relative;
             z-index: 1;
             line-height: normal;
             display: inline-block;
             text-align: center;
-            &:hover, &:focus-visible {
+            &:hover,
+            &:focus-visible {
               text-decoration: underline;
               background-color: transparent;
             }
@@ -324,7 +327,9 @@ a.btn.book-campsite-btn {
       }
     }
     .menu-level-0-children.menu-children--unselected {
-      transition: opacity 0.3s, min-height 0.9s;
+      transition:
+        opacity 0.3s,
+        min-height 0.9s;
       opacity: 0;
       min-height: 0px;
       padding: 0px;
@@ -373,7 +378,9 @@ a.btn.book-campsite-btn {
       display: none;
     }
     .menu-children {
-      transition: opacity 0.3s, min-height 0.3s;
+      transition:
+        opacity 0.3s,
+        min-height 0.3s;
       opacity: 1;
       min-height: 475px;
     }
@@ -402,13 +409,14 @@ a.btn.book-campsite-btn {
 
     .menu-button {
       transition: background-color 0.3s;
-      
+
       .menu-button__title {
         color: $colorBlue;
         display: block;
         width: 100%;
         padding: 8px 10px;
-        &:hover, &:focus-visible {
+        &:hover,
+        &:focus-visible {
           text-decoration: underline;
           background-color: $colorBackgroundGrey;
         }

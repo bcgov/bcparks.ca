@@ -25,7 +25,9 @@ exports.indexParks = async function (options) {
       try {
         queue = await readQueue("elastic index park", options);
       } catch (error) {
-        logger.error(`indexParks() failed while retrieving 'elastic index park' tasks: ${error}`);
+        logger.error(
+          `indexParks() failed while retrieving 'elastic index park' tasks: ${error}`,
+        );
         return;
       }
     }
@@ -52,14 +54,16 @@ exports.indexParks = async function (options) {
         indexed.push(taskId(queue, park.orcs));
       } else {
         logger.error(
-          `error indexing park ${park.orcs} - ${park.protectedAreaName} ORCS=${park.orcs}`
+          `error indexing park ${park.orcs} - ${park.protectedAreaName} ORCS=${park.orcs}`,
         );
       }
     }
     try {
       await removeFromQueue(indexed);
     } catch (error) {
-      logger.error(`Failed while removing queued 'elastic index park' tasks: ${error}`);
+      logger.error(
+        `Failed while removing queued 'elastic index park' tasks: ${error}`,
+      );
       return;
     }
   } while (indexed.length > 0 && !options?.orcs);
@@ -71,7 +75,9 @@ exports.indexParks = async function (options) {
     try {
       queue = await readQueue("elastic remove park", options);
     } catch (error) {
-      logger.error(`indexParks() failed while retrieving 'elastic remove park' tasks: ${error}`);
+      logger.error(
+        `indexParks() failed while retrieving 'elastic remove park' tasks: ${error}`,
+      );
       return;
     }
 
@@ -87,7 +93,9 @@ exports.indexParks = async function (options) {
     try {
       await removeFromQueue(removed);
     } catch (error) {
-      logger.error(`Failed while removing queued 'elastic remove park' tasks: ${error}`);
+      logger.error(
+        `Failed while removing queued 'elastic remove park' tasks: ${error}`,
+      );
       return;
     }
   } while (removed.length > 0);
@@ -112,7 +120,9 @@ const indexPark = async function (park, photos) {
   // if the park isn't visible on the website then remove it from
   // Elasticsearch instead of adding it
   if (!park.isDisplayed || !park.publishedAt) {
-    getLogger().warn(`removing park ${park.orcs} due to unpublished or undisplayed status`);
+    getLogger().warn(
+      `removing park ${park.orcs} due to unpublished or undisplayed status`,
+    );
     await removePark(park.orcs);
     return true;
   }
@@ -165,7 +175,7 @@ const getBatch = async function (queuedTasks, options) {
     },
     {
       encodeValuesOnly: true,
-    }
+    },
   );
   const parksQuery = `/api/search-indexing/parks?${parksFilters}`;
   const response = await cmsAxios.get(parksQuery);
@@ -183,7 +193,9 @@ const getBatch = async function (queuedTasks, options) {
     const publishedParkDocIds = parkList.map((p) => p.documentId);
 
     // get all the draft parks that aren't in the published parks
-    const extraDrafts = draftParkList.filter((p) => !publishedParkDocIds.includes(p.documentId));
+    const extraDrafts = draftParkList.filter(
+      (p) => !publishedParkDocIds.includes(p.documentId),
+    );
 
     getLogger().warn(
       `Adding ${extraDrafts.length} draft protected areas to the list (to be removed from index).`,
@@ -209,7 +221,7 @@ const getPhotos = async function (orcsList) {
     },
     {
       encodeValuesOnly: true,
-    }
+    },
   );
   const photosQuery = `/api/search-indexing/photos?${photoFilters}`;
   const response = await cmsAxios.get(photosQuery);

@@ -1,58 +1,62 @@
-import React, { useState, useEffect, useMemo } from "react"
-import PropTypes from "prop-types"
-import { parseJSON, format } from "date-fns"
-import Accordion from "react-bootstrap/Accordion"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import { orderBy } from "lodash"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
+import React, { useState, useEffect, useMemo } from "react";
+import PropTypes from "prop-types";
+import { parseJSON, format } from "date-fns";
+import Accordion from "react-bootstrap/Accordion";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { orderBy } from "lodash";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-import HtmlContent from "../htmlContent"
-import CustomToggle from "./customToggle"
-import AdvisoryDate from "../advisories/advisoryDate"
-import blueAlertIcon from "../../images/park/blue-alert.svg"
-import redAlertIcon from "../../images/park/red-alert.svg"
-import yellowAlertIcon from "../../images/park/yellow-alert.svg"
-import { getAdvisoryDate } from "../../utils/advisoryHelper"
-import { trackSnowplowEvent } from "../../utils/snowplowHelper"
-import "../../styles/advisories/advisoryDetails.scss"
+import HtmlContent from "../htmlContent";
+import CustomToggle from "./customToggle";
+import AdvisoryDate from "../advisories/advisoryDate";
+import blueAlertIcon from "../../images/park/blue-alert.svg";
+import redAlertIcon from "../../images/park/red-alert.svg";
+import yellowAlertIcon from "../../images/park/yellow-alert.svg";
+import { getAdvisoryDate } from "../../utils/advisoryHelper";
+import { trackSnowplowEvent } from "../../utils/snowplowHelper";
+import "../../styles/advisories/advisoryDetails.scss";
 
-const formatDate = isoDate => {
-  return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
-}
+const formatDate = (isoDate) => {
+  return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : "";
+};
 
-export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus }) {
+export default function AdvisoryDetails({
+  advisories,
+  parkType,
+  parkAccessStatus,
+}) {
   const sortedAdvisories = orderBy(
     advisories,
     // advisory sort order
     [
-      'listingRank',
-      'urgency.sequence',
-      'accessStatus.precedence',
-      'eventType.precedence',
+      "listingRank",
+      "urgency.sequence",
+      "accessStatus.precedence",
+      "eventType.precedence",
       // display date
-      getAdvisoryDate
+      getAdvisoryDate,
     ],
-    ['desc', 'desc', 'asc', 'asc', 'desc']
-  )
+    ["desc", "desc", "asc", "asc", "desc"],
+  );
 
-  const [openAccordions, setOpenAccordions] = useState({})
+  const [openAccordions, setOpenAccordions] = useState({});
 
-  const advisoriesWithFormatting = sortedAdvisories.map(advisory => {
-    let alertIcon
+  const advisoriesWithFormatting = sortedAdvisories.map((advisory) => {
+    let alertIcon;
     switch (advisory.urgency.color) {
       case "blue":
-        alertIcon = blueAlertIcon
-        break
+        alertIcon = blueAlertIcon;
+        break;
       case "red":
-        alertIcon = redAlertIcon
-        break
+        alertIcon = redAlertIcon;
+        break;
       case "yellow":
-        alertIcon = yellowAlertIcon
-        break
+        alertIcon = yellowAlertIcon;
+        break;
       default:
-        alertIcon = blueAlertIcon
+        alertIcon = blueAlertIcon;
     }
 
     return {
@@ -62,44 +66,49 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
       formattedEndDate: formatDate(advisory.endDate),
       formattedUpdatedDate: formatDate(advisory.updatedDate),
       ...advisory,
-    }
-  })
+    };
+  });
 
   const toggleAccordion = (index, advisoryName) => {
     setOpenAccordions((prev) => ({
       ...prev,
       [index]: !prev[index],
-    }))
+    }));
     trackSnowplowEvent(
       openAccordions[index] ? "accordion_close" : "accordion_open",
       null,
       null,
       null,
       advisoryName,
-      {}
-    )
-  }
+      {},
+    );
+  };
 
   const toggleExpandAll = () => {
-    const newExpandAll = !allExpanded
-    const newOpenAccordions = advisoriesWithFormatting.reduce((acc, _, index) => {
-      acc[index] = newExpandAll
-      return acc
-    }, {})
-    setOpenAccordions(newOpenAccordions)
-  }
+    const newExpandAll = !allExpanded;
+    const newOpenAccordions = advisoriesWithFormatting.reduce(
+      (acc, _, index) => {
+        acc[index] = newExpandAll;
+        return acc;
+      },
+      {},
+    );
+    setOpenAccordions(newOpenAccordions);
+  };
 
   const allExpanded = useMemo(() => {
-    return advisoriesWithFormatting.length > 0 &&
+    return (
+      advisoriesWithFormatting.length > 0 &&
       Object.keys(openAccordions).length === advisoriesWithFormatting.length &&
       Object.values(openAccordions).every((isOpen) => isOpen)
-  }, [openAccordions, advisoriesWithFormatting.length])
+    );
+  }, [openAccordions, advisoriesWithFormatting.length]);
 
   useEffect(() => {
     if (advisoriesWithFormatting.length === 1 && parkAccessStatus !== null) {
-      setOpenAccordions({ 0: true })
+      setOpenAccordions({ 0: true });
     }
-  }, [advisoriesWithFormatting.length, parkAccessStatus])
+  }, [advisoriesWithFormatting.length, parkAccessStatus]);
 
   return (
     <div id="advisories">
@@ -110,9 +119,7 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
       <Row>
         {advisoriesWithFormatting.length === 0 && (
           <Col>
-            <p>
-              There are no reported advisories for this {parkType}
-            </p>
+            <p>There are no reported advisories for this {parkType}</p>
           </Col>
         )}
         {advisoriesWithFormatting.length > 0 && (
@@ -120,14 +127,24 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
             {advisoriesWithFormatting.length > 1 && (
               <button
                 onClick={toggleExpandAll}
-                aria-label={allExpanded ? "Collapse all advisories" : "Expand all advisories"}
+                aria-label={
+                  allExpanded
+                    ? "Collapse all advisories"
+                    : "Expand all advisories"
+                }
                 className="btn btn-link expand-link expand-icon"
               >
-                {allExpanded ?
-                  <>Collapse all advisories <FontAwesomeIcon icon={faChevronUp} /></>
-                  :
-                  <>Expand all advisories <FontAwesomeIcon icon={faChevronDown} /></>
-                }
+                {allExpanded ? (
+                  <>
+                    Collapse all advisories{" "}
+                    <FontAwesomeIcon icon={faChevronUp} />
+                  </>
+                ) : (
+                  <>
+                    Expand all advisories{" "}
+                    <FontAwesomeIcon icon={faChevronDown} />
+                  </>
+                )}
               </button>
             )}
             {advisoriesWithFormatting.map((advisory, index) => (
@@ -139,7 +156,9 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                   eventKey={index.toString()}
                   ariaLabel={`${advisory.urgency.urgency} urgency, ${advisory.title}`}
                   ariaControls={advisory.title}
-                  handleClick={() => toggleAccordion(index.toString(), advisory.title)}
+                  handleClick={() =>
+                    toggleAccordion(index.toString(), advisory.title)
+                  }
                 >
                   <div className="d-flex align-items-center">
                     <img
@@ -147,15 +166,22 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                       alt={`${advisory.urgency.urgency} urgency`}
                       className="advisory-status-icon"
                     ></img>
-                    <HtmlContent className="accordion-header">{advisory.title}</HtmlContent>
+                    <HtmlContent className="accordion-header">
+                      {advisory.title}
+                    </HtmlContent>
                   </div>
                   <div className="d-flex align-items-center">
-                    {openAccordions[index] ?
-                      <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-                    }
+                    {openAccordions[index] ? (
+                      <FontAwesomeIcon icon={faChevronUp} />
+                    ) : (
+                      <FontAwesomeIcon icon={faChevronDown} />
+                    )}
                   </div>
                 </CustomToggle>
-                <Accordion.Collapse eventKey={index.toString()} in={openAccordions[index]}>
+                <Accordion.Collapse
+                  eventKey={index.toString()}
+                  in={openAccordions[index]}
+                >
                   <div className="accordion-content">
                     {advisory.description && (
                       <HtmlContent className="mb-2">
@@ -166,7 +192,7 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                       <p key={id}>
                         <a
                           href={url}
-                          style={{ display: 'block' }}
+                          style={{ display: "block" }}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -176,17 +202,36 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
                     ))}
                     <div className="mt-2">
                       <AdvisoryDate
-                        hasEffectiveDateDisplay={advisory.isEffectiveDateDisplayed && advisory.formattedEffectiveDate}
-                        hasEndDateDisplay={advisory.isEndDateDisplayed && advisory.formattedEndDate}
+                        hasEffectiveDateDisplay={
+                          advisory.isEffectiveDateDisplayed &&
+                          advisory.formattedEffectiveDate
+                        }
+                        hasEndDateDisplay={
+                          advisory.isEndDateDisplayed &&
+                          advisory.formattedEndDate
+                        }
                         effectiveDate={advisory.formattedEffectiveDate}
-                        hasEffectiveDateRange={advisory.formattedEffectiveDate !== advisory.formattedEndDate}
+                        hasEffectiveDateRange={
+                          advisory.formattedEffectiveDate !==
+                          advisory.formattedEndDate
+                        }
                         endDate={advisory.formattedEndDate}
-                        hasAdvisoryDateDisplay={advisory.isAdvisoryDateDisplayed && advisory.formattedAdvisoryDate}
+                        hasAdvisoryDateDisplay={
+                          advisory.isAdvisoryDateDisplayed &&
+                          advisory.formattedAdvisoryDate
+                        }
                         advisoryDate={advisory.formattedAdvisoryDate}
-                        hasUpdatedDateDisplay={advisory.isUpdatedDateDisplayed && advisory.formattedUpdatedDate}
+                        hasUpdatedDateDisplay={
+                          advisory.isUpdatedDateDisplayed &&
+                          advisory.formattedUpdatedDate
+                        }
                         updatedDate={advisory.formattedUpdatedDate}
-                        hasDisplayedDate={advisory.isAdvisoryDateDisplayed || advisory.isUpdatedDateDisplayed ||
-                          advisory.isEffectiveDateDisplayed || advisory.isEndDateDisplayed}
+                        hasDisplayedDate={
+                          advisory.isAdvisoryDateDisplayed ||
+                          advisory.isUpdatedDateDisplayed ||
+                          advisory.isEffectiveDateDisplayed ||
+                          advisory.isEndDateDisplayed
+                        }
                       />
                     </div>
                   </div>
@@ -197,11 +242,11 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
         )}
       </Row>
     </div>
-  )
+  );
 }
 
 AdvisoryDetails.propTypes = {
   advisories: PropTypes.array.isRequired,
   parkType: PropTypes.string,
   parkAccessStatus: PropTypes.object,
-}
+};

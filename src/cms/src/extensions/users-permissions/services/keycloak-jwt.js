@@ -9,7 +9,8 @@
 const jwt = require("jsonwebtoken");
 const jwksClient = require("jwks-rsa");
 
-const AUTH_URL = process.env.STRAPI_SSO_AUTH_URL || "https://dev.loginproxy.gov.bc.ca/auth";
+const AUTH_URL =
+  process.env.STRAPI_SSO_AUTH_URL || "https://dev.loginproxy.gov.bc.ca/auth";
 const REALM = process.env.STRAPI_SSO_REALM || "bcparks-service-transformation";
 const SSO_ISSUER = AUTH_URL + "/realms/" + REALM;
 const SSO_JWKSURI = SSO_ISSUER + "/protocol/openid-connect/certs";

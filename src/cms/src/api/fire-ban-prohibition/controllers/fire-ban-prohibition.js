@@ -22,7 +22,7 @@ module.exports = createCoreController(
       } catch (error) {
         return ctx.internalServerError(
           "Error in service fire-ban-prohibition:getAllProtectedAreaFireBans()",
-          error.message,
+          error.message
         );
       }
 
@@ -33,7 +33,7 @@ module.exports = createCoreController(
       } catch (error) {
         return ctx.internalServerError(
           "Error in service fire-ban-prohibition:rescindAllProtectedAreaFireBans()",
-          error.message,
+          error.message
         );
       }
 
@@ -46,7 +46,7 @@ module.exports = createCoreController(
       } catch (error) {
         return ctx.internalServerError(
           "Error in service fire-ban-prohibition:generateAllProtectedAreaFireBans()",
-          error.message,
+          error.message
         );
       }
 
@@ -57,12 +57,12 @@ module.exports = createCoreController(
       } catch (error) {
         return ctx.internalServerError(
           "Error in service fire-ban-prohibition:getAllProtectedAreaFireBans()",
-          error.message,
+          error.message
         );
       }
 
       const updatedParks = _.difference(before, after).concat(
-        _.difference(after, before),
+        _.difference(after, before)
       );
 
       const queueList = updatedParks.map((orcs) => {
@@ -83,10 +83,10 @@ module.exports = createCoreController(
       const cachePlugin = strapi.plugins["rest-cache"];
       if (cachePlugin) {
         await cachePlugin.services.cacheStore.clearByUid(
-          "api::protected-area.protected-area",
+          "api::protected-area.protected-area"
         );
         await cachePlugin.services.cacheStore.clearByUid(
-          "api::public-advisory.public-advisory",
+          "api::public-advisory.public-advisory"
         );
       }
 
@@ -94,8 +94,8 @@ module.exports = createCoreController(
         {
           message: `Propagation complete! ${result.campfireBanCount} campfire bans impacting ${result.parkCount} protected areas.`,
         },
-        201,
+        201
       );
     },
-  }),
+  })
 );

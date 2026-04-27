@@ -1,13 +1,12 @@
-'use strict';
+"use strict";
 
-const { doElasticSearch } = require('../../../helpers/elasticClient');
+const { doElasticSearch } = require("../../../helpers/elasticClient");
 
 /**
  * search service
  */
 
 module.exports = ({ strapi }) => ({
-
   searchParks: async ({
     searchText,
     typeCode,
@@ -21,44 +20,43 @@ module.exports = ({ strapi }) => ({
     offset,
     latitude,
     longitude,
-    radius
+    radius,
   }) => {
-
     let textFilter = [];
 
     if (searchText) {
       textFilter = [
         {
           match_phrase: {
-            "protectedAreaName": {
+            protectedAreaName: {
               query: searchText,
-              boost: 5
-            }
-          }
+              boost: 5,
+            },
+          },
         },
         {
           match_phrase: {
-            "parkNames": {
+            parkNames: {
               query: searchText,
-              boost: 3
-            }
-          }
+              boost: 3,
+            },
+          },
         },
         {
           match_phrase_prefix: {
-            "protectedAreaName": {
+            protectedAreaName: {
               query: searchText,
-              boost: 1
-            }
-          }
+              boost: 1,
+            },
+          },
         },
         {
           match_phrase_prefix: {
             parkNames: {
               query: searchText,
-              boost: 1
-            }
-          }
+              boost: 1,
+            },
+          },
         },
         {
           multi_match: {
@@ -66,9 +64,9 @@ module.exports = ({ strapi }) => ({
             fuzziness: 1,
             type: "best_fields",
             fields: ["parkNames^2", "protectedAreaName^2", "nameLowerCase"],
-            operator: "and"
-          }
-        }
+            operator: "and",
+          },
+        },
       ];
     }
 
@@ -76,50 +74,47 @@ module.exports = ({ strapi }) => ({
     let campingFilter = [];
 
     for (const activityNum of activityNumbers) {
-      mustFilter.push({ match: { "parkActivities.num": activityNum } })
+      mustFilter.push({ match: { "parkActivities.num": activityNum } });
     }
 
     for (const facilityNum of facilityNumbers) {
-      mustFilter.push({ match: { "parkFacilities.num": facilityNum } })
+      mustFilter.push({ match: { "parkFacilities.num": facilityNum } });
     }
 
     for (const campingNum of campingNumbers) {
-      campingFilter.push({ match: { "parkCampingTypes.num": campingNum } })
+      campingFilter.push({ match: { "parkCampingTypes.num": campingNum } });
     }
 
     if (camping) {
-      mustFilter.push({ match: { "hasCamping": true } })
+      mustFilter.push({ match: { hasCamping: true } });
     }
 
     if (marineProtectedArea) {
-      mustFilter.push({ match: { "marineProtectedArea": true } })
+      mustFilter.push({ match: { marineProtectedArea: true } });
     }
 
     if (typeCode) {
-      mustFilter.push({ match: { "typeCode": typeCode } })
+      mustFilter.push({ match: { typeCode: typeCode } });
     }
 
     if (!isNaN(latitude) && !isNaN(longitude) && !isNaN(radius)) {
       mustFilter.push({
-        "geo_distance": {
-          "distance": `${radius}km`,
-          "geoBoundary": `${latitude},${longitude}`
-        }
+        geo_distance: {
+          distance: `${radius}km`,
+          geoBoundary: `${latitude},${longitude}`,
+        },
       });
     }
 
     let areaFilter = [];
 
     for (const areaNum of areaNumbers) {
-      areaFilter.push({ match: { "parkLocations.searchAreaNum": areaNum } })
+      areaFilter.push({ match: { "parkLocations.searchAreaNum": areaNum } });
     }
 
     let sortOrder;
     if (isNaN(latitude) || isNaN(longitude)) {
-      sortOrder = [
-        "_score",
-        "nameLowerCase.keyword"
-      ];
+      sortOrder = ["_score", "nameLowerCase.keyword"];
     } else {
       sortOrder = [
         {
@@ -129,10 +124,10 @@ module.exports = ({ strapi }) => ({
             unit: "km",
             mode: "min",
             distance_type: "arc",
-            ignore_unmapped: true
-          }
-        }
-      ]
+            ignore_unmapped: true,
+          },
+        },
+      ];
     }
 
     let aggregations = {};
@@ -142,15 +137,15 @@ module.exports = ({ strapi }) => ({
           terms: {
             field: "parkActivities.num",
             size: 50,
-            min_doc_count: 0
-          }
+            min_doc_count: 0,
+          },
         },
         facilities: {
           terms: {
             field: "parkFacilities.num",
             size: 50,
-            min_doc_count: 0
-          }
+            min_doc_count: 0,
+          },
         },
         all_areas: {
           global: {},
@@ -162,24 +157,24 @@ module.exports = ({ strapi }) => ({
                     ...mustFilter,
                     {
                       bool: {
-                        filter: [{ bool: { should: [...campingFilter] } }]
-                      }
-                    }
+                        filter: [{ bool: { should: [...campingFilter] } }],
+                      },
+                    },
                   ],
-                  must: [{ bool: { should: [...textFilter] } }]
-                }
+                  must: [{ bool: { should: [...textFilter] } }],
+                },
               },
               aggs: {
                 areas: {
                   terms: {
                     field: "parkLocations.searchAreaNum",
                     size: 50,
-                    min_doc_count: 0
-                  }
-                }
-              }
-            }
-          }
+                    min_doc_count: 0,
+                  },
+                },
+              },
+            },
+          },
         },
         all_camping: {
           global: {},
@@ -191,26 +186,26 @@ module.exports = ({ strapi }) => ({
                     ...mustFilter,
                     {
                       bool: {
-                        filter: [{ bool: { should: [...areaFilter] } }]
-                      }
-                    }
+                        filter: [{ bool: { should: [...areaFilter] } }],
+                      },
+                    },
                   ],
-                  must: [{ bool: { should: [...textFilter] } }]
-                }
+                  must: [{ bool: { should: [...textFilter] } }],
+                },
               },
               aggs: {
                 campings: {
                   terms: {
                     field: "parkCampingTypes.num",
                     size: 50,
-                    min_doc_count: 0
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                    min_doc_count: 0,
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
     }
 
     try {
@@ -227,23 +222,23 @@ module.exports = ({ strapi }) => ({
                   bool: {
                     filter: [
                       {
-                        bool: { should: [...areaFilter] }
-                      }
+                        bool: { should: [...areaFilter] },
+                      },
                     ],
                     must: [
                       {
-                        bool: { should: [...campingFilter] }
-                      }
-                    ]
-                  }
-                }
+                        bool: { should: [...campingFilter] },
+                      },
+                    ],
+                  },
+                },
               ],
               must: [
                 {
-                  bool: { should: [...textFilter] }
-                }
-              ]
-            }
+                  bool: { should: [...textFilter] },
+                },
+              ],
+            },
           },
           sort: sortOrder,
           _source: [
@@ -260,24 +255,22 @@ module.exports = ({ strapi }) => ({
             "parkPhotos",
             "parkDates",
             "parkAreas",
-            "parkFeatures"
+            "parkFeatures",
           ],
-          aggs: aggregations
-        }
+          aggs: aggregations,
+        },
       };
       const result = await doElasticSearch(query);
       return result;
-    }
-    catch (err) {
-      console.log('Search : search.searchParks : Error encountered while making a search request to ElasticSearch.')
+    } catch (err) {
+      console.log(
+        "Search : search.searchParks : Error encountered while making a search request to ElasticSearch."
+      );
       throw err;
     }
   },
 
-  parkAutocomplete: async ({
-    searchText,
-  }) => {
-
+  parkAutocomplete: async ({ searchText }) => {
     if (!searchText) {
       return [];
     }
@@ -292,17 +285,17 @@ module.exports = ({ strapi }) => ({
           match_phrase_prefix: {
             nameLowerCase: {
               query: searchText,
-              boost: 4
-            }
-          }
+              boost: 4,
+            },
+          },
         },
         {
           match_phrase_prefix: {
             parkNames: {
               query: searchText,
-              boost: 4
-            }
-          }
+              boost: 4,
+            },
+          },
         },
         {
           multi_match: {
@@ -310,9 +303,10 @@ module.exports = ({ strapi }) => ({
             fuzziness: 1,
             type: "best_fields",
             fields: ["parkNames^2", "protectedAreaName^5", "nameLowerCase"],
-            operator: "and"
-          }
-        }];
+            operator: "and",
+          },
+        },
+      ];
     }
 
     if (searchText) {
@@ -321,19 +315,19 @@ module.exports = ({ strapi }) => ({
           prefix: {
             "nameLowerCase.keyword": {
               value: searchText.toLowerCase(),
-              boost: 6
-            }
-          }
+              boost: 6,
+            },
+          },
         },
         {
           prefix: {
             "parkNames.keyword": {
               value: searchText.toLowerCase(),
-              boost: 3
-            }
-          }
+              boost: 3,
+            },
+          },
         },
-        ...filtersForLongerQueries
+        ...filtersForLongerQueries,
       ];
     }
 
@@ -346,30 +340,26 @@ module.exports = ({ strapi }) => ({
           size: 10,
           query: {
             bool: {
-              should: [...textFilter]
-            }
-          }
+              should: [...textFilter],
+            },
+          },
         },
-        sort: [
-          "typeCode.keyword:desc",
-          "_score",
-          "nameLowerCase.keyword"
-        ],
-        _source: [
-          "protectedAreaName",
-          "slug"
-        ]
+        sort: ["typeCode.keyword:desc", "_score", "nameLowerCase.keyword"],
+        _source: ["protectedAreaName", "slug"],
       };
       const result = await doElasticSearch(query);
       return result;
-    }
-    catch (err) {
-      console.log('Search : search.parkAutocomplete : Error encountered while making a search request to ElasticSearch.')
+    } catch (err) {
+      console.log(
+        "Search : search.parkAutocomplete : Error encountered while making a search request to ElasticSearch."
+      );
       throw err;
     }
   },
 });
 
 const getIndexName = () => {
-  return `${process.env.ELASTIC_PARK_INDEX_NAME}-${process.env.STRAPI_ADMIN_ENVIRONMENT || 'local'}`;
-}
+  return `${process.env.ELASTIC_PARK_INDEX_NAME}-${
+    process.env.STRAPI_ADMIN_ENVIRONMENT || "local"
+  }`;
+};

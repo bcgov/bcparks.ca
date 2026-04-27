@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const { map } = require('lodash/fp');
-const { UnauthorizedError } = require('@strapi/utils').errors;
+const { map } = require("lodash/fp");
+const { UnauthorizedError } = require("@strapi/utils").errors;
 const AUTH_URL =
   process.env.STRAPI_SSO_AUTH_URL || "https://dev.loginproxy.gov.bc.ca/auth";
 
@@ -13,7 +13,7 @@ const getService = (name) => {
 
 const authenticate = async (ctx) => {
   try {
-    const kcToken = await getService('keycloakJwt').getKCToken(ctx);
+    const kcToken = await getService("keycloakJwt").getKCToken(ctx);
 
     if (!kcToken) {
       // No Keycloak token, return unauthenticated to let other strategies handle it
@@ -34,7 +34,7 @@ const authenticate = async (ctx) => {
       return { authenticated: true };
     }
 
-    const roles = kcToken.resource_access?.['staff-portal']?.roles;
+    const roles = kcToken.resource_access?.["staff-portal"]?.roles;
 
     if (!roles) {
       strapi.log.warn("No staff-portal roles found");
@@ -42,7 +42,7 @@ const authenticate = async (ctx) => {
     }
 
     const hasRequiredRole = roles.some((role) =>
-      KEYCLOAK_AUTH_ROLES.includes(role),
+      KEYCLOAK_AUTH_ROLES.includes(role)
     );
 
     if (!hasRequiredRole) {
@@ -71,11 +71,13 @@ const authenticate = async (ctx) => {
     const permissions = await Promise.resolve(user.role.id)
       .then((roleId) => getService("permission").findRolePermissions(roleId))
       .then(
-        map((perm) => getService("permission").toContentAPIPermission(perm)),
+        map((perm) => getService("permission").toContentAPIPermission(perm))
       );
 
     // Generate an ability (content API engine) based on the given permissions
-    const ability = await strapi.contentAPI.permissions.engine.generateAbility(permissions);
+    const ability = await strapi.contentAPI.permissions.engine.generateAbility(
+      permissions
+    );
 
     ctx.state.user = user;
 
@@ -96,7 +98,7 @@ const verify = async (auth, config) => {
 };
 
 module.exports = {
-  name: 'users-permissions',
+  name: "users-permissions",
   authenticate,
   verify,
 };

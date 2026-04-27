@@ -1,27 +1,27 @@
-const { graphql } = require("gatsby")
-const slugify = require("slugify")
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
-const parseUrl = require("parse-url")
+const { graphql } = require("gatsby");
+const slugify = require("slugify");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+const parseUrl = require("parse-url");
 
 const strapiApiRequest = (graphql, query) =>
   new Promise((resolve, reject) => {
     resolve(
-      graphql(query).then(result => {
+      graphql(query).then((result) => {
         if (result.errors) {
-          reject(result.errors)
+          reject(result.errors);
         }
-        return result
-      })
-    )
-  })
+        return result;
+      }),
+    );
+  });
 
 exports.onPostBuild = ({ reporter }) => {
-  reporter.info(`Pages have been built!`)
+  reporter.info(`Pages have been built!`);
 
   // Compile CKEditor.scss to CSS for CMS use
-  const sass = require("sass")
-  const fs = require("fs")
-  const path = require("path")
+  const sass = require("sass");
+  const fs = require("fs");
+  const path = require("path");
 
   try {
     const result = sass.renderSync({
@@ -31,18 +31,18 @@ exports.onPostBuild = ({ reporter }) => {
         path.join(__dirname, "src/styles"),
         path.join(__dirname, "node_modules"),
       ],
-    })
+    });
 
-    const outputPath = path.join(__dirname, "public/ckeditor-styles.css")
-    fs.writeFileSync(outputPath, result.css)
-    reporter.info(`CKEditor styles compiled to: ${outputPath}`)
+    const outputPath = path.join(__dirname, "public/ckeditor-styles.css");
+    fs.writeFileSync(outputPath, result.css);
+    reporter.info(`CKEditor styles compiled to: ${outputPath}`);
   } catch (error) {
-    reporter.error(`Failed to compile CKEditor.scss: ${error.message}`)
+    reporter.error(`Failed to compile CKEditor.scss: ${error.message}`);
   }
-}
+};
 
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+  const { createTypes } = actions;
 
   const typeDefs = `
   type STRAPI_AUDIO_CLIP_DESCRIPTION_TEXTNODE implements Node @dontInfer {
@@ -429,9 +429,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     Seo: STRAPI__COMPONENT_PARKS_SEO @link(by: "id", from: "Seo___NODE")
     Content: [ContentUnion] @link(by: "id", from: "Content___NODE")
   }
-  `
-  createTypes(typeDefs)
-}
+  `;
+  createTypes(typeDefs);
+};
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const pageQuery = `
@@ -525,7 +525,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       totalCount
     }
   }
-  `
+  `;
   const parkQuery = `
   {
     allStrapiProtectedArea(filter: {isDisplayed: {eq: true}}) {
@@ -540,7 +540,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       totalCount
     }
   }
-  `
+  `;
   const siteQuery = `
   {
     allStrapiSite(filter: {isDisplayed: {eq: true}}) {
@@ -557,7 +557,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       totalCount
     }
   }
-  `
+  `;
   const parkSubQuery = `
   {
     allStrapiParkSubPage {
@@ -571,7 +571,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
     }
   }
-  `
+  `;
   const redirectQuery = `
   {
     allStrapiLegacyRedirect {
@@ -581,99 +581,115 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
     }
   }
-  `
+  `;
 
-  await createStaticPage(pageQuery, { graphql, actions, reporter })
-  await createParkPage(parkQuery, { graphql, actions, reporter })
-  await createSitePage(siteQuery, { graphql, actions, reporter })
-  await createParkSubPages(parkSubQuery, { graphql, actions, reporter })
-  await createRedirects(parkQuery, redirectQuery, { graphql, actions, reporter })
-}
+  await createStaticPage(pageQuery, { graphql, actions, reporter });
+  await createParkPage(parkQuery, { graphql, actions, reporter });
+  await createSitePage(siteQuery, { graphql, actions, reporter });
+  await createParkSubPages(parkSubQuery, { graphql, actions, reporter });
+  await createRedirects(parkQuery, redirectQuery, {
+    graphql,
+    actions,
+    reporter,
+  });
+};
 
 async function createStaticPage(query, { graphql, actions, reporter }) {
-  const result = await graphql(query)
+  const result = await graphql(query);
   if (result.errors) {
-    reporter.panicOnBuild(`Error while running GraphQL query - node create page.`)
-    return
+    reporter.panicOnBuild(
+      `Error while running GraphQL query - node create page.`,
+    );
+    return;
   }
-  result.data.allStrapiPage.nodes.forEach(page => {
+  result.data.allStrapiPage.nodes.forEach((page) => {
     actions.createPage({
       path: page.Slug.replace(/\/$|$/, `/`),
       component: require.resolve(`./src/templates/${page.Template}.js`),
       context: { page },
-    })
-  })
+    });
+  });
 }
 
 async function createParkPage(query, { graphql, actions, reporter }) {
-  const result = await strapiApiRequest(graphql, query)
+  const result = await strapiApiRequest(graphql, query);
   if (result.errors) {
-    reporter.panicOnBuild(`Error while running GraphQL query - node create park page.`)
-    return
+    reporter.panicOnBuild(
+      `Error while running GraphQL query - node create park page.`,
+    );
+    return;
   }
-  result.data.allStrapiProtectedArea.nodes.forEach(park => {
+  result.data.allStrapiProtectedArea.nodes.forEach((park) => {
     actions.createPage({
       path: park.slug.replace(/\/$|$/, `/`),
       component: require.resolve(`./src/templates/park.js`),
       context: { ...park },
-    })
-  })
+    });
+  });
 }
 
 async function createSitePage(query, { graphql, actions, reporter }) {
-  const result = await strapiApiRequest(graphql, query)
+  const result = await strapiApiRequest(graphql, query);
   if (result.errors) {
-    reporter.panicOnBuild(`Error while running GraphQL query - node create site page.`)
-    return
+    reporter.panicOnBuild(
+      `Error while running GraphQL query - node create site page.`,
+    );
+    return;
   }
-  result.data.allStrapiSite.nodes.forEach(site => {
+  result.data.allStrapiSite.nodes.forEach((site) => {
     // fallback in case site doesn't have a slug
-    const slug = site.slug || slugify(site.siteName).toLowerCase()
+    const slug = site.slug || slugify(site.siteName).toLowerCase();
     // fallback in case site doesn't have a relation with protectedArea
-    const parkPath = site.protectedArea?.slug ?? "no-protected-area"
-    const sitePath = `${parkPath}/${slug}`
+    const parkPath = site.protectedArea?.slug ?? "no-protected-area";
+    const sitePath = `${parkPath}/${slug}`;
     actions.createPage({
       path: sitePath.replace(/\/$|$/, `/`),
       component: require.resolve(`./src/templates/site.js`),
       context: { ...site },
-    })
-  })
+    });
+  });
 }
 
 async function createParkSubPages(query, { graphql, actions, reporter }) {
-  const result = await strapiApiRequest(graphql, query)
+  const result = await strapiApiRequest(graphql, query);
   if (result.errors) {
-    reporter.panicOnBuild(`Error while running GraphQL query - node create park sub page.`)
-    return
+    reporter.panicOnBuild(
+      `Error while running GraphQL query - node create park sub page.`,
+    );
+    return;
   }
-  result.data.allStrapiParkSubPage.nodes.forEach(parkSubPage => {
+  result.data.allStrapiParkSubPage.nodes.forEach((parkSubPage) => {
     // fallback in case site doesn't have a relation with protectedArea
-    const parkPath = parkSubPage.protectedArea?.slug ?? "no-protected-area"
-    const parkSubPagePath = `${parkPath}/${parkSubPage.slug}`
+    const parkPath = parkSubPage.protectedArea?.slug ?? "no-protected-area";
+    const parkSubPagePath = `${parkPath}/${parkSubPage.slug}`;
     actions.createPage({
       path: parkSubPagePath.replace(/\/$|$/, `/`),
       component: require.resolve(`./src/templates/parkSubPage.js`),
       context: {
         protectedAreaSlug: parkSubPage.protectedArea?.slug,
-        ...parkSubPage
+        ...parkSubPage,
       },
-    })
-  })
+    });
+  });
 }
 
-async function createRedirects(parkQuery, redirectQuery, { graphql, actions, reporter }) {
-  const response = await strapiApiRequest(graphql, redirectQuery)
-  const resultPark = await strapiApiRequest(graphql, parkQuery)
-  const redirects = response.data.allStrapiLegacyRedirect.nodes
-  const parks = resultPark.data.allStrapiProtectedArea.nodes
+async function createRedirects(
+  parkQuery,
+  redirectQuery,
+  { graphql, actions, reporter },
+) {
+  const response = await strapiApiRequest(graphql, redirectQuery);
+  const resultPark = await strapiApiRequest(graphql, parkQuery);
+  const redirects = response.data.allStrapiLegacyRedirect.nodes;
+  const parks = resultPark.data.allStrapiProtectedArea.nodes;
 
-  redirects.map(item => {
+  redirects.map((item) => {
     return actions.createRedirect({
       fromPath: item.fromPath,
       toPath: item.toPath,
-    })
-  })
-  parks.map(park => {
+    });
+  });
+  parks.map((park) => {
     if (park.oldUrl) {
       try {
         const oldUrl = parseUrl(park.oldUrl);
@@ -681,13 +697,15 @@ async function createRedirects(parkQuery, redirectQuery, { graphql, actions, rep
           return actions.createRedirect({
             fromPath: oldUrl.pathname,
             toPath: park.slug,
-          })
+          });
         }
       } catch (error) {
-        reporter.warn(`Field oldUrl for park ${park.protectedAreaName} could not be parsed`)
+        reporter.warn(
+          `Field oldUrl for park ${park.protectedAreaName} could not be parsed`,
+        );
       }
     }
-  })
+  });
 }
 
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
@@ -697,17 +715,17 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
         rules: [],
       },
       plugins: [new NodePolyfillPlugin()],
-    })
+    });
   }
-  if (stage === 'build-javascript' || stage === 'develop') {
-    const config = getConfig()
+  if (stage === "build-javascript" || stage === "develop") {
+    const config = getConfig();
 
     const miniCssExtractPlugin = config.plugins.find(
-      plugin => plugin.constructor.name === 'MiniCssExtractPlugin'
-    )
+      (plugin) => plugin.constructor.name === "MiniCssExtractPlugin",
+    );
     if (miniCssExtractPlugin) {
-      miniCssExtractPlugin.options.ignoreOrder = true
+      miniCssExtractPlugin.options.ignoreOrder = true;
     }
-    actions.replaceWebpackConfig(config)
+    actions.replaceWebpackConfig(config);
   }
-}
+};

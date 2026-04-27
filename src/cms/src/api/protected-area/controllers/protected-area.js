@@ -59,5 +59,5 @@ module.exports = createCoreController(
     async autocomplete(ctx) {
       return await customSearch.parkAutocomplete(ctx);
     },
-  }),
+  })
 );

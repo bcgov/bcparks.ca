@@ -1,56 +1,75 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react"
-import Accordion from "react-bootstrap/Accordion"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import Accordion from "react-bootstrap/Accordion";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-import HtmlContent from "../htmlContent"
-import StaticIcon from "./staticIcon"
-import { isNullOrWhiteSpace } from "../../utils/helpers"
-import { trackSnowplowEvent } from "../../utils/snowplowHelper"
-import "../../styles/cmsSnippets/parkInfoPage.scss"
-import ParkFeature from "./parkFeature"
-import CustomToggle from "./customToggle"
+import HtmlContent from "../htmlContent";
+import StaticIcon from "./staticIcon";
+import { isNullOrWhiteSpace } from "../../utils/helpers";
+import { trackSnowplowEvent } from "../../utils/snowplowHelper";
+import "../../styles/cmsSnippets/parkInfoPage.scss";
+import ParkFeature from "./parkFeature";
+import CustomToggle from "./customToggle";
 
-export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccordion, groupPicnicReservationUrl }) => {
-  const isPicnicFacility = facility.facilityType.facilityCode === "picnic-shelters"
+export const AccordionList = ({
+  eventKey,
+  facility,
+  openAccordions,
+  toggleAccordion,
+  groupPicnicReservationUrl,
+}) => {
+  const isPicnicFacility =
+    facility.facilityType.facilityCode === "picnic-shelters";
 
   return (
-    <Accordion
-      className={`is-open--${openAccordions[eventKey]}`}
-    >
+    <Accordion className={`is-open--${openAccordions[eventKey]}`}>
       <CustomToggle
         eventKey={eventKey}
         toggleId={facility.facilityType.facilityCode}
         ariaControls={facility.facilityType.facilityName}
-        handleClick={() => toggleAccordion(eventKey, facility.facilityType.facilityName)}
+        handleClick={() =>
+          toggleAccordion(eventKey, facility.facilityType.facilityName)
+        }
       >
         <div className="d-flex align-items-center">
-          <StaticIcon name={facility.facilityType.icon || "information"} size={36} />
+          <StaticIcon
+            name={facility.facilityType.icon || "information"}
+            size={36}
+          />
           <HtmlContent className="accordion-header">
             {facility.facilityType.facilityName}
           </HtmlContent>
         </div>
         <div className="d-flex align-items-center">
-          {openAccordions[eventKey] ?
-            <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />
-          }
+          {openAccordions[eventKey] ? (
+            <FontAwesomeIcon icon={faChevronUp} />
+          ) : (
+            <FontAwesomeIcon icon={faChevronDown} />
+          )}
         </div>
       </CustomToggle>
       <Accordion.Collapse eventKey={eventKey} in={openAccordions[eventKey]}>
         <div className="accordion-content">
           <div className="mb-3">
             <HtmlContent>
-              {!isNullOrWhiteSpace(facility.description?.data) ?
-                facility.description.data : facility.facilityType.defaultDescription.data.defaultDescription
-              }
+              {!isNullOrWhiteSpace(facility.description?.data)
+                ? facility.description.data
+                : facility.facilityType.defaultDescription.data
+                    .defaultDescription}
             </HtmlContent>
             {!facility.hideStandardCallout &&
-              !isNullOrWhiteSpace(facility.facilityType?.appendStandardCalloutText?.data?.appendStandardCalloutText) && (
+              !isNullOrWhiteSpace(
+                facility.facilityType?.appendStandardCalloutText?.data
+                  ?.appendStandardCalloutText,
+              ) && (
                 <blockquote className="callout-box">
                   <HtmlContent>
-                    {facility.facilityType.appendStandardCalloutText.data.appendStandardCalloutText}
+                    {
+                      facility.facilityType.appendStandardCalloutText.data
+                        .appendStandardCalloutText
+                    }
                   </HtmlContent>
                 </blockquote>
               )}
@@ -60,89 +79,94 @@ export const AccordionList = ({ eventKey, facility, openAccordions, toggleAccord
           ))}
           {/* picnic shelter reservation button */}
           {isPicnicFacility && groupPicnicReservationUrl && (
-            <a href={groupPicnicReservationUrl} className="btn btn-secondary my-4">
+            <a
+              href={groupPicnicReservationUrl}
+              className="btn btn-secondary my-4"
+            >
               Book picnic shelter
             </a>
           )}
         </div>
       </Accordion.Collapse>
     </Accordion>
-  )
-}
+  );
+};
 
 export default function ParkFacility({ data, groupPicnicReservationUrl }) {
-  const facilityData = useMemo(() => data || [], [data])
-  const [hash, setHash] = useState("")
-  const [openAccordions, setOpenAccordions] = useState({})
+  const facilityData = useMemo(() => data || [], [data]);
+  const [hash, setHash] = useState("");
+  const [openAccordions, setOpenAccordions] = useState({});
 
   const toggleAccordion = (index, facilityName) => {
     setOpenAccordions((prev) => ({
       ...prev,
       [index]: !prev[index],
-    }))
+    }));
     trackSnowplowEvent(
       openAccordions[index] ? "accordion_close" : "accordion_open",
       null,
       null,
       null,
       facilityName,
-      {}
-    )
-  }
+      {},
+    );
+  };
 
   const toggleExpandAll = () => {
-    const newExpandAll = !allExpanded
+    const newExpandAll = !allExpanded;
     const newOpenAccordions = facilityData.reduce((acc, _, index) => {
-      acc[index] = newExpandAll
-      return acc
-    }, {})
-    setOpenAccordions(newOpenAccordions)
-  }
+      acc[index] = newExpandAll;
+      return acc;
+    }, {});
+    setOpenAccordions(newOpenAccordions);
+  };
 
   const allExpanded = useMemo(() => {
-    return facilityData.length > 0 &&
+    return (
+      facilityData.length > 0 &&
       Object.keys(openAccordions).length === facilityData.length &&
       Object.values(openAccordions).every((isOpen) => isOpen)
-  }, [openAccordions, facilityData.length])
+    );
+  }, [openAccordions, facilityData.length]);
 
   const checkHash = useCallback(() => {
     // Check hash in url
     // if we find a matching facilityCode, open that facility accordion
-    let h = ""
-    let idx = 0
+    let h = "";
+    let idx = 0;
     if (typeof window !== "undefined") {
-      h = window.location.hash
+      h = window.location.hash;
       if (h !== undefined && h !== hash) {
-        facilityData.forEach(facility => {
+        facilityData.forEach((facility) => {
           if (h === "#" + facility.facilityType.facilityCode) {
             if (!openAccordions[idx]) {
               setOpenAccordions((prev) => ({
                 ...prev,
                 [idx]: true,
-              }))
+              }));
             }
           }
-          idx++
-        })
-        setHash(h)
+          idx++;
+        });
+        setHash(h);
       }
     }
-  }, [facilityData, hash, openAccordions])
+  }, [facilityData, hash, openAccordions]);
 
   useEffect(() => {
     window.addEventListener("hashchange", function (e) {
-      checkHash()
-    })
-    checkHash()
-  }, [facilityData, checkHash])
+      checkHash();
+    });
+    checkHash();
+  }, [facilityData, checkHash]);
 
   useEffect(() => {
     if (facilityData.length === 1) {
-      setOpenAccordions({ 0: true })
+      setOpenAccordions({ 0: true });
     }
-  }, [facilityData.length])
+  }, [facilityData.length]);
 
-  if (facilityData.length === 0) return null
+  if (facilityData.length === 0) return null;
 
   return (
     <div id="facilities" className="anchor-link">
@@ -155,14 +179,22 @@ export default function ParkFacility({ data, groupPicnicReservationUrl }) {
           {facilityData.length > 1 && (
             <button
               onClick={toggleExpandAll}
-              aria-label={allExpanded ? "Collapse all facilities" : "Expand all facilities"}
+              aria-label={
+                allExpanded
+                  ? "Collapse all facilities"
+                  : "Expand all facilities"
+              }
               className="btn btn-link expand-link expand-icon"
             >
-              {allExpanded ?
-                <>Collapse all facilities <FontAwesomeIcon icon={faChevronUp} /></>
-                :
-                <>Expand all facilities <FontAwesomeIcon icon={faChevronDown} /></>
-              }
+              {allExpanded ? (
+                <>
+                  Collapse all facilities <FontAwesomeIcon icon={faChevronUp} />
+                </>
+              ) : (
+                <>
+                  Expand all facilities <FontAwesomeIcon icon={faChevronDown} />
+                </>
+              )}
             </button>
           )}
           {facilityData.map((facility, index) => (
@@ -178,5 +210,5 @@ export default function ParkFacility({ data, groupPicnicReservationUrl }) {
         </Col>
       </Row>
     </div>
-  )
+  );
 }

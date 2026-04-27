@@ -19,6 +19,6 @@ module.exports = {
       method: "POST",
       path: "/public-advisories/trigger-scheduled",
       handler: "public-advisory.triggerScheduled",
-    }
+    },
   ],
 };

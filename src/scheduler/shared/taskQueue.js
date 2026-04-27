@@ -22,7 +22,9 @@ const readQueue = async function (actionName, options) {
   const queueResponse = await cmsAxios.get(`/api/queued-tasks?${query}`);
   const queuedTasks = queueResponse.data.data;
   if (queuedTasks.length > 0) {
-    getLogger().info(`Got ${queuedTasks.length} "${actionName}" tasks from the queue`);
+    getLogger().info(
+      `Got ${queuedTasks.length} "${actionName}" tasks from the queue`,
+    );
   }
   return queuedTasks;
 };

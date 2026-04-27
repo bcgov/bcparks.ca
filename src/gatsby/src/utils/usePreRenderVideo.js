@@ -41,11 +41,11 @@ export const usePreRenderVideo = (content = "") => {
       if (videoId) {
         // Fetch video title from noembed API (YouTube metadata service)
         const titlePromise = fetch(
-          `https://noembed.com/embed?dataType=json&url=https://www.youtube.com/watch?v=${videoId}`
+          `https://noembed.com/embed?dataType=json&url=https://www.youtube.com/watch?v=${videoId}`,
         )
-        .then(response => response.json())
-        .then(data => data.title)
-        .catch(() => null); // Return null for failed requests to maintain array indices
+          .then((response) => response.json())
+          .then((data) => data.title)
+          .catch(() => null); // Return null for failed requests to maintain array indices
 
         fetchPromises.push(titlePromise);
       }
@@ -97,6 +97,6 @@ export const usePreRenderVideo = (content = "") => {
   }, [content, fetchVideoTitles]);
 
   return {
-    htmlContent
+    htmlContent,
   };
 };

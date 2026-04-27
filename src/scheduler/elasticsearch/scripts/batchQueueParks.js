@@ -1,6 +1,11 @@
 const { cmsAxios } = require("../../shared/axiosConfig");
 const { getLogger } = require("../../shared/logging");
-const { readQueue, removeFromQueue, addToQueue, existsInQueue } = require("../../shared/taskQueue");
+const {
+  readQueue,
+  removeFromQueue,
+  addToQueue,
+  existsInQueue,
+} = require("../../shared/taskQueue");
 const qs = require("qs");
 
 /**
@@ -53,14 +58,18 @@ exports.batchQueueParks = async function () {
         }
       } catch (error) {
         isError = true;
-        logger.error(`batchQueueParks() failed while adding park ${park.orcs} to queue: ${error}`);
+        logger.error(
+          `batchQueueParks() failed while adding park ${park.orcs} to queue: ${error}`,
+        );
       }
     }
     if (!isError) {
       try {
         await removeFromQueue([task.documentId]);
       } catch (error) {
-        logger.error(`batchQueueParks() failed while removing batch-queue task from queue: ${error}`);
+        logger.error(
+          `batchQueueParks() failed while removing batch-queue task from queue: ${error}`,
+        );
         return;
       }
     }

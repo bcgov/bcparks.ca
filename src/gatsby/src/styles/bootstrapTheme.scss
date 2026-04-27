@@ -8,7 +8,8 @@
 
 @include theme-link-styles;
 
-.btn, .nav-link {
+.btn,
+.nav-link {
   &:focus-visible {
     box-shadow: none;
   }

@@ -17,9 +17,8 @@
  */
 export function getGatsbyUrl() {
   // Get Strapi's hostname
-  const hostname = typeof window !== "undefined"
-    ? window.location.hostname
-    : "bcparks.ca";
+  const hostname =
+    typeof window !== "undefined" ? window.location.hostname : "bcparks.ca";
 
   // Map CMS subdomains to frontend subdomains
   const hostnameMap = new Map([
@@ -63,12 +62,12 @@ export const injectAdminStylesheets = () => {
   injectAdminStylesheet(
     "https://cdn.jsdelivr.net/npm/@bcgov/bc-sans@2.1.0/css/BC_Sans.min.css",
     "bc-sans-font",
-    "sha384-AK+SldBmwNGzhuCscvxxZx4O0hDR2M5z5BdD8NSOAeWyVzRHMXINWpTiBjt9gM2+",
+    "sha384-AK+SldBmwNGzhuCscvxxZx4O0hDR2M5z5BdD8NSOAeWyVzRHMXINWpTiBjt9gM2+"
   );
   injectAdminStylesheet(
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css",
     "font-awesome",
-    "sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm",
+    "sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
   );
 
   // Then inject CKEditor content styles

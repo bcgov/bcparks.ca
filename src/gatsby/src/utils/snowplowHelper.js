@@ -4,7 +4,7 @@ export const trackSnowplowEvent = (
   parkName = null,
   cityName = null,
   label = null,
-  filters = {}
+  filters = {},
 ) => {
   if (typeof window.snowplow === "function") {
     window.snowplow("trackSelfDescribingEvent", {
@@ -25,24 +25,24 @@ export const trackSnowplowEvent = (
         // Possible filters: 'popular', 'area', 'camping', 'activities', 'facilities'
         filters: filters,
       },
-    })
+    });
   }
-}
+};
 
 // convert filter array to object
-export const transformFilters = filters => {
+export const transformFilters = (filters) => {
   return filters.reduce((acc, filter) => {
-    let filterType = filter.type.toLocaleLowerCase()
+    let filterType = filter.type.toLocaleLowerCase();
     // change "things to do" to "activities"
     if (filterType === "things to do") {
       filterType = "activities";
     }
 
-    // add filter label to object 
+    // add filter label to object
     if (!acc[filterType]) {
-      acc[filterType] = filter.label
+      acc[filterType] = filter.label;
     } else {
-      acc[filterType] += `, ${filter.label}`
+      acc[filterType] += `, ${filter.label}`;
     }
 
     // check for "Popular" filters
@@ -52,11 +52,11 @@ export const transformFilters = filters => {
       (filterType === "facilities" && filter.value === 6)
     ) {
       if (!acc["popular"]) {
-        acc["popular"] = filter.label
+        acc["popular"] = filter.label;
       } else {
-        acc["popular"] += `, ${filter.label}`
+        acc["popular"] += `, ${filter.label}`;
       }
     }
-    return acc
-  }, {})
-}
+    return acc;
+  }, {});
+};

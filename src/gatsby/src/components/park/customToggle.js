@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 export default function CustomToggle({
   eventKey,
@@ -8,12 +8,12 @@ export default function CustomToggle({
   handleClick,
   children,
 }) {
-  const handleKeyDown = event => {
+  const handleKeyDown = (event) => {
     if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault()
-      handleClick(eventKey)
+      event.preventDefault();
+      handleClick(eventKey);
     }
-  }
+  };
 
   return (
     <div
@@ -28,5 +28,5 @@ export default function CustomToggle({
     >
       {children}
     </div>
-  )
+  );
 }

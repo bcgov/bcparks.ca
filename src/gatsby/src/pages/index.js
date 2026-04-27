@@ -1,19 +1,19 @@
-import React from "react"
-import { graphql } from "gatsby"
+import React from "react";
+import { graphql } from "gatsby";
 
-import Acknowledgment from "../components/acknowledgment"
-import Footer from "../components/footer"
-import Header from "../components/header"
-import MainSearch from "../components/search/mainSearch"
-import PageContent from "../components/pageContent/pageContent"
-import Seo from "../components/seo"
-import ScrollToTop from "../components/scrollToTop"
+import Acknowledgment from "../components/acknowledgment";
+import Footer from "../components/footer";
+import Header from "../components/header";
+import MainSearch from "../components/search/mainSearch";
+import PageContent from "../components/pageContent/pageContent";
+import Seo from "../components/seo";
+import ScrollToTop from "../components/scrollToTop";
 
-import "../styles/home.scss"
+import "../styles/home.scss";
 
 export const query = graphql`
   {
-    strapiPage(Slug: {eq: "/home"}) {
+    strapiPage(Slug: { eq: "/home" }) {
       Slug
       Content {
         ... on STRAPI__COMPONENT_PARKS_CARD_SET {
@@ -45,10 +45,7 @@ export const query = graphql`
         }
       }
     }
-    allStrapiMenu(
-      sort: {order: ASC},
-      filter: {show: {eq: true}}
-    ) {
+    allStrapiMenu(sort: { order: ASC }, filter: { show: { eq: true } }) {
       nodes {
         strapi_id
         title
@@ -70,11 +67,11 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
 export default function Home({ data }) {
-  const pageContent = data.strapiPage.Content || []
-  const menuContent = data?.allStrapiMenu?.nodes || []
+  const pageContent = data.strapiPage.Content || [];
+  const menuContent = data?.allStrapiMenu?.nodes || [];
 
   return (
     <div id="home">
@@ -87,7 +84,7 @@ export default function Home({ data }) {
             backgroundImage: `url(${require("../images/home/search_bg.jpg").default})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-            backgroundPosition: "center"
+            backgroundPosition: "center",
           }}
         >
           <div id="home-parks-search">
@@ -97,7 +94,7 @@ export default function Home({ data }) {
       </div>
       <div className="home-content-width-override">
         <div id="main">
-          {pageContent.map(content => (
+          {pageContent.map((content) => (
             <div key={content.strapi_component + "-" + content.id}>
               <PageContent
                 contentType={content.strapi_component}
@@ -111,9 +108,12 @@ export default function Home({ data }) {
       <ScrollToTop />
       <Footer />
     </div>
-  )
+  );
 }
 
 export const Head = () => (
-  <Seo title="Home" description="Official website for BC Parks. Get information on camping and other activities in parks across British Columbia. Learn about our environmental conservation work." />
-)
+  <Seo
+    title="Home"
+    description="Official website for BC Parks. Get information on camping and other activities in parks across British Columbia. Learn about our environmental conservation work."
+  />
+);

@@ -73,7 +73,7 @@ module.exports = {
         },
       });
       strapi.log.info(
-        `queued ${documentIds.length} documentIds for ORCS lookup and 'elastic index park' task creation`,
+        `queued ${documentIds.length} documentIds for ORCS lookup and 'elastic index park' task creation`
       );
     } catch (error) {
       strapi.log.error(error);
@@ -83,7 +83,7 @@ module.exports = {
     subject,
     title,
     advisoryNumber,
-    triggerInfo,
+    triggerInfo
   ) {
     if (!subject || !title || !advisoryNumber) {
       return;
@@ -99,7 +99,7 @@ module.exports = {
       ).length > 0;
     if (!exists) {
       strapi.log.info(
-        `queued advisoryNumber ${advisoryNumber} for "${subject}" notification`,
+        `queued advisoryNumber ${advisoryNumber} for "${subject}" notification`
       );
       try {
         await strapi.documents("api::queued-task.queued-task").create({

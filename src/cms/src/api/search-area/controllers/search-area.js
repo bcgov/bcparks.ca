@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /**
  * search-area controller
  */
 
-const { createCoreController } = require('@strapi/strapi').factories;
+const { createCoreController } = require("@strapi/strapi").factories;
 
-module.exports = createCoreController('api::search-area.search-area');
+module.exports = createCoreController("api::search-area.search-area");

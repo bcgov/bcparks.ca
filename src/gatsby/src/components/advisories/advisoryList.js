@@ -1,7 +1,6 @@
+import React from "react";
 
-import React from "react"
-
-import AdvisoryCard from "../advisories/advisoryCard"
+import AdvisoryCard from "../advisories/advisoryCard";
 
 const AdvisoryList = ({ advisories, parkInfoHash }) => {
   // NB when paging was done in front-end, this component
@@ -18,13 +17,13 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
       monthStr: "",
       yearStr: "",
       str: "",
-      dateUnknown: true
+      dateUnknown: true,
     };
     if (date) {
       var d = new Date(date);
 
-      var options = { month: 'short' };
-      var month = new Intl.DateTimeFormat('en-US', options).format(d);
+      var options = { month: "short" };
+      var month = new Intl.DateTimeFormat("en-US", options).format(d);
 
       pd.dateStr = d.getDate().toString();
       pd.monthStr = month;
@@ -33,12 +32,12 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
       pd.dateUnknown = false;
     }
 
-    return pd
-  }
+    return pd;
+  };
 
   const processAlertLevel = (advisory) => {
     // Determine color for alert
-    var color = advisory.urgency.color
+    var color = advisory.urgency.color;
 
     advisory.alertClass = color + "Alert";
 
@@ -66,23 +65,26 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
 
     // alertMsg to use for aria-label on urgency level icon, for screen readers
     if (capColor === "Grey") {
-      advisory.alertMsg = "Grey Advisory - Informational Advisory"
+      advisory.alertMsg = "Grey Advisory - Informational Advisory";
     } else {
       advisory.alertMsg = level + " urgency"; // eg High urgency
     }
-  }
+  };
 
   const processAdvisories = (a) => {
     // determine properties not found from api call or need processing
 
-    if (a.length > 0) { // otherwise no advisories yet
+    if (a.length > 0) {
+      // otherwise no advisories yet
 
       a.forEach((advisory) => {
-
         processAlertLevel(advisory);
 
         // Determine if card has details
-        advisory.detailsClass = (advisory.description || advisory.isEffectiveDateDisplayed) ? "details" : "noDetails";
+        advisory.detailsClass =
+          advisory.description || advisory.isEffectiveDateDisplayed
+            ? "details"
+            : "noDetails";
 
         // Process date strings
         advisory.advisoryDateObj = processDate(advisory.advisoryDate);
@@ -90,8 +92,7 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
         advisory.endDateObj = processDate(advisory.endDate);
 
         advisory.isFirstInYear = false; // assume this, check below
-
-      })
+      });
 
       // mark advisories that are first in that year
       // when true, year displayed above card
@@ -107,8 +108,8 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
     }
 
     haveAdvisories = true;
-    return (a);
-  }
+    return a;
+  };
 
   processAdvisories(advisories, parkInfoHash);
 
@@ -117,16 +118,16 @@ const AdvisoryList = ({ advisories, parkInfoHash }) => {
       {haveAdvisories && (
         <div>
           {advisories.map((advisory, index) => (
-            <AdvisoryCard key={index}
+            <AdvisoryCard
+              key={index}
               advisory={advisory}
-              parkInfoHash={parkInfoHash}>
-            </AdvisoryCard>
+              parkInfoHash={parkInfoHash}
+            ></AdvisoryCard>
           ))}
         </div>
       )}
     </>
   );
+};
 
-}
-
-export default AdvisoryList
+export default AdvisoryList;

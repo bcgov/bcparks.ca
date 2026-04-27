@@ -48,7 +48,9 @@ const loadData = async function () {
         },
       });
       dataRegisterParks = response.data.data.items;
-      logger.info(`${dataRegisterParks.length} parks found in the BC Parks Data Register.`);
+      logger.info(
+        `${dataRegisterParks.length} parks found in the BC Parks Data Register.`,
+      );
     } catch (error) {
       logger.error(error);
       process.exit(1);
@@ -56,10 +58,15 @@ const loadData = async function () {
   }
 
   // get the list of park name types
-  const parkNameTypes = (await axios.get(`${process.env.STRAPI_BASE_URL}/api/park-name-types`)).data
-    .data;
-  const legalNameType = parkNameTypes.find((t) => t.nameType === LEGAL_NAME_TYPE);
-  const phoneticNameType = parkNameTypes.find((t) => t.nameType === PHONETIC_NAME_TYPE);
+  const parkNameTypes = (
+    await axios.get(`${process.env.STRAPI_BASE_URL}/api/park-name-types`)
+  ).data.data;
+  const legalNameType = parkNameTypes.find(
+    (t) => t.nameType === LEGAL_NAME_TYPE,
+  );
+  const phoneticNameType = parkNameTypes.find(
+    (t) => t.nameType === PHONETIC_NAME_TYPE,
+  );
 
   // convert the dataRegisterParks to a dictionary
   const parksDict = {};
@@ -172,7 +179,9 @@ const loadData = async function () {
             httpReqHeaders,
           );
         } catch (error) {
-          logger.error(`Error updating park ${p.orcs}\n${JSON.stringify(error)}`);
+          logger.error(
+            `Error updating park ${p.orcs}\n${JSON.stringify(error)}`,
+          );
         }
       }
     }
@@ -191,7 +200,9 @@ const loadData = async function () {
           { headers: httpReqHeaders },
         );
       } catch (error) {
-        logger.error(`Error updating searchTerms for park ${p.orcs}\n${JSON.stringify(error)}`);
+        logger.error(
+          `Error updating searchTerms for park ${p.orcs}\n${JSON.stringify(error)}`,
+        );
       }
     }
   }
@@ -207,7 +218,9 @@ const loadData = async function () {
  *  Gets a simlified park name from the list of park names associated with a protected area
  */
 const getParkName = function (strapiPark, nameType) {
-  const parkName = strapiPark.parkNames?.find((p) => p?.parkNameType?.nameType === nameType);
+  const parkName = strapiPark.parkNames?.find(
+    (p) => p?.parkNameType?.nameType === nameType,
+  );
   return {
     documentId: parkName?.documentId || null,
     name: parkName?.parkName || "",
@@ -235,7 +248,9 @@ const updateParkName = async function (
   };
   if (newName) {
     if (parkNameDocumentId) {
-      logger.info(`Updating ${nameType} for park ${orcs} from "${oldName}" to "${newName}"`);
+      logger.info(
+        `Updating ${nameType} for park ${orcs} from "${oldName}" to "${newName}"`,
+      );
       try {
         await axios.put(
           `${process.env.STRAPI_BASE_URL}/api/park-names/${parkNameDocumentId}`,
@@ -248,7 +263,9 @@ const updateParkName = async function (
           { headers: httpReqHeaders },
         );
       } catch (error) {
-        logger.error(`Error updating ${nameType} for park ${orcs}\n${JSON.stringify(error)}"`);
+        logger.error(
+          `Error updating ${nameType} for park ${orcs}\n${JSON.stringify(error)}"`,
+        );
         return 1;
       }
     } else {
@@ -260,14 +277,20 @@ const updateParkName = async function (
             data: {
               parkName: newName,
               source: DR_SOURCE,
-              parkNameType: { connect: [{ documentId: nameTypeObj.documentId }] },
-              protectedArea: { connect: [{ documentId: protectedAreaDocumentId }] },
+              parkNameType: {
+                connect: [{ documentId: nameTypeObj.documentId }],
+              },
+              protectedArea: {
+                connect: [{ documentId: protectedAreaDocumentId }],
+              },
             },
           },
           { headers: httpReqHeaders },
         );
       } catch (error) {
-        logger.error(`Error adding ${nameType} for park ${orcs}\n${JSON.stringify(error)}"`);
+        logger.error(
+          `Error adding ${nameType} for park ${orcs}\n${JSON.stringify(error)}"`,
+        );
         return 1;
       }
     }
@@ -276,9 +299,12 @@ const updateParkName = async function (
     if (oldName && source === DR_SOURCE) {
       logger.info(`Deleting ${nameType} "${oldName}" for park ${orcs}`);
       try {
-        await axios.delete(`${process.env.STRAPI_BASE_URL}/api/park-names/${parkNameDocumentId}`, {
-          headers: httpReqHeaders,
-        });
+        await axios.delete(
+          `${process.env.STRAPI_BASE_URL}/api/park-names/${parkNameDocumentId}`,
+          {
+            headers: httpReqHeaders,
+          },
+        );
       } catch (error) {
         logger.error(
           `Error deleting ${nameType} "${oldName}" for park ${orcs}\n${JSON.stringify(error)}"`,
@@ -293,7 +319,11 @@ const updateParkName = async function (
 /**
  * Adds a notification to the task queue
  */
-const queueNameChangeNotification = async function (changeInfo, orcs, httpReqHeaders) {
+const queueNameChangeNotification = async function (
+  changeInfo,
+  orcs,
+  httpReqHeaders,
+) {
   try {
     await axios.post(
       `${process.env.STRAPI_BASE_URL}/api/queued-tasks`,

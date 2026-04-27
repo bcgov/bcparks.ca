@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /**
  * trail-report router
  */
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
+const { createCoreRouter } = require("@strapi/strapi").factories;
 
-module.exports = createCoreRouter('api::trail-report.trail-report');
+module.exports = createCoreRouter("api::trail-report.trail-report");

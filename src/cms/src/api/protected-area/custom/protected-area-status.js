@@ -7,7 +7,7 @@ const boolToYN = (boolVar) => {
 
 const getHasCampfiresFacility = (parkFacilities) => {
   return parkFacilities.some((f) =>
-    f.facilityType?.facilityName.toLowerCase().includes("campfires"),
+    f.facilityType?.facilityName.toLowerCase().includes("campfires")
   );
 };
 
@@ -52,33 +52,37 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
   return _.sortBy(publicAdvisories, ["precedence"])[0];
 };
 const getPublishedPublicAdvisories = async () => {
-  return await strapi.documents("api::public-advisory.public-advisory").findMany({
-    sort: "id",
-    limit: -1,
-    populate: {
-      protectedAreas: { fields: ["orcs"] },
-      accessStatus: { fields: ["accessStatus", "precedence"] },
-      eventType: { fields: ["eventType"] },
-      links: { populate: { type: { fields: ["type"] } } }
-    },
-    filters: {
-      accessStatus: {
-        precedence: {
-          $lt: 120,
+  return await strapi
+    .documents("api::public-advisory.public-advisory")
+    .findMany({
+      sort: "id",
+      limit: -1,
+      populate: {
+        protectedAreas: { fields: ["orcs"] },
+        accessStatus: { fields: ["accessStatus", "precedence"] },
+        eventType: { fields: ["eventType"] },
+        links: { populate: { type: { fields: ["type"] } } },
+      },
+      filters: {
+        accessStatus: {
+          precedence: {
+            $lt: 120,
+          },
         },
       },
-    },
-  });
+    });
 };
 
 const getPublicAdvisoryAudits = async () => {
-  return await strapi.documents("api::public-advisory-audit.public-advisory-audit").findMany({
-    fields: ["advisoryNumber"],
-    filters: {
-      isLatestRevision: true
-    },
-    sort: "id:DESC"
-  });
+  return await strapi
+    .documents("api::public-advisory-audit.public-advisory-audit")
+    .findMany({
+      fields: ["advisoryNumber"],
+      filters: {
+        isLatestRevision: true,
+      },
+      sort: "id:DESC",
+    });
 };
 
 // custom route for park status view
@@ -102,8 +106,8 @@ const getProtectedAreaStatus = async (ctx) => {
     fireZones: {
       fields: ["fireZoneName"],
       populate: {
-        fireCentre: { fields: ["id"]}
-      }
+        fireCentre: { fields: ["id"] },
+      },
     },
     naturalResourceDistricts: {
       fields: ["naturalResourceDistrictName"],
@@ -111,51 +115,55 @@ const getProtectedAreaStatus = async (ctx) => {
     managementAreas: {
       fields: ["managementAreaName"],
       populate: {
-        region: { fields: ["id"]},
-        section: { fields: ["id"]},
-        searchArea: { fields: ["id"]}
-      }
+        region: { fields: ["id"] },
+        section: { fields: ["id"] },
+        searchArea: { fields: ["id"] },
+      },
     },
     parkActivities: {
       fields: ["id"],
       populate: {
-        activityType: { fields: ["activityName", "activityCode"] }
-      }
+        activityType: { fields: ["activityName", "activityCode"] },
+      },
     },
     parkFacilities: {
       fields: ["id"],
       populate: {
-        facilityType: { fields: ["facilityName", "facilityCode"] }
-      }
+        facilityType: { fields: ["facilityName", "facilityCode"] },
+      },
     },
     parkCampingTypes: {
       fields: ["id"],
       populate: {
-        campingType: { fields: ["campingTypeName", "campingTypeCode"] }
-      }
-    }
+        campingType: { fields: ["campingTypeName", "campingTypeCode"] },
+      },
+    },
   };
 
   if (
-    accessStatus
-    || accessStatus_ne
-    || accessStatus_contains
-    || eventType
-    || eventType_ne
-    || eventType_contains
+    accessStatus ||
+    accessStatus_ne ||
+    accessStatus_contains ||
+    eventType ||
+    eventType_ne ||
+    eventType_contains
   ) {
-    entities = await strapi.documents("api::protected-area.protected-area").findMany({
-      ...query,
-      status: "published",
-      limit: -1,
-      populate: protectedAreaPopulateSettings,
-    });
+    entities = await strapi
+      .documents("api::protected-area.protected-area")
+      .findMany({
+        ...query,
+        status: "published",
+        limit: -1,
+        populate: protectedAreaPopulateSettings,
+      });
   } else {
-    entities = await strapi.documents("api::protected-area.protected-area").findMany({
-      ...ctx.query,
-      status: "published",
-      populate: protectedAreaPopulateSettings
-    });
+    entities = await strapi
+      .documents("api::protected-area.protected-area")
+      .findMany({
+        ...ctx.query,
+        status: "published",
+        populate: protectedAreaPopulateSettings,
+      });
   }
 
   const regionsData = await strapi.documents("api::region.region").findMany({
@@ -166,24 +174,30 @@ const getProtectedAreaStatus = async (ctx) => {
     limit: -1,
     populate: "*",
   });
-  const searchAreasData = await strapi.documents("api::search-area.search-area").findMany({
-    limit: -1,
-    populate: "*",
-  });
-  const fireCentresData = await strapi.documents("api::fire-centre.fire-centre").findMany({
-    limit: -1,
-    populate: "*",
-  });
-  const parkNamesAliases = await strapi.documents("api::park-name.park-name").findMany({
-    status: "published",
-    limit: -1,
-    populate: "*",
-    filters: {
-      parkNameType: {
-        nameType: "Alias",
+  const searchAreasData = await strapi
+    .documents("api::search-area.search-area")
+    .findMany({
+      limit: -1,
+      populate: "*",
+    });
+  const fireCentresData = await strapi
+    .documents("api::fire-centre.fire-centre")
+    .findMany({
+      limit: -1,
+      populate: "*",
+    });
+  const parkNamesAliases = await strapi
+    .documents("api::park-name.park-name")
+    .findMany({
+      status: "published",
+      limit: -1,
+      populate: "*",
+      filters: {
+        parkNameType: {
+          nameType: "Alias",
+        },
       },
-    },
-  });
+    });
 
   let publicAdvisories = await getPublishedPublicAdvisories();
   let publicAdvisoryAudits = await getPublicAdvisoryAudits();
@@ -202,8 +216,7 @@ const getProtectedAreaStatus = async (ctx) => {
       ...new Set(
         protectedArea.managementAreas.map(
           (m) =>
-            regionsData.find((region) => region.id === m.region?.id)
-              ?.regionName
+            regionsData.find((region) => region.id === m.region?.id)?.regionName
         )
       ),
     ];
@@ -212,9 +225,8 @@ const getProtectedAreaStatus = async (ctx) => {
       ...new Set(
         protectedArea.managementAreas.map(
           (m) =>
-            sectionsData.find(
-              (section) => section.id === m.section?.id
-            )?.sectionName
+            sectionsData.find((section) => section.id === m.section?.id)
+              ?.sectionName
         )
       ),
     ];
@@ -249,7 +261,10 @@ const getProtectedAreaStatus = async (ctx) => {
 
     const naturalResourceDistricts = [
       ...new Set(
-        protectedArea.naturalResourceDistricts.map((naturalResourceDistrict) => naturalResourceDistrict.naturalResourceDistrictName)
+        protectedArea.naturalResourceDistricts.map(
+          (naturalResourceDistrict) =>
+            naturalResourceDistrict.naturalResourceDistrictName
+        )
       ),
     ];
 
@@ -371,8 +386,10 @@ const getProtectedAreaStatus = async (ctx) => {
     );
   }
   if (accessStatus_contains) {
-    payload = payload.filter(
-      (o) => o?.accessStatus?.toLowerCase().includes(accessStatus_contains.toLowerCase())
+    payload = payload.filter((o) =>
+      o?.accessStatus
+        ?.toLowerCase()
+        .includes(accessStatus_contains.toLowerCase())
     );
   }
 
@@ -388,8 +405,8 @@ const getProtectedAreaStatus = async (ctx) => {
     );
   }
   if (eventType_contains) {
-    payload = payload.filter(
-      (o) => o?.eventType?.toLowerCase().includes(eventType_contains.toLowerCase())
+    payload = payload.filter((o) =>
+      o?.eventType?.toLowerCase().includes(eventType_contains.toLowerCase())
     );
   }
 

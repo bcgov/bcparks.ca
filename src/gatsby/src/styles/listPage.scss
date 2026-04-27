@@ -9,7 +9,8 @@
     a {
       color: $colorBlue !important;
       text-decoration: none !important;
-      &:hover, &:focus-visible {
+      &:hover,
+      &:focus-visible {
         text-decoration: underline !important;
       }
       svg.park-heading-icon {
@@ -171,7 +172,8 @@
       &:last-child {
         border-radius: 0 4px 4px 0 !important;
       }
-      &:hover, &:focus-visible {
+      &:hover,
+      &:focus-visible {
         color: $colorBlue;
         background-color: $colorIceBlue;
         font-weight: 700;

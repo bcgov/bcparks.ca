@@ -57,7 +57,10 @@ exports.createElasticPark = async function (park, photos) {
   }
 
   // add the searchTerms to the parkNames
-  if (park.searchTerms && !park.parkNames.find((n) => n === park.searchTerms.toLowerCase())) {
+  if (
+    park.searchTerms &&
+    !park.parkNames.find((n) => n === park.searchTerms.toLowerCase())
+  ) {
     park.parkNames.push(park.searchTerms.toLowerCase());
   }
 
@@ -69,7 +72,9 @@ exports.createElasticPark = async function (park, photos) {
   if (park?.parkCampingTypes?.length) {
     const parkCampingTypes = park.parkCampingTypes
       .filter((ct) => {
-        return ct.isActive && ct.campingType?.isActive && ct.publishedAt !== null;
+        return (
+          ct.isActive && ct.campingType?.isActive && ct.publishedAt !== null
+        );
       })
       .map((ct) => {
         park.hasCamping = true;
@@ -143,7 +148,12 @@ exports.createElasticPark = async function (park, photos) {
   // add geo center point (this ensures we have at least one point for every park)
   if (park.latitude && park.longitude) {
     park.location = `${park.latitude},${park.longitude}`;
-    flattenedGeometry = geo.appendPoint(flattenedGeometry, park.latitude, park.longitude, 2);
+    flattenedGeometry = geo.appendPoint(
+      flattenedGeometry,
+      park.latitude,
+      park.longitude,
+      2,
+    );
   }
 
   // add extra points for long line segments

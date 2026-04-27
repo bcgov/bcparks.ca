@@ -1,56 +1,64 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react"
-import { graphql, Link } from "gatsby"
-import axios from "axios"
-import qs from "qs"
-import { ProgressBar } from "react-bootstrap"
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { graphql, Link } from "gatsby";
+import axios from "axios";
+import qs from "qs";
+import { ProgressBar } from "react-bootstrap";
 
-import Acknowledgment from "../components/acknowledgment"
-import Breadcrumbs from "../components/breadcrumbs"
-import Footer from "../components/footer"
-import Header from "../components/header"
-import Seo from "../components/seo"
-import AdvisoryFilter from "../components/advisories/advisoryFilter"
-import AdvisoryList from "../components/advisories/advisoryList"
-import AdvisoryPageNav from "../components/advisories/advisoryPageNav"
-import AdvisoryLegend from "../components/advisories/advisoryLegend"
-import ScrollToTop from "../components/scrollToTop"
-import { getAdvisoryTypeFromUrl, compareAdvisories } from "../utils/advisoryHelper"
+import Acknowledgment from "../components/acknowledgment";
+import Breadcrumbs from "../components/breadcrumbs";
+import Footer from "../components/footer";
+import Header from "../components/header";
+import Seo from "../components/seo";
+import AdvisoryFilter from "../components/advisories/advisoryFilter";
+import AdvisoryList from "../components/advisories/advisoryList";
+import AdvisoryPageNav from "../components/advisories/advisoryPageNav";
+import AdvisoryLegend from "../components/advisories/advisoryLegend";
+import ScrollToTop from "../components/scrollToTop";
+import {
+  getAdvisoryTypeFromUrl,
+  compareAdvisories,
+} from "../utils/advisoryHelper";
 
-import "../styles/home.scss"
+import "../styles/home.scss";
 
 const PublicActiveAdvisoriesPage = ({ data }) => {
-  const [advisories, setAdvisories] = useState([]) // array of advisories
+  const [advisories, setAdvisories] = useState([]); // array of advisories
 
-  const [isNewFilter, setIsNewFilter] = useState(true) // true when any part of filter changes
-  const [isDataOld, setIsDataOld] = useState(true) // true when new adivsories needed
+  const [isNewFilter, setIsNewFilter] = useState(true); // true when any part of filter changes
+  const [isDataOld, setIsDataOld] = useState(true); // true when new adivsories needed
 
   // state of filter checkboxes:
-  const [isParksFilter, setIsParksFilter] = useState(false)
-  const [isKeywordFilter, setIsKeywordFilter] = useState(false)
+  const [isParksFilter, setIsParksFilter] = useState(false);
+  const [isKeywordFilter, setIsKeywordFilter] = useState(false);
 
-  const [searchText, setSearchText] = useState("") // search box text
-  const [isAnySearch, setIsAnySearch] = useState(false) // true if text in search box
+  const [searchText, setSearchText] = useState(""); // search box text
+  const [isAnySearch, setIsAnySearch] = useState(false); // true if text in search box
 
-  const [filterCount, setFilterCount] = useState(0) // count of filtered results
+  const [filterCount, setFilterCount] = useState(0); // count of filtered results
 
   // latest call
   // using state to catch when call has not changed, to avoid duplicate calls
-  const [apiCall, setApiCall] = useState("") // latest advisory fetch call
-  const [apiCountCall, setApiCountCall] = useState("") // latest advisory count call
+  const [apiCall, setApiCall] = useState(""); // latest advisory fetch call
+  const [apiCountCall, setApiCountCall] = useState(""); // latest advisory count call
 
-  const apiUrl = `${data.site.siteMetadata.apiURL}/api` // api root
+  const apiUrl = `${data.site.siteMetadata.apiURL}/api`; // api root
 
-  const [isSearchError, setIsSearchError] = useState(false) // true when api error - show msg
+  const [isSearchError, setIsSearchError] = useState(false); // true when api error - show msg
 
-  const [pageIndex, setPageIndex] = useState(1) // current page of results, 1-based
-  const pageLen = 10 // num items per page
-  const [pageCount, setPageCount] = useState(1) // num pages in current search
-  const [isKeyDownLoadingMore, setIsKeyDownLoadingMore] = useState(false)
+  const [pageIndex, setPageIndex] = useState(1); // current page of results, 1-based
+  const pageLen = 10; // num items per page
+  const [pageCount, setPageCount] = useState(1); // num pages in current search
+  const [isKeyDownLoadingMore, setIsKeyDownLoadingMore] = useState(false);
 
   /* Advisory Event Types */
-  const defaultAdvisoryEventType = useMemo(() => ({ label: 'All', value: 'all' }), [])
-  const [eventTypes, setEventTypes] = useState([])
-  const [advisoryType, setAdvisoryType] = useState(defaultAdvisoryEventType.value)
+  const defaultAdvisoryEventType = useMemo(
+    () => ({ label: "All", value: "all" }),
+    [],
+  );
+  const [eventTypes, setEventTypes] = useState([]);
+  const [advisoryType, setAdvisoryType] = useState(
+    defaultAdvisoryEventType.value,
+  );
 
   useEffect(() => {
     const fetchEvenType = async () => {
@@ -62,8 +70,8 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           },
           {
             encodeValuesOnly: true,
-          }
-        )
+          },
+        );
         const response = await axios.get(`${apiUrl}/event-types?${params}`);
 
         const formattedEventTypes = response.data.data.map((obj) => ({
@@ -72,7 +80,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         }));
 
         const localeSortEvent = formattedEventTypes?.sort((a, b) =>
-          a.value.localeCompare(b.value, "en", { sensitivity: "base" })
+          a.value.localeCompare(b.value, "en", { sensitivity: "base" }),
         );
 
         setEventTypes(localeSortEvent);
@@ -89,46 +97,46 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
   // Filter getters and setters --------------------
   const getSearchText = () => {
-    return searchText
-  }
+    return searchText;
+  };
 
   const getAdvisoryType = () => {
-    return advisoryType
-  }
+    return advisoryType;
+  };
 
-  const getAdvistoryFilter = filterType => {
-    var isFiltered = false
+  const getAdvistoryFilter = (filterType) => {
+    var isFiltered = false;
 
     switch (filterType) {
       case "parks":
-        isFiltered = isParksFilter
-        break
+        isFiltered = isParksFilter;
+        break;
       case "keyword":
-        isFiltered = isKeywordFilter
-        break
+        isFiltered = isKeywordFilter;
+        break;
       default:
-        isFiltered = false // won't be hit
-        break
+        isFiltered = false; // won't be hit
+        break;
     }
 
-    return isFiltered
-  }
+    return isFiltered;
+  };
 
   const setAdvisoryFilter = (filterType, isActive) => {
     // called from AdvisoryFilter
 
     switch (filterType) {
       case "parks":
-        setIsParksFilter(isActive)
-        break
+        setIsParksFilter(isActive);
+        break;
       case "keywords":
-        setIsKeywordFilter(isActive)
-        break
+        setIsKeywordFilter(isActive);
+        break;
       default:
         // won't be hit
-        break
+        break;
     }
-  }
+  };
 
   // functions to pass to AdvisoryFilter
   const filterFunctions = {
@@ -138,7 +146,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     getFilter: getAdvistoryFilter,
     setType: setAdvisoryType,
     getType: getAdvisoryType,
-  }
+  };
 
   // API calls to get advisories and total count
   const getAdvisoryTotalCount = useCallback(() => {
@@ -146,74 +154,74 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     // This needs to be a separate call, because we need the
     // unfiltered count for the header
 
-    let queryObj = {}
+    let queryObj = {};
 
     if (advisoryType !== "all") {
-      queryObj.queryText = ""
-      queryObj._eventType = advisoryType
+      queryObj.queryText = "";
+      queryObj._eventType = advisoryType;
     }
 
     const params = qs.stringify(queryObj, {
       encodeValuesOnly: true,
-    })
+    });
 
-    const newApiCountCall = params 
+    const newApiCountCall = params
       ? `${apiUrl}/public-advisories/count?${params}`
-      : `${apiUrl}/public-advisories/count`
-      
+      : `${apiUrl}/public-advisories/count`;
+
     if (newApiCountCall !== apiCountCall) {
-      setApiCountCall(newApiCountCall)
+      setApiCountCall(newApiCountCall);
     }
-  }, [advisoryType, apiUrl, apiCountCall])
+  }, [advisoryType, apiUrl, apiCountCall]);
 
   const getApiQuery = useCallback(
-    advisoryTypeFilter => {
+    (advisoryTypeFilter) => {
       // Build query object for Strapi v5
-      let queryObj = {}
+      let queryObj = {};
 
-      let useParksFilter = isParksFilter
-      let useKeywordFilter = isKeywordFilter
+      let useParksFilter = isParksFilter;
+      let useKeywordFilter = isKeywordFilter;
 
       // check if any checkbox filter is set
-      let anyFilter = isParksFilter || isKeywordFilter
+      let anyFilter = isParksFilter || isKeywordFilter;
 
       if (!anyFilter) {
         // use all filters if none are selected
-        useParksFilter = true
-        useKeywordFilter = true
+        useParksFilter = true;
+        useKeywordFilter = true;
       }
 
       // check if there is anything in the search textbox
-      let anySearch = searchText && searchText !== ""
+      let anySearch = searchText && searchText !== "";
 
       if (anySearch) {
         // only apply filter if there is a keyword
 
         if (useParksFilter || useKeywordFilter) {
-          let searchType
+          let searchType;
           if (useParksFilter && !useKeywordFilter) {
-            searchType = "park"
+            searchType = "park";
           } else if (useKeywordFilter && !useParksFilter) {
-            searchType = "keyword"
+            searchType = "keyword";
           } else {
-            searchType = "all"
+            searchType = "all";
           }
-          queryObj.queryText = searchText
-          queryObj._searchType = searchType
+          queryObj.queryText = searchText;
+          queryObj._searchType = searchType;
         }
       }
 
       if (advisoryTypeFilter !== "all") {
-        queryObj._eventType = advisoryTypeFilter
+        queryObj._eventType = advisoryTypeFilter;
       }
 
-      return queryObj
+      return queryObj;
     },
-    [isKeywordFilter, isParksFilter, searchText]
-  )
+    [isKeywordFilter, isParksFilter, searchText],
+  );
 
   const getAdvisories = useCallback(
-    q => {
+    (q) => {
       // q = api query
       const params = qs.stringify(
         {
@@ -226,29 +234,32 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         },
         {
           encodeValuesOnly: true,
-        }
-      )
-      const newApiCall = `${apiUrl}/public-advisories?${params}`
+        },
+      );
+      const newApiCall = `${apiUrl}/public-advisories?${params}`;
 
       if (apiCall !== newApiCall) {
         // Don't repeat the same call
 
-        setApiCall(newApiCall) // Store this as the latest call
+        setApiCall(newApiCall); // Store this as the latest call
 
         axios
           .get(newApiCall)
           .then(function (data) {
-            let results = data.data.data
-            results.sort(compareAdvisories)
+            let results = data.data.data;
+            results.sort(compareAdvisories);
             // Append new advisories to the existing list if 'Load more' button is clicked
             if (pageIndex > 1) {
-             setAdvisories(prevAdvisories => [...prevAdvisories, ...results]) 
+              setAdvisories((prevAdvisories) => [
+                ...prevAdvisories,
+                ...results,
+              ]);
             } else {
-              setAdvisories(results)
+              setAdvisories(results);
             }
-            setIsDataOld(false) // Flag that advisories are updated
-            setIsNewFilter(false)
-            setIsSearchError(false)
+            setIsDataOld(false); // Flag that advisories are updated
+            setIsNewFilter(false);
+            setIsSearchError(false);
 
             // Get count
             const countParams = qs.stringify(
@@ -257,47 +268,47 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
               },
               {
                 encodeValuesOnly: true,
-              }
-            )
-            const apiCount = `${apiUrl}/public-advisories/count?${countParams}`
+              },
+            );
+            const apiCount = `${apiUrl}/public-advisories/count?${countParams}`;
 
             axios
               .get(apiCount)
               .then(function (data) {
-                let count = data.data
+                let count = data.data;
 
                 // Num advisories for display
-                setFilterCount(count)
+                setFilterCount(count);
 
                 // Set to page one and calc num pages
-                let numPages = Math.ceil(count / pageLen)
-                setPageCount(numPages)
+                let numPages = Math.ceil(count / pageLen);
+                setPageCount(numPages);
               })
               .catch(function (error) {
-                console.log(error)
-              })
+                console.log(error);
+              });
           })
           .catch(function (error) {
-            setIsDataOld(false) // Use existing data as updated
-            setIsSearchError(true) // Show error msg
-          })
+            setIsDataOld(false); // Use existing data as updated
+            setIsSearchError(true); // Show error msg
+          });
       } else {
         // api call hasn't changed - don't make same call again
-        setIsDataOld(false) // Data is still updated
+        setIsDataOld(false); // Data is still updated
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [apiCall, apiUrl]
-  )
+    [apiCall, apiUrl],
+  );
 
   // Load more advisories when 'Load more' button is clicked
   const handleLoadMore = () => {
-    const newIndex = pageIndex + 1
-    setPageIndex(newIndex)
-    const pageStart = (newIndex - 1) * pageLen
+    const newIndex = pageIndex + 1;
+    setPageIndex(newIndex);
+    const pageStart = (newIndex - 1) * pageLen;
 
-    const aType = getAdvisoryTypeFromUrl()
-    let q = getApiQuery(aType)
+    const aType = getAdvisoryTypeFromUrl();
+    let q = getApiQuery(aType);
 
     const params = qs.stringify(
       {
@@ -309,105 +320,120 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       },
       {
         encodeValuesOnly: true,
-      }
-    )
-    const newApiCall = `${apiUrl}/public-advisories?${params}`
+      },
+    );
+    const newApiCall = `${apiUrl}/public-advisories?${params}`;
 
-    axios.get(newApiCall).then(resultResponse => {
-      if (resultResponse.status === 200) {
-        const newResults = resultResponse.data.data;
-        setAdvisories(prevResults => [...prevResults, ...newResults])
-      }
-    }).catch(error => {
-      console.log(error)
-      setIsSearchError(true)
-    })
-  }
+    axios
+      .get(newApiCall)
+      .then((resultResponse) => {
+        if (resultResponse.status === 200) {
+          const newResults = resultResponse.data.data;
+          setAdvisories((prevResults) => [...prevResults, ...newResults]);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsSearchError(true);
+      });
+  };
 
   const handleKeyDownLoadMore = (e) => {
     if (e.key === "Enter" || e.key === " ") {
       setIsKeyDownLoadingMore(true);
-      e.preventDefault()
-      handleLoadMore()
+      e.preventDefault();
+      handleLoadMore();
     }
-  }
+  };
 
-  // This hashset is used by the advisoryCard.js component to quiclky 
-  // determine if the advisoriy is associated with any parks in addition 
+  // This hashset is used by the advisoryCard.js component to quiclky
+  // determine if the advisoriy is associated with any parks in addition
   // to the specified  Fire Centres, Fire Zones, Regions, or Sections.
   // Management Areas are not currently used for anything but are included
   // for completeness. The data comes from GraphQL.
   const buildParkInfoHash = () => {
     const hash = {};
-    for (const x of (data?.allStrapiProtectedArea.nodes || [])) {
+    for (const x of data?.allStrapiProtectedArea.nodes || []) {
       hash[x?.strapi_id.toString()] = {
-        managementAreas: x.managementAreas.map(m => { return m.strapi_id }),
-        sections: x.managementAreas.map(m => { return m.section?.id }),
-        regions: x.managementAreas.map(m => { return m.region?.id }),
-        fireZones: x.fireZones.map(m => { return m.strapi_id }),
-        naturalResourceDistricts: (x.naturalResourceDistricts || []).map(m => m.strapi_id),
-        fireCentres: x.fireZones.map(m => { return m.fireCentre?.id })
+        managementAreas: x.managementAreas.map((m) => {
+          return m.strapi_id;
+        }),
+        sections: x.managementAreas.map((m) => {
+          return m.section?.id;
+        }),
+        regions: x.managementAreas.map((m) => {
+          return m.region?.id;
+        }),
+        fireZones: x.fireZones.map((m) => {
+          return m.strapi_id;
+        }),
+        naturalResourceDistricts: (x.naturalResourceDistricts || []).map(
+          (m) => m.strapi_id,
+        ),
+        fireCentres: x.fireZones.map((m) => {
+          return m.fireCentre?.id;
+        }),
       };
     }
     return hash;
-  }
+  };
 
   // If the filter changes, set data as old and get new data
   useEffect(() => {
     if (isNewFilter) {
-      const aType = getAdvisoryTypeFromUrl()
-      setAdvisoryType(aType)
-      setIsDataOld(true)
+      const aType = getAdvisoryTypeFromUrl();
+      setAdvisoryType(aType);
+      setIsDataOld(true);
 
-      setPageIndex(1) // reset page back to 1
+      setPageIndex(1); // reset page back to 1
 
-      let q = getApiQuery(aType)
-      getAdvisories(q)
+      let q = getApiQuery(aType);
+      getAdvisories(q);
     }
-  }, [isNewFilter, getApiQuery, getAdvisories])
+  }, [isNewFilter, getApiQuery, getAdvisories]);
 
   useEffect(() => {
     // check if there is anything in the search textbox
-    let anySearch = searchText && searchText !== ""
-    setIsAnySearch(anySearch)
+    let anySearch = searchText && searchText !== "";
+    setIsAnySearch(anySearch);
 
-    setIsNewFilter(true)
-  }, [isParksFilter, isKeywordFilter, searchText])
+    setIsNewFilter(true);
+  }, [isParksFilter, isKeywordFilter, searchText]);
 
   useEffect(() => {
     if (!isNewFilter) {
-      let q = getApiQuery(advisoryType)
-      setIsDataOld(true)
-      getAdvisories(q)
+      let q = getApiQuery(advisoryType);
+      setIsDataOld(true);
+      getAdvisories(q);
     }
-  }, [pageIndex, advisoryType, isNewFilter, getApiQuery, getAdvisories])
+  }, [pageIndex, advisoryType, isNewFilter, getApiQuery, getAdvisories]);
 
-    // Reset pageIndex to 1 when advisoryType or searchText changes
-    useEffect(() => {
-      setPageIndex(1)
-    }, [advisoryType, searchText])
+  // Reset pageIndex to 1 when advisoryType or searchText changes
+  useEffect(() => {
+    setPageIndex(1);
+  }, [advisoryType, searchText]);
 
   // Get total advisory count of this type
   // only has to happen once, when type changes, page reloads
   useEffect(() => {
-    getAdvisoryTotalCount()
-  }, [getAdvisoryTotalCount])
+    getAdvisoryTotalCount();
+  }, [getAdvisoryTotalCount]);
 
   // Focus on the last advisory card when 'Load more' button is clicked by keyboard
   useEffect(() => {
     if (isKeyDownLoadingMore) {
-      const advisoryCards = document.querySelectorAll('.advisory-card')
+      const advisoryCards = document.querySelectorAll(".advisory-card");
       if (advisoryCards.length >= pageLen) {
-        let firstNewIndex = advisoryCards.length - 1
-        advisoryCards[firstNewIndex].contentEditable = true
-        advisoryCards[firstNewIndex].focus()
-        advisoryCards[firstNewIndex].contentEditable = false
+        let firstNewIndex = advisoryCards.length - 1;
+        advisoryCards[firstNewIndex].contentEditable = true;
+        advisoryCards[firstNewIndex].focus();
+        advisoryCards[firstNewIndex].contentEditable = false;
       }
-      setIsKeyDownLoadingMore(false)
+      setIsKeyDownLoadingMore(false);
     }
-  }, [isKeyDownLoadingMore, advisories])
+  }, [isKeyDownLoadingMore, advisories]);
 
-  const menuContent = data?.allStrapiMenu?.nodes || []
+  const menuContent = data?.allStrapiMenu?.nodes || [];
   const parkInfoHash = buildParkInfoHash();
 
   const breadcrumbs = [
@@ -416,13 +442,17 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     </Link>,
     <div key="2" className="breadcrumb-text">
       Active advisories
-    </div>
-  ]
+    </div>,
+  ];
 
   return (
     <div>
       <Header mode="internal" content={menuContent} />
-      <div id="main-content" tabIndex={-1} className="static-content--header unique-page--header page-breadcrumbs">
+      <div
+        id="main-content"
+        tabIndex={-1}
+        className="static-content--header unique-page--header page-breadcrumbs"
+      >
         <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="static-content-container">
@@ -440,20 +470,17 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         </div>
 
         <div className={isDataOld ? "hidden" : undefined}>
-          {(isSearchError && isAnySearch) &&
+          {isSearchError && isAnySearch && (
             <div className="my-2">
               There was an error in your search. Tip: avoid using punctuation
             </div>
-          }
+          )}
 
           <AdvisoryLegend />
           <div className="mb-2">
             <b>{filterCount}</b> active advisories
           </div>
-          <AdvisoryList
-            advisories={advisories}
-            parkInfoHash={parkInfoHash}
-          />
+          <AdvisoryList advisories={advisories} parkInfoHash={parkInfoHash} />
           <AdvisoryPageNav
             pageIndex={pageIndex}
             pageCount={pageCount}
@@ -466,14 +493,17 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       <ScrollToTop />
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default PublicActiveAdvisoriesPage
+export default PublicActiveAdvisoriesPage;
 
 export const Head = () => (
-  <Seo title="Active advisories" description="Up-to-date information to help you plan your visit to a park in British Columbia. Get updates on access, closures, hazards, and trail conditions in BC Parks." />
-)
+  <Seo
+    title="Active advisories"
+    description="Up-to-date information to help you plan your visit to a park in British Columbia. Get updates on access, closures, hazards, and trail conditions in BC Parks."
+  />
+);
 
 export const query = graphql`
   {
@@ -482,10 +512,7 @@ export const query = graphql`
         apiURL
       }
     }
-    allStrapiMenu(
-      sort: {order: ASC},
-      filter: {show: {eq: true}}
-    ) {
+    allStrapiMenu(sort: { order: ASC }, filter: { show: { eq: true } }) {
       nodes {
         strapi_id
         title
@@ -530,4 +557,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

@@ -1,201 +1,226 @@
-import React, { useEffect, useState, useRef, useMemo } from "react"
-import { sortBy, truncate } from "lodash"
-import { graphql, Link as GatsbyLink, navigate } from "gatsby"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import useScrollSpy from "react-use-scrollspy"
+import React, { useEffect, useState, useRef, useMemo } from "react";
+import { sortBy, truncate } from "lodash";
+import { graphql, Link as GatsbyLink, navigate } from "gatsby";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import useScrollSpy from "react-use-scrollspy";
 
 import { isNullOrWhiteSpace } from "../utils/helpers";
-import { loadAdvisories } from '../utils/advisoryHelper';
-import { groupParkFeaturesByType, combineCampingTypes, combineFacilities } from '../utils/parkFeaturesHelper';
-import { getParkFeatures, getProtectedArea } from "../utils/apiHelper"
+import { loadAdvisories } from "../utils/advisoryHelper";
+import {
+  groupParkFeaturesByType,
+  combineCampingTypes,
+  combineFacilities,
+} from "../utils/parkFeaturesHelper";
+import { getParkFeatures, getProtectedArea } from "../utils/apiHelper";
 
-import About from "../components/park/about"
-import Acknowledgment from "../components/acknowledgment"
-import AdvisoryDetails from "../components/park/advisoryDetails"
-import Breadcrumbs from "../components/breadcrumbs"
-import CampingDetails from "../components/park/campingDetails"
-import Contact from "../components/park/contact"
-import Footer from "../components/footer"
-import Header from "../components/header"
-import MapLocation from "../components/park/mapLocation"
-import NearbyParks from "../components/park/nearbyParks"
-import PageMenu from "../components/pageContent/pageMenu"
-import ParkActivity from "../components/park/parkActivity"
-import ParkFacility from "../components/park/parkFacility"
-import ParkHeader from "../components/park/parkHeader"
-import ParkOverview from "../components/park/parkOverview"
-import ParkPhotoGallery from "../components/park/parkPhotoGallery"
-import Reconciliation from "../components/park/reconciliation"
-import ReservationsRequired from "../components/park/reservationsRequired"
-import SafetyInfo from "../components/park/safetyInfo"
-import ScrollToTop from "../components/scrollToTop"
-import Seo from "../components/seo"
-import SpecialNote from "../components/park/specialNote"
-import VisitResponsibly from "../components/park/visitResponsibly"
-import VisitorGuidelines from "../components/park/visitorGuidelines"
+import About from "../components/park/about";
+import Acknowledgment from "../components/acknowledgment";
+import AdvisoryDetails from "../components/park/advisoryDetails";
+import Breadcrumbs from "../components/breadcrumbs";
+import CampingDetails from "../components/park/campingDetails";
+import Contact from "../components/park/contact";
+import Footer from "../components/footer";
+import Header from "../components/header";
+import MapLocation from "../components/park/mapLocation";
+import NearbyParks from "../components/park/nearbyParks";
+import PageMenu from "../components/pageContent/pageMenu";
+import ParkActivity from "../components/park/parkActivity";
+import ParkFacility from "../components/park/parkFacility";
+import ParkHeader from "../components/park/parkHeader";
+import ParkOverview from "../components/park/parkOverview";
+import ParkPhotoGallery from "../components/park/parkPhotoGallery";
+import Reconciliation from "../components/park/reconciliation";
+import ReservationsRequired from "../components/park/reservationsRequired";
+import SafetyInfo from "../components/park/safetyInfo";
+import ScrollToTop from "../components/scrollToTop";
+import Seo from "../components/seo";
+import SpecialNote from "../components/park/specialNote";
+import VisitResponsibly from "../components/park/visitResponsibly";
+import VisitorGuidelines from "../components/park/visitorGuidelines";
 
-import parksLogo from "../images/park-card.png"
-import "../styles/parks.scss"
+import parksLogo from "../images/park-card.png";
+import "../styles/parks.scss";
 
 export default function ParkTemplate({ data }) {
-  const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
+  const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`;
 
-  const park = data.strapiProtectedArea
-  const parkType = (park.type || "park").toLowerCase()
-  const operations = park.parkOperation || {}
-  const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
+  const park = data.strapiProtectedArea;
+  const parkType = (park.type || "park").toLowerCase();
+  const operations = park.parkOperation || {};
+  const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes];
 
-  const description = park.description.data.description
-  const safetyInfo = park.safetyInfo.data.safetyInfo
-  const specialNotes = park.specialNotes.data.specialNotes
-  const locationNotes = park.locationNotes.data.locationNotes
-  const conservation = park.conservation.data.conservation
-  const culturalHeritage = park.culturalHeritage.data.culturalHeritage
-  const history = park.history.data.history
-  const wildlife = park.wildlife.data.wildlife
-  const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes
-  const maps = park.maps.data.maps
-  const contact = park.parkContact.data.parkContact
-  const hasNearbyParks = park.nearbyParks?.length > 0
-  const nearbyParks = park.nearbyParks
-  const hasParkGuidelines = park.parkGuidelines?.length > 0
-  const managementAreas = park.managementAreas || []
-  const searchArea = managementAreas[0]?.searchArea || {}
+  const description = park.description.data.description;
+  const safetyInfo = park.safetyInfo.data.safetyInfo;
+  const specialNotes = park.specialNotes.data.specialNotes;
+  const locationNotes = park.locationNotes.data.locationNotes;
+  const conservation = park.conservation.data.conservation;
+  const culturalHeritage = park.culturalHeritage.data.culturalHeritage;
+  const history = park.history.data.history;
+  const wildlife = park.wildlife.data.wildlife;
+  const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes;
+  const maps = park.maps.data.maps;
+  const contact = park.parkContact.data.parkContact;
+  const hasNearbyParks = park.nearbyParks?.length > 0;
+  const nearbyParks = park.nearbyParks;
+  const hasParkGuidelines = park.parkGuidelines?.length > 0;
+  const managementAreas = park.managementAreas || [];
+  const searchArea = managementAreas[0]?.searchArea || {};
 
   const activeActivities = sortBy(
     park.parkActivities.filter(
-      activity => activity.isActive && activity.activityType?.isActive
+      (activity) => activity.isActive && activity.activityType?.isActive,
     ),
     ["activityType.rank", "activityType.activityName"],
-    ["asc"]
-  )
+    ["asc"],
+  );
 
-  const hasReservations = operations.hasReservations
-  const hasDayUsePass = operations.hasDayUsePass
+  const hasReservations = operations.hasReservations;
+  const hasDayUsePass = operations.hasDayUsePass;
 
-  const menuContent = data?.allStrapiMenu?.nodes || []
+  const menuContent = data?.allStrapiMenu?.nodes || [];
 
-  const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
-  const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
-  const [advisories, setAdvisories] = useState([])
-  const [protectedAreaLoadError, setProtectedAreaLoadError] = useState(false)
-  const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true)
-  const [hasCampfireBan, setHasCampfireBan] = useState(false)
-  const [parkAccessStatus, setParkAccessStatus] = useState(null)
-  const [advisoriesWithSeasonal, setAdvisoriesWithSeasonal] = useState([])
-  const [parkFeatures, setParkFeatures] = useState([])
-  const [parkFeaturesLoadError, setParkFeaturesLoadError] = useState(false)
-  const [isLoadingParkFeatures, setIsLoadingParkFeatures] = useState(true)
-  const [activeFacilities, setActiveFacilities] = useState([])
-  const [activeCampings, setActiveCampings] = useState([])
+  const [advisoryLoadError, setAdvisoryLoadError] = useState(false);
+  const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true);
+  const [advisories, setAdvisories] = useState([]);
+  const [protectedAreaLoadError, setProtectedAreaLoadError] = useState(false);
+  const [isLoadingProtectedArea, setIsLoadingProtectedArea] = useState(true);
+  const [hasCampfireBan, setHasCampfireBan] = useState(false);
+  const [parkAccessStatus, setParkAccessStatus] = useState(null);
+  const [advisoriesWithSeasonal, setAdvisoriesWithSeasonal] = useState([]);
+  const [parkFeatures, setParkFeatures] = useState([]);
+  const [parkFeaturesLoadError, setParkFeaturesLoadError] = useState(false);
+  const [isLoadingParkFeatures, setIsLoadingParkFeatures] = useState(true);
+  const [activeFacilities, setActiveFacilities] = useState([]);
+  const [activeCampings, setActiveCampings] = useState([]);
   // only one audio clip can be active at a time
-  const [activeAudio, setActiveAudio] = useState("")
-  const [parkGate, setParkGate] = useState({})
-  const [parkGateDates, setParkGateDates] = useState([])
+  const [activeAudio, setActiveAudio] = useState("");
+  const [parkGate, setParkGate] = useState({});
+  const [parkGateDates, setParkGateDates] = useState([]);
 
   const loadAdvisoriesData = async () => {
-    setIsLoadingAdvisories(true)
+    setIsLoadingAdvisories(true);
     try {
-      const response = await loadAdvisories(apiBaseUrl, park.orcs)
-      setAdvisories(response.data.data)
-      setAdvisoryLoadError(false)
+      const response = await loadAdvisories(apiBaseUrl, park.orcs);
+      setAdvisories(response.data.data);
+      setAdvisoryLoadError(false);
     } catch (error) {
-      console.error("Error loading advisories:", error)
-      setAdvisories([])
-      setAdvisoryLoadError(true)
+      console.error("Error loading advisories:", error);
+      setAdvisories([]);
+      setAdvisoryLoadError(true);
     } finally {
-      setIsLoadingAdvisories(false)
+      setIsLoadingAdvisories(false);
     }
-  }
-  
+  };
+
   const loadProtectedAreaData = async () => {
-    setIsLoadingProtectedArea(true)
+    setIsLoadingProtectedArea(true);
     try {
-      const response = await getProtectedArea(apiBaseUrl, park.orcs)
-      setHasCampfireBan(response.hasCampfireBan)
-      setParkGate(response.parkGate)
-      setParkGateDates(response.parkDates)
-      setProtectedAreaLoadError(false)
+      const response = await getProtectedArea(apiBaseUrl, park.orcs);
+      setHasCampfireBan(response.hasCampfireBan);
+      setParkGate(response.parkGate);
+      setParkGateDates(response.parkDates);
+      setProtectedAreaLoadError(false);
     } catch (error) {
-      console.error("Error loading protected area:", error)
-      setHasCampfireBan(false)
-      setParkGate({})
-      setParkGateDates([])
-      setProtectedAreaLoadError(true)
+      console.error("Error loading protected area:", error);
+      setHasCampfireBan(false);
+      setParkGate({});
+      setParkGateDates([]);
+      setProtectedAreaLoadError(true);
     } finally {
-      setIsLoadingProtectedArea(false)
+      setIsLoadingProtectedArea(false);
     }
-  }
-  
+  };
+
   const loadParkFeaturesData = async () => {
-    setIsLoadingParkFeatures(true)
+    setIsLoadingParkFeatures(true);
     try {
-      const response = await getParkFeatures(apiBaseUrl, park.orcs)
-      setParkFeatures(response.data)
-      setParkFeaturesLoadError(false)
+      const response = await getParkFeatures(apiBaseUrl, park.orcs);
+      setParkFeatures(response.data);
+      setParkFeaturesLoadError(false);
     } catch (error) {
-      console.error("Error loading park features:", error)
-      setParkFeatures([])
-      setParkFeaturesLoadError(true)
+      console.error("Error loading park features:", error);
+      setParkFeatures([]);
+      setParkFeaturesLoadError(true);
     } finally {
-      setIsLoadingParkFeatures(false)
+      setIsLoadingParkFeatures(false);
     }
-  }
+  };
 
   useEffect(() => {
-    loadAdvisoriesData()
-    loadProtectedAreaData()
-    loadParkFeaturesData()
+    loadAdvisoriesData();
+    loadProtectedAreaData();
+    loadParkFeaturesData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiBaseUrl, park.orcs])
+  }, [apiBaseUrl, park.orcs]);
 
   const processedFeatures = useMemo(() => {
-    if (!isLoadingParkFeatures && !parkFeaturesLoadError && parkFeatures.length) {
-      return groupParkFeaturesByType(parkFeatures)
+    if (
+      !isLoadingParkFeatures &&
+      !parkFeaturesLoadError &&
+      parkFeatures.length
+    ) {
+      return groupParkFeaturesByType(parkFeatures);
     }
-    return []
-  }, [isLoadingParkFeatures, parkFeaturesLoadError, parkFeatures])
+    return [];
+  }, [isLoadingParkFeatures, parkFeaturesLoadError, parkFeatures]);
 
   // set active facilities
   useEffect(() => {
-    if (park.parkFacilities.length > 0 &&
+    if (
+      park.parkFacilities.length > 0 &&
       data.allStrapiFacilityType.nodes.length > 0
     ) {
       const facilities = combineFacilities(
         park.parkFacilities,
         data.allStrapiFacilityType.nodes,
-        processedFeatures
-      )
-      setActiveFacilities(facilities)
+        processedFeatures,
+      );
+      setActiveFacilities(facilities);
     }
-  }, [park.parkFacilities, data.allStrapiFacilityType.nodes, processedFeatures])
+  }, [
+    park.parkFacilities,
+    data.allStrapiFacilityType.nodes,
+    processedFeatures,
+  ]);
 
   // set active campings
   useEffect(() => {
-    if (park.parkCampingTypes.length > 0 &&
+    if (
+      park.parkCampingTypes.length > 0 &&
       data.allStrapiCampingType.nodes.length > 0
     ) {
       const campings = combineCampingTypes(
         park.parkCampingTypes,
         data.allStrapiCampingType.nodes,
-        processedFeatures
-      )
-      setActiveCampings(campings)
+        processedFeatures,
+      );
+      setActiveCampings(campings);
     }
-  }, [park.parkCampingTypes, data.allStrapiCampingType.nodes, processedFeatures])
+  }, [
+    park.parkCampingTypes,
+    data.allStrapiCampingType.nodes,
+    processedFeatures,
+  ]);
 
   useEffect(() => {
-    if (window.location.hash && !isLoadingProtectedArea && !isLoadingAdvisories && !isLoadingParkFeatures) {
-      const id = window.location.hash.replace("#", "")
-      const element = document.getElementById(id) || document.querySelector(window.location.hash)
+    if (
+      window.location.hash &&
+      !isLoadingProtectedArea &&
+      !isLoadingAdvisories &&
+      !isLoadingParkFeatures
+    ) {
+      const id = window.location.hash.replace("#", "");
+      const element =
+        document.getElementById(id) ||
+        document.querySelector(window.location.hash);
       if (element) {
         setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }, 100)
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
       }
     }
-  }, [isLoadingProtectedArea, isLoadingAdvisories, isLoadingParkFeatures])
+  }, [isLoadingProtectedArea, isLoadingAdvisories, isLoadingParkFeatures]);
 
   const handleAccessStatus = (statusObj) => {
     setParkAccessStatus(statusObj);
@@ -204,15 +229,15 @@ export default function ParkTemplate({ data }) {
     }
   };
 
-  const parkOverviewRef = useRef(null)
-  const knowBeforeRef = useRef(null)
-  const mapLocationRef = useRef(null)
-  const campingRef = useRef(null)
-  const activityRef = useRef(null)
-  const facilityRef = useRef(null)
-  const aboutRef = useRef(null)
-  const reconciliationRef = useRef(null)
-  const contactRef = useRef(null)
+  const parkOverviewRef = useRef(null);
+  const knowBeforeRef = useRef(null);
+  const mapLocationRef = useRef(null);
+  const campingRef = useRef(null);
+  const activityRef = useRef(null);
+  const facilityRef = useRef(null);
+  const aboutRef = useRef(null);
+  const reconciliationRef = useRef(null);
+  const contactRef = useRef(null);
 
   const sectionRefs = [
     parkOverviewRef,
@@ -224,13 +249,13 @@ export default function ParkTemplate({ data }) {
     aboutRef,
     reconciliationRef,
     contactRef,
-  ]
+  ];
 
   const activeSection = useScrollSpy({
     sectionElementRefs: sectionRefs,
     defaultValue: 0,
     offsetPx: -100,
-  })
+  });
 
   const menuItems = [
     {
@@ -249,7 +274,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 2,
       display: "Maps and location",
       link: "#maps-and-location",
-      visible: !isNullOrWhiteSpace(maps) || !isNullOrWhiteSpace(locationNotes)
+      visible: !isNullOrWhiteSpace(maps) || !isNullOrWhiteSpace(locationNotes),
     },
     {
       sectionIndex: 3,
@@ -273,9 +298,11 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 6,
       display: `About this ${parkType}`,
       link: "#about-this-park",
-      visible: !isNullOrWhiteSpace(conservation) || 
+      visible:
+        !isNullOrWhiteSpace(conservation) ||
         !isNullOrWhiteSpace(culturalHeritage) ||
-        !isNullOrWhiteSpace(history) || !isNullOrWhiteSpace(wildlife)
+        !isNullOrWhiteSpace(history) ||
+        !isNullOrWhiteSpace(wildlife),
     },
     {
       sectionIndex: 7,
@@ -287,9 +314,9 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 8,
       display: `Contact`,
       link: "#contact",
-      visible: true
-    }
-  ]
+      visible: true,
+    },
+  ];
 
   const parkName = park.protectedAreaName;
 
@@ -301,12 +328,12 @@ export default function ParkTemplate({ data }) {
       key="2"
       to="/find-a-park/"
       onClick={(e) => {
-        if (sessionStorage.getItem("prevPath").includes('find-a-park')) {
+        if (sessionStorage.getItem("prevPath").includes("find-a-park")) {
           e.preventDefault();
           navigate(-1);
         } else if (sessionStorage.getItem("lastSearch")) {
           e.preventDefault();
-          navigate('/find-a-park/' + sessionStorage.getItem("lastSearch"))
+          navigate("/find-a-park/" + sessionStorage.getItem("lastSearch"));
         }
       }}
     >
@@ -315,14 +342,18 @@ export default function ParkTemplate({ data }) {
     <div key="3" className="breadcrumb-text">
       {parkName}
     </div>,
-  ]
+  ];
 
   return (
     <div>
       <Header mode="internal" content={menuContent} />
       <div className="park-header-container d-flex flex-wrap d-md-block">
         <div className="parks-container bg-brown">
-          <div id="main-content" tabIndex={-1} className="park-info-container breadcrumb-container">
+          <div
+            id="main-content"
+            tabIndex={-1}
+            className="park-info-container breadcrumb-container"
+          >
             <Breadcrumbs breadcrumbs={breadcrumbs} />
           </div>
           <ParkHeader
@@ -356,7 +387,9 @@ export default function ParkTemplate({ data }) {
             setActiveAudio={setActiveAudio}
           />
         </div>
-        <div className={`parks-container gallery-container has-photo--${photos.length > 0}`}>
+        <div
+          className={`parks-container gallery-container has-photo--${photos.length > 0}`}
+        >
           {photos.length > 0 && (
             <div className="background-container bg-brown"></div>
           )}
@@ -367,10 +400,7 @@ export default function ParkTemplate({ data }) {
       </div>
       <div className="parks-container main-container">
         <div className="page-menu--mobile d-block d-md-none">
-          <PageMenu
-            pageSections={menuItems}
-            menuStyle="list"
-          />
+          <PageMenu pageSections={menuItems} menuStyle="list" />
         </div>
         <div className="row g-0 park-info-container">
           <div className="page-menu--desktop d-none d-md-block col-12 col-md-4">
@@ -380,7 +410,9 @@ export default function ParkTemplate({ data }) {
               menuStyle="nav"
             />
           </div>
-          <div className={`page-content has-nearby-parks--${hasNearbyParks} col-12 col-md-8`}>
+          <div
+            className={`page-content has-nearby-parks--${hasNearbyParks} col-12 col-md-8`}
+          >
             {menuItems[0].visible && (
               <div ref={parkOverviewRef} className="w-100">
                 <ParkOverview
@@ -413,13 +445,17 @@ export default function ParkTemplate({ data }) {
                     </div>
                   )}
                   {!isLoadingAdvisories && !advisoryLoadError && (
-                    <AdvisoryDetails 
-                      advisories={advisoriesWithSeasonal.length > 0 ? advisoriesWithSeasonal : advisories} 
-                      parkType={parkType} 
+                    <AdvisoryDetails
+                      advisories={
+                        advisoriesWithSeasonal.length > 0
+                          ? advisoriesWithSeasonal
+                          : advisories
+                      }
+                      parkType={parkType}
                       parkAccessStatus={parkAccessStatus}
                     />
                   )}
-                  {hasParkGuidelines &&
+                  {hasParkGuidelines && (
                     <Row>
                       <Col>
                         <VisitorGuidelines
@@ -428,17 +464,18 @@ export default function ParkTemplate({ data }) {
                         />
                       </Col>
                     </Row>
-                  }
-                  {(!isNullOrWhiteSpace(safetyInfo) && !hasParkGuidelines) &&
+                  )}
+                  {!isNullOrWhiteSpace(safetyInfo) && !hasParkGuidelines && (
                     <SafetyInfo safetyInfo={safetyInfo} />
-                  }
-                  {(!isNullOrWhiteSpace(specialNotes) && !hasParkGuidelines) &&
+                  )}
+                  {!isNullOrWhiteSpace(specialNotes) && !hasParkGuidelines && (
                     <SpecialNote specialNotes={specialNotes} />
-                  }
+                  )}
                   <blockquote className="callout-box mb-4">
                     <p>
-                      Review the detailed guides under visit responsibly for more information
-                      on staying safe and preserving our natural spaces.
+                      Review the detailed guides under visit responsibly for
+                      more information on staying safe and preserving our
+                      natural spaces.
                     </p>
                   </blockquote>
                   <Row>
@@ -469,7 +506,7 @@ export default function ParkTemplate({ data }) {
                     parkOperation: park.parkOperation,
                     parkFeatures: parkFeatures,
                     isLoadingParkFeatures: isLoadingParkFeatures,
-                    parkFeaturesLoadError: parkFeaturesLoadError
+                    parkFeaturesLoadError: parkFeaturesLoadError,
                   }}
                 />
               </div>
@@ -487,7 +524,9 @@ export default function ParkTemplate({ data }) {
               <div ref={facilityRef} className="w-100">
                 <ParkFacility
                   data={activeFacilities}
-                  groupPicnicReservationUrl={park.parkOperation?.groupPicnicReservationUrl}
+                  groupPicnicReservationUrl={
+                    park.parkOperation?.groupPicnicReservationUrl
+                  }
                 />
               </div>
             )}
@@ -525,24 +564,22 @@ export default function ParkTemplate({ data }) {
           </div>
         </div>
       </div>
-      {hasNearbyParks &&
-        <NearbyParks parks={nearbyParks} />
-      }
+      {hasNearbyParks && <NearbyParks parks={nearbyParks} />}
       <Acknowledgment color={hasNearbyParks ? "brown" : ""} />
       <ScrollToTop />
       <Footer />
     </div>
-  )
+  );
 }
 
 export const Head = ({ data }) => {
-  const park = data.strapiProtectedArea
-  const seo = park.seo
-  const description = park.description.data.description
-  const parkDescription = description.replace(/(<([^>]+)>)/ig, '');
+  const park = data.strapiProtectedArea;
+  const seo = park.seo;
+  const description = park.description.data.description;
+  const parkDescription = description.replace(/(<([^>]+)>)/gi, "");
   const parkDescriptionShort = truncate(parkDescription, { length: 160 });
-  const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
-  const photoUrl = photos[0]?.imageUrl
+  const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes];
+  const photoUrl = photos[0]?.imageUrl;
 
   return (
     <Seo
@@ -551,12 +588,12 @@ export const Head = ({ data }) => {
       keywords={seo?.metaKeywords}
       image={photoUrl || parksLogo}
     />
-  )
-}
+  );
+};
 
 export const query = graphql`
   query ProtectedAreaDetails($orcs: Int) {
-    strapiProtectedArea(orcs: {eq: $orcs}) {
+    strapiProtectedArea(orcs: { eq: $orcs }) {
       slug
       protectedAreaName
       description {
@@ -699,7 +736,7 @@ export const query = graphql`
           defaultTitle
           defaultDescription {
             data {
-              defaultDescription 
+              defaultDescription
             }
           }
         }
@@ -855,15 +892,11 @@ export const query = graphql`
     }
     featuredPhotos: allStrapiParkPhoto(
       filter: {
-        orcs: {eq: $orcs},
-        isFeatured: {eq: true},
-        isActive: {eq: true}
+        orcs: { eq: $orcs }
+        isFeatured: { eq: true }
+        isActive: { eq: true }
       }
-      sort: [
-        {sortOrder: ASC},
-        {dateTaken: DESC},
-        {strapi_id: DESC}
-      ]
+      sort: [{ sortOrder: ASC }, { dateTaken: DESC }, { strapi_id: DESC }]
     ) {
       nodes {
         imageUrl
@@ -878,15 +911,11 @@ export const query = graphql`
     }
     regularPhotos: allStrapiParkPhoto(
       filter: {
-        orcs: {eq: $orcs},
-        isFeatured: {ne: true},
-        isActive: {eq: true}
+        orcs: { eq: $orcs }
+        isFeatured: { ne: true }
+        isActive: { eq: true }
       }
-      sort: [
-        {sortOrder: ASC},
-        {dateTaken: DESC},
-        {strapi_id: DESC}
-      ]
+      sort: [{ sortOrder: ASC }, { dateTaken: DESC }, { strapi_id: DESC }]
     ) {
       nodes {
         imageUrl
@@ -938,10 +967,7 @@ export const query = graphql`
         rank
       }
     }
-    allStrapiMenu(
-      sort: {order: ASC},
-      filter: {show: {eq: true}}
-    ) {
+    allStrapiMenu(sort: { order: ASC }, filter: { show: { eq: true } }) {
       nodes {
         strapi_id
         title
@@ -968,4 +994,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

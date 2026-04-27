@@ -2,65 +2,67 @@
 
 .not-found {
   background-color: $colorBlue;
-  color:white;
+  color: white;
   margin-bottom: 0px;
   h1 {
     font-weight: 100;
   }
 
-  .thumb-link{
+  .thumb-link {
     color: white !important;
     background-color: transparent;
     border: none !important;
     justify-content: left !important;
   }
 
-  .footer{
+  .footer {
     position: relative;
     bottom: 0;
   }
 
-  .home-button{
+  .home-button {
     font-weight: bold;
-    color:$colorBlue;
+    color: $colorBlue;
     background-color: white;
   }
 
-  .banner-icon{
+  .banner-icon {
     font-size: 1.2rem;
     margin-right: 1rem;
   }
 
-  .banner-text{
+  .banner-text {
     font-size: 1rem;
     margin-right: 0.5rem;
-    a{
+    a {
       text-decoration: none;
     }
-    a:hover{
+    a:hover {
       color: $colorBlue;
     }
   }
 
-  .banner-text-dark-link{
+  .banner-text-dark-link {
     font-size: 1rem;
-    a{
+    a {
       color: $colorBlue;
       text-decoration: none;
     }
   }
 
-  .link-divider{
+  .link-divider {
     display: block;
     margin-right: 0.5rem;
   }
 
   @media (max-width: 576px) {
-    .banner-text, .banner-text-dark-link, .banner-icon{
+    .banner-text,
+    .banner-text-dark-link,
+    .banner-icon {
       font-size: 0.7rem;
       margin-right: 0.1rem;
     }
-    .link-divider{
+    .link-divider {
       display: none;
     }
   }

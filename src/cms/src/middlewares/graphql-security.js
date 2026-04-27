@@ -21,7 +21,7 @@ module.exports = (_config, { strapi }) => {
           "script-src 'unsafe-inline' embeddable-sandbox.cdn.apollographql.com",
           "img-src 'self' data: https:",
           "object-src 'none'",
-        ].join("; "),
+        ].join("; ")
       );
     }
     await next();

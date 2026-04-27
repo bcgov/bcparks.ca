@@ -36,22 +36,22 @@ module.exports = {
   protectedAreaOrSiteValidator: function (protectedArea, site) {
     if (!protectedArea && !site) {
       throw new ApplicationError(
-        "Please add either protectedArea or site relation.",
+        "Please add either protectedArea or site relation."
       );
     }
   },
   // checks for valid characters and consecutive forward slashes
   slugCharacterValidator: function (slug) {
-    const regex = new RegExp("^[a-z0-9\-\/]+(?:-[a-z0-9\-\/]+)*$|^$");
+    const regex = new RegExp("^(?:[a-z0-9]+(?:[-/][a-z0-9]+)*)?$");
     if (!regex.test(slug)) {
       throw new ApplicationError(
-        "Please enter lower case letters, numbers, hyphens, or slashes for slugs. No spaces.",
+        "Please enter lower case letters, numbers, hyphens, or slashes for slugs. No spaces."
       );
     }
-    const regex2 = new RegExp("^(?!.*\/\/)[a-z0-9\-\/]+(?:-[a-z0-9\-\/]+)*$|^$");
+    const regex2 = new RegExp("^(?!.*//)[a-z0-9/-]*$");
     if (!regex2.test(slug)) {
       throw new ApplicationError(
-        "Consecutive forward slashes are not allowed in slugs.",
+        "Consecutive forward slashes are not allowed in slugs."
       );
     }
   },

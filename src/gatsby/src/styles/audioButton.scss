@@ -127,7 +127,8 @@
         .dropdown {
           &-item {
             color: $colorGrey !important;
-            &:active, &.active {
+            &:active,
+            &.active {
               color: $colorWhite !important;
               background-color: $colorGreyMed;
             }

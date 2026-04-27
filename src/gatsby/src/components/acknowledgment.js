@@ -1,9 +1,9 @@
-import React from "react"
-import "../styles/acknowledgment.scss"
+import React from "react";
+import "../styles/acknowledgment.scss";
 
 export default function Acknowledgment({ color }) {
-  // pass color prop if a page has a background color 
-  const acknowledgmentClassName = `acknowledgment${color ? ` bg-${color}` : ""}`
+  // pass color prop if a page has a background color
+  const acknowledgmentClassName = `acknowledgment${color ? ` bg-${color}` : ""}`;
   return (
     <div className={acknowledgmentClassName}>
       <div className="acknowledgment-container">
@@ -15,5 +15,5 @@ export default function Acknowledgment({ color }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /**
  * trail-report controller
  */
 
-const { createCoreController } = require('@strapi/strapi').factories;
+const { createCoreController } = require("@strapi/strapi").factories;
 
-module.exports = createCoreController('api::trail-report.trail-report');
+module.exports = createCoreController("api::trail-report.trail-report");

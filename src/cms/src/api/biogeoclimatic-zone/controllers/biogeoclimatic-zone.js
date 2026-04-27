@@ -1,9 +1,11 @@
-'use strict';
+"use strict";
 
 /**
  * biogeoclimatic-zone controller
  */
 
-const { createCoreController } = require('@strapi/strapi').factories;
+const { createCoreController } = require("@strapi/strapi").factories;
 
-module.exports = createCoreController('api::biogeoclimatic-zone.biogeoclimatic-zone');
+module.exports = createCoreController(
+  "api::biogeoclimatic-zone.biogeoclimatic-zone"
+);

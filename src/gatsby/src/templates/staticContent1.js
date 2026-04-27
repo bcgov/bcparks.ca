@@ -1,30 +1,27 @@
-import React, { useRef } from "react"
-import { useStaticQuery, graphql } from "gatsby"
-import useScrollSpy from "react-use-scrollspy"
+import React, { useRef } from "react";
+import { useStaticQuery, graphql } from "gatsby";
+import useScrollSpy from "react-use-scrollspy";
 
-import Acknowledgment from "../components/acknowledgment"
-import Breadcrumbs from "../components/breadcrumbs"
-import Header from "../components/header"
-import Footer from "../components/footer"
-import HtmlContent from "../components/htmlContent"
-import Seo from "../components/seo"
-import PageContent from "../components/pageContent/pageContent"
-import PageMenu from "../components/pageContent/pageMenu"
-import ScrollToTop from "../components/scrollToTop"
+import Acknowledgment from "../components/acknowledgment";
+import Breadcrumbs from "../components/breadcrumbs";
+import Header from "../components/header";
+import Footer from "../components/footer";
+import HtmlContent from "../components/htmlContent";
+import Seo from "../components/seo";
+import PageContent from "../components/pageContent/pageContent";
+import PageMenu from "../components/pageContent/pageMenu";
+import ScrollToTop from "../components/scrollToTop";
 
 import { renderBreadcrumbs } from "../utils/helpers";
 
-import "../styles/staticContent1.scss"
+import "../styles/staticContent1.scss";
 
-const slugify = require("slugify")
+const slugify = require("slugify");
 
 export default function StaticContent1({ pageContext }) {
   const queryData = useStaticQuery(graphql`
     {
-      allStrapiMenu(
-        sort: {order: ASC},
-        filter: {show: {eq: true}}
-      ) {
+      allStrapiMenu(sort: { order: ASC }, filter: { show: { eq: true } }) {
         nodes {
           strapi_id
           title
@@ -46,26 +43,32 @@ export default function StaticContent1({ pageContext }) {
         }
       }
     }
-  `)
+  `);
 
-  const menuContents = queryData?.allStrapiMenu?.nodes || []
-  const { page } = pageContext
-  const pageContents = page?.Content || []
-  const filteredContents = pageContents.filter(c =>
-    c.strapi_component !== "parks.page-header" &&
-    c.strapi_component !== "parks.seo") || []
-  const headerContent = pageContents.find(c => c.strapi_component === "parks.page-header") || {}
+  const menuContents = queryData?.allStrapiMenu?.nodes || [];
+  const { page } = pageContext;
+  const pageContents = page?.Content || [];
+  const filteredContents =
+    pageContents.filter(
+      (c) =>
+        c.strapi_component !== "parks.page-header" &&
+        c.strapi_component !== "parks.seo",
+    ) || [];
+  const headerContent =
+    pageContents.find((c) => c.strapi_component === "parks.page-header") || {};
   // New non-repeatable page header component
-  const pageHeader = page?.PageHeader || null
+  const pageHeader = page?.PageHeader || null;
   const hasPageHeader = Boolean(
-    pageHeader?.pageTitle ||
-    pageHeader?.introHtml?.data?.introHtml.length > 0
-  )
-  const hasPageHeaderIntro = (
-    pageHeader?.introHtml?.data?.introHtml.length > 0 || headerContent?.introHtml?.data?.introHtml.length > 0)
-  const sectionContents = pageContents.filter(c => c.strapi_component === "parks.page-section") || []
-  const hasSections = sectionContents.length > 0
-  const breadcrumbs = renderBreadcrumbs(menuContents, pageContext?.page)
+    pageHeader?.pageTitle || pageHeader?.introHtml?.data?.introHtml.length > 0,
+  );
+  const hasPageHeaderIntro =
+    pageHeader?.introHtml?.data?.introHtml.length > 0 ||
+    headerContent?.introHtml?.data?.introHtml.length > 0;
+  const sectionContents =
+    pageContents.filter((c) => c.strapi_component === "parks.page-section") ||
+    [];
+  const hasSections = sectionContents.length > 0;
+  const breadcrumbs = renderBreadcrumbs(menuContents, pageContext?.page);
 
   let sectionRefs = [
     // Creating 12 refs for scrollspy
@@ -84,33 +87,38 @@ export default function StaticContent1({ pageContext }) {
     useRef(null),
     useRef(null),
     useRef(null),
-  ]
+  ];
 
-  let pageSections = []
+  let pageSections = [];
   if (hasSections) {
-    let firstSectionTitle = page.Title
+    let firstSectionTitle = page.Title;
     if (!firstSectionTitle) {
-      const slug = page?.Slug
-      const current = menuContents.find(c => c.url === slug)
-      firstSectionTitle = current.title
+      const slug = page?.Slug;
+      const current = menuContents.find((c) => c.url === slug);
+      firstSectionTitle = current.title;
     }
     pageSections = [
-      { sectionIndex: 0, display: firstSectionTitle, link: "#", visible: false },
-    ]
+      {
+        sectionIndex: 0,
+        display: firstSectionTitle,
+        link: "#",
+        visible: false,
+      },
+    ];
 
-    let sectionIndex = 0
+    let sectionIndex = 0;
     for (const s of sectionContents) {
-      sectionIndex += 1
-      s.sectionIndex = sectionIndex
+      sectionIndex += 1;
+      s.sectionIndex = sectionIndex;
       // each section needs an index to be used for in-page navigation
       // and scrollspy highlighting
-      const titleId = slugify(s.sectionTitle).toLowerCase()
+      const titleId = slugify(s.sectionTitle).toLowerCase();
       pageSections.push({
         sectionIndex: sectionIndex,
         display: s.sectionTitle,
         link: "#" + titleId,
-        visible: true
-      })
+        visible: true,
+      });
     }
   }
 
@@ -121,7 +129,7 @@ export default function StaticContent1({ pageContext }) {
     sectionElementRefs: sectionRefs,
     defaultValue: 0,
     offsetPx: -100,
-  })
+  });
 
   return (
     <>
@@ -136,28 +144,23 @@ export default function StaticContent1({ pageContext }) {
         {/* Otherwise, display old repeatable seo/pageHeader component */}
         {hasPageHeader ? (
           <>
-            {pageHeader?.imageUrl &&
+            {pageHeader?.imageUrl && (
               <div className="header-image-wrapper">
-                <img
-                  src={pageHeader.imageUrl}
-                  alt={pageHeader.pageTitle}
-                />
+                <img src={pageHeader.imageUrl} alt={pageHeader.pageTitle} />
               </div>
-            }
-            <h1 className="header-title">
-              {pageHeader.pageTitle}
-            </h1>
+            )}
+            <h1 className="header-title">{pageHeader.pageTitle}</h1>
           </>
         ) : (
           <>
-            {headerContent?.imageUrl &&
+            {headerContent?.imageUrl && (
               <div className="header-image-wrapper">
                 <img
                   src={headerContent.imageUrl}
                   alt={headerContent.pageTitle || page.Title}
                 />
               </div>
-            }
+            )}
             <h1 className="header-title">
               {headerContent.pageTitle || page.Title}
             </h1>
@@ -181,13 +184,17 @@ export default function StaticContent1({ pageContext }) {
                 {hasPageHeaderIntro && (
                   <div className="header-content">
                     {hasPageHeader ? (
-                      <HtmlContent>{pageHeader.introHtml.data.introHtml}</HtmlContent>
+                      <HtmlContent>
+                        {pageHeader.introHtml.data.introHtml}
+                      </HtmlContent>
                     ) : (
-                      <HtmlContent>{headerContent.introHtml.data.introHtml}</HtmlContent>
+                      <HtmlContent>
+                        {headerContent.introHtml.data.introHtml}
+                      </HtmlContent>
                     )}
                   </div>
                 )}
-                {filteredContents.map(content => (
+                {filteredContents.map((content) => (
                   <div
                     ref={sectionRefs[content.sectionIndex]}
                     key={content.strapi_component + "-" + content.id}
@@ -207,13 +214,17 @@ export default function StaticContent1({ pageContext }) {
               {hasPageHeaderIntro && (
                 <div className="header-content">
                   {hasPageHeader ? (
-                    <HtmlContent>{pageHeader.introHtml.data.introHtml}</HtmlContent>
+                    <HtmlContent>
+                      {pageHeader.introHtml.data.introHtml}
+                    </HtmlContent>
                   ) : (
-                    <HtmlContent>{headerContent.introHtml.data.introHtml}</HtmlContent>
+                    <HtmlContent>
+                      {headerContent.introHtml.data.introHtml}
+                    </HtmlContent>
                   )}
                 </div>
               )}
-              {filteredContents.map(content => (
+              {filteredContents.map((content) => (
                 <PageContent
                   contentType={content.strapi_component}
                   content={content}
@@ -223,32 +234,39 @@ export default function StaticContent1({ pageContext }) {
             </div>
           )}
         </div>
-      </div >
-      <Acknowledgment  />
+      </div>
+      <Acknowledgment />
       <ScrollToTop />
       <Footer />
     </>
-  )
+  );
 }
 
 export const Head = ({ pageContext }) => {
-  const { page } = pageContext
-  const components = page?.Content || []
-  const headerContent = components.find(c => c.strapi_component === "parks.page-header") || {}
+  const { page } = pageContext;
+  const components = page?.Content || [];
+  const headerContent =
+    components.find((c) => c.strapi_component === "parks.page-header") || {};
   // New non-repeatable page header component
-  const pageHeader = page?.PageHeader || null
-  const meta = components.find(c => c.strapi_component === "parks.seo") || {}
+  const pageHeader = page?.PageHeader || null;
+  const meta = components.find((c) => c.strapi_component === "parks.seo") || {};
   // New non-repeatable seo component
-  const seo = page?.Seo || null
+  const seo = page?.Seo || null;
 
   return (
     // Display new non-repeatable seo/pageHeader component if exists
     // Otherwise, display old repeatable seo/pageHeader component
     <Seo
-      title={seo?.metaTitle || meta?.metaTitle || pageHeader?.pageTitle || headerContent?.pageTitle || page?.Title}
+      title={
+        seo?.metaTitle ||
+        meta?.metaTitle ||
+        pageHeader?.pageTitle ||
+        headerContent?.pageTitle ||
+        page?.Title
+      }
       description={seo?.metaDescription || meta?.metaDescription}
       keywords={seo?.metaKeywords || meta?.metaKeywords}
       image={pageHeader?.imageUrl || headerContent?.imageUrl}
     />
-  )
-}
+  );
+};

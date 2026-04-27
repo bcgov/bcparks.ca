@@ -61,10 +61,8 @@
     "babel-preset-gatsby": "^3.16.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
-    "prettier": "2.2.1",
-    "react-test-renderer": "^18.3.1",
-    "stylelint": "^14.16.1",
-    "stylelint-config-standard-scss": "^3.0.0"
+    "prettier": "^3.8.3",
+    "react-test-renderer": "^18.3.1"
   },
   "keywords": [
     "gatsby"
@@ -72,7 +70,8 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop -H 0.0.0.0",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",

@@ -8,20 +8,19 @@ Building a local version of Strapi is optional, as you can use a remote environm
 
 2. Run the opensearch and postgres instances `docker-compose up -d`
 
-3.  Copy the .env.example file to .env (`cp .env.example .env`). 
+3. Copy the .env.example file to .env (`cp .env.example .env`).
 
-5.  Edit the .env file in a text editor and ensure that this line is set: `DATABASE_HOST=localhost` and `DATABASE_NAME=cms`
+4. Edit the .env file in a text editor and ensure that this line is set: `DATABASE_HOST=localhost` and `DATABASE_NAME=cms`
 
-6. Run `npm install`.
+5. Run `npm install`.
 
-7. Run `npm run build && npm run develop` to run webpack, start a dev server and create the db tables.
+6. Run `npm run build && npm run develop` to run webpack, start a dev server and create the db tables.
 
-8. Create an admin user when prompted by your browser and log in
-
+7. Create an admin user when prompted by your browser and log in
 
 ### Exporting PROD data
 
-This step should be completed by someone familiar with OpenShift.  It involves running terminal commands on a prod server.  
+This step should be completed by someone familiar with OpenShift. It involves running terminal commands on a prod server.
 
 1. Go to the terminal for a prod CMS pod on OpenShift
 
@@ -34,7 +33,6 @@ This step should be completed by someone familiar with OpenShift.  It involves r
 5. Use `oc project` to switch to the prod project in OpenShift
 
 6. oc cp \<name of pod where you did the export>:\<export file name>.tar.gz ./prod.tar.gz
-
 
 ### Importing PROD data
 
@@ -54,7 +52,7 @@ This step should be completed by someone familiar with OpenShift.  It involves r
 
 1. Navigate to the bcparks.ca/src/scheduler directory.
 
-2. Copy the .env.example file to .env (`cp .env.example .env`). 
+2. Copy the .env.example file to .env (`cp .env.example .env`).
 
 3. Edit the .env file in a text editor and ensure that this line is set: `STRAPI_API_TOKEN` is set
 

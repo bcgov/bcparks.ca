@@ -1,7 +1,11 @@
 const { getLogger } = require("../../shared/logging");
 const { readQueue, removeFromQueue } = require("../../shared/taskQueue");
 const { cmsAxios } = require("../../shared/axiosConfig");
-const { getEntityDocIds, getDateTypeMap, getParkGateDocIds } = require("../utils/helper");
+const {
+  getEntityDocIds,
+  getDateTypeMap,
+  getParkGateDocIds,
+} = require("../utils/helper");
 const { dootSplitMessage } = require("./splitMessage");
 
 /**
@@ -20,7 +24,9 @@ exports.dootPublish = async function () {
     try {
       queue = await readQueue("doot publish");
     } catch (error) {
-      logger.error(`dootPublish() failed while retrieving 'doot publish' tasks: ${error}`);
+      logger.error(
+        `dootPublish() failed while retrieving 'doot publish' tasks: ${error}`,
+      );
       return;
     }
 
@@ -30,7 +36,9 @@ exports.dootPublish = async function () {
 
       // loop through each item in the jsonData array
       if (!Array.isArray(jsonData)) {
-        logger.error(`dootPublish() expected jsonData to be an array but got: ${typeof jsonData}`);
+        logger.error(
+          `dootPublish() expected jsonData to be an array but got: ${typeof jsonData}`,
+        );
         continue;
       }
 
@@ -47,10 +55,16 @@ exports.dootPublish = async function () {
       for (const item of jsonData) {
         let protectedAreaDocId, parkAreaDocId, parkFeatureDocId, relationName;
         try {
-          ({ protectedAreaDocId, parkAreaDocId, parkFeatureDocId, relationName } =
-            await getEntityDocIds(item));
+          ({
+            protectedAreaDocId,
+            parkAreaDocId,
+            parkFeatureDocId,
+            relationName,
+          } = await getEntityDocIds(item));
         } catch (error) {
-          logger.error(`dootPublish() failed while retrieving entity IDs: ${error}`);
+          logger.error(
+            `dootPublish() failed while retrieving entity IDs: ${error}`,
+          );
           errorProcessingMessage = true;
           break;
         }
@@ -86,10 +100,14 @@ exports.dootPublish = async function () {
               publishedAt: new Date(),
             };
             try {
-              await cmsAxios.put(`/api/park-gates/${parkGateDocIds[0]}`, { data: updateData });
+              await cmsAxios.put(`/api/park-gates/${parkGateDocIds[0]}`, {
+                data: updateData,
+              });
               logger.info(`Updated park-gates record for ${relationName}`);
             } catch (error) {
-              logger.error(`dootPublish() failed while updating park-gates: ${error}`);
+              logger.error(
+                `dootPublish() failed while updating park-gates: ${error}`,
+              );
               errorProcessingMessage = true;
               break;
             }
@@ -103,7 +121,9 @@ exports.dootPublish = async function () {
               gateOpen24Hours: item.gateInfo.gateOpen24Hours,
               gateOpensAtDawn: item.gateInfo.gateOpensAtDawn,
               gateClosesAtDusk: item.gateInfo.gateClosesAtDusk,
-              protectedArea: protectedAreaDocId ? protectedAreaDocId : undefined,
+              protectedArea: protectedAreaDocId
+                ? protectedAreaDocId
+                : undefined,
               parkArea: parkAreaDocId ? parkAreaDocId : undefined,
               parkFeature: parkFeatureDocId ? parkFeatureDocId : undefined,
               publishedAt: new Date(),
@@ -112,7 +132,9 @@ exports.dootPublish = async function () {
               await cmsAxios.post("/api/park-gates", { data: createData });
               logger.info(`Created new park-gates record for ${relationName}`);
             } catch (error) {
-              logger.error(`dootPublish() failed while creating park-gates: ${error}`);
+              logger.error(
+                `dootPublish() failed while creating park-gates: ${error}`,
+              );
               errorProcessingMessage = true;
               break;
             }
@@ -140,7 +162,9 @@ exports.dootPublish = async function () {
                 `Updated existing park-gates record(s) for ${relationName} to indicate no gate info`,
               );
             } catch (error) {
-              logger.error(`dootPublish() failed while updating park-gates: ${error}`);
+              logger.error(
+                `dootPublish() failed while updating park-gates: ${error}`,
+              );
               errorProcessingMessage = true;
               break;
             }
@@ -156,7 +180,9 @@ exports.dootPublish = async function () {
                 `Deleted duplicate park-gates record ${parkGateDocIds[i]} for ${relationName}`,
               );
             } catch (error) {
-              logger.error(`dootPublish() failed while deleting duplicate park-gates: ${error}`);
+              logger.error(
+                `dootPublish() failed while deleting duplicate park-gates: ${error}`,
+              );
               errorProcessingMessage = true;
               break;
             }
@@ -167,8 +193,12 @@ exports.dootPublish = async function () {
         if (item.operatingYear && (protectedAreaDocId || parkFeatureDocId)) {
           const deleteParams = {
             filters: {
-              protectedArea: protectedAreaDocId ? { documentId: protectedAreaDocId } : undefined,
-              parkFeature: parkFeatureDocId ? { documentId: parkFeatureDocId } : undefined,
+              protectedArea: protectedAreaDocId
+                ? { documentId: protectedAreaDocId }
+                : undefined,
+              parkFeature: parkFeatureDocId
+                ? { documentId: parkFeatureDocId }
+                : undefined,
               operatingYear: item.operatingYear,
             },
             fields: ["documentId"],
@@ -181,29 +211,41 @@ exports.dootPublish = async function () {
 
           let datesToDelete;
           try {
-            datesToDelete = await cmsAxios.get("/api/park-dates", { params: deleteParams });
+            datesToDelete = await cmsAxios.get("/api/park-dates", {
+              params: deleteParams,
+            });
           } catch (error) {
-            logger.error(`dootPublish() failed while retrieving park-dates: ${error}`);
+            logger.error(
+              `dootPublish() failed while retrieving park-dates: ${error}`,
+            );
             errorProcessingMessage = true;
             break;
           }
 
           // collect incoming date type IDs to prevent deleting other seasons/types
           const incomingDateTypeIds = new Set(
-            item.dateRanges?.map((dateRange) => dateRange.dateTypeId).filter(Boolean) || [],
+            item.dateRanges
+              ?.map((dateRange) => dateRange.dateTypeId)
+              .filter(Boolean) || [],
           );
 
           try {
             for (const dateRange of datesToDelete.data.data) {
               if (
-                DOOT_MANAGED_DATE_TYPE_IDS.includes(dateRange.parkDateType.dateTypeId) &&
+                DOOT_MANAGED_DATE_TYPE_IDS.includes(
+                  dateRange.parkDateType.dateTypeId,
+                ) &&
                 incomingDateTypeIds.has(dateRange.parkDateType.dateTypeId)
               ) {
-                await cmsAxios.delete(`/api/park-dates/${dateRange.documentId}`);
+                await cmsAxios.delete(
+                  `/api/park-dates/${dateRange.documentId}`,
+                );
               }
             }
           } catch (error) {
-            logger.error(`dootPublish() failed while deleting park-dates: ${error}`);
+            logger.error(
+              `dootPublish() failed while deleting park-dates: ${error}`,
+            );
             errorProcessingMessage = true;
             break;
           }
@@ -214,7 +256,9 @@ exports.dootPublish = async function () {
           try {
             dateTypeMap = await getDateTypeMap();
           } catch (error) {
-            logger.error(`dootPublish() failed while retrieving dateTypeMap: ${error}`);
+            logger.error(
+              `dootPublish() failed while retrieving dateTypeMap: ${error}`,
+            );
             errorProcessingMessage = true;
             break;
           }
@@ -240,17 +284,25 @@ exports.dootPublish = async function () {
                   parkDateType: dateTypeMap.get(dootDateRange.dateTypeId),
                   isDateAnnual: dootDateRange.isDateAnnual,
                   operatingYear: item.operatingYear,
-                  protectedArea: protectedAreaDocId ? protectedAreaDocId : undefined,
+                  protectedArea: protectedAreaDocId
+                    ? protectedAreaDocId
+                    : undefined,
                   parkFeature: parkFeatureDocId ? parkFeatureDocId : undefined,
                   publishedAt: new Date(),
                 };
-                await cmsAxios.post("/api/park-dates", { data: createDateRangeData });
+                await cmsAxios.post("/api/park-dates", {
+                  data: createDateRangeData,
+                });
               }
               // After creating all date ranges, log a summary message
               const count = item.dateRanges.length;
-              logger.info(`Created ${count} park-dates records for ${relationName}`);
+              logger.info(
+                `Created ${count} park-dates records for ${relationName}`,
+              );
             } catch (error) {
-              logger.error(`dootPublish() failed while creating park-dates: ${error}`);
+              logger.error(
+                `dootPublish() failed while creating park-dates: ${error}`,
+              );
               errorProcessingMessage = true;
               break;
             }
@@ -262,7 +314,9 @@ exports.dootPublish = async function () {
         try {
           await removeFromQueue([message.documentId]);
         } catch (error) {
-          logger.error(`dootPublish() failed while removing message from queue: ${error}`);
+          logger.error(
+            `dootPublish() failed while removing message from queue: ${error}`,
+          );
           continue;
         }
       }

@@ -7,7 +7,9 @@ const Breadcrumbs = ({ breadcrumbs }) => {
         {breadcrumbs.map((breadcrumb, index) => (
           <li key={index}>
             {breadcrumb}
-            {index !== breadcrumbs.length - 1 && <span className="separator">{"›"}</span>}
+            {index !== breadcrumbs.length - 1 && (
+              <span className="separator">{"›"}</span>
+            )}
           </li>
         ))}
       </ol>

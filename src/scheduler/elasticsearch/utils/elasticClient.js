@@ -86,7 +86,7 @@ async function removePark({ itemId }) {
   } catch (err) {
     if (!JSON.stringify(err).includes("not_found")) {
       console.log(
-        `Error encountered while removing indexed data from ElasticSearch.\n${JSON.stringify(err)}`
+        `Error encountered while removing indexed data from ElasticSearch.\n${JSON.stringify(err)}`,
       );
       throw err;
     }
@@ -103,7 +103,9 @@ async function parkIndexExists() {
     });
     return result.statusCode === 200;
   } catch (err) {
-    console.log("Error encountered while checking if index exists in ElasticSearch.");
+    console.log(
+      "Error encountered while checking if index exists in ElasticSearch.",
+    );
   }
   return false;
 }

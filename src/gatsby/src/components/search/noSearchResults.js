@@ -1,23 +1,23 @@
-import React from "react"
-import { Link } from "gatsby"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSearch, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
-import PropTypes from "prop-types"
-import { mapUrl } from "../../utils/constants"
+import React from "react";
+import { Link } from "gatsby";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSearch,
+  faArrowUpRightFromSquare,
+} from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
+import { mapUrl } from "../../utils/constants";
 
-import "../../styles/search.scss"
+import "../../styles/search.scss";
 
 const MapLink = () => {
   return (
-    <a
-      className="map-link"
-      href={mapUrl}
-    >
+    <a className="map-link" href={mapUrl}>
       Map of parks
       <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="link-icon" />
     </a>
-  )
-}
+  );
+};
 
 const NoSearchResults = ({
   handleClickClearCity,
@@ -28,22 +28,22 @@ const NoSearchResults = ({
   const renderNoResultsMessage = () => {
     switch (page) {
       case "find-a-park":
-        return "No parks match your search."
+        return "No parks match your search.";
       case "park-operating-dates":
       case "a-z-list":
-        return "No parks match your selection."
+        return "No parks match your selection.";
       case "approved":
-        return "No documents match your selection."
+        return "No documents match your selection.";
       default:
-        return ""
+        return "";
     }
-  }
+  };
   // event handlers
   const handleClearAll = () => {
-    handleClickClearCity()
-    handleClickClearPark()
-    handleClickClearFilter()
-  }
+    handleClickClearCity();
+    handleClickClearPark();
+    handleClickClearFilter();
+  };
 
   return (
     <div className="no-results-container">
@@ -51,12 +51,16 @@ const NoSearchResults = ({
         <FontAwesomeIcon icon={faSearch} className="search-icon" />
         <div className="no-results-header--right">
           <h2>Sorry...</h2>
-          <p><b>{renderNoResultsMessage()}</b></p>
+          <p>
+            <b>{renderNoResultsMessage()}</b>
+          </p>
         </div>
       </div>
       {page === "find-a-park" && (
         <>
-          <p><b>You could:</b></p>
+          <p>
+            <b>You could:</b>
+          </p>
           <ul>
             <li>Try a different search term</li>
             <li>
@@ -69,7 +73,9 @@ const NoSearchResults = ({
               </button>
             </li>
           </ul>
-          <p><b>Or search using the:</b></p>
+          <p>
+            <b>Or search using the:</b>
+          </p>
           <ul>
             <li>
               <Link to="/find-a-park/a-z-list">A–Z park list</Link>
@@ -85,7 +91,9 @@ const NoSearchResults = ({
           <p className="mb-4">
             <b>Select 'All' to go back to the full list.</b>
           </p>
-          <p><b>Or search using the:</b></p>
+          <p>
+            <b>Or search using the:</b>
+          </p>
           <ul>
             <li>
               <Link to="/find-a-park">Find a park page</Link>
@@ -114,14 +122,14 @@ const NoSearchResults = ({
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default NoSearchResults
+export default NoSearchResults;
 
 NoSearchResults.propTypes = {
   handleClickClearCity: PropTypes.func,
   handleClickClearPark: PropTypes.func,
   handleClickClearFilter: PropTypes.func,
   page: PropTypes.string.isRequired,
-}
+};
