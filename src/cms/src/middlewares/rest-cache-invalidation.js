@@ -13,6 +13,12 @@ const cachedCollectionTypes = [
 
 const watchedCollectionTypes = [
   ...cachedCollectionTypes,
+  "api::park-area.park-area",
+  "api::park-gate.park-gate",
+  "api::park-date.park-date",
+  "api::park-facility.park-facility",
+  "api::park-activity.park-activity",
+  "api::park-camping-type.park-camping-type",
   "api::park-operation.park-operation",
 ];
 
