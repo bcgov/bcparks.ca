@@ -11,6 +11,11 @@ const cachedCollectionTypes = [
   "api::park-feature.park-feature",
 ];
 
+const watchedCollectionTypes = [
+  ...cachedCollectionTypes,
+  "api::park-operation.park-operation",
+];
+
 const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 
 // MAIN MIDDLEWARE FUNCTION (scaffolding)
@@ -18,7 +23,7 @@ const pageActions = ["create", "update", "delete", "publish", "unpublish"];
 module.exports = () => {
   return async (context, next) => {
     if (
-      !cachedCollectionTypes.includes(context.uid) ||
+      !watchedCollectionTypes.includes(context.uid) ||
       !pageActions.includes(context.action)
     ) {
       return await next(); // Call the next middleware in the stack
