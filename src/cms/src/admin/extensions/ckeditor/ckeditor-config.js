@@ -170,10 +170,9 @@ export const registerCKEditor = async (_app) => {
           openInNewTab: {
             mode: "manual",
             label: "Open in a new tab",
-            defaultValue: false,
             attributes: {
-              target: "_blank",
-              rel: "noopener",
+              // Add a special attribute to identify links in a Gatsby transform function
+              "data-ck-link-open-in-new-tab": "true",
             },
           },
 
@@ -181,6 +180,10 @@ export const registerCKEditor = async (_app) => {
             mode: "manual",
             label: "Learn more link",
             classes: "learn-more-link",
+            attributes: {
+              // Add a "ck-link-decorator" data attribute to prevent conflicts with other decorators
+              "data-ck-link-decorator": "learn-more",
+            },
           },
 
           makeButton: {
@@ -188,6 +191,8 @@ export const registerCKEditor = async (_app) => {
             label: "Primary button",
             classes: "btn btn-primary",
             attributes: {
+              // Add a "ck-link-decorator" data attribute to prevent conflicts with other decorators
+              "data-ck-link-decorator": "primary-button",
               role: "button",
             },
           },
@@ -197,6 +202,8 @@ export const registerCKEditor = async (_app) => {
             label: "Secondary button",
             classes: "btn btn-secondary",
             attributes: {
+              // Add a "ck-link-decorator" data attribute to prevent conflicts with other decorators
+              "data-ck-link-decorator": "secondary-button",
               role: "button",
             },
           },
@@ -205,8 +212,8 @@ export const registerCKEditor = async (_app) => {
             mode: "automatic",
             callback: (url) => !!url?.endsWith(".pdf"),
             attributes: {
-              target: "_blank",
-              rel: "noopener",
+              // Add a special attribute to identify downloadable links in a Gatsby transform function
+              "data-ck-link-downloadable": "true",
             },
           },
         },
