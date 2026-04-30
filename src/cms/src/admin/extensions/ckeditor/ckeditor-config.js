@@ -77,13 +77,10 @@ export const registerCKEditor = async (_app) => {
     editorConfig: {
       ...defaultHtmlPreset.editorConfig,
 
-      // Remove color controls from the text-selection popup (balloon toolbar).
-      // We only allow branded colors via predefined styles/classes.
-      balloonToolbar: (
-        defaultHtmlPreset.editorConfig.balloonToolbar || []
-      ).filter(
-        (item) => item !== "fontColor" && item !== "fontBackgroundColor",
-      ),
+      // Remove the font formatting "balloon" toolbar that appears when selecting text,
+      // since it interferes with the custom link toolbar.
+      // Text formatting options are available in the main toolbar.
+      balloonToolbar: false,
 
       toolbar: [
         "heading",
@@ -91,7 +88,11 @@ export const registerCKEditor = async (_app) => {
         "|",
         "bold",
         "italic",
-        "underline",
+        {
+          label: "Other formatting options",
+          icon: "text",
+          items: ["underline", "strikethrough", "superscript", "subscript"],
+        },
         "|",
         "link",
         "strapiMediaLib",
