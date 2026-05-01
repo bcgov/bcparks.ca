@@ -26,7 +26,7 @@ images:
     tag: latest
   redis:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/redis
-    tag: 6.2.14-alpine
+    tag: 6.2.20-alpine
   etl:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/etl-main
     tag: latest

@@ -2,10 +2,10 @@
 
 oc tag -n c1643c-tools --source=docker node:22-slim node:22-slim
 
-oc tag -n c1643c-tools --source=docker redis:6.2.14-alpine redis:6.2.14-alpine
+oc tag -n c1643c-tools --source=docker redis:6.2.20-alpine redis:6.2.20-alpine
 
-oc tag -n c1643c-tools --source=docker bitnami/pgbouncer:1.22.1 pgbouncer:1.22.1
-oc tag -n c1643c-tools pgbouncer:1.22.1 pgbouncer:latest
+oc tag -n c1643c-tools --source=docker bitnamilegacy/pgbouncer:1.24.1-debian-12-r10 pgbouncer:1.24.1
+oc tag -n c1643c-tools pgbouncer:1.24.1 pgbouncer:latest
 
 oc tag -n c1643c-tools --source=docker caddy:2.6.2-alpine caddy:2.6.2-alpine
 oc tag -n c1643c-tools caddy:2.6.2-alpine caddy:latest
