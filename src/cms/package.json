@@ -29,7 +29,7 @@
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@opensearch-project/opensearch": "^2.13.0",
     "@strapi-community/plugin-redis": "^2.0.0",
-    "@strapi-community/plugin-rest-cache": "5.0.1",
+    "@strapi-community/plugin-rest-cache": "5.0.0",
     "@strapi-community/provider-rest-cache-redis": "5.0.0",
     "@strapi/plugin-documentation": "5.44.0",
     "@strapi/plugin-graphql": "5.44.0",
