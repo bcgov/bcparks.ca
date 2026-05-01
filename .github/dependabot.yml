@@ -1,0 +1,96 @@
+# Dependabot configuration for npm dependencies in selected subprojects.
+# Regular dependency version updates are opened against the `alpha` branch,
+# which is the active development branch and typically ahead of `main`.
+# Security-related updates (triggered by CVEs/GitHub advisories) will always
+# target the default branch (`main`), as this behavior cannot be overridden.
+#
+# Only the primary npm projects under /src are managed here; other package.json
+# files are intentionally excluded. Semver-major updates are disabled to avoid
+# breaking changes and are handled manually. Security updates are not grouped so
+# that each vulnerability results in a clearly visible, dedicated PR.
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/src/etl"
+    target-branch: "alpha"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "NOBUG"
+    allow:
+      - dependency-type: "direct"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      npm-minor-and-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "npm"
+    directory: "/src/scheduler"
+    target-branch: "alpha"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "NOBUG"
+    allow:
+      - dependency-type: "direct"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      npm-minor-and-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "npm"
+    directory: "/src/gatsby"
+    target-branch: "alpha"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "NOBUG"
+    allow:
+      - dependency-type: "direct"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      npm-minor-and-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "npm"
+    directory: "/src/cms"
+    target-branch: "alpha"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "NOBUG"
+    allow:
+      - dependency-type: "direct"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      npm-minor-and-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
