@@ -16,6 +16,7 @@ updates:
     target-branch: "alpha"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 1
     commit-message:
       prefix: "NOBUG"
     allow:
@@ -24,19 +25,17 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
     groups:
-      npm-minor-and-patch:
+      etl-minor-patch:
         applies-to: version-updates
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
 
   - package-ecosystem: "npm"
     directory: "/src/scheduler"
     target-branch: "alpha"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 1
     commit-message:
       prefix: "NOBUG"
     allow:
@@ -45,19 +44,17 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
     groups:
-      npm-minor-and-patch:
+      scheduler-minor-patch:
         applies-to: version-updates
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
 
   - package-ecosystem: "npm"
     directory: "/src/gatsby"
     target-branch: "alpha"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 1
     commit-message:
       prefix: "NOBUG"
     allow:
@@ -66,19 +63,17 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
     groups:
-      npm-minor-and-patch:
+      gatsby-minor-patch:
         applies-to: version-updates
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
 
   - package-ecosystem: "npm"
     directory: "/src/cms"
     target-branch: "alpha"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 1
     commit-message:
       prefix: "NOBUG"
     allow:
@@ -87,10 +82,7 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
     groups:
-      npm-minor-and-patch:
+      cms-minor-patch:
         applies-to: version-updates
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
