@@ -49,7 +49,7 @@
     "react-typography": "^0.16.19",
     "react-use-query-param-string": "^2.1.6",
     "react-use-scrollspy": "^3.0.1",
-    "sass": "1.32.13",
+    "sass": "1.99.0",
     "seamless-scroll-polyfill": "^2.3.0",
     "slugify": "^1.6.9",
     "typography": "^0.16.24",
