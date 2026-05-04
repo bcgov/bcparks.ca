@@ -54,32 +54,27 @@ spec:
             - name: DATABASE_CLIENT
               value: postgres
             - name: DATABASE_HOST
-            {{- if .Values.pgbouncer.enabled }}
-              value: {{ template "bcparks_pgbouncer_fullname" . }} 
-            {{- else }}
-              value: {{ template "bcparks_patroni_fullname" . }}
-            {{- end }}
+              valueFrom:
+                secretKeyRef:
+                  name:  {{ .Values.crunchy.instanceName }}-pguser-{{ .Values.crunchy.instanceName }}
+                  key: pgbouncer-host
             - name: DATABASE_PORT
-            {{- if .Values.pgbouncer.enabled }}
-              value: {{ .Values.pgbouncer.service.port | quote }}
-            {{- else }}
-              value: {{ .Values.patroni.service.port | quote }}
-            {{- end }}              
+              valueFrom:
+                secretKeyRef:
+                  name:  {{ .Values.crunchy.instanceName }}-pguser-{{ .Values.crunchy.instanceName }}
+                  key: pgbouncer-port          
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bcparks_patroni_secret" . }}
-                  key: app-db-username
+                  name:  {{ .Values.crunchy.instanceName }}-pguser-{{ .Values.crunchy.instanceName }}
+                  key: user  
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bcparks_patroni_secret" . }}
-                  key: app-db-password
+                  name:  {{ .Values.crunchy.instanceName }}-pguser-{{ .Values.crunchy.instanceName }}
+                  key: password 
             - name: DATABASE_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "bcparks_patroni_secret" . }}
-                  key: app-db-name
+              value: {{ .Values.crunchy.database }}
             - name: DATABASE_SSL
               value: "false"
             - name: DATABASE_MIN_CONNECTIONS

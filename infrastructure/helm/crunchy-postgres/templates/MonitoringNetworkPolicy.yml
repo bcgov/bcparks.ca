@@ -1,0 +1,22 @@
+{{ if .Values.pgmonitor.enabled }}
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: {{ template "crunchy-postgres.fullname" . }}-allow-crunchydb-monitoring
+  labels:
+    postgres-operator.crunchydata.com/cluster: {{ template "crunchy-postgres.fullname" . }}
+    {{ include "crunchy-postgres.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      postgres-operator.crunchydata.com/cluster: {{ template "crunchy-postgres.fullname" . }}
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: {{ .Values.pgmonitor.namespace }}
+              environment: tools
+      ports:
+        - protocol: TCP
+          port: 9187
+{{ end }}

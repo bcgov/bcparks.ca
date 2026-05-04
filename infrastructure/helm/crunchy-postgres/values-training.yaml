@@ -1,0 +1,22 @@
+fullnameOverride: crunchy-postgres-training
+
+postgresVersion: 17
+
+instances:
+  replicas: 2
+  dataVolumeClaimSpec:
+    storage: 2Gi
+  requests:
+    cpu: 100m
+
+pgBackRest:
+  repos:
+    volume:
+      storage: 1Gi
+
+proxy:
+  pgBouncer:
+    replicas: 1
+
+pgmonitor:
+  namespace: c1643c #The high level namespace of your project without the -tools -dev, etc part.

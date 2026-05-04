@@ -8,8 +8,8 @@ cms:
     environment: dev
     externalUrl: https://dev-cms.bcparks.ca
 
-patroni:
-  replicas: 1
+crunchy:
+  instanceName: crunchy-postgres
 
 scheduler:
   env:
