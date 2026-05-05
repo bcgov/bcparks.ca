@@ -12,7 +12,7 @@ instances:
 pgBackRest:
   repos:
     volume:
-      storage: 1Gi
+      storage: 2Gi
 
 proxy:
   pgBouncer:

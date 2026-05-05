@@ -16,7 +16,7 @@ pgBackRest:
       storage: 2Gi
   s3:
     enabled: true
-    bucket: "dootprod"
+    bucket: "parks-cms-prod"
     endpoint: "nrs.objectstore.gov.bc.ca"
 
 proxy:
