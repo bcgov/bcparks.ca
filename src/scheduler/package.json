@@ -16,7 +16,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@opensearch-project/opensearch": "^2.13.0",
-    "axios": "^1.15.2",
+    "axios": "^1.16.0",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.1",
     "dotenv": "^16.6.1",
