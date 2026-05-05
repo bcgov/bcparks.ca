@@ -77,13 +77,10 @@ export const registerCKEditor = async (_app) => {
     editorConfig: {
       ...defaultHtmlPreset.editorConfig,
 
-      // Remove color controls from the text-selection popup (balloon toolbar).
-      // We only allow branded colors via predefined styles/classes.
-      balloonToolbar: (
-        defaultHtmlPreset.editorConfig.balloonToolbar || []
-      ).filter(
-        (item) => item !== "fontColor" && item !== "fontBackgroundColor",
-      ),
+      // Remove the font formatting "balloon" toolbar that appears when selecting text,
+      // since it interferes with the custom link toolbar.
+      // Text formatting options are available in the main toolbar.
+      balloonToolbar: false,
 
       toolbar: [
         "heading",
@@ -91,7 +88,11 @@ export const registerCKEditor = async (_app) => {
         "|",
         "bold",
         "italic",
-        "underline",
+        {
+          label: "Other formatting options",
+          icon: "text",
+          items: ["underline", "strikethrough", "superscript", "subscript"],
+        },
         "|",
         "link",
         "strapiMediaLib",
@@ -169,10 +170,9 @@ export const registerCKEditor = async (_app) => {
           openInNewTab: {
             mode: "manual",
             label: "Open in a new tab",
-            defaultValue: false,
             attributes: {
-              target: "_blank",
-              rel: "noopener",
+              // Add a special attribute to identify links in a Gatsby transform function
+              "data-ck-link-open-in-new-tab": "true",
             },
           },
 
@@ -180,6 +180,10 @@ export const registerCKEditor = async (_app) => {
             mode: "manual",
             label: "Learn more link",
             classes: "learn-more-link",
+            attributes: {
+              // Add a "ck-link-decorator" data attribute to prevent conflicts with other decorators
+              "data-ck-link-decorator": "learn-more",
+            },
           },
 
           makeButton: {
@@ -187,6 +191,8 @@ export const registerCKEditor = async (_app) => {
             label: "Primary button",
             classes: "btn btn-primary",
             attributes: {
+              // Add a "ck-link-decorator" data attribute to prevent conflicts with other decorators
+              "data-ck-link-decorator": "primary-button",
               role: "button",
             },
           },
@@ -196,6 +202,8 @@ export const registerCKEditor = async (_app) => {
             label: "Secondary button",
             classes: "btn btn-secondary",
             attributes: {
+              // Add a "ck-link-decorator" data attribute to prevent conflicts with other decorators
+              "data-ck-link-decorator": "secondary-button",
               role: "button",
             },
           },
@@ -204,8 +212,8 @@ export const registerCKEditor = async (_app) => {
             mode: "automatic",
             callback: (url) => !!url?.endsWith(".pdf"),
             attributes: {
-              target: "_blank",
-              rel: "noopener",
+              // Add a special attribute to identify downloadable links in a Gatsby transform function
+              "data-ck-link-downloadable": "true",
             },
           },
         },
