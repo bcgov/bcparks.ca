@@ -2,9 +2,30 @@
 
 module.exports = {
   async up(knex) {
-    if (await knex.schema.hasTable("recreation_districts")) {
-      await knex.raw(`DELETE FROM recreation_districts;`);
+    const upsertManyByCode = async ({ uid, codeField, labelField, data }) => {
+      for (const row of data) {
+        const code = row[codeField];
 
+        const existing = await strapi.db.query(uid).findOne({
+          where: { [codeField]: code },
+          select: ["id", labelField],
+        });
+
+        if (!existing) {
+          await strapi.db.query(uid).create({ data: row });
+          continue;
+        }
+
+        if (existing[labelField] !== row[labelField]) {
+          await strapi.db.query(uid).update({
+            where: { id: existing.id },
+            data: { [labelField]: row[labelField] },
+          });
+        }
+      }
+    };
+
+    if (await knex.schema.hasTable("recreation_districts")) {
       // prettier-ignore
       const data = [
         { districtCode: "RDCC", district: "Quesnel-Central Cariboo" },
@@ -34,24 +55,33 @@ module.exports = {
         { districtCode: "RDRM", district: "Rocky Mountain" },
       ];
 
-      await strapi.db
-        .query("api::recreation-district.recreation-district")
-        .createMany({ data });
+      await upsertManyByCode({
+        uid: "api::recreation-district.recreation-district",
+        codeField: "districtCode",
+        labelField: "district",
+        data,
+      });
     }
 
     if (await knex.schema.hasTable("recreation_resource_types")) {
-      await knex.raw(`DELETE FROM recreation_resource_types;`);
-
+      // prettier-ignore
       const data = [
         { resourceTypeCode: "IF", resourceType: "Interpretive forest" },
         { resourceTypeCode: "RR", resourceType: "Recreation reserve" },
-        { resourceTypeCode: "RTR", resourceType: "Recreation trail" },
         { resourceTypeCode: "SIT", resourceType: "Recreation site" },
+        { resourceTypeCode: "RTR", resourceType: "Recreation trail reserve" },
+        { resourceTypeCode: "TBL", resourceType: "Trail based recreation linear" },
+        { resourceTypeCode: "TRB", resourceType: "Trail based recreation area" },
+        { resourceTypeCode: "IFT", resourceType: "Interpretive forest trail" },
+        { resourceTypeCode: "RTE", resourceType: "Recreation trail established" },
       ];
 
-      await strapi.db
-        .query("api::recreation-resource-type.recreation-resource-type")
-        .createMany({ data });
+      await upsertManyByCode({
+        uid: "api::recreation-resource-type.recreation-resource-type",
+        codeField: "resourceTypeCode",
+        labelField: "resourceType",
+        data,
+      });
     }
 
     if (
