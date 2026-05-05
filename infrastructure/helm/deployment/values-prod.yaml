@@ -19,8 +19,6 @@ images:
 
 cms:
   resources:
-    limits:
-      memory: 1250Mi
     requests:
       cpu: 175m
       memory: 625Mi
@@ -35,34 +33,11 @@ cms:
     maxReplicas: 4
     cpuUtilizationThreshold: 65
 
-patroni:
-  resources:
-    limits:
-      cpu: 400m
-      memory: 1500Mi
-    requests:
-      cpu: 200m
-      memory: 750Mi
-  replicas: 3
-
-  pvc:
-    size: 6Gi
-
-backup:
-  enabled: true
-
-  pvc:
-    size: 6Gi
-
-  enironment:
-    friendlyName: bcparks.ca CMS Postgres Backup [prod]
-    name: c1643c-prod
+crunchy:
+  instanceName: crunchy-postgres
 
 public:
   resources:
-    limits:
-      cpu: 200m
-      memory: 200Mi
     requests:
       cpu: 100m
       memory: 100Mi

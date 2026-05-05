@@ -9,18 +9,9 @@ images:
   strapi:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/strapi-main
     tag: latest
-  pgbouncer:
-    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/pgbouncer
-    tag: latest
   public:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/public-main
     tag: latest
-  patroni:
-    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/patroni-postgres
-    tag: 2.1.7-12.19-latest
-  backup:
-    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/backup-container
-    tag: postgres-latest
   maintenance:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/maintenance-main
     tag: latest
@@ -40,8 +31,6 @@ cms:
   imagePullPolicy: Always
 
   resources:
-    limits:
-      memory: 1250Mi
     requests:
       cpu: 75m
       memory: 250Mi
@@ -72,56 +61,10 @@ cms:
     maxReplicas: 2
     cpuUtilizationThreshold: 125
 
-patroni:
-  componentName: patroni
-
-  enabled: true
-
-  replicas: 3
-
-  databaseName: cms
-
-  resources:
-    limits:
-      cpu: 250m
-      memory: 1250Mi
-    requests:
-      cpu: 100m
-      memory: 250Mi
-
-  env:
-    maxConnections: 240
-
-  service:
-    portName: patroni-leader
-    port: 5432
-
-  pvc:
-    accessMode: ReadWriteOnce
-    storageClassName: netapp-block-standard
-    size: 1Gi
-
-pgbouncer:
-  enabled: true
-
-  componentName: pgbouncer
-
-  resources:
-    limits:
-      cpu: 150m
-      memory: 150Mi
-    requests:
-      cpu: 50m
-      memory: 50Mi
-
-  env:
-    defaultPoolSize: 80
-    poolMode: transaction
-    maxClientConn: 120
-
-  service:
-    portName: pgbouncer
-    port: 6432
+crunchy:
+  instanceName: crunchy-postgres
+  componentName: crunchy
+  database: cms
 
 public:
   imagePullPolicy: Always
@@ -129,9 +72,6 @@ public:
   componentName: public
 
   resources:
-    limits:
-      cpu: 100m
-      memory: 100Mi
     requests:
       cpu: 50m
       memory: 50Mi
@@ -145,55 +85,12 @@ public:
     maxReplicas: 2
     cpuUtilizationThreshold: 125
 
-backup:
-  componentName: postgres-backup
-
-  # Disabled by default.  Overriden for TEST and PROD
-  enabled: false
-
-  pvc:
-    accessMode: ReadWriteOnce
-    storageClassName: netapp-file-backup
-    size: 1Gi
-
-  schedule: "0 9 * * *"
-
-  successfulJobsHistoryLimit: 5
-  failedJobsHistoryLimit: 2
-  backoffLimit: 0
-
-  backupStrategy: "rolling"
-  backupDir: "/backups/"
-
-  retention:
-    numBackups: 5
-    dailyBackups: 7
-    weeklyBackups: 4
-    monthlyBackups: 1
-
-  enironment:
-    friendlyName: "bcparks.ca CMS Postgres Backup [dev]"
-    name: "c1643c-dev"
-
-  tableSchema: "public"
-
-  resources:
-    limits:
-      cpu: "1"
-      memory: 1Gi
-    requests:
-      cpu: 250m
-      memory: 250Mi
-
 maintenance:
   imagePullPolicy: Always
 
   componentName: maintenance
 
   resources:
-    limits:
-      cpu: 100m
-      memory: 100Mi
     requests:
       cpu: 20m
       memory: 50Mi
@@ -208,9 +105,6 @@ redis:
   componentName: redis
 
   resources:
-    limits:
-      cpu: 100m
-      memory: 256Mi
     requests:
       cpu: 25m
       memory: 64Mi
@@ -240,9 +134,6 @@ etl:
     parkNamesApi: https://test-data.bcparks.ca/api/parks/names?status=established
 
   resources:
-    limits:
-      cpu: "1"
-      memory: 1Gi
     requests:
       cpu: 250m
       memory: 250Mi
@@ -262,9 +153,6 @@ scheduler:
     emailRecipient: parksweb@gov.bc.ca
 
   resources:
-    limits:
-      cpu: 100m
-      memory: 160Mi
     requests:
       cpu: 10m
       memory: 80Mi
