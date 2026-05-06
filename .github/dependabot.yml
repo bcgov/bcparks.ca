@@ -60,8 +60,13 @@ updates:
     allow:
       - dependency-type: "direct"
     ignore:
+      # Don’t allow major updates for anything
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+
+      # Sass >= 1.32.13 adds excessive deprecation warnings
+      # Upgrade intentionally when ready
+      - dependency-name: "sass"
     groups:
       gatsby-minor-patch:
         applies-to: version-updates
@@ -86,3 +91,11 @@ updates:
         applies-to: version-updates
         patterns: ["*"]
         update-types: ["minor", "patch"]
+
+  - package-ecosystem: "npm"
+    directory: "/tools/imagetag-prune"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 0
+    ignore:
+      - dependency-name: "*"
