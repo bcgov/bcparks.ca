@@ -64,7 +64,7 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
 
-      # Sass >= 1.32.13 adds excessive deprecation warnings
+      # Sass > 1.32.13 adds excessive deprecation warnings
       # Upgrade intentionally when ready
       - dependency-name: "sass"
     groups:
@@ -99,3 +99,13 @@ updates:
     open-pull-requests-limit: 0
     ignore:
       - dependency-name: "*"
+
+  # Explicitly cover root-level npm to prevent fallback PRs to main.
+  # Version updates are intentionally disabled; all active Dependabot
+  # usage happens on the alpha branch.
+  - package-ecosystem: "npm"
+    directory: "/"
+    target-branch: "main"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 0
