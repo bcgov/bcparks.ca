@@ -95,6 +95,8 @@ module.exports = ({ strapi }) => ({
   },
 
   publish: async (advisoryStatusMap) => {
+    let publishedAdvisoryCount = 0;
+
     if (Object.keys(advisoryStatusMap).length > 0) {
       // fetch advisories to publish - audit table
       const scheduledAdvisoryToPublishAudit = await strapi
@@ -109,8 +111,6 @@ module.exports = ({ strapi }) => ({
           },
           populate: "*",
         });
-
-      let publishedAdvisoryCount = 0;
 
       // publish advisories - audit table
       for (const advisory of scheduledAdvisoryToPublishAudit) {
@@ -147,9 +147,8 @@ module.exports = ({ strapi }) => ({
             );
           });
       }
-
-      return publishedAdvisoryCount;
     }
+    return publishedAdvisoryCount;
   },
 
   expiringSoon: async (advisoryStatusMap) => {
@@ -201,8 +200,9 @@ module.exports = ({ strapi }) => ({
   },
 
   publishingSoon: async (advisoryStatusMap) => {
+    let totalPublishingSoon = 0;
+
     if (Object.keys(advisoryStatusMap).length > 0) {
-      let totalPublishingSoon = 0;
       const reminders = [
         { daysBefore: 5, message: "This advisory will go live in 5 days" },
         { daysBefore: 2, message: "This advisory will go live in 2 days" },
@@ -253,9 +253,8 @@ module.exports = ({ strapi }) => ({
         }
         totalPublishingSoon += publishingSoon.length;
       }
-      return totalPublishingSoon;
     }
-    return 0;
+    return totalPublishingSoon;
   },
 
   getAdvisoryStatusMap: async () => {
