@@ -148,7 +148,7 @@ module.exports = ({ strapi }) => ({
           });
       });
 
-      return publishedAdviosryCount;
+      return publishedAdvisoryCount;
     }
   },
 
