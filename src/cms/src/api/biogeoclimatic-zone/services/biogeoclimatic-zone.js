@@ -7,5 +7,5 @@
 const { createCoreService } = require("@strapi/strapi").factories;
 
 module.exports = createCoreService(
-  "api::biogeoclimatic-zone.biogeoclimatic-zone"
+  "api::biogeoclimatic-zone.biogeoclimatic-zone",
 );

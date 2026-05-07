@@ -7,5 +7,5 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController(
-  "api::management-document.management-document"
+  "api::management-document.management-document",
 );

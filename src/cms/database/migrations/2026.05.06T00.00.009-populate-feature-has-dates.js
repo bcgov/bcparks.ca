@@ -1992,10 +1992,10 @@ module.exports = {
       (await knex.schema.hasColumn("park_features", "has_dates"))
     ) {
       await knex.raw(
-        `UPDATE park_features SET has_dates = true WHERE orcs_feature_number IN (${trueList})`
+        `UPDATE park_features SET has_dates = true WHERE orcs_feature_number IN (${trueList})`,
       );
       await knex.raw(
-        `UPDATE park_features SET has_dates = false WHERE orcs_feature_number IN (${falseList})`
+        `UPDATE park_features SET has_dates = false WHERE orcs_feature_number IN (${falseList})`,
       );
     }
   },

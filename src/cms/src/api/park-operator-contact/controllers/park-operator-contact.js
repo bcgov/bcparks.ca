@@ -7,5 +7,5 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController(
-  "api::park-operator-contact.park-operator-contact"
+  "api::park-operator-contact.park-operator-contact",
 );

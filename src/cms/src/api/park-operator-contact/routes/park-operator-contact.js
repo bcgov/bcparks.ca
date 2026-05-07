@@ -7,5 +7,5 @@
 const { createCoreRouter } = require("@strapi/strapi").factories;
 
 module.exports = createCoreRouter(
-  "api::park-operator-contact.park-operator-contact"
+  "api::park-operator-contact.park-operator-contact",
 );

@@ -42,7 +42,7 @@ const authenticate = async (ctx) => {
     }
 
     const hasRequiredRole = roles.some((role) =>
-      KEYCLOAK_AUTH_ROLES.includes(role)
+      KEYCLOAK_AUTH_ROLES.includes(role),
     );
 
     if (!hasRequiredRole) {
@@ -71,13 +71,12 @@ const authenticate = async (ctx) => {
     const permissions = await Promise.resolve(user.role.id)
       .then((roleId) => getService("permission").findRolePermissions(roleId))
       .then(
-        map((perm) => getService("permission").toContentAPIPermission(perm))
+        map((perm) => getService("permission").toContentAPIPermission(perm)),
       );
 
     // Generate an ability (content API engine) based on the given permissions
-    const ability = await strapi.contentAPI.permissions.engine.generateAbility(
-      permissions
-    );
+    const ability =
+      await strapi.contentAPI.permissions.engine.generateAbility(permissions);
 
     ctx.state.user = user;
 

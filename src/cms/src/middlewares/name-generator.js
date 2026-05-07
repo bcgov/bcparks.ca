@@ -131,7 +131,7 @@ async function updateName(data, uid) {
   ].filter(Boolean);
 
   const isUpdatingNameFields = nameAffectingFields.some(
-    (field) => data[field] !== undefined
+    (field) => data[field] !== undefined,
   );
 
   // If this is an update and none of the name-affecting relations are changing,
@@ -148,7 +148,7 @@ async function updateName(data, uid) {
     "api::protected-area.protected-area",
     getDocumentId(data.protectedArea),
     recordInstance?.protectedArea,
-    ["orcs", "protectedAreaName"]
+    ["orcs", "protectedAreaName"],
   );
 
   // get site (if applicable)
@@ -156,7 +156,7 @@ async function updateName(data, uid) {
     "api::site.site",
     getDocumentId(data.site),
     recordInstance?.site,
-    ["orcsSiteNumber", "siteName"]
+    ["orcsSiteNumber", "siteName"],
   );
 
   // get park feature (if applicable)
@@ -164,7 +164,7 @@ async function updateName(data, uid) {
     "api::park-feature.park-feature",
     getDocumentId(data.parkFeature),
     recordInstance?.parkFeature,
-    ["orcsFeatureNumber", "parkFeatureName"]
+    ["orcsFeatureNumber", "parkFeatureName"],
   );
 
   // get park area (if applicable)
@@ -172,7 +172,7 @@ async function updateName(data, uid) {
     "api::park-area.park-area",
     getDocumentId(data.parkArea),
     recordInstance?.parkArea,
-    ["orcsAreaNumber", "parkAreaName"]
+    ["orcsAreaNumber", "parkAreaName"],
   );
 
   // get initial suffix of the label
@@ -284,7 +284,7 @@ async function standardRelationLabel(data, dbRecord, config) {
           fields: [labelFieldName],
         })
       )?.[labelFieldName]
-    : dbRecord?.[relationName]?.[labelFieldName] ?? "";
+    : (dbRecord?.[relationName]?.[labelFieldName] ?? "");
 }
 
 // Suffix generator that signals to use the related entity's name as suffix.

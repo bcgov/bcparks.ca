@@ -7,5 +7,5 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController(
-  "api::park-camping-type.park-camping-type"
+  "api::park-camping-type.park-camping-type",
 );

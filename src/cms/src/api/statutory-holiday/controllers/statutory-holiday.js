@@ -7,5 +7,5 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController(
-  "api::statutory-holiday.statutory-holiday"
+  "api::statutory-holiday.statutory-holiday",
 );

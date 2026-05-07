@@ -16,5 +16,5 @@ module.exports = createCoreController(
 
       return this.transformResponse(sanitizedEntity);
     },
-  })
+  }),
 );

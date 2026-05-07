@@ -7,5 +7,5 @@
 const { createCoreService } = require("@strapi/strapi").factories;
 
 module.exports = createCoreService(
-  "api::management-document.management-document"
+  "api::management-document.management-document",
 );

@@ -178,7 +178,7 @@ module.exports = createCoreController(
             } else {
               if (
                 !results[pa.id].find(
-                  (x) => x.accessStatusId === advisory.accessStatus.id
+                  (x) => x.accessStatusId === advisory.accessStatus.id,
                 )
               ) {
                 results[pa.id].push({
@@ -211,10 +211,10 @@ module.exports = createCoreController(
       const cachePlugin = strapi.plugins["rest-cache"];
       if (cachePlugin && (publishedCount > 0 || expiredCount > 0)) {
         await cachePlugin.services.cacheStore.clearByUid(
-          "api::public-advisory.public-advisory"
+          "api::public-advisory.public-advisory",
         );
         await cachePlugin.services.cacheStore.clearByUid(
-          "api::protected-area.protected-area"
+          "api::protected-area.protected-area",
         );
       }
 
@@ -222,8 +222,8 @@ module.exports = createCoreController(
         {
           message: `Scheduled public advisory processing complete. ${publishedCount} published. ${expiredCount} expired. ${expiringSoonCount} expiring soon. ${publishingSoonCount} publishing soon.`,
         },
-        201
+        201,
       );
     },
-  })
+  }),
 );

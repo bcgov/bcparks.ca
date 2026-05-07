@@ -1,9 +1,11 @@
-'use strict';
+"use strict";
 
 /**
  * recreation-district controller
  */
 
-const { createCoreController } = require('@strapi/strapi').factories;
+const { createCoreController } = require("@strapi/strapi").factories;
 
-module.exports = createCoreController('api::recreation-district.recreation-district');
+module.exports = createCoreController(
+  "api::recreation-district.recreation-district",
+);

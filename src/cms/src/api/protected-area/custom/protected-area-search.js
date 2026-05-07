@@ -60,7 +60,7 @@ const searchParks = async function (ctx) {
     ctx.response.status = 500;
     ctx.body = "An error was encountered while processing the search request.";
     console.log(
-      "An error was encountered while processing the search request."
+      "An error was encountered while processing the search request.",
     );
     console.log(err);
   }
@@ -95,7 +95,7 @@ const parkAutocomplete = async function (ctx) {
     ctx.response.status = 500;
     ctx.body = "An error was encountered while processing the search request.";
     console.log(
-      `An error was encountered by search autocomplete: ${ctx.query.queryText}`
+      `An error was encountered by search autocomplete: ${ctx.query.queryText}`,
     );
     console.log(err);
   }
@@ -123,7 +123,7 @@ function parseSearchFilters(query) {
   if (query.activities) {
     if (typeof query.activities === "object") {
       activityNumbers = query.activities.map((activity) =>
-        parseInt(activity, 10)
+        parseInt(activity, 10),
       );
     } else {
       activityNumbers = [parseInt(query.activities, 10)];
@@ -132,7 +132,7 @@ function parseSearchFilters(query) {
   if (query.facilities) {
     if (typeof query.facilities === "object") {
       facilityNumbers = query.facilities.map((facility) =>
-        parseInt(facility, 10)
+        parseInt(facility, 10),
       );
     } else {
       facilityNumbers = [parseInt(query.facilities, 10)];

@@ -90,11 +90,11 @@ module.exports = {
     ) {
       await knex.raw(
         `UPDATE access_statuses SET recreation_status_code = 2
-         WHERE group_label = 'Closed';`
+         WHERE group_label = 'Closed';`,
       );
       await knex.raw(
         `UPDATE access_statuses SET recreation_status_code = 1
-         WHERE group_label <> 'Closed';`
+         WHERE group_label <> 'Closed';`,
       );
     }
   },

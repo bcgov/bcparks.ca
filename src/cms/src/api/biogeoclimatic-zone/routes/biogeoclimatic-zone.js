@@ -7,5 +7,5 @@
 const { createCoreRouter } = require("@strapi/strapi").factories;
 
 module.exports = createCoreRouter(
-  "api::biogeoclimatic-zone.biogeoclimatic-zone"
+  "api::biogeoclimatic-zone.biogeoclimatic-zone",
 );

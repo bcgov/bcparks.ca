@@ -264,7 +264,7 @@ module.exports = ({ strapi }) => ({
       return result;
     } catch (err) {
       console.log(
-        "Search : search.searchParks : Error encountered while making a search request to ElasticSearch."
+        "Search : search.searchParks : Error encountered while making a search request to ElasticSearch.",
       );
       throw err;
     }
@@ -351,7 +351,7 @@ module.exports = ({ strapi }) => ({
       return result;
     } catch (err) {
       console.log(
-        "Search : search.parkAutocomplete : Error encountered while making a search request to ElasticSearch."
+        "Search : search.parkAutocomplete : Error encountered while making a search request to ElasticSearch.",
       );
       throw err;
     }

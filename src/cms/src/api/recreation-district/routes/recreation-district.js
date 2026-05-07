@@ -1,9 +1,11 @@
-'use strict';
+"use strict";
 
 /**
  * recreation-district router
  */
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
+const { createCoreRouter } = require("@strapi/strapi").factories;
 
-module.exports = createCoreRouter('api::recreation-district.recreation-district');
+module.exports = createCoreRouter(
+  "api::recreation-district.recreation-district",
+);

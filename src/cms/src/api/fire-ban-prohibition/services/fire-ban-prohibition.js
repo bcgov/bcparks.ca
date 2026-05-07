@@ -49,7 +49,7 @@ module.exports = createCoreService(
         } catch (error) {
           strapi.log.error(
             `Error updating protected area ${protectedArea.orcs}:`,
-            error
+            error,
           );
         }
       }
@@ -104,7 +104,7 @@ module.exports = createCoreService(
           // add the campfire ban to all protectedAreas matching the natural resource district
           const count = await addProtectedAreaFireBans(
             protectedAreaDocIds,
-            ban.effectiveDate
+            ban.effectiveDate,
           );
           rowsUpdated += count;
         }
@@ -130,14 +130,13 @@ module.exports = createCoreService(
 
         if (fireZones.length) {
           // get a list of protectedArea documentIds to have firebans added.
-          const protectedAreaDocIds = await getProtectedAreasByFireZoneToAddBan(
-            fireZones
-          );
+          const protectedAreaDocIds =
+            await getProtectedAreasByFireZoneToAddBan(fireZones);
 
           // add the campfire ban to all protectedAreas matching the firezones
           const count = await addProtectedAreaFireBans(
             protectedAreaDocIds,
-            ban.effectiveDate
+            ban.effectiveDate,
           );
           rowsUpdated += count;
         }
@@ -165,13 +164,13 @@ module.exports = createCoreService(
         return b.orcs;
       });
     },
-  })
+  }),
 );
 
 /* get a list of protectedArea documentIds in a list of natural resource districts to have firebans added
  */
 const getProtectedAreasByNaturalResourceDistrictToAddBan = async (
-  naturalResourceDistricts
+  naturalResourceDistricts,
 ) => {
   const protectedAreas = await strapi
     .documents("api::protected-area.protected-area")
@@ -244,7 +243,7 @@ const addProtectedAreaFireBans = async (protectedAreaDocIds, effectiveDate) => {
     } catch (error) {
       strapi.log.error(
         `Error updating protected area ${protectedArea.orcs}:`,
-        error
+        error,
       );
     }
   }

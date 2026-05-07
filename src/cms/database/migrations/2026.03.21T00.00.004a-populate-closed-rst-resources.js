@@ -14,7 +14,7 @@ const loadData = async function () {
   try {
     rstResources = await fetchRSTResources();
     console.log(
-      `Got ${rstResources.length} recreation resources from the RST API.`
+      `Got ${rstResources.length} recreation resources from the RST API.`,
     );
   } catch (error) {
     console.log(error);
@@ -26,7 +26,7 @@ const loadData = async function () {
   try {
     strapiResources = await fetchStrapiResources();
     console.log(
-      `Got ${strapiResources.length} recreation resources from Strapi.`
+      `Got ${strapiResources.length} recreation resources from Strapi.`,
     );
   } catch (error) {
     console.log(error);
@@ -78,7 +78,7 @@ const loadData = async function () {
   // loop through the RST resources and update or create them in Strapi
   for (const rstResource of rstResources) {
     const matchingStrapiResource = strapiResources.find(
-      (r) => r.recResourceId === rstResource.rec_resource_id
+      (r) => r.recResourceId === rstResource.rec_resource_id,
     );
 
     const districtDocId = districtLookup[rstResource.district_code];
@@ -116,7 +116,7 @@ const loadData = async function () {
               },
             });
           console.log(
-            `Updated recreation resource ${rstResource.rec_resource_id} in Strapi.`
+            `Updated recreation resource ${rstResource.rec_resource_id} in Strapi.`,
           );
         } catch (error) {
           console.log(error);
@@ -139,7 +139,7 @@ const loadData = async function () {
             },
           });
         console.log(
-          `Created recreation resource ${rstResource.rec_resource_id} in Strapi.`
+          `Created recreation resource ${rstResource.rec_resource_id} in Strapi.`,
         );
       } catch (error) {
         console.log(error);
@@ -230,10 +230,10 @@ module.exports = {
   async up(knex) {
     if (await knex.schema.hasTable("recreation_resources")) {
       await knex.raw(
-        "DELETE FROM public_advisory_audits WHERE submitted_by = 'Imported'"
+        "DELETE FROM public_advisory_audits WHERE submitted_by = 'Imported'",
       );
       await knex.raw(
-        "DELETE FROM public_advisories WHERE submitted_by = 'Imported'"
+        "DELETE FROM public_advisories WHERE submitted_by = 'Imported'",
       );
       await loadData();
     }

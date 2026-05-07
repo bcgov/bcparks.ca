@@ -1894,7 +1894,7 @@ module.exports = {
 
         if (!recreationResourceDocumentId) {
           strapi.log.warn(
-            `Skipping closure for recreation resource ${closure.rec_resource_id}: no matching recreation resource was found in this environment.`
+            `Skipping closure for recreation resource ${closure.rec_resource_id}: no matching recreation resource was found in this environment.`,
           );
           continue;
         }

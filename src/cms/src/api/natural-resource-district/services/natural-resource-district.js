@@ -7,5 +7,5 @@
 const { createCoreService } = require("@strapi/strapi").factories;
 
 module.exports = createCoreService(
-  "api::natural-resource-district.natural-resource-district"
+  "api::natural-resource-district.natural-resource-district",
 );

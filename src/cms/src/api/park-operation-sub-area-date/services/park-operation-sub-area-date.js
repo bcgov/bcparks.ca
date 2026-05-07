@@ -7,5 +7,5 @@
 const { createCoreService } = require("@strapi/strapi").factories;
 
 module.exports = createCoreService(
-  "api::park-operation-sub-area-date.park-operation-sub-area-date"
+  "api::park-operation-sub-area-date.park-operation-sub-area-date",
 );

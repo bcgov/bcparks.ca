@@ -1,9 +1,11 @@
-'use strict';
+"use strict";
 
 /**
  * recreation-district service
  */
 
-const { createCoreService } = require('@strapi/strapi').factories;
+const { createCoreService } = require("@strapi/strapi").factories;
 
-module.exports = createCoreService('api::recreation-district.recreation-district');
+module.exports = createCoreService(
+  "api::recreation-district.recreation-district",
+);

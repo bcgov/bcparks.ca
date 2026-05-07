@@ -7,5 +7,5 @@
 const { createCoreRouter } = require("@strapi/strapi").factories;
 
 module.exports = createCoreRouter(
-  "api::fire-ban-prohibition.fire-ban-prohibition"
+  "api::fire-ban-prohibition.fire-ban-prohibition",
 );

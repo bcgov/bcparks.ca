@@ -7,5 +7,5 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController(
-  "api::terrestrial-ecosection.terrestrial-ecosection"
+  "api::terrestrial-ecosection.terrestrial-ecosection",
 );

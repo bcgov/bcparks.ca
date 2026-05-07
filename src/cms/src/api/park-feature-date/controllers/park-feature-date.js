@@ -7,5 +7,5 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController(
-  "api::park-feature-date.park-feature-date"
+  "api::park-feature-date.park-feature-date",
 );

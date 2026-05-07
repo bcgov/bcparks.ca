@@ -7,13 +7,13 @@ const boolToYN = (boolVar) => {
 
 const getHasCampfiresFacility = (parkFacilities) => {
   return parkFacilities.some((f) =>
-    f.facilityType?.facilityName.toLowerCase().includes("campfires")
+    f.facilityType?.facilityName.toLowerCase().includes("campfires"),
   );
 };
 
 const getPublicAdvisory = (publishedAdvisories, orcs) => {
   const filteredByOrcs = publishedAdvisories.filter((f) =>
-    f.protectedAreas.some((o) => o.orcs === orcs)
+    f.protectedAreas.some((o) => o.orcs === orcs),
   );
   let publicAdvisories = [];
 
@@ -205,19 +205,20 @@ const getProtectedAreaStatus = async (ctx) => {
   let payload = entities.map((protectedArea) => {
     let publicAdvisory = getPublicAdvisory(
       publicAdvisories,
-      protectedArea.orcs
+      protectedArea.orcs,
     );
 
     const publicAdvisoryAudit = publicAdvisoryAudits.find(
-      (f) => f.advisoryNumber === publicAdvisory.advisoryNumber
+      (f) => f.advisoryNumber === publicAdvisory.advisoryNumber,
     );
 
     const regions = [
       ...new Set(
         protectedArea.managementAreas.map(
           (m) =>
-            regionsData.find((region) => region.id === m.region?.id)?.regionName
-        )
+            regionsData.find((region) => region.id === m.region?.id)
+              ?.regionName,
+        ),
       ),
     ];
 
@@ -226,8 +227,8 @@ const getProtectedAreaStatus = async (ctx) => {
         protectedArea.managementAreas.map(
           (m) =>
             sectionsData.find((section) => section.id === m.section?.id)
-              ?.sectionName
-        )
+              ?.sectionName,
+        ),
       ),
     ];
 
@@ -236,9 +237,9 @@ const getProtectedAreaStatus = async (ctx) => {
         protectedArea.managementAreas.map(
           (m) =>
             searchAreasData.find(
-              (searchArea) => searchArea.id === m.searchArea?.id
-            )?.searchAreaName
-        )
+              (searchArea) => searchArea.id === m.searchArea?.id,
+            )?.searchAreaName,
+        ),
       ),
     ];
 
@@ -246,16 +247,16 @@ const getProtectedAreaStatus = async (ctx) => {
       ...new Set(
         protectedArea.fireZones.map((fireZone) => {
           const fireCentre = fireCentresData.find(
-            (f) => f.fireZones.length > 0 && f.id === fireZone.fireCentre?.id
+            (f) => f.fireZones.length > 0 && f.id === fireZone.fireCentre?.id,
           );
           if (fireCentre) return fireCentre.fireCentreName;
-        })
+        }),
       ),
     ];
 
     const fireZones = [
       ...new Set(
-        protectedArea.fireZones.map((fireZone) => fireZone.fireZoneName)
+        protectedArea.fireZones.map((fireZone) => fireZone.fireZoneName),
       ),
     ];
 
@@ -263,8 +264,8 @@ const getProtectedAreaStatus = async (ctx) => {
       ...new Set(
         protectedArea.naturalResourceDistricts.map(
           (naturalResourceDistrict) =>
-            naturalResourceDistrict.naturalResourceDistrictName
-        )
+            naturalResourceDistrict.naturalResourceDistrictName,
+        ),
       ),
     ];
 
@@ -324,7 +325,8 @@ const getProtectedAreaStatus = async (ctx) => {
       protectedAreaName: protectedArea.protectedAreaName,
       protectedAreaNameAliases: parkNamesAliases
         .filter(
-          (p) => p.protectedArea && +p.protectedArea.orcs === protectedArea.orcs
+          (p) =>
+            p.protectedArea && +p.protectedArea.orcs === protectedArea.orcs,
         )
         .map((d) => d.parkName),
       type: protectedArea.type,
@@ -334,7 +336,7 @@ const getProtectedAreaStatus = async (ctx) => {
       isReservationsAffected: boolToYN(publicAdvisory.reservationsAffected),
       eventType: publicAdvisory.eventType,
       hasCampfiresFacility: boolToYN(
-        getHasCampfiresFacility(protectedArea.parkFacilities)
+        getHasCampfiresFacility(protectedArea.parkFacilities),
       ),
 
       hasCampfireBan: boolToYN(protectedArea.hasCampfireBan),
@@ -352,7 +354,7 @@ const getProtectedAreaStatus = async (ctx) => {
       sections: sections,
       searchAreas: searchAreas,
       managementAreas: protectedArea.managementAreas.map(
-        (m) => m.managementAreaName
+        (m) => m.managementAreaName,
       ),
       parkActivities: parkActivities,
       parkFacilities: parkFacilities,
@@ -377,36 +379,36 @@ const getProtectedAreaStatus = async (ctx) => {
   // custom filters on accessStatus derived field
   if (accessStatus) {
     payload = payload.filter(
-      (o) => o?.accessStatus?.toLowerCase() == accessStatus.toLowerCase()
+      (o) => o?.accessStatus?.toLowerCase() == accessStatus.toLowerCase(),
     );
   }
   if (accessStatus_ne) {
     payload = payload.filter(
-      (o) => o?.accessStatus?.toLowerCase() != accessStatus_ne.toLowerCase()
+      (o) => o?.accessStatus?.toLowerCase() != accessStatus_ne.toLowerCase(),
     );
   }
   if (accessStatus_contains) {
     payload = payload.filter((o) =>
       o?.accessStatus
         ?.toLowerCase()
-        .includes(accessStatus_contains.toLowerCase())
+        .includes(accessStatus_contains.toLowerCase()),
     );
   }
 
   // custom filters on eventType derived field
   if (eventType) {
     payload = payload.filter(
-      (o) => o?.eventType?.toLowerCase() == eventType.toLowerCase()
+      (o) => o?.eventType?.toLowerCase() == eventType.toLowerCase(),
     );
   }
   if (eventType_ne) {
     payload = payload.filter(
-      (o) => o?.eventType?.toLowerCase() != eventType_ne.toLowerCase()
+      (o) => o?.eventType?.toLowerCase() != eventType_ne.toLowerCase(),
     );
   }
   if (eventType_contains) {
     payload = payload.filter((o) =>
-      o?.eventType?.toLowerCase().includes(eventType_contains.toLowerCase())
+      o?.eventType?.toLowerCase().includes(eventType_contains.toLowerCase()),
     );
   }
 

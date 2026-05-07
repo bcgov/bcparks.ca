@@ -1,9 +1,11 @@
-'use strict';
+"use strict";
 
 /**
  * recreation-resource controller
  */
 
-const { createCoreController } = require('@strapi/strapi').factories;
+const { createCoreController } = require("@strapi/strapi").factories;
 
-module.exports = createCoreController('api::recreation-resource.recreation-resource');
+module.exports = createCoreController(
+  "api::recreation-resource.recreation-resource",
+);

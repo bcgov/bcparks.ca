@@ -7,5 +7,5 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController(
-  "api::marine-ecosection.marine-ecosection"
+  "api::marine-ecosection.marine-ecosection",
 );
