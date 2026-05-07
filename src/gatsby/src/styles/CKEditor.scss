@@ -74,14 +74,6 @@
     margin-bottom: 0;
   }
 
-  // Prevent a display issue for learn-more-links when CKEditor breaks a link into multiple elements
-  .ck-list-bogus-paragraph {
-    // Only show the ::after pseudo-element for the last .learn-more-link
-    .learn-more-link:not(:last-child)::after {
-      display: none;
-    }
-  }
-
   @include button-styles;
   @include base-link-styles;
   @include theme-link-styles;
