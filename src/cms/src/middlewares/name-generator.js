@@ -75,6 +75,10 @@ const collections = [
     uid: "api::park-gate.park-gate",
     suffixGenerator: relationNameLabel,
   },
+  {
+    uid: "api::park-operation.park-operation",
+    suffixGenerator: relationNameLabel,
+  },
 ];
 const collectionTypes = collections.map((c) => c.uid);
 

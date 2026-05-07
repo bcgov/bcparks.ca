@@ -12,6 +12,9 @@
     "draftAndPublish": true
   },
   "attributes": {
+    "name": {
+      "type": "string"
+    },
     "orcsSiteNumber": {
       "type": "string"
     },
