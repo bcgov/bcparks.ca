@@ -62,7 +62,8 @@ module.exports = () => {
   }
 
   /**
-   * Applies revisioning rules before update: Creates a new revision instead of changing published data.
+   * Applies revisioning rules before update: create an archived copy of the current live record,
+   * and continue the update on that live record with the next revision number.
    */
   async function beforeUpdate(ctx) {
     let { data, documentId } = ctx.params;
@@ -107,45 +108,20 @@ module.exports = () => {
       newPublicAdvisory.advisoryStatus,
     );
 
-    // Keep the currently published revision unchanged when creating a draft or review revision.
+    // When changing a published advisory into draft/review status, create an archived copy
+    // of the current live revision first, then let the live record continue as the next revision.
     if (
       oldAdvisoryStatus === "PUB" &&
       ["DFT", "HQR"].includes(newAdvisoryStatusCode)
     ) {
-      // Create a successor revision instead of mutating the currently published revision.
-      const nextRevisionNumber = await getNextRevisionNumber(
+      // Create an archived copy of the current live revision, and update
+      // that live record with the next revision number.
+      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
+      newPublicAdvisory.advisoryNumber = oldPublicAdvisory.advisoryNumber;
+      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,
       );
-
-      // Strip Strapi metadata fields out of the data for the new revision
-      const {
-        id,
-        documentId,
-        createdBy,
-        updatedBy,
-        createdAt,
-        updatedAt,
-        // Keep the data explicitly sent from the frontend
-        ...successorBase
-      } = newPublicAdvisory;
-
-      const successor = {
-        ...successorBase,
-        advisoryNumber: oldPublicAdvisory.advisoryNumber,
-        revisionNumber: nextRevisionNumber,
-        isLatestRevision: true,
-      };
-
-      await markAsNotLatestRevision(oldPublicAdvisory.id);
-      const createdRevision = await strapi
-        .documents("api::public-advisory-audit.public-advisory-audit")
-        .create({ data: successor });
-
-      if (!ctx.state) {
-        ctx.state = {};
-      }
-      ctx.state.skipUpdateLifecycle = true;
-      ctx.result = createdRevision;
+      newPublicAdvisory.isLatestRevision = true;
       return;
     }
 
@@ -256,11 +232,6 @@ module.exports = () => {
     if (context.action === "update") {
       await beforeUpdate(context);
 
-      // When `beforeUpdate` already created the successor revision, skip the update call.
-      if (context.state?.skipUpdateLifecycle) {
-        return context.result;
-      }
-
       context.result = await next();
       await afterUpdate(context);
       return context.result;
@@ -299,18 +270,6 @@ async function getNextRevisionNumber(advisoryNumber) {
   let maxRevisionNumber = results.length > 0 ? results[0].revisionNumber : 0;
   if (!maxRevisionNumber || maxRevisionNumber < 0) maxRevisionNumber = 0;
   return ++maxRevisionNumber;
-}
-
-/**
- * Demotes one advisory-audit record so a successor can become the latest revision.
- */
-async function markAsNotLatestRevision(id) {
-  await strapi.db
-    .query("api::public-advisory-audit.public-advisory-audit")
-    .update({
-      where: { id },
-      data: { isLatestRevision: false },
-    });
 }
 
 /**
