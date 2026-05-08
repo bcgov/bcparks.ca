@@ -25,7 +25,7 @@ module.exports = ({ strapi }) => ({
         });
 
       // delete advisories - public advisory table
-      advisoryToUnpublish.forEach(async (advisory) => {
+      for (const advisory of advisoryToUnpublish) {
         strapi.log.info(
           `unpublishing public-advisory [advisoryNumber:${advisory.advisoryNumber}]`,
         );
@@ -52,10 +52,10 @@ module.exports = ({ strapi }) => ({
               error,
             );
           });
-      });
+      }
 
       // unpublish advisories - audit table
-      advisoryToUnpublish.forEach(async (advisory) => {
+      for (const advisory of advisoryToUnpublish) {
         const advisoryAudit = await strapi
           .documents("api::public-advisory-audit.public-advisory-audit")
           .findMany({
@@ -89,12 +89,14 @@ module.exports = ({ strapi }) => ({
               );
             });
         }
-      });
+      }
     }
     return expiredAdvisoryCount;
   },
 
   publish: async (advisoryStatusMap) => {
+    let publishedAdvisoryCount = 0;
+
     if (Object.keys(advisoryStatusMap).length > 0) {
       // fetch advisories to publish - audit table
       const scheduledAdvisoryToPublishAudit = await strapi
@@ -110,10 +112,8 @@ module.exports = ({ strapi }) => ({
           populate: "*",
         });
 
-      let publishedAdvisoryCount = 0;
-
       // publish advisories - audit table
-      scheduledAdvisoryToPublishAudit.forEach(async (advisory) => {
+      for (const advisory of scheduledAdvisoryToPublishAudit) {
         strapi.log.info(
           `publishing scheduled public-advisory-audit [advisoryNumber:${advisory.advisoryNumber}]`,
         );
@@ -146,10 +146,9 @@ module.exports = ({ strapi }) => ({
               error,
             );
           });
-      });
-
-      return publishedAdviosryCount;
+      }
     }
+    return publishedAdvisoryCount;
   },
 
   expiringSoon: async (advisoryStatusMap) => {
@@ -184,7 +183,7 @@ module.exports = ({ strapi }) => ({
             ],
           },
         });
-      expiringSoon.forEach(async (advisory) => {
+      for (const advisory of expiringSoon) {
         strapi.log.info(
           `advisory expiring soon [advisoryNumber:${advisory.advisoryNumber}]`,
         );
@@ -194,15 +193,16 @@ module.exports = ({ strapi }) => ({
           advisory.advisoryNumber,
           "public-advisory-audit::services::scheduling::expiringSoon()",
         );
-      });
+      }
       return expiringSoon.length;
     }
     return 0;
   },
 
   publishingSoon: async (advisoryStatusMap) => {
+    let totalPublishingSoon = 0;
+
     if (Object.keys(advisoryStatusMap).length > 0) {
-      let totalPublishingSoon = 0;
       const reminders = [
         { daysBefore: 5, message: "This advisory will go live in 5 days" },
         { daysBefore: 2, message: "This advisory will go live in 2 days" },
@@ -240,7 +240,7 @@ module.exports = ({ strapi }) => ({
               ],
             },
           });
-        publishingSoon.forEach(async (advisory) => {
+        for (const advisory of publishingSoon) {
           strapi.log.info(
             `advisory going live soon [advisoryNumber:${advisory.advisoryNumber}]`,
           );
@@ -250,12 +250,11 @@ module.exports = ({ strapi }) => ({
             advisory.advisoryNumber,
             "public-advisory-audit::services::scheduling::publishingSoon()",
           );
-        });
+        }
         totalPublishingSoon += publishingSoon.length;
       }
-      return totalPublishingSoon;
     }
-    return 0;
+    return totalPublishingSoon;
   },
 
   getAdvisoryStatusMap: async () => {
@@ -267,9 +266,9 @@ module.exports = ({ strapi }) => ({
         populate: "*",
       });
     const advisoryStatusMap = {};
-    advisoryStatus.forEach((a) => {
+    for (const a of advisoryStatus) {
       advisoryStatusMap[a.code] = a;
-    });
+    }
     return advisoryStatusMap;
   },
 });
