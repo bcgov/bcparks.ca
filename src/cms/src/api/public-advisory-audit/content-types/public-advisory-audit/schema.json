@@ -177,6 +177,12 @@
     "createdByName": {
       "type": "string"
     },
+    "reviewedByName": {
+      "type": "string"
+    },
+    "reviewedAt": {
+      "type": "datetime"
+    },
     "createdByRole": {
       "type": "string"
     },
