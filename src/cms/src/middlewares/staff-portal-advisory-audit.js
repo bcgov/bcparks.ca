@@ -71,18 +71,23 @@ module.exports = () => {
     documentId = documentId || data?.documentId;
     if (!documentId) return;
 
-    const newPublicAdvisory = data;
-    if (!newPublicAdvisory.publishedAt) return;
+    // This variable represents the advisory being updated (not a new one)
+    const updatedPublicAdvisory = data;
+    if (!updatedPublicAdvisory.publishedAt) return;
 
     // Get the status to save in the DB based on the publish intent (dates + requested status)
-    const resolvedAdvisoryStatus =
-      await resolvePublishIntentStatus(newPublicAdvisory);
+    const resolvedAdvisoryStatus = await resolvePublishIntentStatus(
+      updatedPublicAdvisory,
+    );
     if (resolvedAdvisoryStatus) {
-      newPublicAdvisory.advisoryStatus = resolvedAdvisoryStatus;
+      updatedPublicAdvisory.advisoryStatus = resolvedAdvisoryStatus;
     }
 
-    newPublicAdvisory.publishedAt = new Date();
-    newPublicAdvisory.isLatestRevision = true;
+    updatedPublicAdvisory.publishedAt = new Date();
+
+    // Updated features will always be the latest revision, so set the flag true if it's not already.
+    updatedPublicAdvisory.isLatestRevision = true;
+
     const oldPublicAdvisory = await strapi
       .documents("api::public-advisory-audit.public-advisory-audit")
       .findOne({
@@ -105,7 +110,7 @@ module.exports = () => {
 
     // Get the new status code for the revisioning checks below.
     const newAdvisoryStatusCode = await getAdvisoryStatusCode(
-      newPublicAdvisory.advisoryStatus,
+      updatedPublicAdvisory.advisoryStatus,
     );
 
     // When changing a published advisory into draft/review status, create an archived copy
@@ -117,20 +122,20 @@ module.exports = () => {
       // Create an archived copy of the current live revision, and update
       // that live record with the next revision number.
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      newPublicAdvisory.advisoryNumber = oldPublicAdvisory.advisoryNumber;
-      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+      updatedPublicAdvisory.advisoryNumber = oldPublicAdvisory.advisoryNumber;
+      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,
       );
-      newPublicAdvisory.isLatestRevision = true;
+      updatedPublicAdvisory.isLatestRevision = true;
       return;
     }
 
-    if (isAdvisoryEqual(newPublicAdvisory, oldPublicAdvisory)) return;
+    if (isAdvisoryEqual(updatedPublicAdvisory, oldPublicAdvisory)) return;
 
     // flow 5: system updates
-    if (newPublicAdvisory.modifiedBy === "system") {
+    if (updatedPublicAdvisory.modifiedBy === "system") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,
       );
       return;
@@ -142,7 +147,7 @@ module.exports = () => {
       oldPublicAdvisory.modifiedBy === "system"
     ) {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,
       );
       return;
@@ -151,7 +156,7 @@ module.exports = () => {
     // flow 3: update published advisory
     if (oldAdvisoryStatus === "PUB") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,
       );
       return;
@@ -387,6 +392,9 @@ async function getAdvisoryStatusByCode(code) {
     });
 }
 
+/**
+ * Creates an archived copy of the provided advisory data.
+ */
 async function archiveOldPublicAdvisoryAudit(data) {
   delete data.id;
   delete data.documentId;
