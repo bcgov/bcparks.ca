@@ -159,8 +159,9 @@ async function resolveNestedProtectedAreaDocumentIds(
   }
 
   const entry = await strapi.documents(collectionType).findOne({
-    documentId: documentId,
-    populate: "*",
+    documentId,
+    fields: ["documentId"],
+    populate: getNestedProtectedAreaPopulate(collectionType),
     status: "published",
   });
 
@@ -178,4 +179,23 @@ async function resolveNestedProtectedAreaDocumentIds(
         .filter(Boolean),
     ),
   ];
+}
+
+function getNestedProtectedAreaPopulate(collectionType) {
+  const populate = {
+    protectedArea: {
+      fields: ["documentId"],
+    },
+    parkFeature: {
+      populate: { protectedArea: { fields: ["documentId"] } },
+    },
+  };
+
+  if (collectionType === "api::park-gate.park-gate") {
+    populate.parkArea = {
+      populate: { protectedArea: { fields: ["documentId"] } },
+    };
+  }
+
+  return populate;
 }
