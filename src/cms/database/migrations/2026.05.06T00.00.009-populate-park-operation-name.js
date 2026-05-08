@@ -18,6 +18,23 @@ module.exports = {
         WITH name_build AS (
           SELECT
             po.id,
+            COALESCE(p.orcs::text, '') || ': ' ||
+            COALESCE(p.protected_area_name, '') AS new_name
+          FROM public.park_operations AS po
+          LEFT JOIN public.park_operations_protected_area_lnk AS popol ON popol.park_operation_id = po.id
+          LEFT JOIN public.protected_areas AS p ON p.id = popol.protected_area_id
+          WHERE p.orcs IS NOT NULL
+        )
+        UPDATE public.park_operations AS po
+        SET name = nb.new_name
+        FROM name_build AS nb
+        WHERE nb.id = po.id;
+      `);
+
+      await knex.raw(`
+        WITH name_build AS (
+          SELECT
+            po.id,
             COALESCE(s.orcs_site_number::text, '') || ': ' ||
             COALESCE(s.site_name, '') AS new_name
           FROM public.park_operations AS po
@@ -30,23 +47,6 @@ module.exports = {
         FROM name_build AS nb
         WHERE nb.id = po.id
           AND (po.name IS NULL OR po.name = '');
-      `);
-
-      await knex.raw(`
-        WITH name_build AS (
-          SELECT
-            po.id,
-            COALESCE(p.orcs::text, '') || ': ' ||
-            COALESCE(p.protected_area_name, '') AS new_name
-          FROM public.park_operations AS po
-          LEFT JOIN public.park_operations_protected_area_lnk AS popol ON popol.park_operation_id = po.id
-          LEFT JOIN public.protected_areas AS p ON p.id = popol.protected_area_id
-          WHERE p.orcs IS NOT NULL
-        )
-        UPDATE public.park_operations AS po
-        SET name = nb.new_name
-        FROM name_build AS nb
-        WHERE nb.id = po.id;
       `);
     }
   },
