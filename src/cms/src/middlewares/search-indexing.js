@@ -23,7 +23,14 @@ const getImpactedRelations = require("./helpers/getImpactedRelations.js");
 const protectedAreaCollectionType = "api::protected-area.protected-area";
 const photoCollectionType = "api::park-photo.park-photo";
 const publicAdvisoryCollectionType = "api::public-advisory.public-advisory";
-const parkDateCollectionType = "api::park-date.park-date";
+
+// multiple paths to protectedArea, nested 1-2 levels deep.
+const nestedRelatedCollectionTypes = [
+  "api::park-date.park-date",
+  "api::park-gate.park-gate",
+];
+
+// single direct path to protectedArea, one level deep.
 const otherRelatedCollectionTypes = [
   "api::geo-shape.geo-shape",
   "api::park-activity.park-activity",
@@ -31,12 +38,14 @@ const otherRelatedCollectionTypes = [
   "api::park-facility.park-facility",
   "api::park-feature.park-feature",
   "api::park-name.park-name",
+  "api::park-area.park-area",
 ];
+
 const allRelevantCollections = [
   protectedAreaCollectionType,
   photoCollectionType,
   publicAdvisoryCollectionType,
-  parkDateCollectionType,
+  ...nestedRelatedCollectionTypes,
   ...otherRelatedCollectionTypes,
 ];
 
@@ -86,22 +95,25 @@ module.exports = () => {
       }
     }
 
-    // Handle park dates
-    if (context.uid === parkDateCollectionType) {
-      let linkedParksBefore = await getDateRelations(context.params.documentId);
+    // Handle park dates and park gates
+    if (nestedRelatedCollectionTypes.includes(context.uid)) {
+      const relatedCollectionType = context.uid;
+      const linkedParksBefore = await resolveNestedProtectedAreaDocumentIds(
+        relatedCollectionType,
+        context.params.documentId,
+      );
       const result = await next();
-      let linkedParksAfter = await getDateRelations(result.documentId);
+      const linkedParksAfter = await resolveNestedProtectedAreaDocumentIds(
+        relatedCollectionType,
+        result.documentId,
+      );
 
       // Combine and deduplicate the impacted parks before and after the change
       const impactedParks = [
         ...new Set([...linkedParksBefore, ...linkedParksAfter]),
       ];
 
-      await batchQueueParks(
-        Array.from(impactedParks),
-        context.uid,
-        context.action,
-      );
+      await batchQueueParks(impactedParks, context.uid, context.action);
 
       return result;
     }
@@ -136,31 +148,34 @@ module.exports = () => {
 
 // HELPER FUNCTIONS
 
-async function getDateRelations(documentId) {
+// This function gets related protected areas for collections with multiple
+// levels of relations to protected areas (e.g. park-date and park-gate)
+async function resolveNestedProtectedAreaDocumentIds(
+  collectionType,
+  documentId,
+) {
   if (!documentId) {
     return [];
   }
-  const parkDate = await strapi.documents(parkDateCollectionType).findOne({
+
+  const entry = await strapi.documents(collectionType).findOne({
     documentId: documentId,
-    fields: ["documentId"],
-    populate: {
-      protectedArea: {
-        fields: ["documentId"],
-      },
-      parkFeature: {
-        fields: ["documentId"],
-        populate: {
-          protectedArea: {
-            fields: ["documentId"],
-          },
-        },
-      },
-    },
+    populate: "*",
     status: "published",
   });
 
+  const relatedProtectedAreas = [
+    entry?.protectedArea,
+    entry?.parkFeature?.protectedArea,
+    entry?.parkArea?.protectedArea,
+  ];
+
+  // Return unique non-empty protected area document IDs
   return [
-    parkDate?.protectedArea?.documentId,
-    parkDate?.parkFeature?.protectedArea?.documentId,
-  ].filter(Boolean);
+    ...new Set(
+      relatedProtectedAreas
+        .map((relatedProtectedArea) => relatedProtectedArea?.documentId)
+        .filter(Boolean),
+    ),
+  ];
 }
