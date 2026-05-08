@@ -116,8 +116,21 @@ module.exports = () => {
       const nextRevisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,
       );
+
+      // Strip Strapi metadata fields out of the data for the new revision
+      const {
+        id,
+        documentId,
+        createdBy,
+        updatedBy,
+        createdAt,
+        updatedAt,
+        // Keep the data explicitly sent from the frontend
+        ...successorBase
+      } = newPublicAdvisory;
+
       const successor = {
-        ...newPublicAdvisory,
+        ...successorBase,
         advisoryNumber: oldPublicAdvisory.advisoryNumber,
         revisionNumber: nextRevisionNumber,
         isLatestRevision: true,
