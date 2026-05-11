@@ -5,10 +5,33 @@
  */
 
 const { queueAdvisoryEmail } = require("../helpers/taskQueue.js");
+const {
+  getNextAdvisoryNumber,
+  getNextRevisionNumber,
+} = require("./helpers/advisoryNumbers.js");
+const {
+  resolvePublishIntentStatus,
+  getAdvisoryStatusCode,
+} = require("./helpers/advisoryStatus.js");
+const {
+  archiveOldPublicAdvisoryAudit,
+  copyToPublicAdvisory,
+  isAdvisoryEqual,
+} = require("./helpers/advisoryData.js");
 
 module.exports = () => {
+  /**
+   * Prepares create payload defaults and resolves publish intent status from dates.
+   */
   async function beforeCreate(ctx) {
     let { data } = ctx.params;
+
+    // Get the status to save in the DB based on the publish intent (dates + requested status)
+    const resolvedAdvisoryStatus = await resolvePublishIntentStatus(data);
+    if (resolvedAdvisoryStatus) {
+      data.advisoryStatus = resolvedAdvisoryStatus;
+    }
+
     if (!data.revisionNumber && !data.advisoryNumber) {
       data.advisoryNumber = await getNextAdvisoryNumber();
       data.revisionNumber = 1;
@@ -51,17 +74,33 @@ module.exports = () => {
     await copyToPublicAdvisory(newPublicAdvisoryAudit);
   }
 
+  /**
+   * Applies revisioning rules before update: create an archived copy of the current live record,
+   * and continue the update on that live record with the next revision number.
+   */
   async function beforeUpdate(ctx) {
     let { data, documentId } = ctx.params;
 
     documentId = documentId || data?.documentId;
     if (!documentId) return;
 
-    const newPublicAdvisory = data;
-    if (!newPublicAdvisory.publishedAt) return;
+    // This variable represents the advisory being updated (not a new one)
+    const updatedPublicAdvisory = data;
+    if (!updatedPublicAdvisory.publishedAt) return;
 
-    newPublicAdvisory.publishedAt = new Date();
-    newPublicAdvisory.isLatestRevision = true;
+    // Get the status to save in the DB based on the publish intent (dates + requested status)
+    const resolvedAdvisoryStatus = await resolvePublishIntentStatus(
+      updatedPublicAdvisory,
+    );
+    if (resolvedAdvisoryStatus) {
+      updatedPublicAdvisory.advisoryStatus = resolvedAdvisoryStatus;
+    }
+
+    updatedPublicAdvisory.publishedAt = new Date();
+
+    // Updated features will always be the latest revision, so set the flag true if it's not already.
+    updatedPublicAdvisory.isLatestRevision = true;
+
     const oldPublicAdvisory = await strapi
       .documents("api::public-advisory-audit.public-advisory-audit")
       .findOne({
@@ -82,12 +121,34 @@ module.exports = () => {
       ? oldPublicAdvisory.advisoryStatus.code
       : "DFT";
 
-    if (isAdvisoryEqual(newPublicAdvisory, oldPublicAdvisory)) return;
+    // Get the new status code for the revisioning checks below.
+    const newAdvisoryStatusCode = await getAdvisoryStatusCode(
+      updatedPublicAdvisory.advisoryStatus,
+    );
+
+    // When changing a published advisory into draft/review status, create an archived copy
+    // of the current live revision first, then let the live record continue as the next revision.
+    if (
+      oldAdvisoryStatus === "PUB" &&
+      ["DFT", "HQR"].includes(newAdvisoryStatusCode)
+    ) {
+      // Create an archived copy of the current live revision, and update
+      // that live record with the next revision number.
+      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
+      updatedPublicAdvisory.advisoryNumber = oldPublicAdvisory.advisoryNumber;
+      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+        oldPublicAdvisory.advisoryNumber,
+      );
+      updatedPublicAdvisory.isLatestRevision = true;
+      return;
+    }
+
+    if (isAdvisoryEqual(updatedPublicAdvisory, oldPublicAdvisory)) return;
 
     // flow 5: system updates
-    if (newPublicAdvisory.modifiedBy === "system") {
+    if (updatedPublicAdvisory.modifiedBy === "system") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,
       );
       return;
@@ -99,7 +160,7 @@ module.exports = () => {
       oldPublicAdvisory.modifiedBy === "system"
     ) {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,
       );
       return;
@@ -108,14 +169,19 @@ module.exports = () => {
     // flow 3: update published advisory
     if (oldAdvisoryStatus === "PUB") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      newPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,
       );
       return;
     }
   }
 
+  /**
+   * Handles notification and public collection synchronization after update.
+   */
   async function afterUpdate(ctx) {
+    if (!ctx?.result?.documentId) return;
+
     const publicAdvisoryAudit = await strapi
       .documents("api::public-advisory-audit.public-advisory-audit")
       .findOne({
@@ -123,7 +189,7 @@ module.exports = () => {
         populate: "*",
       });
 
-    const oldAdvisoryStatus = ctx.state.oldStatus; // saved by beforeUpdate() above
+    const oldAdvisoryStatus = ctx.state?.oldStatus; // saved by beforeUpdate() above
     const newAdvisoryStatus = publicAdvisoryAudit.advisoryStatus?.code;
 
     if (newAdvisoryStatus === "HQR" && oldAdvisoryStatus !== "HQR") {
@@ -183,6 +249,7 @@ module.exports = () => {
     // replicate beforeUpdate/afterUpdate lifecycles in Strapi 4
     if (context.action === "update") {
       await beforeUpdate(context);
+
       context.result = await next();
       await afterUpdate(context);
       return context.result;
@@ -191,174 +258,3 @@ module.exports = () => {
     return await next();
   };
 };
-
-// HELPER FUNCTIONS
-
-async function getNextAdvisoryNumber() {
-  const results = await strapi
-    .documents("api::public-advisory-audit.public-advisory-audit")
-    .findMany({
-      sort: { advisoryNumber: "DESC" },
-      limit: 1,
-      fields: ["advisoryNumber"],
-    });
-  let maxAdvisoryNumber = results.length > 0 ? results[0].advisoryNumber : 0;
-  if (!maxAdvisoryNumber || maxAdvisoryNumber < 0) maxAdvisoryNumber = 0;
-  return ++maxAdvisoryNumber;
-}
-
-async function getNextRevisionNumber(advisoryNumber) {
-  const results = await strapi
-    .documents("api::public-advisory-audit.public-advisory-audit")
-    .findMany({
-      filters: {
-        advisoryNumber,
-      },
-      sort: { revisionNumber: "DESC" },
-      limit: 1,
-      fields: ["revisionNumber"],
-    });
-  let maxRevisionNumber = results.length > 0 ? results[0].revisionNumber : 0;
-  if (!maxRevisionNumber || maxRevisionNumber < 0) maxRevisionNumber = 0;
-  return ++maxRevisionNumber;
-}
-
-async function archiveOldPublicAdvisoryAudit(data) {
-  delete data.id;
-  delete data.documentId;
-  delete data.updatedBy;
-  delete data.createdBy;
-  delete data.links; // keep links connected to the latest revision, not the archived version
-  data.publishedAt = null;
-  data.isLatestRevision = false;
-
-  try {
-    await strapi
-      .documents("api::public-advisory-audit.public-advisory-audit")
-      .create({ data: data });
-  } catch (error) {
-    strapi.log.error(
-      `error creating public-advisory-audit ${data.advisoryNumber}...`,
-      error,
-    );
-  }
-}
-
-async function savePublicAdvisory(publicAdvisory) {
-  delete publicAdvisory.updatedBy;
-  delete publicAdvisory.createdBy;
-  const isExist = await strapi
-    .documents("api::public-advisory.public-advisory")
-    .findFirst({
-      filters: {
-        advisoryNumber: publicAdvisory.advisoryNumber,
-      },
-      fields: ["advisoryNumber"],
-    });
-  if (publicAdvisory.advisoryStatus.code === "PUB") {
-    publicAdvisory.publishedAt = new Date();
-    if (isExist) {
-      try {
-        publicAdvisory.id = isExist.id;
-        publicAdvisory.documentId = isExist.documentId;
-        strapi.log.info(
-          `updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
-        );
-        await strapi.documents("api::public-advisory.public-advisory").update({
-          documentId: isExist.documentId,
-          data: publicAdvisory,
-        });
-      } catch (error) {
-        strapi.log.error(
-          `error updating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
-          error,
-        );
-      }
-    } else {
-      try {
-        delete publicAdvisory.id;
-        delete publicAdvisory.documentId;
-        strapi.log.info(
-          `creating public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
-        );
-        await strapi.documents("api::public-advisory.public-advisory").create({
-          data: publicAdvisory,
-        });
-      } catch (error) {
-        strapi.log.error(
-          `error creating public-advisory ${publicAdvisory.id}...`,
-          error,
-        );
-      }
-    }
-  } else if (isExist) {
-    try {
-      strapi.log.info(
-        `deleting public-advisory advisoryNumber ${publicAdvisory.advisoryNumber}...`,
-      );
-      await strapi
-        .documents("api::public-advisory.public-advisory")
-        .delete({ documentId: isExist.documentId });
-    } catch (error) {
-      strapi.log.error(
-        `error deleting public-advisory ${publicAdvisory.id}...`,
-        error,
-      );
-    }
-  }
-}
-
-async function copyToPublicAdvisory(newPublicAdvisory) {
-  if (newPublicAdvisory.isLatestRevision && newPublicAdvisory.advisoryStatus) {
-    const triggerStatuses = ["PUB", "UNP"];
-    if (triggerStatuses.includes(newPublicAdvisory.advisoryStatus.code)) {
-      await savePublicAdvisory(newPublicAdvisory);
-    }
-  }
-}
-
-function isAdvisoryEqual(newData, oldData) {
-  const fieldsToCompare = {
-    title: null,
-    description: null,
-    isSafetyRelated: null,
-    listingRank: null,
-    note: null,
-    advisoryDate: null,
-    effectiveDate: null,
-    endDate: null,
-    expiryDate: null,
-    accessStatus: {},
-    eventType: {},
-    urgency: {},
-    standardMessages: [],
-    protectedAreas: [],
-    advisoryStatus: {},
-    links: [],
-    regions: [],
-    sections: [],
-    managementAreas: [],
-    sites: [],
-    fireCentres: [],
-    fireZones: [],
-    naturalResourceDistricts: [],
-    isAdvisoryDateDisplayed: null,
-    isEffectiveDateDisplayed: null,
-    isEndDateDisplayed: null,
-    isUpdatedDateDisplayed: null,
-    modifiedBy: null,
-  };
-
-  for (const key of Object.keys(fieldsToCompare)) {
-    if (Array.isArray(oldData[key])) {
-      oldData[key] = oldData[key].map((x) => x.id).sort();
-      if (newData[key]) newData[key].sort();
-    } else {
-      if (typeof oldData[key] === "object" && oldData[key])
-        oldData[key] = oldData[key].id;
-    }
-    if (JSON.stringify(newData[key]) != JSON.stringify(oldData[key]))
-      return false;
-  }
-  return true;
-}
