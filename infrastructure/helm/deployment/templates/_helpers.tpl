@@ -80,22 +80,6 @@ Gets the suffix of the namespace. (-dev, -tools, ... )
 https://{{ .Release.Name }}-{{ .Values.cms.componentName }}-{{ .Release.Namespace }}.{{ .Values.cluster.domain }}
 {{- end -}}
 
-{{ define "bcparks_patroni_fullname" -}}
-{{ .Release.Name }}-{{ .Values.patroni.componentName }}
-{{- end -}}
-
-{{ define "bcparks_patroni_secret" -}}
-{{ .Release.Name }}-{{ .Values.patroni.componentName }}-secret
-{{- end -}}
-
-{{ define "bcparks_postgres_backup_fullname" -}}
-{{ .Release.Name }}-{{ .Values.backup.componentName }}
-{{- end -}}
-
-{{ define "bcparks_pgbouncer_fullname" -}}
-{{ .Release.Name }}-{{ .Values.pgbouncer.componentName }}
-{{- end -}}
-
 {{ define "bcparks_admin_external_url" -}}
 https://{{ .Release.Name }}-{{ .Values.admin.componentName }}-{{ .Release.Namespace }}.{{ .Values.cluster.domain }}
 {{- end -}}
@@ -115,4 +99,3 @@ https://{{ .Release.Name }}-{{ .Values.public.componentName }}-{{ .Release.Names
 {{ define "bcparks_scheduler_fullname" -}}
 {{ .Release.Name }}-{{ .Values.scheduler.componentName }}
 {{- end -}}
-

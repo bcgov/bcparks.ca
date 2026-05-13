@@ -1,38 +1,42 @@
 cluster:
-  ssoAuthUrl: https://dev.loginproxy.gov.bc.ca/auth
-  publicUrl: https://alpha-dev.bcparks.ca
-  staffPortalUrl: https://alpha-dev-staff.bcparks.ca
+  ssoAuthUrl: https://test.loginproxy.gov.bc.ca/auth
+  publicUrl: https://alpha-test.bcparks.ca
+  staffPortalUrl: https://alpha-test-staff.bcparks.ca
 
 images:
   strapi:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/strapi-alpha
+    tag: test
   admin:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/admin-alpha
+    tag: test
   public:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/public-alpha
+    tag: test
   maintenance:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/maintenance-alpha
+    tag: test
   etl:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/etl-alpha
+    tag: test
   scheduler:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/scheduler-alpha
+    tag: test
 
 cms:
   env:
-    environment: alpha-dev
-    externalUrl: https://alpha-dev-cms.bcparks.ca
+    environment: alpha-test
+    externalUrl: https://alpha-test-cms.bcparks.ca
 
-patroni:
-  replicas: 1
+  hpa:
+    minReplicas: 1
+    maxReplicas: 2
 
-backup:
-  enabled: false
-
-  enironment:
-    friendlyName: bcparks.ca CMS Postgres Backup [alpha-dev]
+crunchy:
+  instanceName: crunchy-postgres-alpha
 
 etl:
-  enabled: false
+  enabled: true
 
 scheduler:
   env:
