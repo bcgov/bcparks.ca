@@ -1,0 +1,27 @@
+fullnameOverride: crunchy-postgres
+
+postgresVersion: 17
+
+instances:
+  replicas: 2
+  dataVolumeClaimSpec:
+    storage: 2Gi
+  requests:
+    cpu: 100m
+
+pgBackRest:
+  retention: "15" # Ideally a larger number such as 30 backups/days
+  repos:
+    volume:
+      storage: 2Gi
+  s3:
+    enabled: true
+    bucket: "parks-cms-prod"
+    endpoint: "nrs.objectstore.gov.bc.ca"
+
+proxy:
+  pgBouncer:
+    replicas: 1
+
+pgmonitor:
+  namespace: c1643c #The high level namespace of your project without the -tools -dev, etc part.

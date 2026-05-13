@@ -22,21 +22,8 @@ cms:
     environment: test
     externalUrl: https://test-cms.bcparks.ca
 
-patroni:
-  replicas: 1
-
-  pvc:
-    size: 2Gi
-
-backup:
-  enabled: true
-
-  pvc:
-    size: 2Gi
-
-  enironment:
-    friendlyName: bcparks.ca CMS Postgres Backup [test]
-    name: c1643c-test
+crunchy:
+  instanceName: crunchy-postgres
 
 scheduler:
   env:
