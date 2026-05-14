@@ -19,10 +19,10 @@
     "code": {
       "type": "string"
     },
-    "precedence": {
+    "sortOrder": {
       "type": "integer",
       "unique": true,
-      "required": false
+      "required": true
     }
   }
 }
