@@ -18,6 +18,11 @@
     },
     "code": {
       "type": "string"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "unique": true,
+      "required": true
     }
   }
 }
