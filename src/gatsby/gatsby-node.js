@@ -2,7 +2,6 @@ const { graphql } = require("gatsby");
 const slugify = require("slugify");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const parseUrl = require("parse-url");
-const webpack = require("webpack");
 
 const strapiApiRequest = (graphql, query) =>
   new Promise((resolve, reject) => {
@@ -712,25 +711,10 @@ async function createRedirects(
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   if (stage === "build-html" || stage === "develop-html") {
     actions.setWebpackConfig({
-      resolve: {
-        alias: {
-          "node:sqlite": false,
-        },
-        fallback: {
-          sqlite: false,
-        },
-      },
       module: {
         rules: [],
       },
-      plugins: [
-        new webpack.NormalModuleReplacementPlugin(/^node:/, (resource) => {
-          resource.request = resource.request.replace(/^node:/, "");
-        }),
-        new webpack.IgnorePlugin({ resourceRegExp: /^sqlite$/ }),
-        new webpack.IgnorePlugin({ resourceRegExp: /^node:sqlite$/ }),
-        new NodePolyfillPlugin(),
-      ],
+      plugins: [new NodePolyfillPlugin()],
     });
   }
   if (stage === "build-javascript" || stage === "develop") {
