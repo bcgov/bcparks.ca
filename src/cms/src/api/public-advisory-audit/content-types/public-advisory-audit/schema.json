@@ -183,6 +183,12 @@
     "reviewedAt": {
       "type": "datetime"
     },
+    "unpublishedByName": {
+      "type": "string"
+    },
+    "unpublishedAt": {
+      "type": "datetime"
+    },
     "createdByRole": {
       "type": "string"
     },
