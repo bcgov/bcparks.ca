@@ -12,7 +12,9 @@ exports.batchQueueParks = async function () {
   let queue;
 
   // get items from the queue with the action 'elastic batch-queue parks'
+  let processedTasks;
   do {
+    processedTasks = [];
     try {
       queue = await readQueue("elastic batch-queue parks");
     } catch (error) {
@@ -62,6 +64,7 @@ exports.batchQueueParks = async function () {
       if (!isError) {
         try {
           await removeFromQueue([task.documentId]);
+          processedTasks.push(task.documentId);
         } catch (error) {
           logger.error(
             `batchQueueParks() failed while removing batch-queue task from queue: ${error}`,
@@ -70,5 +73,5 @@ exports.batchQueueParks = async function () {
         }
       }
     }
-  } while (queue.length > 0);
+  } while (processedTasks.length > 0);
 };
