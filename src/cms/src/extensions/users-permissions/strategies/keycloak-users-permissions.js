@@ -2,10 +2,10 @@
 
 const { map } = require("lodash/fp");
 const { UnauthorizedError } = require("@strapi/utils").errors;
+
 const AUTH_URL =
   process.env.STRAPI_SSO_AUTH_URL || "https://dev.loginproxy.gov.bc.ca/auth";
-
-const KEYCLOAK_AUTH_ROLES = ["submitter", "approver"];
+const KEYCLOAK_AUTH_ROLES = ["advisory-user"];
 
 const getService = (name) => {
   return strapi.plugin("users-permissions").service(name);
