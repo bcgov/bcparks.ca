@@ -67,6 +67,11 @@ updates:
       # Sass > 1.32.13 adds excessive deprecation warnings
       # Upgrade intentionally when ready
       - dependency-name: "sass"
+
+      # Cheerio > 1.0.0-rc.12 adds sqlite dependency via undici
+      # see: https://github.com/cheeriojs/cheerio/issues/4747
+      # 1.0.0-rc.12 has no known security advisories or issues impacting our gatsby project
+      - dependency-name: "cheerio"
     groups:
       gatsby-minor-patch:
         applies-to: version-updates
