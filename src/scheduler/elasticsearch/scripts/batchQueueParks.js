@@ -25,30 +25,40 @@ exports.batchQueueParks = async function () {
     }
 
     for (const task of queue) {
-      const query = qs.stringify(
-        {
-          filters: {
-            documentId: { $in: task.jsonData.parkDocumentIds },
-          },
-          fields: ["orcs"],
-        },
-        { encodeValuesOnly: true },
-      );
+      const parkDocumentIds = task.jsonData?.parkDocumentIds || [];
 
-      let parks;
-      try {
-        parks = await cmsAxios.get(`/api/protected-areas?${query}`);
-      } catch (error) {
-        logger.error(`batchQueueParks() failed while retrieving parks: ${error}`);
-        return;
+      // Convert documentIds to orcs in batches of 50 to avoid URL length issues
+      const batchSize = 50;
+      const orcsValues = [];
+
+      for (let i = 0; i < parkDocumentIds.length; i += batchSize) {
+        const batchIds = parkDocumentIds.slice(i, i + batchSize);
+        const query = qs.stringify(
+          {
+            filters: {
+              documentId: { $in: batchIds },
+            },
+            fields: ["orcs"],
+          },
+          { encodeValuesOnly: true },
+        );
+
+        let parks;
+        try {
+          parks = await cmsAxios.get(`/api/protected-areas?${query}`);
+          orcsValues.push(...parks.data.data.map((park) => park.orcs));
+        } catch (error) {
+          logger.error(`batchQueueParks() failed while retrieving parks: ${error}`);
+          return;
+        }
       }
 
       let isError = false;
-      for (const park of parks?.data?.data || []) {
+      for (const orcs of orcsValues) {
         try {
-          if (!(await existsInQueue("elastic index park", park.orcs))) {
+          if (!(await existsInQueue("elastic index park", orcs))) {
             const addedToQueue = await addToQueue({
-              data: { action: "elastic index park", numericData: park.orcs },
+              data: { action: "elastic index park", numericData: orcs },
             });
             if (!addedToQueue) {
               isError = true;
@@ -56,9 +66,7 @@ exports.batchQueueParks = async function () {
           }
         } catch (error) {
           isError = true;
-          logger.error(
-            `batchQueueParks() failed while adding park ${park.orcs} to queue: ${error}`,
-          );
+          logger.error(`batchQueueParks() failed while adding park ${orcs} to queue: ${error}`);
         }
       }
       if (!isError) {
