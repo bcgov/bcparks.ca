@@ -18,7 +18,7 @@
     "@loadable/webpack-plugin": "^5.15.2",
     "axios": "^1.16.1",
     "bootstrap": "^5.3.8",
-    "cheerio": "1.0.0-rc.12",
+    "cheerio": "1.2.0",
     "date-fns": "^2.30.0",
     "gatsby": "^5.16.1",
     "gatsby-plugin-canonical-urls": "^5.16.0",

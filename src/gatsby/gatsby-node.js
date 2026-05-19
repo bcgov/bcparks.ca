@@ -708,15 +708,31 @@ async function createRedirects(
   });
 }
 
+// Customize the webpack config for specific build stages
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
+  // Server-side HTML renderer bundle
   if (stage === "build-html" || stage === "develop-html") {
     actions.setWebpackConfig({
       module: {
         rules: [],
       },
       plugins: [new NodePolyfillPlugin()],
+      externals: [
+        // Exclude Node core modules (node:*) and `undici` from the server-side JS bundle.
+        // Undici (a Cheerio dependency) references `node:sqlite` and `process.versions`, which breaks the Webpack build.
+        // Externalizing these modules lets Node handle them at runtime, without Webpack transforming them.
+        function ({ request }, callback) {
+          if (/^node:/.test(request) || request === "undici") {
+            return callback(null, "commonjs " + request);
+          }
+
+          callback();
+        },
+      ],
     });
   }
+
+  // Client-side JS bundle
   if (stage === "build-javascript" || stage === "develop") {
     const config = getConfig();
 
