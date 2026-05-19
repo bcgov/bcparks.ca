@@ -34,14 +34,13 @@ module.exports = () => {
       }
     }
 
-    // Call next() to ensure ctx.request.body & ctx.state.auth are populated
+    // Call next() to ensure ctx.request.body & ctx.state are populated
     await next();
 
     // Allow draft access for authenticated users
-    const isUser = !!ctx.state?.user;
-    const isApiToken = ctx.state?.auth?.strategy?.name === "api-token";
+    const isAuthenticated = !!ctx.state?.isAuthenticated;
 
-    if (isUser || isApiToken) {
+    if (isAuthenticated) {
       return;
     }
 
