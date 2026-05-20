@@ -38,6 +38,12 @@
       "type": "boolean",
       "required": true,
       "default": true
+    },
+    "organization": {
+      "type": "enumeration",
+      "required": true,
+      "default": "Both",
+      "enum": ["BCP", "RST", "Both"]
     }
   }
 }

@@ -43,6 +43,12 @@
       "default": 1,
       "min": 1,
       "max": 2
+    },
+    "organization": {
+      "type": "enumeration",
+      "required": true,
+      "default": "Both",
+      "enum": ["BCP", "RST", "Both"]
     }
   }
 }
