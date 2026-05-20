@@ -39,25 +39,33 @@ module.exports = ({ strapi }) => ({
           strapi.log.info(
             `setting public-advisory-audit to unpublished [advisoryNumber:${advisory.advisoryNumber}]`,
           );
-          await strapi
-            .documents("api::public-advisory-audit.public-advisory-audit")
-            .update({
-              documentId: advisoryAudit[0].documentId,
-              data: {
-                advisoryStatus: {
-                  id: advisoryStatusMap["UNP"].id,
+          try {
+            await strapi
+              .documents("api::public-advisory-audit.public-advisory-audit")
+              .update({
+                documentId: advisoryAudit[0].documentId,
+                data: {
+                  advisoryStatus: {
+                    id: advisoryStatusMap["UNP"].id,
+                  },
+                  removalDate: new Date(),
+                  modifiedBy: "system",
+                  modifiedDate: new Date(),
                 },
-                removalDate: new Date(),
-                modifiedBy: "system",
-                modifiedDate: new Date(),
-              },
-            })
-            .catch((error) => {
-              strapi.log.error(
-                `error updating public-advisory-audit #${advisory.advisoryNumber}`,
-                error,
-              );
-            });
+              });
+            expiredAdvisoryCount++;
+            await queueAdvisoryEmail(
+              "Expired advisory removed",
+              "An expired advisory was removed",
+              advisory.advisoryNumber,
+              "public-advisory::services::scheduling::expire()",
+            );
+          } catch (error) {
+            strapi.log.error(
+              `error updating public-advisory-audit #${advisory.advisoryNumber}`,
+              error,
+            );
+          }
         }
       }
     }
