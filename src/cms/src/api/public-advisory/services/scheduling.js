@@ -152,51 +152,33 @@ module.exports = ({ strapi }) => ({
   },
 
   expiringSoon: async (advisoryStatusMap) => {
-    if (Object.keys(advisoryStatusMap).length > 0) {
-      const today = new Date();
-      const nextWeek = new Date(
-        today.setTime(today.getTime() + 7 * 24 * 60 * 60 * 1000),
+    // Use a 3-minute window 7 days before expiry to avoid missing advisories when
+    // cron timing drifts. Duplicate emails are throttled in scheduler email logic
+    // (THROTTLE_MINUTES), so overlap won't send multiple emails.
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const rangeStart = new Date(nextWeek.getTime() - 60 * 1000).toISOString();
+    const rangeEnd = new Date(nextWeek.getTime() + 120 * 1000).toISOString();
+
+    const expiringSoon = await strapi
+      .documents("api::public-advisory.public-advisory")
+      .findMany({
+        filters: {
+          expiryDate: { $gte: rangeStart, $lte: rangeEnd },
+        },
+      });
+    for (const advisory of expiringSoon) {
+      strapi.log.info(
+        `advisory expiring soon [advisoryNumber:${advisory.advisoryNumber}]`,
       );
-      const rangeStart = new Date(
-        nextWeek.setTime(nextWeek.getTime() - 60 * 1000),
-      ).toISOString();
-      const rangeEnd = new Date(
-        nextWeek.setTime(nextWeek.getTime() + 120 * 1000),
-      ).toISOString();
-      const expiringSoon = await strapi
-        .documents("api::public-advisory-audit.public-advisory-audit")
-        .findMany({
-          filters: {
-            $and: [
-              {
-                isLatestRevision: true,
-              },
-              {
-                expiryDate: { $gte: rangeStart },
-              },
-              {
-                expiryDate: { $lte: rangeEnd },
-              },
-              {
-                advisoryStatus: advisoryStatusMap["PUB"].id,
-              },
-            ],
-          },
-        });
-      for (const advisory of expiringSoon) {
-        strapi.log.info(
-          `advisory expiring soon [advisoryNumber:${advisory.advisoryNumber}]`,
-        );
-        await queueAdvisoryEmail(
-          "Advisory expiring soon",
-          "This advisory will be expiring in one week",
-          advisory.advisoryNumber,
-          "public-advisory-audit::services::scheduling::expiringSoon()",
-        );
-      }
-      return expiringSoon.length;
+      await queueAdvisoryEmail(
+        "Advisory expiring soon",
+        "This advisory will be expiring in one week",
+        advisory.advisoryNumber,
+        "public-advisory::services::scheduling::expiringSoon()",
+      );
     }
-    return 0;
+    return expiringSoon.length;
   },
 
   publishingSoon: async (advisoryStatusMap) => {
