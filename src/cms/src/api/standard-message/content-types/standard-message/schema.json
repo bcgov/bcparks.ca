@@ -39,7 +39,7 @@
       "required": true,
       "default": true
     },
-    "organization": {
+    "scope": {
       "type": "enumeration",
       "required": true,
       "default": "Both",

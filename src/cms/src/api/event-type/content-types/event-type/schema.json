@@ -21,7 +21,7 @@
     "description": {
       "type": "string"
     },
-    "organization": {
+    "scope": {
       "type": "enumeration",
       "required": true,
       "default": "Both",
