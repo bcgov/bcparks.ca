@@ -10,12 +10,14 @@ const { dootSplitMessage } = require("./splitMessage");
 exports.dootPublish = async function () {
   let queue;
   const logger = getLogger();
+  let processedTasks;
 
   // When we create/update date ranges from DOOT data, we will only delete existing
   // date ranges of these types to avoid removing date ranges managed manually in Strapi.
   const DOOT_MANAGED_DATE_TYPE_IDS = [1, 2, 3, 4, 6, 7, 8]; // Gate, Tier 1, Tier 2, Winter fee, Operation, Reservation, Backcountry registration
 
   do {
+    processedTasks = [];
     // get items from the queue with the action 'doot publish'
     try {
       queue = await readQueue("doot publish");
@@ -261,11 +263,12 @@ exports.dootPublish = async function () {
       if (!errorProcessingMessage) {
         try {
           await removeFromQueue([message.documentId]);
+          processedTasks.push(message.documentId);
         } catch (error) {
           logger.error(`dootPublish() failed while removing message from queue: ${error}`);
           continue;
         }
       }
     }
-  } while (queue.length > 0);
+  } while (processedTasks.length > 0);
 };
