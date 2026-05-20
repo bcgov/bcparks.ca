@@ -24,37 +24,8 @@ module.exports = ({ strapi }) => ({
           populate: "*",
         });
 
-      // delete advisories - public advisory table
-      for (const advisory of advisoryToUnpublish) {
-        strapi.log.info(
-          `unpublishing public-advisory [advisoryNumber:${advisory.advisoryNumber}]`,
-        );
-        await strapi
-          .documents("api::public-advisory.public-advisory")
-          .update({
-            documentId: advisory.documentId,
-            data: {
-              publishedAt: null,
-            },
-          })
-          .then(async (advisory) => {
-            expiredAdvisoryCount++;
-            await queueAdvisoryEmail(
-              "Expired advisory removed",
-              "An expired advisory was removed",
-              advisory.advisoryNumber,
-              "public-advisory-audit::services::scheduling::expire()",
-            );
-          })
-          .catch((error) => {
-            strapi.log.error(
-              `error updating public-advisory #${advisory.advisoryNumber}`,
-              error,
-            );
-          });
-      }
-
       // unpublish advisories - audit table
+      // middleware will remove the records from public-advisories once the audit record is unpublished
       for (const advisory of advisoryToUnpublish) {
         const advisoryAudit = await strapi
           .documents("api::public-advisory-audit.public-advisory-audit")
@@ -73,7 +44,6 @@ module.exports = ({ strapi }) => ({
             .update({
               documentId: advisoryAudit[0].documentId,
               data: {
-                publishedAt: new Date(),
                 advisoryStatus: {
                   id: advisoryStatusMap["UNP"].id,
                 },
@@ -122,7 +92,6 @@ module.exports = ({ strapi }) => ({
           .update({
             documentId: advisory.documentId,
             data: {
-              publishedAt: advisory.advisoryDate,
               advisoryStatus: {
                 id: advisoryStatusMap["PUB"].id,
               },
