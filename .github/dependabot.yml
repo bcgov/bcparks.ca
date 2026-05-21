@@ -86,6 +86,10 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+
+      # @strapi-community/provider-rest-cache-redis has an unlisted peer dependency 
+      # on @strapi-community/plugin-rest-cache
+      - dependency-name: "@strapi-community/plugin-rest-cache"
     groups:
       cms-minor-patch:
         applies-to: version-updates
