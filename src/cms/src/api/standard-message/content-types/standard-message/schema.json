@@ -38,6 +38,12 @@
       "type": "boolean",
       "required": true,
       "default": true
+    },
+    "scope": {
+      "type": "enumeration",
+      "required": true,
+      "default": "Both",
+      "enum": ["BCP", "RST", "Both"]
     }
   }
 }

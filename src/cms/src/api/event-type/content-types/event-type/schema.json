@@ -20,6 +20,12 @@
     },
     "description": {
       "type": "string"
+    },
+    "scope": {
+      "type": "enumeration",
+      "required": true,
+      "default": "Both",
+      "enum": ["BCP", "RST", "Both"]
     }
   }
 }
