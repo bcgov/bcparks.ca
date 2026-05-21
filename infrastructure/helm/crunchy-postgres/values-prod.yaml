@@ -3,9 +3,9 @@ fullnameOverride: crunchy-postgres
 postgresVersion: 17
 
 instances:
-  replicas: 2
+  replicas: 3
   dataVolumeClaimSpec:
-    storage: 2Gi
+    storage: 6Gi
   requests:
     cpu: 100m
 
@@ -13,7 +13,7 @@ pgBackRest:
   retention: "15" # Ideally a larger number such as 30 backups/days
   repos:
     volume:
-      storage: 2Gi
+      storage: 6Gi
   s3:
     enabled: true
     bucket: "parks-cms-prod"
