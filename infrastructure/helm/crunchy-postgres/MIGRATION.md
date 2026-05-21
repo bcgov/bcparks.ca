@@ -40,13 +40,18 @@
    ```
 
 1. Copy the backup onto the crunchy primary with `oc cp`
-   - I usually put it in `/tmp`
-   - It will get removed in a few minutes so work fast
 
-   e.g.
+   Run this in the leader pod
 
    ```
-   oc cp ./strapi-backup.sql crunchy-postgres-alpha-ha-jrs7-0:/tmp/strapi-backup.sql
+   mkdir -p /pgdata/tmp_backup
+   chmod 700 /pgdata/tmp_backup
+   ```
+
+   Run this from your mac terminal
+
+   ```
+   oc cp ./strapi-backup.sql crunchy-postgres-alpha-ha-jrs7-0:/pgdata/tmp_backup/strapi-backup.sql
    ```
 
 1. Restore the DB
@@ -59,7 +64,7 @@
    ```
    \q
 
-   psql -h crunchy-postgres-primary -U crunchy-postgres -d cms < /tmp/strapi-backup.sql
+   psql -h crunchy-postgres-primary -U crunchy-postgres -d cms < /pgdata/tmp_backup/strapi-backup.sql
    ```
 
    alpha environments:
@@ -68,7 +73,9 @@
    ```
    \q
 
-   psql -h crunchy-postgres-alpha-primary -U crunchy-postgres-alpha -d cms < /tmp/strapi-backup.sql
+   psql -h crunchy-postgres-alpha-primary -U crunchy-postgres-alpha -d cms < /pgdata/tmp_backup/strapi-backup.sql
    ```
+
+   **You can delete the backup when you're done.**
 
 1. Run the `upgrade` command in the `deployment` helm chart for the environment being migrated

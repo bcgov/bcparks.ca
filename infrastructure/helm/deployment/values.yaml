@@ -116,14 +116,14 @@ redis:
 etl:
   componentName: etl
 
-  # Enabled by default.  Overriden for aplha-dev
+  # Enabled by default.  Overridden for alpha-dev
   enabled: true
   disableBcwfsCron: true
   disableParkNamesCron: false
   enableBcwfsStandalonePropagation: false
 
-  # Run the cron job every hour at 15 minutes past the hour
-  schedule: "15 * * * *"
+  # Run the cron job every hour at 1 minute past the hour
+  schedule: "1 * * * *"
 
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 2
