@@ -32,7 +32,7 @@ jobs:
 
       # Downgrade/pin Docker Engine to v28.x on the hosted runner
       - name: Set up Docker 28.x
-        uses: docker/setup-docker-action@v4
+        uses: docker/setup-docker-action@v5
         with:
           version: "28.5.2"
           set-host: true # <— this sets DOCKER_HOST for all following steps
@@ -136,7 +136,7 @@ jobs:
 
       # Downgrade/pin Docker Engine to v28.x on the hosted runner
       - name: Set up Docker 28.x
-        uses: docker/setup-docker-action@v4
+        uses: docker/setup-docker-action@v5
         with:
           version: "28.5.2"
           set-host: true # <— this sets DOCKER_HOST for all following steps
@@ -178,7 +178,7 @@ jobs:
 
       # Downgrade/pin Docker Engine to v28.x on the hosted runner
       - name: Set up Docker 28.x
-        uses: docker/setup-docker-action@v4
+        uses: docker/setup-docker-action@v5
         with:
           version: "28.5.2"
           set-host: true # <— this sets DOCKER_HOST for all following steps
