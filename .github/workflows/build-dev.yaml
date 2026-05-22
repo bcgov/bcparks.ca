@@ -18,7 +18,7 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
@@ -61,7 +61,7 @@ jobs:
       IMAGE_NAME: public-builder-${{ github.ref_name }}
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set env
         run: |
@@ -91,7 +91,7 @@ jobs:
       IMAGE_NAME: maintenance-${{ github.ref_name }}
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set env
         run: |
@@ -122,7 +122,7 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
@@ -164,7 +164,7 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
@@ -205,12 +205,13 @@ jobs:
     needs: [build-cms]
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
-          oc: "4.14"
+          oc: "4.16"
+          skip_cache: true
 
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
