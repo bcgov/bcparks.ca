@@ -1,10 +1,10 @@
 import * as dotenv from "dotenv";
 
-import bcwfsLoadData from './scripts/bcwfs-bans.js';
-import bcwfsPropagateData from './scripts/bcwfs-propagate.js';
-import parkNamesLoadData from './scripts/park-names.js';
-import rstResourcesLoadData from './scripts/rst-resources.js';
-import { noCommandLineArgs, scriptKeySpecified } from './utils/commandLine.js';
+import bcwfsLoadData from "./scripts/bcwfs-bans.js";
+import bcwfsPropagateData from "./scripts/bcwfs-propagate.js";
+import parkNamesLoadData from "./scripts/park-names.js";
+import rstResourcesLoadData from "./scripts/rst-resources.js";
+import { noCommandLineArgs, scriptKeySpecified } from "./utils/commandLine.js";
 
 // The cron schedule is set to "15 * * * *" in the /infrastructure/helm/bcparks/values.yaml
 // Hourly jobs will run at 15 minutes past the hour.
@@ -29,6 +29,12 @@ const DAILY_RUN_HOUR_UTC = 7;
     await parkNamesLoadData();
   }
 
+  // Check if the command line arg 'rst' was entered.
+  // e.g. `node index.js rst`
+  if (scriptKeySpecified("rst")) {
+    await rstResourcesLoadData();
+  }
+
   // If no arg was entered then run all the scripts
   // (the cron will run all the scripts)
   if (noCommandLineArgs()) {
@@ -44,39 +50,19 @@ const DAILY_RUN_HOUR_UTC = 7;
       await bcwfsPropagateData();
     }
 
-    // Check if the command line arg 'rst' was entered.
-    // e.g. `node index.js rst`
-    if (scriptKeySpecified("rst")) {
+    // add more hourly jobs here
+
+    // Run these jobs daily at 12:15am PT
+    if (new Date().getUTCHours() === DAILY_RUN_HOUR_UTC) {
+      if (process.env.DISABLE_PARK_NAMES_CRON !== "true") {
+        await parkNamesLoadData();
+      }
+
+      if (process.env.DISABLE_RST_CRON !== "true") {
         await rstResourcesLoadData();
-    }
+      }
 
-    // If no arg was entered then run all the scripts
-    // (the cron will run all the scripts)
-    if (noCommandLineArgs()) {
-
-        // Run these jobs hourly at 15 minutes past the hour
-        if (process.env.DISABLE_BCWFS_CRON !== "true") {
-            await bcwfsLoadData();
-        }
-
-        if (process.env.DISABLE_BCWFS_CRON !== "true" || process.env.ENABLE_BCWFS_STANDALONE_PROPAGATION === "true") {
-            await bcwfsPropagateData();
-        }
-
-        // add more hourly jobs here
-
-        // Run these jobs daily at 12:15am PT
-        if (new Date().getUTCHours() === DAILY_RUN_HOUR_UTC) {
-            if (process.env.DISABLE_PARK_NAMES_CRON !== "true") {
-                await parkNamesLoadData();
-            }
-
-            if (process.env.DISABLE_RST_CRON !== "true") {
-                await rstResourcesLoadData();
-            }
-
-            // add more daily jobs
-        }
+      // add more daily jobs
     }
   }
 })();
