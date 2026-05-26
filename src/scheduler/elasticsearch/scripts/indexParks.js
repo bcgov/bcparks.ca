@@ -197,11 +197,13 @@ const getBatch = async function (queuedTasks, options) {
       (p) => !publishedParkDocIds.includes(p.documentId),
     );
 
-    getLogger().warn(
-      `Adding ${extraDrafts.length} draft protected areas to the list (to be removed from index).`,
-    );
-
-    parkList.push(...extraDrafts);
+    // add any draft parks that aren't in the published parks to the list of parks to be indexed
+    if (extraDrafts.length > 0) {
+      getLogger().warn(
+        `Adding ${extraDrafts.length} draft protected areas to the list (to be removed from index).`,
+      );
+      parkList.push(...extraDrafts);
+    }
   }
 
   return parkList;
