@@ -124,7 +124,7 @@ function isAdvisoryEqual(newData, oldData) {
     isEffectiveDateDisplayed: null,
     isEndDateDisplayed: null,
     isUpdatedDateDisplayed: null,
-    modifiedBy: null,
+    modifiedByName: null,
   };
 
   for (const key of Object.keys(fieldsToCompare)) {

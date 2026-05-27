@@ -146,7 +146,7 @@ module.exports = () => {
     if (isAdvisoryEqual(updatedPublicAdvisory, oldPublicAdvisory)) return;
 
     // flow 5: system updates
-    if (updatedPublicAdvisory.modifiedBy === "system") {
+    if (updatedPublicAdvisory.modifiedByName === "system") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,
@@ -157,7 +157,7 @@ module.exports = () => {
     // flow 4: update unpublished (set by system)
     if (
       oldAdvisoryStatus === "UNP" &&
-      oldPublicAdvisory.modifiedBy === "system"
+      oldPublicAdvisory.modifiedByName === "system"
     ) {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(

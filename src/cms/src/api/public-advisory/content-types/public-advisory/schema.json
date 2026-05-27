@@ -68,9 +68,6 @@
       "type": "boolean",
       "default": null
     },
-    "submittedBy": {
-      "type": "string"
-    },
     "createdDate": {
       "type": "datetime"
     },
@@ -84,9 +81,6 @@
       "type": "datetime"
     },
     "expiryDate": {
-      "type": "datetime"
-    },
-    "removalDate": {
       "type": "datetime"
     },
     "updatedDate": {
