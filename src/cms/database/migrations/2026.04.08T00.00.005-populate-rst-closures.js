@@ -1809,6 +1809,10 @@ module.exports = {
     if (
       process.env.STRAPI_ADMIN_ENVIRONMENT !== "prod" &&
       (await knex.schema.hasTable("public_advisory_audits")) &&
+      (await knex.schema.hasColumn(
+        "public_advisory_audits",
+        "modifiedByName",
+      )) &&
       (await knex.schema.hasTable("recreation_resources"))
     ) {
       // use strapi.documents to get all the recreation resources and create a map of recResourceId to documentId
@@ -1904,8 +1908,8 @@ module.exports = {
           title: closure.headline,
           description: closure.closure_description,
           accessStatus: fullClosureAccessStatus?.documentId,
-          submittedBy: "Imported",
-          modifiedBy: "Imported",
+          submittedByName: "Imported",
+          modifiedByName: "Imported",
           advisoryDate: new Date(),
           effectiveDate: new Date(),
           createdDate: new Date(),
