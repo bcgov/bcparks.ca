@@ -1811,7 +1811,7 @@ module.exports = {
       (await knex.schema.hasTable("public_advisory_audits")) &&
       (await knex.schema.hasColumn(
         "public_advisory_audits",
-        "modifiedByName",
+        "modified_by_name",
       )) &&
       (await knex.schema.hasTable("recreation_resources"))
     ) {
