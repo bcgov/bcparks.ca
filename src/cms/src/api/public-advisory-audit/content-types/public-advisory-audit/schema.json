@@ -70,7 +70,7 @@
       "type": "boolean",
       "default": null
     },
-    "submittedBy": {
+    "submittedByName": {
       "type": "string"
     },
     "createdDate": {
@@ -97,7 +97,7 @@
     "modifiedDate": {
       "type": "datetime"
     },
-    "modifiedBy": {
+    "modifiedByName": {
       "type": "string"
     },
     "modifiedByRole": {
@@ -180,13 +180,13 @@
     "reviewedByName": {
       "type": "string"
     },
-    "reviewedAt": {
+    "reviewedDate": {
       "type": "datetime"
     },
     "unpublishedByName": {
       "type": "string"
     },
-    "unpublishedAt": {
+    "unpublishedDate": {
       "type": "datetime"
     },
     "createdByRole": {
