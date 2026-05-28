@@ -204,7 +204,8 @@ module.exports = () => {
     if (
       newAdvisoryStatus === "PUB" &&
       oldAdvisoryStatus !== "PUB" &&
-      publicAdvisoryAudit.modifiedByRole === "submitter" &&
+      (publicAdvisoryAudit.modifiedByRole === "submitter" ||
+        publicAdvisoryAudit.modifiedByRole === "contributor") && // TODO: determine after-hours rules for contributors
       publicAdvisoryAudit.isUrgentAfterHours
     ) {
       await queueAdvisoryEmail(
