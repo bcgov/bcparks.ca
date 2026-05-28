@@ -177,6 +177,9 @@
     "createdByName": {
       "type": "string"
     },
+    "createdByEmail": {
+      "type": "string"
+    },
     "reviewedByName": {
       "type": "string"
     },
