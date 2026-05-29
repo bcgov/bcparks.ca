@@ -248,6 +248,11 @@
       "target": "api::park-gate.park-gate",
       "mappedBy": "parkFeature"
     },
+    "datesCanSpan2years": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
     "hasDates": {
       "type": "boolean",
       "default": false
