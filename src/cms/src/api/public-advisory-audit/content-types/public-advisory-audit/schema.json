@@ -186,6 +186,12 @@
     "reviewedDate": {
       "type": "datetime"
     },
+    "publishedByName": {
+      "type": "string"
+    },
+    "publishedDate": {
+      "type": "datetime"
+    },
     "unpublishedByName": {
       "type": "string"
     },
