@@ -18,7 +18,7 @@ const featureIds = [
 
 module.exports = {
   async up(knex) {
-    // Skip if the table collection table doesn't exist
+    // Skip if the collection table doesn't exist
     if (!(await knex.schema.hasTable("park_features"))) return;
 
     // Add the new column if it doesn't exist
