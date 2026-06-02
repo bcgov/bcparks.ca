@@ -22,7 +22,7 @@ module.exports = {
     if (!(await knex.schema.hasTable("park_features"))) return;
 
     // Add the new column if it doesn't exist
-    // Strapi maps datesCanSpan2years to dates_can_span_2_years
+    // Strapi maps datesCanSpan2Years to dates_can_span_2_years
     if (
       !(await knex.schema.hasColumn("park_features", "dates_can_span_2_years"))
     ) {
@@ -31,7 +31,7 @@ module.exports = {
       });
     }
 
-    // Update the specified features to have their datesCanSpan2years value set to true
+    // Update the specified features to have their datesCanSpan2Years value set to true
     await knex("park_features")
       .whereIn("feature_id", featureIds)
       .update({ dates_can_span_2_years: true });
