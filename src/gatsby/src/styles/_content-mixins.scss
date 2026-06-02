@@ -129,8 +129,14 @@
 }
 
 @mixin media-styles {
-  figure.media div[data-oembed-url] {
+  figure.media {
+    display: block;
     width: 100%;
+
+    div[data-oembed-url] {
+      display: block;
+      width: 100%;
+    }
   }
 
   img {
