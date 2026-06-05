@@ -110,6 +110,8 @@ const messages = [
 module.exports = {
   async up(knex) {
     if (await knex.schema.hasTable("standard_messages")) {
+      await knex.raw("DELETE FROM standard_messages where precedence >= 19"); // delete existing messages to prevent duplicates on re-run
+
       // create a map of event type names (eventType field) to documentIds
       const eventTypes = await knex("event_types").select(
         "document_id",
@@ -140,6 +142,7 @@ module.exports = {
               precedence,
               description,
               eventType: eventTypeDocId,
+              isActive: true,
             },
           });
       }
