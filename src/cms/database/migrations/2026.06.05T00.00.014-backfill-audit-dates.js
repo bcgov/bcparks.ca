@@ -23,44 +23,12 @@ module.exports = {
       WHERE modified_date IS NULL
     `);
 
-    // Normalize submitted_by_name from IDIR usernames to full names
-    const submittedByNameUpdates = [
-      ["Robert Fiddler", "Rob Fiddler"],
-      ["Michael Olund", "Mike Olund"],
-      ["Steven Carpenter", "srcarpen"],
-      ["Brett Yerex", "byerex"],
-      ["Simon Debisschop", "sdebissc"],
-      ["Meghan Driver", "mdriver"],
-    ];
-    for (const [fullName, idir] of submittedByNameUpdates) {
-      await knex.raw(
-        `
-        UPDATE public_advisory_audits
-        SET submitted_by_name = ?
-        WHERE submitted_by_name = ?
-      `,
-        [fullName, idir],
-      );
-    }
-
-    // Normalize modified_by_name from IDIR/display names to full names
-    const modifiedByNameUpdates = [
-      ["Robert Fiddler", "Fiddler, Robert ENV:EX"],
-      ["Brett Yerex", "Yerex, Brett ENV:EX"],
-      ["Steven Carpenter", "Carpenter, Steven R ENV:EX"],
-      ["Tammy Liddicoat", "Liddicoat, Tammy C ENV:EX"],
-      [null, ""],
-    ];
-    for (const [fullName, raw] of modifiedByNameUpdates) {
-      await knex.raw(
-        `
-        UPDATE public_advisory_audits
-        SET modified_by_name = ?
-        WHERE modified_by_name = ?
-      `,
-        [fullName, raw],
-      );
-    }
+    // Change blanks to nulls for modified_by_name
+    await knex.raw(`
+      UPDATE public_advisory_audits
+      SET modified_by_name = null
+      WHERE modified_by_name = ''
+    `);
 
     // Fall back to created_by_name if modified_by_name is still null
     await knex.raw(`
@@ -69,20 +37,6 @@ module.exports = {
       WHERE modified_by_name IS NULL
         AND created_by_name IS NOT NULL
         AND created_by_name <> ''
-    `);
-
-    // Copy submitted_by_name to modified_by_name for known web team members on revision 1
-    await knex.raw(`
-      UPDATE public_advisory_audits
-      SET modified_by_name = submitted_by_name
-      WHERE (modified_by_name IS NULL OR modified_by_name = '')
-        AND submitted_by_name IN (
-          'Steven Carpenter', 'Robert Fiddler', 'Brett Yerex',
-          'Leah Wilcock', 'Sam Terani', 'Brittany Heath',
-          'Creole Carmichael', 'Samuel Macklin', 'Tammy Liddicoat',
-          'Simon Debisschop', 'Meghan Driver'
-        )
-        AND revision_number = 1
     `);
 
     // Default remaining nulls to 'Unknown'
