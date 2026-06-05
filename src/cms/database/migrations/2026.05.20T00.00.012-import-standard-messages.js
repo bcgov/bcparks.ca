@@ -110,7 +110,16 @@ const messages = [
 module.exports = {
   async up(knex) {
     if (await knex.schema.hasTable("standard_messages")) {
-      await knex.raw("DELETE FROM standard_messages where precedence >= 19"); // delete existing messages to prevent duplicates on re-run
+      // If precedence 30 already exists, this migration has already imported all rows.
+      const precedence30Exists = await knex("standard_messages")
+        .where({ precedence: 30 })
+        .first();
+      if (precedence30Exists) {
+        strapi.log.info(
+          "Standard messages already imported (precedence 30 exists). Skipping migration.",
+        );
+        return;
+      }
 
       // create a map of event type names (eventType field) to documentIds
       const eventTypes = await knex("event_types").select(
