@@ -229,12 +229,27 @@ function titleCase(str) {
 module.exports = {
   async up(knex) {
     if (await knex.schema.hasTable("recreation_resources")) {
-      await knex.raw(
-        "DELETE FROM public_advisory_audits WHERE submitted_by = 'Imported'",
-      );
-      await knex.raw(
-        "DELETE FROM public_advisories WHERE submitted_by = 'Imported'",
-      );
+      if (
+        await knex.schema.hasColumn(
+          "public_advisory_audits",
+          "submitted_by_name",
+        )
+      ) {
+        await knex.raw(
+          "DELETE FROM public_advisory_audits WHERE submitted_by_name = 'Imported'",
+        );
+
+        await loadData();
+      }
+
+      if (
+        await knex.schema.hasColumn("public_advisories", "submitted_by_name")
+      ) {
+        await knex.raw(
+          "DELETE FROM public_advisories WHERE submitted_by_name = 'Imported'",
+        );
+      }
+
       await loadData();
     }
   },
