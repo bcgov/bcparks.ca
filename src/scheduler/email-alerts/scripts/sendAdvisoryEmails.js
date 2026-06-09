@@ -114,7 +114,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 
       if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
         if (process.env.EMAIL_ENABLED.toLowerCase() !== "false") {
-          const subject = `${emailData.subject}: ${emailData.data.title}`;
+          const subject = emailData.subject;
           const summary = emailData.data.description.replace(
             /(<([^>]+)>)/gi,
             "",
@@ -123,7 +123,15 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
             process.env.BCPARKS_ENVIRONMENT.toLowerCase() === "prod"
               ? "Staff Web Portal"
               : process.env.BCPARKS_ENVIRONMENT.toUpperCase();
-          await send(subject, htmlMessageBody, summary, fromName);
+
+          // Build recipients list for this email
+          const recipients = [
+            // Split EMAIL_RECIPIENT because it can be a comma-separated list
+            ...(process.env.EMAIL_RECIPIENT || "").split(",").filter(Boolean),
+            ...(emailInfo.additionalRecipients ?? []),
+          ].filter(Boolean);
+
+          await send(subject, htmlMessageBody, summary, fromName, recipients);
         }
       }
     }
