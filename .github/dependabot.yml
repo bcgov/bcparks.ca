@@ -6,13 +6,16 @@
 #
 # Only the primary npm projects under /src are managed here; other package.json
 # files are intentionally excluded. Semver-major updates are disabled to avoid
-# breaking changes and are handled manually. Security updates are not grouped so
-# that each vulnerability results in a clearly visible, dedicated PR.
+# breaking changes and are handled manually.
 
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/src/etl"
+    directories:
+      - "/src/etl"
+      - "/src/scheduler"
+      - "/src/gatsby"
+      - "/src/cms"
     target-branch: "alpha"
     schedule:
       interval: "weekly"
@@ -22,76 +25,23 @@ updates:
     allow:
       - dependency-type: "direct"
     ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-    groups:
-      etl-minor-patch:
-        applies-to: version-updates
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
-
-  - package-ecosystem: "npm"
-    directory: "/src/scheduler"
-    target-branch: "alpha"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 1
-    commit-message:
-      prefix: "NOBUG"
-    allow:
-      - dependency-type: "direct"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-    groups:
-      scheduler-minor-patch:
-        applies-to: version-updates
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
-
-  - package-ecosystem: "npm"
-    directory: "/src/gatsby"
-    target-branch: "alpha"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 1
-    commit-message:
-      prefix: "NOBUG"
-    allow:
-      - dependency-type: "direct"
-    ignore:
-      # Don’t allow major updates for anything
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
 
       # Sass > 1.32.13 adds excessive deprecation warnings
       # Upgrade intentionally when ready
       - dependency-name: "sass"
-    groups:
-      gatsby-minor-patch:
-        applies-to: version-updates
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
 
-  - package-ecosystem: "npm"
-    directory: "/src/cms"
-    target-branch: "alpha"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 1
-    commit-message:
-      prefix: "NOBUG"
-    allow:
-      - dependency-type: "direct"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
+      # Cheerio > 1.0.0-rc.12 adds sqlite dependency via undici
+      # see: https://github.com/cheeriojs/cheerio/issues/4747
+      # 1.0.0-rc.12 has no known security advisories or issues impacting our gatsby project
+      - dependency-name: "cheerio"
 
-      # @strapi-community/provider-rest-cache-redis has an unlisted peer dependency 
+      # @strapi-community/provider-rest-cache-redis has an unlisted peer dependency
       # on @strapi-community/plugin-rest-cache
       - dependency-name: "@strapi-community/plugin-rest-cache"
     groups:
-      cms-minor-patch:
+      bcparks-minor-patch:
         applies-to: version-updates
         patterns: ["*"]
         update-types: ["minor", "patch"]
