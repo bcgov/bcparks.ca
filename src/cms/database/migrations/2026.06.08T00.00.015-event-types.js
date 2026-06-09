@@ -978,7 +978,6 @@ exports.up = async function (knex) {
       description: item.description,
       scope: item.scope,
       updated_at: knex.fn.now(),
-      published_at: knex.fn.now(),
     });
   }
 };
