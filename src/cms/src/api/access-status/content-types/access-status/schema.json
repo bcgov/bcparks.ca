@@ -23,7 +23,17 @@
       "type": "string"
     },
     "groupLabel": {
-      "type": "string"
+      "type": "enumeration",
+      "required": true,
+      "default": "Open",
+      "enum": [
+        "Open",
+        "Closed",
+        "Limited access",
+        "Restricted",
+        "Seasonal restrictions",
+        "Visit with caution"
+      ]
     },
     "description": {
       "type": "text"

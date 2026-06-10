@@ -27,6 +27,13 @@ module.exports = {
           'Seasonal restrictions'
         );
       `);
+
+      // delete this inactive record so we don't have to add it's group_label
+      // to the enum
+      await knex.raw(`
+        DELETE FROM access_statuses
+        WHERE access_status = 'Open to public';
+      `);
     }
   },
 };
