@@ -192,7 +192,7 @@ const loadData = async function () {
             isDisplayed: false,
           },
         },
-        rstAxiosConfig,
+        { headers: httpReqHeaders },
       );
       logger.info(
         `Soft-deleted recreation resource ${resource.recResourceId} in Strapi by setting isDisplayed to false.`,
