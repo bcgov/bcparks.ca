@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as dotenv from "dotenv";
+import https from "https";
 import proj4 from "proj4";
 import _ from "lodash";
 import * as qs from "qs";
@@ -13,6 +14,13 @@ dotenv.config({
 const httpReqHeaders = {
   Authorization: "Bearer " + process.env.STRAPI_API_TOKEN,
   "Content-Type": "application/json",
+};
+
+const rejectUnauthorized = process.env.RST_VALIDATE_CERTS !== "false";
+
+const rstAxiosConfig = {
+  headers: httpReqHeaders,
+  httpsAgent: new https.Agent({ rejectUnauthorized }),
 };
 
 // Define BC Albers (EPSG:3005) once at module scope to avoid repeated registration
@@ -32,7 +40,7 @@ const loadData = async function () {
     rstResources = await fetchRSTResources();
     logger.info(`Got ${rstResources.length} recreation resources from the RST API.`);
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error getting recreation resources from RST API: ${error}`);
     process.exit(1);
   }
 
@@ -43,7 +51,7 @@ const loadData = async function () {
     strapiResources = await fetchStrapiResources(strapiResourcesUrl);
     logger.info(`Got ${strapiResources.length} recreation resources from Strapi.`);
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error getting recreation resources from Strapi: ${error}`);
     process.exit(1);
   }
 
@@ -55,7 +63,7 @@ const loadData = async function () {
       { headers: httpReqHeaders },
     );
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error getting recreation districts from Strapi: ${error}`);
     process.exit(1);
   }
 
@@ -73,7 +81,7 @@ const loadData = async function () {
       { headers: httpReqHeaders },
     );
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error getting recreation resource types from Strapi: ${error}`);
     process.exit(1);
   }
 
@@ -137,7 +145,7 @@ const loadData = async function () {
           );
           logger.info(`Updated recreation resource ${rstResource.rec_resource_id} in Strapi.`);
         } catch (error) {
-          logger.error(error);
+          logger.error(`Error updating recreation resource in Strapi: ${error}`);
           errorCount++;
         }
       }
@@ -162,7 +170,7 @@ const loadData = async function () {
         );
         logger.info(`Created recreation resource ${rstResource.rec_resource_id} in Strapi.`);
       } catch (error) {
-        logger.error(error);
+        logger.error(`Error creating recreation resource in Strapi: ${error}`);
         errorCount++;
       }
     }
@@ -184,13 +192,13 @@ const loadData = async function () {
             isDisplayed: false,
           },
         },
-        { headers: httpReqHeaders },
+        rstAxiosConfig,
       );
       logger.info(
         `Soft-deleted recreation resource ${resource.recResourceId} in Strapi by setting isDisplayed to false.`,
       );
     } catch (error) {
-      logger.error(error);
+      logger.error(`Error soft-deleting recreation resource in Strapi: ${error}`);
       errorCount++;
     }
   }
@@ -209,12 +217,12 @@ async function fetchRSTResources() {
   const rstSummaryUrl = `${process.env.RST_API}/recreation-resource/summary`;
 
   const rstResources = [];
-  const { data } = await axios.get(`${rstSummaryUrl}?page=1`);
+  const { data } = await axios.get(`${rstSummaryUrl}?page=1`, rstAxiosConfig);
   const totalPages = data.totalPages;
   rstResources.push(...data.data);
 
   for (let page = 2; page <= totalPages; page++) {
-    const { data } = await axios.get(`${rstSummaryUrl}?page=${page}`);
+    const { data } = await axios.get(`${rstSummaryUrl}?page=${page}`, rstAxiosConfig);
     rstResources.push(...data.data);
   }
   return rstResources;
