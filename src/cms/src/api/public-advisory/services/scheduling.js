@@ -90,7 +90,7 @@ module.exports = ({ strapi }) => {
 
               await queueAdvisoryEmail(
                 subject,
-                "An expired advisory was removed",
+                "An expired advisory / closure was removed:",
                 advisory.advisoryNumber,
                 "public-advisory-audit::services::scheduling::expire()",
                 creatorEmail ? [creatorEmail] : [],
@@ -191,7 +191,7 @@ module.exports = ({ strapi }) => {
 
               await queueAdvisoryEmail(
                 subject,
-                "A scheduled advisory was posted",
+                "A scheduled advisory / closure was posted:",
                 advisory.advisoryNumber,
                 "public-advisory-audit::services::scheduling::publish()",
                 advisory.createdByEmail ? [advisory.createdByEmail] : [],
@@ -240,7 +240,7 @@ module.exports = ({ strapi }) => {
 
         await queueAdvisoryEmail(
           subject,
-          "This advisory will be expiring in one week",
+          "An advisory / closure will be expiring in one week:",
           advisory.advisoryNumber,
           "public-advisory::services::scheduling::expiringSoon()",
           creatorEmail ? [creatorEmail] : [],
@@ -254,7 +254,10 @@ module.exports = ({ strapi }) => {
 
       if (Object.keys(advisoryStatusMap).length > 0) {
         const reminders = [
-          { daysBefore: 7, message: "This advisory will go live in 7 days" },
+          {
+            daysBefore: 7,
+            message: "An advisory / closure will go live in one week:",
+          },
         ];
         for (const reminder of reminders) {
           const today = new Date();
