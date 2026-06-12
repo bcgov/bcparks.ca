@@ -88,9 +88,6 @@
     "expiryDate": {
       "type": "datetime"
     },
-    "removalDate": {
-      "type": "datetime"
-    },
     "updatedDate": {
       "type": "datetime"
     },
