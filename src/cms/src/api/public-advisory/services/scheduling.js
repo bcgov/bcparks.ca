@@ -77,9 +77,10 @@ module.exports = ({ strapi }) => ({
                 advisoryStatus: {
                   id: advisoryStatusMap["UNP"].id,
                 },
-                removalDate: new Date(),
                 modifiedByName: "system",
                 modifiedDate: new Date(),
+                unpublishedByName: "system",
+                unpublishedDate: new Date(),
               },
             })
             .catch((error) => {
@@ -128,7 +129,6 @@ module.exports = ({ strapi }) => ({
               },
               modifiedByName: "system",
               modifiedDate: new Date(),
-              removalDate: null,
             },
           })
           .then(async (advisory) => {
