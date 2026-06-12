@@ -35,7 +35,7 @@ module.exports = createCoreController(
       const { filters, sort, populate, fields, pagination } = ctx.query;
 
       // Get all the published public advisories from the projection table.
-      // We need to do it this way because it's possible for the lastest revision
+      // We need to do it this way because it's possible for the latest revision
       // of a public advisory audit to be newer than the published revision.
       const published = await strapi
         .documents("api::public-advisory.public-advisory")
@@ -73,6 +73,11 @@ module.exports = createCoreController(
           }
         : publishedOrScheduledFilter;
 
+      // use a very large pageSize to force the configured rest.maxLimit cap.
+      const paginationOption = !pagination
+        ? { pagination: { pageSize: Number.MAX_SAFE_INTEGER } }
+        : { pagination };
+
       // query the audit table with the merged filters and all other query params
       const { results, pagination: paginationResult } = await strapi
         .service("api::public-advisory-audit.public-advisory-audit")
@@ -80,7 +85,7 @@ module.exports = createCoreController(
           filters: mergedFilters,
           sort,
           populate,
-          pagination,
+          ...paginationOption,
           fields,
           status: "published",
         });
