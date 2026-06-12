@@ -45,11 +45,17 @@ exports.sendParkNamesEmails = async function () {
       if (process.env.EMAIL_ENABLED.toLowerCase() !== "false") {
         const subject = `A Protected Area Name Was Changed`;
         const summary = `${jsonData.oldName} was changed to ${jsonData.newName}`;
+        // Split EMAIL_RECIPIENT because it can be a comma-separated list
+        const recipients = (process.env.EMAIL_RECIPIENT || "")
+          .split(",")
+          .filter(Boolean);
         const fromName =
           process.env.BCPARKS_ENVIRONMENT.toLowerCase() === "prod"
             ? "Staff Web Portal"
             : process.env.BCPARKS_ENVIRONMENT.toUpperCase();
-        await send(subject, htmlMessageBody, summary, fromName);
+        await send(subject, htmlMessageBody, summary, fromName, [
+          ...recipients,
+        ]);
       }
     }
 

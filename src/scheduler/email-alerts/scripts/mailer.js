@@ -1,6 +1,20 @@
 const nodemailer = require("nodemailer");
 
-exports.send = async function (subject, body, summary, fromName) {
+/**
+ * Sends an email to the provided list of recipients.
+ * @param {string} subject email subject
+ * @param {string} body rendered HTML body
+ * @param {string} summary plain-text summary/body
+ * @param {string} fromName display name for sender
+ * @param {string[]} recipients full list of recipients
+ */
+exports.send = async function (
+  subject,
+  body,
+  summary,
+  fromName,
+  recipients,
+) {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_SERVER,
     port: process.env.EMAIL_PORT,
@@ -13,7 +27,7 @@ exports.send = async function (subject, body, summary, fromName) {
 
   await transporter.sendMail({
     from: `${fromName} <${process.env.EMAIL_SENDER}>`,
-    to: process.env.EMAIL_RECIPIENT,
+    to: recipients,
     subject: subject,
     text: summary,
     html: body,
