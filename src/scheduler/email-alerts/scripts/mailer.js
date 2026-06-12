@@ -14,6 +14,7 @@ exports.send = async function (
   summary,
   fromName,
   recipients,
+  attachments = [],
 ) {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_SERVER,
@@ -31,11 +32,6 @@ exports.send = async function (
     subject: subject,
     text: summary,
     html: body,
-    attachments: [
-      {
-        path: "./email-alerts/images/logo.png",
-        cid: "logo.png",
-      },
-    ],
+    attachments,
   });
 };

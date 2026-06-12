@@ -131,7 +131,22 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
             ...(emailInfo.additionalRecipients ?? []),
           ].filter(Boolean);
 
-          await send(subject, htmlMessageBody, summary, fromName, recipients);
+          // Attach the Ministry of Environment & BC Parks logo as logo.png
+          const attachments = [
+            {
+              path: "./email-alerts/images/logo-moe-parks.png",
+              cid: "logo.png",
+            },
+          ];
+
+          await send(
+            subject,
+            htmlMessageBody,
+            summary,
+            fromName,
+            recipients,
+            attachments,
+          );
         }
       }
     }
