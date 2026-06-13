@@ -11,6 +11,7 @@ const {
   noCommandLineArgs,
 } = require("../../shared/commandLine");
 const { send } = require("./mailer");
+const { buildEmailMetadata } = require("./advisoryEmailMetadata");
 
 /**
  * Sends queued emails
@@ -47,6 +48,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
       const emailInfo = message?.jsonData;
 
       const advisory = (await getAdvisoryInfo(advisoryNumber))[0];
+      const metadata = buildEmailMetadata(advisory, emailInfo?.metadataFields);
 
       let dateLabel = "";
       let dateString = "";
@@ -89,6 +91,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
         ...emailInfo,
         ...{
           data: advisory,
+          metadata,
           dateLabel: dateLabel,
           dateString: dateString,
           publicUrl: process.env.PUBLIC_URL,

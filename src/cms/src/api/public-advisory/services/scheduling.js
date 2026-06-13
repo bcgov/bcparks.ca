@@ -5,6 +5,7 @@
  */
 
 const { queueAdvisoryEmail } = require("../../../helpers/taskQueue.js");
+const { METADATA_FIELDS } = require("../../../helpers/advisoryEmailMetadata.js");
 
 /**
  * Adds the advisory headline to the email subject.
@@ -94,6 +95,7 @@ module.exports = ({ strapi }) => {
                 advisory.advisoryNumber,
                 "public-advisory-audit::services::scheduling::expire()",
                 creatorEmail ? [creatorEmail] : [],
+                [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.EXPIRY_DATE],
               );
             })
             .catch((error) => {
@@ -195,6 +197,7 @@ module.exports = ({ strapi }) => {
                 advisory.advisoryNumber,
                 "public-advisory-audit::services::scheduling::publish()",
                 advisory.createdByEmail ? [advisory.createdByEmail] : [],
+                [METADATA_FIELDS.POSTING_DATE],
               );
             })
             .catch((error) => {
@@ -244,6 +247,11 @@ module.exports = ({ strapi }) => {
           advisory.advisoryNumber,
           "public-advisory::services::scheduling::expiringSoon()",
           creatorEmail ? [creatorEmail] : [],
+          [
+            METADATA_FIELDS.POSTING_DATE,
+            METADATA_FIELDS.UPDATED_DATE,
+            METADATA_FIELDS.EXPIRY_DATE,
+          ],
         );
       }
       return expiringSoon.length;
@@ -308,6 +316,7 @@ module.exports = ({ strapi }) => {
               advisory.advisoryNumber,
               "public-advisory-audit::services::scheduling::publishingSoon()",
               advisory.createdByEmail ? [advisory.createdByEmail] : [],
+              [METADATA_FIELDS.POSTING_DATE],
             );
           }
           totalPublishingSoon += publishingSoon.length;

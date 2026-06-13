@@ -18,6 +18,7 @@ const {
   copyToPublicAdvisory,
   isAdvisoryEqual,
 } = require("./helpers/advisoryData.js");
+const { METADATA_FIELDS } = require("../helpers/advisoryEmailMetadata.js");
 
 module.exports = () => {
   /**
@@ -60,6 +61,8 @@ module.exports = () => {
         "A draft advisory / closure is ready for review:",
         newPublicAdvisoryAudit.advisoryNumber,
         "public-advisory-audit::lifecycles::afterCreate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
       );
     }
 
@@ -72,6 +75,8 @@ module.exports = () => {
         "An after-hours advisory / closure was posted:",
         newPublicAdvisoryAudit.advisoryNumber,
         "public-advisory-audit::lifecycles::afterCreate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE],
       );
     }
 
@@ -205,6 +210,8 @@ module.exports = () => {
         "A draft advisory / closure is ready for review:",
         publicAdvisoryAudit.advisoryNumber,
         "public-advisory-audit::lifecycles::afterUpdate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
       );
     }
 
@@ -220,6 +227,8 @@ module.exports = () => {
         "An after-hours advisory / closure was posted:",
         publicAdvisoryAudit.advisoryNumber,
         "public-advisory-audit::lifecycles::afterUpdate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE],
       );
     }
 

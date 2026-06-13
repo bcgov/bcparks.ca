@@ -128,10 +128,12 @@
   </p>
   <% } %>
 
-  <% if (data.advisoryDate) { %>
+  <% if (metadata && metadata.length > 0) { %>
   <p style="margin-top: 32px">
-    <strong>Posting date:</strong>
-    <%= data.advisoryDate %>
+    <% metadata.forEach((item) => { %>
+    <strong><%= item.label %>:</strong>
+    <%= item.value %><br />
+    <% }) %>
   </p>
   <% } %>
 
