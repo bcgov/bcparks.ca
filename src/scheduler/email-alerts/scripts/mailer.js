@@ -7,6 +7,7 @@ const nodemailer = require("nodemailer");
  * @param {string} summary plain-text summary/body
  * @param {string} fromName display name for sender
  * @param {string[]} recipients full list of recipients
+ * @param {Array} attachments optional list of attachments, each with {filename, content} properties
  */
 exports.send = async function (
   subject,
