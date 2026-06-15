@@ -115,12 +115,6 @@ module.exports = () => {
 
     if (!oldPublicAdvisory) return;
 
-    // save the status of the old advisory so we can get it back in afterUpdate()
-    if (!ctx.state) {
-      ctx.state = {};
-    }
-    ctx.state.oldStatus = oldPublicAdvisory.advisoryStatus?.code;
-
     const oldAdvisoryStatus = oldPublicAdvisory.advisoryStatus
       ? oldPublicAdvisory.advisoryStatus.code
       : "DFT";
@@ -129,6 +123,20 @@ module.exports = () => {
     const newAdvisoryStatusCode = await getAdvisoryStatusCode(
       updatedPublicAdvisory.advisoryStatus,
     );
+
+    // save the status of the old advisory so we can get it back in afterUpdate()
+    if (!ctx.state) {
+      ctx.state = {};
+    }
+    ctx.state.oldStatus = oldAdvisoryStatus;
+
+    // Copy unpublish metadata to the previous revision because it is the version
+    // actually being unpublished; the audit fields become immutable on the previous version.
+    if (newAdvisoryStatusCode === "UNP" && oldAdvisoryStatus === "PUB") {
+      oldPublicAdvisory.unpublishedByName =
+        updatedPublicAdvisory.unpublishedByName;
+      oldPublicAdvisory.unpublishedDate = updatedPublicAdvisory.unpublishedDate;
+    }
 
     if (isAdvisoryEqual(updatedPublicAdvisory, oldPublicAdvisory)) return;
 
