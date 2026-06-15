@@ -63,47 +63,30 @@ module.exports = ({ strapi }) => {
             populate: "*",
           });
 
-        // delete advisories - public advisory table
+        // notify for advisories to unpublish - public advisory table
         for (const advisory of advisoryToUnpublish) {
           strapi.log.info(
-            `unpublishing public-advisory [advisoryNumber:${advisory.advisoryNumber}]`,
+            `sending notifications for expired public-advisory [advisoryNumber:${advisory.advisoryNumber}]`,
           );
-          await strapi
-            .documents("api::public-advisory.public-advisory")
-            .update({
-              documentId: advisory.documentId,
-              data: {
-                publishedAt: null,
-              },
-            })
-            .then(async (advisory) => {
-              expiredAdvisoryCount++;
 
-              const subject = addHeadlineToSubject(
-                "Expired advisory / closure was removed",
-                advisory,
-              );
+          expiredAdvisoryCount++;
 
-              // Find the creator email from the original advisory-audit record
-              const creatorEmail = await getCreatorEmail(
-                advisory.advisoryNumber,
-              );
+          const subject = addHeadlineToSubject(
+            "Expired advisory / closure was removed",
+            advisory,
+          );
 
-              await queueAdvisoryEmail(
-                subject,
-                "An expired advisory / closure was removed:",
-                advisory.advisoryNumber,
-                "public-advisory-audit::services::scheduling::expire()",
-                creatorEmail ? [creatorEmail] : [],
-                [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.EXPIRY_DATE],
-              );
-            })
-            .catch((error) => {
-              strapi.log.error(
-                `error updating public-advisory #${advisory.advisoryNumber}`,
-                error,
-              );
-            });
+          // Find the creator email from the original advisory-audit record
+          const creatorEmail = await getCreatorEmail(advisory.advisoryNumber);
+
+          await queueAdvisoryEmail(
+            subject,
+            "An expired advisory / closure was removed:",
+            advisory.advisoryNumber,
+            "public-advisory-audit::services::scheduling::expire()",
+            creatorEmail ? [creatorEmail] : [],
+            [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.EXPIRY_DATE],
+          );
         }
 
         // unpublish advisories - audit table
@@ -125,7 +108,6 @@ module.exports = ({ strapi }) => {
               .update({
                 documentId: advisoryAudit[0].documentId,
                 data: {
-                  publishedAt: new Date(),
                   advisoryStatus: {
                     id: advisoryStatusMap["UNP"].id,
                   },
@@ -175,7 +157,6 @@ module.exports = ({ strapi }) => {
             .update({
               documentId: advisory.documentId,
               data: {
-                publishedAt: advisory.advisoryDate,
                 advisoryStatus: {
                   id: advisoryStatusMap["PUB"].id,
                 },
@@ -331,7 +312,7 @@ module.exports = ({ strapi }) => {
         .documents("api::advisory-status.advisory-status")
         .findMany({
           limit: -1,
-          populate: "*",
+          fields: ["id", "code"],
         });
       const advisoryStatusMap = {};
       for (const a of advisoryStatus) {
