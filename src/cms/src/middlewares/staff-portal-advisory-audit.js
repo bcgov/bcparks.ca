@@ -18,6 +18,7 @@ const {
   copyToPublicAdvisory,
   isAdvisoryEqual,
 } = require("./helpers/advisoryData.js");
+const { METADATA_FIELDS } = require("../helpers/advisoryEmailMetadata.js");
 
 module.exports = () => {
   /**
@@ -50,12 +51,18 @@ module.exports = () => {
 
     const newAdvisoryStatus = newPublicAdvisoryAudit.advisoryStatus?.code;
 
+    const urgency =
+      newPublicAdvisoryAudit.urgency?.urgency?.toLowerCase() ?? "";
+    const subject = `Review draft: ${urgency} urgency advisory / closure`;
+
     if (newAdvisoryStatus === "HQR") {
       await queueAdvisoryEmail(
-        "Approval requested",
-        "Approval requested for the following advisory",
+        subject,
+        "A draft advisory / closure is ready for review:",
         newPublicAdvisoryAudit.advisoryNumber,
         "public-advisory-audit::lifecycles::afterCreate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
       );
     }
 
@@ -64,10 +71,12 @@ module.exports = () => {
       newPublicAdvisoryAudit.isUrgentAfterHours
     ) {
       await queueAdvisoryEmail(
-        "After-hours advisory posted",
-        "An after-hours advisory was posted",
+        "After-hours advisory / closure was posted",
+        "An after-hours advisory / closure was posted:",
         newPublicAdvisoryAudit.advisoryNumber,
         "public-advisory-audit::lifecycles::afterCreate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE],
       );
     }
 
@@ -180,12 +189,17 @@ module.exports = () => {
     const oldAdvisoryStatus = ctx.state?.oldStatus; // saved by beforeUpdate() above
     const newAdvisoryStatus = publicAdvisoryAudit.advisoryStatus?.code;
 
+    const urgency = publicAdvisoryAudit.urgency?.urgency?.toLowerCase() ?? "";
+    const subject = `Review draft: ${urgency} urgency advisory / closure`;
+
     if (newAdvisoryStatus === "HQR" && oldAdvisoryStatus !== "HQR") {
       await queueAdvisoryEmail(
-        "Approval requested",
-        "Approval requested for the following advisory",
+        subject,
+        "A draft advisory / closure is ready for review:",
         publicAdvisoryAudit.advisoryNumber,
         "public-advisory-audit::lifecycles::afterUpdate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
       );
     }
 
@@ -197,10 +211,12 @@ module.exports = () => {
       publicAdvisoryAudit.isUrgentAfterHours
     ) {
       await queueAdvisoryEmail(
-        "After-hours advisory posted",
-        "An after-hours advisory was posted",
+        "After-hours advisory / closure was posted",
+        "An after-hours advisory / closure was posted:",
         publicAdvisoryAudit.advisoryNumber,
         "public-advisory-audit::lifecycles::afterUpdate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE],
       );
     }
 

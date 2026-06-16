@@ -7,6 +7,7 @@ const nodemailer = require("nodemailer");
  * @param {string} summary plain-text summary/body
  * @param {string} fromName display name for sender
  * @param {string[]} recipients full list of recipients
+ * @param {Array} attachments optional list of attachments, each with {filename, content} properties
  */
 exports.send = async function (
   subject,
@@ -14,6 +15,7 @@ exports.send = async function (
   summary,
   fromName,
   recipients,
+  attachments = [],
 ) {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_SERVER,
@@ -31,11 +33,6 @@ exports.send = async function (
     subject: subject,
     text: summary,
     html: body,
-    attachments: [
-      {
-        path: "./email-alerts/images/logo.png",
-        cid: "logo.png",
-      },
-    ],
+    attachments,
   });
 };

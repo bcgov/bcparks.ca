@@ -53,9 +53,23 @@ exports.sendParkNamesEmails = async function () {
           process.env.BCPARKS_ENVIRONMENT.toLowerCase() === "prod"
             ? "Staff Web Portal"
             : process.env.BCPARKS_ENVIRONMENT.toUpperCase();
-        await send(subject, htmlMessageBody, summary, fromName, [
-          ...recipients,
-        ]);
+
+        // Attach the BC Parks logo as logo.png
+        const attachments = [
+          {
+            path: "./email-alerts/images/logo.png",
+            cid: "logo.png",
+          },
+        ];
+
+        await send(
+          subject,
+          htmlMessageBody,
+          summary,
+          fromName,
+          [...recipients],
+          attachments,
+        );
       }
     }
 

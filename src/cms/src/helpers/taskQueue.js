@@ -85,6 +85,7 @@ module.exports = {
     advisoryNumber,
     triggerInfo,
     additionalRecipients = [],
+    metadataFields = [],
   ) {
     if (!subject || !title || !advisoryNumber) {
       return;
@@ -113,6 +114,7 @@ module.exports = {
               advisoryNumber: advisoryNumber,
               triggeredBy: triggerInfo,
               additionalRecipients: additionalRecipients,
+              metadataFields: metadataFields,
             },
           },
         });

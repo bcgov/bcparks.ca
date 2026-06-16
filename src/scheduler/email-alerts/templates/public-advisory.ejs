@@ -10,12 +10,14 @@
   <img src="cid:logo.png" alt="BC Parks" title="BC Parks Logo" style="margin: 8px 16px 0px 0px;" width="150" />
 
   <span style="display:inline-block;font-size:16pt;white-space:nowrap;margin-top:10px;color:#003366;">
-    &nbsp;Staff web portal
+    &nbsp;Parks and Recreation staff web portal
   </span>
 
   <p style="font-size: 16pt">
     <%= title %>
   </p>
+
+  <hr />
 
   <p style="font-size:13pt;margin-bottom:12px;">
     <strong>Urgency level:</strong>
@@ -126,9 +128,18 @@
   </p>
   <% } %>
 
+  <% if (metadata && metadata.length > 0) { %>
+  <p style="margin-top: 32px">
+    <% metadata.forEach((item) => { %>
+    <strong><%= item.label %>:</strong>
+    <%= item.value %><br />
+    <% }) %>
+  </p>
+  <% } %>
+
   <span style="display: inline-block; text-align: center; background-color: #003366; border: 1px solid #002447; color: white;">
     <span style="display: inline-block; background-color: #003366; color: white; border-width: 1px 0 0 1px; border-color: #0070e0; border-style: solid;">
-      <a style="display: inline-block; text-decoration: none; color: white; border-color: #003366; border-width: 5px 15px; border-style: solid; white-space: nowrap;" 
+      <a style="display: inline-block; text-decoration: none; color: white; border-color: #003366; border-width: 5px 15px; border-style: solid; white-space: nowrap;"
       href="<%= adminUrl %>/advisory-link/<%= advisoryNumber %>">
         Manage advisory
       </a>

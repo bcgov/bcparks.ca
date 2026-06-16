@@ -5,6 +5,7 @@
  */
 
 const { queueAdvisoryEmail } = require("../../../helpers/taskQueue.js");
+const { METADATA_FIELDS } = require("../../../helpers/advisoryEmailMetadata.js");
 
 /**
  * Adds the advisory headline to the email subject.
@@ -90,10 +91,11 @@ module.exports = ({ strapi }) => {
 
               await queueAdvisoryEmail(
                 subject,
-                "An expired advisory was removed",
+                "An expired advisory / closure was removed:",
                 advisory.advisoryNumber,
                 "public-advisory-audit::services::scheduling::expire()",
                 creatorEmail ? [creatorEmail] : [],
+                [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.EXPIRY_DATE],
               );
             })
             .catch((error) => {
@@ -191,10 +193,11 @@ module.exports = ({ strapi }) => {
 
               await queueAdvisoryEmail(
                 subject,
-                "A scheduled advisory was posted",
+                "A scheduled advisory / closure was posted:",
                 advisory.advisoryNumber,
                 "public-advisory-audit::services::scheduling::publish()",
                 advisory.createdByEmail ? [advisory.createdByEmail] : [],
+                [METADATA_FIELDS.POSTING_DATE],
               );
             })
             .catch((error) => {
@@ -240,10 +243,15 @@ module.exports = ({ strapi }) => {
 
         await queueAdvisoryEmail(
           subject,
-          "This advisory will be expiring in one week",
+          "An advisory / closure will be expiring in one week:",
           advisory.advisoryNumber,
           "public-advisory::services::scheduling::expiringSoon()",
           creatorEmail ? [creatorEmail] : [],
+          [
+            METADATA_FIELDS.POSTING_DATE,
+            METADATA_FIELDS.UPDATED_DATE,
+            METADATA_FIELDS.EXPIRY_DATE,
+          ],
         );
       }
       return expiringSoon.length;
@@ -254,7 +262,10 @@ module.exports = ({ strapi }) => {
 
       if (Object.keys(advisoryStatusMap).length > 0) {
         const reminders = [
-          { daysBefore: 7, message: "This advisory will go live in 7 days" },
+          {
+            daysBefore: 7,
+            message: "An advisory / closure will go live in one week:",
+          },
         ];
         for (const reminder of reminders) {
           const today = new Date();
@@ -305,6 +316,7 @@ module.exports = ({ strapi }) => {
               advisory.advisoryNumber,
               "public-advisory-audit::services::scheduling::publishingSoon()",
               advisory.createdByEmail ? [advisory.createdByEmail] : [],
+              [METADATA_FIELDS.POSTING_DATE],
             );
           }
           totalPublishingSoon += publishingSoon.length;
