@@ -130,38 +130,12 @@ module.exports = () => {
       updatedPublicAdvisory.advisoryStatus,
     );
 
-    // When changing a published advisory into draft/review status, create an archived copy
-    // of the current live revision first, then let the live record continue as the next revision.
-    if (
-      oldAdvisoryStatus === "PUB" &&
-      ["DFT", "HQR"].includes(newAdvisoryStatusCode)
-    ) {
-      // Create an archived copy of the current live revision, and update
-      // that live record with the next revision number.
-      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      updatedPublicAdvisory.advisoryNumber = oldPublicAdvisory.advisoryNumber;
-      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber,
-      );
-      updatedPublicAdvisory.isLatestRevision = true;
-      return;
-    }
-
     if (isAdvisoryEqual(updatedPublicAdvisory, oldPublicAdvisory)) return;
 
-    // flow 5: system updates
-    if (updatedPublicAdvisory.modifiedByName === "system") {
-      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber,
-      );
-      return;
-    }
-
-    // flow 4: update unpublished (set by system)
+    // revision flow 1: published by system
     if (
-      oldAdvisoryStatus === "UNP" &&
-      oldPublicAdvisory.modifiedByName === "system"
+      newAdvisoryStatusCode === "PUB" &&
+      updatedPublicAdvisory.publishedByName === "system"
     ) {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
@@ -170,8 +144,22 @@ module.exports = () => {
       return;
     }
 
-    // flow 3: update published advisory
+    // revision flow 2: changes to published advisories
     if (oldAdvisoryStatus === "PUB") {
+      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
+      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+        oldPublicAdvisory.advisoryNumber,
+      );
+      return;
+    }
+
+    // revision flow 3: non-published advisory modified by a different user
+    if (
+      oldPublicAdvisory.modifiedByName !==
+        updatedPublicAdvisory.modifiedByName &&
+      ["DFT", "HQR", "SCH"].includes(newAdvisoryStatusCode) &&
+      ["DFT", "HQR", "SCH"].includes(oldAdvisoryStatus)
+    ) {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,

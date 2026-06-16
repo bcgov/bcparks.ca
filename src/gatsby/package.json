@@ -16,7 +16,7 @@
     "@loadable/babel-plugin": "^5.16.1",
     "@loadable/component": "^5.16.7",
     "@loadable/webpack-plugin": "^5.15.2",
-    "axios": "^1.17.0",
+    "axios": "^1.18.0",
     "bootstrap": "^5.3.8",
     "cheerio": "1.2.0",
     "date-fns": "^2.30.0",
@@ -61,7 +61,7 @@
     "babel-preset-gatsby": "^3.16.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
-    "prettier": "^3.8.3",
+    "prettier": "^3.8.4",
     "react-test-renderer": "^18.3.1"
   },
   "keywords": [
