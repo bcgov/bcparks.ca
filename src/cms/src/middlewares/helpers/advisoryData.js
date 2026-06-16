@@ -120,10 +120,14 @@ function isAdvisoryEqual(newData, oldData) {
     fireCentres: [],
     fireZones: [],
     naturalResourceDistricts: [],
+    recreationDistricts: [],
+    recreationResources: [],
     isAdvisoryDateDisplayed: null,
     isEffectiveDateDisplayed: null,
     isEndDateDisplayed: null,
     isUpdatedDateDisplayed: null,
+    isReservationsAffected: null,
+    isUrgentAfterHours: null,
     modifiedByName: null,
   };
 
