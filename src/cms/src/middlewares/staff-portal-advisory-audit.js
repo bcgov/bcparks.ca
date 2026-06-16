@@ -37,7 +37,6 @@ module.exports = () => {
       data.advisoryNumber = await getNextAdvisoryNumber();
       data.revisionNumber = 1;
       data.isLatestRevision = true;
-      data.publishedAt = new Date();
     }
   }
 
@@ -95,7 +94,6 @@ module.exports = () => {
 
     // This variable represents the advisory being updated (not a new one)
     const updatedPublicAdvisory = data;
-    if (!updatedPublicAdvisory.publishedAt) return;
 
     // Get the status to save in the DB based on the publish intent (dates + requested status)
     const resolvedAdvisoryStatus = await resolvePublishIntentStatus(
@@ -104,8 +102,6 @@ module.exports = () => {
     if (resolvedAdvisoryStatus) {
       updatedPublicAdvisory.advisoryStatus = resolvedAdvisoryStatus;
     }
-
-    updatedPublicAdvisory.publishedAt = new Date();
 
     // Updated features will always be the latest revision, so set the flag true if it's not already.
     updatedPublicAdvisory.isLatestRevision = true;
@@ -118,7 +114,6 @@ module.exports = () => {
       });
 
     if (!oldPublicAdvisory) return;
-    if (!oldPublicAdvisory.publishedAt) return;
 
     // save the status of the old advisory so we can get it back in afterUpdate()
     if (!ctx.state) {

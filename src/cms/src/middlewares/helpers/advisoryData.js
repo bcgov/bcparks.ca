@@ -7,7 +7,6 @@ async function archiveOldPublicAdvisoryAudit(data) {
   delete data.updatedBy;
   delete data.createdBy;
   delete data.links; // keep links connected to the latest revision, not the archived version
-  data.publishedAt = null;
   data.isLatestRevision = false;
 
   try {
