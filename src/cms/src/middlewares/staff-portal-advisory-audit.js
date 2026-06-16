@@ -128,8 +128,11 @@ module.exports = () => {
 
     if (isAdvisoryEqual(updatedPublicAdvisory, oldPublicAdvisory)) return;
 
-    // revision flow 1: all changes involving published advisories
-    if (newAdvisoryStatusCode === "PUB" || oldAdvisoryStatus === "PUB") {
+    // revision flow 1: published by system
+    if (
+      newAdvisoryStatusCode === "PUB" &&
+      updatedPublicAdvisory.publishedByName === "system"
+    ) {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
         oldPublicAdvisory.advisoryNumber,
@@ -137,7 +140,16 @@ module.exports = () => {
       return;
     }
 
-    // revision flow 2: non-published advisory modified by a different user
+    // revision flow 2: changes to published advisories
+    if (oldAdvisoryStatus === "PUB") {
+      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
+      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
+        oldPublicAdvisory.advisoryNumber,
+      );
+      return;
+    }
+
+    // revision flow 3: non-published advisory modified by a different user
     if (
       oldPublicAdvisory.modifiedByName !==
         updatedPublicAdvisory.modifiedByName &&
