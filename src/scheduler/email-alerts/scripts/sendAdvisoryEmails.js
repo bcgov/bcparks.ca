@@ -117,22 +117,67 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 
       if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
         if (process.env.EMAIL_ENABLED.toLowerCase() !== "false") {
+          const environment = (
+            process.env.BCPARKS_ENVIRONMENT || ""
+          ).toLowerCase();
           const subject = emailData.subject;
           const summary = emailData.data.description.replace(
             /(<([^>]+)>)/gi,
             "",
           );
           const fromName =
-            process.env.BCPARKS_ENVIRONMENT.toLowerCase() === "prod"
+            environment === "prod"
               ? "Staff Web Portal"
               : process.env.BCPARKS_ENVIRONMENT.toUpperCase();
 
           // Build recipients list for this email
           const recipients = [
             // Split EMAIL_RECIPIENT because it can be a comma-separated list
-            ...(process.env.EMAIL_RECIPIENT || "").split(",").filter(Boolean),
+            ...(process.env.EMAIL_RECIPIENT || "").split(","),
             ...(emailInfo.additionalRecipients ?? []),
           ].filter(Boolean);
+
+          // Deduplicate recipients list
+          const uniqueRecipients = [...new Set(recipients)];
+
+          let recipientsToSend = uniqueRecipients;
+
+          // In non-production environments, only send to recipients in EMAIL_RECIPIENT_WHITELIST.
+          if (environment !== "prod") {
+            const whitelist = (process.env.EMAIL_RECIPIENT_WHITELIST || "")
+              .split(",")
+              .map((recipient) => recipient.toLowerCase())
+              .filter(Boolean);
+            const whitelistSet = new Set(whitelist);
+
+            if (!whitelist.length) {
+              logger.error(
+                `Skipping advisory email ${advisoryNumber} in '${process.env.BCPARKS_ENVIRONMENT}' because EMAIL_RECIPIENT_WHITELIST is empty.`,
+              );
+              continue;
+            }
+
+            // Filter recipients against the whitelist
+            recipientsToSend = uniqueRecipients.filter((recipient) =>
+              whitelistSet.has(recipient.toLowerCase()),
+            );
+
+            // Log a warning for any recipients that were filtered out
+            for (const recipient of uniqueRecipients) {
+              if (!whitelistSet.has(recipient.toLowerCase())) {
+                logger.warn(
+                  `Non-prod recipient filtered out for advisory ${advisoryNumber} in '${process.env.BCPARKS_ENVIRONMENT}': ${recipient}`,
+                );
+              }
+            }
+
+            if (!recipientsToSend.length) {
+              logger.error(
+                `Skipping advisory email ${advisoryNumber} in '${process.env.BCPARKS_ENVIRONMENT}' because no recipients matched EMAIL_RECIPIENT_WHITELIST.`,
+              );
+              continue;
+            }
+          }
 
           // Attach the Ministry of Environment & BC Parks logo as logo.png
           const attachments = [
@@ -147,7 +192,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
             htmlMessageBody,
             summary,
             fromName,
-            recipients,
+            recipientsToSend,
             attachments,
           );
         }
