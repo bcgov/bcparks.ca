@@ -18,7 +18,7 @@ is the record that actually transitioned from published to unpublished.
 
 module.exports = {
   async up(knex) {
-    // check if the advisories table exists and if it contains an "is_published" column
+    // check if the advisories table exists and if it contains an "unpublished_date" column
     if (
       (await knex.schema.hasTable("public_advisory_audits")) &&
       (await knex.schema.hasColumn(
