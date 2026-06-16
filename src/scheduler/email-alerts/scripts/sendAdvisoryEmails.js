@@ -117,9 +117,8 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 
       if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
         if (process.env.EMAIL_ENABLED.toLowerCase() !== "false") {
-          const environment = (
-            process.env.BCPARKS_ENVIRONMENT || ""
-          ).toLowerCase();
+          const environmentName = process.env.BCPARKS_ENVIRONMENT || "local";
+          const environment = environmentName.toLowerCase();
           const subject = emailData.subject;
           const summary = emailData.data.description.replace(
             /(<([^>]+)>)/gi,
@@ -128,7 +127,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
           const fromName =
             environment === "prod"
               ? "Staff Web Portal"
-              : process.env.BCPARKS_ENVIRONMENT.toUpperCase();
+              : environmentName.toUpperCase();
 
           // Build recipients list for this email
           const recipients = [
