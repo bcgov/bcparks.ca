@@ -231,6 +231,7 @@ const getAdvisoryInfo = async function (advisoryNumber) {
           fields: ["siteName", "slug"],
           populate: { protectedArea: { fields: "slug" } },
         },
+        recreationResources: { fields: ["resourceName", "recResourceId"] },
         standardMessages: { fields: ["description"] },
         urgency: { fields: ["urgency"] },
       },

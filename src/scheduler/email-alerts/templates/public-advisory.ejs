@@ -97,6 +97,14 @@
     <% } %>
   <% } %>
 
+  <% if (data.recreationResources && data.recreationResources.length > 0) { %>
+  <p style="margin-top: 4px">
+    <% data.recreationResources.forEach((val) => { %>
+    <span style="margin-right:4px;"><%= val.resourceName %> (<%= val.recResourceId %>)</span>
+    <% }) %>
+  </p>
+  <% } %>
+
 
   <div style="margin-top: 32px">
     <%- data.description %>
