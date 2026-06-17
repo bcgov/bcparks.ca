@@ -59,6 +59,8 @@ spec:
               value: {{ .Values.scheduler.env.emailSender }}
             - name: EMAIL_RECIPIENT
               value: {{ .Values.scheduler.env.emailRecipient | quote }}
+            - name: EMAIL_RECIPIENT_WHITELIST
+              value: {{ .Values.scheduler.env.emailRecipientWhitelist | quote }}
             - name: PUBLIC_URL
               value: {{ .Values.cluster.publicUrl | quote }}
             - name: ADMIN_URL

@@ -15,6 +15,7 @@ scheduler:
   env:
     emailEnabled: true
     emailRecipient: manuji@oxd.com,mike@oxd.com
+    emailRecipientWhitelist: manuji@oxd.com,mike@oxd.com
 
 etl:
   enabled: false
