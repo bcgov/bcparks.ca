@@ -26,7 +26,7 @@ cms:
   env:
     environment: prod
     externalUrl: https://cms.bcparks.ca
-    cacheTtl: "600000"
+    cacheTtl: "600"
 
   hpa:
     minReplicas: 2
