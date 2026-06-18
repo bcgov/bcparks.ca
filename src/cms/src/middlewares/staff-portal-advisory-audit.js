@@ -80,7 +80,7 @@ module.exports = () => {
       );
     } else if (newAdvisoryStatus === "SCH" || newAdvisoryStatus === "PUB") {
       // Regular posting notification:
-      // If the status changed from some other status to SCH or PUB
+      // If the advisory is created directly with status SCH or PUB
       await queueAdvisoryEmail(
         `Review posting: ${urgency} urgency advisory / closure`,
         "An advisory / closure is ready for review:",
