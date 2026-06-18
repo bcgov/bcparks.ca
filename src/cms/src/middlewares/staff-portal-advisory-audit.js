@@ -52,12 +52,23 @@ module.exports = () => {
 
     const urgency =
       newPublicAdvisoryAudit.urgency?.urgency?.toLowerCase() ?? "";
-    const subject = `Review draft: ${urgency} urgency advisory / closure`;
 
     if (newAdvisoryStatus === "HQR") {
       await queueAdvisoryEmail(
-        subject,
+        `Review draft: ${urgency} urgency advisory / closure`,
         "A draft advisory / closure is ready for review:",
+        newPublicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterCreate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
+      );
+    }
+
+    // If the status is SCH or PUB, send "Review posting" email
+    if (newAdvisoryStatus === "SCH" || newAdvisoryStatus === "PUB") {
+      await queueAdvisoryEmail(
+        `Review posting: ${urgency} urgency advisory / closure`,
+        "An advisory / closure is ready for review:",
         newPublicAdvisoryAudit.advisoryNumber,
         "public-advisory-audit::lifecycles::afterCreate()",
         [],
@@ -193,12 +204,26 @@ module.exports = () => {
     const newAdvisoryStatus = publicAdvisoryAudit.advisoryStatus?.code;
 
     const urgency = publicAdvisoryAudit.urgency?.urgency?.toLowerCase() ?? "";
-    const subject = `Review draft: ${urgency} urgency advisory / closure`;
 
     if (newAdvisoryStatus === "HQR" && oldAdvisoryStatus !== "HQR") {
       await queueAdvisoryEmail(
-        subject,
+        `Review draft: ${urgency} urgency advisory / closure`,
         "A draft advisory / closure is ready for review:",
+        publicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterUpdate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
+      );
+    }
+
+    // If the status changed from some other status to SCH or PUB, send "Review posting" email
+    if (
+      (newAdvisoryStatus === "SCH" && oldAdvisoryStatus !== "SCH") ||
+      (newAdvisoryStatus === "PUB" && oldAdvisoryStatus !== "PUB")
+    ) {
+      await queueAdvisoryEmail(
+        `Review posting: ${urgency} urgency advisory / closure`,
+        "An advisory / closure is ready for review:",
         publicAdvisoryAudit.advisoryNumber,
         "public-advisory-audit::lifecycles::afterUpdate()",
         [],
