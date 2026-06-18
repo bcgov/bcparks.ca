@@ -64,22 +64,12 @@ module.exports = () => {
       );
     }
 
-    // If the status is SCH or PUB, send "Review posting" email
-    if (newAdvisoryStatus === "SCH" || newAdvisoryStatus === "PUB") {
-      await queueAdvisoryEmail(
-        `Review posting: ${urgency} urgency advisory / closure`,
-        "An advisory / closure is ready for review:",
-        newPublicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterCreate()",
-        [],
-        [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
-      );
-    }
-
     if (
       newAdvisoryStatus === "PUB" &&
       newPublicAdvisoryAudit.isUrgentAfterHours
     ) {
+      // After-hours posting notification
+      // If users with after-hours posting permission posted this with an urgent/after-hours flag
       await queueAdvisoryEmail(
         "After-hours advisory / closure was posted",
         "An after-hours advisory / closure was posted:",
@@ -87,6 +77,17 @@ module.exports = () => {
         "public-advisory-audit::lifecycles::afterCreate()",
         [],
         [METADATA_FIELDS.POSTING_DATE],
+      );
+    } else if (newAdvisoryStatus === "SCH" || newAdvisoryStatus === "PUB") {
+      // Regular posting notification:
+      // If the status changed from some other status to SCH or PUB
+      await queueAdvisoryEmail(
+        `Review posting: ${urgency} urgency advisory / closure`,
+        "An advisory / closure is ready for review:",
+        newPublicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterCreate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
       );
     }
 
@@ -216,21 +217,6 @@ module.exports = () => {
       );
     }
 
-    // If the status changed from some other status to SCH or PUB, send "Review posting" email
-    if (
-      (newAdvisoryStatus === "SCH" && oldAdvisoryStatus !== "SCH") ||
-      (newAdvisoryStatus === "PUB" && oldAdvisoryStatus !== "PUB")
-    ) {
-      await queueAdvisoryEmail(
-        `Review posting: ${urgency} urgency advisory / closure`,
-        "An advisory / closure is ready for review:",
-        publicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterUpdate()",
-        [],
-        [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
-      );
-    }
-
     if (
       newAdvisoryStatus === "PUB" &&
       oldAdvisoryStatus !== "PUB" &&
@@ -238,6 +224,8 @@ module.exports = () => {
         publicAdvisoryAudit.modifiedByRole === "contributor") && // TODO: determine after-hours rules for contributors
       publicAdvisoryAudit.isUrgentAfterHours
     ) {
+      // After-hours posting notification
+      // If users with after-hours posting permission posted this with an urgent/after-hours flag
       await queueAdvisoryEmail(
         "After-hours advisory / closure was posted",
         "An after-hours advisory / closure was posted:",
@@ -245,6 +233,20 @@ module.exports = () => {
         "public-advisory-audit::lifecycles::afterUpdate()",
         [],
         [METADATA_FIELDS.POSTING_DATE],
+      );
+    } else if (
+      (newAdvisoryStatus === "SCH" && oldAdvisoryStatus !== "SCH") ||
+      (newAdvisoryStatus === "PUB" && oldAdvisoryStatus !== "PUB")
+    ) {
+      // Regular posting notification:
+      // If the status changed from some other status to SCH or PUB
+      await queueAdvisoryEmail(
+        `Review posting: ${urgency} urgency advisory / closure`,
+        "An advisory / closure is ready for review:",
+        publicAdvisoryAudit.advisoryNumber,
+        "public-advisory-audit::lifecycles::afterUpdate()",
+        [],
+        [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
       );
     }
 
