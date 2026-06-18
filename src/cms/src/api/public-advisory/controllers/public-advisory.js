@@ -204,6 +204,9 @@ module.exports = createCoreController(
       const expiringSoonCount = await strapi
         .service("api::public-advisory.scheduling")
         .expiringSoon(advisoryStatusMap);
+      const endDateReachedCount = await strapi
+        .service("api::public-advisory.scheduling")
+        .endDateReached(advisoryStatusMap);
       const publishingSoonCount = await strapi
         .service("api::public-advisory.scheduling")
         .publishingSoon(advisoryStatusMap);
@@ -220,7 +223,7 @@ module.exports = createCoreController(
 
       ctx.send(
         {
-          message: `Scheduled public advisory processing complete. ${publishedCount} published. ${expiredCount} expired. ${expiringSoonCount} expiring soon. ${publishingSoonCount} publishing soon.`,
+          message: `Scheduled public advisory processing complete. ${publishedCount} published. ${expiredCount} expired. ${expiringSoonCount} expiring soon. ${endDateReachedCount} end date reached. ${publishingSoonCount} publishing soon.`,
         },
         201,
       );

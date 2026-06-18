@@ -5,7 +5,9 @@
  */
 
 const { queueAdvisoryEmail } = require("../../../helpers/taskQueue.js");
-const { METADATA_FIELDS } = require("../../../helpers/advisoryEmailMetadata.js");
+const {
+  METADATA_FIELDS,
+} = require("../../../helpers/advisoryEmailMetadata.js");
 
 /**
  * Adds the advisory headline to the email subject.
@@ -236,6 +238,57 @@ module.exports = ({ strapi }) => {
         );
       }
       return expiringSoon.length;
+    },
+
+    /**
+     * Queues notifications when published advisories reach their end date/time.
+     * @return {Promise<number>} the count of advisories that reached end date
+     */
+    endDateReached: async (advisoryStatusMap) => {
+      if (Object.keys(advisoryStatusMap).length === 0) return 0;
+
+      // Use a 3-minute window around now to avoid missing advisories when
+      // cron timing drifts. Duplicate sends are throttled in scheduler email logic.
+      const now = new Date();
+      const rangeStart = new Date(now.getTime() - 60 * 1000).toISOString();
+      const rangeEnd = new Date(now.getTime() + 120 * 1000).toISOString();
+
+      const endDateReachedAdvisories = await strapi
+        .documents("api::public-advisory.public-advisory")
+        .findMany({
+          filters: {
+            endDate: { $gte: rangeStart, $lte: rangeEnd },
+            advisoryStatus: advisoryStatusMap["PUB"].id,
+          },
+        });
+
+      for (const advisory of endDateReachedAdvisories) {
+        strapi.log.info(
+          `advisory end date reached [advisoryNumber:${advisory.advisoryNumber}]`,
+        );
+
+        const subject = addHeadlineToSubject(
+          "Advisory / closure end date reached",
+          advisory,
+        );
+
+        const creatorEmail = await getCreatorEmail(advisory.advisoryNumber);
+
+        await queueAdvisoryEmail(
+          subject,
+          "An advisory / closure has reached its end date:",
+          advisory.advisoryNumber,
+          "public-advisory::services::scheduling::endDateReached()",
+          creatorEmail ? [creatorEmail] : [],
+          [
+            METADATA_FIELDS.POSTING_DATE,
+            METADATA_FIELDS.UPDATED_DATE,
+            METADATA_FIELDS.END_DATE,
+          ],
+        );
+      }
+
+      return endDateReachedAdvisories.length;
     },
 
     publishingSoon: async (advisoryStatusMap) => {

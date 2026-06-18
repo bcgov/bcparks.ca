@@ -81,16 +81,26 @@
     <%= data.protectedAreas.length %> parks affected
   </span>
   <% } else { %>
+    <% if (data.protectedAreas.length > 0 || data.sites.length > 0) { %>
+    <p style="margin-top: 4px">
+      <% data.protectedAreas.forEach((val) => { %>
+      <a style="color:#2464a4!important;margin-right:4px;" href="<%= publicUrl %>/<%= val.slug %>">
+        <%= val.protectedAreaName %>
+      </a>
+      <% }) %>
+      <% data.sites.forEach((val) => { %>
+      <a style="color:#2464a4!important;margin-right:4px;" href="<%= publicUrl %>/<%= val.protectedArea.slug %>/<%= val.slug %>">
+        <%= val.siteName %>
+      </a>
+      <% }) %>
+    </p>
+    <% } %>
+  <% } %>
+
+  <% if (data.recreationResources && data.recreationResources.length > 0) { %>
   <p style="margin-top: 4px">
-    <% data.protectedAreas.forEach((val) => { %>
-    <a style="color:#2464a4!important;margin-right:4px;" href="<%= publicUrl %>/<%= val.slug %>">
-      <%= val.protectedAreaName %>
-    </a>
-    <% }) %>
-    <% data.sites.forEach((val) => { %>
-    <a style="color:#2464a4!important;margin-right:4px;" href="<%= publicUrl %>/<%= val.protectedArea.slug %>/<%= val.slug %>">
-      <%= val.siteName %>
-    </a>
+    <% data.recreationResources.forEach((val) => { %>
+    <span style="margin-right:4px;"><%= val.resourceName %> (<%= val.recResourceId %>)</span>
     <% }) %>
   </p>
   <% } %>
@@ -104,6 +114,7 @@
     <% }) %>
   </div>
 
+  <% if (data.links && data.links.length > 0) { %>
   <p style="margin-top: 32px">
     <% data.links.forEach((val) => { %>
     <a href="<%= val.url %>" style="color:#2464a4!important;">
@@ -112,6 +123,7 @@
     <br />
     <% }) %>
   </p>
+  <% } %>
 
   <% if (dateLabel && dateString) { %>
   <p style=" margin-top: 32px">
