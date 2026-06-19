@@ -110,6 +110,13 @@ const messages = [
 module.exports = {
   async up(knex) {
     if (await knex.schema.hasTable("standard_messages")) {
+      // add a group_label (string) column if it doesn't exist
+      if (!(await knex.schema.hasColumn("standard_messages", "group_label"))) {
+        await knex.schema.table("standard_messages", (table) => {
+          table.string("group_label");
+        });
+      }
+
       // If precedence 30 already exists, this migration has already imported all rows.
       const precedence30Exists = await knex("standard_messages")
         .where({ precedence: 30 })
@@ -149,6 +156,7 @@ module.exports = {
               scope,
               title,
               precedence,
+              groupLabel: "Access",
               description,
               eventType: eventTypeDocId,
               isActive: true,

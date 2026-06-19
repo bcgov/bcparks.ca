@@ -26,32 +26,13 @@
       "type": "enumeration",
       "required": true,
       "default": "Both",
-      "enum": [
-        "BCP",
-        "RST",
-        "Both"
-      ]
+      "enum": ["BCP", "RST", "Both"]
     },
-    "groupLabel": {
-      "type": "enumeration",
-      "required": true,
-      "enum": [
-        "Access",
-        "Activities",
-        "Area closures",
-        "Community",
-        "Construction/maintenance",
-        "Environment and wildlife",
-        "Facilities",
-        "Hazards",
-        "Human health",
-        "Natural disasters and emergencies",
-        "Park management",
-        "Public behaviour",
-        "Public safety",
-        "Weather and seasonal",
-        "Wildfire"
-      ]
+    "eventTypeSubCategories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::event-type-sub-category.event-type-sub-category",
+      "mappedBy": "eventTypes"
     }
   }
 }
