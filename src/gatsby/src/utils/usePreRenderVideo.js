@@ -38,7 +38,7 @@ export const usePreRenderVideo = (content = "") => {
       const urlSegments = iframeSrc?.split("/");
       const rawSegment = urlSegments?.at(-1);
       // Strip query params to get a clean video ID
-      const videoId = rawSegment?.split("?")[0]
+      const videoId = rawSegment?.split("?")[0];
 
       if (videoId) {
         // Fetch video title from noembed API (YouTube metadata service)
