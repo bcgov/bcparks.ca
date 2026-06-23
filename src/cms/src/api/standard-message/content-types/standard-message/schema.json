@@ -44,6 +44,19 @@
       "required": true,
       "default": "Both",
       "enum": ["BCP", "RST", "Both"]
+    },
+    "groupLabel": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Access",
+        "Environmental",
+        "Public safety",
+        "Seasonal restrictions",
+        "Wildfire",
+        "Wildlife",
+        "Pandemic"
+      ]
     }
   }
 }
