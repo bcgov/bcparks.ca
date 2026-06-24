@@ -5,10 +5,7 @@
  */
 
 const { queueAdvisoryEmail } = require("../helpers/taskQueue.js");
-const {
-  getNextAdvisoryNumber,
-  getNextRevisionNumber,
-} = require("./helpers/advisoryNumbers.js");
+const { getNextAdvisoryNumber } = require("./helpers/advisoryNumbers.js");
 const {
   resolvePublishIntentStatus,
   getAdvisoryStatusCode,
@@ -158,18 +155,16 @@ module.exports = () => {
       updatedPublicAdvisory.publishedByName === "system"
     ) {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber,
-      );
+      updatedPublicAdvisory.revisionNumber =
+        oldPublicAdvisory.revisionNumber + 1;
       return;
     }
 
     // revision flow 2: changes to published advisories
     if (oldAdvisoryStatus === "PUB") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber,
-      );
+      updatedPublicAdvisory.revisionNumber =
+        oldPublicAdvisory.revisionNumber + 1;
       return;
     }
 
@@ -181,9 +176,8 @@ module.exports = () => {
       ["DFT", "HQR", "SCH"].includes(oldAdvisoryStatus)
     ) {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      updatedPublicAdvisory.revisionNumber = await getNextRevisionNumber(
-        oldPublicAdvisory.advisoryNumber,
-      );
+      updatedPublicAdvisory.revisionNumber =
+        oldPublicAdvisory.revisionNumber + 1;
       return;
     }
   }
