@@ -102,7 +102,7 @@
     <% data.recreationResources.forEach((val) => { %>
     <span style="margin-right:4px;">
       <% if (val.link) { %>
-        <a href="<%= val.link %>" target="_blank" rel="noopener noreferrer"><%= val.resourceName %> (<%= val.recResourceId %>)</a>
+        <a href="<%= val.link %>" target="_blank" rel="noopener noreferrer" style="color:#2464a4!important;"><%= val.resourceName %> (<%= val.recResourceId %>)</a>
       <% } else { %>
         <%= val.resourceName %>
       <% } %>
