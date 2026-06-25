@@ -100,7 +100,13 @@
   <% if (data.recreationResources && data.recreationResources.length > 0) { %>
   <p style="margin-top: 4px">
     <% data.recreationResources.forEach((val) => { %>
-    <span style="margin-right:4px;"><%= val.resourceName %> (<%= val.recResourceId %>)</span>
+    <span style="margin-right:4px;">
+      <% if (val.link) { %>
+        <a href="<%= val.link %>" target="_blank"><%= val.resourceName %> (<%= val.recResourceId %>)</a>
+      <% } else { %>
+        <%= val.resourceName %>
+      <% } %>
+    </span>
     <% }) %>
   </p>
   <% } %>
