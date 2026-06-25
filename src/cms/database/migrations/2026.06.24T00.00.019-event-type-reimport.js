@@ -323,10 +323,6 @@ const eventTypes = [
   },
   {
     subCategory: "Access",
-    eventType: "Road closure",
-  },
-  {
-    subCategory: "Access",
     eventType: "Road conditions",
   },
   {
