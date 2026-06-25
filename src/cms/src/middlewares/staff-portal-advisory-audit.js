@@ -75,7 +75,12 @@ module.exports = () => {
         [],
         [METADATA_FIELDS.POSTING_DATE],
       );
-    } else if (newAdvisoryStatus === "SCH" || newAdvisoryStatus === "PUB") {
+    } else if (
+      (newAdvisoryStatus === "SCH" || newAdvisoryStatus === "PUB") &&
+      // Don't send a notification if the advisory was posted by HQ Staff (approver role)
+      // because they are the ones who will be reviewing it.
+      newPublicAdvisoryAudit.modifiedByRole !== "approver"
+    ) {
       // Regular posting notification:
       // If the advisory is created directly with status SCH or PUB
       await queueAdvisoryEmail(
@@ -229,8 +234,11 @@ module.exports = () => {
         [METADATA_FIELDS.POSTING_DATE],
       );
     } else if (
-      (newAdvisoryStatus === "SCH" && oldAdvisoryStatus !== "SCH") ||
-      (newAdvisoryStatus === "PUB" && oldAdvisoryStatus !== "PUB")
+      ((newAdvisoryStatus === "SCH" && oldAdvisoryStatus !== "SCH") ||
+        (newAdvisoryStatus === "PUB" && oldAdvisoryStatus !== "PUB")) &&
+      // Don't send a notification if the advisory was posted by HQ Staff (approver role)
+      // because they are the ones who will be reviewing it.
+      publicAdvisoryAudit.modifiedByRole !== "approver"
     ) {
       // Regular posting notification:
       // If the status changed from some other status to SCH or PUB
