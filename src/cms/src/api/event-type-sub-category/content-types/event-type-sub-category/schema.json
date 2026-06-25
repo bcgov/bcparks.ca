@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "event_type_sub_categories",
+  "info": {
+    "singularName": "event-type-sub-category",
+    "pluralName": "event-type-sub-categories",
+    "displayName": "Event-type-sub-category"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "subCategory": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "eventTypes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::event-type.event-type",
+      "inversedBy": "eventTypeSubCategories"
+    }
+  }
+}
