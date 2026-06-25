@@ -84,12 +84,12 @@
     <% if (data.protectedAreas.length > 0 || data.sites.length > 0) { %>
     <p style="margin-top: 4px">
       <% data.protectedAreas.forEach((val) => { %>
-      <a style="color:#2464a4!important;margin-right:4px;" href="<%= publicUrl %>/<%= val.slug %>">
+      <a style="color:#2464a4!important;margin-right:4px;" href="<%= publicUrl %>/<%= val.slug %>" rel="noopener noreferrer">
         <%= val.protectedAreaName %>
       </a>
       <% }) %>
       <% data.sites.forEach((val) => { %>
-      <a style="color:#2464a4!important;margin-right:4px;" href="<%= publicUrl %>/<%= val.protectedArea.slug %>/<%= val.slug %>">
+      <a style="color:#2464a4!important;margin-right:4px;" href="<%= publicUrl %>/<%= val.protectedArea.slug %>/<%= val.slug %>" rel="noopener noreferrer">
         <%= val.siteName %>
       </a>
       <% }) %>
@@ -102,7 +102,7 @@
     <% data.recreationResources.forEach((val) => { %>
     <span style="margin-right:4px;">
       <% if (val.link) { %>
-        <a href="<%= val.link %>" target="_blank"><%= val.resourceName %> (<%= val.recResourceId %>)</a>
+        <a href="<%= val.link %>" target="_blank" rel="noopener noreferrer"><%= val.resourceName %> (<%= val.recResourceId %>)</a>
       <% } else { %>
         <%= val.resourceName %>
       <% } %>
@@ -123,7 +123,7 @@
   <% if (data.links && data.links.length > 0) { %>
   <p style="margin-top: 32px">
     <% data.links.forEach((val) => { %>
-    <a href="<%= val.url %>" style="color:#2464a4!important;">
+    <a href="<%= val.url %>" style="color:#2464a4!important;" rel="noopener noreferrer">
       <%= val.title %>
     </a>
     <br />
@@ -157,7 +157,7 @@
 
   <span style="display: inline-block; text-align: center; background-color: #003366; border: 1px solid #002447; color: white;">
     <span style="display: inline-block; background-color: #003366; color: white; border-width: 1px 0 0 1px; border-color: #0070e0; border-style: solid;">
-      <a style="display: inline-block; text-decoration: none; color: white; border-color: #003366; border-width: 5px 15px; border-style: solid; white-space: nowrap;"
+      <a style="display: inline-block; text-decoration: none; color: white; border-color: #003366; border-width: 5px 15px; border-style: solid; white-space: nowrap;" rel="noopener noreferrer"
       href="<%= adminUrl %>/advisory-link/<%= advisoryNumber %>">
         Manage advisory / closure
       </a>
