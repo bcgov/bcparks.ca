@@ -16,6 +16,12 @@
     },
     "category": {
       "type": "string"
+    },
+    "eventTypes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::event-type.event-type",
+      "inversedBy": "eventTypeSubCategories"
     }
   }
 }

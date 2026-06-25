@@ -40,7 +40,6 @@ const eventTypes = [
   {
     subCategory: "Natural disasters and emergencies",
     eventType: "Avalanche hazard",
-  }
   },
   {
     subCategory: "Hazards",
@@ -91,7 +90,7 @@ const eventTypes = [
     eventType: "Camping",
   },
   {
-    subCategory: "Natural disasters and emergenices",
+    subCategory: "Natural disasters and emergencies",
     eventType: "Catastrophic event",
   },
   {
@@ -185,7 +184,6 @@ const eventTypes = [
   {
     subCategory: "Natural disasters and emergencies",
     eventType: "Freshet",
-  }
   },
   {
     subCategory: "Area closures",
@@ -232,7 +230,7 @@ const eventTypes = [
     eventType: "Investigation",
   },
   {
-    subCategory: "Natural disasters and emergenices",
+    subCategory: "Natural disasters and emergencies",
     eventType: "Landslide",
   },
   {
@@ -352,7 +350,7 @@ const eventTypes = [
     eventType: "Road washout",
   },
   {
-    subCategory: "Natural disasters and emergenices",
+    subCategory: "Natural disasters and emergencies",
     eventType: "Rockfall hazard",
   },
   {
@@ -408,7 +406,7 @@ const eventTypes = [
     eventType: "Trail maintenance",
   },
   {
-    subCategory: "Natural disasters and emergenices",
+    subCategory: "Natural disasters and emergencies",
     eventType: "Tsunami",
   },
   {
@@ -532,37 +530,42 @@ module.exports = {
 
     // create the link table if it doesn't exist yet
     if (
-      !(await knex.schema.hasTable("event_types_event_type_sub_categories_lnk"))
+      !(await knex.schema.hasTable("event_type_sub_categories_event_types_lnk"))
     ) {
       await knex.schema.createTable(
-        "event_types_event_type_sub_categories_lnk",
+        "event_type_sub_categories_event_types_lnk",
         (table) => {
           table.increments("id").primary();
-          table
-            .integer("event_type_id")
-            .references("id")
-            .inTable("event_types")
-            .onDelete("CASCADE");
           table
             .integer("event_type_sub_category_id")
             .references("id")
             .inTable("event_type_sub_categories")
             .onDelete("CASCADE");
+          table
+            .integer("event_type_id")
+            .references("id")
+            .inTable("event_types")
+            .onDelete("CASCADE");
+          table.double("event_type_ord");
           table.double("event_type_sub_category_ord");
-          table.unique(["event_type_id", "event_type_sub_category_id"], {
-            indexName: "event_types_event_type_sub_categories_lnk_uq",
+          table.unique(["event_type_sub_category_id", "event_type_id"], {
+            indexName: "event_type_sub_categories_event_types_lnk_uq",
           });
           table.index(
-            ["event_type_id"],
-            "event_types_event_type_sub_categories_lnk_fk",
+            ["event_type_sub_category_id"],
+            "event_type_sub_categories_event_types_lnk_fk",
           );
           table.index(
-            ["event_type_sub_category_id"],
-            "event_types_event_type_sub_categories_lnk_ifk",
+            ["event_type_id"],
+            "event_type_sub_categories_event_types_lnk_ifk",
+          );
+          table.index(
+            ["event_type_ord"],
+            "event_type_sub_categories_event_types_lnk_ofk",
           );
           table.index(
             ["event_type_sub_category_ord"],
-            "event_types_event_type_sub_categories_lnk_ofk",
+            "event_type_sub_categories_event_types_lnk_oifk",
           );
         },
       );
