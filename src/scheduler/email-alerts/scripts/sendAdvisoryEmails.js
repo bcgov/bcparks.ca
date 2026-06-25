@@ -88,15 +88,14 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
       }
 
       // Add Rec Sites & Trails Resource links where applicable
-      advisory.recreationResources = advisory.recreationResources.map(
-        (resource) => {
-          // Build the sitesandtrailsbc.ca deep-link using the same logic as the frontend
-          const link = resource.recResourceId
-            ? `https://www.sitesandtrailsbc.ca/resource/${encodeURIComponent(resource.recResourceId)}`
-            : null;
-          return { ...resource, link };
-        },
-      );
+      const recResources = advisory.recreationResources ?? [];
+      advisory.recreationResources = recResources.map((resource) => {
+        // Build the sitesandtrailsbc.ca deep-link using the same logic as the frontend
+        const link = resource.recResourceId
+          ? `https://www.sitesandtrailsbc.ca/resource/${encodeURIComponent(resource.recResourceId)}`
+          : null;
+        return { ...resource, link };
+      });
 
       const emailData = {
         ...emailInfo,
