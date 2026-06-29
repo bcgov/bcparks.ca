@@ -90,10 +90,12 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
       // Add Rec Sites & Trails Resource links where applicable
       const recResources = advisory.recreationResources ?? [];
       advisory.recreationResources = recResources.map((resource) => {
-        // Build the sitesandtrailsbc.ca deep-link using the same logic as the frontend
-        const link = resource.recResourceId
-          ? `https://www.sitesandtrailsbc.ca/resource/${encodeURIComponent(resource.recResourceId)}`
-          : null;
+        // Build the sitesandtrailsbc.ca deep-link using the same logic as the frontend:
+        // Only if isDisplayed is true, and recResourceId is present
+        const link =
+          resource.isDisplayed && resource.recResourceId
+            ? `https://www.sitesandtrailsbc.ca/resource/${encodeURIComponent(resource.recResourceId)}`
+            : null;
         return { ...resource, link };
       });
 
@@ -241,7 +243,9 @@ const getAdvisoryInfo = async function (advisoryNumber) {
           fields: ["siteName", "slug"],
           populate: { protectedArea: { fields: "slug" } },
         },
-        recreationResources: { fields: ["resourceName", "recResourceId"] },
+        recreationResources: {
+          fields: ["resourceName", "recResourceId", "isDisplayed"],
+        },
         standardMessages: { fields: ["description"] },
         urgency: { fields: ["urgency"] },
       },
