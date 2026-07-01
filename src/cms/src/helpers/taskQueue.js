@@ -1,3 +1,7 @@
+const {
+  stripBcpSpecificAdvisoryFields,
+} = require("./recSpacePayloadSanitizer.js");
+
 module.exports = {
   indexPark: async function (orcs) {
     if (!orcs) {
@@ -121,6 +125,44 @@ module.exports = {
       } catch (error) {
         strapi.log.error(error);
       }
+    }
+  },
+  queueRecSpacePublicAdvisoryCrudEvent: async function (
+    operation,
+    triggerInfo,
+    newPublicAdvisoryAudit,
+    oldPublicAdvisoryAudit = null,
+  ) {
+    if (!operation || !newPublicAdvisoryAudit) {
+      return;
+    }
+
+    const queuedNewPublicAdvisoryAudit = stripBcpSpecificAdvisoryFields(
+      newPublicAdvisoryAudit,
+    );
+    const queuedOldPublicAdvisoryAudit = stripBcpSpecificAdvisoryFields(
+      oldPublicAdvisoryAudit,
+    );
+
+    try {
+      await strapi.documents("api::queued-task.queued-task").create({
+        data: {
+          action: "recspace push public-advisory",
+          numericData: queuedNewPublicAdvisoryAudit.advisoryNumber,
+          jsonData: {
+            operation: operation,
+            triggeredBy: triggerInfo,
+            newPublicAdvisoryAudit: queuedNewPublicAdvisoryAudit,
+            oldPublicAdvisoryAudit: queuedOldPublicAdvisoryAudit,
+          },
+        },
+      });
+
+      strapi.log.info(
+        `queued recspace push public-advisory ${operation} for advisory ${queuedNewPublicAdvisoryAudit.advisoryNumber}`,
+      );
+    } catch (error) {
+      strapi.log.error(error);
     }
   },
 };
