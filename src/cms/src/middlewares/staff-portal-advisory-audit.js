@@ -12,7 +12,8 @@ const {
 } = require("./helpers/advisoryStatus.js");
 const {
   archiveOldPublicAdvisoryAudit,
-  copyToPublicAdvisory,
+  syncProjections,
+  queueRecSpaceDelete,
   isAdvisoryEqual,
 } = require("./helpers/advisoryData.js");
 const { METADATA_FIELDS } = require("../helpers/advisoryEmailMetadata.js");
@@ -55,7 +56,7 @@ module.exports = () => {
         `Review draft: ${urgency} urgency advisory / closure`,
         "A draft advisory / closure is ready for review:",
         newPublicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterCreate()",
+        "staff-portal-advisory-audit::afterCreate()",
         [],
         [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
       );
@@ -71,7 +72,7 @@ module.exports = () => {
         "After-hours advisory / closure was posted",
         "An after-hours advisory / closure was posted:",
         newPublicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterCreate()",
+        "staff-portal-advisory-audit::afterCreate()",
         [],
         [METADATA_FIELDS.POSTING_DATE],
       );
@@ -87,13 +88,13 @@ module.exports = () => {
         `Review posting: ${urgency} urgency advisory / closure`,
         "An advisory / closure is ready for review:",
         newPublicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterCreate()",
+        "staff-portal-advisory-audit::afterCreate()",
         [],
         [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
       );
     }
 
-    await copyToPublicAdvisory(newPublicAdvisoryAudit);
+    await syncProjections(newPublicAdvisoryAudit, null);
   }
 
   /**
@@ -193,24 +194,35 @@ module.exports = () => {
   async function afterUpdate(ctx) {
     if (!ctx?.result?.documentId) return;
 
-    const publicAdvisoryAudit = await strapi
+    const newPublicAdvisoryAudit = await strapi
       .documents("api::public-advisory-audit.public-advisory-audit")
       .findOne({
         documentId: ctx.result.documentId,
         populate: "*",
       });
 
-    const oldAdvisoryStatus = ctx.state?.oldStatus; // saved by beforeUpdate() above
-    const newAdvisoryStatus = publicAdvisoryAudit.advisoryStatus?.code;
+    const oldPublicAdvisory = await strapi
+      .documents("api::public-advisory-audit.public-advisory-audit")
+      .findFirst({
+        filters: {
+          advisoryNumber: newPublicAdvisoryAudit.advisoryNumber,
+          revisionNumber: newPublicAdvisoryAudit.revisionNumber - 1,
+        },
+        populate: "*",
+      });
 
-    const urgency = publicAdvisoryAudit.urgency?.urgency?.toLowerCase() ?? "";
+    const oldAdvisoryStatus = ctx.state?.oldStatus; // saved by beforeUpdate() above
+    const newAdvisoryStatus = newPublicAdvisoryAudit.advisoryStatus?.code;
+
+    const urgency =
+      newPublicAdvisoryAudit.urgency?.urgency?.toLowerCase() ?? "";
 
     if (newAdvisoryStatus === "HQR" && oldAdvisoryStatus !== "HQR") {
       await queueAdvisoryEmail(
         `Review draft: ${urgency} urgency advisory / closure`,
         "A draft advisory / closure is ready for review:",
-        publicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterUpdate()",
+        newPublicAdvisoryAudit.advisoryNumber,
+        "staff-portal-advisory-audit::afterUpdate()",
         [],
         [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
       );
@@ -219,17 +231,17 @@ module.exports = () => {
     if (
       newAdvisoryStatus === "PUB" &&
       oldAdvisoryStatus !== "PUB" &&
-      (publicAdvisoryAudit.modifiedByRole === "submitter" ||
-        publicAdvisoryAudit.modifiedByRole === "contributor") && // TODO: determine after-hours rules for contributors
-      publicAdvisoryAudit.isUrgentAfterHours
+      (newPublicAdvisoryAudit.modifiedByRole === "submitter" ||
+        newPublicAdvisoryAudit.modifiedByRole === "contributor") &&
+      newPublicAdvisoryAudit.isUrgentAfterHours
     ) {
       // After-hours posting notification
       // If users with after-hours posting permission posted this with an urgent/after-hours flag
       await queueAdvisoryEmail(
         "After-hours advisory / closure was posted",
         "An after-hours advisory / closure was posted:",
-        publicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterUpdate()",
+        newPublicAdvisoryAudit.advisoryNumber,
+        "staff-portal-advisory-audit::afterUpdate()",
         [],
         [METADATA_FIELDS.POSTING_DATE],
       );
@@ -238,21 +250,31 @@ module.exports = () => {
         (newAdvisoryStatus === "PUB" && oldAdvisoryStatus !== "PUB")) &&
       // Don't send a notification if the advisory was posted by HQ Staff (approver role)
       // because they are the ones who will be reviewing it.
-      publicAdvisoryAudit.modifiedByRole !== "approver"
+      newPublicAdvisoryAudit.modifiedByRole !== "approver"
     ) {
       // Regular posting notification:
       // If the status changed from some other status to SCH or PUB
       await queueAdvisoryEmail(
         `Review posting: ${urgency} urgency advisory / closure`,
         "An advisory / closure is ready for review:",
-        publicAdvisoryAudit.advisoryNumber,
-        "public-advisory-audit::lifecycles::afterUpdate()",
+        newPublicAdvisoryAudit.advisoryNumber,
+        "staff-portal-advisory-audit::afterUpdate()",
         [],
         [METADATA_FIELDS.POSTING_DATE, METADATA_FIELDS.SUBMITTER],
       );
     }
 
-    await copyToPublicAdvisory(publicAdvisoryAudit);
+    if (
+      oldAdvisoryStatus === "SCH" &&
+      !["SCH", "PUB"].includes(newAdvisoryStatus)
+    ) {
+      await queueRecSpaceDelete(
+        newPublicAdvisoryAudit,
+        "staff-portal-advisory-audit::afterUpdate()",
+      );
+    }
+
+    await syncProjections(newPublicAdvisoryAudit, oldPublicAdvisory);
   }
 
   // Middleware entry point
