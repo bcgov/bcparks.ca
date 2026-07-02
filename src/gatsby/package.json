@@ -39,7 +39,7 @@
     "parse-url": "^8.1.0",
     "popper.js": "^1.14.6",
     "prop-types": "^15.7.2",
-    "qs": "^6.15.2",
+    "qs": "^6.15.3",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.10",
     "react-bootstrap-typeahead": "^6.4.1",
@@ -61,7 +61,7 @@
     "babel-preset-gatsby": "^3.16.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
-    "prettier": "^3.8.4",
+    "prettier": "^3.9.4",
     "react-test-renderer": "^18.3.1"
   },
   "keywords": [
