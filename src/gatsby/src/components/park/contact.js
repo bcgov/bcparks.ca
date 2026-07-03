@@ -76,16 +76,8 @@ export default function Contact({ contact, parkContacts, operations }) {
     parkContacts.filter(contact => contact.isActive).sort((a, b) => {
       return a.rank - b.rank
     })
-  const hasAnyReservations =
-    operations.hasCanoeCircuitReservations ||
-    operations.hasGroupPicnicReservations ||
-    operations.hasFrontcountryReservations ||
-    operations.hasFrontcountryGroupReservations ||
-    operations.hasFrontcountryCabinReservations ||
-    operations.hasBackcountryReservations ||
-    operations.hasBackcountryGroupReservations ||
-    operations.hasBackcountryShelterReservations ||
-    operations.hasBackcountryWildernessReservations
+
+  const inReservationSystem = operations.inReservationSystem
 
   return (
     <div id="contact" className="anchor-link">
@@ -94,8 +86,8 @@ export default function Contact({ contact, parkContacts, operations }) {
         <figure className="table">
           <table>
             <tbody>
-              {/* display it if hasAnyReservations is true  */}
-              {hasAnyReservations && (
+              {/* display it only when the park is in the reservation system */}
+              {inReservationSystem && (
                 <tr>
                   <th scope="row">Reservations, changes, and cancellations</th>
                   <td>
