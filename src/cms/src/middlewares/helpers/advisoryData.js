@@ -38,7 +38,6 @@ async function savePublicAdvisoryAndRecSpaceSync(
   // Always queue a RecSpace scheduled-create event, then stop.
   if (advisoryStatusCode === "SCH") {
     await queueRecSpacePublicAdvisoryCrudEvent(
-      "create scheduled",
       "advisoryData::savePublicAdvisoryAndRecSpaceSync()#scheduled-public-advisory",
       newPublicAdvisoryAudit,
       oldPublicAdvisoryAudit,
@@ -68,7 +67,6 @@ async function savePublicAdvisoryAndRecSpaceSync(
           data: newPublicAdvisoryAudit,
         });
         await queueRecSpacePublicAdvisoryCrudEvent(
-          "update",
           "advisoryData::savePublicAdvisoryAndRecSpaceSync()#update-public-advisory",
           newPublicAdvisoryAudit,
           oldPublicAdvisoryAudit,
@@ -90,7 +88,6 @@ async function savePublicAdvisoryAndRecSpaceSync(
           data: newPublicAdvisoryAudit,
         });
         await queueRecSpacePublicAdvisoryCrudEvent(
-          "create",
           "advisoryData::savePublicAdvisoryAndRecSpaceSync()#create-public-advisory",
           newPublicAdvisoryAudit,
           oldPublicAdvisoryAudit,
@@ -111,7 +108,6 @@ async function savePublicAdvisoryAndRecSpaceSync(
         .documents("api::public-advisory.public-advisory")
         .delete({ documentId: isExist.documentId });
       await queueRecSpacePublicAdvisoryCrudEvent(
-        "delete",
         "advisoryData::savePublicAdvisoryAndRecSpaceSync()#delete-public-advisory",
         newPublicAdvisoryAudit,
         oldPublicAdvisoryAudit,
@@ -160,11 +156,7 @@ async function queueRecSpaceDelete(publicAdvisory, triggerInfo) {
     return;
   }
 
-  await queueRecSpacePublicAdvisoryCrudEvent(
-    "delete scheduled",
-    triggerInfo,
-    publicAdvisory,
-  );
+  await queueRecSpacePublicAdvisoryCrudEvent(triggerInfo, publicAdvisory);
 }
 
 function isAdvisoryEqual(newData, oldData) {

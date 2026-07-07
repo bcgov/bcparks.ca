@@ -65,6 +65,12 @@ spec:
               value: {{ .Values.cluster.publicUrl | quote }}
             - name: ADMIN_URL
               value: {{ .Values.cluster.staffPortalUrl | quote }}
+            - name: REC_SPACE_BASE_URL
+              value: {{ .Values.scheduler.env.recSpaceBaseUrl | quote }}
+            - name: REC_SPACE_KEYCLOAK_TOKEN_URL
+              value: {{ .Values.scheduler.env.recSpaceKeycloakTokenUrl | quote }}
+            - name: REC_SPACE_KEYCLOAK_CLIENT_ID
+              value: {{ .Values.scheduler.env.recSpaceKeycloakClientId | quote }} 
           livenessProbe:
             exec:
               command:

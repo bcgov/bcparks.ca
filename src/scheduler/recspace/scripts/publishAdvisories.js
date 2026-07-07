@@ -1,0 +1,121 @@
+const { getLogger } = require("../../shared/logging");
+const { readQueue, removeFromQueue } = require("../../shared/taskQueue");
+const { recSpaceAxios } = require("../utils/axiosRecSpaceAuth");
+
+/**
+ * Posts a public advisory payload to the RecSpace API.
+ */
+async function postRecSpacePublicAdvisory(payload) {
+  recSpaceAxios
+    .post("/api/v1/act/advisories", payload)
+    .then(() => {
+      const logger = getLogger();
+      logger.info(
+        `Advisory ${payload.advisory_number} with rec_resource_id ${payload.rec_resource_id} posted successfully`,
+      );
+    })
+    .catch((error) => {
+      const logger = getLogger();
+      logger.error(
+        `postRecSpacePublicAdvisory() failed for advisory ${payload.advisory_number} with rec_resource_id ${payload.rec_resource_id}: ${error}`,
+      );
+      // rethrow the error
+      throw error;
+    });
+}
+
+/**
+ * Deletes a public advisory from the RecSpace API.
+ */
+async function deleteRecSpacePublicAdvisory(advisoryNumber, recResourceId) {
+  recSpaceAxios
+    .delete(`/api/v1/act/advisories/${recResourceId}/${advisoryNumber}`)
+    .then(() => {
+      const logger = getLogger();
+      logger.info(
+        `Advisory ${advisoryNumber} with rec_resource_id ${recResourceId} deleted successfully`,
+      );
+    })
+    .catch((error) => {
+      const logger = getLogger();
+      if (error?.response?.status === 404) {
+        logger.info(
+          `Advisory ${advisoryNumber} with rec_resource_id ${recResourceId} not found (404), skipping`,
+        );
+        return;
+      }
+      logger.error(
+        `deleteRecSpacePublicAdvisory() failed for advisory ${advisoryNumber} with rec_resource_id ${recResourceId}: ${error}`,
+      );
+      // rethrow the error
+      throw error;
+    });
+}
+
+/**
+ * Processes `recspace publish advisory` queued tasks and syncs to RecSpace
+ */
+exports.publishToRecSpace = async function () {
+  let queue;
+  const logger = getLogger();
+
+  // get items from the queue with the action 'recspace publish advisory'
+  try {
+    queue = await readQueue("recspace publish advisory");
+  } catch (error) {
+    logger.error(
+      `publishToRecSpace() failed while retrieving 'recspace publish advisory' tasks: ${error}`,
+    );
+    return;
+  }
+
+  for (const message of queue) {
+    try {
+      const advisoryNumber = message?.numericData;
+      const beforeJsonData = message?.jsonData?.before;
+      const afterJsonData = message?.jsonData?.after;
+
+      const beforeRecResourceIds = beforeJsonData?.rec_resource_ids || [];
+      const afterRecResourceIds = afterJsonData?.rec_resource_ids || [];
+
+      // determine which rec_resource_ids were removed
+      const removedRecResourceIds = beforeRecResourceIds.filter(
+        (id) => !afterRecResourceIds.includes(id),
+      );
+
+      // determine the after status of the advisory
+      const afterStatus = afterJsonData?.advisory_status || null;
+
+      // if the after status is "Scheduled" or "Published" then we need to send a POST request
+      // to the API for each recResourceId in the after payload
+      // Note: POST endpoint performs upsert, so PUT is unnecessary
+      if (afterStatus === "Scheduled" || afterStatus === "Published") {
+        for (const recResourceId of afterJsonData?.rec_resource_ids || []) {
+          const payload = { ...afterJsonData };
+          delete payload.revision_number;
+          delete payload.rec_resource_ids;
+          payload.rec_resource_id = recResourceId;
+          await postRecSpacePublicAdvisory(payload);
+        }
+
+        // if any recResourceIds were removed then we need to send a DELETE request
+        // to the API for each recResourceId in the removedRecResourceIds
+        for (const recResourceId of removedRecResourceIds) {
+          await deleteRecSpacePublicAdvisory(advisoryNumber, recResourceId);
+        }
+      } else {
+        // if the after status is anything else then we need to send a DELETE request
+        // to the API for each recResourceId in the before payload
+        for (const recResourceId of beforeJsonData?.rec_resource_ids || []) {
+          await deleteRecSpacePublicAdvisory(advisoryNumber, recResourceId);
+        }
+      }
+
+      await removeFromQueue([message.documentId]);
+    } catch (error) {
+      logger.error(
+        `publishToRecSpace() failed while processing advisory ${message?.numericData}: ${error}`,
+      );
+    }
+  }
+};

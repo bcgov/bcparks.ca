@@ -55,3 +55,6 @@ etl:
 scheduler:
   env:
     emailEnabled: true
+    recSpaceBaseUrl: https://dj2qs6gf0wkg3.cloudfront.net
+    recSpaceKeycloakTokenUrl: https://loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect/token
+    recSpaceKeycloakClientId: testing-act-integration-6456
