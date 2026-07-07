@@ -6,50 +6,45 @@ const { recSpaceAxios } = require("../utils/axiosRecSpaceAuth");
  * Posts a public advisory payload to the RecSpace API.
  */
 async function postRecSpacePublicAdvisory(payload) {
-  recSpaceAxios
-    .post("/api/v1/act/advisories", payload)
-    .then(() => {
-      const logger = getLogger();
-      logger.info(
-        `Advisory ${payload.advisory_number} with rec_resource_id ${payload.rec_resource_id} posted successfully`,
-      );
-    })
-    .catch((error) => {
-      const logger = getLogger();
-      logger.error(
-        `postRecSpacePublicAdvisory() failed for advisory ${payload.advisory_number} with rec_resource_id ${payload.rec_resource_id}: ${error}`,
-      );
-      // rethrow the error
-      throw error;
-    });
+  const logger = getLogger();
+  try {
+    await recSpaceAxios.post("/api/v1/act/advisories", payload);
+    logger.info(
+      `Advisory ${payload.advisory_number} with rec_resource_id ${payload.rec_resource_id} posted successfully`,
+    );
+  } catch (error) {
+    logger.error(
+      `postRecSpacePublicAdvisory() failed for advisory ${payload.advisory_number} with rec_resource_id ${payload.rec_resource_id}: ${error?.message ?? error}`,
+    );
+    throw error;
+  }
 }
 
 /**
  * Deletes a public advisory from the RecSpace API.
  */
 async function deleteRecSpacePublicAdvisory(advisoryNumber, recResourceId) {
-  recSpaceAxios
-    .delete(`/api/v1/act/advisories/${recResourceId}/${advisoryNumber}`)
-    .then(() => {
-      const logger = getLogger();
+  const logger = getLogger();
+  try {
+    await recSpaceAxios.delete(
+      `/api/v1/act/advisories/${recResourceId}/${advisoryNumber}`,
+    );
+    logger.info(
+      `Advisory ${advisoryNumber} with rec_resource_id ${recResourceId} deleted successfully`,
+    );
+  } catch (error) {
+    if (error?.response?.status === 404) {
       logger.info(
-        `Advisory ${advisoryNumber} with rec_resource_id ${recResourceId} deleted successfully`,
+        `Advisory ${advisoryNumber} with rec_resource_id ${recResourceId} not found (404), skipping`,
       );
-    })
-    .catch((error) => {
-      const logger = getLogger();
-      if (error?.response?.status === 404) {
-        logger.info(
-          `Advisory ${advisoryNumber} with rec_resource_id ${recResourceId} not found (404), skipping`,
-        );
-        return;
-      }
-      logger.error(
-        `deleteRecSpacePublicAdvisory() failed for advisory ${advisoryNumber} with rec_resource_id ${recResourceId}: ${error}`,
-      );
-      // rethrow the error
-      throw error;
-    });
+      return;
+    }
+
+    logger.error(
+      `deleteRecSpacePublicAdvisory() failed for advisory ${advisoryNumber} with rec_resource_id ${recResourceId}: ${error?.message ?? error}`,
+    );
+    throw error;
+  }
 }
 
 /**

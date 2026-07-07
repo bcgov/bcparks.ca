@@ -23,9 +23,7 @@ const {
   sendParkNamesEmails,
 } = require("./email-alerts/scripts/sendParkNamesEmails");
 const { dootPublish } = require("./doot/scripts/publish");
-const {
-  publishToRecSpace: syncRecSpace,
-} = require("./recspace/scripts/publishAdvisories");
+const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
 
 (async () => {
   dotenv.config({

@@ -70,7 +70,12 @@ spec:
             - name: REC_SPACE_KEYCLOAK_TOKEN_URL
               value: {{ .Values.scheduler.env.recSpaceKeycloakTokenUrl | quote }}
             - name: REC_SPACE_KEYCLOAK_CLIENT_ID
-              value: {{ .Values.scheduler.env.recSpaceKeycloakClientId | quote }} 
+              value: {{ .Values.scheduler.env.recSpaceKeycloakClientId | quote }}
+            - name: REC_SPACE_KEYCLOAK_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-{{ .Values.etl.componentName }}-secret
+                  key: REC_SPACE_KEYCLOAK_CLIENT_SECRET
           livenessProbe:
             exec:
               command:

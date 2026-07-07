@@ -13,7 +13,7 @@ function buildPayload(paAudit) {
   }
 
   return {
-    rec_resource_ids: paAudit.recreationResources.flatMap((resource) =>
+    rec_resource_ids: (paAudit.recreationResources ?? []).flatMap((resource) =>
       resource?.recResourceId ? [resource.recResourceId] : [],
     ),
     advisory_number: paAudit.advisoryNumber ?? null,
