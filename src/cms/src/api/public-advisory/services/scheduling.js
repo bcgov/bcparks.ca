@@ -28,12 +28,13 @@ function addHeadlineToSubject(subject, advisoryData) {
 module.exports = ({ strapi }) => {
   /**
    * Gets the original creator email for an advisory.
-   * Returns the createdByEmail value from the first corresponding revision in public-advisory-audit.
+   * Returns the createdByEmail value from the first corresponding revision
+   * in public-advisory-audit unless the original creator role is approver.
    * @param {number} advisoryNumber the advisory number to look up
-   * @returns {Promise<string|undefined>} creator email, if found
+   * @returns {Promise<string|null>} creator email, if found and applicable
    */
   async function getCreatorEmail(advisoryNumber) {
-    // Find the original advisory revision to get the submitter email.
+    // Find the original advisory revision to get the submitter role and email.
     const advisoryAudit = await strapi
       .documents("api::public-advisory-audit.public-advisory-audit")
       .findFirst({
@@ -41,10 +42,18 @@ module.exports = ({ strapi }) => {
           advisoryNumber,
           revisionNumber: 1,
         },
-        fields: ["createdByEmail"],
+        fields: ["createdByEmail", "createdByRole"],
       });
 
-    return advisoryAudit?.createdByEmail;
+    if (
+      advisoryAudit?.createdByEmail &&
+      advisoryAudit?.createdByRole !== "approver"
+    ) {
+      return advisoryAudit.createdByEmail;
+    }
+
+    // If original creator role is approver, they already receive the main email
+    return null;
   }
 
   return {
@@ -174,12 +183,19 @@ module.exports = ({ strapi }) => {
                 advisory,
               );
 
+              // Add the original creator email, unless they are an approver
+              // (HQ Staff already gets the email)
+              const additionalRecipients =
+                advisory.createdByEmail && advisory.createdByRole !== "approver"
+                  ? [advisory.createdByEmail]
+                  : [];
+
               await queueAdvisoryEmail(
                 subject,
                 "A scheduled advisory / closure was posted:",
                 advisory.advisoryNumber,
                 "public-advisory-audit::services::scheduling::publish()",
-                advisory.createdByEmail ? [advisory.createdByEmail] : [],
+                additionalRecipients,
                 [METADATA_FIELDS.POSTING_DATE],
               );
             })
@@ -344,12 +360,19 @@ module.exports = ({ strapi }) => {
               advisory,
             );
 
+            // Add the original creator email, unless they are an approver
+            // (HQ Staff already gets the email)
+            const additionalRecipients =
+              advisory.createdByEmail && advisory.createdByRole !== "approver"
+                ? [advisory.createdByEmail]
+                : [];
+
             await queueAdvisoryEmail(
               subject,
               reminder.message,
               advisory.advisoryNumber,
               "public-advisory-audit::services::scheduling::publishingSoon()",
-              advisory.createdByEmail ? [advisory.createdByEmail] : [],
+              additionalRecipients,
               [METADATA_FIELDS.POSTING_DATE],
             );
           }
