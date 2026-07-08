@@ -2,7 +2,7 @@ cluster:
   ssoAuthUrl: https://test.loginproxy.gov.bc.ca/auth
   publicUrl: https://test.bcparks.ca
   staffPortalUrl: https://test-staff.bcparks.ca
-  recSpaceApiUrl: https://dk1yyyipojdmy.cloudfront.net
+  recSpaceApiUrl: https://dj7ul2th5369y.cloudfront.net
 
 images:
   strapi:
