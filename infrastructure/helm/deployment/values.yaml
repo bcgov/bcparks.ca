@@ -4,6 +4,7 @@ cluster:
   ssoRealm: bcparks-service-transformation
   ssoClientId: staff-portal
   staffPortalUrl: https://dev-staff.bcparks.ca
+  recSpaceApiUrl: https://dv5oa6g5xh0tq.cloudfront.net
 
 images:
   strapi:
@@ -133,7 +134,6 @@ etl:
   env:
     bcwfsBansApi: https://openmaps.gov.bc.ca/geo/pub/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=WHSE_LAND_AND_NATURAL_RESOURCE.PROT_BANS_AND_PROHIBITIONS_SP&count=50&outputFormat=json
     parkNamesApi: https://test-data.bcparks.ca/api/parks/names?status=established
-    rstApi: https://dj7ul2th5369y.cloudfront.net/api/v1
 
   resources:
     requests:

@@ -66,7 +66,7 @@ spec:
             - name: ADMIN_URL
               value: {{ .Values.cluster.staffPortalUrl | quote }}
             - name: REC_SPACE_BASE_URL
-              value: {{ .Values.scheduler.env.recSpaceBaseUrl | quote }}
+              value: {{ .Values.cluster.recSpaceApiUrl | quote }}
             - name: REC_SPACE_KEYCLOAK_TOKEN_URL
               value: {{ .Values.scheduler.env.recSpaceKeycloakTokenUrl | quote }}
             - name: REC_SPACE_KEYCLOAK_CLIENT_ID

@@ -38,7 +38,7 @@ spec:
                 - name: STRAPI_BASE_URL
                   value: {{ .Values.cms.env.externalUrl }}
                 - name: RST_API
-                  value: {{ .Values.etl.env.rstApi }}
+                  value: {{ .Values.cluster.recSpaceApiUrl }}/api/v1
                 - name: STRAPI_API_TOKEN
                   valueFrom:
                     secretKeyRef:

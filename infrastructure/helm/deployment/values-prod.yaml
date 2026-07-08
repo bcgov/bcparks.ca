@@ -2,6 +2,7 @@ cluster:
   ssoAuthUrl: https://loginproxy.gov.bc.ca/auth
   publicUrl: https://bcparks.ca
   staffPortalUrl: https://staff.bcparks.ca
+  recSpaceApiUrl: https://dj2qs6gf0wkg3.cloudfront.net
 
 images:
   strapi:
@@ -50,11 +51,9 @@ public:
 etl:
   env:
     parkNamesApi: https://data.bcparks.ca/api/parks/names?status=established
-    rstApi: https://dj2qs6gf0wkg3.cloudfront.net/api/v1
 
 scheduler:
   env:
     emailEnabled: true
-    recSpaceBaseUrl: https://dj2qs6gf0wkg3.cloudfront.net
     recSpaceKeycloakTokenUrl: https://loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect/token
     recSpaceKeycloakClientId: testing-act-integration-6456
