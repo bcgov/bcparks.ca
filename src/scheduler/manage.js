@@ -23,6 +23,7 @@ const {
   sendParkNamesEmails,
 } = require("./email-alerts/scripts/sendParkNamesEmails");
 const { dootPublish } = require("./doot/scripts/publish");
+const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
 
 (async () => {
   dotenv.config({
@@ -159,6 +160,16 @@ const { dootPublish } = require("./doot/scripts/publish");
     return;
   }
 
+  /**
+   * Publish queued advisory changes to RecSpace
+   * (manually triggered via OpenShift terminal / mainly for debugging purposes)
+   */
+  if (scriptKeySpecified("rstsync")) {
+    logger.info("Publishing queued advisory changes to RecSpace");
+    await publishToRecSpace();
+    return;
+  }
+
   console.log("\nUsage: \n");
   console.log("node manage.js [command]\n");
   console.log("Command options:\n");
@@ -178,4 +189,5 @@ const { dootPublish } = require("./doot/scripts/publish");
     "emailtest   : test email template (writes to file 'mail-test-[#].html')",
   );
   console.log("dootpublish : publish queued DOOT data to Strapi\n");
+  console.log("rstsync     : process RecSpace advisory sync queue\n");
 })();

@@ -33,3 +33,6 @@ scheduler:
     emailEnabled: true
     emailRecipient: manuji@oxd.com,mike@oxd.com
     emailRecipientWhitelist: manuji@oxd.com,mike@oxd.com
+    recSpaceBaseUrl: https://d1b4b6mhsdovf2.cloudfront.net
+    recSpaceKeycloakTokenUrl: https://dev.loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect/token
+    recSpaceKeycloakClientId: testing-act-integration-6456

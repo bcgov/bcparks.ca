@@ -25,6 +25,7 @@
     "node-schedule": "^2.1.1",
     "nodemailer": "^6.10.1",
     "qs": "^6.15.3",
+    "simple-oauth2": "^5.1.0",
     "winston": "^3.19.0"
   }
 }

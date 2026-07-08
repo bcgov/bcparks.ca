@@ -3,7 +3,7 @@ const { getLogger } = require("./logging");
 const qs = require("qs");
 
 const readQueue = async function (actionName, options) {
-  const sort = options?.descending ? "numericData:DESC" : "numericData";
+  const sort = [options?.descending ? "numericData:DESC" : "numericData", "id"];
   const query = qs.stringify(
     {
       fields: ["numericData", "jsonData"],
