@@ -14,12 +14,15 @@ import AdvisoryDate from "../advisories/advisoryDate"
 import blueAlertIcon from "../../images/park/blue-alert.svg"
 import redAlertIcon from "../../images/park/red-alert.svg"
 import yellowAlertIcon from "../../images/park/yellow-alert.svg"
-import { getAdvisoryDate } from "../../utils/advisoryHelper"
 import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/advisories/advisoryDetails.scss"
 
 const formatDate = isoDate => {
   return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
+}
+
+const getTimestamp = isoDate => {
+  return isoDate ? parseJSON(isoDate).getTime() : null
 }
 
 export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus }) {
@@ -30,11 +33,13 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
       'listingRank',
       'urgency.sequence',
       'accessStatus.precedence',
-      'eventType.precedence',
-      // display date
-      getAdvisoryDate
+      // updatedDate first when available
+      advisory => getTimestamp(advisory.updatedDate),
+      // then advisoryDate
+      advisory => getTimestamp(advisory.advisoryDate),
+      'eventType.precedence'
     ],
-    ['desc', 'desc', 'asc', 'asc', 'desc']
+    ['desc', 'desc', 'asc', 'desc', 'desc', 'asc']
   )
 
   const [openAccordions, setOpenAccordions] = useState({})
