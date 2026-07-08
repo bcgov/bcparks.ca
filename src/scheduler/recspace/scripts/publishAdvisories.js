@@ -78,18 +78,27 @@ exports.publishToRecSpace = async function () {
         (id) => !afterRecResourceIds.includes(id),
       );
 
-      // determine the after status of the advisory
+      // determine the before and after status of the advisory
+      const beforeStatus = beforeJsonData?.advisory_status || null;
       const afterStatus = afterJsonData?.advisory_status || null;
+
+      if (beforeStatus === "Published" && afterStatus === "Scheduled") {
+        // This is a special case, so do nothing. The "before" advisory is still published
+        // in the public-advisories collection and the "after" is just a draft scheduled
+        // for future publication.
+        await removeFromQueue([message.documentId]);
+        continue;
+      }
 
       // if the after status is "Scheduled" or "Published" then we need to send a POST request
       // to the API for each recResourceId in the after payload
       // Note: POST endpoint performs upsert, so PUT is unnecessary
       if (afterStatus === "Scheduled" || afterStatus === "Published") {
-        for (const recResourceId of afterJsonData?.rec_resource_ids || []) {
-          const payload = { ...afterJsonData };
-          delete payload.revision_number;
-          delete payload.rec_resource_ids;
-          payload.rec_resource_id = recResourceId;
+        const { revision_number, rec_resource_ids, ...basePayload } =
+          afterJsonData;
+
+        for (const recResourceId of rec_resource_ids || []) {
+          const payload = { ...basePayload, rec_resource_id: recResourceId };
           await postRecSpacePublicAdvisory(payload);
         }
 
