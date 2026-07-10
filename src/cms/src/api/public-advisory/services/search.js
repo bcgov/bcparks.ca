@@ -9,26 +9,46 @@ module.exports = ({ strapi }) => ({
   search: async (query) => {
     query = buildQuery(query);
 
-    const paginationLimit = Number(query.pagination?.limit);
-    const paginationPageSize = Number(query.pagination?.pageSize);
-    const paginationStart = Number(query.pagination?.start);
-    const paginationPage = Number(query.pagination?.page);
+    const toInteger = (value) => {
+      if (value === undefined || value === null) {
+        return undefined;
+      }
 
-    if (query.limit === undefined) {
-      if (Number.isFinite(paginationLimit) && paginationLimit >= 0) {
+      if (typeof value === "string" && value.trim() === "") {
+        return undefined;
+      }
+
+      const numericValue = Number(value);
+      return Number.isInteger(numericValue) ? numericValue : undefined;
+    };
+
+    const directLimit = toInteger(query.limit);
+    const directStart = toInteger(query.start);
+    const paginationLimit = toInteger(query.pagination?.limit);
+    const paginationPageSize = toInteger(query.pagination?.pageSize);
+    const paginationStart = toInteger(query.pagination?.start);
+    const paginationPage = toInteger(query.pagination?.page);
+
+    if (directLimit > 0) {
+      query.limit = directLimit;
+    } else {
+      if (paginationLimit > 0) {
         query.limit = paginationLimit;
-      } else if (Number.isFinite(paginationPageSize) && paginationPageSize >= 0) {
+      } else if (paginationPageSize > 0) {
         query.limit = paginationPageSize;
       } else {
         query.limit = 10;
       }
     }
 
-    if (query.start === undefined) {
-      if (Number.isFinite(paginationStart) && paginationStart >= 0) {
+    if (directStart >= 0) {
+      query.start = directStart;
+    } else {
+      if (paginationStart >= 0) {
         query.start = paginationStart;
       } else {
-        query.start = ((Number.isFinite(paginationPage) ? paginationPage : 1) - 1) * query.limit;
+        const safePage = paginationPage >= 1 ? paginationPage : 1;
+        query.start = (safePage - 1) * query.limit;
       }
     }
 
