@@ -340,13 +340,22 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const buildParkInfoHash = () => {
     const hash = {};
     for (const x of (data?.allStrapiProtectedArea.nodes || [])) {
-      hash[x?.strapi_id.toString()] = {
-        managementAreas: x.managementAreas.map(m => { return m.strapi_id }),
-        sections: x.managementAreas.map(m => { return m.section?.id }),
-        regions: x.managementAreas.map(m => { return m.region?.id }),
-        fireZones: x.fireZones.map(m => { return m.strapi_id }),
-        naturalResourceDistricts: (x.naturalResourceDistricts || []).map(m => m.strapi_id),
-        fireCentres: x.fireZones.map(m => { return m.fireCentre?.id })
+      const nodeId = x?.strapi_id
+      if (!nodeId) {
+        continue
+      }
+
+      const managementAreas = x.managementAreas || []
+      const fireZones = x.fireZones || []
+      const naturalResourceDistricts = x.naturalResourceDistricts || []
+
+      hash[nodeId.toString()] = {
+        managementAreas: managementAreas.map(m => { return m.strapi_id }),
+        sections: managementAreas.map(m => { return m.section?.id }),
+        regions: managementAreas.map(m => { return m.region?.id }),
+        fireZones: fireZones.map(m => { return m.strapi_id }),
+        fireCentres: fireZones.map(m => { return m.fireCentre?.id }),
+        naturalResourceDistricts: naturalResourceDistricts.map(m => m.strapi_id),
       };
     }
     return hash;
