@@ -9,12 +9,27 @@ module.exports = ({ strapi }) => ({
   search: async (query) => {
     query = buildQuery(query);
 
+    const paginationLimit = Number(query.pagination?.limit);
+    const paginationPageSize = Number(query.pagination?.pageSize);
+    const paginationStart = Number(query.pagination?.start);
+    const paginationPage = Number(query.pagination?.page);
+
     if (query.limit === undefined) {
-      query.limit = query.pagination?.pageSize || 10;
+      if (Number.isFinite(paginationLimit) && paginationLimit >= 0) {
+        query.limit = paginationLimit;
+      } else if (Number.isFinite(paginationPageSize) && paginationPageSize >= 0) {
+        query.limit = paginationPageSize;
+      } else {
+        query.limit = 10;
+      }
     }
 
     if (query.start === undefined) {
-      query.start = ((query.pagination?.page || 1) - 1) * query.limit;
+      if (Number.isFinite(paginationStart) && paginationStart >= 0) {
+        query.start = paginationStart;
+      } else {
+        query.start = ((Number.isFinite(paginationPage) ? paginationPage : 1) - 1) * query.limit;
+      }
     }
 
     query.sort = ["advisoryDate:DESC"];
