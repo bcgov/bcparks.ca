@@ -94,7 +94,7 @@ export default function ParkHeader({
   const externalLink =
     `${mapUrl}&center=${longitude},${latitude}&level=${linkZoom}`
   // Get the park operation dates
-  const parkDates = getParkDates(operationDates)
+  const parkDates = getParkDates(operationDates || [])
   const parkReservationsURL = parkOperation?.reservationUrl || reservationsURL
   const parkDayUsePassURL = parkOperation?.dayUsePassUrl || dayUsePassURL
   const hasParkDates = parkDates && parkDates.length > 0

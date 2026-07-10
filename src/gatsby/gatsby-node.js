@@ -224,7 +224,16 @@ exports.createSchemaCustomization = ({ actions }) => {
     updatedAt: Date
   }
 
+  type STRAPI_PROTECTED_AREA_DESCRIPTION_TEXTNODE implements Node @dontInfer {
+    description: String
+  }
+
+  type STRAPI_PROTECTED_AREADescription {
+    data: STRAPI_PROTECTED_AREA_DESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
   type STRAPI_PROTECTED_AREA implements Node {
+    description: STRAPI_PROTECTED_AREADescription
     managementDocuments:[STRAPI_MANAGEMENT_DOCUMENT] @link(by: "id", from: "managementDocuments___NODE")
     biogeoclimaticZones: [STRAPI_BIOGEOCLIMATIC_ZONE] @link(by: "id", from: "biogeoclimaticZones___NODE")
     marineEcosections: [STRAPI_MARINE_ECOSECTION] @link(by: "id", from: "marineEcosections___NODE")
