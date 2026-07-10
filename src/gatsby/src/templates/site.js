@@ -273,12 +273,18 @@ export default function SiteTemplate({ data }) {
     >
       Find a park
     </GatsbyLink>,
-    <GatsbyLink
-      key="3"
-      to={`/${parkSlug}`}
-    >
-      {parkName}
-    </GatsbyLink>,
+    park?.slug ? (
+      <GatsbyLink
+        key="3"
+        to={`/${parkSlug}`}
+      >
+        {parkName}
+      </GatsbyLink>
+    ) : (
+      <div key="3" className="breadcrumb-text">
+        {parkName}
+      </div>
+    ),
     <div key="4" className="breadcrumb-text">
       {site.siteName}
     </div>,
