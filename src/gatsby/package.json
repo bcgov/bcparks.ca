@@ -54,14 +54,14 @@
     "slugify": "^1.6.9",
     "typography": "^0.16.24",
     "typography-theme-kirkham": "^0.16.19",
-    "yet-another-react-lightbox": "^3.32.0"
+    "yet-another-react-lightbox": "^3.32.1"
   },
   "devDependencies": {
     "babel-jest": "^27.5.1",
     "babel-preset-gatsby": "^3.16.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
-    "prettier": "^3.9.4",
+    "prettier": "^3.9.5",
     "react-test-renderer": "^18.3.1"
   },
   "keywords": [
