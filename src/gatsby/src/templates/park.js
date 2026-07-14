@@ -310,6 +310,15 @@ export default function ParkTemplate({ data }) {
     managementAreasCount: managementAreas.length,
   })
 
+  if (park.orcs === 11 || park.slug === "keremeos-columns-park" || park.orcs == 33) {
+    console.info(`[ParkTemplate Debug] ${park.slug} (${park.orcs}) full park object`, park)
+    try {
+      console.info(`[ParkTemplate Debug] ${park.slug} (${park.orcs}) full park JSON`, JSON.stringify(park, null, 2))
+    } catch (error) {
+      console.error(`[ParkTemplate Debug] ${park.slug} (${park.orcs}) failed to stringify full park object`, error)
+    }
+  }
+
   console.info(
     `[ParkTemplate Debug] ${park.slug} (${park.orcs}) section visibility`,
     menuItems.map((item) => ({
