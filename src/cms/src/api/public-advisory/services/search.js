@@ -9,47 +9,12 @@ module.exports = ({ strapi }) => ({
   search: async (query) => {
     query = buildQuery(query);
 
-    const toInteger = (value) => {
-      if (value === undefined || value === null) {
-        return undefined;
-      }
-
-      if (typeof value === "string" && value.trim() === "") {
-        return undefined;
-      }
-
-      const numericValue = Number(value);
-      return Number.isInteger(numericValue) ? numericValue : undefined;
-    };
-
-    const directLimit = toInteger(query.limit);
-    const directStart = toInteger(query.start);
-    const paginationLimit = toInteger(query.pagination?.limit);
-    const paginationPageSize = toInteger(query.pagination?.pageSize);
-    const paginationStart = toInteger(query.pagination?.start);
-    const paginationPage = toInteger(query.pagination?.page);
-
-    if (directLimit > 0) {
-      query.limit = directLimit;
-    } else {
-      if (paginationLimit > 0) {
-        query.limit = paginationLimit;
-      } else if (paginationPageSize > 0) {
-        query.limit = paginationPageSize;
-      } else {
-        query.limit = 10;
-      }
+    if (query.limit === undefined) {
+      query.limit = query.pagination?.pageSize || 10;
     }
 
-    if (directStart >= 0) {
-      query.start = directStart;
-    } else {
-      if (paginationStart >= 0) {
-        query.start = paginationStart;
-      } else {
-        const safePage = paginationPage >= 1 ? paginationPage : 1;
-        query.start = (safePage - 1) * query.limit;
-      }
+    if (query.start === undefined) {
+      query.start = ((query.pagination?.page || 1) - 1) * query.limit;
     }
 
     query.sort = ["advisoryDate:DESC"];
