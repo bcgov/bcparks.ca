@@ -228,7 +228,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     description: String
   }
 
-  type STRAPI_PROTECTED_AREADescription @dontInfer {
+  type STRAPI_PROTECTED_AREADescription {
     data: STRAPI_PROTECTED_AREA_DESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -236,7 +236,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     safetyInfo: String
   }
 
-  type STRAPI_PROTECTED_AREASafetyInfo @dontInfer {
+  type STRAPI_PROTECTED_AREASafetyInfo {
     data: STRAPI_PROTECTED_AREA_SAFETYINFO_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -244,7 +244,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     specialNotes: String
   }
 
-  type STRAPI_PROTECTED_AREASpecialNotes @dontInfer {
+  type STRAPI_PROTECTED_AREASpecialNotes {
     data: STRAPI_PROTECTED_AREA_SPECIALNOTES_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -252,7 +252,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     locationNotes: String
   }
 
-  type STRAPI_PROTECTED_AREALocationNotes @dontInfer {
+  type STRAPI_PROTECTED_AREALocationNotes {
     data: STRAPI_PROTECTED_AREA_LOCATIONNOTES_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -260,7 +260,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     parkContact: String
   }
 
-  type STRAPI_PROTECTED_AREAParkContact @dontInfer {
+  type STRAPI_PROTECTED_AREAParkContact {
     data: STRAPI_PROTECTED_AREA_PARKCONTACT_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -268,7 +268,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     reservations: String
   }
 
-  type STRAPI_PROTECTED_AREAReservations @dontInfer {
+  type STRAPI_PROTECTED_AREAReservations {
     data: STRAPI_PROTECTED_AREA_RESERVATIONS_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -276,7 +276,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     maps: String
   }
 
-  type STRAPI_PROTECTED_AREAMaps @dontInfer {
+  type STRAPI_PROTECTED_AREAMaps {
     data: STRAPI_PROTECTED_AREA_MAPS_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -284,7 +284,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     managementPlanning: String
   }
 
-  type STRAPI_PROTECTED_AREAManagementPlanning @dontInfer {
+  type STRAPI_PROTECTED_AREAManagementPlanning {
     data: STRAPI_PROTECTED_AREA_MANAGEMENTPLANNING_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -292,7 +292,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     partnerships: String
   }
 
-  type STRAPI_PROTECTED_AREAPartnerships @dontInfer {
+  type STRAPI_PROTECTED_AREAPartnerships {
     data: STRAPI_PROTECTED_AREA_PARTNERSHIPS_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -300,7 +300,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     purpose: String
   }
 
-  type STRAPI_PROTECTED_AREAPurpose @dontInfer {
+  type STRAPI_PROTECTED_AREAPurpose {
     data: STRAPI_PROTECTED_AREA_PURPOSE_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -308,7 +308,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     reconciliationNotes: String
   }
 
-  type STRAPI_PROTECTED_AREAReconciliationNotes @dontInfer {
+  type STRAPI_PROTECTED_AREAReconciliationNotes {
     data: STRAPI_PROTECTED_AREA_RECONCILIATIONNOTES_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -316,7 +316,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     conservation: String
   }
 
-  type STRAPI_PROTECTED_AREAConservation @dontInfer {
+  type STRAPI_PROTECTED_AREAConservation {
     data: STRAPI_PROTECTED_AREA_CONSERVATION_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -324,7 +324,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     culturalHeritage: String
   }
 
-  type STRAPI_PROTECTED_AREACulturalHeritage @dontInfer {
+  type STRAPI_PROTECTED_AREACulturalHeritage {
     data: STRAPI_PROTECTED_AREA_CULTURALHERITAGE_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -332,7 +332,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     history: String
   }
 
-  type STRAPI_PROTECTED_AREAHistory @dontInfer {
+  type STRAPI_PROTECTED_AREAHistory {
     data: STRAPI_PROTECTED_AREA_HISTORY_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
@@ -340,7 +340,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     wildlife: String
   }
 
-  type STRAPI_PROTECTED_AREAWildlife @dontInfer {
+  type STRAPI_PROTECTED_AREAWildlife {
     data: STRAPI_PROTECTED_AREA_WILDLIFE_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
