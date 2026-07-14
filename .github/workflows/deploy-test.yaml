@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Attempt to checkout tag
-        uses: actions/checkout@v6
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.releaseTag }}
 
@@ -30,8 +30,7 @@ jobs:
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
-          oc: "4.16"
-          skip_cache: true
+          oc: "4.14"
 
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
@@ -48,7 +47,7 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag scheduler-main:${{ github.event.inputs.releaseTag }} scheduler-main:${{ env.ENVIRONMENT }}
 
       - name: Trigger Gatsby static build workflow
-        uses: peter-evans/repository-dispatch@v4
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: publish-gatsby
