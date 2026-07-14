@@ -63,6 +63,22 @@ export default function ParkTemplate({ data, pageContext }) {
     )
   }
 
+  if (park.parkActivities == null) {
+    console.warn(
+      `[ParkTemplate] parkActivities is null for slug="${park.slug || pageContext?.slug || "unknown"}" orcs="${park.orcs || pageContext?.orcs || "unknown"}" name="${park.protectedAreaName || "unknown"}"`
+    )
+  }
+  if (park.parkFacilities == null) {
+    console.warn(
+      `[ParkTemplate] parkFacilities is null for slug="${park.slug || pageContext?.slug || "unknown"}" orcs="${park.orcs || pageContext?.orcs || "unknown"}" name="${park.protectedAreaName || "unknown"}"`
+    )
+  }
+  if (park.parkCampingTypes == null) {
+    console.warn(
+      `[ParkTemplate] parkCampingTypes is null for slug="${park.slug || pageContext?.slug || "unknown"}" orcs="${park.orcs || pageContext?.orcs || "unknown"}" name="${park.protectedAreaName || "unknown"}"`
+    )
+  }
+
   const parkType = (park.type || "park").toLowerCase()
   const operations = park.parkOperation || {}
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
@@ -85,7 +101,7 @@ export default function ParkTemplate({ data, pageContext }) {
   const searchArea = managementAreas[0]?.searchArea || {}
 
   const activeActivities = sortBy(
-    park.parkActivities.filter(
+    (park.parkActivities || []).filter(
       activity => activity.isActive && activity.activityType?.isActive
     ),
     ["activityType.rank", "activityType.activityName"],
@@ -178,7 +194,7 @@ export default function ParkTemplate({ data, pageContext }) {
 
   // set active facilities
   useEffect(() => {
-    if (park.parkFacilities.length > 0 &&
+    if (park.parkFacilities?.length > 0 &&
       data.allStrapiFacilityType.nodes.length > 0
     ) {
       const facilities = combineFacilities(
@@ -192,7 +208,7 @@ export default function ParkTemplate({ data, pageContext }) {
 
   // set active campings
   useEffect(() => {
-    if (park.parkCampingTypes.length > 0 &&
+    if (park.parkCampingTypes?.length > 0 &&
       data.allStrapiCampingType.nodes.length > 0
     ) {
       const campings = combineCampingTypes(
