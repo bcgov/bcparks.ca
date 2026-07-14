@@ -37,8 +37,11 @@ const getIcon = (contactType) => {
 
 export const ParkContact = ({ contact }) => {
   const parkOperatorContact = contact.parkOperatorContact
-  const links = contact.contactInformation.length > 0 ? contact.contactInformation :
+  const links = contact.contactInformation?.length > 0 ? contact.contactInformation :
     parkOperatorContact?.defaultContactInformation?.length > 0 ? parkOperatorContact.defaultContactInformation : []
+  const contactDescription = contact.description?.data?.description
+  const defaultDescription = parkOperatorContact?.defaultDescription?.data?.defaultDescription
+  const displayDescription = contactDescription || defaultDescription
 
   return (
     <tr>
@@ -46,11 +49,9 @@ export const ParkContact = ({ contact }) => {
         {contact.title ? contact.title : parkOperatorContact?.defaultTitle}
       </th>
       <td>
-        {(contact.description.data.description ||
-          parkOperatorContact?.defaultDescription?.data?.defaultDescription) &&
+        {displayDescription &&
           <HtmlContent>
-            {contact.description.data.description ||
-              parkOperatorContact?.defaultDescription?.data?.defaultDescription}
+            {displayDescription}
           </HtmlContent>
         }
         {links.length > 0 && links.map((link, index) => (

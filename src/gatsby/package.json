@@ -70,7 +70,8 @@
     "gatsby"
   ],
   "scripts": {
-    "build": "gatsby build",
+    "build:nodebug": "gatsby build",
+    "build": "NODE_OPTIONS='--trace-deprecation --enable-source-maps' GATSBY_BUILD_DEBUG=true gatsby build --verbose",
     "develop": "gatsby develop -H 0.0.0.0",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",

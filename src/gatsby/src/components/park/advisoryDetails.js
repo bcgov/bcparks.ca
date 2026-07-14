@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
-import { parseJSON, format } from "date-fns"
+import { parseJSON, format, isValid } from "date-fns"
 import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -19,7 +19,13 @@ import { trackSnowplowEvent } from "../../utils/snowplowHelper"
 import "../../styles/advisories/advisoryDetails.scss"
 
 const formatDate = isoDate => {
-  return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
+  if (!isoDate) return ""
+  try {
+    const parsed = parseJSON(isoDate)
+    return isValid(parsed) ? format(parsed, "MMMM d, yyyy") : ""
+  } catch (error) {
+    return ""
+  }
 }
 
 export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus }) {

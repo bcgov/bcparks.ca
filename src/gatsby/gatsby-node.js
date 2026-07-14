@@ -3,6 +3,39 @@ const slugify = require("slugify")
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 const parseUrl = require("parse-url")
 
+const isBuildDebugEnabled = process.env.GATSBY_BUILD_DEBUG === "true"
+
+// Format unknown thrown values into a readable string for build diagnostics.
+const formatBuildError = (errorLike) => {
+  if (errorLike instanceof Error) {
+    return `${errorLike.message}\n${errorLike.stack || ""}`
+  }
+  if (typeof errorLike === "string") {
+    return errorLike
+  }
+  try {
+    return JSON.stringify(errorLike)
+  } catch (error) {
+    return String(errorLike)
+  }
+}
+
+// Install opt-in process-level error handlers for verbose CI diagnostics.
+exports.onPreInit = ({ reporter }) => {
+  if (!isBuildDebugEnabled) return
+
+  Error.stackTraceLimit = 100
+  reporter.info("GATSBY_BUILD_DEBUG enabled: verbose stack traces and process error handlers are active")
+
+  process.on("unhandledRejection", (reason) => {
+    reporter.panicOnBuild(`[build-debug] Unhandled promise rejection\n${formatBuildError(reason)}`)
+  })
+
+  process.on("uncaughtException", (error) => {
+    reporter.panicOnBuild(`[build-debug] Uncaught exception\n${formatBuildError(error)}`)
+  })
+}
+
 const strapiApiRequest = (graphql, query) =>
   new Promise((resolve, reject) => {
     resolve(
@@ -692,15 +725,25 @@ async function createRedirects(parkQuery, redirectQuery, { graphql, actions, rep
 
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   if (stage === "build-html" || stage === "develop-html") {
-    actions.setWebpackConfig({
+    const config = {
       module: {
         rules: [],
       },
       plugins: [new NodePolyfillPlugin()],
-    })
+    }
+    // Source maps in debug mode improve SSR stack readability in CI logs.
+    if (isBuildDebugEnabled) {
+      config.devtool = "source-map"
+    }
+    actions.setWebpackConfig(config)
   }
   if (stage === 'build-javascript' || stage === 'develop') {
     const config = getConfig()
+
+    if (isBuildDebugEnabled && stage === "build-javascript") {
+      // Keep this opt-in to avoid slowing normal production builds.
+      config.devtool = "source-map"
+    }
 
     const miniCssExtractPlugin = config.plugins.find(
       plugin => plugin.constructor.name === 'MiniCssExtractPlugin'

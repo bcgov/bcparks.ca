@@ -1,5 +1,5 @@
 import React from "react"
-import { parseISO, format } from "date-fns"
+import { parseISO, format, isValid } from "date-fns"
 import _ from "lodash"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -8,13 +8,17 @@ import FontAwesome from "../fontAwesome"
 
 // Helper function to format date
 const formatDate = (str) => {
+  if (!str) return ""
   const date = parseISO(str)
+  if (!isValid(date)) return ""
   return format(date, 'MMMM d, yyyy')
 }
 
 // Helper function to add cache-buster to URL based on an ISO date
 const addCacheBuster = (url, isoDate) => {
+  if (!url) return ""
   const cacheBuster = new Date(isoDate).getTime()
+  if (Number.isNaN(cacheBuster)) return url
   const separator = url.includes("?") ? "&" : "?"
   return `${url}${separator}cb=${cacheBuster}`
 }
@@ -22,6 +26,8 @@ const addCacheBuster = (url, isoDate) => {
 export const Guideline = ({ guide, reports }) => {
   const guidelineType = guide.guidelineType
   const guidelineTypeIcon = guidelineType?.icon ? _.kebabCase(guidelineType.icon) : ""
+  const guideDescription = guide.description?.data?.description ||
+    guidelineType?.defaultDescription?.data?.defaultDescription || ""
 
   return (
     <Row className="guideline">
@@ -30,24 +36,24 @@ export const Guideline = ({ guide, reports }) => {
       </Col>
       <Col className="guideline--right">
         <h4>{guide.title ? guide.title : guidelineType.defaultTitle}</h4>
-        <HtmlContent>
-          {guide.description?.data?.description ?
-            guide.description.data.description : guidelineType.defaultDescription.data.defaultDescription}
-        </HtmlContent>
+        {guideDescription && <HtmlContent>{guideDescription}</HtmlContent>}
         {(guidelineType.hasTrailReport && reports?.length > 0) &&
-          reports.map((report, index) => (
-            <p key={index}>
-              View the{" "}
-              <a
-                href={addCacheBuster(report.reportUrl, report.updatedAt)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {report.title} [PDF]
-              </a>
-              {` (${formatDate(report.reportDate)})`}.
-            </p>
-          ))}
+          reports.map((report, index) => {
+            const reportDateLabel = formatDate(report.reportDate)
+            return (
+              <p key={index}>
+                View the{" "}
+                <a
+                  href={addCacheBuster(report.reportUrl, report.updatedAt)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {report.title} [PDF]
+                </a>
+                {reportDateLabel ? ` (${reportDateLabel})` : ""}.
+              </p>
+            )
+          })}
       </Col>
     </Row>
   )

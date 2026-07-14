@@ -1,4 +1,11 @@
-import { parseISO, format, getYear, getMonth, getDate, getMinutes } from "date-fns"
+import { parseISO, format, getYear, getMonth, getDate, getMinutes, isValid } from "date-fns"
+
+// Parse an ISO date string and return null for missing or invalid values.
+const parseIsoDateSafe = (value) => {
+  if (!value) return null
+  const parsed = parseISO(value)
+  return isValid(parsed) ? parsed : null
+}
 
 // Format a date range
 // e.g. "May 15 – Oct 31, 2025" or "year-round"
@@ -8,8 +15,11 @@ const formatDateRange = (startDate, endDate) => {
   }
 
   // Parse dates using date-fns
-  const openDate = parseISO(startDate)
-  const closeDate = parseISO(endDate)
+  const openDate = parseIsoDateSafe(startDate)
+  const closeDate = parseIsoDateSafe(endDate)
+  if (!openDate || !closeDate) {
+    return ""
+  }
   
   // Only show dates that are current year or future
   const openYear = getYear(openDate)
@@ -43,8 +53,10 @@ const formatDateRange = (startDate, endDate) => {
 // Format gate time 
 // e.g. "08:00:00" to "8 am"
 const formattedTime = time => {
+  if (!time) return ""
   // prepend a dummy date to the time string to parse it
-  const dateTime = parseISO(`1970-01-01T${time}`)
+  const dateTime = parseIsoDateSafe(`1970-01-01T${time}`)
+  if (!dateTime) return ""
   const minutes = getMinutes(dateTime)
   if (minutes === 0) {
     return format(dateTime, "h aa").toLowerCase()
@@ -67,7 +79,7 @@ const joinDateRanges = (dateRanges) => {
 
 // Get feature dates formatted
 const getFeatureDates = (dateArray) => {
-  return dateArray
+  return (dateArray || [])
     .sort((a, b) => new Date(a.start) - new Date(b.start))
     .map(dateRange => {
       const dateStr = formatDateRange(dateRange.start, dateRange.end)
@@ -79,7 +91,7 @@ const getFeatureDates = (dateArray) => {
 
 // Get park dates formatted (current year only)
 const getParkDates = (parkOperationDates) => {  
-  if (parkOperationDates.length === 0) {
+  if (!parkOperationDates || parkOperationDates.length === 0) {
     return ""
   }
 

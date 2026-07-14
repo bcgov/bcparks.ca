@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Badge from "react-bootstrap/Badge"
-import { parseJSON, format } from "date-fns"
+import { parseJSON, format, isValid } from "date-fns"
 
 import HtmlContent from "../htmlContent"
 import AdvisoryDate from "./advisoryDate"
@@ -14,7 +14,13 @@ import blueAlertIcon from "../../images/park/blue-alert.svg"
 import "../../styles/advisories/advisoryCard.scss"
 
 const formatDate = isoDate => {
-  return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
+  if (!isoDate) return ""
+  try {
+    const parsed = parseJSON(isoDate)
+    return isValid(parsed) ? format(parsed, "MMMM d, yyyy") : ""
+  } catch (error) {
+    return ""
+  }
 }
 
 const AdvisoryCard = ({ advisory, parkInfoHash }) => {
