@@ -38,25 +38,46 @@ import VisitorGuidelines from "../components/park/visitorGuidelines"
 import parksLogo from "../images/park-card.png"
 import "../styles/parks.scss"
 
-export default function ParkTemplate({ data }) {
+export default function ParkTemplate({ data, pageContext }) {
   const apiBaseUrl = `${data.site.siteMetadata.apiURL}/api`
 
   const park = data.strapiProtectedArea
+  const menuContent = data?.allStrapiMenu?.nodes || []
+
+  if (!park) {
+    console.warn(
+      `[ParkTemplate] Missing strapiProtectedArea for slug="${pageContext?.slug || "unknown"}" orcs="${pageContext?.orcs || "unknown"}"`
+    )
+    return (
+      <div>
+        <Header mode="internal" content={menuContent} />
+        <div className="parks-container main-container">
+          <div className="park-info-container">
+            <h1>Park information is currently unavailable</h1>
+          </div>
+        </div>
+        <Acknowledgment />
+        <ScrollToTop />
+        <Footer />
+      </div>
+    )
+  }
+
   const parkType = (park.type || "park").toLowerCase()
   const operations = park.parkOperation || {}
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
 
-  const description = park.description.data.description
-  const safetyInfo = park.safetyInfo.data.safetyInfo
-  const specialNotes = park.specialNotes.data.specialNotes
-  const locationNotes = park.locationNotes.data.locationNotes
-  const conservation = park.conservation.data.conservation
-  const culturalHeritage = park.culturalHeritage.data.culturalHeritage
-  const history = park.history.data.history
-  const wildlife = park.wildlife.data.wildlife
-  const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes
-  const maps = park.maps.data.maps
-  const contact = park.parkContact.data.parkContact
+  const description = park.description?.data?.description || ""
+  const safetyInfo = park.safetyInfo?.data?.safetyInfo || ""
+  const specialNotes = park.specialNotes?.data?.specialNotes || ""
+  const locationNotes = park.locationNotes?.data?.locationNotes || ""
+  const conservation = park.conservation?.data?.conservation || ""
+  const culturalHeritage = park.culturalHeritage?.data?.culturalHeritage || ""
+  const history = park.history?.data?.history || ""
+  const wildlife = park.wildlife?.data?.wildlife || ""
+  const reconciliationNotes = park.reconciliationNotes?.data?.reconciliationNotes || ""
+  const maps = park.maps?.data?.maps || ""
+  const contact = park.parkContact?.data?.parkContact || ""
   const hasNearbyParks = park.nearbyParks?.length > 0
   const nearbyParks = park.nearbyParks
   const hasParkGuidelines = park.parkGuidelines?.length > 0
@@ -73,8 +94,6 @@ export default function ParkTemplate({ data }) {
 
   const hasReservations = operations.hasReservations
   const hasDayUsePass = operations.hasDayUsePass
-
-  const menuContent = data?.allStrapiMenu?.nodes || []
 
   const [advisoryLoadError, setAdvisoryLoadError] = useState(false)
   const [isLoadingAdvisories, setIsLoadingAdvisories] = useState(true)
@@ -108,7 +127,7 @@ export default function ParkTemplate({ data }) {
       setIsLoadingAdvisories(false)
     }
   }
-  
+
   const loadProtectedAreaData = async () => {
     setIsLoadingProtectedArea(true)
     try {
@@ -127,7 +146,7 @@ export default function ParkTemplate({ data }) {
       setIsLoadingProtectedArea(false)
     }
   }
-  
+
   const loadParkFeaturesData = async () => {
     setIsLoadingParkFeatures(true)
     try {
@@ -273,7 +292,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 6,
       display: `About this ${parkType}`,
       link: "#about-this-park",
-      visible: !isNullOrWhiteSpace(conservation) || 
+      visible: !isNullOrWhiteSpace(conservation) ||
         !isNullOrWhiteSpace(culturalHeritage) ||
         !isNullOrWhiteSpace(history) || !isNullOrWhiteSpace(wildlife)
     },
@@ -413,9 +432,9 @@ export default function ParkTemplate({ data }) {
                     </div>
                   )}
                   {!isLoadingAdvisories && !advisoryLoadError && (
-                    <AdvisoryDetails 
-                      advisories={advisoriesWithSeasonal.length > 0 ? advisoriesWithSeasonal : advisories} 
-                      parkType={parkType} 
+                    <AdvisoryDetails
+                      advisories={advisoriesWithSeasonal.length > 0 ? advisoriesWithSeasonal : advisories}
+                      parkType={parkType}
                       parkAccessStatus={parkAccessStatus}
                     />
                   )}
@@ -535,10 +554,23 @@ export default function ParkTemplate({ data }) {
   )
 }
 
-export const Head = ({ data }) => {
+export const Head = ({ data, pageContext }) => {
   const park = data.strapiProtectedArea
+  if (!park) {
+    console.warn(
+      `[ParkTemplate:Head] Missing strapiProtectedArea for slug="${pageContext?.slug || "unknown"}" orcs="${pageContext?.orcs || "unknown"}"`
+    )
+    return (
+      <Seo
+        title={pageContext?.protectedAreaName || "BC Parks"}
+        description=""
+        image={parksLogo}
+      />
+    )
+  }
+
   const seo = park.seo
-  const description = park.description.data.description
+  const description = park.description?.data?.description || ""
   const parkDescription = description.replace(/(<([^>]+)>)/ig, '');
   const parkDescriptionShort = truncate(parkDescription, { length: 160 });
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes]
@@ -699,7 +731,7 @@ export const query = graphql`
           defaultTitle
           defaultDescription {
             data {
-              defaultDescription 
+              defaultDescription
             }
           }
         }
