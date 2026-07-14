@@ -71,10 +71,16 @@ export const ParkContact = ({ contact }) => {
   )
 }
 
-export default function Contact({ contact, parkContacts, operations }) {
+export default function Contact({ contact, parkContacts, operations, parkSlug, parkOrcs, parkName }) {
+  if (parkContacts == null) {
+    console.warn(
+      `[ParkTemplate] parkContacts is null for slug="${parkSlug || "unknown"}" orcs="${parkOrcs || "unknown"}" name="${parkName || "unknown"}"`
+    )
+  }
+
   // Filter contacts by isActive and sort by rank
   const sortedContacts =
-    parkContacts.filter(contact => contact.isActive).sort((a, b) => {
+    (parkContacts || []).filter(contact => contact.isActive).sort((a, b) => {
       return a.rank - b.rank
     })
   const hasAnyReservations =

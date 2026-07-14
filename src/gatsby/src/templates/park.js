@@ -554,6 +554,9 @@ export default function ParkTemplate({ data, pageContext }) {
                   contact={contact}
                   parkContacts={park.parkContacts}
                   operations={operations}
+                  parkSlug={park.slug}
+                  parkOrcs={park.orcs}
+                  parkName={park.protectedAreaName}
                 />
               </div>
             )}
