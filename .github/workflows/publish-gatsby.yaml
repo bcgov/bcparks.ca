@@ -29,6 +29,7 @@ concurrency:
 
 env:
   GATSBY_ENABLE_SNOWPLOW: true
+  GATSBY_CPU_COUNT: 1
 
 jobs:
   build:
