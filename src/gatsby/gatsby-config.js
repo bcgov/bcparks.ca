@@ -83,6 +83,7 @@ module.exports = {
             singularName: "protected-area",
             queryParams: {
               fields: "*",
+              sort: ["id:asc"],
               populate: {
                 parkActivities: {
                   populate: ["activityType"],
@@ -214,6 +215,7 @@ module.exports = {
           {
             singularName: "site",
             queryParams: {
+              sort: ["id:asc"],
               populate: {
                 protectedArea: {
                   fields: "*",
