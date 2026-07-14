@@ -291,42 +291,41 @@ export default function ParkTemplate({ data }) {
     }
   ]
 
-  // Temporary debug logging
-  console.info(`[ParkTemplate Debug] ${park.slug} (${park.orcs}) source data`, {
-    descriptionPresent: !isNullOrWhiteSpace(description),
-    mapsPresent: !isNullOrWhiteSpace(maps),
-    locationNotesPresent: !isNullOrWhiteSpace(locationNotes),
-    conservationPresent: !isNullOrWhiteSpace(conservation),
-    culturalHeritagePresent: !isNullOrWhiteSpace(culturalHeritage),
-    historyPresent: !isNullOrWhiteSpace(history),
-    wildlifePresent: !isNullOrWhiteSpace(wildlife),
-    reconciliationPresent: !isNullOrWhiteSpace(reconciliationNotes),
-    parkActivitiesCount: park.parkActivities?.length || 0,
-    activeActivitiesCount: activeActivities.length,
-    parkFacilitiesCount: park.parkFacilities?.length || 0,
-    activeFacilitiesCount: activeFacilities.length,
-    parkCampingTypesCount: park.parkCampingTypes?.length || 0,
-    activeCampingsCount: activeCampings.length,
-    managementAreasCount: managementAreas.length,
-  })
+  if (typeof window === "undefined" && (park.orcs === 11 || park.slug === "keremeos-columns-park")) {
+    console.info(`[ParkTemplate Debug] ${park.slug} (${park.orcs}) source data`, {
+      descriptionPresent: !isNullOrWhiteSpace(description),
+      mapsPresent: !isNullOrWhiteSpace(maps),
+      locationNotesPresent: !isNullOrWhiteSpace(locationNotes),
+      conservationPresent: !isNullOrWhiteSpace(conservation),
+      culturalHeritagePresent: !isNullOrWhiteSpace(culturalHeritage),
+      historyPresent: !isNullOrWhiteSpace(history),
+      wildlifePresent: !isNullOrWhiteSpace(wildlife),
+      reconciliationPresent: !isNullOrWhiteSpace(reconciliationNotes),
+      parkActivitiesCount: park.parkActivities?.length || 0,
+      activeActivitiesCount: activeActivities.length,
+      parkFacilitiesCount: park.parkFacilities?.length || 0,
+      activeFacilitiesCount: activeFacilities.length,
+      parkCampingTypesCount: park.parkCampingTypes?.length || 0,
+      activeCampingsCount: activeCampings.length,
+      managementAreasCount: managementAreas.length,
+    })
 
-  if (park.orcs === 11 || park.slug === "keremeos-columns-park" || park.orcs == 33) {
     console.info(`[ParkTemplate Debug] ${park.slug} (${park.orcs}) full park object`, park)
     try {
       console.info(`[ParkTemplate Debug] ${park.slug} (${park.orcs}) full park JSON`, JSON.stringify(park, null, 2))
     } catch (error) {
       console.error(`[ParkTemplate Debug] ${park.slug} (${park.orcs}) failed to stringify full park object`, error)
     }
-  }
 
-  console.info(
-    `[ParkTemplate Debug] ${park.slug} (${park.orcs}) section visibility`,
-    menuItems.map((item) => ({
-      link: item.link,
-      display: item.display,
-      visible: item.visible,
-    }))
-  )
+    console.info(
+      `[ParkTemplate Debug] ${park.slug} (${park.orcs}) section visibility`,
+      menuItems.map((item) => ({
+        link: item.link,
+        display: item.display,
+        visible: item.visible,
+      }))
+    )
+  }
 
   const parkName = park.protectedAreaName;
 

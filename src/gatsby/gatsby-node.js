@@ -442,7 +442,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(typeDefs)
 }
 
-exports.createPages = async ({ graphql, actions, reporter }) => {
+exports.createPages = async ({ graphql, actions, reporter, getNodesByType, getNode }) => {
   const pageQuery = `
   {
     allStrapiPage(filter: {Slug: {nin: ["/home", "/active-advisories", "/find-a-park"]}}) {
@@ -593,7 +593,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `
 
   await createStaticPage(pageQuery, { graphql, actions, reporter })
-  await createParkPage(parkQuery, { graphql, actions, reporter })
+  await createParkPage(parkQuery, { graphql, actions, reporter, getNodesByType, getNode })
   await createSitePage(siteQuery, { graphql, actions, reporter })
   await createParkSubPages(parkSubQuery, { graphql, actions, reporter })
   await createRedirects(parkQuery, redirectQuery, { graphql, actions, reporter })
@@ -614,13 +614,83 @@ async function createStaticPage(query, { graphql, actions, reporter }) {
   })
 }
 
-async function createParkPage(query, { graphql, actions, reporter }) {
+async function createParkPage(query, { graphql, actions, reporter, getNodesByType, getNode }) {
   const result = await strapiApiRequest(graphql, query)
   if (result.errors) {
     reporter.panicOnBuild(`Error while running GraphQL query - node create park page.`)
     return
   }
   result.data.allStrapiProtectedArea.nodes.forEach(park => {
+    if (park.orcs === 11 || park.slug === "keremeos-columns-park") {
+      const rawParkNode = getNodesByType("STRAPI_PROTECTED_AREA").find(
+        (node) => node.slug === park.slug && node.orcs === park.orcs,
+      )
+
+      if (rawParkNode) {
+        reporter.info(
+          `[ParkTemplate Debug] ${park.slug} (${park.orcs}) raw protected area node ${JSON.stringify({
+            id: rawParkNode.id,
+            strapi_id: rawParkNode.strapi_id,
+            documentId: rawParkNode.documentId,
+            slug: rawParkNode.slug,
+            orcs: rawParkNode.orcs,
+            description: rawParkNode.description,
+            locationNotes: rawParkNode.locationNotes,
+            reconciliationNotes: rawParkNode.reconciliationNotes,
+            safetyInfo: rawParkNode.safetyInfo,
+            specialNotes: rawParkNode.specialNotes,
+            parkContact: rawParkNode.parkContact,
+            conservation: rawParkNode.conservation,
+            culturalHeritage: rawParkNode.culturalHeritage,
+            history: rawParkNode.history,
+            wildlife: rawParkNode.wildlife,
+            reservations: rawParkNode.reservations,
+            maps: rawParkNode.maps,
+            parkActivities: rawParkNode.parkActivities,
+            parkFacilities: rawParkNode.parkFacilities,
+            parkCampingTypes: rawParkNode.parkCampingTypes,
+            parkGuidelines: rawParkNode.parkGuidelines,
+            parkOperation: rawParkNode.parkOperation,
+            managementAreas: rawParkNode.managementAreas,
+            trailReports: rawParkNode.trailReports,
+            parkContacts: rawParkNode.parkContacts,
+            audioClips: rawParkNode.audioClips,
+          }, null, 2)}`
+        )
+
+        reporter.info(
+          `[ParkTemplate Debug] ${park.slug} (${park.orcs}) raw link resolution ${JSON.stringify({
+            descriptionDataNodeId: rawParkNode.description?.data___NODE,
+            descriptionDataNodeExists: !!getNode(rawParkNode.description?.data___NODE),
+            locationNotesDataNodeId: rawParkNode.locationNotes?.data___NODE,
+            locationNotesDataNodeExists: !!getNode(rawParkNode.locationNotes?.data___NODE),
+            reconciliationNotesDataNodeId: rawParkNode.reconciliationNotes?.data___NODE,
+            reconciliationNotesDataNodeExists: !!getNode(rawParkNode.reconciliationNotes?.data___NODE),
+            safetyInfoDataNodeId: rawParkNode.safetyInfo?.data___NODE,
+            safetyInfoDataNodeExists: !!getNode(rawParkNode.safetyInfo?.data___NODE),
+            specialNotesDataNodeId: rawParkNode.specialNotes?.data___NODE,
+            specialNotesDataNodeExists: !!getNode(rawParkNode.specialNotes?.data___NODE),
+            parkContactDataNodeId: rawParkNode.parkContact?.data___NODE,
+            parkContactDataNodeExists: !!getNode(rawParkNode.parkContact?.data___NODE),
+            conservationDataNodeId: rawParkNode.conservation?.data___NODE,
+            conservationDataNodeExists: !!getNode(rawParkNode.conservation?.data___NODE),
+            culturalHeritageDataNodeId: rawParkNode.culturalHeritage?.data___NODE,
+            culturalHeritageDataNodeExists: !!getNode(rawParkNode.culturalHeritage?.data___NODE),
+            historyDataNodeId: rawParkNode.history?.data___NODE,
+            historyDataNodeExists: !!getNode(rawParkNode.history?.data___NODE),
+            wildlifeDataNodeId: rawParkNode.wildlife?.data___NODE,
+            wildlifeDataNodeExists: !!getNode(rawParkNode.wildlife?.data___NODE),
+            reservationsDataNodeId: rawParkNode.reservations?.data___NODE,
+            reservationsDataNodeExists: !!getNode(rawParkNode.reservations?.data___NODE),
+            mapsDataNodeId: rawParkNode.maps?.data___NODE,
+            mapsDataNodeExists: !!getNode(rawParkNode.maps?.data___NODE),
+          }, null, 2)}`
+        )
+      } else {
+        reporter.warn(`[ParkTemplate Debug] ${park.slug} (${park.orcs}) raw protected area node not found`)
+      }
+    }
+
     actions.createPage({
       path: park.slug.replace(/\/$|$/, `/`),
       component: require.resolve(`./src/templates/park.js`),
