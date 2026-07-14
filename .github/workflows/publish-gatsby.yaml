@@ -108,7 +108,7 @@ jobs:
       - run: mkdir -p gatsby/public && mkdir gatsby/.cache
 
       - name: Cache Gatsby Cache Folder
-        uses: actions/cache@v5
+        uses: actions/cache@v4
         id: gatsby-cache-folder
         with:
           path: gatsby/.cache
@@ -116,7 +116,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cache-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
       - name: Cache Gatsby Public Folder
-        uses: actions/cache@v5
+        uses: actions/cache@v4
         id: gatsby-public-folder
         with:
           path: gatsby/public
