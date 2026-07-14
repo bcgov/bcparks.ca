@@ -108,7 +108,7 @@ export default function ParkTemplate({ data }) {
       setIsLoadingAdvisories(false)
     }
   }
-  
+
   const loadProtectedAreaData = async () => {
     setIsLoadingProtectedArea(true)
     try {
@@ -127,7 +127,7 @@ export default function ParkTemplate({ data }) {
       setIsLoadingProtectedArea(false)
     }
   }
-  
+
   const loadParkFeaturesData = async () => {
     setIsLoadingParkFeatures(true)
     try {
@@ -273,7 +273,7 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 6,
       display: `About this ${parkType}`,
       link: "#about-this-park",
-      visible: !isNullOrWhiteSpace(conservation) || 
+      visible: !isNullOrWhiteSpace(conservation) ||
         !isNullOrWhiteSpace(culturalHeritage) ||
         !isNullOrWhiteSpace(history) || !isNullOrWhiteSpace(wildlife)
     },
@@ -290,6 +290,34 @@ export default function ParkTemplate({ data }) {
       visible: true
     }
   ]
+
+  // Temporary debug logging
+  console.info(`[ParkTemplate Debug] ${park.slug} (${park.orcs}) source data`, {
+    descriptionPresent: !isNullOrWhiteSpace(description),
+    mapsPresent: !isNullOrWhiteSpace(maps),
+    locationNotesPresent: !isNullOrWhiteSpace(locationNotes),
+    conservationPresent: !isNullOrWhiteSpace(conservation),
+    culturalHeritagePresent: !isNullOrWhiteSpace(culturalHeritage),
+    historyPresent: !isNullOrWhiteSpace(history),
+    wildlifePresent: !isNullOrWhiteSpace(wildlife),
+    reconciliationPresent: !isNullOrWhiteSpace(reconciliationNotes),
+    parkActivitiesCount: park.parkActivities?.length || 0,
+    activeActivitiesCount: activeActivities.length,
+    parkFacilitiesCount: park.parkFacilities?.length || 0,
+    activeFacilitiesCount: activeFacilities.length,
+    parkCampingTypesCount: park.parkCampingTypes?.length || 0,
+    activeCampingsCount: activeCampings.length,
+    managementAreasCount: managementAreas.length,
+  })
+
+  console.info(
+    `[ParkTemplate Debug] ${park.slug} (${park.orcs}) section visibility`,
+    menuItems.map((item) => ({
+      link: item.link,
+      display: item.display,
+      visible: item.visible,
+    }))
+  )
 
   const parkName = park.protectedAreaName;
 
@@ -413,9 +441,9 @@ export default function ParkTemplate({ data }) {
                     </div>
                   )}
                   {!isLoadingAdvisories && !advisoryLoadError && (
-                    <AdvisoryDetails 
-                      advisories={advisoriesWithSeasonal.length > 0 ? advisoriesWithSeasonal : advisories} 
-                      parkType={parkType} 
+                    <AdvisoryDetails
+                      advisories={advisoriesWithSeasonal.length > 0 ? advisoriesWithSeasonal : advisories}
+                      parkType={parkType}
                       parkAccessStatus={parkAccessStatus}
                     />
                   )}
@@ -699,7 +727,7 @@ export const query = graphql`
           defaultTitle
           defaultDescription {
             data {
-              defaultDescription 
+              defaultDescription
             }
           }
         }
