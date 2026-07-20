@@ -2,6 +2,7 @@ cluster:
   ssoAuthUrl: https://test.loginproxy.gov.bc.ca/auth
   publicUrl: https://alpha-test.bcparks.ca
   staffPortalUrl: https://alpha-test-staff.bcparks.ca
+  recSpaceApiUrl: https://dpeu7dmgz4j6y.cloudfront.net
 
 images:
   strapi:
@@ -43,6 +44,5 @@ scheduler:
     emailEnabled: true
     emailRecipient: manuji@oxd.com,mike@oxd.com
     emailRecipientWhitelist: manuji@oxd.com,mike@oxd.com
-    recSpaceBaseUrl: https://dk1yyyipojdmy.cloudfront.net
     recSpaceKeycloakTokenUrl: https://test.loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect/token
     recSpaceKeycloakClientId: testing-act-integration-6456
