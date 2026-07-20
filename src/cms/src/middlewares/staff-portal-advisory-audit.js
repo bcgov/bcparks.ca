@@ -155,18 +155,18 @@ module.exports = () => {
 
     if (isAdvisoryEqual(updatedPublicAdvisory, oldPublicAdvisory)) return;
 
-    // revision flow 1: published by system
     if (
-      newAdvisoryStatusCode === "PUB" &&
-      updatedPublicAdvisory.publishedByName === "system"
+      updatedPublicAdvisory.reviewedByName &&
+      !updatedPublicAdvisory.modifiedByName &&
+      !updatedPublicAdvisory.publishedByName &&
+      !updatedPublicAdvisory.unpublishedByName
     ) {
-      await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
-      updatedPublicAdvisory.revisionNumber =
-        oldPublicAdvisory.revisionNumber + 1;
+      // Review-only updates: no new revision needed.
+      // The review payload is sent via PUT with minimal data
       return;
     }
 
-    // revision flow 2: changes to published advisories
+    // revision flow 1: changes to published advisories
     if (oldAdvisoryStatus === "PUB") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       updatedPublicAdvisory.revisionNumber =
@@ -174,7 +174,7 @@ module.exports = () => {
       return;
     }
 
-    // revision flow 3: non-published advisory modified by a different user
+    // revision flow 2: non-published advisory modified by a different user
     if (
       oldPublicAdvisory.modifiedByName !==
         updatedPublicAdvisory.modifiedByName &&
@@ -299,6 +299,11 @@ module.exports = () => {
 
     // replicate beforeCreate/afterCreate lifecycles in Strapi 4
     if (context.action === "create") {
+      // skip if we are creating an audit record
+      if (context.params?.data?.isLatestRevision === false) {
+        return await next();
+      }
+
       await beforeCreate(context);
       context.result = await next();
       await afterCreate(context);
