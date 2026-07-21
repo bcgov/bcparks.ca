@@ -16,6 +16,9 @@ async function postRecSpacePublicAdvisory(payload) {
     logger.error(
       `postRecSpacePublicAdvisory() failed for advisory ${payload.advisory_number} with rec_resource_id ${payload.rec_resource_id}: ${error?.message ?? error}`,
     );
+    if (error?.response?.data) {
+      logger.error(`Response body: ${JSON.stringify(error.response.data)}`);
+    }
     throw error;
   }
 }
