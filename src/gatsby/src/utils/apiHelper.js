@@ -34,7 +34,7 @@ const PARK_DATES = {
         isActive: { $eq: true },
       },
       {
-        operatingYear: { $gte: currentYear },
+        endDate: { $gte: `${currentYear}-01-01` },
       },
     ],
   },
@@ -57,7 +57,7 @@ const PARK_GATE_DATES = {
         isActive: { $eq: true },
       },
       {
-        operatingYear: { $gte: currentYear },
+        endDate: { $gte: `${currentYear}-01-01` },
       },
       {
         parkDateType: {
