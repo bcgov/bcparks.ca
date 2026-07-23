@@ -94,7 +94,7 @@ const getParkDates = (parkOperationDates) => {
             date.endDate <= `${currentYear}-12-31`)) &&
         date.startDate &&
         date.endDate
-      );
+      )
     })
     .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
     .map(date => formatDateRange(date.startDate, date.endDate))
