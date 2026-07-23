@@ -138,6 +138,12 @@ jobs:
         run: |
           oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-${{ env.ENV_SUFFIX }} rollout restart deployment ${{ env.DEPLOYMENT_NAME }}
 
+      - name: Tag rollback image
+        if: env.IMAGE_TAG == 'prod'
+        run: |
+          TIMESTAMP=$(date -u +'%Y%m%dT%H%M')
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-main:prod public-main:rollback${TIMESTAMP}
+
   # alert-if-failure:
   #   if: ${{ always() && (needs.build.result=='failure')}}
   #   runs-on: ubuntu-latest
