@@ -85,7 +85,7 @@ const getParkDates = (parkOperationDates) => {
 
   const currentYear = new Date().getFullYear()
 
-  // Format each date range, filter by operating year
+  // Format each date range; include current operating year and prior-year ranges that extend into the current year
   const formattedDateRanges = parkOperationDates
     .filter((date) => {
       return (
