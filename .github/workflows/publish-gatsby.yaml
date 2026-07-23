@@ -29,6 +29,7 @@ concurrency:
 
 env:
   GATSBY_ENABLE_SNOWPLOW: true
+  TOOLS_NAMESPACE: ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools
 
 jobs:
   build:
@@ -141,7 +142,7 @@ jobs:
       - name: Tag rollback image
         if: env.IMAGE_TAG == 'prod'
         run: |
-          TIMESTAMP=$(date -u +'%Y%m%dT%H%M')
+          TIMESTAMP=$(TZ=America/Vancouver date +'%Y%m%dT%H%M')
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public-main:prod public-main:rollback${TIMESTAMP}
 
   # alert-if-failure:
