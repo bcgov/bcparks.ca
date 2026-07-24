@@ -18,13 +18,13 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v3
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v4
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
@@ -32,7 +32,7 @@ jobs:
 
       # Downgrade/pin Docker Engine to v28.x on the hosted runner
       - name: Set up Docker 28.x
-        uses: docker/setup-docker-action@v5
+        uses: docker/setup-docker-action@v4
         with:
           version: "28.5.2"
           set-host: true # <— this sets DOCKER_HOST for all following steps
@@ -61,7 +61,7 @@ jobs:
       IMAGE_NAME: public-builder-${{ github.ref_name }}
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v3
 
       - name: Set env
         run: |
@@ -69,7 +69,7 @@ jobs:
           echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v4
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
@@ -91,7 +91,7 @@ jobs:
       IMAGE_NAME: maintenance-${{ github.ref_name }}
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v3
 
       - name: Set env
         run: |
@@ -99,7 +99,7 @@ jobs:
           echo "REGISTRY_IMAGE=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v4
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
@@ -122,13 +122,13 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v3
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v4
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
@@ -136,7 +136,7 @@ jobs:
 
       # Downgrade/pin Docker Engine to v28.x on the hosted runner
       - name: Set up Docker 28.x
-        uses: docker/setup-docker-action@v5
+        uses: docker/setup-docker-action@v4
         with:
           version: "28.5.2"
           set-host: true # <— this sets DOCKER_HOST for all following steps
@@ -164,13 +164,13 @@ jobs:
       BUILDER_IMAGE: registry.access.redhat.com/ubi9/nodejs-22
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v3
 
       - name: Set env
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v4
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
@@ -178,7 +178,7 @@ jobs:
 
       # Downgrade/pin Docker Engine to v28.x on the hosted runner
       - name: Set up Docker 28.x
-        uses: docker/setup-docker-action@v5
+        uses: docker/setup-docker-action@v4
         with:
           version: "28.5.2"
           set-host: true # <— this sets DOCKER_HOST for all following steps
@@ -205,13 +205,12 @@ jobs:
     needs: [build-cms]
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v3
 
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
-          oc: "4.16"
-          skip_cache: true
+          oc: "4.14"
 
       - name: Login OpenShift
         uses: redhat-actions/oc-login@v1
@@ -226,7 +225,7 @@ jobs:
           oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-scheduler
 
       - name: Trigger Gatsby static build workflow
-        uses: peter-evans/repository-dispatch@v4
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: publish-gatsby

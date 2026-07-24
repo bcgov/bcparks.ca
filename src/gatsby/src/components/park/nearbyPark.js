@@ -14,8 +14,8 @@ import { addSmallImagePrefix, handleImgError } from "../../utils/helpers";
 const NearbyPark = ({ park }) => {
   // sort photos to keep the same conditions as the find a park page
   // ref: scheduler/elasticsearch/transformers/park/main.js
-  const photos = park.parkPhotos
-    .filter((p) => p.isActive)
+  const photos = (park.parkPhotos || [])
+    .filter(p => p.isActive)
     .sort((a, b) => {
       if (a.isFeatured && !b.isFeatured) {
         return -1;

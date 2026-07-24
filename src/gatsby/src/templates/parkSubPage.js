@@ -21,17 +21,19 @@ export default function ParkSubPage({ data }) {
   const contents = page.content;
   const header = page.pageHeader;
   const park = page.protectedArea;
+  const parkSlug = park?.slug || "no-protected-area";
+  const parkName = park?.protectedAreaName || "Protected area";
   const menuContent = data?.allStrapiMenu?.nodes || [];
   const sections =
     contents?.filter((content) =>
-      Boolean(content.strapi_component === "parks.page-section"),
+      Boolean(content.strapi_component === "parks.page-section")
     ) || [];
   const hasSections = sections.length > 0;
   const filteredContent =
     contents?.filter(
       (c) =>
         Boolean(c.strapi_component !== "parks.page-header") &&
-        Boolean(c.strapi_component !== "parks.seo"),
+        Boolean(c.strapi_component !== "parks.seo")
     ) || [];
 
   let sectionRefs = [
@@ -90,9 +92,15 @@ export default function ParkSubPage({ data }) {
     >
       Find a park
     </GatsbyLink>,
-    <GatsbyLink key="3" to={`/${park.slug}`}>
-      {park.protectedAreaName}
-    </GatsbyLink>,
+    park?.slug ? (
+      <GatsbyLink key="3" to={`/${parkSlug}`}>
+        {parkName}
+      </GatsbyLink>
+    ) : (
+      <div key="3" className="breadcrumb-text">
+        {parkName}
+      </div>
+    ),
     <div key="4" className="breadcrumb-text">
       {page.title}
     </div>,
@@ -113,7 +121,7 @@ export default function ParkSubPage({ data }) {
           </div>
         )}
         <h1 className="header-title">
-          {park.protectedAreaName}: {header?.title ?? page.title}
+          {parkName}: {header?.title ?? page.title}
         </h1>
       </div>
       {hasSections && (
@@ -135,7 +143,7 @@ export default function ParkSubPage({ data }) {
               <div className="page-content col-md-8 col-12">
                 {header && (
                   <div className="header-content">
-                    {header.introHtml.data.introHtml && (
+                    {header.introHtml?.data?.introHtml && (
                       <HtmlContent>
                         {header.introHtml.data.introHtml}
                       </HtmlContent>
@@ -157,7 +165,7 @@ export default function ParkSubPage({ data }) {
             </div>
           ) : (
             <div>
-              {header && header.introHtml.data.introHtml && (
+              {header?.introHtml?.data?.introHtml && (
                 <div className="header-content">
                   <HtmlContent>{header.introHtml.data.introHtml}</HtmlContent>
                 </div>
@@ -184,10 +192,11 @@ export const Head = ({ data }) => {
   const page = data.strapiParkSubPage;
   const park = page.protectedArea;
   const seo = page.seo;
+  const parkName = park?.protectedAreaName || "Protected area";
 
   return (
     <Seo
-      title={seo?.metaTitle ?? park.protectedAreaName + ": " + page.title}
+      title={seo?.metaTitle ?? parkName + ": " + page.title}
       description={seo?.metaDescription}
       keywords={seo?.metaKeywords}
       image={page.pageHeader?.imageUrl}

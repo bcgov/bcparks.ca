@@ -224,7 +224,142 @@ exports.createSchemaCustomization = ({ actions }) => {
     updatedAt: Date
   }
 
+  type STRAPI_PROTECTED_AREA_DESCRIPTION_TEXTNODE implements Node @dontInfer {
+    description: String
+  }
+
+  type STRAPI_PROTECTED_AREADescription {
+    data: STRAPI_PROTECTED_AREA_DESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_SAFETYINFO_TEXTNODE implements Node @dontInfer {
+    safetyInfo: String
+  }
+
+  type STRAPI_PROTECTED_AREASafetyInfo {
+    data: STRAPI_PROTECTED_AREA_SAFETYINFO_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_SPECIALNOTES_TEXTNODE implements Node @dontInfer {
+    specialNotes: String
+  }
+
+  type STRAPI_PROTECTED_AREASpecialNotes {
+    data: STRAPI_PROTECTED_AREA_SPECIALNOTES_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_LOCATIONNOTES_TEXTNODE implements Node @dontInfer {
+    locationNotes: String
+  }
+
+  type STRAPI_PROTECTED_AREALocationNotes {
+    data: STRAPI_PROTECTED_AREA_LOCATIONNOTES_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_PARKCONTACT_TEXTNODE implements Node @dontInfer {
+    parkContact: String
+  }
+
+  type STRAPI_PROTECTED_AREAParkContact {
+    data: STRAPI_PROTECTED_AREA_PARKCONTACT_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_RESERVATIONS_TEXTNODE implements Node @dontInfer {
+    reservations: String
+  }
+
+  type STRAPI_PROTECTED_AREAReservations {
+    data: STRAPI_PROTECTED_AREA_RESERVATIONS_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_MAPS_TEXTNODE implements Node @dontInfer {
+    maps: String
+  }
+
+  type STRAPI_PROTECTED_AREAMaps {
+    data: STRAPI_PROTECTED_AREA_MAPS_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_MANAGEMENTPLANNING_TEXTNODE implements Node @dontInfer {
+    managementPlanning: String
+  }
+
+  type STRAPI_PROTECTED_AREAManagementPlanning {
+    data: STRAPI_PROTECTED_AREA_MANAGEMENTPLANNING_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_PARTNERSHIPS_TEXTNODE implements Node @dontInfer {
+    partnerships: String
+  }
+
+  type STRAPI_PROTECTED_AREAPartnerships {
+    data: STRAPI_PROTECTED_AREA_PARTNERSHIPS_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_PURPOSE_TEXTNODE implements Node @dontInfer {
+    purpose: String
+  }
+
+  type STRAPI_PROTECTED_AREAPurpose {
+    data: STRAPI_PROTECTED_AREA_PURPOSE_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_RECONCILIATIONNOTES_TEXTNODE implements Node @dontInfer {
+    reconciliationNotes: String
+  }
+
+  type STRAPI_PROTECTED_AREAReconciliationNotes {
+    data: STRAPI_PROTECTED_AREA_RECONCILIATIONNOTES_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_CONSERVATION_TEXTNODE implements Node @dontInfer {
+    conservation: String
+  }
+
+  type STRAPI_PROTECTED_AREAConservation {
+    data: STRAPI_PROTECTED_AREA_CONSERVATION_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_CULTURALHERITAGE_TEXTNODE implements Node @dontInfer {
+    culturalHeritage: String
+  }
+
+  type STRAPI_PROTECTED_AREACulturalHeritage {
+    data: STRAPI_PROTECTED_AREA_CULTURALHERITAGE_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_HISTORY_TEXTNODE implements Node @dontInfer {
+    history: String
+  }
+
+  type STRAPI_PROTECTED_AREAHistory {
+    data: STRAPI_PROTECTED_AREA_HISTORY_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
+  type STRAPI_PROTECTED_AREA_WILDLIFE_TEXTNODE implements Node @dontInfer {
+    wildlife: String
+  }
+
+  type STRAPI_PROTECTED_AREAWildlife {
+    data: STRAPI_PROTECTED_AREA_WILDLIFE_TEXTNODE @link(by: "id", from: "data___NODE")
+  }
+
   type STRAPI_PROTECTED_AREA implements Node {
+    description: STRAPI_PROTECTED_AREADescription
+    safetyInfo: STRAPI_PROTECTED_AREASafetyInfo
+    specialNotes: STRAPI_PROTECTED_AREASpecialNotes
+    locationNotes: STRAPI_PROTECTED_AREALocationNotes
+    parkContact: STRAPI_PROTECTED_AREAParkContact
+    reservations: STRAPI_PROTECTED_AREAReservations
+    maps: STRAPI_PROTECTED_AREAMaps
+    managementPlanning: STRAPI_PROTECTED_AREAManagementPlanning
+    partnerships: STRAPI_PROTECTED_AREAPartnerships
+    purpose: STRAPI_PROTECTED_AREAPurpose
+    reconciliationNotes: STRAPI_PROTECTED_AREAReconciliationNotes
+    conservation: STRAPI_PROTECTED_AREAConservation
+    culturalHeritage: STRAPI_PROTECTED_AREACulturalHeritage
+    history: STRAPI_PROTECTED_AREAHistory
+    wildlife: STRAPI_PROTECTED_AREAWildlife
     managementDocuments:[STRAPI_MANAGEMENT_DOCUMENT] @link(by: "id", from: "managementDocuments___NODE")
     biogeoclimaticZones: [STRAPI_BIOGEOCLIMATIC_ZONE] @link(by: "id", from: "biogeoclimaticZones___NODE")
     marineEcosections: [STRAPI_MARINE_ECOSECTION] @link(by: "id", from: "marineEcosections___NODE")

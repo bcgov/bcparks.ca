@@ -75,7 +75,7 @@ const joinDateRanges = (dateRanges) => {
 
 // Get feature dates formatted
 const getFeatureDates = (dateArray) => {
-  return dateArray
+  return (dateArray || [])
     .sort((a, b) => new Date(a.start) - new Date(b.start))
     .map((dateRange) => {
       const dateStr = formatDateRange(dateRange.start, dateRange.end);
@@ -87,7 +87,7 @@ const getFeatureDates = (dateArray) => {
 
 // Get park dates formatted (current year only)
 const getParkDates = (parkOperationDates) => {
-  if (parkOperationDates.length === 0) {
+  if (!parkOperationDates || parkOperationDates.length === 0) {
     return "";
   }
 

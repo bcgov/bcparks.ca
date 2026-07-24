@@ -29,6 +29,7 @@ concurrency:
 
 env:
   GATSBY_ENABLE_SNOWPLOW: true
+  TOOLS_NAMESPACE: ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools
 
 jobs:
   build:
@@ -43,7 +44,7 @@ jobs:
       - name: Set env based on branch
         run: |
           if [[ "${{ github.event.client_payload.branch }}" == "main" || "${{ github.event.inputs.branchName }}" == "main" ]]; then
-              echo "BRANCH=main" >> $GITHUB_ENV              
+              echo "BRANCH=main" >> $GITHUB_ENV
               echo "BUILDER_IMAGE_NAME=public-builder-main" >> $GITHUB_ENV
               echo "IMAGE_NAME=public-main" >> $GITHUB_ENV
               echo "DEPLOYMENT_NAME=main-public" >> $GITHUB_ENV
@@ -71,7 +72,7 @@ jobs:
               echo "ENV_SUFFIX=test" >> $GITHUB_ENV
               echo "IMAGE_TAG=test" >> $GITHUB_ENV
               if [[ "${{ github.event.client_payload.branch }}" == "main" || "${{ github.event.inputs.branchName }}" == "main" ]]; then
-                  echo "STRAPI_SOURCE_URL=https://test-cms.bcparks.ca" >> $GITHUB_ENV              
+                  echo "STRAPI_SOURCE_URL=https://test-cms.bcparks.ca" >> $GITHUB_ENV
                   echo "REACT_APP_CMS_BASE_URL=https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://test.bcparks.ca" >> $GITHUB_ENV
                   echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_TEST__GOLD }}" >> $GITHUB_ENV
@@ -94,42 +95,28 @@ jobs:
               fi
           fi
       - name: Login to OpenShift Container Repository
-        uses: docker/login-action@v4
+        uses: docker/login-action@v2
         with:
           registry: ${{secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY}}
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v3
         with:
           node-version: "22"
 
-      - run: mkdir -p gatsby/public && mkdir gatsby/.cache
-
-      - name: Cache Gatsby Cache Folder
-        uses: actions/cache@v5
-        id: gatsby-cache-folder
-        with:
-          path: gatsby/.cache
-          key: ${{ runner.os }}-cache-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
-          restore-keys: |
-            ${{ runner.os }}-cache-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
-      - name: Cache Gatsby Public Folder
-        uses: actions/cache@v5
-        id: gatsby-public-folder
-        with:
-          path: gatsby/public
-          key: ${{ runner.os }}-public-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
-          restore-keys: |
-            ${{ runner.os }}-public-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
+      - run: mkdir -p gatsby/public
       - name: Build static
         run: |
           # Run the builder image as container since you can't directly copy file from an image
           docker run -d -t --name builder ${{ steps.vars.outputs.registry_builder_image }}:${{ env.IMAGE_TAG }}
           # Copy Gatsby source and packages to local.  Tried to just do the build in the container, but ran into some weird issues with the build
           docker cp builder:/gatsby/. gatsby
-          cd gatsby && npm run build
+          cd gatsby
+          # Ensure a fresh build from source data; avoid stale page-data from copied image cache.
+          rm -rf .cache public
+          npm run build
       - name: Build and push public image
         run: |
           docker build -t ${{ steps.vars.outputs.registry_image }}:${{ env.IMAGE_TAG }} .
@@ -139,7 +126,7 @@ jobs:
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
-          oc: "4.16"
+          oc: "4.14"
           skip_cache: true
 
       - name: Login OpenShift
@@ -151,6 +138,12 @@ jobs:
       - name: Trigger rollout
         run: |
           oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-${{ env.ENV_SUFFIX }} rollout restart deployment ${{ env.DEPLOYMENT_NAME }}
+
+      - name: Tag rollback image
+        if: env.IMAGE_TAG == 'prod'
+        run: |
+          TIMESTAMP=$(TZ=America/Vancouver date +'%Y%m%dT%H%M')
+          oc -n ${{ env.TOOLS_NAMESPACE }} tag public-main:prod public-main:rollback${TIMESTAMP}
 
   # alert-if-failure:
   #   if: ${{ always() && (needs.build.result=='failure')}}

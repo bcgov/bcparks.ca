@@ -44,19 +44,21 @@ export default function SiteTemplate({ data }) {
 
   const site = data.strapiSite;
   const park = site.protectedArea;
+  const parkSlug = park?.slug || "no-protected-area";
+  const parkName = park?.protectedAreaName || "Protected area";
   const operations = site.parkOperation || {};
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes];
 
-  const description = site.description.data.description;
+  const description = site.description?.data?.description;
   const safetyInfo = site.safetyInfo?.data?.safetyInfo;
-  const locationNotes = site.locationNotes.data.locationNotes;
+  const locationNotes = site.locationNotes?.data?.locationNotes;
   const hasSiteGuidelines = site.parkGuidelines?.length > 0;
-  const managementAreas = park.managementAreas || [];
+  const managementAreas = park?.managementAreas || [];
   const searchArea = managementAreas[0]?.searchArea || {};
 
   const activeActivities = sortBy(
-    site.parkActivities.filter(
-      (activity) => activity.isActive && activity.activityType?.isActive,
+    (site.parkActivities || []).filter(
+      (activity) => activity.isActive && activity.activityType?.isActive
     ),
     ["activityType.rank", "activityType.activityName"],
     ["asc"],
@@ -111,6 +113,15 @@ export default function SiteTemplate({ data }) {
 
   const loadProtectedAreaData = async () => {
     setIsLoadingProtectedArea(true);
+    if (!park?.orcs) {
+      setHasCampfireBan(false);
+      setParkGate({});
+      setParkGateDates([]);
+      setProtectedAreaLoadError(false);
+      setIsLoadingProtectedArea(false);
+      return;
+    }
+
     try {
       const response = await getProtectedArea(apiBaseUrl, park.orcs);
       setHasCampfireBan(response.hasCampfireBan);
@@ -167,7 +178,7 @@ export default function SiteTemplate({ data }) {
   // set active facilities
   useEffect(() => {
     if (
-      site.parkFacilities.length > 0 &&
+      site.parkFacilities?.length > 0 &&
       data.allStrapiFacilityType.nodes.length > 0
     ) {
       const facilities = combineFacilities(
@@ -186,7 +197,7 @@ export default function SiteTemplate({ data }) {
   // set active campings
   useEffect(() => {
     if (
-      site.parkCampingTypes.length > 0 &&
+      site.parkCampingTypes?.length > 0 &&
       data.allStrapiCampingType.nodes.length > 0
     ) {
       const campings = combineCampingTypes(
@@ -286,12 +297,15 @@ export default function SiteTemplate({ data }) {
     >
       Find a park
     </GatsbyLink>,
-    <GatsbyLink
-      key="3"
-      to={`/${park?.slug ? park.slug : "parks/protected-area"}`}
-    >
-      {park?.protectedAreaName}
-    </GatsbyLink>,
+    park?.slug ? (
+      <GatsbyLink key="3" to={`/${parkSlug}`}>
+        {parkName}
+      </GatsbyLink>
+    ) : (
+      <div key="3" className="breadcrumb-text">
+        {parkName}
+      </div>
+    ),
     <div key="4" className="breadcrumb-text">
       {site.siteName}
     </div>,
@@ -311,8 +325,8 @@ export default function SiteTemplate({ data }) {
           </div>
           <ParkHeader
             orcs={site.orcsSiteNumber}
-            slug={`${park.slug}/${site.slug}`}
-            parkName={`${park?.protectedAreaName}: ${site.siteName}`}
+            slug={`${parkSlug}/${site.slug}`}
+            parkName={`${parkName}: ${site.siteName}`}
             parkType="site"
             mapZoom={site.mapZoom}
             latitude={site.latitude}
@@ -341,7 +355,9 @@ export default function SiteTemplate({ data }) {
           />
         </div>
         <div
-          className={`parks-container gallery-container has-photo--${photos.length > 0}`}
+          className={`parks-container gallery-container has-photo--${
+            photos.length > 0
+          }`}
         >
           {photos.length > 0 && (
             <div className="background-container bg-brown"></div>
@@ -486,7 +502,7 @@ export default function SiteTemplate({ data }) {
 export const Head = ({ data }) => {
   const site = data.strapiSite;
   const park = site.protectedArea;
-  const description = site.description.data.description;
+  const description = site.description?.data?.description || "";
   const siteDescription = description.replace(/(<([^>]+)>)/gi, "");
   const siteDescriptionShort = truncate(siteDescription, { length: 160 });
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes];
@@ -494,7 +510,7 @@ export const Head = ({ data }) => {
 
   return (
     <Seo
-      title={`${park?.protectedAreaName}: ${site.siteName}`}
+      title={`${park?.protectedAreaName || "Protected area"}: ${site.siteName}`}
       description={siteDescriptionShort}
       image={photoUrl}
     />

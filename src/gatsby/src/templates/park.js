@@ -50,17 +50,18 @@ export default function ParkTemplate({ data }) {
   const operations = park.parkOperation || {};
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes];
 
-  const description = park.description.data.description;
-  const safetyInfo = park.safetyInfo.data.safetyInfo;
-  const specialNotes = park.specialNotes.data.specialNotes;
-  const locationNotes = park.locationNotes.data.locationNotes;
-  const conservation = park.conservation.data.conservation;
-  const culturalHeritage = park.culturalHeritage.data.culturalHeritage;
-  const history = park.history.data.history;
-  const wildlife = park.wildlife.data.wildlife;
-  const reconciliationNotes = park.reconciliationNotes.data.reconciliationNotes;
-  const maps = park.maps.data.maps;
-  const contact = park.parkContact.data.parkContact;
+  const description = park.description?.data?.description;
+  const safetyInfo = park.safetyInfo?.data?.safetyInfo;
+  const specialNotes = park.specialNotes?.data?.specialNotes;
+  const locationNotes = park.locationNotes?.data?.locationNotes;
+  const conservation = park.conservation?.data?.conservation;
+  const culturalHeritage = park.culturalHeritage?.data?.culturalHeritage;
+  const history = park.history?.data?.history;
+  const wildlife = park.wildlife?.data?.wildlife;
+  const reconciliationNotes =
+    park.reconciliationNotes?.data?.reconciliationNotes;
+  const maps = park.maps?.data?.maps;
+  const contact = park.parkContact?.data?.parkContact;
   const hasNearbyParks = park.nearbyParks?.length > 0;
   const nearbyParks = park.nearbyParks;
   const hasParkGuidelines = park.parkGuidelines?.length > 0;
@@ -68,8 +69,8 @@ export default function ParkTemplate({ data }) {
   const searchArea = managementAreas[0]?.searchArea || {};
 
   const activeActivities = sortBy(
-    park.parkActivities.filter(
-      (activity) => activity.isActive && activity.activityType?.isActive,
+    (park.parkActivities || []).filter(
+      (activity) => activity.isActive && activity.activityType?.isActive
     ),
     ["activityType.rank", "activityType.activityName"],
     ["asc"],
@@ -168,7 +169,7 @@ export default function ParkTemplate({ data }) {
   // set active facilities
   useEffect(() => {
     if (
-      park.parkFacilities.length > 0 &&
+      park.parkFacilities?.length > 0 &&
       data.allStrapiFacilityType.nodes.length > 0
     ) {
       const facilities = combineFacilities(
@@ -187,7 +188,7 @@ export default function ParkTemplate({ data }) {
   // set active campings
   useEffect(() => {
     if (
-      park.parkCampingTypes.length > 0 &&
+      park.parkCampingTypes?.length > 0 &&
       data.allStrapiCampingType.nodes.length > 0
     ) {
       const campings = combineCampingTypes(
@@ -556,7 +557,7 @@ export default function ParkTemplate({ data }) {
               <div ref={contactRef} className="w-100">
                 <Contact
                   contact={contact}
-                  parkContacts={park.parkContacts}
+                  parkContacts={park.parkContacts || []}
                   operations={operations}
                 />
               </div>
@@ -575,7 +576,7 @@ export default function ParkTemplate({ data }) {
 export const Head = ({ data }) => {
   const park = data.strapiProtectedArea;
   const seo = park.seo;
-  const description = park.description.data.description;
+  const description = park.description?.data?.description || "";
   const parkDescription = description.replace(/(<([^>]+)>)/gi, "");
   const parkDescriptionShort = truncate(parkDescription, { length: 160 });
   const photos = [...data.featuredPhotos.nodes, ...data.regularPhotos.nodes];
