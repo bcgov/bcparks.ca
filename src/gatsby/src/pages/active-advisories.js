@@ -225,7 +225,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       // q = api query
       const params = qs.stringify(
         {
-          sort: ["advisoryDate:desc"],
+          // Use deterministic sorting for offset pagination: posting date, then
+          // updated date, then id to keep page boundaries stable across calls.
+          sort: ["advisoryDate:desc", "updatedDate:desc", "id:desc"],
           pagination: {
             limit: pageLen,
             start: pageLen * (pageIndex - 1),
@@ -309,6 +311,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     const params = qs.stringify(
       {
+        // Maintain a deterministic multi-key sort so "Load more" pages stay
+        // stable even when multiple advisories share the same advisoryDate.
+        sort: ["advisoryDate:desc", "updatedDate:desc", "id:desc"],
         pagination: {
           limit: pageLen,
           start: pageStart,
@@ -326,6 +331,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       .then(resultResponse => {
         if (resultResponse.status === 200) {
           const newResults = resultResponse.data.data
+          // Apply the same client-side comparison used by the initial fetch so
+          // appended results stay aligned with the page's chronological rules.
+          newResults.sort(compareAdvisories)
           setAdvisories(prevResults => [...prevResults, ...newResults])
         }
       })
