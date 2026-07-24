@@ -14,7 +14,10 @@ import AdvisoryList from "../components/advisories/advisoryList"
 import AdvisoryPageNav from "../components/advisories/advisoryPageNav"
 import AdvisoryLegend from "../components/advisories/advisoryLegend"
 import ScrollToTop from "../components/scrollToTop"
-import { getAdvisoryTypeFromUrl, compareAdvisories } from "../utils/advisoryHelper"
+import {
+  getAdvisoryTypeFromUrl,
+  compareAdvisories,
+} from "../utils/advisoryHelper"
 
 import "../styles/home.scss"
 
@@ -48,12 +51,17 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const [isKeyDownLoadingMore, setIsKeyDownLoadingMore] = useState(false)
 
   /* Advisory Event Types */
-  const defaultAdvisoryEventType = useMemo(() => ({ label: 'All', value: 'all' }), [])
+  const defaultAdvisoryEventType = useMemo(
+    () => ({ label: "All", value: "all" }),
+    []
+  )
   const [eventTypes, setEventTypes] = useState([])
-  const [advisoryType, setAdvisoryType] = useState(defaultAdvisoryEventType.value)
+  const [advisoryType, setAdvisoryType] = useState(
+    defaultAdvisoryEventType.value
+  )
 
   useEffect(() => {
-    const fetchEvenType = async () => {
+    const fetchEventType = async () => {
       try {
         const params = qs.stringify(
           {
@@ -64,28 +72,28 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
             encodeValuesOnly: true,
           }
         )
-        const response = await axios.get(`${apiUrl}/event-types?${params}`);
+        const response = await axios.get(`${apiUrl}/event-types?${params}`)
 
-        const formattedEventTypes = response.data.data.map((obj) => ({
+        const formattedEventTypes = response.data.data.map(obj => ({
           label: obj.eventType,
           value: obj.eventType,
-        }));
+        }))
 
         const localeSortEvent = formattedEventTypes?.sort((a, b) =>
           a.value.localeCompare(b.value, "en", { sensitivity: "base" })
-        );
+        )
 
-        setEventTypes(localeSortEvent);
+        setEventTypes(localeSortEvent)
       } catch (err) {
-        console.error("Fetch Even Type error:", err);
+        console.error("Fetch Event Type error:", err)
       }
-    };
+    }
 
-    fetchEvenType();
+    fetchEventType()
 
-    let eventType = getAdvisoryTypeFromUrl();
-    setAdvisoryType(eventType);
-  }, [defaultAdvisoryEventType, apiUrl]);
+    let eventType = getAdvisoryTypeFromUrl()
+    setAdvisoryType(eventType)
+  }, [defaultAdvisoryEventType, apiUrl])
 
   // Filter getters and setters --------------------
   const getSearchText = () => {
@@ -157,10 +165,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       encodeValuesOnly: true,
     })
 
-    const newApiCountCall = params 
+    const newApiCountCall = params
       ? `${apiUrl}/public-advisories/count?${params}`
       : `${apiUrl}/public-advisories/count`
-      
+
     if (newApiCountCall !== apiCountCall) {
       setApiCountCall(newApiCountCall)
     }
@@ -217,7 +225,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       // q = api query
       const params = qs.stringify(
         {
-          sort: ["advisoryDate:desc"],
+          // Use deterministic sorting for offset pagination: posting date, then
+          // updated date, then id to keep page boundaries stable across calls.
+          sort: ["advisoryDate:desc", "updatedDate:desc", "id:desc"],
           pagination: {
             limit: pageLen,
             start: pageLen * (pageIndex - 1),
@@ -242,7 +252,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
             results.sort(compareAdvisories)
             // Append new advisories to the existing list if 'Load more' button is clicked
             if (pageIndex > 1) {
-             setAdvisories(prevAdvisories => [...prevAdvisories, ...results]) 
+              setAdvisories(prevAdvisories => [...prevAdvisories, ...results])
             } else {
               setAdvisories(results)
             }
@@ -301,6 +311,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     const params = qs.stringify(
       {
+        // Maintain a deterministic multi-key sort so "Load more" pages stay
+        // stable even when multiple advisories share the same advisoryDate.
+        sort: ["advisoryDate:desc", "updatedDate:desc", "id:desc"],
         pagination: {
           limit: pageLen,
           start: pageStart,
@@ -313,33 +326,39 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     )
     const newApiCall = `${apiUrl}/public-advisories?${params}`
 
-    axios.get(newApiCall).then(resultResponse => {
-      if (resultResponse.status === 200) {
-        const newResults = resultResponse.data.data;
-        setAdvisories(prevResults => [...prevResults, ...newResults])
-      }
-    }).catch(error => {
-      console.log(error)
-      setIsSearchError(true)
-    })
+    axios
+      .get(newApiCall)
+      .then(resultResponse => {
+        if (resultResponse.status === 200) {
+          const newResults = resultResponse.data.data
+          // Apply the same client-side comparison used by the initial fetch so
+          // appended results stay aligned with the page's chronological rules.
+          newResults.sort(compareAdvisories)
+          setAdvisories(prevResults => [...prevResults, ...newResults])
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        setIsSearchError(true)
+      })
   }
 
-  const handleKeyDownLoadMore = (e) => {
+  const handleKeyDownLoadMore = e => {
     if (e.key === "Enter" || e.key === " ") {
-      setIsKeyDownLoadingMore(true);
+      setIsKeyDownLoadingMore(true)
       e.preventDefault()
       handleLoadMore()
     }
   }
 
-  // This hashset is used by the advisoryCard.js component to quiclky 
-  // determine if the advisoriy is associated with any parks in addition 
-  // to the specified  Fire Centres, Fire Zones, Regions, or Sections.
+  // This hashset is used by the advisoryCard.js component to quickly
+  // determine if the advisory is associated with any parks in addition
+  // to the specified Fire Centres, Fire Zones, Regions, or Sections.
   // Management Areas are not currently used for anything but are included
   // for completeness. The data comes from GraphQL.
   const buildParkInfoHash = () => {
-    const hash = {};
-    for (const x of (data?.allStrapiProtectedArea.nodes || [])) {
+    const hash = {}
+    for (const x of data?.allStrapiProtectedArea.nodes || []) {
       const nodeId = x?.strapi_id
       if (!nodeId) {
         continue
@@ -350,15 +369,27 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       const naturalResourceDistricts = x.naturalResourceDistricts || []
 
       hash[nodeId.toString()] = {
-        managementAreas: managementAreas.map(m => { return m.strapi_id }),
-        sections: managementAreas.map(m => { return m.section?.id }),
-        regions: managementAreas.map(m => { return m.region?.id }),
-        fireZones: fireZones.map(m => { return m.strapi_id }),
-        fireCentres: fireZones.map(m => { return m.fireCentre?.id }),
-        naturalResourceDistricts: naturalResourceDistricts.map(m => m.strapi_id),
-      };
+        managementAreas: managementAreas.map(m => {
+          return m.strapi_id
+        }),
+        sections: managementAreas.map(m => {
+          return m.section?.id
+        }),
+        regions: managementAreas.map(m => {
+          return m.region?.id
+        }),
+        fireZones: fireZones.map(m => {
+          return m.strapi_id
+        }),
+        fireCentres: fireZones.map(m => {
+          return m.fireCentre?.id
+        }),
+        naturalResourceDistricts: naturalResourceDistricts.map(
+          m => m.strapi_id
+        ),
+      }
     }
-    return hash;
+    return hash
   }
 
   // If the filter changes, set data as old and get new data
@@ -391,10 +422,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     }
   }, [pageIndex, advisoryType, isNewFilter, getApiQuery, getAdvisories])
 
-    // Reset pageIndex to 1 when advisoryType or searchText changes
-    useEffect(() => {
-      setPageIndex(1)
-    }, [advisoryType, searchText])
+  // Reset pageIndex to 1 when advisoryType or searchText changes
+  useEffect(() => {
+    setPageIndex(1)
+  }, [advisoryType, searchText])
 
   // Get total advisory count of this type
   // only has to happen once, when type changes, page reloads
@@ -405,7 +436,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   // Focus on the last advisory card when 'Load more' button is clicked by keyboard
   useEffect(() => {
     if (isKeyDownLoadingMore) {
-      const advisoryCards = document.querySelectorAll('.advisory-card')
+      const advisoryCards = document.querySelectorAll(".advisory-card")
       if (advisoryCards.length >= pageLen) {
         let firstNewIndex = advisoryCards.length - 1
         advisoryCards[firstNewIndex].contentEditable = true
@@ -417,7 +448,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   }, [isKeyDownLoadingMore, advisories])
 
   const menuContent = data?.allStrapiMenu?.nodes || []
-  const parkInfoHash = buildParkInfoHash();
+  const parkInfoHash = buildParkInfoHash()
 
   const breadcrumbs = [
     <Link key="1" to="/">
@@ -425,13 +456,17 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     </Link>,
     <div key="2" className="breadcrumb-text">
       Active advisories
-    </div>
+    </div>,
   ]
 
   return (
     <div>
       <Header mode="internal" content={menuContent} />
-      <div id="main-content" tabIndex={-1} className="static-content--header unique-page--header page-breadcrumbs">
+      <div
+        id="main-content"
+        tabIndex={-1}
+        className="static-content--header unique-page--header page-breadcrumbs"
+      >
         <Breadcrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="static-content-container">
@@ -449,20 +484,17 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         </div>
 
         <div className={isDataOld ? "hidden" : undefined}>
-          {(isSearchError && isAnySearch) &&
+          {isSearchError && isAnySearch && (
             <div className="my-2">
               There was an error in your search. Tip: avoid using punctuation
             </div>
-          }
+          )}
 
           <AdvisoryLegend />
           <div className="mb-2">
             <b>{filterCount}</b> active advisories
           </div>
-          <AdvisoryList
-            advisories={advisories}
-            parkInfoHash={parkInfoHash}
-          />
+          <AdvisoryList advisories={advisories} parkInfoHash={parkInfoHash} />
           <AdvisoryPageNav
             pageIndex={pageIndex}
             pageCount={pageCount}
@@ -481,7 +513,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 export default PublicActiveAdvisoriesPage
 
 export const Head = () => (
-  <Seo title="Active advisories" description="Up-to-date information to help you plan your visit to a park in British Columbia. Get updates on access, closures, hazards, and trail conditions in BC Parks." />
+  <Seo
+    title="Active advisories"
+    description="Up-to-date information to help you plan your visit to a park in British Columbia. Get updates on access, closures, hazards, and trail conditions in BC Parks."
+  />
 )
 
 export const query = graphql`
@@ -491,10 +526,7 @@ export const query = graphql`
         apiURL
       }
     }
-    allStrapiMenu(
-      sort: {order: ASC},
-      filter: {show: {eq: true}}
-    ) {
+    allStrapiMenu(sort: { order: ASC }, filter: { show: { eq: true } }) {
       nodes {
         strapi_id
         title

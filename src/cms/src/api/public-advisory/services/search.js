@@ -52,7 +52,7 @@ module.exports = ({ strapi }) => ({
       }
     }
 
-    query.sort = ["advisoryDate:DESC"];
+    query.sort = ["advisoryDate:DESC", "updatedDate:DESC", "id:DESC"];
 
     const results = await strapi.documents("api::public-advisory.public-advisory").findMany(query);
     return { results: results };
