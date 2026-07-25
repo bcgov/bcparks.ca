@@ -51,5 +51,8 @@
     ],
     "testEnvironment": "node",
     "testTimeout": 60000
+  },
+  "overrides": {
+    "axios": "1.15.2"
   }
 }
