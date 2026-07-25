@@ -85,11 +85,16 @@ const getParkDates = (parkOperationDates) => {
 
   const currentYear = new Date().getFullYear()
 
-  // Format each date range, filter by operating year
+  // Format each date range; include current operating year and prior-year ranges that extend into the current year
   const formattedDateRanges = parkOperationDates
-    .filter(date => {
-      return date.operatingYear === currentYear &&
-             date.startDate && date.endDate
+    .filter((date) => {
+      return (
+        (date.operatingYear === currentYear ||
+          (date.endDate >= `${currentYear}-01-01` &&
+            date.endDate <= `${currentYear}-12-31`)) &&
+        date.startDate &&
+        date.endDate
+      )
     })
     .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
     .map(date => formatDateRange(date.startDate, date.endDate))
