@@ -173,7 +173,7 @@ exports.dootPublish = async function () {
               parkFeature: parkFeatureDocId ? { documentId: parkFeatureDocId } : undefined,
               operatingYear: item.operatingYear,
             },
-            fields: ["documentId"],
+            fields: ["documentId", "sourceDateRangeId"],
             populate: {
               parkDateType: {
                 fields: ["dateTypeId"],
@@ -195,13 +195,33 @@ exports.dootPublish = async function () {
             item.dateRanges?.map((dateRange) => dateRange.dateTypeId).filter(Boolean) || [],
           );
 
+          // collect incoming sourceDateRangeIds to skip deleting records that can be updated with PUT
+          const incomingSourceIds = new Set(
+            item.dateRanges?.map((dateRange) => dateRange.id).filter((id) => id != null) || [],
+          );
+
+          // build a map of sourceDateRangeId -> documentId for existing records
+          const existingBySourceId = new Map();
+          for (const dateRange of datesToDelete.data.data) {
+            if (dateRange.sourceDateRangeId != null) {
+              existingBySourceId.set(dateRange.sourceDateRangeId, dateRange.documentId);
+            }
+          }
+
+          let deletedCount = 0;
+          let createdCount = 0;
+          let updatedCount = 0;
+
           try {
             for (const dateRange of datesToDelete.data.data) {
               if (
                 DOOT_MANAGED_DATE_TYPE_IDS.includes(dateRange.parkDateType.dateTypeId) &&
-                incomingDateTypeIds.has(dateRange.parkDateType.dateTypeId)
+                incomingDateTypeIds.has(dateRange.parkDateType.dateTypeId) &&
+                (dateRange.sourceDateRangeId == null ||
+                  !incomingSourceIds.has(dateRange.sourceDateRangeId))
               ) {
                 await cmsAxios.delete(`/api/park-dates/${dateRange.documentId}`);
+                deletedCount++;
               }
             }
           } catch (error) {
@@ -234,7 +254,7 @@ exports.dootPublish = async function () {
               }
               // create the date ranges
               for (const dootDateRange of item.dateRanges) {
-                const createDateRangeData = {
+                const parkDateData = {
                   startDate: dootDateRange.startDate,
                   endDate: dootDateRange.endDate,
                   isActive: dootDateRange.isActive,
@@ -245,12 +265,33 @@ exports.dootPublish = async function () {
                   protectedArea: protectedAreaDocId ? protectedAreaDocId : undefined,
                   parkFeature: parkFeatureDocId ? parkFeatureDocId : undefined,
                   publishedAt: new Date(),
+                  sourceDateRangeId: dootDateRange.id ?? null,
                 };
-                await cmsAxios.post("/api/park-dates", { data: createDateRangeData });
+                const existingDocId =
+                  dootDateRange.id != null ? existingBySourceId.get(dootDateRange.id) : undefined;
+                if (existingDocId) {
+                  await cmsAxios.put(`/api/park-dates/${existingDocId}`, {
+                    data: parkDateData,
+                  });
+                  updatedCount++;
+                } else {
+                  await cmsAxios.post("/api/park-dates", {
+                    data: parkDateData,
+                  });
+                  createdCount++;
+                }
               }
-              // After creating all date ranges, log a summary message
-              const count = item.dateRanges.length;
-              logger.info(`Created ${count} park-dates records for ${relationName}`);
+              // Log a summary of non-zero park-dates operations
+              const summary = [
+                deletedCount && `Deleted ${deletedCount}`,
+                createdCount && `Created ${createdCount}`,
+                updatedCount && `Updated ${updatedCount}`,
+              ]
+                .filter(Boolean)
+                .join(", ");
+              if (summary) {
+                logger.info(`${summary} park-dates record(s) for ${relationName}.`);
+              }
             } catch (error) {
               logger.error(`dootPublish() failed while creating park-dates: ${error}`);
               errorProcessingMessage = true;
