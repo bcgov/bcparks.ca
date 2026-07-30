@@ -33,13 +33,11 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
       'listingRank',
       'urgency.sequence',
       'accessStatus.precedence',
-      // updatedDate first when available
-      advisory => getTimestamp(advisory.updatedDate),
-      // then advisoryDate
-      advisory => getTimestamp(advisory.advisoryDate),
+      // use updatedDate when available, fall back to advisoryDate
+      advisory => getTimestamp(advisory.updatedDate) ?? getTimestamp(advisory.advisoryDate),
       'eventType.precedence'
     ],
-    ['desc', 'desc', 'asc', 'desc', 'desc', 'asc']
+    ['desc', 'desc', 'asc', 'desc', 'asc']
   )
 
   const [openAccordions, setOpenAccordions] = useState({})
