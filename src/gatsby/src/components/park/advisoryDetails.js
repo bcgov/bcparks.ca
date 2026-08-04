@@ -21,10 +21,6 @@ const formatDate = isoDate => {
   return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
 }
 
-const getTimestamp = isoDate => {
-  return isoDate ? parseJSON(isoDate).getTime() : null
-}
-
 // Returns a day-precision timestamp for sorting: 
 // Uses updatedDate when available, falls back to advisoryDate.
 // Same-day advisories compare as equal, allowing eventType.precedence to act as the tiebreaker.
