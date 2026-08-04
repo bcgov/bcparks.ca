@@ -25,6 +25,16 @@ const getTimestamp = isoDate => {
   return isoDate ? parseJSON(isoDate).getTime() : null
 }
 
+// Returns a day-precision timestamp for sorting: 
+// Uses updatedDate when available, falls back to advisoryDate.
+// Same-day advisories compare as equal, allowing eventType.precedence to act as the tiebreaker.
+const getEffectiveDayTimestamp = advisory => {
+  const d = advisory.updatedDate ?? advisory.advisoryDate
+  if (!d) return null
+  const date = parseJSON(d)
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
+}
+
 export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus }) {
   const sortedAdvisories = orderBy(
     advisories,
@@ -33,9 +43,8 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
       'listingRank',
       'urgency.sequence',
       'accessStatus.precedence',
-      // use updatedDate when available, fall back to advisoryDate
-      advisory => getTimestamp(advisory.updatedDate) ?? getTimestamp(advisory.advisoryDate),
-      'eventType.precedence'
+      getEffectiveDayTimestamp,
+      'eventType.precedence',
     ],
     ['desc', 'desc', 'asc', 'desc', 'asc']
   )
