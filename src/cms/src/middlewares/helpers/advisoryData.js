@@ -192,7 +192,6 @@ function isAdvisoryEqual(newData, oldData) {
     isUpdatedDateDisplayed: null,
     isReservationsAffected: null,
     isUrgentAfterHours: null,
-    modifiedByName: null,
   };
 
   for (const key of Object.keys(fieldsToCompare)) {
