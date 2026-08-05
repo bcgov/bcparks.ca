@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
-import { parseJSON, format } from "date-fns"
+import { parseJSON, format, startOfDay } from "date-fns"
 import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -21,8 +21,13 @@ const formatDate = isoDate => {
   return isoDate ? format(parseJSON(isoDate), "MMMM d, yyyy") : ""
 }
 
-const getTimestamp = isoDate => {
-  return isoDate ? parseJSON(isoDate).getTime() : null
+// Returns a day-precision timestamp for sorting: 
+// Uses updatedDate when available, falls back to advisoryDate.
+// Same-day advisories compare as equal, allowing eventType.precedence to act as the tiebreaker.
+const getEffectiveDayTimestamp = advisory => {
+  const d = advisory.updatedDate ?? advisory.advisoryDate
+  if (!d) return null
+  return startOfDay(parseJSON(d)).getTime()
 }
 
 export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus }) {
@@ -33,9 +38,8 @@ export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus
       'listingRank',
       'urgency.sequence',
       'accessStatus.precedence',
-      // use updatedDate when available, fall back to advisoryDate
-      advisory => getTimestamp(advisory.updatedDate) ?? getTimestamp(advisory.advisoryDate),
-      'eventType.precedence'
+      getEffectiveDayTimestamp,
+      'eventType.precedence',
     ],
     ['desc', 'desc', 'asc', 'desc', 'asc']
   )
