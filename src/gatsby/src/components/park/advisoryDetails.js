@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
-import { parseJSON, format } from "date-fns"
+import { parseJSON, format, startOfDay } from "date-fns"
 import Accordion from "react-bootstrap/Accordion"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -27,8 +27,7 @@ const formatDate = isoDate => {
 const getEffectiveDayTimestamp = advisory => {
   const d = advisory.updatedDate ?? advisory.advisoryDate
   if (!d) return null
-  const date = parseJSON(d)
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
+  return startOfDay(parseJSON(d)).getTime()
 }
 
 export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus }) {
