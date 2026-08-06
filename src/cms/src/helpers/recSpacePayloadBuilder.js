@@ -37,13 +37,9 @@ function buildPayload(paAudit) {
     end_date: paAudit.endDate ?? null,
     expiry_date: paAudit.expiryDate ?? null,
     removal_date: paAudit.unpublishedDate ?? null,
-    // TODO: this should be nullable in the API, but the RecSpace API still expects a date
-    updated_date: paAudit.updatedDate ?? new Date(0).toISOString(),
-    // updated_date: paAudit.updatedDate ?? null,
+    updated_date: paAudit.updatedDate ?? null,
     modified_date: paAudit.modifiedDate ?? null,
-    // TODO: this will be renamed to published_date soon, but the RecSpace API still expects published_at for now
-    published_at: paAudit.publishedDate ?? null,
-    // published_date: paAudit.publishedDate ?? null,
+    published_date: paAudit.publishedDate ?? null,
     listing_rank: paAudit.listingRank ?? 0,
     urgency_sequence: paAudit.urgency?.sequence ?? 0,
     access_status_precedence: paAudit.accessStatus?.precedence ?? 0,
