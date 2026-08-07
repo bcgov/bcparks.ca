@@ -8,13 +8,14 @@ const { recSpaceAxios } = require("../utils/axiosRecSpaceAuth");
 async function postRecSpacePublicAdvisory(payload) {
   const logger = getLogger();
   try {
-    await recSpaceAxios.post("/api/v1/act/advisories", payload);
+    await recSpaceAxios.post("/api/v1/act/advisories/bulk", payload);
     logger.info(
-      `Advisory ${payload.advisory_number} with rec_resource_id ${payload.rec_resource_id} posted successfully`,
+      `Advisory ${payload.advisory_number} posted successfully for ${payload.rec_resource_ids?.length || 0} rec_resource_id(s)`,
     );
   } catch (error) {
+    const recResourceIdsText = `(${(payload?.rec_resource_ids || []).map((id) => `'${id}'`).join(", ")})`;
     logger.error(
-      `postRecSpacePublicAdvisory() failed for advisory ${payload.advisory_number} with rec_resource_id ${payload.rec_resource_id}: ${error?.message ?? error}`,
+      `postRecSpacePublicAdvisory() failed for advisory ${payload.advisory_number} with rec_resource_ids ${recResourceIdsText}: ${error?.message ?? error}`,
     );
     if (error?.response?.data) {
       logger.error(`Response body: ${JSON.stringify(error.response.data)}`);
@@ -94,15 +95,16 @@ exports.publishToRecSpace = async function () {
       }
 
       // if the after status is "Scheduled" or "Published" then we need to send a POST request
-      // to the API for each recResourceId in the after payload
+      // to the API with rec_resource_ids in the after payload
       // Note: POST endpoint performs upsert, so PUT is unnecessary
       if (afterStatus === "Scheduled" || afterStatus === "Published") {
-        const { revision_number, rec_resource_ids, ...basePayload } =
-          afterJsonData;
-
-        for (const recResourceId of rec_resource_ids || []) {
-          const payload = { ...basePayload, rec_resource_id: recResourceId };
+        if (afterRecResourceIds.length > 0) {
+          const { revision_number, ...payload } = afterJsonData;
           await postRecSpacePublicAdvisory(payload);
+        } else {
+          logger.info(
+            `Skipping bulk POST for advisory ${advisoryNumber} because rec_resource_ids is empty`,
+          );
         }
 
         // if any recResourceIds were removed then we need to send a DELETE request
