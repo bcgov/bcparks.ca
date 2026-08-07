@@ -12,7 +12,7 @@ let inFlightTokenRequest = null;
 
 // Fail fast on startup if required RecSpace settings are missing.
 const missingRecSpaceConfig = [
-  "REC_SPACE_BASE_URL",
+  "REC_SPACE_ADMIN_API_URL",
   "REC_SPACE_KEYCLOAK_TOKEN_URL",
   "REC_SPACE_KEYCLOAK_CLIENT_ID",
   "REC_SPACE_KEYCLOAK_CLIENT_SECRET",
@@ -66,7 +66,7 @@ async function fetchRecSpaceAccessToken() {
 }
 
 const recSpaceAxios = axios.create({
-  baseURL: process.env.REC_SPACE_BASE_URL,
+  baseURL: process.env.REC_SPACE_ADMIN_API_URL,
   headers: {
     common: {
       "Content-Type": "application/json",

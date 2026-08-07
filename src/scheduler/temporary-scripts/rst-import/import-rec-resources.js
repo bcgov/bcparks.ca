@@ -1,14 +1,17 @@
-import axios from "axios";
-import * as dotenv from "dotenv";
-import https from "https";
-import proj4 from "proj4";
-import _ from "lodash";
-import * as qs from "qs";
+// This is copied from /src/etl/scripts/rst-resources.js and logging has been
+// modified so it can be used as a temporary script for importing recreation
+// resources from the RST API into Strapi.
 
-import { getLogger } from "../utils/logging.js";
+const axios = require("axios");
+const dotenv = require("dotenv");
+const https = require("https");
+const proj4 = require("proj4");
+const _ = require("lodash");
+const qs = require("qs");
+const path = require("node:path");
 
 dotenv.config({
-  path: `.env`,
+  path: path.resolve(__dirname, "../../.env"),
 });
 
 const httpReqHeaders = {
@@ -16,11 +19,9 @@ const httpReqHeaders = {
   "Content-Type": "application/json",
 };
 
-const rejectUnauthorized = process.env.RST_VALIDATE_CERTS !== "false";
-
 const rstAxiosConfig = {
   headers: httpReqHeaders,
-  httpsAgent: new https.Agent({ rejectUnauthorized }),
+  httpsAgent: new https.Agent({ rejectUnauthorized: false }),
 };
 
 // Define BC Albers (EPSG:3005) once at module scope to avoid repeated registration
@@ -31,16 +32,17 @@ proj4.defs(
 );
 
 const loadData = async function () {
-  const logger = getLogger();
-  logger.info("UPDATING RECREATION RESOURCES...");
+  console.log("UPDATING RECREATION RESOURCES...");
 
   // get the list of recreation resources from the RST API
   let rstResources;
   try {
     rstResources = await fetchRSTResources();
-    logger.info(`Got ${rstResources.length} recreation resources from the RST API.`);
+    console.log(
+      `Got ${rstResources.length} recreation resources from the RST API.`,
+    );
   } catch (error) {
-    logger.error(`Error getting recreation resources from RST API: ${error}`);
+    console.error(`Error getting recreation resources from RST API: ${error}`);
     process.exit(1);
   }
 
@@ -49,9 +51,11 @@ const loadData = async function () {
   let strapiResources;
   try {
     strapiResources = await fetchStrapiResources(strapiResourcesUrl);
-    logger.info(`Got ${strapiResources.length} recreation resources from Strapi.`);
+    console.log(
+      `Got ${strapiResources.length} recreation resources from Strapi.`,
+    );
   } catch (error) {
-    logger.error(`Error getting recreation resources from Strapi: ${error}`);
+    console.error(`Error getting recreation resources from Strapi: ${error}`);
     process.exit(1);
   }
 
@@ -63,7 +67,7 @@ const loadData = async function () {
       { headers: httpReqHeaders },
     );
   } catch (error) {
-    logger.error(`Error getting recreation districts from Strapi: ${error}`);
+    console.error(`Error getting recreation districts from Strapi: ${error}`);
     process.exit(1);
   }
 
@@ -81,8 +85,10 @@ const loadData = async function () {
       { headers: httpReqHeaders },
     );
   } catch (error) {
-    logger.error(`Error getting recreation resource types from Strapi: ${error}`);
-    process.exit(1);
+    console.error(
+      `Error getting recreation resource types from Strapi: ${error}`,
+    );
+    throw error;
   }
 
   // create a lookup object for resource types to get documentId from the resource type code
@@ -104,12 +110,15 @@ const loadData = async function () {
     );
 
     const districtDocId = districtLookup[rstResource.district_code];
-    const resourceTypeDocId = resourceTypeLookup[rstResource.rec_resource_type_code];
+    const resourceTypeDocId =
+      resourceTypeLookup[rstResource.rec_resource_type_code];
 
     // extract latitue and longitude from the site_point_geometry field which is stored
     // as BC Albers in the RST API and convert it to WGS84 for Strapi
     if (rstResource.site_point_geometry) {
-      const { latitude, longitude } = convertAlbersToWGS84(rstResource.site_point_geometry);
+      const { latitude, longitude } = convertAlbersToWGS84(
+        rstResource.site_point_geometry,
+      );
       rstResource.latitude = latitude;
       rstResource.longitude = longitude;
     }
@@ -122,11 +131,15 @@ const loadData = async function () {
       // update the existing resource in Strapi if any of the fields have changed
       if (
         matchingStrapiResource.resourceName !== rstResource.name ||
-        matchingStrapiResource.isDisplayed !== rstResource.display_on_public_site ||
-        matchingStrapiResource.recreationDistrict?.documentId !== districtDocId ||
-        matchingStrapiResource.recreationResourceType?.documentId !== resourceTypeDocId ||
+        matchingStrapiResource.isDisplayed !==
+          rstResource.display_on_public_site ||
+        matchingStrapiResource.recreationDistrict?.documentId !==
+          districtDocId ||
+        matchingStrapiResource.recreationResourceType?.documentId !==
+          resourceTypeDocId ||
         // use != instead of !== to treat null and undefined as equal
-        matchingStrapiResource.closestCommunity != rstResource.closest_community ||
+        matchingStrapiResource.closestCommunity !=
+          rstResource.closest_community ||
         matchingStrapiResource.latitude != rstResource.latitude ||
         matchingStrapiResource.longitude != rstResource.longitude
       ) {
@@ -147,9 +160,13 @@ const loadData = async function () {
             },
             { headers: httpReqHeaders },
           );
-          logger.info(`Updated recreation resource ${rstResource.rec_resource_id} in Strapi.`);
+          console.log(
+            `Updated recreation resource ${rstResource.rec_resource_id} in Strapi.`,
+          );
         } catch (error) {
-          logger.error(`Error updating recreation resource in Strapi: ${error}`);
+          console.error(
+            `Error updating recreation resource in Strapi: ${error}`,
+          );
           errorCount++;
         }
       }
@@ -172,38 +189,13 @@ const loadData = async function () {
           },
           { headers: httpReqHeaders },
         );
-        logger.info(`Created recreation resource ${rstResource.rec_resource_id} in Strapi.`);
+        console.log(
+          `Created recreation resource ${rstResource.rec_resource_id} in Strapi.`,
+        );
       } catch (error) {
-        logger.error(`Error creating recreation resource in Strapi: ${error}`);
+        console.error(`Error creating recreation resource in Strapi: ${error}`);
         errorCount++;
       }
-    }
-  }
-
-  // get a list of recreation resource IDs that were only in Strapi and not
-  // in the RST API response and set isDisplayed to false
-  const rstResourceIdSet = new Set(rstResources.map((r) => r.rec_resource_id));
-
-  const tombstonedStrapiResources = strapiResources.filter(
-    (r) => !rstResourceIdSet.has(r.recResourceId) && r.isDisplayed !== false,
-  );
-  for (const resource of tombstonedStrapiResources) {
-    try {
-      await axios.put(
-        `${strapiResourcesUrl}/${resource.documentId}`,
-        {
-          data: {
-            isDisplayed: false,
-          },
-        },
-        { headers: httpReqHeaders },
-      );
-      logger.info(
-        `Soft-deleted recreation resource ${resource.recResourceId} in Strapi by setting isDisplayed to false.`,
-      );
-    } catch (error) {
-      logger.error(`Error soft-deleting recreation resource in Strapi: ${error}`);
-      errorCount++;
     }
   }
 
@@ -211,14 +203,16 @@ const loadData = async function () {
     process.exit(1);
   }
 
-  logger.info("DONE!");
+  console.log("DONE!");
 };
 
 // DATA FETCHING FUNCTIONS
 
 // Fetches all recreation resources from the RST API, handling pagination
 async function fetchRSTResources() {
-  const rstSummaryUrl = `${process.env.RST_API}/recreation-resource/summary`;
+  const rstSummaryUrl = `${process.env.REC_SPACE_PUBLIC_API_URL}/api/v1/recreation-resource/summary`;
+
+  console.log(`Fetching recreation resources from RST API: ${rstSummaryUrl}`);
 
   const rstResources = [];
   const { data } = await axios.get(`${rstSummaryUrl}?page=1`, rstAxiosConfig);
@@ -226,7 +220,10 @@ async function fetchRSTResources() {
   rstResources.push(...data.data);
 
   for (let page = 2; page <= totalPages; page++) {
-    const { data } = await axios.get(`${rstSummaryUrl}?page=${page}`, rstAxiosConfig);
+    const { data } = await axios.get(
+      `${rstSummaryUrl}?page=${page}`,
+      rstAxiosConfig,
+    );
     rstResources.push(...data.data);
   }
   return rstResources;
@@ -287,4 +284,8 @@ function convertAlbersToWGS84(sitePointGeometry) {
   }
 }
 
-export default loadData;
+// Run when executed with: node import-rec-resources.js
+loadData().catch((error) => {
+  console.error(`Fatal error running import-rec-resources.js: ${error}`);
+  process.exit(1);
+});
