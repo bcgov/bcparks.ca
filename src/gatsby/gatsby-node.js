@@ -403,6 +403,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     hasBackcountryShelterReservations: Boolean
     hasBackcountryWildernessReservations: Boolean
     hasGroupPicnicReservations: Boolean
+    inReservationSystem: Boolean
     frontcountryReservationUrl: String
     frontcountryGroupReservationUrl: String
     frontcountryCabinReservationUrl: String

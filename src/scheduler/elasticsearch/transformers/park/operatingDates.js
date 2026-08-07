@@ -8,7 +8,7 @@ const convertParkDates = function (parkDates) {
   return parkDates
     .filter(
       (d) =>
-        d.operatingYear >= thisYear &&
+        d.endDate >= `${thisYear}-01-01` &&
         d.publishedAt !== null &&
         d.startDate &&
         d.endDate,
@@ -37,7 +37,7 @@ const convertParkFeatures = function (parkFeatures) {
         parkDates: feature.parkDates
           .filter(
             (d) =>
-              d.operatingYear >= thisYear &&
+              d.endDate >= `${thisYear}-01-01` &&
               d.isActive &&
               d.publishedAt !== null &&
               d.startDate &&

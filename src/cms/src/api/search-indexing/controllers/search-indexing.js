@@ -80,8 +80,8 @@ module.exports = ({ strapi }) => ({
               $eq: GATE_DATE_TYPE_ID,
             },
           },
-          operatingYear: {
-            $gte: thisYear,
+          endDate: {
+            $gte: `${thisYear}-01-01`,
           },
         },
       },
@@ -107,8 +107,8 @@ module.exports = ({ strapi }) => ({
                   $eq: OPERATION_DATE_TYPE_ID,
                 },
               },
-              operatingYear: {
-                $gte: thisYear,
+              endDate: {
+                $gte: `${thisYear}-01-01`,
               },
             },
           },

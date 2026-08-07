@@ -744,6 +744,7 @@ export const query = graphql`
       }
       parkOperation {
         isActive
+        inReservationSystem
         hasReservations
         hasBackcountryReservations
         hasBackcountryPermits

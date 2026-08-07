@@ -61,7 +61,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   );
 
   useEffect(() => {
-    const fetchEvenType = async () => {
+    const fetchEventType = async () => {
       try {
         const params = qs.stringify(
           {
@@ -74,26 +74,26 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
         );
         const response = await axios.get(`${apiUrl}/event-types?${params}`);
 
-        const formattedEventTypes = response.data.data.map((obj) => ({
+        const formattedEventTypes = response.data.data.map(obj => ({
           label: obj.eventType,
           value: obj.eventType,
-        }));
+        }))
 
         const localeSortEvent = formattedEventTypes?.sort((a, b) =>
           a.value.localeCompare(b.value, "en", { sensitivity: "base" }),
         );
 
-        setEventTypes(localeSortEvent);
+        setEventTypes(localeSortEvent)
       } catch (err) {
-        console.error("Fetch Even Type error:", err);
+        console.error("Fetch Event Type error:", err)
       }
-    };
+    }
 
-    fetchEvenType();
+    fetchEventType()
 
-    let eventType = getAdvisoryTypeFromUrl();
-    setAdvisoryType(eventType);
-  }, [defaultAdvisoryEventType, apiUrl]);
+    let eventType = getAdvisoryTypeFromUrl()
+    setAdvisoryType(eventType)
+  }, [defaultAdvisoryEventType, apiUrl])
 
   // Filter getters and setters --------------------
   const getSearchText = () => {
@@ -225,7 +225,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       // q = api query
       const params = qs.stringify(
         {
-          sort: ["advisoryDate:desc"],
+          // Use deterministic sorting for offset pagination: posting date, then
+          // updated date, then id to keep page boundaries stable across calls.
+          sort: ["advisoryDate:desc", "updatedDate:desc", "id:desc"],
           pagination: {
             limit: pageLen,
             start: pageLen * (pageIndex - 1),
@@ -250,10 +252,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
             results.sort(compareAdvisories);
             // Append new advisories to the existing list if 'Load more' button is clicked
             if (pageIndex > 1) {
-              setAdvisories((prevAdvisories) => [
-                ...prevAdvisories,
-                ...results,
-              ]);
+              setAdvisories(prevAdvisories => [...prevAdvisories, ...results])
             } else {
               setAdvisories(results);
             }
@@ -312,6 +311,9 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     const params = qs.stringify(
       {
+        // Maintain a deterministic multi-key sort so "Load more" pages stay
+        // stable even when multiple advisories share the same advisoryDate.
+        sort: ["advisoryDate:desc", "updatedDate:desc", "id:desc"],
         pagination: {
           limit: pageLen,
           start: pageStart,
@@ -326,19 +328,22 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     axios
       .get(newApiCall)
-      .then((resultResponse) => {
+      .then(resultResponse => {
         if (resultResponse.status === 200) {
-          const newResults = resultResponse.data.data;
-          setAdvisories((prevResults) => [...prevResults, ...newResults]);
+          const newResults = resultResponse.data.data
+          // Apply the same client-side comparison used by the initial fetch so
+          // appended results stay aligned with the page's chronological rules.
+          newResults.sort(compareAdvisories)
+          setAdvisories(prevResults => [...prevResults, ...newResults])
         }
       })
-      .catch((error) => {
-        console.log(error);
-        setIsSearchError(true);
-      });
-  };
+      .catch(error => {
+        console.log(error)
+        setIsSearchError(true)
+      })
+  }
 
-  const handleKeyDownLoadMore = (e) => {
+  const handleKeyDownLoadMore = e => {
     if (e.key === "Enter" || e.key === " ") {
       setIsKeyDownLoadingMore(true);
       e.preventDefault();

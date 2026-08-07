@@ -102,8 +102,8 @@ export default function Contact({ contact, parkContacts, operations }) {
         <figure className="table">
           <table>
             <tbody>
-              {/* display it if hasAnyReservations is true  */}
-              {hasAnyReservations && (
+              {/* display it only when the park is in the reservation system */}
+              {inReservationSystem && (
                 <tr>
                   <th scope="row">Reservations, changes, and cancellations</th>
                   <td>
