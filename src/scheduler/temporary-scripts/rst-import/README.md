@@ -6,8 +6,6 @@ These scripts are temporarily included in the scheduler project so they will be 
 
 Run the scripts one at a time from the terminal on the scheduler pod
 
-```
-node tasks/rst-import/import-rec-resources.js
+    node temporary-scripts/rst-import/import-rec-resources.js
 
-node tasks/rst-import/import-closures.js
-```
+    node temporary-scripts/rst-import/import-closures.js

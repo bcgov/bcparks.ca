@@ -1,8 +1,5 @@
 const axios = require("axios");
 const dotenv = require("dotenv");
-const https = require("https");
-const proj4 = require("proj4");
-const _ = require("lodash");
 const qs = require("qs");
 const { readFile } = require("node:fs/promises");
 const path = require("node:path");
@@ -40,10 +37,11 @@ const loadData = async function () {
   // get the closure data from a local file
   let rstClosures;
   try {
-    const fileContents = await readFile(
-      "./closed-rec-resources-2026-07-22.json",
-      "utf8",
+    const ftaDataPath = path.resolve(
+      __dirname,
+      "closed-rec-resources-2026-07-22.json",
     );
+    const fileContents = await readFile(ftaDataPath, "utf8");
     rstClosures = JSON.parse(fileContents);
   } catch (error) {
     console.error(
@@ -53,7 +51,8 @@ const loadData = async function () {
   }
 
   for (const resource of rstClosures) {
-    const resourceType = resourceTypeMap[resource.rec_resource_type_code];
+    const resourceType =
+      resourceTypeMap[resource.rec_resource_type_code] || "Site";
     resource.advisory_title = `${resourceType} is closed`;
   }
 

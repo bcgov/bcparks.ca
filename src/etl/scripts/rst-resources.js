@@ -93,10 +93,14 @@ const loadData = async function () {
 
   let errorCount = 0;
 
+  const strapiResourceById = new Map(
+    strapiResources.map((r) => [r.recResourceId, r]),
+  );
+
   // loop through the RST resources and update or create them in Strapi
   for (const rstResource of rstResources) {
-    const matchingStrapiResource = strapiResources.find(
-      (r) => r.recResourceId === rstResource.rec_resource_id,
+    const matchingStrapiResource = strapiResourceById.get(
+      rstResource.rec_resource_id,
     );
 
     const districtDocId = districtLookup[rstResource.district_code];

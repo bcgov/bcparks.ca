@@ -19,11 +19,9 @@ const httpReqHeaders = {
   "Content-Type": "application/json",
 };
 
-const rejectUnauthorized = "false";
-
 const rstAxiosConfig = {
   headers: httpReqHeaders,
-  httpsAgent: new https.Agent({ rejectUnauthorized }),
+  httpsAgent: new https.Agent({ rejectUnauthorized: false }),
 };
 
 // Define BC Albers (EPSG:3005) once at module scope to avoid repeated registration
@@ -101,10 +99,14 @@ const loadData = async function () {
 
   let errorCount = 0;
 
+  const strapiResourceById = new Map(
+    strapiResources.map((r) => [r.recResourceId, r]),
+  );
+
   // loop through the RST resources and update or create them in Strapi
   for (const rstResource of rstResources) {
-    const matchingStrapiResource = strapiResources.find(
-      (r) => r.recResourceId === rstResource.rec_resource_id,
+    const matchingStrapiResource = strapiResourceById.get(
+      rstResource.rec_resource_id,
     );
 
     const districtDocId = districtLookup[rstResource.district_code];
