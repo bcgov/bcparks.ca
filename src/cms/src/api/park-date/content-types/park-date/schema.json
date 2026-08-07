@@ -19,8 +19,7 @@
       "default": true
     },
     "isDateAnnual": {
-      "type": "boolean",
-      "default": null
+      "type": "boolean"
     },
     "operatingYear": {
       "type": "integer",
@@ -53,6 +52,10 @@
       "relation": "manyToOne",
       "target": "api::park-feature.park-feature",
       "inversedBy": "parkDates"
+    },
+    "sourceDateRangeId": {
+      "type": "integer",
+      "unique": true
     }
   }
 }
