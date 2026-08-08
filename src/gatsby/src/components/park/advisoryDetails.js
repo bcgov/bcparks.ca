@@ -27,28 +27,27 @@ export default function AdvisoryDetails({
   parkType,
   parkAccessStatus,
 }) {
-// Returns a day-precision timestamp for sorting: 
-// Uses updatedDate when available, falls back to advisoryDate.
-// Same-day advisories compare as equal, allowing eventType.precedence to act as the tiebreaker.
-const getEffectiveDayTimestamp = advisory => {
-  const d = advisory.updatedDate ?? advisory.advisoryDate
-  if (!d) return null
-  return startOfDay(parseJSON(d)).getTime()
-}
+  // Returns a day-precision timestamp for sorting:
+  // Uses updatedDate when available, falls back to advisoryDate.
+  // Same-day advisories compare as equal, allowing eventType.precedence to act as the tiebreaker.
+  const getEffectiveDayTimestamp = (advisory) => {
+    const d = advisory.updatedDate ?? advisory.advisoryDate;
+    if (!d) return null;
+    return startOfDay(parseJSON(d)).getTime();
+  };
 
-export default function AdvisoryDetails({ advisories, parkType, parkAccessStatus }) {
   const sortedAdvisories = orderBy(
     advisories,
     // advisory sort order
     [
-      'listingRank',
-      'urgency.sequence',
-      'accessStatus.precedence',
+      "listingRank",
+      "urgency.sequence",
+      "accessStatus.precedence",
       getEffectiveDayTimestamp,
-      'eventType.precedence',
+      "eventType.precedence",
     ],
-    ['desc', 'desc', 'asc', 'desc', 'asc']
-  )
+    ["desc", "desc", "asc", "desc", "asc"],
+  );
 
   const [openAccordions, setOpenAccordions] = useState({});
 

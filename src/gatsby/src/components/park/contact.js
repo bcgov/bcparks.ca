@@ -84,16 +84,8 @@ export default function Contact({ contact, parkContacts, operations }) {
     .sort((a, b) => {
       return a.rank - b.rank;
     });
-  const hasAnyReservations =
-    operations.hasCanoeCircuitReservations ||
-    operations.hasGroupPicnicReservations ||
-    operations.hasFrontcountryReservations ||
-    operations.hasFrontcountryGroupReservations ||
-    operations.hasFrontcountryCabinReservations ||
-    operations.hasBackcountryReservations ||
-    operations.hasBackcountryGroupReservations ||
-    operations.hasBackcountryShelterReservations ||
-    operations.hasBackcountryWildernessReservations;
+
+  const inReservationSystem = operations.inReservationSystem;
 
   return (
     <div id="contact" className="anchor-link">
