@@ -74,24 +74,6 @@ const loadAllAdvisories = (apiBaseUrl) => {
   return axios.get(`${apiBaseUrl}/public-advisories/?${params}`);
 };
 
-// Get advisory displayed date
-const getAdvisoryDate = (advisory) => {
-  if (advisory.isAdvisoryDateDisplayed && advisory.advisoryDate) {
-    return new Date(advisory.advisoryDate);
-  }
-  if (advisory.isEffectiveDateDisplayed && advisory.effectiveDate) {
-    return new Date(advisory.effectiveDate);
-  }
-  if (advisory.isUpdatedDateDisplayed && advisory.updatedDate) {
-    return new Date(advisory.updatedDate);
-  }
-  // If none of the above conditions are met
-  // return updatedDate if available, otherwise return advisoryDate
-  return advisory.updatedDate
-    ? new Date(advisory.updatedDate)
-    : new Date(advisory.advisoryDate);
-};
-
 // Parses a date-like value to a sortable timestamp.
 // Invalid or missing values fall back to 0 so sorting stays deterministic.
 const getSortableTimestamp = value => {
@@ -150,7 +132,6 @@ export {
   loadAdvisories,
   loadAllAdvisories,
   getAdvisoryTypeFromUrl,
-  getAdvisoryDate,
   compareAdvisories,
   WINTER_FULL_PARK_ADVISORY,
   WINTER_SUB_AREA_ADVISORY,
