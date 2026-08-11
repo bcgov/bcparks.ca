@@ -118,10 +118,11 @@ module.exports = createCoreController(
           .service("api::public-advisory.search")
           .countSearch(ctx.query);
       }
-
-      return await strapi
-        .service("api::public-advisory.public-advisory")
-        .count(ctx.query);
+      return (
+        await strapi
+          .service("api::public-advisory.public-advisory")
+          .find(ctx.query)
+      ).pagination.total;
     },
     async items(ctx) {
       let entities;
