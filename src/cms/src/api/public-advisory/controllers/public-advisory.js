@@ -93,6 +93,7 @@ module.exports = createCoreController(
         ({ results: entities, pagination } = await strapi
           .service("api::public-advisory.search")
           .search(ctx.query));
+        pagination = pagination || {};
       } else {
         ({ results: entities, pagination } = await strapi
           .service("api::public-advisory.public-advisory")

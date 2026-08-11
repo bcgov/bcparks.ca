@@ -6,29 +6,47 @@
 
 module.exports = ({ strapi }) => ({
   search: async (query) => {
-    // Read the full matching set, sort once, then slice to keep pagination stable.
+    // Only apply display-date sorting when the request includes _displaySort=1.
+    const isDisplaySortEnabled = query._displaySort === "1";
+
     const pagination = normalizePagination(query);
     query = buildQuery(stripPagination(query));
-    query.sort = ["effectiveDate:DESC", "advisoryDate:DESC", "updatedDate:DESC", "id:DESC"];
+
+    // If display-date sorting is enabled, we need to fetch all matching results and apply a custom sort function.
+    if (isDisplaySortEnabled) {
+      // Apply a coarse DB sort before the final compareAdvisories sort runs in memory
+      query.sort = ["effectiveDate:DESC", "advisoryDate:DESC", "updatedDate:DESC", "id:DESC"];
+
+      const results = await strapi
+        .documents("api::public-advisory.public-advisory")
+        .findMany(query);
+
+      const sortedResults = [...results].sort(compareAdvisories);
+
+      return {
+        results: sortedResults.slice(
+          pagination.start,
+          pagination.start + pagination.limit,
+        ),
+        pagination: {
+          page: Math.floor(pagination.start / pagination.limit) + 1,
+          pageSize: pagination.limit,
+          pageCount: Math.ceil(sortedResults.length / pagination.limit),
+          total: sortedResults.length,
+        },
+      };
+    }
+
+    // If display-date sorting is not enabled, we can rely on the DB to sort and paginate results as usual.
+    query.limit = pagination.limit;
+    query.start = pagination.start;
+    query.sort = ["advisoryDate:DESC", "updatedDate:DESC", "id:DESC"];
 
     const results = await strapi
       .documents("api::public-advisory.public-advisory")
       .findMany(query);
 
-    const sortedResults = [...results].sort(compareAdvisories);
-
-    return {
-      results: sortedResults.slice(
-        pagination.start,
-        pagination.start + pagination.limit,
-      ),
-      pagination: {
-        page: Math.floor(pagination.start / pagination.limit) + 1,
-        pageSize: pagination.limit,
-        pageCount: Math.ceil(sortedResults.length / pagination.limit),
-        total: sortedResults.length,
-      },
-    };
+    return { results };
   },
   countSearch: async (query) => {
     // Count against the same filtered set used by search, without paging controls.
