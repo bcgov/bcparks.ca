@@ -74,38 +74,6 @@ const loadAllAdvisories = (apiBaseUrl) => {
   return axios.get(`${apiBaseUrl}/public-advisories/?${params}`);
 };
 
-// Parses a date-like value to a sortable timestamp.
-// Invalid or missing values fall back to 0 so sorting stays deterministic.
-const getSortableTimestamp = value => {
-  const parsed = Date.parse(value)
-  return Number.isFinite(parsed) ? parsed : 0
-}
-
-// Sort advisories by posting date first, then by updated date, then id to
-// guarantee a deterministic order for offset pagination. This intentionally
-// differs from the UI display date, which may show effective or updated dates.
-const compareAdvisories = (a, b) => {
-  const advisoryDateA = getSortableTimestamp(a.advisoryDate)
-  const advisoryDateB = getSortableTimestamp(b.advisoryDate)
-  const advisoryDateDiff = advisoryDateB - advisoryDateA
-
-  if (advisoryDateDiff !== 0) {
-    return advisoryDateDiff
-  }
-
-  // If advisoryDate matches, compare updatedDate.
-  const updatedDateA = getSortableTimestamp(a.updatedDate)
-  const updatedDateB = getSortableTimestamp(b.updatedDate)
-  const updatedDateDiff = updatedDateB - updatedDateA
-
-  if (updatedDateDiff !== 0) {
-    return updatedDateDiff
-  }
-
-  // Final tie-breaker: id keeps ordering stable when date fields are identical.
-  return (Number(b.id) || 0) - (Number(a.id) || 0)
-}
-
 const WINTER_FULL_PARK_ADVISORY = {
   id: -1,
   title: "Limited access to this park during winter season",
@@ -132,7 +100,6 @@ export {
   loadAdvisories,
   loadAllAdvisories,
   getAdvisoryTypeFromUrl,
-  compareAdvisories,
   WINTER_FULL_PARK_ADVISORY,
   WINTER_SUB_AREA_ADVISORY,
 };
