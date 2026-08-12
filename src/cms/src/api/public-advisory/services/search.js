@@ -45,8 +45,7 @@ module.exports = ({ strapi }) => ({
     const results = await strapi
       .documents("api::public-advisory.public-advisory")
       .findMany(query);
-
-    return { results };
+    return { results: results };
   },
   countSearch: async (query) => {
     // Count against the same filtered set used by search, without paging controls.
