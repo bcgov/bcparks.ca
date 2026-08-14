@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
-import { parseJSON, format } from "date-fns";
+import { parseJSON, format, startOfDay } from "date-fns";
 import Accordion from "react-bootstrap/Accordion";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -14,7 +14,6 @@ import AdvisoryDate from "../advisories/advisoryDate";
 import blueAlertIcon from "../../images/park/blue-alert.svg";
 import redAlertIcon from "../../images/park/red-alert.svg";
 import yellowAlertIcon from "../../images/park/yellow-alert.svg";
-import { getAdvisoryDate } from "../../utils/advisoryHelper";
 import { trackSnowplowEvent } from "../../utils/snowplowHelper";
 import "../../styles/advisories/advisoryDetails.scss";
 

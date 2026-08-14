@@ -74,56 +74,6 @@ const loadAllAdvisories = (apiBaseUrl) => {
   return axios.get(`${apiBaseUrl}/public-advisories/?${params}`);
 };
 
-// Get advisory displayed date
-const getAdvisoryDate = (advisory) => {
-  if (advisory.isAdvisoryDateDisplayed && advisory.advisoryDate) {
-    return new Date(advisory.advisoryDate);
-  }
-  if (advisory.isEffectiveDateDisplayed && advisory.effectiveDate) {
-    return new Date(advisory.effectiveDate);
-  }
-  if (advisory.isUpdatedDateDisplayed && advisory.updatedDate) {
-    return new Date(advisory.updatedDate);
-  }
-  // If none of the above conditions are met
-  // return updatedDate if available, otherwise return advisoryDate
-  return advisory.updatedDate
-    ? new Date(advisory.updatedDate)
-    : new Date(advisory.advisoryDate);
-};
-
-// Parses a date-like value to a sortable timestamp.
-// Invalid or missing values fall back to 0 so sorting stays deterministic.
-const getSortableTimestamp = value => {
-  const parsed = Date.parse(value)
-  return Number.isFinite(parsed) ? parsed : 0
-}
-
-// Sort advisories by posting date first, then by updated date, then id to
-// guarantee a deterministic order for offset pagination. This intentionally
-// differs from the UI display date, which may show effective or updated dates.
-const compareAdvisories = (a, b) => {
-  const advisoryDateA = getSortableTimestamp(a.advisoryDate)
-  const advisoryDateB = getSortableTimestamp(b.advisoryDate)
-  const advisoryDateDiff = advisoryDateB - advisoryDateA
-
-  if (advisoryDateDiff !== 0) {
-    return advisoryDateDiff
-  }
-
-  // If advisoryDate matches, compare updatedDate.
-  const updatedDateA = getSortableTimestamp(a.updatedDate)
-  const updatedDateB = getSortableTimestamp(b.updatedDate)
-  const updatedDateDiff = updatedDateB - updatedDateA
-
-  if (updatedDateDiff !== 0) {
-    return updatedDateDiff
-  }
-
-  // Final tie-breaker: id keeps ordering stable when date fields are identical.
-  return (Number(b.id) || 0) - (Number(a.id) || 0)
-}
-
 const WINTER_FULL_PARK_ADVISORY = {
   id: -1,
   title: "Limited access to this park during winter season",
@@ -150,8 +100,6 @@ export {
   loadAdvisories,
   loadAllAdvisories,
   getAdvisoryTypeFromUrl,
-  getAdvisoryDate,
-  compareAdvisories,
   WINTER_FULL_PARK_ADVISORY,
   WINTER_SUB_AREA_ADVISORY,
 };

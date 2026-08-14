@@ -43,6 +43,20 @@ const appendStandardMessages = function (entity) {
   return entity;
 };
 
+// Enables display-date sorting path only when the request includes _displaySort=1.
+const isDisplaySortEnabled = function (query) {
+  return query?._displaySort === "1";
+};
+
+// Use custom search for text/event filters or when display-date sorting is explicitly enabled.
+const shouldUseSearchService = function (query) {
+  return (
+    isDisplaySortEnabled(query) ||
+    (query?.queryText && query.queryText.length > 0) ||
+    (query?._eventType && query._eventType.length > 0)
+  );
+};
+
 module.exports = createCoreController(
   "api::public-advisory.public-advisory",
   ({ strapi }) => ({
@@ -75,14 +89,11 @@ module.exports = createCoreController(
 
       ctx.query = populateStandardMessages(ctx.query);
 
-      if (
-        ctx.query.queryText !== undefined ||
-        ctx.query._eventType !== undefined
-      ) {
-        ({ results: entities } = await strapi
+      if (shouldUseSearchService(ctx.query)) {
+        ({ results: entities, pagination } = await strapi
           .service("api::public-advisory.search")
           .search(ctx.query));
-        pagination = {};
+        pagination = pagination || {};
       } else {
         ({ results: entities, pagination } = await strapi
           .service("api::public-advisory.public-advisory")
@@ -103,10 +114,7 @@ module.exports = createCoreController(
       };
     },
     async count(ctx) {
-      if (
-        ctx.query.queryText !== undefined ||
-        ctx.query._eventType !== undefined
-      ) {
+      if (shouldUseSearchService(ctx.query)) {
         return await strapi
           .service("api::public-advisory.search")
           .countSearch(ctx.query);

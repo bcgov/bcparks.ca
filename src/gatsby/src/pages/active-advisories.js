@@ -14,10 +14,7 @@ import AdvisoryList from "../components/advisories/advisoryList";
 import AdvisoryPageNav from "../components/advisories/advisoryPageNav";
 import AdvisoryLegend from "../components/advisories/advisoryLegend";
 import ScrollToTop from "../components/scrollToTop";
-import {
-  getAdvisoryTypeFromUrl,
-  compareAdvisories,
-} from "../utils/advisoryHelper";
+import { getAdvisoryTypeFromUrl } from "../utils/advisoryHelper";
 
 import "../styles/home.scss";
 
@@ -177,7 +174,10 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
   const getApiQuery = useCallback(
     (advisoryTypeFilter) => {
       // Build query object for Strapi v5
-      let queryObj = {};
+      let queryObj = {
+        // Tell the API to sort the full advisory list by the display date before paging results.
+        _displaySort: "1",
+      };
 
       let useParksFilter = isParksFilter;
       let useKeywordFilter = isKeywordFilter;
@@ -225,9 +225,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       // q = api query
       const params = qs.stringify(
         {
-          // Use deterministic sorting for offset pagination: posting date, then
-          // updated date, then id to keep page boundaries stable across calls.
-          sort: ["advisoryDate:desc", "updatedDate:desc", "id:desc"],
+          // Sorting is handled in the CMS service before pagination is applied.
           pagination: {
             limit: pageLen,
             start: pageLen * (pageIndex - 1),
@@ -249,7 +247,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
           .get(newApiCall)
           .then(function (data) {
             let results = data.data.data;
-            results.sort(compareAdvisories);
             // Append new advisories to the existing list if 'Load more' button is clicked
             if (pageIndex > 1) {
               setAdvisories(prevAdvisories => [...prevAdvisories, ...results])
@@ -311,9 +308,7 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
 
     const params = qs.stringify(
       {
-        // Maintain a deterministic multi-key sort so "Load more" pages stay
-        // stable even when multiple advisories share the same advisoryDate.
-        sort: ["advisoryDate:desc", "updatedDate:desc", "id:desc"],
+        // Sorting is handled in the CMS service before pagination is applied.
         pagination: {
           limit: pageLen,
           start: pageStart,
@@ -331,9 +326,6 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
       .then(resultResponse => {
         if (resultResponse.status === 200) {
           const newResults = resultResponse.data.data
-          // Apply the same client-side comparison used by the initial fetch so
-          // appended results stay aligned with the page's chronological rules.
-          newResults.sort(compareAdvisories)
           setAdvisories(prevResults => [...prevResults, ...newResults])
         }
       })
