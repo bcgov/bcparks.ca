@@ -37,13 +37,13 @@
     "@strapi/provider-upload-aws-s3": "5.52.0",
     "@strapi/strapi": "5.52.0",
     "keyv": "^5.6.0",
-    "pg": "^8.22.0",
+    "pg": "^8.23.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.4",
     "strapi-health-plugin": "^1.2.2",
     "strapi-plugin-multi-select": "^2.1.1",
-    "styled-components": "^6.4.4"
+    "styled-components": "^6.5.1"
   },
   "devDependencies": {
     "better-sqlite3": "^11.10.0",
