@@ -102,6 +102,7 @@ module.exports = {
           action: "email advisory",
           numericData: advisoryNumber,
         },
+        fields: ["jsonData"],
       });
 
     // Check if any existing queued tasks for this advisory have the same subject
