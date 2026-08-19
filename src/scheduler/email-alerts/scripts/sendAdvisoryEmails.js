@@ -17,7 +17,7 @@ const { buildEmailMetadata } = require("./advisoryEmailMetadata");
  * Sends queued emails
  */
 exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
-  const THROTTLE_MINUTES = 10; // min. time before sending 2 emails about 1 advisory
+  const THROTTLE_MINUTES = 10; // min. time before sending duplicate emails for an advisory+subject
   let queue;
   let sent = [];
   const logger = getLogger();
@@ -38,11 +38,18 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 
   for (const message of queue) {
     const advisoryNumber = message?.numericData;
+    const throttleSubject = message?.jsonData?.subject || "";
+
     if (
-      !recentAdvisoryEmails.find((e) => e.advisoryNumber === advisoryNumber)
+      !recentAdvisoryEmails.find(
+        (email) =>
+          email.advisoryNumber === advisoryNumber &&
+          email.subject === throttleSubject,
+      )
     ) {
       sent.push({
         advisoryNumber: advisoryNumber,
+        subject: throttleSubject,
         lastEmailSent: new Date().toISOString(),
       });
       const emailInfo = message?.jsonData;
@@ -111,6 +118,15 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
         },
       };
 
+      if (scriptKeySpecified("emailtest")) {
+        // For testing, add all recipient addresses to emailData
+        // so they can be included in the rendered document for verification.
+        emailData.allRecipients = [
+          ...(process.env.EMAIL_RECIPIENT || "").split(","),
+          ...(emailInfo.additionalRecipients ?? []),
+        ].filter(Boolean);
+      }
+
       // render the email template
       const htmlMessageBody = await ejs.renderFile(
         "./email-alerts/templates/public-advisory.ejs",
@@ -119,7 +135,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 
       if (scriptKeySpecified("emailtest")) {
         writeFile(
-          `./mail-test-${advisoryNumber}.html`,
+          `./mail-test-${advisoryNumber}-${message.documentId}.html`,
           htmlMessageBody,
           (err) => {
             if (err) throw err;
@@ -208,6 +224,10 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
           );
         }
       }
+    } else {
+      logger.info(
+        `Skipped advisory email ${advisoryNumber} with subject "${throttleSubject}" because a duplicate was sent recently. Email not sent.`,
+      );
     }
     if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
       await removeFromQueue([message.documentId]);
@@ -220,7 +240,9 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
   ).toISOString();
 
   return [
-    ...recentAdvisoryEmails.filter((a) => a.lastEmailSent > throttleMinutesAgo),
+    ...recentAdvisoryEmails.filter(
+      (email) => email.lastEmailSent > throttleMinutesAgo,
+    ),
     ...sent,
   ];
 };

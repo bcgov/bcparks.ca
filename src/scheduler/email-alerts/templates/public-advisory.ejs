@@ -6,6 +6,10 @@
   <title><%= title %></title>
 </head>
 
+<% if (allRecipients && allRecipients.length > 0) { %>
+<!-- Email recipients: <%= allRecipients.join(", ") %> -->
+<% } %>
+
 <body style="font-family: Arial, Helvetica; color: #1a1a1a">
   <img src="cid:logo.png" alt="BC Parks" title="BC Parks Logo" style="margin: 8px 16px 0px 0px;" width="150" />
 
