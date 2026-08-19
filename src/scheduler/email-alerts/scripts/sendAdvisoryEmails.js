@@ -42,8 +42,9 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
 
     if (
       !recentAdvisoryEmails.find(
-        (e) =>
-          e.advisoryNumber === advisoryNumber && e.subject === throttleSubject,
+        (email) =>
+          email.advisoryNumber === advisoryNumber &&
+          email.subject === throttleSubject,
       )
     ) {
       sent.push({
@@ -239,7 +240,9 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
   ).toISOString();
 
   return [
-    ...recentAdvisoryEmails.filter((a) => a.lastEmailSent > throttleMinutesAgo),
+    ...recentAdvisoryEmails.filter(
+      (email) => email.lastEmailSent > throttleMinutesAgo,
+    ),
     ...sent,
   ];
 };
