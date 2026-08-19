@@ -95,15 +95,20 @@ module.exports = {
     if (!subject || !title || !advisoryNumber) {
       return;
     }
-    const exists =
-      (
-        await strapi.documents("api::queued-task.queued-task").findMany({
-          filters: {
-            action: "email advisory",
-            numericData: advisoryNumber,
-          },
-        })
-      ).length > 0;
+    const existingTasks = await strapi
+      .documents("api::queued-task.queued-task")
+      .findMany({
+        filters: {
+          action: "email advisory",
+          numericData: advisoryNumber,
+        },
+      });
+
+    // Check if any existing queued tasks for this advisory have the same subject
+    const exists = existingTasks.some(
+      (task) => task?.jsonData?.subject === subject,
+    );
+
     if (!exists) {
       strapi.log.info(
         `queued advisoryNumber ${advisoryNumber} for "${subject}" notification`,
