@@ -6,7 +6,7 @@
   <title><%= title %></title>
 </head>
 
-<% if (allRecipients && allRecipients.length > 0) { %>
+<% if (typeof allRecipients !== "undefined" && Array.isArray(allRecipients) && allRecipients.length > 0) { %>
 <!-- Email recipients: <%= allRecipients.join(", ") %> -->
 <% } %>
 
