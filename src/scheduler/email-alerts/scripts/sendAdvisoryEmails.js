@@ -225,7 +225,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
       }
     } else {
       logger.info(
-        `Throttled advisory email ${advisoryNumber} with subject "${throttleSubject}". Removing duplicate queue item.`,
+        `Skipped advisory email ${advisoryNumber} with subject "${throttleSubject}" because a duplicate was sent recently. Email not sent.`,
       );
     }
     if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
