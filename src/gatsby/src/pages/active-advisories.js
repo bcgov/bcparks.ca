@@ -175,8 +175,8 @@ const PublicActiveAdvisoriesPage = ({ data }) => {
     (advisoryTypeFilter) => {
       // Build query object for Strapi v5
       let queryObj = {
-        // Tell the API to sort the full advisory list by the display date before paging results.
-        _displaySort: "1",
+        // Tell the API to apply active-advisory date sorting before paging results.
+        _activeAdvisorySort: "1",
       };
 
       let useParksFilter = isParksFilter;

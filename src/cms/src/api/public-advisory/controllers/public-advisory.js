@@ -43,15 +43,15 @@ const appendStandardMessages = function (entity) {
   return entity;
 };
 
-// Enables display-date sorting path only when the request includes _displaySort=1.
-const isDisplaySortEnabled = function (query) {
-  return query?._displaySort === "1";
+// Enables active-advisory sorting only when the request flag is enabled.
+const isActiveAdvisorySort = function (query) {
+  return query?._activeAdvisorySort === "1";
 };
 
-// Use custom search for text/event filters or when display-date sorting is explicitly enabled.
+// Use custom search for text/event filters or when active-advisory sorting is explicitly enabled.
 const shouldUseSearchService = function (query) {
   return (
-    isDisplaySortEnabled(query) ||
+    isActiveAdvisorySort(query) ||
     (query?.queryText && query.queryText.length > 0) ||
     (query?._eventType && query._eventType.length > 0)
   );

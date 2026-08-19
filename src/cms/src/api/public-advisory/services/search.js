@@ -1,27 +1,34 @@
 "use strict";
 
+const { orderBy } = require("lodash");
+
 /**
  * public advisory search service
  */
 
 module.exports = ({ strapi }) => ({
   search: async (query) => {
-    // Only apply display-date sorting when the request includes _displaySort=1.
-    const isDisplaySortEnabled = query._displaySort === "1";
+    // Only apply active-advisory date sorting when the request flag is enabled.
+    const isActiveAdvisorySort = query._activeAdvisorySort === "1";
 
     const pagination = normalizePagination(query);
     query = buildQuery(stripPagination(query));
 
-    // If display-date sorting is enabled, we need to fetch all matching results and apply a custom sort function.
-    if (isDisplaySortEnabled) {
-      // Apply a coarse DB sort before the final compareAdvisories sort runs in memory
-      query.sort = ["effectiveDate:DESC", "advisoryDate:DESC", "updatedDate:DESC", "id:DESC"];
+    // If custom active-advisory sorting is enabled, fetch all matching results and apply a final in-memory sort.
+    if (isActiveAdvisorySort) {
+      // Apply a coarse DB sort before the final compareAdvisories sort runs in memory.
+      query.sort = ["updatedDate:DESC", "advisoryDate:DESC", "id:DESC"];
 
       const results = await strapi
         .documents("api::public-advisory.public-advisory")
         .findMany(query);
 
-      const sortedResults = [...results].sort(compareAdvisories);
+      // Sort the full result set before slicing for pagination.
+      const sortedResults = orderBy(
+        results,
+        [getSortTimestamp, "id"],
+        ["desc", "desc"],
+      );
 
       return {
         results: sortedResults.slice(
@@ -37,7 +44,7 @@ module.exports = ({ strapi }) => ({
       };
     }
 
-    // If display-date sorting is not enabled, we can rely on the DB to sort and paginate results as usual.
+    // If active-advisory sorting is not enabled, rely on DB sorting and pagination.
     query.limit = pagination.limit;
     query.start = pagination.start;
     query.sort = ["advisoryDate:DESC", "updatedDate:DESC", "id:DESC"];
@@ -117,52 +124,14 @@ const stripPagination = (query) => {
   delete nextQuery.start;
   delete nextQuery.sort;
   delete nextQuery.pagination;
-  delete nextQuery._displaySort;
+  delete nextQuery._activeAdvisorySort;
 
   return nextQuery;
 };
 
-// Derive the timestamp used for advisory display ordering.
-const getDisplayTimestamp = (advisory) => {
-  if (advisory.isEffectiveDateDisplayed && advisory.effectiveDate) {
-    return Date.parse(advisory.effectiveDate) || 0;
-  }
-
-  if (advisory.isAdvisoryDateDisplayed && advisory.advisoryDate) {
-    return Date.parse(advisory.advisoryDate) || 0;
-  }
-
-  if (advisory.isUpdatedDateDisplayed && advisory.updatedDate) {
-    return Date.parse(advisory.updatedDate) || 0;
-  }
-
+// Resolves the active-advisory sort timestamp as updatedDate, or advisoryDate when updatedDate is missing.
+const getSortTimestamp = (advisory) => {
   return Date.parse(advisory.updatedDate || advisory.advisoryDate) || 0;
-};
-
-// Keep ordering deterministic by applying date precedence, then stable tie-breakers.
-const compareAdvisories = (a, b) => {
-  // 1) Primary sort: displayed date precedence (effective, advisory, updated).
-  const displayDateDiff = getDisplayTimestamp(b) - getDisplayTimestamp(a);
-  if (displayDateDiff !== 0) {
-    return displayDateDiff;
-  }
-
-  // 2) Tie-breaker: most recently updated advisory first.
-  const updatedDateDiff =
-    (Date.parse(b.updatedDate) || 0) - (Date.parse(a.updatedDate) || 0);
-  if (updatedDateDiff !== 0) {
-    return updatedDateDiff;
-  }
-
-  // 3) Tie-breaker: most recent advisory date first.
-  const advisoryDateDiff =
-    (Date.parse(b.advisoryDate) || 0) - (Date.parse(a.advisoryDate) || 0);
-  if (advisoryDateDiff !== 0) {
-    return advisoryDateDiff;
-  }
-
-  // 4) Final tie-breaker: higher id first for stable ordering.
-  return (Number(b.id) || 0) - (Number(a.id) || 0);
 };
 
 // Build shared filters/populate for public advisory search requests.
