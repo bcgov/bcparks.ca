@@ -16,7 +16,7 @@ module.exports = ({ strapi }) => ({
 
     // If custom active-advisory sorting is enabled, fetch all matching results and apply a final in-memory sort.
     if (isActiveAdvisorySort) {
-      // Apply a coarse DB sort before the final compareAdvisories sort runs in memory.
+      // Apply a coarse DB sort before the final in-memory sorting.
       query.sort = ["updatedDate:DESC", "advisoryDate:DESC", "id:DESC"];
 
       const results = await strapi
