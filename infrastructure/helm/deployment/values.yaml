@@ -152,8 +152,8 @@ scheduler:
     emailEnabled: true
     emailServer: apps.smtp.gov.bc.ca
     emailPort: 25
-    emailSender: parksweb@gov.bc.ca
-    emailRecipient: parksweb@gov.bc.ca
+    emailSender: cardweb@gov.bc.ca
+    emailRecipient: cardweb@gov.bc.ca
     emailRecipientWhitelist: ""
 
   resources:
