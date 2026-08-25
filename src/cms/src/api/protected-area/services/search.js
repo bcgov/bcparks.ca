@@ -114,7 +114,7 @@ module.exports = ({ strapi }) => ({
 
     let sortOrder;
     if (isNaN(latitude) || isNaN(longitude)) {
-      sortOrder = ["_score", "nameLowerCase.keyword"];
+      sortOrder = ["_score", "nameLowerCase.keyword", "orcs"];
     } else {
       sortOrder = [
         {
@@ -127,6 +127,10 @@ module.exports = ({ strapi }) => ({
             ignore_unmapped: true,
           },
         },
+        // if two parks are the same distance away, sort by score and then by keyword
+        { _score: { order: "desc" } },
+        { "nameLowerCase.keyword": { order: "asc" } },
+        { orcs: { order: "asc" } },
       ];
     }
 

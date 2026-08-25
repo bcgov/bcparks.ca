@@ -215,13 +215,13 @@ async function fetchRSTResources() {
   console.log(`Fetching recreation resources from RST API: ${rstSummaryUrl}`);
 
   const rstResources = [];
-  const { data } = await axios.get(`${rstSummaryUrl}?page=1`, rstAxiosConfig);
+  const { data } = await axios.get(`${rstSummaryUrl}?page=1&sort=id`, rstAxiosConfig);
   const totalPages = data.totalPages;
   rstResources.push(...data.data);
 
   for (let page = 2; page <= totalPages; page++) {
     const { data } = await axios.get(
-      `${rstSummaryUrl}?page=${page}`,
+      `${rstSummaryUrl}?page=${page}&sort=id`,
       rstAxiosConfig,
     );
     rstResources.push(...data.data);
@@ -232,6 +232,7 @@ async function fetchRSTResources() {
 // Fetches all recreation resources from Strapi, handling pagination
 async function fetchStrapiResources(strapiResourcesUrl) {
   const queryParams = {
+    sort: ["id:asc"],
     populate: {
       recreationDistrict: { fields: ["documentId"] },
       recreationResourceType: { fields: ["documentId"] },
