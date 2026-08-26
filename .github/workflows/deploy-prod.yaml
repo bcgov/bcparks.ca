@@ -27,9 +27,6 @@ jobs:
           echo "::error::Git Tag not found, please double check input"
           exit 1
 
-      - name: Set env
-        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:

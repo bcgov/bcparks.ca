@@ -3,9 +3,11 @@
   "description": "Utility to help prune older image tags in OpenShift namespace",
   "version": "1.0.0",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start:local": "OPENSHIFT_AUTH_TOKEN=\"$(oc whoami -t)\" OPENSHIFT_API_URL=\"$(oc whoami --show-server)/apis/image.openshift.io/v1\" node index.js"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "phin": "^3.6.1"
   },
   "repository": {

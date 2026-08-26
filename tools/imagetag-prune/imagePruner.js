@@ -12,6 +12,12 @@ const p = require("phin");
  * Default behavior will keep "numReleasesToKeep" number of tags matching the
  * "releaseTagRegex" and "gitShaHashRegex" regex patterns.
  *
+ * Gatsby rollback images (<gatsbyRollbackImageName>:rollbackYYYYMMDDTHHMM) use separate
+ * retention rules:
+ * - Days 0-3: keep every image
+ * - Days 4-14: keep only the first image created each day
+ * - Older than 14 days: delete, while keeping a minimum number of builds
+ *
  * Dry run will compute imagestreamtags to delete but not actually delete them.
  */
 class ImagePruner {
@@ -21,6 +27,10 @@ class ImagePruner {
     releaseTagRegex,
     gitShaHashRegex,
     numReleasesToKeep = 10,
+    gatsbyKeepAllDays = 3,
+    gatsbyKeepFirstDailyUntilDays = 14,
+    gatsbyMinBuildsToKeep = 5,
+    gatsbyRollbackImageName = "public-main",
     imageTagsToIgnore = ["latest", "dev", "test", "prod"],
     imageStreamsToPrune = [],
     dryRun = true,
@@ -37,12 +47,18 @@ class ImagePruner {
     this.imageStreamsToPrune = imageStreamsToPrune;
     this.imageTagsToIgnore = imageTagsToIgnore;
     this.numReleasesToKeep = numReleasesToKeep;
+    this.gatsbyKeepAllDays = gatsbyKeepAllDays;
+    this.gatsbyKeepFirstDailyUntilDays = gatsbyKeepFirstDailyUntilDays;
+    this.gatsbyMinBuildsToKeep = gatsbyMinBuildsToKeep;
+    this.gatsbyRollbackImageName = gatsbyRollbackImageName;
 
     this.dryRun = dryRun;
 
     this.releaseTagsToKeep = [];
     this.gitHashTagsToKeep = [];
-    this.imageTagsToDelete = [];
+    this.artifactTagsToDelete = [];
+    this.gatsbyTagsToDelete = [];
+    this.gatsbyRollbackBuildsSeen = 0;
   }
 
   async prune() {
@@ -76,9 +92,36 @@ class ImagePruner {
       })
       .sort((a, b) => b.creationTimestamp - a.creationTimestamp);
 
+    // Loop through items oldest->newest and mark the first Gatsby rollback tag created each day.
+    // The rollback tag timestamp is already in Vancouver local time.
+    const firstGatsbyBuildDaysSeen = new Set();
+    for (let i = sortedItems.length - 1; i >= 0; i -= 1) {
+      const item = sortedItems[i];
+      if (item.imageName === this.gatsbyRollbackImageName) {
+        const match = /^rollback(\d{8})T\d{4}$/i.exec(item.tag);
+        const buildDate = match ? match[1] : null;
+        if (!buildDate) {
+          item.firstGatsbyBuildOfTheDay = false;
+          continue;
+        }
+        if (!firstGatsbyBuildDaysSeen.has(buildDate)) {
+          firstGatsbyBuildDaysSeen.add(buildDate);
+          item.firstGatsbyBuildOfTheDay = true;
+        } else {
+          item.firstGatsbyBuildOfTheDay = false;
+        }
+      }
+    }
+
     for (const item of sortedItems) {
-      if (this.#shouldCleanImage(item.imageName, item.tag)) {
-        this.imageTagsToDelete.push({
+      if (this.#shouldCleanBuildArtifactImage(item.imageName, item.tag)) {
+        this.artifactTagsToDelete.push({
+          imageName: item.imageName,
+          tagName: item.tag,
+        });
+      }
+      if (this.#shouldCleanGatsbyRollbackImage(item)) {
+        this.gatsbyTagsToDelete.push({
           imageName: item.imageName,
           tagName: item.tag,
         });
@@ -86,7 +129,12 @@ class ImagePruner {
     }
   }
 
-  #shouldCleanImage(name, tag) {
+  #shouldCleanBuildArtifactImage(name, tag) {
+    // Gatsby rollback imagestream is handled separately in #shouldCleanGatsbyRollbackImage
+    if (name === this.gatsbyRollbackImageName) {
+      return false;
+    }
+
     if (!this.imageStreamsToPrune.includes(name)) {
       return false;
     }
@@ -128,22 +176,64 @@ class ImagePruner {
     return true;
   }
 
+  #shouldCleanGatsbyRollbackImage(item) {
+    if (item.imageName !== this.gatsbyRollbackImageName) {
+      return false;
+    }
+
+    // keep dev/test/prod/latest tags
+    if (this.imageTagsToIgnore.includes(item.tag)) {
+      return false;
+    }
+
+    // Only apply Gatsby retention rules to rollback tags.
+    if (!/^rollback\d{8}T\d{4}$/i.test(item.tag)) {
+      return false;
+    }
+
+    this.gatsbyRollbackBuildsSeen += 1;
+
+    const now = Date.now();
+    const itemAgeInDays = Math.floor(
+      (now - item.creationTimestamp.getTime()) / (1000 * 60 * 60 * 24),
+    );
+
+    // Days 0-3: keep every image
+    if (itemAgeInDays <= this.gatsbyKeepAllDays) {
+      return false;
+    }
+
+    // Days 4-14: keep only the first image created each day
+    if (itemAgeInDays <= this.gatsbyKeepFirstDailyUntilDays && item.firstGatsbyBuildOfTheDay) {
+      return false;
+    }
+
+    // Keep at least N rollback builds overall.
+    const buildsRetainedSoFar = this.gatsbyRollbackBuildsSeen - this.gatsbyTagsToDelete.length;
+    if (buildsRetainedSoFar <= this.gatsbyMinBuildsToKeep) {
+      return false;
+    }
+
+    return true;
+  }
+
   async #deleteImageTags() {
     if (this.dryRun) {
       console.log(
-        "This is only a dryrun, nothing will be removed.  Set dry run env to false to perform actual deletions.\n"
+        "This is only a dryrun, nothing will be removed.  Set dry run env to false to perform actual deletions.\n",
       );
     }
     console.log(
-      `${this.imageTagsToDelete.length} images tags matched pruned criteria\n`
+      `${this.artifactTagsToDelete.length} build artifact image tags matched prune criteria\n`,
+    );
+    console.log(
+      `${this.gatsbyTagsToDelete.length} Gatsby rollback image tags matched prune criteria\n`,
     );
 
-    for (const tag of this.imageTagsToDelete) {
-      console.log(
-        `${this.dryRun ? "--DRY-RUN--" : ""}Deleting ${tag.imageName}:${
-          tag.tagName
-        }`
-      );
+    const imageTagsToDelete = this.artifactTagsToDelete.concat(this.gatsbyTagsToDelete);
+
+    for (const tag of imageTagsToDelete) {
+      console.log(`${this.dryRun ? "--DRY-RUN--" : ""}Deleting ${tag.imageName}:${tag.tagName}`);
       if (!this.dryRun) {
         try {
           const res = await p({
