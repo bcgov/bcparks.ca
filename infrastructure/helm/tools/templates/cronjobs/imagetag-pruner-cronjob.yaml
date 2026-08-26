@@ -44,7 +44,7 @@ spec:
                   value: 'false'
                 - name: NUM_RELEASES_TO_KEEP
                   value: '10'
-                - name: IMAGESTRAMS_TO_CLEAN
+                - name: IMAGESTREAMS_TO_CLEAN
                   value: >-
                     admin-alpha,admin-main,etl-alpha,etl-main,maintenance-alpha,maintenance-main,public-builder-alpha,public-builder-main,strapi-alpha,strapi-main,scheduler-main,scheduler-alpha
               resources: {}
