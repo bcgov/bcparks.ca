@@ -215,13 +215,13 @@ async function fetchRSTResources() {
   console.log(`Fetching recreation resources from RST API: ${rstSummaryUrl}`);
 
   const rstResources = [];
-  const { data } = await axios.get(`${rstSummaryUrl}?page=1&sort=id`, rstAxiosConfig);
+  const { data } = await axios.get(`${rstSummaryUrl}?page=1`, rstAxiosConfig);
   const totalPages = data.totalPages;
   rstResources.push(...data.data);
 
   for (let page = 2; page <= totalPages; page++) {
     const { data } = await axios.get(
-      `${rstSummaryUrl}?page=${page}&sort=id`,
+      `${rstSummaryUrl}?page=${page}`,
       rstAxiosConfig,
     );
     rstResources.push(...data.data);
