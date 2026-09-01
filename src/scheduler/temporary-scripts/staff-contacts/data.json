@@ -1,0 +1,3299 @@
+[
+  {
+    "managementAreaNumber": "1",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Awesome, Andy",
+    "jobTitle": "Executive Director",
+    "email": "Andy.Awesome@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "1",
+    "activeDirectoryGuid": "02be042e-3886-4299-8ab9-2774a7c77586",
+    "fullName": "Brave, Bob",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Bob.Brave@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "1",
+    "activeDirectoryGuid": "83875e6f-be75-4233-96fc-675dbbb98e84",
+    "fullName": "Caring, Connor",
+    "jobTitle": "Area Supervisor - Arrow",
+    "email": "Connor.Caring@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "1",
+    "activeDirectoryGuid": "9797f076-5af4-4c54-b682-b329cc15aede",
+    "fullName": "Dependable, Doug",
+    "jobTitle": "Park Ranger",
+    "email": "Doug.Dependable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "1",
+    "activeDirectoryGuid": "f488810c-3794-4494-86b1-e233b7d07b0e",
+    "fullName": "Excellent, Emily",
+    "jobTitle": "PPA Section Head",
+    "email": "Emily.Excellent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "1",
+    "activeDirectoryGuid": "a9e884ed-af8a-4d92-aa64-4df71d05e3f1",
+    "fullName": "Friendly, Frank",
+    "jobTitle": "Administration Section Head",
+    "email": "Frank.Friendly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "1",
+    "activeDirectoryGuid": "ad3b5942-1d40-4ca5-a5b6-a0f858e964a4",
+    "fullName": "Generous, Greg",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Greg.Generous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "1",
+    "activeDirectoryGuid": "625854e6-f802-40e5-8ebb-6cb020f35aaf",
+    "fullName": "Helpful, Howard",
+    "jobTitle": "Recreation Officer",
+    "email": "Howard.Helpful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "1",
+    "activeDirectoryGuid": "1e3fffae-383c-4b8a-a4e0-c908fd4d1180",
+    "fullName": "Insightful, Ian",
+    "jobTitle": "Regional Director",
+    "email": "Ian.Insightful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "1",
+    "activeDirectoryGuid": "046e76bd-5d42-4501-ae3c-57736ee31e5c",
+    "fullName": "Jovial, Joyce",
+    "jobTitle": "Conservation Specialist",
+    "email": "Joyce.Jovial@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "1",
+    "activeDirectoryGuid": "52058671-feba-4f0e-8ac4-f4a6a9cea444",
+    "fullName": "Kind, Kelly",
+    "jobTitle": "Section Head, Recreation - Kootenay",
+    "email": "Kelly.Kind@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "2",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Loyal, Larry",
+    "jobTitle": "Operations Manager",
+    "email": "Larry.Loyal@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "2",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Mindful, Mark",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Mark.Mindful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "2",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Noble, Neil",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Neil.Noble@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "2",
+    "activeDirectoryGuid": "d670eadf-d597-4e7a-9d73-af06bd442ddb",
+    "fullName": "Outstanding, Oscar",
+    "jobTitle": "Park Ranger",
+    "email": "Oscar.Outstanding@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "2",
+    "activeDirectoryGuid": "c21212b4-721b-46b0-b9d5-e43483ef7564",
+    "fullName": "Patient, Peter",
+    "jobTitle": "Parks and Protected Areas Section Head - Haida Gwaii/South Isl.",
+    "email": "Peter.Patient@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "2",
+    "activeDirectoryGuid": "3ae85fc8-7669-4b94-be9d-21ced467a4da",
+    "fullName": "Reliable, Ryan",
+    "jobTitle": "North Island Recreation Section Head",
+    "email": "Ryan.Reliable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "2",
+    "activeDirectoryGuid": "6cb8e7b0-3980-4753-b744-385686509dc4",
+    "fullName": "Skillful, Sally",
+    "jobTitle": "Arrowsmith Area Supervisor",
+    "email": "Sally.Skillful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "3",
+    "activeDirectoryGuid": "0c3f33ac-5283-4933-bdf7-477daee089ea",
+    "fullName": "Talented, Trent",
+    "jobTitle": "Auxiliary Park Ranger",
+    "email": "Trent.Talented@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "3",
+    "activeDirectoryGuid": "50e94581-b254-4040-a600-0685b076c2f5",
+    "fullName": "Versatile, Vaughn",
+    "jobTitle": "Regional Director, North Coast Skeena Region",
+    "email": "Vaughn.Versatile@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "3",
+    "activeDirectoryGuid": "e7346f9c-d316-4333-bf90-92a971a46c45",
+    "fullName": "Wise, Willard",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Willard.Wise@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "3",
+    "activeDirectoryGuid": "2279b2d7-2dfd-4364-8d26-47c4a24b1a7a",
+    "fullName": "Admirable, Amber",
+    "jobTitle": "PPA Section Head - Peace Region",
+    "email": "Amber.Admirable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "3",
+    "activeDirectoryGuid": "c71b5dd5-b5c8-4a83-8506-7bb8588eb16f",
+    "fullName": "Brilliant, Bruce",
+    "jobTitle": "Executive Director",
+    "email": "Bruce.Brilliant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "3",
+    "activeDirectoryGuid": "740bad44-c2be-4c98-97ce-4dcd38ad9627",
+    "fullName": "Creative, Chloe",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Chloe.Creative@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "3",
+    "activeDirectoryGuid": "56c144cc-4df6-4e50-8ac2-88e4d68c6c8f",
+    "fullName": "Dynamic, Debra",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Debra.Dynamic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "3",
+    "activeDirectoryGuid": "dbb3b803-7369-44d5-b799-19339e130081",
+    "fullName": "Energetic, Ellen",
+    "jobTitle": "Area Supervisor",
+    "email": "Ellen.Energetic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "4",
+    "activeDirectoryGuid": "50e94581-b254-4040-a600-0685b076c2f5",
+    "fullName": "Faithful, Franklin",
+    "jobTitle": "Regional Director, North Coast Skeena Region",
+    "email": "Franklin.Faithful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "4",
+    "activeDirectoryGuid": "e7346f9c-d316-4333-bf90-92a971a46c45",
+    "fullName": "Gentle, Gary",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Gary.Gentle@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "4",
+    "activeDirectoryGuid": "2279b2d7-2dfd-4364-8d26-47c4a24b1a7a",
+    "fullName": "Honest, Henry",
+    "jobTitle": "PPA Section Head - Peace Region",
+    "email": "Henry.Honest@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "4",
+    "activeDirectoryGuid": "c71b5dd5-b5c8-4a83-8506-7bb8588eb16f",
+    "fullName": "Intelligent, Isabel",
+    "jobTitle": "Executive Director",
+    "email": "Isabel.Intelligent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "4",
+    "activeDirectoryGuid": "b33b51d0-52c7-472f-99fc-b66db869a044",
+    "fullName": "Joyful, Jordan",
+    "jobTitle": "Babine Area Supervisor",
+    "email": "Jordan.Joyful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "4",
+    "activeDirectoryGuid": "05c84ea9-bb39-4a4a-8aa7-829048af90fb",
+    "fullName": "Keen, Kate",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Kate.Keen@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "4",
+    "activeDirectoryGuid": "740bad44-c2be-4c98-97ce-4dcd38ad9627",
+    "fullName": "Lovable, Linda",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Linda.Lovable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Modest, Mike",
+    "jobTitle": "Executive Director",
+    "email": "Mike.Modest@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "961e7494-d8ed-4790-855e-6fdc9775549c",
+    "fullName": "Nice, Nancy",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Nancy.Nice@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "890c8ee3-355d-4d45-9393-ee1f6a42d4ba",
+    "fullName": "Optimistic, Olivia",
+    "jobTitle": "Recreation Section Head",
+    "email": "Olivia.Optimistic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "888fb56b-ab14-4d80-8ee5-b1ef70cbfca8",
+    "fullName": "Passionate, Pete",
+    "jobTitle": "Parks and Protected Area Section Head, Bella Coola",
+    "email": "Pete.Passionate@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "d3359427-89ad-4cbc-8460-e631e9840093",
+    "fullName": "Respectful, Ross",
+    "jobTitle": "Conservation Specialist",
+    "email": "Ross.Respectful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "69f4438c-4ffb-4c54-8bba-9df0d7e222d5",
+    "fullName": "Sincere, Sophie",
+    "jobTitle": "Administrative Section Head",
+    "email": "Sophie.Sincere@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "14e532ad-cbba-4ee3-8845-dc8352b7d199",
+    "fullName": "Thoughtful, Todd",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Todd.Thoughtful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "56f64ae1-7357-4162-9283-2e07d1e67428",
+    "fullName": "Valiant, Victor",
+    "jobTitle": "South Okanagan Senior Park Ranger",
+    "email": "Victor.Valiant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "7073f985-251e-4030-9436-82d44298195b",
+    "fullName": "Warm, Wesley",
+    "jobTitle": "Area Supervisor - Bella Coola",
+    "email": "Wesley.Warm@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "f2e05183-92e6-4c4b-8ca9-5525d17e785c",
+    "fullName": "Adaptable, Angela",
+    "jobTitle": "Regional Director",
+    "email": "Angela.Adaptable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "d0db6b26-b485-4ae3-ad00-80cabb98fbe9",
+    "fullName": "Bright, Brenda",
+    "jobTitle": "Recreation Administrative Assistant",
+    "email": "Brenda.Bright@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "e571f0f8-67c1-4f9d-b125-8f683e119382",
+    "fullName": "Capable, Craig",
+    "jobTitle": "Park Ranger",
+    "email": "Craig.Capable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "5",
+    "activeDirectoryGuid": "3fd39271-4806-4a47-b5ee-4842d7b3f86d",
+    "fullName": "Daring, Daniel",
+    "jobTitle": "Regional Planning Section Head - Cariboo",
+    "email": "Daniel.Daring@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Earnest, Ethan",
+    "jobTitle": "Executive Director",
+    "email": "Ethan.Earnest@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "961e7494-d8ed-4790-855e-6fdc9775549c",
+    "fullName": "Fair, Felix",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Felix.Fair@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "890c8ee3-355d-4d45-9393-ee1f6a42d4ba",
+    "fullName": "Genuine, Greg",
+    "jobTitle": "Recreation Section Head",
+    "email": "Greg.Genuine@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "64b39745-0a5e-402f-bee2-ea5e4c969fef",
+    "fullName": "Humble, Hugh",
+    "jobTitle": "Bowron-Cariboo Area Supervisor",
+    "email": "Hugh.Humble@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "c7195a81-3510-4244-88b3-84da7e059b45",
+    "fullName": "Imaginative, Ian",
+    "jobTitle": "Park Ranger",
+    "email": "Ian.Imaginative@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "d3359427-89ad-4cbc-8460-e631e9840093",
+    "fullName": "Joyous, Joanna",
+    "jobTitle": "Conservation Specialist",
+    "email": "Joanna.Joyous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "69f4438c-4ffb-4c54-8bba-9df0d7e222d5",
+    "fullName": "Knowledgeable, Karen",
+    "jobTitle": "Administrative Section Head",
+    "email": "Karen.Knowledgeable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "14e532ad-cbba-4ee3-8845-dc8352b7d199",
+    "fullName": "Loving, Lily",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Lily.Loving@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "f2e05183-92e6-4c4b-8ca9-5525d17e785c",
+    "fullName": "Motivated, Mabel",
+    "jobTitle": "Regional Director",
+    "email": "Mabel.Motivated@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "c0f50ac3-b529-4a5c-9214-bab1ae660c90",
+    "fullName": "Nimble, Noah",
+    "jobTitle": "Parks & Protected Area Section Head",
+    "email": "Noah.Nimble@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "d0db6b26-b485-4ae3-ad00-80cabb98fbe9",
+    "fullName": "Observant, Olivia",
+    "jobTitle": "Recreation Administrative Assistant",
+    "email": "Olivia.Observant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "62a61038-e57a-46b7-8198-3d2790f0c5a2",
+    "fullName": "Peaceful, Patrick",
+    "jobTitle": "Park Ranger",
+    "email": "Patrick.Peaceful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "09ed895e-b027-4d79-90ce-7a1a4a71cda8",
+    "fullName": "Resourceful, Ralph",
+    "jobTitle": "Senior Park Ranger - Bowron-Cariboo",
+    "email": "Ralph.Resourceful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "51",
+    "activeDirectoryGuid": "3fd39271-4806-4a47-b5ee-4842d7b3f86d",
+    "fullName": "Sensible, Sean",
+    "jobTitle": "Regional Planning Section Head - Cariboo",
+    "email": "Sean.Sensible@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "7",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Trustworthy, Tom",
+    "jobTitle": "Operations Manager",
+    "email": "Tom.Trustworthy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "7",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Valuable, Vaughn",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Vaughn.Valuable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "7",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Warmhearted, Walter",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Walter.Warmhearted@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "7",
+    "activeDirectoryGuid": "0d236779-50c4-4c6e-962e-9c2a103ce3e5",
+    "fullName": "Agile, Ashley",
+    "jobTitle": "Seasonal Maintenance Crew Leader",
+    "email": "Ashley.Agile@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "7",
+    "activeDirectoryGuid": "4e1ab46c-b3ab-40e6-aff5-3415673d940f",
+    "fullName": "Bold, Brad",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Brad.Bold@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "7",
+    "activeDirectoryGuid": "0144b76e-3c72-4c01-96fc-a8209ae3781d",
+    "fullName": "Calm, Colin",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Colin.Calm@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "7",
+    "activeDirectoryGuid": "87b70910-48d0-4fb9-8d36-f97bfe31f31d",
+    "fullName": "Dazzling, Diane",
+    "jobTitle": "Section Head, Parks and Protected Areas",
+    "email": "Diane.Dazzling@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "7",
+    "activeDirectoryGuid": "3ae85fc8-7669-4b94-be9d-21ced467a4da",
+    "fullName": "Easygoing, Evan",
+    "jobTitle": "North Island Recreation Section Head",
+    "email": "Evan.Easygoing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "7",
+    "activeDirectoryGuid": "e5b047b6-75d5-4d67-b9d9-da31358c22ad",
+    "fullName": "Fabulous, Fiona",
+    "jobTitle": "South Central Coast Area Supervisor",
+    "email": "Fiona.Fabulous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "8",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Gifted, Gordon",
+    "jobTitle": "Executive Director",
+    "email": "Gordon.Gifted@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "8",
+    "activeDirectoryGuid": "961e7494-d8ed-4790-855e-6fdc9775549c",
+    "fullName": "Hardworking, Hazel",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Hazel.Hardworking@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "8",
+    "activeDirectoryGuid": "890c8ee3-355d-4d45-9393-ee1f6a42d4ba",
+    "fullName": "Impartial, Isabel",
+    "jobTitle": "Recreation Section Head",
+    "email": "Isabel.Impartial@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "8",
+    "activeDirectoryGuid": "fb442202-500e-4c0b-8c0d-d1d41ddad424",
+    "fullName": "Judicious, Joan",
+    "jobTitle": "Central Coast Senior Park Ranger",
+    "email": "Joan.Judicious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "8",
+    "activeDirectoryGuid": "888fb56b-ab14-4d80-8ee5-b1ef70cbfca8",
+    "fullName": "Kindly, Kevin",
+    "jobTitle": "Parks and Protected Area Section Head, Bella Coola",
+    "email": "Kevin.Kindly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "8",
+    "activeDirectoryGuid": "d3359427-89ad-4cbc-8460-e631e9840093",
+    "fullName": "Likable, Laura",
+    "jobTitle": "Conservation Specialist",
+    "email": "Laura.Likable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "8",
+    "activeDirectoryGuid": "69f4438c-4ffb-4c54-8bba-9df0d7e222d5",
+    "fullName": "Magnificent, Megan",
+    "jobTitle": "Administrative Section Head",
+    "email": "Megan.Magnificent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "8",
+    "activeDirectoryGuid": "14e532ad-cbba-4ee3-8845-dc8352b7d199",
+    "fullName": "Neat, Nancy",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Nancy.Neat@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "8",
+    "activeDirectoryGuid": "f2e05183-92e6-4c4b-8ca9-5525d17e785c",
+    "fullName": "Obliging, Otis",
+    "jobTitle": "Regional Director",
+    "email": "Otis.Obliging@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "8",
+    "activeDirectoryGuid": "d0db6b26-b485-4ae3-ad00-80cabb98fbe9",
+    "fullName": "Perceptive, Patty",
+    "jobTitle": "Recreation Administrative Assistant",
+    "email": "Patty.Perceptive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "8",
+    "activeDirectoryGuid": "3fd39271-4806-4a47-b5ee-4842d7b3f86d",
+    "fullName": "Radiant, Ross",
+    "jobTitle": "Regional Planning Section Head - Cariboo",
+    "email": "Ross.Radiant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "9",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Sociable, Sarah",
+    "jobTitle": "Operations Manager",
+    "email": "Sarah.Sociable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "9",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Tactful, Travis",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Travis.Tactful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "9",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Venerable, Vaughn",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Vaughn.Venerable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "9",
+    "activeDirectoryGuid": "fb2aff15-096c-4463-86d5-cb60381b275b",
+    "fullName": "Welcoming, Walter",
+    "jobTitle": "Clayoquot Senior Park Ranger",
+    "email": "Walter.Welcoming@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "9",
+    "activeDirectoryGuid": "58cb4d38-e640-48d8-ab31-8ef055ee9db8",
+    "fullName": "Ambitious, Anna",
+    "jobTitle": "Area Supervisor",
+    "email": "Anna.Ambitious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "9",
+    "activeDirectoryGuid": "c21212b4-721b-46b0-b9d5-e43483ef7564",
+    "fullName": "Benevolent, Barbara",
+    "jobTitle": "Parks and Protected Areas Section Head - Haida Gwaii/South Isl.",
+    "email": "Barbara.Benevolent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "9",
+    "activeDirectoryGuid": "3ae85fc8-7669-4b94-be9d-21ced467a4da",
+    "fullName": "Candid, Caleb",
+    "jobTitle": "North Island Recreation Section Head",
+    "email": "Caleb.Candid@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "9",
+    "activeDirectoryGuid": "49f983a8-b212-4ac1-84da-71c4abd7b8e6",
+    "fullName": "Decent, Drew",
+    "jobTitle": "Clayoquot Park Ranger",
+    "email": "Drew.Decent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "10",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Ebullient, Erica",
+    "jobTitle": "Operations Manager",
+    "email": "Erica.Ebullient@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "10",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Fantastic, Frances",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Frances.Fantastic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "10",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Gallant, Gerald",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Gerald.Gallant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "10",
+    "activeDirectoryGuid": "812172f2-97eb-4456-833a-502134cd9c2a",
+    "fullName": "Happy, Holly",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Holly.Happy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "10",
+    "activeDirectoryGuid": "ab289c7a-0292-4659-a0ed-b5ca4fc79f15",
+    "fullName": "Impressive, Isabel",
+    "jobTitle": "Cowichan Area Supervisor",
+    "email": "Isabel.Impressive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "10",
+    "activeDirectoryGuid": "4e1ab46c-b3ab-40e6-aff5-3415673d940f",
+    "fullName": "Just, Janet",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Janet.Just@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "10",
+    "activeDirectoryGuid": "5756f09e-b642-445a-9ec9-4ed49b911b84",
+    "fullName": "Kindhearted, Karl",
+    "jobTitle": "Cowichan Senior Park Ranger",
+    "email": "Karl.Kindhearted@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "10",
+    "activeDirectoryGuid": "cbc53950-4de7-4b2f-a2fd-414a689a3138",
+    "fullName": "Lively, Liam",
+    "jobTitle": "Recreation Section Head",
+    "email": "Liam.Lively@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "11",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Magnanimous, Monica",
+    "jobTitle": "Executive Director",
+    "email": "Monica.Magnanimous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "11",
+    "activeDirectoryGuid": "b8d66628-2c1e-4a3a-a1db-eb8fa4756638",
+    "fullName": "Natural, Nick",
+    "jobTitle": "Park Ranger",
+    "email": "Nick.Natural@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "11",
+    "activeDirectoryGuid": "f488810c-3794-4494-86b1-e233b7d07b0e",
+    "fullName": "Open, Olivia",
+    "jobTitle": "PPA Section Head",
+    "email": "Olivia.Open@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "11",
+    "activeDirectoryGuid": "a9e884ed-af8a-4d92-aa64-4df71d05e3f1",
+    "fullName": "Persistent, Penny",
+    "jobTitle": "Administration Section Head",
+    "email": "Penny.Persistent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "11",
+    "activeDirectoryGuid": "a5291ec6-bc64-45f9-ae9f-91802dbe5c90",
+    "fullName": "Rational, Rachel",
+    "jobTitle": "Senior Park Ranger - East Kootenay North",
+    "email": "Rachel.Rational@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "11",
+    "activeDirectoryGuid": "ad3b5942-1d40-4ca5-a5b6-a0f858e964a4",
+    "fullName": "Steadfast, Sean",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Sean.Steadfast@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "11",
+    "activeDirectoryGuid": "625854e6-f802-40e5-8ebb-6cb020f35aaf",
+    "fullName": "Tenacious, Tina",
+    "jobTitle": "Recreation Officer",
+    "email": "Tina.Tenacious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "11",
+    "activeDirectoryGuid": "1e3fffae-383c-4b8a-a4e0-c908fd4d1180",
+    "fullName": "Veracious, Violet",
+    "jobTitle": "Regional Director",
+    "email": "Violet.Veracious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "11",
+    "activeDirectoryGuid": "046e76bd-5d42-4501-ae3c-57736ee31e5c",
+    "fullName": "Wholesome, Wesley",
+    "jobTitle": "Conservation Specialist",
+    "email": "Wesley.Wholesome@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "11",
+    "activeDirectoryGuid": "76a4d496-60a5-4d0a-aaa3-833235105f15",
+    "fullName": "Amazing, Alice",
+    "jobTitle": "Area Supervisor - East Kootenay North",
+    "email": "Alice.Amazing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "11",
+    "activeDirectoryGuid": "52058671-feba-4f0e-8ac4-f4a6a9cea444",
+    "fullName": "Balanced, Bradley",
+    "jobTitle": "Section Head, Recreation - Kootenay",
+    "email": "Bradley.Balanced@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Charming, Cheryl",
+    "jobTitle": "Executive Director",
+    "email": "Cheryl.Charming@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "b115bde5-aeb6-4976-aa23-2d51e5d2ce0f",
+    "fullName": "Decisive, Dennis",
+    "jobTitle": "Park Ranger",
+    "email": "Dennis.Decisive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "89be4b4e-c5ed-432e-a12a-b0b19f47a876",
+    "fullName": "Effective, Erica",
+    "jobTitle": "Park Ranger",
+    "email": "Erica.Effective@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "544e96d6-9800-40b0-8227-cb377e618df9",
+    "fullName": "Fearless, Fiona",
+    "jobTitle": "Park Ranger-Kootenay/Okanagan",
+    "email": "Fiona.Fearless@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "f488810c-3794-4494-86b1-e233b7d07b0e",
+    "fullName": "Glad, Glen",
+    "jobTitle": "PPA Section Head",
+    "email": "Glen.Glad@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "a9e884ed-af8a-4d92-aa64-4df71d05e3f1",
+    "fullName": "Harmonious, Hannah",
+    "jobTitle": "Administration Section Head",
+    "email": "Hannah.Harmonious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "ad3b5942-1d40-4ca5-a5b6-a0f858e964a4",
+    "fullName": "Incredible, Ivan",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Ivan.Incredible@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "625854e6-f802-40e5-8ebb-6cb020f35aaf",
+    "fullName": "Jubilant, Josh",
+    "jobTitle": "Recreation Officer",
+    "email": "Josh.Jubilant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "1e3fffae-383c-4b8a-a4e0-c908fd4d1180",
+    "fullName": "Knowing, Kylie",
+    "jobTitle": "Regional Director",
+    "email": "Kylie.Knowing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "046e76bd-5d42-4501-ae3c-57736ee31e5c",
+    "fullName": "Logical, Logan",
+    "jobTitle": "Conservation Specialist",
+    "email": "Logan.Logical@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "d09e5d6e-04be-474b-998a-6172a0d47883",
+    "fullName": "Majestic, Marc",
+    "jobTitle": "Area Supervisor",
+    "email": "Marc.Majestic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "12",
+    "activeDirectoryGuid": "52058671-feba-4f0e-8ac4-f4a6a9cea444",
+    "fullName": "Nurturing, Nora",
+    "jobTitle": "Section Head, Recreation - Kootenay",
+    "email": "Nora.Nurturing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Openhearted, Otis",
+    "jobTitle": "Executive Director",
+    "email": "Otis.Openhearted@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "367b12d6-7fa3-4645-b6aa-29d8fc235d7c",
+    "fullName": "Personable, Patrick",
+    "jobTitle": "Parks Administrative Support Clerk",
+    "email": "Patrick.Personable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "0152fa2e-3fc9-4733-bee4-f449f16dad75",
+    "fullName": "Realistic, Regina",
+    "jobTitle": "Recreation Section Head",
+    "email": "Regina.Realistic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "698805ad-7276-4372-baa4-5e8ba77856f6",
+    "fullName": "Strong, Sophie",
+    "jobTitle": "Planning Section Head -  Okanagan",
+    "email": "Sophie.Strong@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "8ad8cce4-b78c-462a-b31c-195cd16ce125",
+    "fullName": "Terrific, Trevor",
+    "jobTitle": "Recreation Officer",
+    "email": "Trevor.Terrific@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "f99fa5d4-808c-4c99-acc9-87ceef7ea6a4",
+    "fullName": "Versed, Vera",
+    "jobTitle": "Area Supervisor, Parks & Protected Areas",
+    "email": "Vera.Versed@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "0bdac92b-d1fe-4cce-b39e-fc17b35996fd",
+    "fullName": "Willing, Wayne",
+    "jobTitle": "Recreation Service Officer",
+    "email": "Wayne.Willing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "89e643cd-1ad9-4497-a862-3fb105142e91",
+    "fullName": "Amiable, Abigail",
+    "jobTitle": "Conservation Specialist",
+    "email": "Abigail.Amiable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "5830b528-3325-42bc-a3fb-cc1431e1e557",
+    "fullName": "Beautiful, Brad",
+    "jobTitle": "Regional Director",
+    "email": "Brad.Beautiful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "a9e884ed-af8a-4d92-aa64-4df71d05e3f1",
+    "fullName": "Charitable, Craig",
+    "jobTitle": "Administration Section Head",
+    "email": "Craig.Charitable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "ad3b5942-1d40-4ca5-a5b6-a0f858e964a4",
+    "fullName": "Dedicated, Diane",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Diane.Dedicated@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "6",
+    "activeDirectoryGuid": "90d29149-6466-48d2-9b8c-b002bcbf8789",
+    "fullName": "Efficient, Evan",
+    "jobTitle": "PPA Section Head",
+    "email": "Evan.Efficient@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "39",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Fervent, Frank",
+    "jobTitle": "Executive Director",
+    "email": "Frank.Fervent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "39",
+    "activeDirectoryGuid": "961e7494-d8ed-4790-855e-6fdc9775549c",
+    "fullName": "Gleaming, Glen",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Glen.Gleaming@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "39",
+    "activeDirectoryGuid": "890c8ee3-355d-4d45-9393-ee1f6a42d4ba",
+    "fullName": "Hearty, Hugh",
+    "jobTitle": "Recreation Section Head",
+    "email": "Hugh.Hearty@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "39",
+    "activeDirectoryGuid": "36b7dcac-45e2-4cc2-9c34-b5c09d65dde4",
+    "fullName": "Independent, Irene",
+    "jobTitle": "Area Supervisor",
+    "email": "Irene.Independent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "39",
+    "activeDirectoryGuid": "2757ebcb-28d6-488c-a762-12d01da48816",
+    "fullName": "Jaunty, Jane",
+    "jobTitle": "Section Head",
+    "email": "Jane.Jaunty@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "39",
+    "activeDirectoryGuid": "14e532ad-cbba-4ee3-8845-dc8352b7d199",
+    "fullName": "Knightly, Kelly",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Kelly.Knightly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "39",
+    "activeDirectoryGuid": "d36b7f39-6a10-49ba-bed3-af7ca518237f",
+    "fullName": "Luminous, Lisa",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Lisa.Luminous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "39",
+    "activeDirectoryGuid": "5830b528-3325-42bc-a3fb-cc1431e1e557",
+    "fullName": "Marvelous, Martin",
+    "jobTitle": "Regional Director",
+    "email": "Martin.Marvelous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "39",
+    "activeDirectoryGuid": "641544dc-a590-4f48-b4bb-a45b0aad0354",
+    "fullName": "Notable, Nicole",
+    "jobTitle": "Conservation Specialist",
+    "email": "Nicole.Notable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "39",
+    "activeDirectoryGuid": "b9312a24-44a4-4b69-9d48-2ec47f91e9db",
+    "fullName": "Orderly, Opal",
+    "jobTitle": "Program Assistant",
+    "email": "Opal.Orderly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "39",
+    "activeDirectoryGuid": "6b552f8b-7b04-453e-85d3-8f5c836f55f3",
+    "fullName": "Persuasive, Patty",
+    "jobTitle": "Planning Section Head",
+    "email": "Patty.Persuasive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Reasonable, Ryan",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Ryan.Reasonable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "330dc2c9-0cc5-4cd1-b9fd-de66793ce56b",
+    "fullName": "Successful, Seth",
+    "jobTitle": "Park Ranger",
+    "email": "Seth.Successful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "84ade704-b640-4f2a-956e-2be2d59911dd",
+    "fullName": "Thankful, Tanya",
+    "jobTitle": "Recreation Officer",
+    "email": "Tanya.Thankful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "bac201bb-7385-445a-a6d1-349d6c50deb6",
+    "fullName": "Vibrant, Violet",
+    "jobTitle": "A/Senior Park Ranger",
+    "email": "Violet.Vibrant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "f32ea9af-1b49-4598-8e1d-727e71de7208",
+    "fullName": "Winning, Wendy",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Wendy.Winning@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "d3099212-a14d-462b-91d9-658d9bdac452",
+    "fullName": "Able, Alan",
+    "jobTitle": "Area Supervisor Squamish",
+    "email": "Alan.Able@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "b4a8e07d-9522-4116-917c-25695fe2541b",
+    "fullName": "Beloved, Brad",
+    "jobTitle": "Section Head, Parks and Protected Area Sea to Sky",
+    "email": "Brad.Beloved@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "35a883bf-a702-436b-b71a-484150129ecf",
+    "fullName": "Cheerful, Chase",
+    "jobTitle": "Area Supervisor Garibaldi South",
+    "email": "Chase.Cheerful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "51fc84f6-284e-4166-a55e-bdcc53f8a35a",
+    "fullName": "Deft, Dennis",
+    "jobTitle": "Recreation Section Head - Sea to Sky",
+    "email": "Dennis.Deft@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "388af9c4-a06b-4765-8ef9-eaa928208c62",
+    "fullName": "Elegant, Emma",
+    "jobTitle": "Regional Director, South Coast, Parks and Recreation Program",
+    "email": "Emma.Elegant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "41121c98-3bdf-4bc5-a621-f4bc9c796380",
+    "fullName": "Flawless, Fiona",
+    "jobTitle": "Regional Operations Manager - South Coast",
+    "email": "Fiona.Flawless@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "49",
+    "activeDirectoryGuid": "916ae755-001d-4b33-a027-809cb025d828",
+    "fullName": "Glorious, Gary",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Gary.Glorious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "40",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Heartening, Hannah",
+    "jobTitle": "Executive Director",
+    "email": "Hannah.Heartening@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "40",
+    "activeDirectoryGuid": "961e7494-d8ed-4790-855e-6fdc9775549c",
+    "fullName": "Industrious, Irene",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Irene.Industrious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "40",
+    "activeDirectoryGuid": "890c8ee3-355d-4d45-9393-ee1f6a42d4ba",
+    "fullName": "Jolly, Jared",
+    "jobTitle": "Recreation Section Head",
+    "email": "Jared.Jolly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "40",
+    "activeDirectoryGuid": "2757ebcb-28d6-488c-a762-12d01da48816",
+    "fullName": "Kingly, Kathy",
+    "jobTitle": "Section Head",
+    "email": "Kathy.Kingly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "40",
+    "activeDirectoryGuid": "f6dc7c8f-6c66-41dd-838c-3757c1f71322",
+    "fullName": "Lucid, Luke",
+    "jobTitle": "Senior Park Ranger - Grasslands Area",
+    "email": "Luke.Lucid@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "40",
+    "activeDirectoryGuid": "14e532ad-cbba-4ee3-8845-dc8352b7d199",
+    "fullName": "Mature, Monica",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Monica.Mature@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "40",
+    "activeDirectoryGuid": "5830b528-3325-42bc-a3fb-cc1431e1e557",
+    "fullName": "Noteworthy, Nora",
+    "jobTitle": "Regional Director",
+    "email": "Nora.Noteworthy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "40",
+    "activeDirectoryGuid": "641544dc-a590-4f48-b4bb-a45b0aad0354",
+    "fullName": "Organized, Otis",
+    "jobTitle": "Conservation Specialist",
+    "email": "Otis.Organized@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "40",
+    "activeDirectoryGuid": "b9312a24-44a4-4b69-9d48-2ec47f91e9db",
+    "fullName": "Philanthropic, Preston",
+    "jobTitle": "Program Assistant",
+    "email": "Preston.Philanthropic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "40",
+    "activeDirectoryGuid": "6b552f8b-7b04-453e-85d3-8f5c836f55f3",
+    "fullName": "Receptive, Ralph",
+    "jobTitle": "Planning Section Head",
+    "email": "Ralph.Receptive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "40",
+    "activeDirectoryGuid": "c59f55aa-d839-48e6-926e-af7babf0c78a",
+    "fullName": "Supportive, Susan",
+    "jobTitle": "Area Supervisor - Grasslands Area (Thompson Section)",
+    "email": "Susan.Supportive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "13",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Thorough, Trevor",
+    "jobTitle": "Operations Manager",
+    "email": "Trevor.Thorough@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "13",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Victorious, Valerie",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Valerie.Victorious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "13",
+    "activeDirectoryGuid": "74360d66-bd38-4456-a9af-6b44d2bc9464",
+    "fullName": "Winsome, Wayne",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Wayne.Winsome@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "13",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Adept, Adam",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Adam.Adept@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "13",
+    "activeDirectoryGuid": "dd694569-3c8e-4de7-857a-aab86dd5ce26",
+    "fullName": "Beneficial, Bonnie",
+    "jobTitle": "Administrative Section Head",
+    "email": "Bonnie.Beneficial@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "13",
+    "activeDirectoryGuid": "c21212b4-721b-46b0-b9d5-e43483ef7564",
+    "fullName": "Clever, Chad",
+    "jobTitle": "Parks and Protected Areas Section Head - Haida Gwaii/South Isl.",
+    "email": "Chad.Clever@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "13",
+    "activeDirectoryGuid": "3ae85fc8-7669-4b94-be9d-21ced467a4da",
+    "fullName": "Delightful, Diana",
+    "jobTitle": "North Island Recreation Section Head",
+    "email": "Diana.Delightful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "13",
+    "activeDirectoryGuid": "562dd2d2-89f2-40f3-89ed-7008d1468376",
+    "fullName": "Eloquent, Eric",
+    "jobTitle": "Area Supervisor, Haida Gwaii",
+    "email": "Eric.Eloquent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "54",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Flexible, Fred",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Fred.Flexible@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "54",
+    "activeDirectoryGuid": "6d26903d-58fa-4613-850c-4fd3e7cff4d1",
+    "fullName": "Godly, George",
+    "jobTitle": "Parks and Protected Areas Section Head - Lower Mainland Section",
+    "email": "George.Godly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "54",
+    "activeDirectoryGuid": "48556583-ce5d-47ea-a63b-2f2614d0afc2",
+    "fullName": "Heavenly, Hannah",
+    "jobTitle": "Park Ranger, Howe Sound",
+    "email": "Hannah.Heavenly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "54",
+    "activeDirectoryGuid": "51fd23cf-34e7-4bfe-988c-6620b01b9508",
+    "fullName": "Ingenious, Ivan",
+    "jobTitle": "Recreation Services Officer, Lower Mainland",
+    "email": "Ivan.Ingenious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "54",
+    "activeDirectoryGuid": "ebdca227-3726-49d4-abc0-9cba54809576",
+    "fullName": "Justified, John",
+    "jobTitle": "Community Liaison Officer",
+    "email": "John.Justified@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "54",
+    "activeDirectoryGuid": "388af9c4-a06b-4765-8ef9-eaa928208c62",
+    "fullName": "Lucky, Liam",
+    "jobTitle": "Regional Director, South Coast, Parks and Recreation Program",
+    "email": "Liam.Lucky@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "54",
+    "activeDirectoryGuid": "f48ca9c0-a6f1-4668-bd89-0214de253873",
+    "fullName": "Meaningful, Marie",
+    "jobTitle": "Area Supervisor Howe Sound",
+    "email": "Marie.Meaningful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "54",
+    "activeDirectoryGuid": "aabb2a67-fb01-4034-b7a5-cd848b8d4266",
+    "fullName": "Neighborly, Noah",
+    "jobTitle": "Recreation Section Head, Lower Mainland",
+    "email": "Noah.Neighborly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "54",
+    "activeDirectoryGuid": "b000ddfa-cf4a-40f6-862e-f3698ed2531f",
+    "fullName": "Original, Owen",
+    "jobTitle": "Senior Park Ranger - Howe Sound Area",
+    "email": "Owen.Original@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "54",
+    "activeDirectoryGuid": "41121c98-3bdf-4bc5-a621-f4bc9c796380",
+    "fullName": "Placid, Pete",
+    "jobTitle": "Regional Operations Manager - South Coast",
+    "email": "Pete.Placid@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "14",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Refined, Rowan",
+    "jobTitle": "Operations Manager",
+    "email": "Rowan.Refined@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "14",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Sympathetic, Sean",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Sean.Sympathetic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "14",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Thriving, Travis",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Travis.Thriving@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "14",
+    "activeDirectoryGuid": "812172f2-97eb-4456-833a-502134cd9c2a",
+    "fullName": "Vigilant, Valerie",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Valerie.Vigilant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "14",
+    "activeDirectoryGuid": "9481cf37-a000-480f-955f-16446aa2cd4f",
+    "fullName": "Witty, Wayne",
+    "jobTitle": "Area Supervisor",
+    "email": "Wayne.Witty@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "14",
+    "activeDirectoryGuid": "4e1ab46c-b3ab-40e6-aff5-3415673d940f",
+    "fullName": "Adventurous, Amy",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Amy.Adventurous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "14",
+    "activeDirectoryGuid": "cbc53950-4de7-4b2f-a2fd-414a689a3138",
+    "fullName": "Blissful, Bradley",
+    "jobTitle": "Recreation Section Head",
+    "email": "Bradley.Blissful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "14",
+    "activeDirectoryGuid": "2a4f1186-bbb1-445c-8142-d82693efbf72",
+    "fullName": "Committed, Cheryl",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Cheryl.Committed@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "15",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Desirable, Donna",
+    "jobTitle": "Executive Director",
+    "email": "Donna.Desirable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "15",
+    "activeDirectoryGuid": "653af42c-e84f-49ef-a6a9-4ea857044662",
+    "fullName": "Eminent, Emma",
+    "jobTitle": "Kootenay Lake Area Supervisor",
+    "email": "Emma.Eminent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "15",
+    "activeDirectoryGuid": "7038f91c-a50c-4a05-8cab-6afec0d0aa1e",
+    "fullName": "Flourishing, Faith",
+    "jobTitle": "Ranger",
+    "email": "Faith.Flourishing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "15",
+    "activeDirectoryGuid": "f488810c-3794-4494-86b1-e233b7d07b0e",
+    "fullName": "Golden, Gerald",
+    "jobTitle": "PPA Section Head",
+    "email": "Gerald.Golden@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "15",
+    "activeDirectoryGuid": "a9e884ed-af8a-4d92-aa64-4df71d05e3f1",
+    "fullName": "Heroic, Helen",
+    "jobTitle": "Administration Section Head",
+    "email": "Helen.Heroic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "15",
+    "activeDirectoryGuid": "ad3b5942-1d40-4ca5-a5b6-a0f858e964a4",
+    "fullName": "Innovative, Isaac",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Isaac.Innovative@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "15",
+    "activeDirectoryGuid": "625854e6-f802-40e5-8ebb-6cb020f35aaf",
+    "fullName": "Laudable, Liam",
+    "jobTitle": "Recreation Officer",
+    "email": "Liam.Laudable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "15",
+    "activeDirectoryGuid": "1e3fffae-383c-4b8a-a4e0-c908fd4d1180",
+    "fullName": "Merciful, Marie",
+    "jobTitle": "Regional Director",
+    "email": "Marie.Merciful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "15",
+    "activeDirectoryGuid": "046e76bd-5d42-4501-ae3c-57736ee31e5c",
+    "fullName": "Nifty, Naomi",
+    "jobTitle": "Conservation Specialist",
+    "email": "Naomi.Nifty@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "15",
+    "activeDirectoryGuid": "ee934ac0-684b-4611-a8ec-1ad92931ff47",
+    "fullName": "Outgoing, Otis",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Otis.Outgoing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "15",
+    "activeDirectoryGuid": "52058671-feba-4f0e-8ac4-f4a6a9cea444",
+    "fullName": "Playful, Peter",
+    "jobTitle": "Section Head, Recreation - Kootenay",
+    "email": "Peter.Playful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "16",
+    "activeDirectoryGuid": "50e94581-b254-4040-a600-0685b076c2f5",
+    "fullName": "Refreshing, Randy",
+    "jobTitle": "Regional Director, North Coast Skeena Region",
+    "email": "Randy.Refreshing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "16",
+    "activeDirectoryGuid": "c7836277-433a-4103-b440-33303328a17b",
+    "fullName": "Sagacious, Sophie",
+    "jobTitle": "Parks and Protected Area Section Head - Skeena West",
+    "email": "Sophie.Sagacious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "16",
+    "activeDirectoryGuid": "e3728415-92a2-4a79-8492-356b92768986",
+    "fullName": "Tidy, Tanya",
+    "jobTitle": "Lakelse Douglas Channel Area Supervisor",
+    "email": "Tanya.Tidy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "16",
+    "activeDirectoryGuid": "a3362203-28b9-48d9-a74f-addf03a66f31",
+    "fullName": "Vigorous, Vaughn",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Vaughn.Vigorous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "16",
+    "activeDirectoryGuid": "00f1dc5b-5a62-4f5e-b391-a518a0602a34",
+    "fullName": "Wonderful, Wesley",
+    "jobTitle": "Senior Park Ranger - Lakelse Douglas Channel",
+    "email": "Wesley.Wonderful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "17",
+    "activeDirectoryGuid": "2279b2d7-2dfd-4364-8d26-47c4a24b1a7a",
+    "fullName": "Affable, Allison",
+    "jobTitle": "PPA Section Head - Peace Region",
+    "email": "Allison.Affable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "17",
+    "activeDirectoryGuid": "c71b5dd5-b5c8-4a83-8506-7bb8588eb16f",
+    "fullName": "Blithe, Becky",
+    "jobTitle": "Executive Director",
+    "email": "Becky.Blithe@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "17",
+    "activeDirectoryGuid": "6ef19b45-3adb-4707-a77c-12b8349e9fa6",
+    "fullName": "Compassionate, Chloe",
+    "jobTitle": "Auxiliary Park Ranger",
+    "email": "Chloe.Compassionate@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "17",
+    "activeDirectoryGuid": "b1e1bf30-a5cb-4063-bbbf-bd389c964420",
+    "fullName": "Determined, Dan",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Dan.Determined@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "17",
+    "activeDirectoryGuid": "b5b73a5d-8896-4ae6-8c94-43557eeda499",
+    "fullName": "Empathetic, Emily",
+    "jobTitle": "Regional Director",
+    "email": "Emily.Empathetic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "17",
+    "activeDirectoryGuid": "21a31b43-e127-47bb-9501-3dfcd8c0d0ea",
+    "fullName": "Focused, Frank",
+    "jobTitle": "Auxiliary Park Ranger",
+    "email": "Frank.Focused@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "55",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Good, Greg",
+    "jobTitle": "Operations Manager",
+    "email": "Greg.Good@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "55",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Honorable, Heather",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Heather.Honorable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "55",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Inquisitive, Ian",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Ian.Inquisitive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "55",
+    "activeDirectoryGuid": "4e1ab46c-b3ab-40e6-aff5-3415673d940f",
+    "fullName": "Learned, Lauren",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Lauren.Learned@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "55",
+    "activeDirectoryGuid": "87b70910-48d0-4fb9-8d36-f97bfe31f31d",
+    "fullName": "Meritorious, Marc",
+    "jobTitle": "Section Head, Parks and Protected Areas",
+    "email": "Marc.Meritorious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "55",
+    "activeDirectoryGuid": "7aebf607-f2ac-4684-9b73-b80a24fb3e9c",
+    "fullName": "Overjoyed, Oscar",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Oscar.Overjoyed@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "55",
+    "activeDirectoryGuid": "3ae85fc8-7669-4b94-be9d-21ced467a4da",
+    "fullName": "Pleasant, Patrick",
+    "jobTitle": "North Island Recreation Section Head",
+    "email": "Patrick.Pleasant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "55",
+    "activeDirectoryGuid": "e36a9e7d-fe95-45b6-8040-f477ca7aea26",
+    "fullName": "Regal, Roger",
+    "jobTitle": "Miracle Beach Senior Park Ranger",
+    "email": "Roger.Regal@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "18",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Sage, Scott",
+    "jobTitle": "Operations Manager",
+    "email": "Scott.Sage@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "18",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Tireless, Todd",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Todd.Tireless@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "18",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Virtuous, Vaughn",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Vaughn.Virtuous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "18",
+    "activeDirectoryGuid": "4e1ab46c-b3ab-40e6-aff5-3415673d940f",
+    "fullName": "Worthy, Wade",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Wade.Worthy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "18",
+    "activeDirectoryGuid": "87b70910-48d0-4fb9-8d36-f97bfe31f31d",
+    "fullName": "Affectionate, Amanda",
+    "jobTitle": "Section Head, Parks and Protected Areas",
+    "email": "Amanda.Affectionate@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "18",
+    "activeDirectoryGuid": "3ae85fc8-7669-4b94-be9d-21ced467a4da",
+    "fullName": "Bountiful, Brad",
+    "jobTitle": "North Island Recreation Section Head",
+    "email": "Brad.Bountiful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "20",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Competent, Craig",
+    "jobTitle": "Executive Director",
+    "email": "Craig.Competent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "20",
+    "activeDirectoryGuid": "961e7494-d8ed-4790-855e-6fdc9775549c",
+    "fullName": "Devoted, Diane",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Diane.Devoted@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "20",
+    "activeDirectoryGuid": "890c8ee3-355d-4d45-9393-ee1f6a42d4ba",
+    "fullName": "Enchanting, Edward",
+    "jobTitle": "Recreation Section Head",
+    "email": "Edward.Enchanting@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "20",
+    "activeDirectoryGuid": "888fb56b-ab14-4d80-8ee5-b1ef70cbfca8",
+    "fullName": "Forgiving, Fred",
+    "jobTitle": "Parks and Protected Area Section Head, Bella Coola",
+    "email": "Fred.Forgiving@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "20",
+    "activeDirectoryGuid": "d3359427-89ad-4cbc-8460-e631e9840093",
+    "fullName": "Gorgeous, Gerald",
+    "jobTitle": "Conservation Specialist",
+    "email": "Gerald.Gorgeous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "20",
+    "activeDirectoryGuid": "69f4438c-4ffb-4c54-8bba-9df0d7e222d5",
+    "fullName": "Hopeful, Holly",
+    "jobTitle": "Administrative Section Head",
+    "email": "Holly.Hopeful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "20",
+    "activeDirectoryGuid": "14e532ad-cbba-4ee3-8845-dc8352b7d199",
+    "fullName": "Inspiring, Iris",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Iris.Inspiring@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "20",
+    "activeDirectoryGuid": "f2e05183-92e6-4c4b-8ca9-5525d17e785c",
+    "fullName": "Legendary, Leo",
+    "jobTitle": "Regional Director",
+    "email": "Leo.Legendary@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "20",
+    "activeDirectoryGuid": "a95c425d-1435-4193-9e0b-79e18f459c94",
+    "fullName": "Methodical, Mason",
+    "jobTitle": "Area Supervisor",
+    "email": "Mason.Methodical@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "20",
+    "activeDirectoryGuid": "d0db6b26-b485-4ae3-ad00-80cabb98fbe9",
+    "fullName": "Obedient, Oscar",
+    "jobTitle": "Recreation Administrative Assistant",
+    "email": "Oscar.Obedient@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "20",
+    "activeDirectoryGuid": "3fd39271-4806-4a47-b5ee-4842d7b3f86d",
+    "fullName": "Pleasing, Preston",
+    "jobTitle": "Regional Planning Section Head - Cariboo",
+    "email": "Preston.Pleasing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "21",
+    "activeDirectoryGuid": "50e94581-b254-4040-a600-0685b076c2f5",
+    "fullName": "Relaxed, Ruth",
+    "jobTitle": "Regional Director, North Coast Skeena Region",
+    "email": "Ruth.Relaxed@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "21",
+    "activeDirectoryGuid": "c7836277-433a-4103-b440-33303328a17b",
+    "fullName": "Saintly, Sylvia",
+    "jobTitle": "Parks and Protected Area Section Head - Skeena West",
+    "email": "Sylvia.Saintly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "21",
+    "activeDirectoryGuid": "a3362203-28b9-48d9-a74f-addf03a66f31",
+    "fullName": "Tolerant, Tina",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Tina.Tolerant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "22",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Visionary, Valerie",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Valerie.Visionary@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "22",
+    "activeDirectoryGuid": "425b2742-eab7-4664-9dde-be12b782fded",
+    "fullName": "Watchful, Whitney",
+    "jobTitle": "Park Ranger",
+    "email": "Whitney.Watchful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "22",
+    "activeDirectoryGuid": "6d26903d-58fa-4613-850c-4fd3e7cff4d1",
+    "fullName": "Agreeable, Amber",
+    "jobTitle": "Parks and Protected Areas Section Head - Lower Mainland Section",
+    "email": "Amber.Agreeable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "22",
+    "activeDirectoryGuid": "e827a254-4a5d-4158-97a1-4d5e13e49d56",
+    "fullName": "Bubbly, Bruce",
+    "jobTitle": "Area Supervisor, North Fraser",
+    "email": "Bruce.Bubbly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "22",
+    "activeDirectoryGuid": "51fd23cf-34e7-4bfe-988c-6620b01b9508",
+    "fullName": "Confident, Cindy",
+    "jobTitle": "Recreation Services Officer, Lower Mainland",
+    "email": "Cindy.Confident@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "22",
+    "activeDirectoryGuid": "ebdca227-3726-49d4-abc0-9cba54809576",
+    "fullName": "Diligent, Dan",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Dan.Diligent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "22",
+    "activeDirectoryGuid": "ac502202-b690-47af-a801-c7dac950ead9",
+    "fullName": "Encouraging, Erica",
+    "jobTitle": "Senior Park Ranger - North Fraser",
+    "email": "Erica.Encouraging@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "22",
+    "activeDirectoryGuid": "388af9c4-a06b-4765-8ef9-eaa928208c62",
+    "fullName": "Formidable, Fiona",
+    "jobTitle": "Regional Director, South Coast, Parks and Recreation Program",
+    "email": "Fiona.Formidable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "22",
+    "activeDirectoryGuid": "aabb2a67-fb01-4034-b7a5-cd848b8d4266",
+    "fullName": "Graceful, George",
+    "jobTitle": "Recreation Section Head, Lower Mainland",
+    "email": "George.Graceful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "22",
+    "activeDirectoryGuid": "41121c98-3bdf-4bc5-a621-f4bc9c796380",
+    "fullName": "Hospitable, Hugh",
+    "jobTitle": "Regional Operations Manager - South Coast",
+    "email": "Hugh.Hospitable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Intrepid, Isaac",
+    "jobTitle": "Executive Director",
+    "email": "Isaac.Intrepid@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "367b12d6-7fa3-4645-b6aa-29d8fc235d7c",
+    "fullName": "Level, Lucy",
+    "jobTitle": "Parks Administrative Support Clerk",
+    "email": "Lucy.Level@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "94b9cb8f-07a2-4e2b-a542-970212f9e073",
+    "fullName": "Meticulous, Monica",
+    "jobTitle": "Area Supervisor North Okanagan",
+    "email": "Monica.Meticulous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "0152fa2e-3fc9-4733-bee4-f449f16dad75",
+    "fullName": "Objective, Otis",
+    "jobTitle": "Recreation Section Head",
+    "email": "Otis.Objective@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "698805ad-7276-4372-baa4-5e8ba77856f6",
+    "fullName": "Poised, Paul",
+    "jobTitle": "Planning Section Head -  Okanagan",
+    "email": "Paul.Poised@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "8ad8cce4-b78c-462a-b31c-195cd16ce125",
+    "fullName": "Remarkable, Rick",
+    "jobTitle": "Recreation Officer",
+    "email": "Rick.Remarkable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "89e643cd-1ad9-4497-a862-3fb105142e91",
+    "fullName": "Savvy, Sam",
+    "jobTitle": "Conservation Specialist",
+    "email": "Sam.Savvy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "84b850cb-c0c4-4e9b-8e24-8f1f52fefd70",
+    "fullName": "Tough, Tyler",
+    "jobTitle": "Park Ranger",
+    "email": "Tyler.Tough@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "5830b528-3325-42bc-a3fb-cc1431e1e557",
+    "fullName": "Vital, Vaughn",
+    "jobTitle": "Regional Director",
+    "email": "Vaughn.Vital@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "a9e884ed-af8a-4d92-aa64-4df71d05e3f1",
+    "fullName": "Whimsical, Wesley",
+    "jobTitle": "Administration Section Head",
+    "email": "Wesley.Whimsical@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "b9955a04-608b-4d26-9204-77d374c1f492",
+    "fullName": "Alert, Andy",
+    "jobTitle": "Park Ranger",
+    "email": "Andy.Alert@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "ad3b5942-1d40-4ca5-a5b6-a0f858e964a4",
+    "fullName": "Buoyant, Bruce",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Bruce.Buoyant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "23",
+    "activeDirectoryGuid": "90d29149-6466-48d2-9b8c-b002bcbf8789",
+    "fullName": "Conscientious, Cody",
+    "jobTitle": "PPA Section Head",
+    "email": "Cody.Conscientious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "44",
+    "activeDirectoryGuid": "50e94581-b254-4040-a600-0685b076c2f5",
+    "fullName": "Diplomatic, Doug",
+    "jobTitle": "Regional Director, North Coast Skeena Region",
+    "email": "Doug.Diplomatic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "44",
+    "activeDirectoryGuid": "e7346f9c-d316-4333-bf90-92a971a46c45",
+    "fullName": "Endearing, Ella",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Ella.Endearing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "44",
+    "activeDirectoryGuid": "2279b2d7-2dfd-4364-8d26-47c4a24b1a7a",
+    "fullName": "Forthright, Fiona",
+    "jobTitle": "PPA Section Head - Peace Region",
+    "email": "Fiona.Forthright@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "44",
+    "activeDirectoryGuid": "c71b5dd5-b5c8-4a83-8506-7bb8588eb16f",
+    "fullName": "Gracious, Glen",
+    "jobTitle": "Executive Director",
+    "email": "Glen.Gracious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "44",
+    "activeDirectoryGuid": "02efcbf2-1967-4def-817e-d29e7812896b",
+    "fullName": "Humane, Hugh",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Hugh.Humane@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "44",
+    "activeDirectoryGuid": "740bad44-c2be-4c98-97ce-4dcd38ad9627",
+    "fullName": "Intuitive, Ivan",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Ivan.Intuitive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "44",
+    "activeDirectoryGuid": "15ac4df3-dbb9-4c07-a3df-57ae05ee5982",
+    "fullName": "Lighthearted, Linda",
+    "jobTitle": "Area Supervisor",
+    "email": "Linda.Lighthearted@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Mighty, Mason",
+    "jobTitle": "Executive Director",
+    "email": "Mason.Mighty@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "33529ad3-cb1c-4efd-95bc-b903a29a22c2",
+    "fullName": "Openhanded, Oscar",
+    "jobTitle": "Park Ranger",
+    "email": "Oscar.Openhanded@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "961e7494-d8ed-4790-855e-6fdc9775549c",
+    "fullName": "Polished, Pete",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Pete.Polished@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "890c8ee3-355d-4d45-9393-ee1f6a42d4ba",
+    "fullName": "Renowned, Roland",
+    "jobTitle": "Recreation Section Head",
+    "email": "Roland.Renowned@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "b1ecbc4a-8d5e-4116-b5c9-1803bee30177",
+    "fullName": "Scholarly, Seth",
+    "jobTitle": "Recreation Services Officer, Thompson Section",
+    "email": "Seth.Scholarly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "1a377846-ddf6-42de-8a75-e3510d5f0ac1",
+    "fullName": "Tranquil, Tom",
+    "jobTitle": "Area Supervisor",
+    "email": "Tom.Tranquil@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "d3359427-89ad-4cbc-8460-e631e9840093",
+    "fullName": "Vivacious, Vaughn",
+    "jobTitle": "Conservation Specialist",
+    "email": "Vaughn.Vivacious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "69f4438c-4ffb-4c54-8bba-9df0d7e222d5",
+    "fullName": "Wholehearted, Willard",
+    "jobTitle": "Administrative Section Head",
+    "email": "Willard.Wholehearted@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "14e532ad-cbba-4ee3-8845-dc8352b7d199",
+    "fullName": "Alluring, Adam",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Adam.Alluring@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "f2e05183-92e6-4c4b-8ca9-5525d17e785c",
+    "fullName": "Brainy, Brad",
+    "jobTitle": "Regional Director",
+    "email": "Brad.Brainy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "c0f50ac3-b529-4a5c-9214-bab1ae660c90",
+    "fullName": "Considerate, Colin",
+    "jobTitle": "Parks & Protected Area Section Head",
+    "email": "Colin.Considerate@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "d0db6b26-b485-4ae3-ad00-80cabb98fbe9",
+    "fullName": "Direct, Dean",
+    "jobTitle": "Recreation Administrative Assistant",
+    "email": "Dean.Direct@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "41",
+    "activeDirectoryGuid": "3fd39271-4806-4a47-b5ee-4842d7b3f86d",
+    "fullName": "Enduring, Eddie",
+    "jobTitle": "Regional Planning Section Head - Cariboo",
+    "email": "Eddie.Enduring@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "24",
+    "activeDirectoryGuid": "50d49d73-9190-4e5a-86a2-03c84dcb3214",
+    "fullName": "Fortunate, Fiona",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Fiona.Fortunate@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "24",
+    "activeDirectoryGuid": "af220b24-e633-4d25-9b5a-4139e1dd553b",
+    "fullName": "Grand, Grant",
+    "jobTitle": "Acting Regional Director, Omineca Peace Region",
+    "email": "Grant.Grand@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "24",
+    "activeDirectoryGuid": "c71b5dd5-b5c8-4a83-8506-7bb8588eb16f",
+    "fullName": "Humorous, Holly",
+    "jobTitle": "Executive Director",
+    "email": "Holly.Humorous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "24",
+    "activeDirectoryGuid": "423d96de-1fa1-478c-8cdc-3c22b06d54b9",
+    "fullName": "Inventive, Ivy",
+    "jobTitle": "Area Supervisor - Omineca Section",
+    "email": "Ivy.Inventive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "24",
+    "activeDirectoryGuid": "c90c7d29-66eb-401b-8997-17872cefe4b5",
+    "fullName": "Limber, Lisa",
+    "jobTitle": "Area Supervisor - Omineca",
+    "email": "Lisa.Limber@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "24",
+    "activeDirectoryGuid": "b5b73a5d-8896-4ae6-8c94-43557eeda499",
+    "fullName": "Mirthful, Marie",
+    "jobTitle": "Regional Director",
+    "email": "Marie.Mirthful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "25",
+    "activeDirectoryGuid": "2279b2d7-2dfd-4364-8d26-47c4a24b1a7a",
+    "fullName": "Polite, Paul",
+    "jobTitle": "PPA Section Head - Peace Region",
+    "email": "Paul.Polite@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "25",
+    "activeDirectoryGuid": "9584c494-f31e-4660-b6a7-bf5579b67b69",
+    "fullName": "Reputable, Rose",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Rose.Reputable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "25",
+    "activeDirectoryGuid": "c71b5dd5-b5c8-4a83-8506-7bb8588eb16f",
+    "fullName": "Scrupulous, Sophie",
+    "jobTitle": "Executive Director",
+    "email": "Sophie.Scrupulous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "25",
+    "activeDirectoryGuid": "b5b73a5d-8896-4ae6-8c94-43557eeda499",
+    "fullName": "Transparent, Tom",
+    "jobTitle": "Regional Director",
+    "email": "Tom.Transparent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "25",
+    "activeDirectoryGuid": "21a31b43-e127-47bb-9501-3dfcd8c0d0ea",
+    "fullName": "Vivid, Vivian",
+    "jobTitle": "Auxiliary Park Ranger",
+    "email": "Vivian.Vivid@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Wondrous, Wendy",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Wendy.Wondrous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "84ade704-b640-4f2a-956e-2be2d59911dd",
+    "fullName": "Altruistic, Allison",
+    "jobTitle": "Recreation Officer",
+    "email": "Allison.Altruistic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "842a05ed-c64e-45c2-915b-1dc4e1bb08d5",
+    "fullName": "Breezy, Bill",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Bill.Breezy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "f32ea9af-1b49-4598-8e1d-727e71de7208",
+    "fullName": "Consistent, Claire",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Claire.Consistent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "d3099212-a14d-462b-91d9-658d9bdac452",
+    "fullName": "Discerning, Daniel",
+    "jobTitle": "Area Supervisor Squamish",
+    "email": "Daniel.Discerning@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "b4a8e07d-9522-4116-917c-25695fe2541b",
+    "fullName": "Engaging, Erin",
+    "jobTitle": "Section Head, Parks and Protected Area Sea to Sky",
+    "email": "Erin.Engaging@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "db3f1949-283e-4bbf-a7fc-4c5c73c85839",
+    "fullName": "Frank, Franklin",
+    "jobTitle": "Park Ranger",
+    "email": "Franklin.Frank@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "432f4a07-1102-49c0-a7a1-9835051045e8",
+    "fullName": "Grateful, Gerald",
+    "jobTitle": "Park Ranger",
+    "email": "Gerald.Grateful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "51fc84f6-284e-4166-a55e-bdcc53f8a35a",
+    "fullName": "Handy, Hazel",
+    "jobTitle": "Recreation Section Head - Sea to Sky",
+    "email": "Hazel.Handy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "388af9c4-a06b-4765-8ef9-eaa928208c62",
+    "fullName": "Invaluable, Ivan",
+    "jobTitle": "Regional Director, South Coast, Parks and Recreation Program",
+    "email": "Ivan.Invaluable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "8cf47d80-733a-4200-8fdf-410725c03076",
+    "fullName": "Lissome, Liam",
+    "jobTitle": "Area Supervisor Pemberton",
+    "email": "Liam.Lissome@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "26",
+    "activeDirectoryGuid": "41121c98-3bdf-4bc5-a621-f4bc9c796380",
+    "fullName": "Moral, Molly",
+    "jobTitle": "Regional Operations Manager - South Coast",
+    "email": "Molly.Moral@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "28",
+    "activeDirectoryGuid": "50d49d73-9190-4e5a-86a2-03c84dcb3214",
+    "fullName": "Positive, Peter",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Peter.Positive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "28",
+    "activeDirectoryGuid": "af220b24-e633-4d25-9b5a-4139e1dd553b",
+    "fullName": "Resilient, Rob",
+    "jobTitle": "Acting Regional Director, Omineca Peace Region",
+    "email": "Rob.Resilient@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "28",
+    "activeDirectoryGuid": "c71b5dd5-b5c8-4a83-8506-7bb8588eb16f",
+    "fullName": "Seasoned, Sam",
+    "jobTitle": "Executive Director",
+    "email": "Sam.Seasoned@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "28",
+    "activeDirectoryGuid": "b93c7b5d-4656-440b-a9cd-d2271c70bd2a",
+    "fullName": "Tremendous, Trent",
+    "jobTitle": "Area Supervisor - Mount Robson",
+    "email": "Trent.Tremendous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "28",
+    "activeDirectoryGuid": "9c2c258b-45b7-445a-bf8b-77ed30156305",
+    "fullName": "Venturesome, Victor",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Victor.Venturesome@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "28",
+    "activeDirectoryGuid": "c046270e-fa6c-47b6-a115-23b388b57d13",
+    "fullName": "Workable, Wade",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Wade.Workable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "28",
+    "activeDirectoryGuid": "b5b73a5d-8896-4ae6-8c94-43557eeda499",
+    "fullName": "Analytical, Aaron",
+    "jobTitle": "Regional Director",
+    "email": "Aaron.Analytical@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "30",
+    "activeDirectoryGuid": "50e94581-b254-4040-a600-0685b076c2f5",
+    "fullName": "Businesslike, Bonnie",
+    "jobTitle": "Regional Director, North Coast Skeena Region",
+    "email": "Bonnie.Businesslike@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "30",
+    "activeDirectoryGuid": "63d0ac72-c062-470d-8602-3a3073a328fa",
+    "fullName": "Constructive, Cheryl",
+    "jobTitle": "Skeena Nass Area Supervisor",
+    "email": "Cheryl.Constructive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "30",
+    "activeDirectoryGuid": "c7836277-433a-4103-b440-33303328a17b",
+    "fullName": "Disciplined, Donna",
+    "jobTitle": "Parks and Protected Area Section Head - Skeena West",
+    "email": "Donna.Disciplined@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "30",
+    "activeDirectoryGuid": "192b1e84-e2f4-4377-abc6-f2181c6826a6",
+    "fullName": "Enlightened, Ella",
+    "jobTitle": "Senior Park Ranger, Skeena Nass",
+    "email": "Ella.Enlightened@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "30",
+    "activeDirectoryGuid": "a3362203-28b9-48d9-a74f-addf03a66f31",
+    "fullName": "Fruitful, Frank",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Frank.Fruitful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "32",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Great, Gary",
+    "jobTitle": "Operations Manager",
+    "email": "Gary.Great@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "32",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Healthy, Howard",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Howard.Healthy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "32",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Illustrious, Ian",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Ian.Illustrious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "32",
+    "activeDirectoryGuid": "e0cf72f4-7e32-47a9-8260-88635dd8072a",
+    "fullName": "Lovely, Lily",
+    "jobTitle": "South-Central Coast Senior Park Ranger",
+    "email": "Lily.Lovely@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "32",
+    "activeDirectoryGuid": "25709cdd-2a64-4d48-b106-d881a99ac67c",
+    "fullName": "Masterful, Mike",
+    "jobTitle": "Park Ranger, South Central Coast Area",
+    "email": "Mike.Masterful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "32",
+    "activeDirectoryGuid": "4e1ab46c-b3ab-40e6-aff5-3415673d940f",
+    "fullName": "Powerful, Pete",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Pete.Powerful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "32",
+    "activeDirectoryGuid": "87b70910-48d0-4fb9-8d36-f97bfe31f31d",
+    "fullName": "Resolute, Ross",
+    "jobTitle": "Section Head, Parks and Protected Areas",
+    "email": "Ross.Resolute@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "32",
+    "activeDirectoryGuid": "3ae85fc8-7669-4b94-be9d-21ced467a4da",
+    "fullName": "Secure, Steve",
+    "jobTitle": "North Island Recreation Section Head",
+    "email": "Steve.Secure@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Triumphant, Tyler",
+    "jobTitle": "Executive Director",
+    "email": "Tyler.Triumphant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "961e7494-d8ed-4790-855e-6fdc9775549c",
+    "fullName": "Angelic, Andy",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Andy.Angelic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "890c8ee3-355d-4d45-9393-ee1f6a42d4ba",
+    "fullName": "Believable, Becky",
+    "jobTitle": "Recreation Section Head",
+    "email": "Becky.Believable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "d3359427-89ad-4cbc-8460-e631e9840093",
+    "fullName": "Cooperative, Colin",
+    "jobTitle": "Conservation Specialist",
+    "email": "Colin.Cooperative@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "5d9c77e4-900b-4ced-b659-5f198fbfe2d0",
+    "fullName": "Distinctive, Debra",
+    "jobTitle": "Park Ranger",
+    "email": "Debra.Distinctive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "69f4438c-4ffb-4c54-8bba-9df0d7e222d5",
+    "fullName": "Enterprising, Elaine",
+    "jobTitle": "Administrative Section Head",
+    "email": "Elaine.Enterprising@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "8c20b566-ee2a-404a-bc11-26592b7d1669",
+    "fullName": "Fun, Fred",
+    "jobTitle": "North Chilcotin Senior Park Ranger",
+    "email": "Fred.Fun@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "14e532ad-cbba-4ee3-8845-dc8352b7d199",
+    "fullName": "Gregarious, Gail",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Gail.Gregarious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "f2e05183-92e6-4c4b-8ca9-5525d17e785c",
+    "fullName": "Hallowed, Harry",
+    "jobTitle": "Regional Director",
+    "email": "Harry.Hallowed@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "c0f50ac3-b529-4a5c-9214-bab1ae660c90",
+    "fullName": "Immaculate, Isaac",
+    "jobTitle": "Parks & Protected Area Section Head",
+    "email": "Isaac.Immaculate@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "d0db6b26-b485-4ae3-ad00-80cabb98fbe9",
+    "fullName": "Lithe, Leo",
+    "jobTitle": "Recreation Administrative Assistant",
+    "email": "Leo.Lithe@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "33",
+    "activeDirectoryGuid": "3fd39271-4806-4a47-b5ee-4842d7b3f86d",
+    "fullName": "Memorable, Martin",
+    "jobTitle": "Regional Planning Section Head - Cariboo",
+    "email": "Martin.Memorable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "34",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Practical, Patrick",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Patrick.Practical@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "34",
+    "activeDirectoryGuid": "6d26903d-58fa-4613-850c-4fd3e7cff4d1",
+    "fullName": "Respected, Reid",
+    "jobTitle": "Parks and Protected Areas Section Head - Lower Mainland Section",
+    "email": "Reid.Respected@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "34",
+    "activeDirectoryGuid": "f52300ff-348f-4f48-87d4-caca85ef3b1f",
+    "fullName": "Selfless, Stan",
+    "jobTitle": "Interpretive Ranger",
+    "email": "Stan.Selfless@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "34",
+    "activeDirectoryGuid": "51fd23cf-34e7-4bfe-988c-6620b01b9508",
+    "fullName": "True, Tina",
+    "jobTitle": "Recreation Services Officer, Lower Mainland",
+    "email": "Tina.True@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "34",
+    "activeDirectoryGuid": "78fff4b0-4a1a-4b0c-a2c5-ae89791f0003",
+    "fullName": "Apt, Alan",
+    "jobTitle": "Sr. Park Ranger - South Fraser Area",
+    "email": "Alan.Apt@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "34",
+    "activeDirectoryGuid": "ebdca227-3726-49d4-abc0-9cba54809576",
+    "fullName": "Best, Bruce",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Bruce.Best@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "34",
+    "activeDirectoryGuid": "388af9c4-a06b-4765-8ef9-eaa928208c62",
+    "fullName": "Cordial, Connor",
+    "jobTitle": "Regional Director, South Coast, Parks and Recreation Program",
+    "email": "Connor.Cordial@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "34",
+    "activeDirectoryGuid": "aabb2a67-fb01-4034-b7a5-cd848b8d4266",
+    "fullName": "Distinguished, Dennis",
+    "jobTitle": "Recreation Section Head, Lower Mainland",
+    "email": "Dennis.Distinguished@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "34",
+    "activeDirectoryGuid": "41121c98-3bdf-4bc5-a621-f4bc9c796380",
+    "fullName": "Enthusiastic, Emma",
+    "jobTitle": "Regional Operations Manager - South Coast",
+    "email": "Emma.Enthusiastic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "34",
+    "activeDirectoryGuid": "da294135-a4b3-44a5-a2e4-40d0639998e3",
+    "fullName": "Funny, Frances",
+    "jobTitle": "South Fraser Area Supervisor",
+    "email": "Frances.Funny@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "29",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Groovy, Gordon",
+    "jobTitle": "Operations Manager",
+    "email": "Gordon.Groovy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "29",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Handsome, Hazel",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Hazel.Handsome@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "29",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Incisive, Iris",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Iris.Incisive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "29",
+    "activeDirectoryGuid": "812172f2-97eb-4456-833a-502134cd9c2a",
+    "fullName": "Mellow, Marie",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Marie.Mellow@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "29",
+    "activeDirectoryGuid": "4e1ab46c-b3ab-40e6-aff5-3415673d940f",
+    "fullName": "Praiseworthy, Pete",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Pete.Praiseworthy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "29",
+    "activeDirectoryGuid": "ae1ae976-beab-458e-be24-f861487894d3",
+    "fullName": "Responsible, Ryan",
+    "jobTitle": "South Gulf Islands Area Supervisor",
+    "email": "Ryan.Responsible@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "29",
+    "activeDirectoryGuid": "cbc53950-4de7-4b2f-a2fd-414a689a3138",
+    "fullName": "Sensational, Stanley",
+    "jobTitle": "Recreation Section Head",
+    "email": "Stanley.Sensational@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Trusty, Theresa",
+    "jobTitle": "Executive Director",
+    "email": "Theresa.Trusty@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "367b12d6-7fa3-4645-b6aa-29d8fc235d7c",
+    "fullName": "Ardent, Andy",
+    "jobTitle": "Parks Administrative Support Clerk",
+    "email": "Andy.Ardent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "7cc0a8d6-e312-42de-8bb6-8007c6c00dea",
+    "fullName": "Blameless, Brad",
+    "jobTitle": "District Recreation Officer - South Okanagan - Boundary",
+    "email": "Brad.Blameless@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "0152fa2e-3fc9-4733-bee4-f449f16dad75",
+    "fullName": "Courageous, Cody",
+    "jobTitle": "Recreation Section Head",
+    "email": "Cody.Courageous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "698805ad-7276-4372-baa4-5e8ba77856f6",
+    "fullName": "Dignified, Donna",
+    "jobTitle": "Planning Section Head -  Okanagan",
+    "email": "Donna.Dignified@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "8ad8cce4-b78c-462a-b31c-195cd16ce125",
+    "fullName": "Enviable, Ellen",
+    "jobTitle": "Recreation Officer",
+    "email": "Ellen.Enviable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "df190141-3aa8-4c3c-a026-271bd1d36889",
+    "fullName": "Fine, Frank",
+    "jobTitle": "Student Ranger Crew Member",
+    "email": "Frank.Fine@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "89e643cd-1ad9-4497-a862-3fb105142e91",
+    "fullName": "Growing, George",
+    "jobTitle": "Conservation Specialist",
+    "email": "George.Growing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "c08f9f72-bc05-4a22-858b-b8c4adf8156f",
+    "fullName": "Hardy, Harry",
+    "jobTitle": "Area Supervisor South Okanagan",
+    "email": "Harry.Hardy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "5830b528-3325-42bc-a3fb-cc1431e1e557",
+    "fullName": "Incomparable, Ivan",
+    "jobTitle": "Regional Director",
+    "email": "Ivan.Incomparable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "a9e884ed-af8a-4d92-aa64-4df71d05e3f1",
+    "fullName": "Merry, Megan",
+    "jobTitle": "Administration Section Head",
+    "email": "Megan.Merry@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "ad3b5942-1d40-4ca5-a5b6-a0f858e964a4",
+    "fullName": "Precious, Patty",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Patty.Precious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "35",
+    "activeDirectoryGuid": "90d29149-6466-48d2-9b8c-b002bcbf8789",
+    "fullName": "Responsive, Rose",
+    "jobTitle": "PPA Section Head",
+    "email": "Rose.Responsive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "42",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Serene, Stanley",
+    "jobTitle": "Executive Director",
+    "email": "Stanley.Serene@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "42",
+    "activeDirectoryGuid": "961e7494-d8ed-4790-855e-6fdc9775549c",
+    "fullName": "Truthful, Travis",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Travis.Truthful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "42",
+    "activeDirectoryGuid": "890c8ee3-355d-4d45-9393-ee1f6a42d4ba",
+    "fullName": "Articulate, Ashley",
+    "jobTitle": "Recreation Section Head",
+    "email": "Ashley.Articulate@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "42",
+    "activeDirectoryGuid": "635fdf1f-423d-43ee-9cb5-42e468fb5bf5",
+    "fullName": "Blessed, Bonnie",
+    "jobTitle": "Park Ranger",
+    "email": "Bonnie.Blessed@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "42",
+    "activeDirectoryGuid": "2757ebcb-28d6-488c-a762-12d01da48816",
+    "fullName": "Courteous, Carl",
+    "jobTitle": "Section Head",
+    "email": "Carl.Courteous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "42",
+    "activeDirectoryGuid": "14e532ad-cbba-4ee3-8845-dc8352b7d199",
+    "fullName": "Driven, Dylan",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Dylan.Driven@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "42",
+    "activeDirectoryGuid": "5830b528-3325-42bc-a3fb-cc1431e1e557",
+    "fullName": "Equitable, Ella",
+    "jobTitle": "Regional Director",
+    "email": "Ella.Equitable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "42",
+    "activeDirectoryGuid": "641544dc-a590-4f48-b4bb-a45b0aad0354",
+    "fullName": "Firm, Faith",
+    "jobTitle": "Conservation Specialist",
+    "email": "Faith.Firm@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "42",
+    "activeDirectoryGuid": "b9312a24-44a4-4b69-9d48-2ec47f91e9db",
+    "fullName": "Gutsy, Greg",
+    "jobTitle": "Program Assistant",
+    "email": "Greg.Gutsy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "42",
+    "activeDirectoryGuid": "3fa47524-5255-4595-8f9c-2dbb00155c72",
+    "fullName": "Indomitable, Ivan",
+    "jobTitle": "Area Supervisor",
+    "email": "Ivan.Indomitable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "42",
+    "activeDirectoryGuid": "6b552f8b-7b04-453e-85d3-8f5c836f55f3",
+    "fullName": "Model, Molly",
+    "jobTitle": "Planning Section Head",
+    "email": "Molly.Model@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "52",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Precise, Pete",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Pete.Precise@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "52",
+    "activeDirectoryGuid": "84ade704-b640-4f2a-956e-2be2d59911dd",
+    "fullName": "Reverent, Rick",
+    "jobTitle": "Recreation Officer",
+    "email": "Rick.Reverent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "52",
+    "activeDirectoryGuid": "f32ea9af-1b49-4598-8e1d-727e71de7208",
+    "fullName": "Sharp, Susan",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Susan.Sharp@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "52",
+    "activeDirectoryGuid": "d3099212-a14d-462b-91d9-658d9bdac452",
+    "fullName": "Tender, Terry",
+    "jobTitle": "Area Supervisor Squamish",
+    "email": "Terry.Tender@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "52",
+    "activeDirectoryGuid": "b4a8e07d-9522-4116-917c-25695fe2541b",
+    "fullName": "Artistic, Ashley",
+    "jobTitle": "Section Head, Parks and Protected Area Sea to Sky",
+    "email": "Ashley.Artistic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "52",
+    "activeDirectoryGuid": "d394f23c-c52e-4940-be28-6f121bc78a83",
+    "fullName": "Bonny, Bonnie",
+    "jobTitle": "Senior Park Ranger Squamish Area",
+    "email": "Bonnie.Bonny@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "52",
+    "activeDirectoryGuid": "432f4a07-1102-49c0-a7a1-9835051045e8",
+    "fullName": "Crafty, Cody",
+    "jobTitle": "Park Ranger",
+    "email": "Cody.Crafty@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "52",
+    "activeDirectoryGuid": "51fc84f6-284e-4166-a55e-bdcc53f8a35a",
+    "fullName": "Dutiful, Daniel",
+    "jobTitle": "Recreation Section Head - Sea to Sky",
+    "email": "Daniel.Dutiful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "52",
+    "activeDirectoryGuid": "388af9c4-a06b-4765-8ef9-eaa928208c62",
+    "fullName": "Ethical, Edward",
+    "jobTitle": "Regional Director, South Coast, Parks and Recreation Program",
+    "email": "Edward.Ethical@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "52",
+    "activeDirectoryGuid": "41121c98-3bdf-4bc5-a621-f4bc9c796380",
+    "fullName": "Fitting, Frank",
+    "jobTitle": "Regional Operations Manager - South Coast",
+    "email": "Frank.Fitting@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "52",
+    "activeDirectoryGuid": "9d26475d-4a53-44f0-971d-84f582d2424c",
+    "fullName": "Genial, Gordon",
+    "jobTitle": "Park Ranger",
+    "email": "Gordon.Genial@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "36",
+    "activeDirectoryGuid": "50e94581-b254-4040-a600-0685b076c2f5",
+    "fullName": "Influential, Irene",
+    "jobTitle": "Regional Director, North Coast Skeena Region",
+    "email": "Irene.Influential@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "36",
+    "activeDirectoryGuid": "e7346f9c-d316-4333-bf90-92a971a46c45",
+    "fullName": "Momentous, Mason",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Mason.Momentous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "36",
+    "activeDirectoryGuid": "2279b2d7-2dfd-4364-8d26-47c4a24b1a7a",
+    "fullName": "Principled, Patty",
+    "jobTitle": "PPA Section Head - Peace Region",
+    "email": "Patty.Principled@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "36",
+    "activeDirectoryGuid": "c71b5dd5-b5c8-4a83-8506-7bb8588eb16f",
+    "fullName": "Righteous, Rob",
+    "jobTitle": "Executive Director",
+    "email": "Rob.Righteous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "36",
+    "activeDirectoryGuid": "06259986-2c78-4f52-8db5-a376215d525f",
+    "fullName": "Shining, Sean",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Sean.Shining@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "36",
+    "activeDirectoryGuid": "740bad44-c2be-4c98-97ce-4dcd38ad9627",
+    "fullName": "Thrilling, Tanya",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Tanya.Thrilling@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Aspiring, Amber",
+    "jobTitle": "Operations Manager",
+    "email": "Amber.Aspiring@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Boundless, Betty",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Betty.Boundless@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Cultured, Connor",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Connor.Cultured@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "5f71d23b-5911-41be-a505-4a7733b34326",
+    "fullName": "Dashing, Dave",
+    "jobTitle": "Park Ranger",
+    "email": "Dave.Dashing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "44d94196-27d4-4fe9-bb44-cfbe79557f05",
+    "fullName": "Exceptional, Eric",
+    "jobTitle": "Student Ranger Crew Member",
+    "email": "Eric.Exceptional@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "9b83d9ee-99f3-4a91-a92c-f145d2118b56",
+    "fullName": "Fond, Faith",
+    "jobTitle": "Student Ranger Crew Lead",
+    "email": "Faith.Fond@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "4e1ab46c-b3ab-40e6-aff5-3415673d940f",
+    "fullName": "Glowing, Glen",
+    "jobTitle": "Parks and Protected Areas Section Head",
+    "email": "Glen.Glowing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "ddac6143-6832-44ed-ab31-49f7247871f3",
+    "fullName": "Informed, Isabel",
+    "jobTitle": "Park Ranger",
+    "email": "Isabel.Informed@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "87b70910-48d0-4fb9-8d36-f97bfe31f31d",
+    "fullName": "Motivating, Molly",
+    "jobTitle": "Section Head, Parks and Protected Areas",
+    "email": "Molly.Motivating@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "2424223c-eeb6-4e6c-923b-b289168b2f9e",
+    "fullName": "Proactive, Phil",
+    "jobTitle": "Strathcona Area Supervisor",
+    "email": "Phil.Proactive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "d83f9664-d155-45a2-9d85-8a1fc2d7aad9",
+    "fullName": "Robust, Roland",
+    "jobTitle": "Seasonal Maintenance Crew Leader",
+    "email": "Roland.Robust@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "37",
+    "activeDirectoryGuid": "3ae85fc8-7669-4b94-be9d-21ced467a4da",
+    "fullName": "Shrewd, Stella",
+    "jobTitle": "North Island Recreation Section Head",
+    "email": "Stella.Shrewd@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "38",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Timely, Travis",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Travis.Timely@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "38",
+    "activeDirectoryGuid": "84ade704-b640-4f2a-956e-2be2d59911dd",
+    "fullName": "Assured, Adam",
+    "jobTitle": "Recreation Officer",
+    "email": "Adam.Assured@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "38",
+    "activeDirectoryGuid": "dfbcaf88-80c3-4416-8102-25f8bda785a2",
+    "fullName": "Brisk, Brad",
+    "jobTitle": "Sunshine Coast Area Supervisor",
+    "email": "Brad.Brisk@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "38",
+    "activeDirectoryGuid": "f32ea9af-1b49-4598-8e1d-727e71de7208",
+    "fullName": "Curious, Chris",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Chris.Curious@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "38",
+    "activeDirectoryGuid": "d3099212-a14d-462b-91d9-658d9bdac452",
+    "fullName": "Debonair, Dawn",
+    "jobTitle": "Area Supervisor Squamish",
+    "email": "Dawn.Debonair@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "38",
+    "activeDirectoryGuid": "b4a8e07d-9522-4116-917c-25695fe2541b",
+    "fullName": "Exemplary, Erin",
+    "jobTitle": "Section Head, Parks and Protected Area Sea to Sky",
+    "email": "Erin.Exemplary@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "38",
+    "activeDirectoryGuid": "3e808784-3fb1-4390-a13f-79c0ce7c5be8",
+    "fullName": "Forceful, Frank",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Frank.Forceful@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "38",
+    "activeDirectoryGuid": "51fc84f6-284e-4166-a55e-bdcc53f8a35a",
+    "fullName": "Innocent, Irene",
+    "jobTitle": "Recreation Section Head - Sea to Sky",
+    "email": "Irene.Innocent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "38",
+    "activeDirectoryGuid": "388af9c4-a06b-4765-8ef9-eaa928208c62",
+    "fullName": "Moving, Mark",
+    "jobTitle": "Regional Director, South Coast, Parks and Recreation Program",
+    "email": "Mark.Moving@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "38",
+    "activeDirectoryGuid": "41121c98-3bdf-4bc5-a621-f4bc9c796380",
+    "fullName": "Productive, Paula",
+    "jobTitle": "Regional Operations Manager - South Coast",
+    "email": "Paula.Productive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "45",
+    "activeDirectoryGuid": "50d49d73-9190-4e5a-86a2-03c84dcb3214",
+    "fullName": "Rousing, Ruth",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Ruth.Rousing@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "45",
+    "activeDirectoryGuid": "af220b24-e633-4d25-9b5a-4139e1dd553b",
+    "fullName": "Skilled, Stella",
+    "jobTitle": "Acting Regional Director, Omineca Peace Region",
+    "email": "Stella.Skilled@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "45",
+    "activeDirectoryGuid": "c71b5dd5-b5c8-4a83-8506-7bb8588eb16f",
+    "fullName": "Trained, Tara",
+    "jobTitle": "Executive Director",
+    "email": "Tara.Trained@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "45",
+    "activeDirectoryGuid": "3292326b-eb5a-44c5-a62f-e8ffa1b506a7",
+    "fullName": "Astute, Aaron",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Aaron.Astute@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "45",
+    "activeDirectoryGuid": "48c5430d-b799-49ed-b1ce-ffd73c15d19c",
+    "fullName": "Bustling, Bill",
+    "jobTitle": "Area Supervisor - Upper Fraser",
+    "email": "Bill.Bustling@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "45",
+    "activeDirectoryGuid": "ebdc782b-b3ab-484e-b6d9-045c1d19ba06",
+    "fullName": "Ceaseless, Cameron",
+    "jobTitle": "Auxiliary Park Ranger",
+    "email": "Cameron.Ceaseless@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "45",
+    "activeDirectoryGuid": "b5b73a5d-8896-4ae6-8c94-43557eeda499",
+    "fullName": "Dexterous, Dawn",
+    "jobTitle": "Regional Director",
+    "email": "Dawn.Dexterous@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "46",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Exuberant, Eleanor",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Eleanor.Exuberant@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "46",
+    "activeDirectoryGuid": "ac219237-b85d-45f2-8894-2108584a9520",
+    "fullName": "Instrumental, Ivy",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Ivy.Instrumental@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "46",
+    "activeDirectoryGuid": "6d26903d-58fa-4613-850c-4fd3e7cff4d1",
+    "fullName": "Proficient, Paul",
+    "jobTitle": "Parks and Protected Areas Section Head - Lower Mainland Section",
+    "email": "Paul.Proficient@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "46",
+    "activeDirectoryGuid": "51fd23cf-34e7-4bfe-988c-6620b01b9508",
+    "fullName": "Ready, Rita",
+    "jobTitle": "Recreation Services Officer, Lower Mainland",
+    "email": "Rita.Ready@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "46",
+    "activeDirectoryGuid": "ebdca227-3726-49d4-abc0-9cba54809576",
+    "fullName": "Sleek, Sally",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Sally.Sleek@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "46",
+    "activeDirectoryGuid": "43b61e47-a4e3-4df7-ba65-b22d5df2d572",
+    "fullName": "Trim, Tanya",
+    "jobTitle": "Area Supervisor Vancouver",
+    "email": "Tanya.Trim@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "46",
+    "activeDirectoryGuid": "388af9c4-a06b-4765-8ef9-eaa928208c62",
+    "fullName": "Attentive, Amanda",
+    "jobTitle": "Regional Director, South Coast, Parks and Recreation Program",
+    "email": "Amanda.Attentive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "46",
+    "activeDirectoryGuid": "aabb2a67-fb01-4034-b7a5-cd848b8d4266",
+    "fullName": "Beaming, Bradley",
+    "jobTitle": "Recreation Section Head, Lower Mainland",
+    "email": "Bradley.Beaming@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "46",
+    "activeDirectoryGuid": "41121c98-3bdf-4bc5-a621-f4bc9c796380",
+    "fullName": "Celebrated, Cindy",
+    "jobTitle": "Regional Operations Manager - South Coast",
+    "email": "Cindy.Celebrated@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "47",
+    "activeDirectoryGuid": "9567530d-e3d2-41d7-a84e-0b247fdf77a2",
+    "fullName": "Downright, Derek",
+    "jobTitle": "Operations Manager",
+    "email": "Derek.Downright@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "47",
+    "activeDirectoryGuid": "27157451-3d48-40f2-bd4d-4ca6390e7dbb",
+    "fullName": "Educated, Eleanor",
+    "jobTitle": "Regional Director - West Coast",
+    "email": "Eleanor.Educated@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "47",
+    "activeDirectoryGuid": "faab20b6-12b8-4e60-8b41-22b960942c29",
+    "fullName": "Integral, Irene",
+    "jobTitle": "Executive Director, Coast Area,  Parks & Recreation Program",
+    "email": "Irene.Integral@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "47",
+    "activeDirectoryGuid": "5f71d23b-5911-41be-a505-4a7733b34326",
+    "fullName": "Profound, Penny",
+    "jobTitle": "Park Ranger",
+    "email": "Penny.Profound@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "47",
+    "activeDirectoryGuid": "44d94196-27d4-4fe9-bb44-cfbe79557f05",
+    "fullName": "Smart, Susan",
+    "jobTitle": "Student Ranger Crew Member",
+    "email": "Susan.Smart@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "47",
+    "activeDirectoryGuid": "9b83d9ee-99f3-4a91-a92c-f145d2118b56",
+    "fullName": "Trusted, Tina",
+    "jobTitle": "Student Ranger Crew Lead",
+    "email": "Tina.Trusted@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "47",
+    "activeDirectoryGuid": "ddac6143-6832-44ed-ab31-49f7247871f3",
+    "fullName": "Authentic, Anna",
+    "jobTitle": "Park Ranger",
+    "email": "Anna.Authentic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "47",
+    "activeDirectoryGuid": "1d85c112-1ccc-41c4-bac3-eee6602016dd",
+    "fullName": "Becoming, Brenda",
+    "jobTitle": "Von Donop Area Supervisor",
+    "email": "Brenda.Becoming@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "47",
+    "activeDirectoryGuid": "d83f9664-d155-45a2-9d85-8a1fc2d7aad9",
+    "fullName": "Central, Cathy",
+    "jobTitle": "Seasonal Maintenance Crew Leader",
+    "email": "Cathy.Central@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "47",
+    "activeDirectoryGuid": "c21212b4-721b-46b0-b9d5-e43483ef7564",
+    "fullName": "Dreamy, Dawn",
+    "jobTitle": "Parks and Protected Areas Section Head - Haida Gwaii/South Isl.",
+    "email": "Dawn.Dreamy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "47",
+    "activeDirectoryGuid": "3ae85fc8-7669-4b94-be9d-21ced467a4da",
+    "fullName": "Effervescent, Eddie",
+    "jobTitle": "North Island Recreation Section Head",
+    "email": "Eddie.Effervescent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Interesting, Ian",
+    "jobTitle": "Executive Director",
+    "email": "Ian.Interesting@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "367b12d6-7fa3-4645-b6aa-29d8fc235d7c",
+    "fullName": "Progressive, Phil",
+    "jobTitle": "Parks Administrative Support Clerk",
+    "email": "Phil.Progressive@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "0152fa2e-3fc9-4733-bee4-f449f16dad75",
+    "fullName": "Smooth, Shane",
+    "jobTitle": "Recreation Section Head",
+    "email": "Shane.Smooth@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "698805ad-7276-4372-baa4-5e8ba77856f6",
+    "fullName": "Accomplished, Amber",
+    "jobTitle": "Planning Section Head -  Okanagan",
+    "email": "Amber.Accomplished@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "8ad8cce4-b78c-462a-b31c-195cd16ce125",
+    "fullName": "Befitting, Brenda",
+    "jobTitle": "Recreation Officer",
+    "email": "Brenda.Befitting@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "7af3f596-8747-460e-9203-03b86d9f043d",
+    "fullName": "Certain, Colin",
+    "jobTitle": "Auxiliary Park Ranger (PA12)",
+    "email": "Colin.Certain@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "89e643cd-1ad9-4497-a862-3fb105142e91",
+    "fullName": "Durable, Drew",
+    "jobTitle": "Conservation Specialist",
+    "email": "Drew.Durable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "5830b528-3325-42bc-a3fb-cc1431e1e557",
+    "fullName": "Elite, Emma",
+    "jobTitle": "Regional Director",
+    "email": "Emma.Elite@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "a9e884ed-af8a-4d92-aa64-4df71d05e3f1",
+    "fullName": "Invincible, Ivy",
+    "jobTitle": "Administration Section Head",
+    "email": "Ivy.Invincible@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "07871897-a0de-48fa-af20-bc1692a59bb5",
+    "fullName": "Prominent, Pete",
+    "jobTitle": "Senior Park Ranger",
+    "email": "Pete.Prominent@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "ad3b5942-1d40-4ca5-a5b6-a0f858e964a4",
+    "fullName": "Snappy, Sophie",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Sophie.Snappy@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "90d29149-6466-48d2-9b8c-b002bcbf8789",
+    "fullName": "Accurate, Aaron",
+    "jobTitle": "PPA Section Head",
+    "email": "Aaron.Accurate@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "48",
+    "activeDirectoryGuid": "c8367f6f-7af1-49b6-8aaa-9fa718342099",
+    "fullName": "Brotherly, Betty",
+    "jobTitle": "Area Supervisor, Parks & Protected Areas",
+    "email": "Betty.Brotherly@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "2c459479-b149-46ed-91ed-cd963e3ee9c3",
+    "fullName": "Champion, Cheryl",
+    "jobTitle": "Executive Director",
+    "email": "Cheryl.Champion@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "961e7494-d8ed-4790-855e-6fdc9775549c",
+    "fullName": "Eager, Emily",
+    "jobTitle": "Recreation Services Officer",
+    "email": "Emily.Eager@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "bef1514b-6bb3-488b-b977-aec997348bbd",
+    "fullName": "Inviting, Ivan",
+    "jobTitle": "Auxiliary Park Ranger",
+    "email": "Ivan.Inviting@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "890c8ee3-355d-4d45-9393-ee1f6a42d4ba",
+    "fullName": "Promising, Philip",
+    "jobTitle": "Recreation Section Head",
+    "email": "Philip.Promising@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "7c721e3a-8d51-4053-acbe-ef25a2a20c50",
+    "fullName": "Solid, Sandra",
+    "jobTitle": "Area Supervisor",
+    "email": "Sandra.Solid@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "2757ebcb-28d6-488c-a762-12d01da48816",
+    "fullName": "Accountable, Ashley",
+    "jobTitle": "Section Head",
+    "email": "Ashley.Accountable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "14e532ad-cbba-4ee3-8845-dc8352b7d199",
+    "fullName": "Charismatic, Colin",
+    "jobTitle": "Community Liaison Officer",
+    "email": "Colin.Charismatic@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "4dcd98fe-d5e1-48b5-8efa-e5d8d63d8459",
+    "fullName": "Irreplaceable, Ivan",
+    "jobTitle": "Sr Park Ranger",
+    "email": "Ivan.Irreplaceable@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "5830b528-3325-42bc-a3fb-cc1431e1e557",
+    "fullName": "Prompt, Paul",
+    "jobTitle": "Regional Director",
+    "email": "Paul.Prompt@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "641544dc-a590-4f48-b4bb-a45b0aad0354",
+    "fullName": "Sophisticated, Sally",
+    "jobTitle": "Conservation Specialist",
+    "email": "Sally.Sophisticated@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "b9312a24-44a4-4b69-9d48-2ec47f91e9db",
+    "fullName": "Achieving, Austin",
+    "jobTitle": "Program Assistant",
+    "email": "Austin.Achieving@gov.bc.ca"
+  },
+  {
+    "managementAreaNumber": "43",
+    "activeDirectoryGuid": "6b552f8b-7b04-453e-85d3-8f5c836f55f3",
+    "fullName": "Chivalrous, Chad",
+    "jobTitle": "Planning Section Head",
+    "email": "Chad.Chivalrous@gov.bc.ca"
+  }
+]

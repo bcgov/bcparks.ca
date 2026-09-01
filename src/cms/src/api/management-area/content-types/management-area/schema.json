@@ -44,6 +44,12 @@
       "relation": "manyToOne",
       "target": "api::search-area.search-area",
       "inversedBy": "managementAreas"
+    },
+    "staffContacts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::staff-contact.staff-contact",
+      "mappedBy": "managementAreas"
     }
   }
 }
