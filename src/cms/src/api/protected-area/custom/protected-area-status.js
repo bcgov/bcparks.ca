@@ -11,6 +11,70 @@ const getHasCampfiresFacility = (parkFacilities) => {
   );
 };
 
+// dateTypeId values from park-date-type
+const GATE_DATE_TYPE_ID = 1;
+const OPERATION_DATE_TYPE_ID = 6;
+
+const getToday = () => {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${now.getFullYear()}-${month}-${day}`;
+};
+
+// Mirrors checkParkClosure in gatsby/src/components/park/parkAccessStatus.js.
+// This logic is duplicated (not shared) between the frontend and this controller,
+// so any change here must be made there too, and vice versa.
+const checkParkClosure = (parkDates, today) => {
+  if (!parkDates || parkDates.length === 0) {
+    return false;
+  }
+  for (const d of parkDates) {
+    if (d.startDate && d.startDate > today) {
+      return true;
+    }
+    if (d.endDate && d.endDate < today) {
+      return true;
+    }
+  }
+  return false;
+};
+
+// Mirrors checkParkFeatureClosure in gatsby/src/components/park/parkAccessStatus.js.
+// This logic is duplicated (not shared) between the frontend and this controller,
+// so any change here must be made there too, and vice versa.
+const checkParkFeatureClosure = (parkFeatures, today) => {
+  if (!parkFeatures || parkFeatures.length === 0) {
+    return false;
+  }
+  for (const parkFeature of parkFeatures) {
+    let closureAffectsAccessStatus = parkFeature.closureAffectsAccessStatus;
+    if (closureAffectsAccessStatus == null) {
+      closureAffectsAccessStatus =
+        parkFeature.parkFeatureType?.closureAffectsAccessStatus;
+    }
+    if (!closureAffectsAccessStatus) {
+      continue;
+    }
+    if (parkFeature.isActive !== true || parkFeature.isOpen !== true) {
+      continue;
+    }
+    const dates = parkFeature.parkDates || [];
+    for (const d of dates) {
+      if (d.isActive !== true) {
+        continue;
+      }
+      if (d.startDate && d.startDate > today) {
+        return true;
+      }
+      if (d.endDate && d.endDate < today) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
 const getPublicAdvisory = (publishedAdvisories, orcs) => {
   const filteredByOrcs = publishedAdvisories.filter((f) =>
     f.protectedAreas.some((o) => o.orcs === orcs),
@@ -29,6 +93,7 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
     precedence: 99,
     reservationsAffected: null,
     links: [],
+    hidesSeasonalAdvisory: false,
   };
 
   filteredByOrcs.map((p) => {
@@ -44,6 +109,7 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
       precedence: p.accessStatus ? p.accessStatus.precedence : null,
       reservationsAffected: p.reservationsAffected,
       links: p.links,
+      hidesSeasonalAdvisory: p.accessStatus?.hidesSeasonalAdvisory === true,
     };
     publicAdvisories = [...publicAdvisories, data];
   });
@@ -51,7 +117,14 @@ const getPublicAdvisory = (publishedAdvisories, orcs) => {
   if (publicAdvisories.length === 0)
     publicAdvisories = [publicAdvisoryDefaultValues];
 
-  return _.sortBy(publicAdvisories, ["precedence"])[0];
+  // any published advisory for this park can suppress the seasonal
+  // restrictions override below, not just the top-precedence one
+  const hidesSeasonalAdvisory = publicAdvisories.some(
+    (p) => p.hidesSeasonalAdvisory === true,
+  );
+
+  const topAdvisory = _.sortBy(publicAdvisories, ["precedence"])[0];
+  return { ...topAdvisory, hidesSeasonalAdvisory };
 };
 const getPublishedPublicAdvisories = async () => {
   return await strapi
@@ -61,7 +134,14 @@ const getPublishedPublicAdvisories = async () => {
       limit: -1,
       populate: {
         protectedAreas: { fields: ["orcs"] },
-        accessStatus: { fields: ["accessStatus", "precedence", "groupLabel"] },
+        accessStatus: {
+          fields: [
+            "accessStatus",
+            "precedence",
+            "groupLabel",
+            "hidesSeasonalAdvisory",
+          ],
+        },
         eventType: { fields: ["eventType"] },
         links: { populate: { type: { fields: ["type"] } } },
       },
@@ -104,7 +184,31 @@ const getProtectedAreaStatus = async (ctx) => {
     ...query
   } = ctx.query;
 
+  const thisYear = new Date().getFullYear();
+  const today = getToday();
+
   const protectedAreaPopulateSettings = {
+    parkDates: {
+      fields: ["startDate", "endDate"],
+      filters: {
+        isActive: { $eq: true },
+        endDate: { $gte: `${thisYear}-01-01` },
+        parkDateType: { dateTypeId: { $eq: GATE_DATE_TYPE_ID } },
+      },
+    },
+    parkFeatures: {
+      fields: ["isActive", "isOpen", "closureAffectsAccessStatus"],
+      populate: {
+        parkFeatureType: { fields: ["closureAffectsAccessStatus"] },
+        parkDates: {
+          fields: ["startDate", "endDate", "isActive"],
+          filters: {
+            endDate: { $gte: `${thisYear}-01-01` },
+            parkDateType: { dateTypeId: { $eq: OPERATION_DATE_TYPE_ID } },
+          },
+        },
+      },
+    },
     fireZones: {
       fields: ["fireZoneName"],
       populate: {
@@ -312,6 +416,27 @@ const getProtectedAreaStatus = async (ctx) => {
       };
     });
 
+    // if a park's main gate or a park feature is closed for the season
+    // (outside its operating dates) and no advisory already accounts for
+    // that, the "Open" status is overridden to "Seasonal restrictions" -
+    // see checkParkClosure/checkParkFeatureClosure above
+    let resolvedAccessStatus = publicAdvisory.accessStatus;
+    let resolvedAccessStatusCategory = publicAdvisory.groupLabel;
+    if (
+      resolvedAccessStatusCategory === "Open" &&
+      !publicAdvisory.hidesSeasonalAdvisory
+    ) {
+      const mainGateClosure = checkParkClosure(protectedArea.parkDates, today);
+      const areaClosure = checkParkFeatureClosure(
+        protectedArea.parkFeatures,
+        today,
+      );
+      if (mainGateClosure || areaClosure) {
+        resolvedAccessStatus = "Seasonal restrictions";
+        resolvedAccessStatusCategory = "Seasonal restrictions";
+      }
+    }
+
     // bans and prohibitions
     let campfireBanNote = "";
     if (protectedArea.hasCampfireBanOverride) {
@@ -333,8 +458,8 @@ const getProtectedAreaStatus = async (ctx) => {
         .map((d) => d.parkName),
       type: protectedArea.type,
       typeCode: protectedArea.typeCode,
-      accessStatus: publicAdvisory.accessStatus,
-      accessStatusCategory: publicAdvisory.groupLabel,
+      accessStatus: resolvedAccessStatus,
+      accessStatusCategory: resolvedAccessStatusCategory,
       accessDetails: publicAdvisory.advisoryTitle,
       isReservationsAffected: boolToYN(publicAdvisory.reservationsAffected),
       eventType: publicAdvisory.eventType,
