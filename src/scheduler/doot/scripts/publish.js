@@ -303,7 +303,7 @@ exports.dootPublish = async function () {
                 const isBlankDateRange =
                   !dootDateRange.startDate || !dootDateRange.endDate;
                 if (isBlankDateRange) {
-                  if (existingDocId) {
+                  if (existingDocId != null) {
                     await cmsAxios.delete(`/api/park-dates/${existingDocId}`);
                     deletedCount++;
                   }
@@ -325,7 +325,7 @@ exports.dootPublish = async function () {
                   publishedAt: new Date(),
                   sourceDateRangeId: dootDateRange.id ?? null,
                 };
-                if (existingDocId) {
+                if (existingDocId != null) {
                   await cmsAxios.put(`/api/park-dates/${existingDocId}`, {
                     data: parkDateData,
                   });
