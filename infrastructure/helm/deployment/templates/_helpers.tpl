@@ -96,6 +96,15 @@ https://{{ .Release.Name }}-{{ .Values.public.componentName }}-{{ .Release.Names
 {{ .Release.Name }}-elasticsearch-secret
 {{- end -}}
 
+{{/* Secret names shared by component templates and their consumers. */}}
+{{ define "bcparks_etl_secret" -}}
+{{ .Release.Name }}-{{ .Values.etl.componentName }}-secret
+{{- end -}}
+
+{{ define "bcparks_redis_secret" -}}
+{{ .Release.Name }}-{{ .Values.redis.componentName }}-secret
+{{- end -}}
+
 {{ define "bcparks_scheduler_fullname" -}}
 {{ .Release.Name }}-{{ .Values.scheduler.componentName }}
 {{- end -}}
