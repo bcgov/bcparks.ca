@@ -99,3 +99,7 @@ https://{{ .Release.Name }}-{{ .Values.public.componentName }}-{{ .Release.Names
 {{ define "bcparks_scheduler_fullname" -}}
 {{ .Release.Name }}-{{ .Values.scheduler.componentName }}
 {{- end -}}
+
+{{ define "bcparks_scheduler_secret" -}}
+{{ .Release.Name }}-{{ .Values.scheduler.componentName }}-secret
+{{- end -}}
