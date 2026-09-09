@@ -1,5 +1,7 @@
 "use strict";
 const _ = require("lodash");
+const format = require("date-fns/format");
+const utcToZonedTime = require("date-fns-tz/utcToZonedTime");
 
 const boolToYN = (boolVar) => {
   return boolVar ? "Y" : "N";
@@ -16,10 +18,12 @@ const GATE_DATE_TYPE_ID = 1;
 const OPERATION_DATE_TYPE_ID = 6;
 
 const getToday = () => {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${now.getFullYear()}-${month}-${day}`;
+  // Convert to America/Los_Angeles to ensure consistent closure logic across timezones
+  const pacificTime = utcToZonedTime(
+    new Date().toISOString(),
+    "America/Los_Angeles"
+  );
+  return format(pacificTime, "yyyy-MM-dd");
 };
 
 // Mirrors checkParkClosure in gatsby/src/components/park/parkAccessStatus.js.
@@ -29,15 +33,11 @@ const checkParkClosure = (parkDates, today) => {
   if (!parkDates || parkDates.length === 0) {
     return false;
   }
-  for (const d of parkDates) {
-    if (d.startDate && d.startDate > today) {
-      return true;
-    }
-    if (d.endDate && d.endDate < today) {
-      return true;
-    }
-  }
-  return false;
+  // Closed if today is not within any operating range.
+  const isOpenToday = parkDates.some((d) =>
+    d.startDate && d.endDate && d.startDate <= today && d.endDate >= today,
+  );
+  return !isOpenToday;
 };
 
 // Mirrors checkParkFeatureClosure in gatsby/src/components/park/parkAccessStatus.js.
@@ -47,32 +47,31 @@ const checkParkFeatureClosure = (parkFeatures, today) => {
   if (!parkFeatures || parkFeatures.length === 0) {
     return false;
   }
-  for (const parkFeature of parkFeatures) {
+  return parkFeatures.some((parkFeature) => {
     let closureAffectsAccessStatus = parkFeature.closureAffectsAccessStatus;
     if (closureAffectsAccessStatus == null) {
       closureAffectsAccessStatus =
         parkFeature.parkFeatureType?.closureAffectsAccessStatus;
     }
-    if (!closureAffectsAccessStatus) {
-      continue;
-    }
-    if (parkFeature.isActive !== true || parkFeature.isOpen !== true) {
-      continue;
+    if (
+      !closureAffectsAccessStatus ||
+      parkFeature.isActive !== true ||
+      parkFeature.isOpen !== true
+    ) {
+      return false;
     }
     const dates = parkFeature.parkDates || [];
-    for (const d of dates) {
-      if (d.isActive !== true) {
-        continue;
-      }
-      if (d.startDate && d.startDate > today) {
-        return true;
-      }
-      if (d.endDate && d.endDate < today) {
-        return true;
-      }
-    }
-  }
-  return false;
+    // Closed if today is not within any operating range
+    const featureOpenToday = dates.some(
+      (d) =>
+        d.isActive === true &&
+        d.startDate &&
+        d.endDate &&
+        d.startDate <= today &&
+        d.endDate >= today
+    );
+    return !featureOpenToday; // Return true if feature is closed and affects status
+  });
 };
 
 const getPublicAdvisory = (publishedAdvisories, orcs) => {
