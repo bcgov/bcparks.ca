@@ -292,8 +292,24 @@ exports.dootPublish = async function () {
                   );
                 }
               }
-              // create the date ranges
+              // create/update/delete the date ranges
               for (const dootDateRange of item.dateRanges) {
+                const existingDocId =
+                  dootDateRange.id != null ? existingBySourceId.get(dootDateRange.id) : undefined;
+
+                // a blank startDate/endDate means the date range was intentionally removed in DOOT, 
+                // so the matching Strapi record should be deleted rather than saved with
+                // blank required fields (which would fail validation and abort the whole message).
+                const isBlankDateRange =
+                  !dootDateRange.startDate || !dootDateRange.endDate;
+                if (isBlankDateRange) {
+                  if (existingDocId) {
+                    await cmsAxios.delete(`/api/park-dates/${existingDocId}`);
+                    deletedCount++;
+                  }
+                  continue;
+                }
+
                 const parkDateData = {
                   startDate: dootDateRange.startDate,
                   endDate: dootDateRange.endDate,
@@ -309,8 +325,6 @@ exports.dootPublish = async function () {
                   publishedAt: new Date(),
                   sourceDateRangeId: dootDateRange.id ?? null,
                 };
-                const existingDocId =
-                  dootDateRange.id != null ? existingBySourceId.get(dootDateRange.id) : undefined;
                 if (existingDocId) {
                   await cmsAxios.put(`/api/park-dates/${existingDocId}`, {
                     data: parkDateData,
