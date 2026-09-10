@@ -27,15 +27,12 @@ function checkParkClosure(operatingDates) {
   if (!operatingDates || operatingDates.length === 0) {
     return false;
   }
-  for (const d of operatingDates) {
-    if (d.startDate && d.startDate > today) {
-      return true;
-    }
-    if (d.endDate && d.endDate < today) {
-      return true;
-    }
-  }
-  return false;
+  // Closed if today is not within any operating range
+  const isOpenToday = operatingDates.some(
+    (d) =>
+      d.startDate && d.endDate && d.startDate <= today && d.endDate >= today
+  );
+  return !isOpenToday;
 }
 
 function checkParkFeatureClosure(parkFeatures, staticData) {
@@ -43,7 +40,7 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
     return false;
   }
   const parkFeatureTypes = staticData?.allStrapiParkFeatureType.nodes || [];
-  for (const parkFeature of parkFeatures) {
+  return parkFeatures.some((parkFeature) => {
     // determine if closure affects access status using isIgnored
 
     // in scheduler/elasticsearch/transformers/park/operatingDates.js
@@ -82,30 +79,26 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
     }
     // skip features that don't affect access status
     if (!closureAffectsAccessStatus) {
-      continue;
+      return false;
     }
     // skip inactive or closed features
     if (parkFeature.isActive !== true || parkFeature.isOpen !== true) {
-      continue;
+      return false;
     }
     // check the dates to see if any parkFeatures are closed
     const dates = parkFeature.parkDates || [];
-    for (const d of dates) {
-      if (d.isActive !== true) {
-        continue;
-      }
-      if (d.parkDateType?.dateTypeId !== PARK_DATE_TYPE.OPERATION) {
-        continue;
-      }
-      if (d.startDate && d.startDate > today) {
-        return true;
-      }
-      if (d.endDate && d.endDate < today) {
-        return true;
-      }
-    }
-  }
-  return false;
+    // Closed if today is not within any operating range
+    const featureOpenToday = dates.some(
+      (d) =>
+        d.isActive === true &&
+        d.parkDateType?.dateTypeId === PARK_DATE_TYPE.OPERATION &&
+        d.startDate &&
+        d.endDate &&
+        d.startDate <= today &&
+        d.endDate >= today
+    );
+    return !featureOpenToday; // Return true if feature is closed and affects status
+  });
 }
 
 function parkAccessFromAdvisories(
