@@ -110,7 +110,7 @@ spec:
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}-{{ .Values.redis.componentName }}-secret
+                  name: {{ template "bcparks_redis_secret" . }}
                   key: REDIS_PASSWORD
             - name: ENABLE_GRAPHQL_PLAYGROUND
               value: {{ .Values.cms.env.enableGraphQLPlayground | quote }}

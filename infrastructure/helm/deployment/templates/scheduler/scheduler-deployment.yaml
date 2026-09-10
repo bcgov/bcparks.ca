@@ -39,7 +39,7 @@ spec:
             - name: STRAPI_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}-{{ .Values.etl.componentName }}-secret
+                  name: {{ template "bcparks_etl_secret" . }}
                   key: STRAPI_API_TOKEN
             - name: ELASTIC_PARK_INDEX_NAME
               value: {{ .Values.cms.env.indexName | quote }}
@@ -79,7 +79,7 @@ spec:
             - name: REC_SPACE_KEYCLOAK_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}-{{ .Values.etl.componentName }}-secret
+                  name: {{ template "bcparks_etl_secret" . }}
                   key: REC_SPACE_KEYCLOAK_CLIENT_SECRET
           livenessProbe:
             exec:
