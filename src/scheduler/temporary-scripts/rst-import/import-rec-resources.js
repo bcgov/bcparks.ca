@@ -232,6 +232,7 @@ async function fetchRSTResources() {
 // Fetches all recreation resources from Strapi, handling pagination
 async function fetchStrapiResources(strapiResourcesUrl) {
   const queryParams = {
+    sort: ["id:asc"],
     populate: {
       recreationDistrict: { fields: ["documentId"] },
       recreationResourceType: { fields: ["documentId"] },

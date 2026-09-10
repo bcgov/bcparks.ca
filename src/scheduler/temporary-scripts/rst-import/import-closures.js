@@ -64,7 +64,10 @@ const loadData = async function () {
     for (let page = 1, pageCount = 1; page <= pageCount; page++) {
       const { data } = await axios.get(url, {
         headers: httpReqHeaders,
-        params: { pagination: { page, pageSize: 1000 } },
+        params: {
+          sort: ["id:asc"],
+          pagination: { page, pageSize: 1000 },
+        },
         paramsSerializer: (params) =>
           qs.stringify(params, { encodeValuesOnly: true }),
       });
