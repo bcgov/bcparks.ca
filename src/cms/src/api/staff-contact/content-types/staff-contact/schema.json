@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "staff_contacts",
+  "info": {
+    "singularName": "staff-contact",
+    "pluralName": "staff-contacts",
+    "displayName": "Staff-contact"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fullName": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "managementAreas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::management-area.management-area",
+      "inversedBy": "staffContacts"
+    },
+    "activeDirectoryGuid": {
+      "type": "string",
+      "unique": true,
+      "regex": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "isActive": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    }
+  }
+}
