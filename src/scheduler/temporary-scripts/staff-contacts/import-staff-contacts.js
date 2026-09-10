@@ -62,16 +62,13 @@ const loadData = async function () {
   try {
     const url = `${process.env.STRAPI_BASE_URL}/api/management-areas`;
 
-    for (let page = 1, pageCount = 1; page <= pageCount; page++) {
-      const { data } = await axios.get(url, {
-        headers: httpReqHeaders,
-        params: { pagination: { page, pageSize: 1000 } },
-        paramsSerializer: (params) => qs.stringify(params, { encodeValuesOnly: true }),
-      });
+    const { data } = await axios.get(url, {
+      headers: httpReqHeaders,
+      params: { pagination: { pageSize: 1000 } },
+      paramsSerializer: (params) => qs.stringify(params, { encodeValuesOnly: true }),
+    });
 
-      strapiManagementAreas.push(...(data?.data || []));
-      pageCount = data?.meta?.pagination?.pageCount || 1;
-    }
+    strapiManagementAreas.push(...(data?.data || []));
   } catch (error) {
     console.error(`Error getting management areas from Strapi: ${error?.message ?? error}`);
     throw error;
