@@ -236,7 +236,14 @@ exports.dootPublish = async function () {
             item.dateRanges?.map((dateRange) => dateRange.id).filter((id) => id != null) || [],
           );
 
-          // build a map of sourceDateRangeId -> documentId for existing records
+          // Note: sourceDateRangeId is a newer field added to track which DOOT record created
+          // each Strapi park-date record. There is no practical backfill capability for existing
+          // records. Most 2026 and earlier records therefore have NULL values. Once 2027 dates
+          // are published from DOOT, newly generated records will populate this field correctly.
+          // The situation will self-correct over time as older date ranges expire and are
+          // replaced by new DOOT records.
+          
+          // Build a map of sourceDateRangeId -> documentId for existing records that can be updated.
           const existingBySourceId = new Map();
           for (const dateRange of datesToDelete.data.data) {
             if (dateRange.sourceDateRangeId != null) {
