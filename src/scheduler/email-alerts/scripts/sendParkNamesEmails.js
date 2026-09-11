@@ -1,12 +1,13 @@
 const { getLogger } = require("../../shared/logging");
 const { readQueue, removeFromQueue } = require("../../shared/taskQueue");
 const ejs = require("ejs");
-const { writeFile } = require("fs");
+const { writeFile } = require("node:fs").promises;
 const {
   scriptKeySpecified,
   noCommandLineArgs,
 } = require("../../shared/commandLine");
-const { send } = require("./mailer");
+const { send } = require("../utils/mailer");
+const { getSenderName, getLogoAttachment } = require("../utils/emailHelper");
 
 /**
  * Sends queued emails
@@ -36,7 +37,7 @@ exports.sendParkNamesEmails = async function () {
     );
 
     if (scriptKeySpecified("emailtest")) {
-      writeFile(`./mail-test-${orcs}.html`, htmlMessageBody, (err) => {
+      await writeFile(`./mail-test-${orcs}.html`, htmlMessageBody, (err) => {
         if (err) throw err;
       });
     }
@@ -49,26 +50,14 @@ exports.sendParkNamesEmails = async function () {
         const recipients = (process.env.EMAIL_RECIPIENT || "")
           .split(",")
           .filter(Boolean);
-        const fromName =
-          process.env.BCPARKS_ENVIRONMENT.toLowerCase() === "prod"
-            ? "Staff Web Portal"
-            : process.env.BCPARKS_ENVIRONMENT.toUpperCase();
-
-        // Attach the BC Parks logo as logo.png
-        const attachments = [
-          {
-            path: "./email-alerts/images/logo.png",
-            cid: "logo.png",
-          },
-        ];
 
         await send(
           subject,
           htmlMessageBody,
           summary,
-          fromName,
+          getSenderName(),
           [...recipients],
-          attachments,
+          getLogoAttachment(),
         );
       }
     }

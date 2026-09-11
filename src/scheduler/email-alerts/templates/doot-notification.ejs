@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title><%= title %></title>
+</head>
+
+<% if (typeof allRecipients !== "undefined" && Array.isArray(allRecipients) && allRecipients.length > 0) { %>
+<!-- Email recipients: <%= allRecipients.join(", ") %> -->
+<% } %>
+
+<body style="font-family: Arial, Helvetica; color: #1a1a1a">
+  <%- include("includes/header.ejs") %>
+
+  <h1 style="margin: 24px 0; font-size: 20px; font-weight: 400; line-height: 1.4;">
+    <%= title %>
+  </h1>
+
+  <div style="font-size:16px; margin: 0 0 20px 0">
+    <%- description %>
+  </div>
+
+  <div style="margin: 0 0 28px 0">
+    <a style="display: inline-block; padding: 10px 16px; background-color: #003366; border: 1px solid #003366; border-radius: 3px; color: #ffffff; font-size: 12px; font-weight: 700; line-height: 16px; text-decoration: none; white-space: nowrap;" rel="noopener noreferrer" href="<%= adminUrl %>/dates/edit/<%= seasonFormSlug %>/<%= seasonId %>"><%= buttonText %></a>
+  </div>
+
+  <div style="font-size: 13px; margin: 0 0 20px 0">
+    You are receiving this email because you manage information in the dates of operation 
+    tool (DOOT) in the staff web portal.
+  </div>
+
+  <div style="font-size: 13px; margin: 0">
+    Need help? Reply to <a href="mailto:cardweb@gov.bc.ca">cardweb@gov.bc.ca</a>
+  </div>
+</body>
+</html>

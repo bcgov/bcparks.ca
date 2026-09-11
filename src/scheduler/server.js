@@ -19,6 +19,7 @@ const {
 const {
   sendAdvisoryEmails,
 } = require("./email-alerts/scripts/sendAdvisoryEmails");
+const { sendDootEmails } = require("./email-alerts/scripts/sendDootEmails");
 const {
   sendParkNamesEmails,
 } = require("./email-alerts/scripts/sendParkNamesEmails");
@@ -33,6 +34,7 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
   const logger = getLogger();
 
   let recentAdvisoryEmails = [];
+  let recentDootEmails = [];
 
   /**
    * Starts the cron job to reindex parks as entries are added to the queuedTasks
@@ -55,6 +57,7 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
     try {
       logger.info("Starting cron");
       recentAdvisoryEmails = await sendAdvisoryEmails(recentAdvisoryEmails);
+      recentDootEmails = await sendDootEmails(recentDootEmails);
       await sendParkNamesEmails();
       await populateGeoShapes({ silent: true });
       await batchQueueParks();
