@@ -19,6 +19,7 @@ const {
 const {
   sendAdvisoryEmails,
 } = require("./email-alerts/scripts/sendAdvisoryEmails");
+const { sendDootEmails } = require("./email-alerts/scripts/sendDootEmails");
 const {
   sendParkNamesEmails,
 } = require("./email-alerts/scripts/sendParkNamesEmails");
@@ -126,6 +127,7 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
   if (scriptKeySpecified("emailsend")) {
     logger.info("Sending queued emails");
     await sendAdvisoryEmails([]);
+    await sendDootEmails([]);
     await sendParkNamesEmails();
     return;
   }
