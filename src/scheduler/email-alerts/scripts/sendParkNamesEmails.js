@@ -1,12 +1,13 @@
 const { getLogger } = require("../../shared/logging");
 const { readQueue, removeFromQueue } = require("../../shared/taskQueue");
 const ejs = require("ejs");
-const { writeFile } = require("fs");
+const { writeFile } = require("node:fs").promises;
 const {
   scriptKeySpecified,
   noCommandLineArgs,
 } = require("../../shared/commandLine");
-const { send } = require("./mailer");
+const { send } = require("../utils/mailer");
+const { getSenderName, getLogoAttachment } = require("../utils/emailHelper");
 
 /**
  * Sends queued emails
@@ -14,6 +15,10 @@ const { send } = require("./mailer");
 exports.sendParkNamesEmails = async function () {
   let queue;
   const logger = getLogger();
+  const isProduction = process.env.BCPARKS_ENVIRONMENT === "prod";
+  const emailEnabled = process.env.EMAIL_ENABLED?.toLowerCase() !== "false";
+
+  const shouldSend = scriptKeySpecified("emailsend") || noCommandLineArgs();
 
   // get items from the queue with the action 'email parkname change'
   try {
@@ -36,44 +41,33 @@ exports.sendParkNamesEmails = async function () {
     );
 
     if (scriptKeySpecified("emailtest")) {
-      writeFile(`./mail-test-${orcs}.html`, htmlMessageBody, (err) => {
-        if (err) throw err;
-      });
+      await writeFile(`./mail-test-${orcs}.html`, htmlMessageBody);
     }
 
-    if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
-      if (process.env.EMAIL_ENABLED.toLowerCase() !== "false") {
-        const subject = `A Protected Area Name Was Changed`;
-        const summary = `${jsonData.oldName} was changed to ${jsonData.newName}`;
-        // Split EMAIL_RECIPIENT because it can be a comma-separated list
-        const recipients = (process.env.EMAIL_RECIPIENT || "")
-          .split(",")
-          .filter(Boolean);
-        const fromName =
-          process.env.BCPARKS_ENVIRONMENT.toLowerCase() === "prod"
-            ? "Staff Web Portal"
-            : process.env.BCPARKS_ENVIRONMENT.toUpperCase();
+    if (shouldSend && emailEnabled) {
+      const subject = `A Protected Area Name Was Changed`;
+      const summary = `${jsonData.oldName} was changed to ${jsonData.newName}`;
+      // Split EMAIL_RECIPIENT because it can be a comma-separated list
+      const recipients = (process.env.EMAIL_RECIPIENT || "")
+        .split(",")
+        .filter(Boolean);
 
-        // Attach the BC Parks logo as logo.png
-        const attachments = [
-          {
-            path: "./email-alerts/images/logo.png",
-            cid: "logo.png",
-          },
-        ];
-
-        await send(
-          subject,
-          htmlMessageBody,
-          summary,
-          fromName,
-          [...recipients],
-          attachments,
-        );
-      }
+      await send(
+        subject,
+        htmlMessageBody,
+        summary,
+        getSenderName(),
+        [...recipients],
+        getLogoAttachment(),
+      );
     }
 
-    if (scriptKeySpecified("emailsend") || noCommandLineArgs()) {
+    // Remove processed messages except when production email is disabled.
+    // In production, EMAIL_ENABLED=false acts as a kill switch and preserves
+    // the queue for later retry.
+    const shouldRemoveFromQueue = shouldSend && (!isProduction || emailEnabled);
+
+    if (shouldRemoveFromQueue) {
       await removeFromQueue([message.documentId]);
     }
   }
