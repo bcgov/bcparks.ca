@@ -111,6 +111,11 @@ module.exports = ({ strapi }) => ({
                 $gte: `${thisYear}-01-01`,
               },
             },
+            populate: {
+              parkDateType: {
+                fields: ["dateTypeId"],
+              },
+            },
           },
           parkFeatureType: {
             fields: ["featureTypeId"],

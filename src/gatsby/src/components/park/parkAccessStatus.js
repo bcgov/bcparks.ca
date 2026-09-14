@@ -91,7 +91,8 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
     const featureOpenToday = dates.some(
       (d) =>
         d.isActive === true &&
-        d.parkDateType?.dateTypeId === PARK_DATE_TYPE.OPERATION &&
+        (d.parkDateType == null ||
+          d.parkDateType.dateTypeId === PARK_DATE_TYPE.OPERATION) &&
         d.startDate &&
         d.endDate &&
         d.startDate <= today &&
