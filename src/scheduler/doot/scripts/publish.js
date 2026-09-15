@@ -236,7 +236,14 @@ exports.dootPublish = async function () {
             item.dateRanges?.map((dateRange) => dateRange.id).filter((id) => id != null) || [],
           );
 
-          // build a map of sourceDateRangeId -> documentId for existing records
+          // Note: sourceDateRangeId is a newer field added to track which DOOT record created
+          // each Strapi park-date record. There is no practical backfill capability for existing
+          // records. Most 2026 and earlier records therefore have NULL values. Once 2027 dates
+          // are published from DOOT, newly generated records will populate this field correctly.
+          // The situation will self-correct over time as older date ranges expire and are
+          // replaced by new DOOT records.
+          
+          // Build a map of sourceDateRangeId -> documentId for existing records that can be updated.
           const existingBySourceId = new Map();
           for (const dateRange of datesToDelete.data.data) {
             if (dateRange.sourceDateRangeId != null) {
@@ -292,8 +299,24 @@ exports.dootPublish = async function () {
                   );
                 }
               }
-              // create the date ranges
+              // create/update/delete the date ranges
               for (const dootDateRange of item.dateRanges) {
+                const existingDocId =
+                  dootDateRange.id != null ? existingBySourceId.get(dootDateRange.id) : undefined;
+
+                // a blank startDate/endDate means the date range was intentionally removed in DOOT, 
+                // so the matching Strapi record should be deleted rather than saved with
+                // blank required fields (which would fail validation and abort the whole message).
+                const isBlankDateRange =
+                  !dootDateRange.startDate || !dootDateRange.endDate;
+                if (isBlankDateRange) {
+                  if (existingDocId != null) {
+                    await cmsAxios.delete(`/api/park-dates/${existingDocId}`);
+                    deletedCount++;
+                  }
+                  continue;
+                }
+
                 const parkDateData = {
                   startDate: dootDateRange.startDate,
                   endDate: dootDateRange.endDate,
@@ -309,9 +332,7 @@ exports.dootPublish = async function () {
                   publishedAt: new Date(),
                   sourceDateRangeId: dootDateRange.id ?? null,
                 };
-                const existingDocId =
-                  dootDateRange.id != null ? existingBySourceId.get(dootDateRange.id) : undefined;
-                if (existingDocId) {
+                if (existingDocId != null) {
                   await cmsAxios.put(`/api/park-dates/${existingDocId}`, {
                     data: parkDateData,
                   });
