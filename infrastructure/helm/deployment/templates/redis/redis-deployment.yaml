@@ -42,7 +42,7 @@ spec:
               protocol: TCP
           envFrom:
             - secretRef:
-                name: {{ .Release.Name }}-{{ .Values.redis.componentName }}-secret
+                name: {{ template "bcparks_redis_secret" . }}
           volumeMounts:
             - name: conf
               mountPath: /conf
