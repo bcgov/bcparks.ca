@@ -144,6 +144,13 @@ const getPublishedPublicAdvisories = async () => {
         },
         eventType: { fields: ["eventType"] },
         links: { populate: { type: { fields: ["type"] } } },
+        filters: {
+          accessStatus: {
+            precedence: {
+              $lt: 120,
+            },
+          },
+        },
       },
     });
 };
