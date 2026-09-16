@@ -59,6 +59,10 @@ spec:
               value: {{ .Values.scheduler.env.emailSender }}
             - name: EMAIL_RECIPIENT
               value: {{ .Values.scheduler.env.emailRecipient | quote }}
+            - name: DOOT_IS_RECIPIENT
+              value: {{ .Values.scheduler.env.dootIsRecipient | quote }}
+            - name: DOOT_RS_RECIPIENT
+              value: {{ .Values.scheduler.env.dootRsRecipient | quote }}
             - name: EMAIL_RECIPIENT_WHITELIST
               value: {{ .Values.scheduler.env.emailRecipientWhitelist | quote }}
             - name: PUBLIC_URL

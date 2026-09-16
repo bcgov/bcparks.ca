@@ -17,6 +17,8 @@ scheduler:
   env:
     emailEnabled: true
     emailRecipient: manuji@oxd.com,mike@oxd.com
+    dootIsRecipient: manuji+IS@oxd.com,mike+IS@oxd.com
+    dootRsRecipient: manuji+RS@oxd.com,mike+RS@oxd.com
     emailRecipientWhitelist: manuji@oxd.com,mike@oxd.com
     recSpaceKeycloakTokenUrl: https://dev.loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect/token
     recSpaceKeycloakClientId: testing-act-integration-6456
