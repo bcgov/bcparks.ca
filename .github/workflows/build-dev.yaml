@@ -22,10 +22,12 @@ jobs:
 
       - name: Set env
         run: |
-          echo "SHORT_SHA=$(git rev-parse --short=8 HEAD)" >> $GITHUB_ENV
-          echo "IMAGE_TAGS=latest" >> $GITHUB_ENV
+          SHORT_SHA=$(git rev-parse --short=8 HEAD)
+          echo "SHORT_SHA=${SHORT_SHA}" >> "$GITHUB_ENV"
           if [ "${GITHUB_REF_NAME}" = "main" ]; then
-            echo "IMAGE_TAGS=latest ${SHORT_SHA}" >> $GITHUB_ENV
+            echo "IMAGE_TAGS=latest ${SHORT_SHA}" >> "$GITHUB_ENV"
+          else
+            echo "IMAGE_TAGS=latest" >> "$GITHUB_ENV"
           fi
 
       - name: Login to OpenShift Container Repository
@@ -135,10 +137,12 @@ jobs:
 
       - name: Set env
         run: |
-          echo "SHORT_SHA=$(git rev-parse --short=8 HEAD)" >> $GITHUB_ENV
-          echo "IMAGE_TAGS=latest" >> $GITHUB_ENV
+          SHORT_SHA=$(git rev-parse --short=8 HEAD)
+          echo "SHORT_SHA=${SHORT_SHA}" >> "$GITHUB_ENV"
           if [ "${GITHUB_REF_NAME}" = "main" ]; then
-            echo "IMAGE_TAGS=latest ${SHORT_SHA}" >> $GITHUB_ENV
+            echo "IMAGE_TAGS=latest ${SHORT_SHA}" >> "$GITHUB_ENV"
+          else
+            echo "IMAGE_TAGS=latest" >> "$GITHUB_ENV"
           fi
 
       - name: Login to OpenShift Container Repository
@@ -182,10 +186,12 @@ jobs:
 
       - name: Set env
         run: |
-          echo "SHORT_SHA=$(git rev-parse --short=8 HEAD)" >> $GITHUB_ENV
-          echo "IMAGE_TAGS=latest" >> $GITHUB_ENV
+          SHORT_SHA=$(git rev-parse --short=8 HEAD)
+          echo "SHORT_SHA=${SHORT_SHA}" >> "$GITHUB_ENV"
           if [ "${GITHUB_REF_NAME}" = "main" ]; then
-            echo "IMAGE_TAGS=latest ${SHORT_SHA}" >> $GITHUB_ENV
+            echo "IMAGE_TAGS=latest ${SHORT_SHA}" >> "$GITHUB_ENV"
+          else
+            echo "IMAGE_TAGS=latest" >> "$GITHUB_ENV"
           fi
 
       - name: Login to OpenShift Container Repository
