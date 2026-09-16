@@ -131,6 +131,7 @@ const getPublishedPublicAdvisories = async () => {
     .findMany({
       sort: "id",
       limit: -1,
+      status: "published",
       populate: {
         protectedAreas: { fields: ["orcs"] },
         accessStatus: {
@@ -143,11 +144,11 @@ const getPublishedPublicAdvisories = async () => {
         },
         eventType: { fields: ["eventType"] },
         links: { populate: { type: { fields: ["type"] } } },
-      },
-      filters: {
-        accessStatus: {
-          precedence: {
-            $lt: 120,
+        filters: {
+          accessStatus: {
+            precedence: {
+              $lt: 120,
+            },
           },
         },
       },
