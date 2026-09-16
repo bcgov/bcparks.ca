@@ -1,8 +1,10 @@
-FROM node:22-slim
+FROM --platform=linux/amd64 node:24-slim
 
-COPY package.json .
+WORKDIR /app
 
-RUN npm install
+COPY package*.json ./
+
+RUN npm ci
 
 COPY *.js ./
 
