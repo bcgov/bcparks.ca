@@ -35,7 +35,7 @@ async function processEmailQueue(config, recent = []) {
   const sent = [];
 
   const isProduction = process.env.BCPARKS_ENVIRONMENT === "prod";
-  const emailEnabled = process.env.EMAIL_ENABLED?.toLowerCase() !== "false";
+  const emailEnabled = process.env.EMAIL_ENABLED?.toLowerCase() === "true";
   const shouldSend = scriptKeySpecified("emailsend") || noCommandLineArgs();
 
   let queue;

@@ -16,7 +16,7 @@ exports.sendParkNamesEmails = async function () {
   let queue;
   const logger = getLogger();
   const isProduction = process.env.BCPARKS_ENVIRONMENT === "prod";
-  const emailEnabled = process.env.EMAIL_ENABLED?.toLowerCase() !== "false";
+  const emailEnabled = process.env.EMAIL_ENABLED?.toLowerCase() === "true";
 
   const shouldSend = scriptKeySpecified("emailsend") || noCommandLineArgs();
 
