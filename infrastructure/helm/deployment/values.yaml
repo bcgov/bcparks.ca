@@ -154,7 +154,6 @@ scheduler:
     emailPort: 25
     emailSender: cardweb@gov.bc.ca
     emailRecipient: cardweb@gov.bc.ca
-    emailRecipientWhitelist: ""
 
   resources:
     requests:

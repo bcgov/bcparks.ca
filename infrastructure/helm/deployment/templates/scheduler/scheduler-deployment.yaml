@@ -60,7 +60,10 @@ spec:
             - name: EMAIL_RECIPIENT
               value: {{ .Values.scheduler.env.emailRecipient | quote }}
             - name: EMAIL_RECIPIENT_WHITELIST
-              value: {{ .Values.scheduler.env.emailRecipientWhitelist | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_scheduler_secret" . }}
+                  key: EMAIL_RECIPIENT_WHITELIST
             - name: PUBLIC_URL
               value: {{ .Values.cluster.publicUrl | quote }}
             - name: ADMIN_URL
