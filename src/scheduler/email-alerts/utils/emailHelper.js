@@ -38,12 +38,17 @@ const filterRecipientsByEnvironment = function (
 
   const whitelistSet = new Set(whitelist);
 
+  // Compare plus-addressed recipients using their base address,
+  // while returning the original address so the tag remains visible.
+  const normalizeForWhitelist = (recipient) =>
+    recipient.replace(/\+[^@]+@/, "@").toLowerCase();
+
   const filteredRecipients = recipients.filter((recipient) =>
-    whitelistSet.has(recipient.toLowerCase()),
+    whitelistSet.has(normalizeForWhitelist(recipient)),
   );
 
   recipients
-    .filter((recipient) => !whitelistSet.has(recipient.toLowerCase()))
+    .filter((recipient) => !whitelistSet.has(normalizeForWhitelist(recipient)))
     .forEach((recipient) => {
       logger.warn(`Non-prod recipient filtered out: ${recipient}`);
     });
