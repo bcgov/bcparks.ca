@@ -120,6 +120,7 @@ export default function FindAPark({ location, data }) {
   // useState and constants
   const menuContent = data?.allStrapiMenu?.nodes || [];
   const searchCities = data?.allStrapiSearchCity?.nodes || [];
+  // Sort is defined server-side in protected-area searchParks (Elasticsearch) to keep _start/_limit paging deterministic.
   const searchApiUrl = `${data.site.siteMetadata.apiURL}/api/protected-areas/search`;
 
   const [areasCount, setAreasCount] = useState([]);
@@ -430,6 +431,7 @@ export default function FindAPark({ location, data }) {
     const newPage = +currentPage + 1;
     setCurrentPage(newPage);
     const pageStart = (newPage - 1) * itemsPerPage;
+    // Request slices by offset/limit; ordering comes from the searchParks service.
     axios
       .get(searchApiUrl, {
         params: { ...params, _start: pageStart, _limit: itemsPerPage },
@@ -569,7 +571,7 @@ export default function FindAPark({ location, data }) {
     if (queryParamStateSyncComplete()) {
       setIsLoading(true);
       setFilters();
-      // first Axios request
+      // first Axios request (deterministic sort is applied by searchParks)
       const request1 = axios.get(searchApiUrl, {
         params: { ...params, _start: 0, _limit: currentPage * itemsPerPage },
       });
