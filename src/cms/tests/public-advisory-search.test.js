@@ -7,7 +7,7 @@ const createSearchService = require("../src/api/public-advisory/services/search"
  *
  * @param {object[]} advisories advisories returned by the document service
  * @param {object} [pagination] optional pagination query
- * @returns {Promise<object>} search results and pagination metadata
+ * @returns {Promise<object>} search results, pagination metadata, and document query mock
  */
 const searchActiveAdvisories = async (advisories, pagination) => {
   const findMany = jest.fn().mockResolvedValue(advisories);
@@ -16,10 +16,12 @@ const searchActiveAdvisories = async (advisories, pagination) => {
   };
   const service = createSearchService({ strapi });
 
-  return service.search({
+  const response = await service.search({
     _activeAdvisorySort: "1",
     ...(pagination && { pagination }),
   });
+
+  return { ...response, findMany };
 };
 
 describe("public advisory search", () => {
@@ -83,7 +85,7 @@ describe("public advisory search", () => {
 
   // Guards against applying pagination before the effective-date sort.
   it("sorts active advisories before pagination", async () => {
-    const { results, pagination } = await searchActiveAdvisories(
+    const { results, pagination, findMany } = await searchActiveAdvisories(
       [
         {
           id: 1,
@@ -101,14 +103,18 @@ describe("public advisory search", () => {
           advisoryDate: "2026-08-21T20:00:00.000Z",
         },
       ],
-      { start: 0, limit: 2 },
+      { start: 1, limit: 1 },
     );
 
-    expect(results.map(({ id }) => id)).toEqual([2, 3]);
+    const documentQuery = findMany.mock.calls[0][0];
+    expect(documentQuery).not.toHaveProperty("limit");
+    expect(documentQuery).not.toHaveProperty("start");
+    expect(documentQuery).not.toHaveProperty("pagination");
+    expect(results.map(({ id }) => id)).toEqual([3]);
     expect(pagination).toEqual({
-      page: 1,
-      pageSize: 2,
-      pageCount: 2,
+      page: 2,
+      pageSize: 1,
+      pageCount: 3,
       total: 3,
     });
   });
