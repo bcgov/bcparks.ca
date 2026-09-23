@@ -9,6 +9,28 @@ const {
 const { dootSplitMessage } = require("./splitMessage");
 
 /**
+ * Returns the date types this item is authoritative for, so the delete step leaves
+ * other date types alone. Combines the types in item.dateRanges with
+ * item.optionalDateTypeIds, which covers types (e.g. Gate and Tier 2) that
+ * can be removed down to zero rows in DOOT and so won't appear in dateRanges.
+ * Payloads without optionalDateTypeIds still work.
+ * @param {Object} item A single doot-publish payload item
+ * @returns {Set<number>} Date type numbers this item is authoritative for
+ */
+function getIncomingDateTypeIds(item) {
+  const fromDateRanges =
+    item.dateRanges?.map((dateRange) => dateRange.dateTypeId).filter(Boolean) ||
+    [];
+  const fromOptional = Array.isArray(item.optionalDateTypeIds)
+    ? item.optionalDateTypeIds
+    : [];
+
+  return new Set([...fromDateRanges, ...fromOptional]);
+}
+
+exports.getIncomingDateTypeIds = getIncomingDateTypeIds;
+
+/**
  * Publishes DOOT date and gate info to Strapi
  */
 exports.dootPublish = async function () {
@@ -224,12 +246,7 @@ exports.dootPublish = async function () {
             break;
           }
 
-          // collect incoming date type IDs to prevent deleting other seasons/types
-          const incomingDateTypeIds = new Set(
-            item.dateRanges
-              ?.map((dateRange) => dateRange.dateTypeId)
-              .filter(Boolean) || [],
-          );
+          const incomingDateTypeIds = getIncomingDateTypeIds(item);
 
           // collect incoming sourceDateRangeIds to skip deleting records that can be updated with PUT
           const incomingSourceIds = new Set(
