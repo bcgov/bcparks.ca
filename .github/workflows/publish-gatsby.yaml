@@ -135,8 +135,11 @@ jobs:
             ${{ runner.os }}-public-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
 
       - name: Build static
+        timeout-minutes: 20
         run: |
           cd gatsby
+          export NODE_OPTIONS="--max-old-space-size=4096"
+          export GATSBY_CPU_COUNT=2
           npm run build
       - name: Build and push public image
         run: |
