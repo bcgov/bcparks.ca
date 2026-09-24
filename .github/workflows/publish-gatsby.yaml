@@ -106,16 +106,37 @@ jobs:
         with:
           node-version: "22"
 
-      - run: mkdir -p gatsby/public
-      - name: Build static
+      - run: mkdir -p gatsby
+      - name: Prepare Gatsby source
         run: |
           # Run the builder image as container since you can't directly copy file from an image
           docker run -d -t --name builder ${{ steps.vars.outputs.registry_builder_image }}:${{ env.IMAGE_TAG }}
           # Copy Gatsby source and packages to local.  Tried to just do the build in the container, but ran into some weird issues with the build
           docker cp builder:/gatsby/. gatsby
+
+      - run: mkdir -p gatsby/public gatsby/.cache
+
+      - name: Cache Gatsby Cache Folder
+        uses: actions/cache@v3
+        id: gatsby-cache-folder
+        with:
+          path: gatsby/.cache
+          key: ${{ runner.os }}-cache-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
+          restore-keys: |
+            ${{ runner.os }}-cache-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
+
+      - name: Cache Gatsby Public Folder
+        uses: actions/cache@v3
+        id: gatsby-public-folder
+        with:
+          path: gatsby/public
+          key: ${{ runner.os }}-public-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
+          restore-keys: |
+            ${{ runner.os }}-public-gatsby-${{ env.BRANCH }}-${{ env.ENV_SUFFIX }}
+
+      - name: Build static
+        run: |
           cd gatsby
-          # Ensure a fresh build from source data; avoid stale page-data from copied image cache.
-          rm -rf .cache public
           npm run build
       - name: Build and push public image
         run: |
