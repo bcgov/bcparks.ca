@@ -163,7 +163,7 @@ function isAdvisoryEqual(newData, oldData) {
   const fieldsToCompare = {
     title: null,
     description: null,
-    isSafetyRelated: null,
+    isSafetyRelated: false,
     listingRank: null,
     note: null,
     advisoryDate: null,
@@ -184,23 +184,33 @@ function isAdvisoryEqual(newData, oldData) {
     fireCentres: [],
     fireZones: [],
     naturalResourceDistricts: [],
-    recreationDistricts: [],
     recreationResources: [],
-    isAdvisoryDateDisplayed: null,
-    isEffectiveDateDisplayed: null,
-    isEndDateDisplayed: null,
-    isUpdatedDateDisplayed: null,
-    isReservationsAffected: null,
-    isUrgentAfterHours: null,
+    isAdvisoryDateDisplayed: false,
+    isEffectiveDateDisplayed: false,
+    isEndDateDisplayed: false,
+    isUpdatedDateDisplayed: false,
+    isReservationsAffected: false,
+    isUrgentAfterHours: false,
+    submittedByName: null,
   };
 
   for (const key of Object.keys(fieldsToCompare)) {
+    // submittedByName: if blank or null, treat it as no change;
+    // if it has a value, compare it to the old value like the other fields
+    if (key === "submittedByName" && !newData[key]) continue;
+
+    // booleans: compare as truthy or non-truthy, so null, undefined and false are equal
+    if (typeof fieldsToCompare[key] === "boolean") {
+      if (!!newData[key] !== !!oldData[key]) return false;
+      continue;
+    }
+
     if (Array.isArray(oldData[key])) {
-      oldData[key] = oldData[key].map((x) => x.id).sort();
+      oldData[key] = oldData[key].map((x) => x.documentId).sort();
       if (newData[key]) newData[key].sort();
     } else {
       if (typeof oldData[key] === "object" && oldData[key])
-        oldData[key] = oldData[key].id;
+        oldData[key] = oldData[key].documentId;
     }
     if (JSON.stringify(newData[key]) != JSON.stringify(oldData[key]))
       return false;

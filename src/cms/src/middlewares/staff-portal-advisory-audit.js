@@ -153,7 +153,12 @@ module.exports = () => {
       oldPublicAdvisory.unpublishedDate = updatedPublicAdvisory.unpublishedDate;
     }
 
-    if (isAdvisoryEqual(updatedPublicAdvisory, oldPublicAdvisory)) return;
+    if (isAdvisoryEqual(updatedPublicAdvisory, oldPublicAdvisory)) {
+      // No new revision, so keep the existing submittedByName.
+      // The client clears it on every edit, but it still applies to this revision.
+      updatedPublicAdvisory.submittedByName = oldPublicAdvisory.submittedByName;
+      return;
+    }
 
     if (
       updatedPublicAdvisory.reviewedByName &&
