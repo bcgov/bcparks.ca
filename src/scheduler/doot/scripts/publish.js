@@ -9,28 +9,6 @@ const {
 const { dootSplitMessage } = require("./splitMessage");
 
 /**
- * Returns the date types this item is authoritative for, so the delete step leaves
- * other date types alone. Combines the types in item.dateRanges with
- * item.optionalDateTypeIds, which covers types (e.g. Gate and Tier 2) that
- * can be removed down to zero rows in DOOT and so won't appear in dateRanges.
- * Payloads without optionalDateTypeIds still work.
- * @param {Object} item A single doot-publish payload item
- * @returns {Set<number>} Date type numbers this item is authoritative for
- */
-function getIncomingDateTypeIds(item) {
-  const fromDateRanges =
-    item.dateRanges?.map((dateRange) => dateRange.dateTypeId).filter(Boolean) ||
-    [];
-  const fromOptional = Array.isArray(item.optionalDateTypeIds)
-    ? item.optionalDateTypeIds
-    : [];
-
-  return new Set([...fromDateRanges, ...fromOptional]);
-}
-
-exports.getIncomingDateTypeIds = getIncomingDateTypeIds;
-
-/**
  * Publishes DOOT date and gate info to Strapi
  */
 exports.dootPublish = async function () {
@@ -38,9 +16,12 @@ exports.dootPublish = async function () {
   const logger = getLogger();
   let processedTasks;
 
-  // When we create/update date ranges from DOOT data, we will only delete existing
-  // date ranges of these types to avoid removing date ranges managed manually in Strapi.
-  const DOOT_MANAGED_DATE_TYPE_IDS = [1, 2, 3, 4, 6, 7, 8]; // Gate, Tier 1, Tier 2, Winter fee, Operation, Reservation, Backcountry registration
+  // Date types DOOT manages by season type.
+  // Each publish contains a full season, so managed types missing from dateRanges are safe to delete.
+  const DOOT_MANAGED_DATE_TYPE_IDS = {
+    regular: [1, 2, 3, 6, 7, 8], // Gate, Tier 1, Tier 2, Operation, Reservation, Backcountry registration
+    winter: [4],
+  };
 
   do {
     processedTasks = [];
@@ -246,7 +227,8 @@ exports.dootPublish = async function () {
             break;
           }
 
-          const incomingDateTypeIds = getIncomingDateTypeIds(item);
+          const managedDateTypeIds =
+            DOOT_MANAGED_DATE_TYPE_IDS[item.seasonType] ?? [];
 
           // collect incoming sourceDateRangeIds to skip deleting records that can be updated with PUT
           const incomingSourceIds = new Set(
@@ -275,8 +257,7 @@ exports.dootPublish = async function () {
           try {
             for (const dateRange of datesToDelete.data.data) {
               if (
-                DOOT_MANAGED_DATE_TYPE_IDS.includes(dateRange.parkDateType.dateTypeId) &&
-                incomingDateTypeIds.has(dateRange.parkDateType.dateTypeId) &&
+                managedDateTypeIds.includes(dateRange.parkDateType.dateTypeId) &&
                 (dateRange.sourceDateRangeId == null ||
                   !incomingSourceIds.has(dateRange.sourceDateRangeId))
               ) {
