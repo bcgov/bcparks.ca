@@ -16,9 +16,12 @@ exports.dootPublish = async function () {
   const logger = getLogger();
   let processedTasks;
 
-  // When we create/update date ranges from DOOT data, we will only delete existing
-  // date ranges of these types to avoid removing date ranges managed manually in Strapi.
-  const DOOT_MANAGED_DATE_TYPE_IDS = [1, 2, 3, 4, 6, 7, 8]; // Gate, Tier 1, Tier 2, Winter fee, Operation, Reservation, Backcountry registration
+  // Date types DOOT manages by season type.
+  // Each publish contains a full season, so managed types missing from dateRanges are safe to delete.
+  const DOOT_MANAGED_DATE_TYPE_IDS = {
+    regular: [1, 2, 3, 6, 7, 8], // Gate, Tier 1, Tier 2, Operation, Reservation, Backcountry registration
+    winter: [4],
+  };
 
   do {
     processedTasks = [];
@@ -224,12 +227,8 @@ exports.dootPublish = async function () {
             break;
           }
 
-          // collect incoming date type IDs to prevent deleting other seasons/types
-          const incomingDateTypeIds = new Set(
-            item.dateRanges
-              ?.map((dateRange) => dateRange.dateTypeId)
-              .filter(Boolean) || [],
-          );
+          const managedDateTypeIds =
+            DOOT_MANAGED_DATE_TYPE_IDS[item.seasonType] ?? [];
 
           // collect incoming sourceDateRangeIds to skip deleting records that can be updated with PUT
           const incomingSourceIds = new Set(
@@ -258,8 +257,7 @@ exports.dootPublish = async function () {
           try {
             for (const dateRange of datesToDelete.data.data) {
               if (
-                DOOT_MANAGED_DATE_TYPE_IDS.includes(dateRange.parkDateType.dateTypeId) &&
-                incomingDateTypeIds.has(dateRange.parkDateType.dateTypeId) &&
+                managedDateTypeIds.includes(dateRange.parkDateType.dateTypeId) &&
                 (dateRange.sourceDateRangeId == null ||
                   !incomingSourceIds.has(dateRange.sourceDateRangeId))
               ) {
