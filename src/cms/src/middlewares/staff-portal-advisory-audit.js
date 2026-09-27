@@ -153,14 +153,13 @@ module.exports = () => {
       oldPublicAdvisory.unpublishedDate = updatedPublicAdvisory.unpublishedDate;
     }
 
-    if (isAdvisoryEqual(updatedPublicAdvisory, oldPublicAdvisory)) {
-      // No new revision, so keep the existing submittedByName.
-      // The client clears it on every edit, but it still applies to this revision.
-      updatedPublicAdvisory.submittedByName = oldPublicAdvisory.submittedByName;
-      return;
-    }
+    const hasChanges = !isAdvisoryEqual(
+      updatedPublicAdvisory,
+      oldPublicAdvisory,
+    );
 
     if (
+      hasChanges &&
       updatedPublicAdvisory.reviewedByName &&
       !updatedPublicAdvisory.modifiedByName &&
       !updatedPublicAdvisory.publishedByName &&
@@ -172,7 +171,7 @@ module.exports = () => {
     }
 
     // revision flow 1: changes to published advisories
-    if (oldAdvisoryStatus === "PUB") {
+    if (hasChanges && oldAdvisoryStatus === "PUB") {
       await archiveOldPublicAdvisoryAudit(oldPublicAdvisory);
       updatedPublicAdvisory.revisionNumber =
         oldPublicAdvisory.revisionNumber + 1;
@@ -181,6 +180,7 @@ module.exports = () => {
 
     // revision flow 2: non-published advisory modified by a different user
     if (
+      hasChanges &&
       oldPublicAdvisory.modifiedByName !==
         updatedPublicAdvisory.modifiedByName &&
       ["DFT", "HQR", "SCH"].includes(newAdvisoryStatusCode) &&
@@ -190,6 +190,11 @@ module.exports = () => {
       updatedPublicAdvisory.revisionNumber =
         oldPublicAdvisory.revisionNumber + 1;
       return;
+    }
+
+    // No new revision, so restore submittedByName the client form cleared
+    if (!updatedPublicAdvisory.submittedByName) {
+      updatedPublicAdvisory.submittedByName = oldPublicAdvisory.submittedByName;
     }
   }
 
