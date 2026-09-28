@@ -6,9 +6,17 @@
       overflow: hidden;
     }
 
+    /* Undo the inline hiding styles on the dark logo in header.ejs; it's
+       hidden several ways because some clients (Outlook iOS/Mac) ignore
+       display: none on its own. mso-hide is Outlook-only, and line-height
+       and font-size stay 0 so the logo lines up like the light one */
     .logo-dark {
-      display: inline !important;
+      display: inline-block !important;
       max-height: none !important;
+      max-width: none !important;
+      width: auto !important;
+      overflow: visible !important;
+      visibility: visible !important;
     }
   }
 </style>
