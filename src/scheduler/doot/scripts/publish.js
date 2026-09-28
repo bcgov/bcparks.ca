@@ -250,6 +250,32 @@ exports.dootPublish = async function () {
             }
           }
 
+          // create a map of the park-date-types collection to get the id for each
+          // dateTypeId
+          let dateTypeMap;
+          try {
+            dateTypeMap = await getDateTypeMap();
+          } catch (error) {
+            logger.error(
+              `dootPublish() failed while retrieving dateTypeMap: ${error}`,
+            );
+            errorProcessingMessage = true;
+            break;
+          }
+
+          // validate all the dateTypeIds before deleting anything, 
+          // so an invalid payload can't leave the season partially deleted
+          const invalidDateRange = item.dateRanges?.find(
+            (dootDateRange) => !dateTypeMap.has(dootDateRange.dateTypeId),
+          );
+          if (invalidDateRange) {
+            logger.error(
+              `dootPublish() failed: Invalid dateTypeId ${invalidDateRange.dateTypeId} in DOOT data for ${relationName}`,
+            );
+            errorProcessingMessage = true;
+            break;
+          }
+
           let deletedCount = 0;
           let createdCount = 0;
           let updatedCount = 0;
@@ -273,30 +299,9 @@ exports.dootPublish = async function () {
             break;
           }
 
-          // create a map of the park-date-types collection to get the id for each
-          // dateTypeId
-          let dateTypeMap;
-          try {
-            dateTypeMap = await getDateTypeMap();
-          } catch (error) {
-            logger.error(
-              `dootPublish() failed while retrieving dateTypeMap: ${error}`,
-            );
-            errorProcessingMessage = true;
-            break;
-          }
-
           // create new date ranges
           if (item.dateRanges && item.dateRanges.length > 0) {
             try {
-              // validate all the dateTypeIds first
-              for (const dootDateRange of item.dateRanges) {
-                if (!dateTypeMap.has(dootDateRange.dateTypeId)) {
-                  throw new Error(
-                    `Invalid dateTypeId ${dootDateRange.dateTypeId} in DOOT data for ${relationName}`,
-                  );
-                }
-              }
               // create/update/delete the date ranges
               for (const dootDateRange of item.dateRanges) {
                 const existingDocId =
