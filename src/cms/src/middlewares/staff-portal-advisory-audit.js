@@ -193,7 +193,7 @@ module.exports = () => {
     }
 
     // No new revision, so restore submittedByName the client form cleared
-    if (!updatedPublicAdvisory.submittedByName) {
+    if (!updatedPublicAdvisory.submittedByName?.trim()) {
       updatedPublicAdvisory.submittedByName = oldPublicAdvisory.submittedByName;
     }
   }

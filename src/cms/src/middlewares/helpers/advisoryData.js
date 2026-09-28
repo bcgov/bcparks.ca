@@ -195,9 +195,14 @@ function isAdvisoryEqual(newData, oldData) {
   };
 
   for (const key of Object.keys(fieldsToCompare)) {
-    // submittedByName: if blank or null, treat it as no change;
-    // if it has a value, compare it to the old value like the other fields
-    if (key === "submittedByName" && !newData[key]) continue;
+    // submittedByName: if blank, whitespace or null, treat it as no change;
+    // if it has a value, compare it to the old value, ignoring surrounding whitespace
+    if (key === "submittedByName") {
+      const newName = newData[key]?.trim();
+      const oldName = oldData[key]?.trim();
+      if (newName && newName !== oldName) return false;
+      continue;
+    }
 
     // booleans: compare as truthy or non-truthy, so null, undefined and false are equal
     if (typeof fieldsToCompare[key] === "boolean") {
