@@ -12,6 +12,7 @@ const nodemailer = require("nodemailer");
  * @param {string[]} recipients "To" recipients
  * @param {string[]} [ccRecipients] optional "CC" recipients
  * @param {Array} attachments optional list of attachments, each with {filename, content} properties
+ * @returns {Promise<void>} resolves when the email has been handed to the mail server
  */
 exports.send = async function (
   subject,
