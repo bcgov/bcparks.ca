@@ -1,0 +1,46 @@
+# bcparks.ca end-to-end tests
+
+Playwright tests for the public bcparks.ca site. This is a standalone npm
+package; run all commands from this directory.
+
+## Setup
+Requires Node 22 (see `.nvmrc`).
+
+```sh
+nvm use
+npm install
+npx playwright install
+```
+
+Create the env files for the sites you want to test from the committed
+examples (the real files are gitignored):
+
+```sh
+for f in env/.env.*.example; do cp -n "$f" "${f%.example}"; done
+```
+
+## Running tests
+```sh
+npm test                 # all projects against prod
+npm run test:smoke       # @smoke tests only
+ENV=dev npm test         # use env/.env.dev
+npx playwright show-report
+```
+
+`ENV` selects `env/.env.<ENV>`: `prod` (default), `dev`, `test`, `alpha-dev`,
+`alpha-test` or `local`. Tests must use paths relative to `BASE_URL`
+(`page.goto('/contact/')`, `toHaveURL('/find-a-park/')`), never a full site URL.
+Only links to separate systems, such as camping.bcparks.ca, stay absolute.
+The non-prod sites may only be reachable from the BC Gov network or VPN.
+
+## Layout
+- `*.spec.js`: tests (`seed.spec.js` is the seed used by the AI agents)
+- `pages/`: page objects
+- `specs/`: test plans for the AI agents
+- `scripts/update-agents.js`: regenerates the root agent/MCP config (`npm run agents:update`)
+
+## AI agents / MCP
+`.mcp.json` at the repo root starts the Playwright test MCP server from this
+package. Claude Code launches it with whatever `node` is on your PATH, so if
+your nvm default is older than 22, run `nvm alias default 22` and restart your
+editor.

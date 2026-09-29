@@ -1,0 +1,22 @@
+{
+  "name": "bcparks-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright end-to-end tests for bcparks.ca",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --project=smoke",
+    "agents:update": "node scripts/update-agents.js"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^20.14.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

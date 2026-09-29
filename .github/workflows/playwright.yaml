@@ -1,0 +1,38 @@
+name: Playwright Tests
+on:
+  push:
+    branches: [ Automated-tests ]
+    paths: [ 'tests/e2e/**', '.github/workflows/playwright.yaml' ]
+  pull_request:
+    branches: [ Automated-tests ]
+    paths: [ 'tests/e2e/**', '.github/workflows/playwright.yaml' ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests/e2e
+    env:
+      # env/.env.* files are not committed, so the target site is set here
+      ENV: prod
+      BASE_URL: https://bcparks.ca/
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: tests/e2e/.nvmrc
+        cache: npm
+        cache-dependency-path: tests/e2e/package-lock.json
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright tests
+      run: npx playwright test
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report
+        path: tests/e2e/playwright-report/
+        retention-days: 30

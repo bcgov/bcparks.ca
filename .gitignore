@@ -166,15 +166,15 @@ bcparks.ca-scrape.laccdb
 ##### Frontend ######
 
 # dependencies
-**//node_modules
-**//.pnp
+**/node_modules
+**/.pnp
 **/.pnp.js
 
 # testing
-**//coverage
+**/coverage
 
 # production
-**//build
+**/build
 
 # misc
 **/.DS_Store
@@ -186,6 +186,7 @@ bcparks.ca-scrape.laccdb
 **/.env.production.local
 **/.env.prod
 **/.env.test
+**/.env.dev
 **/generate-react-cli.json
 **/yarn.lock
 **/npm-debug.log*
@@ -198,3 +199,6 @@ bcparks.ca-scrape.laccdb
 # Don't ignore .s2i bin
 !**/.s2i/bin/
 *.sln.DotSettings.user
+
+# Playwright MCP server output (Playwright tests live in tests/e2e)
+/.playwright-mcp/
