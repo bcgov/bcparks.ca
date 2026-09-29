@@ -42,7 +42,7 @@ exports.sendDootEmails = (recent) =>
 
       getCCRecipients: (message) => {
         const emailInfo = message?.jsonData || {};
-        return emailInfo.ccIS && !emailInfo.sendToIS
+        return emailInfo.copyToIS && !emailInfo.sendToIS
           ? csvToArray(process.env.DOOT_IS_RECIPIENT)
           : [];
       },
