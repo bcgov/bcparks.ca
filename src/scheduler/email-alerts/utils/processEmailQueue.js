@@ -72,11 +72,17 @@ async function processEmailQueue(config, recent = []) {
         ),
       ];
 
+      const toRecipientSet = new Set(
+        recipients.map((recipient) => recipient.toLowerCase()),
+      );
       const ccRecipients = [
         ...new Set(
           (config.getCCRecipients?.(message) || [])
-            .map((r) => r.trim())
-            .filter(Boolean),
+            .map((recipient) => recipient.trim())
+            .filter(Boolean)
+            .filter(
+              (recipient) => !toRecipientSet.has(recipient.toLowerCase()),
+            ),
         ),
       ];
 
