@@ -2,7 +2,7 @@
 
 ## Application Overview
 
-The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informational content page — it is NOT a contact form. It provides three main sections: (1) "Get a quick answer" — a set of links to self-serve help topics (camping reservations, policies, popular topics); (2) "Contact us" — direct contact channels (email mailto: link, two tel: phone numbers, a physical mail address, and a note about contacting individual campgrounds directly via each park's page); and (3) "Follow us" — links to social media (Facebook, Instagram), the BC Parks blog, and a PDF social media moderation policy. The page also includes a sticky/anchor "On this page" table of contents (desktop only), a breadcrumb trail, the shared site header (logo, "Book camping" CTA button, and mega-menu navigation with a hamburger menu on mobile), and the shared site footer (permit/get-involved/stay-connected link columns and legal links). There are no form inputs, dropdowns, or submit buttons on this page, so this plan focuses on content accuracy, link correctness/destinations, in-page anchor navigation, external link behavior, responsive layout, accessibility basics, and shared header/footer integration as experienced from this page. Assume every test starts from a fresh browser context navigated directly to https://bcparks.ca/contact/ with no prior state.
+The page at `/contact/` (relative to `BASE_URL`) ("Contact BC Parks") is a static informational content page — it is NOT a contact form. It provides three main sections: (1) "Get a quick answer" — a set of links to self-serve help topics (camping reservations, policies, popular topics); (2) "Contact us" — direct contact channels (email mailto: link, two tel: phone numbers, a physical mail address, and a note about contacting individual campgrounds directly via each park's page); and (3) "Follow us" — links to social media (Facebook, Instagram), the BC Parks blog, and a PDF social media moderation policy. The page also includes a sticky/anchor "On this page" table of contents (desktop only), a breadcrumb trail, the shared site header (logo, "Book camping" CTA button, and mega-menu navigation with a hamburger menu on mobile), and the shared site footer (permit/get-involved/stay-connected link columns and legal links). There are no form inputs, dropdowns, or submit buttons on this page, so this plan focuses on content accuracy, link correctness/destinations, in-page anchor navigation, external link behavior, responsive layout, accessibility basics, and shared header/footer integration as experienced from this page. Assume every test starts from a fresh browser context navigated directly to `/contact/` with no prior state.
 
 ## Test Scenarios
 
@@ -15,7 +15,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-page-load.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/
+  1. Navigate to `/contact/`
     - expect: Page responds with HTTP 200
     - expect: Page title is 'Contact BC Parks | BC Parks'
     - expect: The main H1 heading 'Contact BC Parks' is visible
@@ -23,14 +23,14 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
     - expect: Breadcrumb shows 'Home › Contact'
     - expect: The 'Home' breadcrumb link has href '/'
   3. Click the 'Home' breadcrumb link
-    - expect: Browser navigates to the BC Parks home page (https://bcparks.ca/)
+    - expect: Browser navigates to the BC Parks home page (`/`)
 
 #### 1.2. All three main sections and their headings are present
 
 **File:** `tests/e2e/contact/contact-page-load.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/
+  1. Navigate to `/contact/`
   2. Locate the 'Get a quick answer' section
     - expect: Section heading 'Get a quick answer' is visible
     - expect: Sub-headings 'How to reserve camping', 'Camping policies', and 'Popular topics' are visible
@@ -47,7 +47,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-page-load.spec.js`
 
 **Steps:**
-  1. Set viewport to a desktop size (e.g. 1280x800) and navigate to https://bcparks.ca/contact/
+  1. Set viewport to a desktop size (e.g. 1280x800) and navigate to `/contact/`
     - expect: An 'On this page' widget is visible with three links: 'Get a quick answer', 'Contact us', 'Follow us'
   2. Verify the href of each 'On this page' link
     - expect: 'Get a quick answer' link href is '#get-a-quick-answer'
@@ -63,7 +63,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-anchor-navigation.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ on a desktop viewport
+  1. Navigate to `/contact/` on a desktop viewport
   2. Click the 'Get a quick answer' link in the 'On this page' widget
     - expect: URL updates to include '#get-a-quick-answer'
     - expect: The 'Get a quick answer' heading is scrolled into view / at or near the top of the viewport
@@ -79,7 +79,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-anchor-navigation.spec.js`
 
 **Steps:**
-  1. Navigate directly to https://bcparks.ca/contact/#contact-us
+  1. Navigate directly to `/contact/#contact-us`
     - expect: Page loads successfully
     - expect: The 'Contact us' section is visible in the viewport shortly after load without any manual scrolling
 
@@ -88,7 +88,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-anchor-navigation.spec.js`
 
 **Steps:**
-  1. Navigate directly to https://bcparks.ca/contact/#does-not-exist
+  1. Navigate directly to `/contact/#does-not-exist`
     - expect: Page loads successfully with HTTP 200
     - expect: Page renders normally at the top (or unchanged position) since the anchor target does not exist
     - expect: No JavaScript errors are thrown as a direct result of the invalid anchor
@@ -102,7 +102,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-quick-answer-links.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/
+  1. Navigate to `/contact/`
   2. Click the 'Frontcountry camping' link
     - expect: Navigates to a page whose URL contains '/reservations/frontcountry-camping' and which loads successfully (HTTP 200)
   3. Go back to the contact page and click the 'Group camping' link
@@ -115,7 +115,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-quick-answer-links.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/
+  1. Navigate to `/contact/`
   2. Click 'Changes, cancellations, and refunds'
     - expect: Navigates to a page whose URL contains '/reservations/cancellations-refunds'
   3. Go back and click 'Party size and number of vehicles'
@@ -128,7 +128,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-quick-answer-links.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/
+  1. Navigate to `/contact/`
   2. Click '2026 fee changes'
     - expect: Navigates to '/reservations/camping-fees/#2026-fee-changes'
   3. Go back and click 'Day-use passes'
@@ -141,7 +141,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-quick-answer-links.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/
+  1. Navigate to `/contact/`
   2. Collect the href of every link within the 'Get a quick answer' section
     - expect: List includes exactly 9 links matching the ones documented above
   3. Issue a request (or navigate) to each collected href in turn
@@ -157,7 +157,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-channels.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ and locate the 'Email' sub-section
+  1. Navigate to `/contact/` and locate the 'Email' sub-section
     - expect: A link with visible text 'parkinfo@gov.bc.ca' is present
   2. Inspect the href attribute of the email link
     - expect: href equals exactly 'mailto:parkinfo@gov.bc.ca' (no typos, correct domain)
@@ -169,7 +169,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-channels.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ and locate the 'Phone' sub-section
+  1. Navigate to `/contact/` and locate the 'Phone' sub-section
     - expect: Two phone links are visible: '1-800-689-9025' and '1-519-858-6161'
   2. Inspect the href of the toll-free number
     - expect: href equals 'tel:1-800-689-9025'
@@ -185,7 +185,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-channels.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ and locate the 'Mail' sub-section
+  1. Navigate to `/contact/` and locate the 'Mail' sub-section
     - expect: Text reads 'BC Parks PO Box 9351 STN Prov Govt Victoria BC V8W 9V1' exactly, displayed as plain (non-link) text
 
 #### 4.4. 'Contact a campground' guidance links to Find a Park
@@ -193,7 +193,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-channels.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ and locate the 'Contact a campground' sub-section
+  1. Navigate to `/contact/` and locate the 'Contact a campground' sub-section
     - expect: Explanatory text about lost and found, arrival delays, and campground-specific questions is visible, containing an inline link with text 'park page'
   2. Click the 'park page' link
     - expect: Navigates to the Find a Park page (URL contains '/find-a-park') and it loads a searchable list/map of parks
@@ -207,7 +207,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-social-links.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ and locate the 'Follow us' section
+  1. Navigate to `/contact/` and locate the 'Follow us' section
   2. Inspect the 'Facebook' link href
     - expect: href equals 'https://www.facebook.com/YourBCParks/'
   3. Inspect the 'Instagram' link href
@@ -220,7 +220,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-social-links.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/
+  1. Navigate to `/contact/`
   2. Click the 'BC Parks blog' link in the 'Follow us' section
     - expect: Navigates to https://engage.gov.bc.ca/bcparksblog/ and the blog site loads successfully
 
@@ -229,7 +229,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-social-links.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ and scroll to the moderation policy sentence at the bottom of 'Follow us'
+  1. Navigate to `/contact/` and scroll to the moderation policy sentence at the bottom of 'Follow us'
     - expect: A link with text 'social media moderation policy' is visible
   2. Inspect the link's target/rel attributes
     - expect: target='_blank' and rel includes 'noopener' (safe external link handling)
@@ -242,7 +242,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-social-links.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ and read the paragraphs under 'Follow us'
+  1. Navigate to `/contact/` and read the paragraphs under 'Follow us'
     - expect: Text explains social comments are answered weekdays 9am-5pm Pacific Time, best-effort one week response (longer in peak summer), and that not every message receives a reply due to volume
 
 ### 6. Shared Header, Footer, and Cross-Page Navigation
@@ -254,7 +254,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-shared-header.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/
+  1. Navigate to `/contact/`
   2. Click the 'Book camping' button in the header
     - expect: Browser navigates to https://camping.bcparks.ca/ and the camping reservation home page loads
 
@@ -263,7 +263,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-shared-header.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ on a desktop viewport
+  1. Navigate to `/contact/` on a desktop viewport
     - expect: Header navigation menu shows: Find a park, Plan your trip, Reservations, Conservation, Get involved, Park-use permits, About, Contact
   2. Click 'Find a park' menu item
     - expect: Navigates to (or opens a mega-menu leading to) the Find a Park page/section
@@ -277,7 +277,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-shared-header.spec.js`
 
 **Steps:**
-  1. Set viewport to a mobile size (e.g. 375x812) and navigate to https://bcparks.ca/contact/
+  1. Set viewport to a mobile size (e.g. 375x812) and navigate to `/contact/`
     - expect: An 'Open menu' hamburger button is visible instead of the full inline menu
     - expect: The 'On this page' TOC widget is not shown (or is otherwise appropriately adapted) on mobile
   2. Click the 'Open menu' button
@@ -290,7 +290,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-shared-footer.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ and scroll to the footer
+  1. Navigate to `/contact/` and scroll to the footer
     - expect: Footer columns 'Get a permit', 'Get involved', and 'Stay connected' are visible with their respective links
     - expect: Legal links 'Site map', 'Disclaimer', 'Privacy', 'Accessibility', 'Copyright' are visible
   2. Click the footer 'Contact us' link (under 'Stay connected')
@@ -305,7 +305,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-shared-footer.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ and scroll just above the footer
+  1. Navigate to `/contact/` and scroll just above the footer
     - expect: The territorial acknowledgement statement about First Nations is visible and readable in full, above the footer contentinfo region
 
 ### 7. Accessibility and Robustness
@@ -317,7 +317,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-accessibility.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ and press Tab once from the top of the page
+  1. Navigate to `/contact/` and press Tab once from the top of the page
     - expect: A 'Skip to main content' link receives focus and becomes visible
   2. Activate (press Enter on) the focused 'Skip to main content' link
     - expect: Focus/scroll moves to the '#main-content' region, bypassing the header navigation
@@ -327,7 +327,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-accessibility.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ and inspect the heading hierarchy
+  1. Navigate to `/contact/` and inspect the heading hierarchy
     - expect: Exactly one H1 ('Contact BC Parks') exists
     - expect: H2 headings ('Get a quick answer', 'Contact us', 'Follow us') logically nest under the H1
     - expect: H3 sub-headings nest under their respective H2 without skipped levels
@@ -337,7 +337,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-accessibility.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/
+  1. Navigate to `/contact/`
   2. Tab sequentially through all interactive elements on the page (nav, TOC links, quick-answer links, email/phone links, social links, footer links)
     - expect: Every link is reachable via Tab in a sensible visual order
     - expect: Each focused link shows a visible focus indicator
@@ -348,7 +348,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-accessibility.spec.js`
 
 **Steps:**
-  1. Navigate to https://bcparks.ca/contact/ with console message monitoring enabled
+  1. Navigate to `/contact/` with console message monitoring enabled
     - expect: Record baseline console output. Note: at the time of writing, known pre-existing React hydration errors (Minified React error #418 / #423) occur on load; these should be tracked as a known issue rather than a new regression
   2. Compare captured console errors against the known baseline
     - expect: No NEW/unexpected error types beyond the documented baseline appear
@@ -359,7 +359,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-accessibility.spec.js`
 
 **Steps:**
-  1. Load https://bcparks.ca/contact/ at a desktop viewport (e.g. 1280x800)
+  1. Load `/contact/` at a desktop viewport (e.g. 1280x800)
     - expect: Layout shows the two/three-column arrangement with the 'On this page' TOC sidebar, content is not clipped or overlapping
   2. Resize/reload at a tablet viewport (e.g. 768x1024)
     - expect: Content reflows without horizontal scrollbars or overlapping elements
@@ -371,7 +371,7 @@ The page at https://bcparks.ca/contact/ ("Contact BC Parks") is a static informa
 **File:** `tests/e2e/contact/contact-accessibility.spec.js`
 
 **Steps:**
-  1. Open a fresh browser context and navigate directly to https://bcparks.ca/contact/ (simulating a bookmark or external link click)
+  1. Open a fresh browser context and navigate directly to `/contact/` (simulating a bookmark or external link click)
     - expect: Page loads fully and correctly with no dependency on prior navigation state
   2. From the BC Parks home page, click through the header menu to reach the Contact page instead
     - expect: Resulting Contact page content is identical to the directly-loaded version

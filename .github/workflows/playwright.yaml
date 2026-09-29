@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [ Automated-tests ]
     paths: [ 'tests/e2e/**', '.github/workflows/playwright.yaml' ]
+permissions:
+  contents: read
 jobs:
   test:
     timeout-minutes: 60
@@ -29,7 +31,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npm test
     - uses: actions/upload-artifact@v4
       if: always()
       with:

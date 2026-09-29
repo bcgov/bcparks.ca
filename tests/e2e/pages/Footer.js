@@ -33,150 +33,150 @@ export class Footer extends BasePage{
 
     //BCParks Logo
     async BCParksLogoFooterIsPresent() {
-        expect(this.bcParksFooterLogo).toBeVisible();
+        await expect(this.bcParksFooterLogo).toBeVisible();
     }
     
     async BCParksFooterClick(){
-        this.bcParksFooterLogo.click();
+        await this.bcParksFooterLogo.click();
     }
 
     //Land Acknowledgement message is visible
     async landAcknowledgementMessageIsPresent() {
-        expect(this.landAcknowledgementMessage).toBeVisible();
+        await expect(this.landAcknowledgementMessage).toBeVisible();
     }
 
     //Footer columns are visible
     async getAPermitColumnIsPresent() {
-        expect(this.getAPermitColumn).toBeVisible();
+        await expect(this.getAPermitColumn).toBeVisible();
     }
 
     async getInvolvedColumnIsPresent() {
-        expect(this.getInvolvedColumn).toBeVisible();
+        await expect(this.getInvolvedColumn).toBeVisible();
     }
 
     async stayConnectedColumnIsPresent() {
-        expect(this.stayConnectedColumn).toBeVisible();
+        await expect(this.stayConnectedColumn).toBeVisible();
     }
 
     //Footer links are visible
     async parkUsePermitsLinkIsPresent() {
-        expect(this.parkUsePermitsLink).toBeVisible();
+        await expect(this.parkUsePermitsLink).toBeVisible();
     }
 
     async filmingInParksLinkIsPresent() {
-        expect(this.filmingInParksLink).toBeVisible();
+        await expect(this.filmingInParksLink).toBeVisible();
     }
 
     async travelTradeLinkIsPresent() {
-        expect(this.travelTradeLink).toBeVisible();
+        await expect(this.travelTradeLink).toBeVisible();
     }
 
     async donateLinkIsPresent() {
-        expect(this.donateLink).toBeVisible();
+        await expect(this.donateLink).toBeVisible();
     }
 
     async buyLicencePlateLinkIsPresent() {
-        expect(this.buyLicencePlateLink).toBeVisible();
+        await expect(this.buyLicencePlateLink).toBeVisible();
     }
 
     async volunteerLinkIsPresent() {
-        expect(this.volunteerLink).toBeVisible();
+        await expect(this.volunteerLink).toBeVisible();
     }
 
     async contactUsLinkIsPresent() {
-        expect(this.contactUsLink).toBeVisible();
+        await expect(this.contactUsLink).toBeVisible();
     }
 
     async bcParksBlogLinkIsPresent() {
-        expect(this.bcParksBlogLink).toBeVisible();
+        await expect(this.bcParksBlogLink).toBeVisible();
     }
 
     async faceBooklinkIsPresent() {
-        expect(this.faceBooklink).toBeVisible();
+        await expect(this.faceBooklink).toBeVisible();
     }
 
     async instagramLinkIsPresent() {
-        expect(this.instagramLink).toBeVisible();
+        await expect(this.instagramLink).toBeVisible();
     }
 
     async siteMapLinkIsPresent() {
-        expect(this.siteMapLink).toBeVisible();
+        await expect(this.siteMapLink).toBeVisible();
     }
 
     async disclaimerLinkIsPresent() {
-        expect(this.disclaimerLink).toBeVisible();
+        await expect(this.disclaimerLink).toBeVisible();
     }
 
     async privacyLinkIsPresent() {
-        expect(this.privacyLink).toBeVisible();
+        await expect(this.privacyLink).toBeVisible();
     }
 
     async accessibilityLinkIsPresent() {
-        expect(this.accessibilityLink).toBeVisible();
+        await expect(this.accessibilityLink).toBeVisible();
     }
 
     async copyrightLinkIsPresent() {
-        expect(this.copyrightLink).toBeVisible();
+        await expect(this.copyrightLink).toBeVisible();
     }
 
     // Clicking footer links
     async clickParkUsePermitsLink() {
-        this.parkUsePermitsLink.click();
+        await this.parkUsePermitsLink.click();
     }
 
     async clickFilmingInParksLink() {
-        this.filmingInParksLink.click();
+        await this.filmingInParksLink.click();
     }
 
     async clickTravelTradeLink() {
-        this.travelTradeLink.click();
+        await this.travelTradeLink.click();
     }
 
     async clickDonateLink() {
-        this.donateLink.click();
+        await this.donateLink.click();
     }
 
     async clickBuyLicencePlateLink() {
-        this.buyLicencePlateLink.click();
+        await this.buyLicencePlateLink.click();
     }
 
     async clickVolunteerLink() {
-        this.volunteerLink.click();
+        await this.volunteerLink.click();
     }
 
     async clickContactUsLink() {
-        this.contactUsLink.click();
+        await this.contactUsLink.click();
     }
 
     async clickBcParksBlogLink() {
-        this.bcParksBlogLink.click();
+        await this.bcParksBlogLink.click();
     }
 
     async clickFaceBooklink() {
-        this.faceBooklink.click();
+        await this.faceBooklink.click();
     }
 
     async clickInstagramLink() {
-        this.instagramLink.click();
+        await this.instagramLink.click();
     }
 
     async clickSiteMapLink() {
-        this.siteMapLink.click();
+        await this.siteMapLink.click();
     }
 
     async clickDisclaimerLink() {
-        this.disclaimerLink.click();
+        await this.disclaimerLink.click();
     }
 
     async clickPrivacyLink() {
-        this.privacyLink.click();
+        await this.privacyLink.click();
     }
 
     async clickAccessibilityLink() {
-        this.accessibilityLink.click();
+        await this.accessibilityLink.click();
     }
 
     async clickCopyrightLink() {
-        this.copyrightLink.click();
+        await this.copyrightLink.click();
     }
 }

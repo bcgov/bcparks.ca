@@ -4,7 +4,7 @@ test.describe('Find a park page tests', async ()=>{
     const customTimeout = { timeout: 90000 };
 
     test.beforeEach(async ({page})=>{
-        page.goto('/');
+        await page.goto('/');
     });
 
     test('Go to the find a park page', async ({page})=>{

@@ -470,15 +470,6 @@ test.describe('Follow Us / Social Links', () => {
 
   test('Social media moderation policy PDF link opens in a new tab', async ({ page, context }) => {
     // 1. Scroll to the moderation policy sentence at the bottom of 'Follow us'
-    const moderationPolicyLink = page.getByRole('link', { name: 'social media moderation policy' });
-    await expect(moderationPolicyLink).toBeVisible();
-  });
-
-});
-
-
-
- /*   
     const followUsSection = page.getByText('Follow usFollow us on social');
     const moderationPolicyLink = followUsSection.getByRole('link', { name: 'social media moderation policy' });
     await expect(moderationPolicyLink).toBeVisible();
@@ -486,13 +477,13 @@ test.describe('Follow Us / Social Links', () => {
     // 2. Inspect the link's target/rel attributes
     await expect(moderationPolicyLink).toHaveAttribute('target', '_blank');
     await expect(moderationPolicyLink).toHaveAttribute('rel', /noopener/);
+    await expect(moderationPolicyLink).toHaveAttribute('href', /social_media_moderation_policy.*\.pdf$/);
 
     // 3. Click the link and capture the new tab/page that opens
     const [newPage] = await Promise.all([
       context.waitForEvent('page'),
       moderationPolicyLink.click(),
     ]);
-    await expect(newPage).toHaveURL('https://nrs.objectstore.gov.bc.ca/kuwyyf/bc_parks_social_media_moderation_policy_101cd4e97e.pdf');
     await expect(page).toHaveURL('/contact/');
   });
 
@@ -502,4 +493,4 @@ test.describe('Follow Us / Social Links', () => {
     await expect(followUsSection.getByText('We respond to social media comments on weekdays from 9am to 5pm Pacific Time. We make every effort to respond within a week, but it may take longer during peak summer season. We read every message but, due to high volume, we may not respond to each one.')).toBeVisible();
   });
 
-  */
+});

@@ -7,7 +7,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "playwright test",
+    "test": "playwright test --project=full-chromium --project=full-firefox --project=full-webkit",
     "test:smoke": "playwright test --project=smoke",
     "agents:update": "node scripts/update-agents.js"
   },
