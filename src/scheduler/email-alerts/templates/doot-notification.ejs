@@ -7,8 +7,11 @@
   <%- include("includes/styles.ejs") %>
 </head>
 
-<% if (typeof allRecipients !== "undefined" && Array.isArray(allRecipients) && allRecipients.length > 0) { %>
-<!-- Email recipients: <%= allRecipients.join(", ") %> -->
+<% if (typeof debugToRecipients !== "undefined" && Array.isArray(debugToRecipients) && debugToRecipients.length > 0) { %>
+<!-- To: <%= debugToRecipients.join(", ") %> -->
+<% } %>
+<% if (typeof debugCcRecipients !== "undefined" && Array.isArray(debugCcRecipients) && debugCcRecipients.length > 0) { %>
+<!-- CC: <%= debugCcRecipients.join(", ") %> -->
 <% } %>
 
 <body style="font-family: Arial, Helvetica; color: #1a1a1a">

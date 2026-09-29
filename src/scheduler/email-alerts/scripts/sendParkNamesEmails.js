@@ -58,6 +58,7 @@ exports.sendParkNamesEmails = async function () {
         summary,
         getSenderName(),
         [...recipients],
+        [],
         getLogoAttachment(),
       );
     }
