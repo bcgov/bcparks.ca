@@ -1,11 +1,36 @@
 name: Playwright Tests
 on:
-  push:
-    branches: [ Automated-tests ]
-    paths: [ 'tests/e2e/**', '.github/workflows/playwright.yaml' ]
+  # Run Playwright tests on PRs that modify the E2E tests or the workflow itself
   pull_request:
-    branches: [ Automated-tests ]
-    paths: [ 'tests/e2e/**', '.github/workflows/playwright.yaml' ]
+    branches:
+      # QA PRs should target main, which tests against https://bcparks.ca/.
+      # The alpha environments can only be tested with a manual run (workflow_dispatch).
+      - main
+    paths:
+      - tests/e2e/**
+      - .github/workflows/playwright.yaml
+      
+  # TODO: After a prod Gatsby build, run a content verification test (not written
+  # yet) that samples select pages on https://bcparks.ca/ to detect Gatsby
+  # local database corruption. publish-gatsby.yaml will send this event (prod only)
+  # after a 3-5 minute wait to let the OpenShift rollout finish.
+  # repository_dispatch:
+  #   types:
+  #     - playwright-content-verification
+
+  # Allow manual trigger via the GitHub UI
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to test
+        type: choice
+        default: prod
+        options:
+          - prod
+          - test
+          - dev
+          - alpha-test
+          - alpha-dev
 permissions:
   contents: read
 jobs:
@@ -15,11 +40,29 @@ jobs:
     defaults:
       run:
         working-directory: tests/e2e
-    env:
-      # env/.env.* files are not committed, so the target site is set here
-      ENV: prod
-      BASE_URL: https://bcparks.ca/
     steps:
+    - name: Set target site
+      env:
+        # Only manual runs set inputs.environment; PRs and repository_dispatch use prod
+        ENVIRONMENT: ${{ inputs.environment || 'prod' }}
+        LICENSE_PLATE: ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}
+      run: |
+        if [ "$ENVIRONMENT" = "prod" ]; then
+          base_url="https://bcparks.ca/"
+        else
+          # Non-prod tests use the Helm default routes, which don't have the
+          # ip_whitelist annotation used on the vanity routes. Robots.txt and
+          # canonical tags keep them out of search results. Temporary until
+          # Caddy handles IP-or-password auth for these environments.
+          case "$ENVIRONMENT" in
+            alpha-*) release="alpha"; namespace_env="${ENVIRONMENT#alpha-}" ;;
+            *) release="main"; namespace_env="$ENVIRONMENT" ;;
+          esac
+          base_url="https://${release}-public-${LICENSE_PLATE}-${namespace_env}.apps.gold.devops.gov.bc.ca/"
+        fi
+        echo "ENV=$ENVIRONMENT" >> "$GITHUB_ENV"
+        echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
+      working-directory: .
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
