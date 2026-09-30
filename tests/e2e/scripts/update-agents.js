@@ -36,13 +36,6 @@ if (copilotSetupStepsContent !== undefined)
 if (!rootSpecsExisted)
   fs.rmSync(inRoot('specs'), { recursive: true, force: true });
 
-/**
- * Updates Playwright MCP arguments in a JSON configuration file.
- * Does nothing if the file doesn't exist.
- * @param {string} file - Path to the configuration file, relative to the repository root.
- * @param {(json: object) => object} getServers - Selects the configuration's MCP server map.
- * @returns {void}
- */
 function updateJson(file, getServers) {
   if (!fs.existsSync(inRoot(file)))
     return;

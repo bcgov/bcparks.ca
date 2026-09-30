@@ -23,7 +23,7 @@ You are an expert maintenance agent for this repository.
   - `src/gatsby/src/utils/`
   - `src/gatsby/src/components/`
 - Prefer existing Lodash functions for common collection/object/array transformations when implementing utility logic; avoid writing custom helpers when Lodash already solves it clearly.
-- Add JSDoc to all new functions and any modified non-trivial functions, including parameter and return descriptions.
+- Add JSDoc to all new functions and any modified non-trivial functions, including parameter and return descriptions. JSDoc is optional in `tests/e2e/` functions.
 
 ### Migrations and schema
 
