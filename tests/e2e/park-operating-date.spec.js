@@ -78,7 +78,6 @@ test.describe('Park Operating Date tests', ()=>{
         await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
         await page.getByRole('menuitem', { name: 'Park operating dates' }).click();
         //await page.waitForLoadState('networkidle');  
-        test.setTimeout(60000); // Increase the timeout to 60 seconds           
         // Select all links on the page
         const links = await page.$$(`a`);
         // Loop through each link
