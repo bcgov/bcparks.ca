@@ -4,9 +4,10 @@
 # Security-related updates (triggered by CVEs/GitHub advisories) will always
 # target the default branch (`main`), as this behavior cannot be overridden.
 #
-# Only the primary npm projects under /src are managed here; other package.json
-# files are intentionally excluded. Semver-major updates are disabled to avoid
-# breaking changes and are handled manually.
+# Only the primary npm projects under /src and the /tests/e2e Playwright suite
+# are managed here; other package.json files are intentionally excluded.
+# Semver-major updates are disabled to avoid breaking changes and are handled
+# manually.
 
 version: 2
 updates:
@@ -16,6 +17,7 @@ updates:
       - "/src/scheduler"
       - "/src/gatsby"
       - "/src/cms"
+      - "/tests/e2e"
     target-branch: "alpha"
     schedule:
       interval: "weekly"
