@@ -73,25 +73,15 @@ test.describe('Park Operating Date tests', ()=>{
         await page.goBack();
     });
 
-
-    test('Check the park links are working and redirect to the correct site', async({page})=>{
+    test('The park page link redirects to the find a park page', async({page})=>{
         await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
         await page.getByRole('menuitem', { name: 'Park operating dates' }).click();
-        //await page.waitForLoadState('networkidle');  
-        // Select all links on the page
-        const links = await page.$$(`a`);
-        // Loop through each link
-        for (const link of links) { 
-        const text = await link.textContent(); // Get the text content of the link
-        
-        // Check if the text includes 'Check the park'
-            if (text.includes('Check the park')) {
-                await link.click();
-                await expect(page).toHaveURL('/' + 'find-a-park/'); 
-                await page.goBack();
-            }
-        
-        };
+  
+        // Click the 'park page' link
+        const parkPageLink = page.getByRole('link', { name: 'park page' });
+        await expect(parkPageLink).toBeVisible();
+        await parkPageLink.click();
+        await expect(page).toHaveURL('/find-a-park/');
     });
 
     test('Check the land acknowledgment message is visible', async ({page})=>{
@@ -105,7 +95,6 @@ test.describe('Park Operating Date tests', ()=>{
         await expect(page.locator('div').filter({ hasText: 'We acknowledge all First' }).nth(3)).toContainText('We acknowledge all First Nations on whose territories BC Parks were established. We honour their connection to the land and respect the importance of their diverse teachings, traditions, and practices within these territories.')
         await expect(page.getByText('We acknowledge all First')).toBeVisible();
     });
-
 
     test('Check the back to top button is working', async ({ page }) => {
         await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
