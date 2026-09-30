@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Find a park page tests', async ()=>{
+test.describe('Find a park page tests', ()=>{
     const customTimeout = { timeout: 90000 };
 
     test.beforeEach(async ({page})=>{
