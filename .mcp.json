@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "playwright-test": {
+      "command": "npx",
+      "args": [
+        "--prefix",
+        "tests/e2e",
+        "playwright",
+        "run-test-mcp-server",
+        "--config",
+        "tests/e2e/playwright.config.js"
+      ]
+    }
+  }
+}
