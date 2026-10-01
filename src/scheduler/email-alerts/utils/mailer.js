@@ -9,8 +9,10 @@ const nodemailer = require("nodemailer");
  *   It is intended for device notifications, not as a separate
  *   plain-text email body.
  * @param {string} fromName display name for sender
- * @param {string[]} recipients full list of recipients
+ * @param {string[]} recipients "To" recipients
+ * @param {string[]} [ccRecipients] optional "CC" recipients
  * @param {Array} attachments optional list of attachments, each with {filename, content} properties
+ * @returns {Promise<void>} resolves when the email has been handed to the mail server
  */
 exports.send = async function (
   subject,
@@ -18,6 +20,7 @@ exports.send = async function (
   notificationSummary,
   fromName,
   recipients,
+  ccRecipients = [],
   attachments = [],
 ) {
   const isLocalDevelopment = process.env.BCPARKS_ENVIRONMENT === "local";
@@ -58,6 +61,7 @@ exports.send = async function (
   await transporter.sendMail({
     from: `${fromName} <${process.env.EMAIL_SENDER}>`,
     to: recipients,
+    cc: ccRecipients,
     subject: subject,
     text: notificationSummary,
     html: body,

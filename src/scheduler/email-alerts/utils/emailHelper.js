@@ -8,13 +8,15 @@ const path = require("node:path");
  *
  * @param {string[]} recipients Email addresses to filter.
  * @param {{error: Function, warn: Function}} logger Logger instance.
- * @param {string} emailDescription Description used in log messages.
+ * @param {string} logLabel Description used in log messages.
+ * @param {boolean} [isCC=false] Whether the recipients are CC recipients.
  * @returns {string[]} Recipients permitted for the current environment.
  */
 const filterRecipientsByEnvironment = function (
   recipients,
   logger,
-  emailDescription,
+  logLabel,
+  isCC = false,
 ) {
   const environment = (
     process.env.BCPARKS_ENVIRONMENT || "local"
@@ -29,9 +31,9 @@ const filterRecipientsByEnvironment = function (
     .map((recipient) => recipient.trim().toLowerCase())
     .filter(Boolean);
 
-  if (!whitelist.length) {
+  if (!whitelist.length && !isCC) {
     logger.error(
-      `Skipping ${emailDescription} because EMAIL_RECIPIENT_WHITELIST is empty.`,
+      `Skipping ${logLabel} because EMAIL_RECIPIENT_WHITELIST is empty.`,
     );
     return [];
   }
@@ -50,12 +52,14 @@ const filterRecipientsByEnvironment = function (
   recipients
     .filter((recipient) => !whitelistSet.has(normalizeForWhitelist(recipient)))
     .forEach((recipient) => {
-      logger.warn(`Non-prod recipient filtered out: ${recipient}`);
+      logger.warn(
+        `Non-prod ${isCC ? "cc " : ""}recipient filtered out: ${recipient}`,
+      );
     });
 
-  if (!filteredRecipients.length) {
+  if (!filteredRecipients.length && !isCC) {
     logger.error(
-      `Skipping ${emailDescription} because no recipients matched ` +
+      `Skipping ${logLabel} because no recipients matched ` +
         "EMAIL_RECIPIENT_WHITELIST.",
     );
   }

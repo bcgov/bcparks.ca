@@ -19,16 +19,18 @@ const THROTTLE_MINUTES = 10;
 
 /**
  * Generic queued-email processor.
- * @param {object} config
- * @param {string}   config.action          task-queue action to read
- * @param {string}   config.templatePath    EJS template path
- * @param {string}   config.label           label used in logs
- * @param {(msg) => string}            config.getDedupeKey
- * @param {(msg) => Promise<object>}   config.buildEmailData
- * @param {(msg) => string[]}          config.getRecipients
- * @param {(data) => string}           config.getSummaryText
- * @param {(msg) => string}            config.getTestFileName
- * @param {object[]} recent  sent records from the previous run
+ * @param {object} config email type settings and functions
+ * @param {string} config.action task-queue action to read
+ * @param {string} config.templatePath EJS template path
+ * @param {string} config.label label used in logs
+ * @param {(msg) => string} config.getDedupeKey returns the duplicate check key
+ * @param {(msg) => Promise<object>} config.buildEmailData returns template data
+ * @param {(msg) => string[]} config.getRecipients returns "To" addresses
+ * @param {(msg) => string[]} [config.getCCRecipients] returns "CC" addresses
+ * @param {(data) => string} config.getSummaryText returns summary text
+ * @param {(msg) => string} config.getTestFileName returns emailtest file path
+ * @param {object[]} recent recently sent records for throttle purposes
+ * @returns {Promise<object[]|undefined>} updated list of recently sent records
  */
 async function processEmailQueue(config, recent = []) {
   const logger = getLogger();
@@ -70,8 +72,23 @@ async function processEmailQueue(config, recent = []) {
         ),
       ];
 
+      const toRecipientSet = new Set(
+        recipients.map((recipient) => recipient.toLowerCase()),
+      );
+      const ccRecipients = [
+        ...new Set(
+          (config.getCCRecipients?.(message) || [])
+            .map((recipient) => recipient.trim())
+            .filter(Boolean)
+            .filter(
+              (recipient) => !toRecipientSet.has(recipient.toLowerCase()),
+            ),
+        ),
+      ];
+
       if (scriptKeySpecified("emailtest")) {
-        emailData.allRecipients = recipients;
+        emailData.debugToRecipients = recipients;
+        emailData.debugCcRecipients = ccRecipients;
       }
 
       const htmlMessageBody = await ejs.renderFile(
@@ -84,13 +101,20 @@ async function processEmailQueue(config, recent = []) {
       }
 
       if (shouldSend && emailEnabled) {
+        // prevent spamming real users from non-production environments
         const recipientsToSend = filterRecipientsByEnvironment(
           recipients,
           logger,
           `${config.label} email ${dedupeKey}`,
         );
+        const recipientsToCC = filterRecipientsByEnvironment(
+          ccRecipients,
+          logger,
+          `${config.label} CC ${dedupeKey}`,
+          true,
+        );
 
-        if (recipientsToSend.length) {
+        if (recipientsToSend.length || recipientsToCC.length) {
           const summary = convert(config.getSummaryText(emailData), {
             wordwrap: false,
           });
@@ -101,6 +125,7 @@ async function processEmailQueue(config, recent = []) {
             summary,
             getSenderName(),
             recipientsToSend,
+            recipientsToCC,
             getLogoAttachment(),
           );
 
