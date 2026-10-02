@@ -1,52 +1,67 @@
-import { test, expect } from "@playwright/test";
+import {
+  test,
+  expect,
+  isUnreachableError,
+  pauseTests,
+} from "./utils/networkPause.js";
 
 // Compares Strapi API content with the published park pages to detect
 // Gatsby local database corruption after a build. For each park, one item
 // from each child relation is looked up on the park page.
 
-// Parks to sample, by ORCS number
-const PARK_ORCS = [
-  // Parks
-  1, // Strathcona
-  2, // Mount Robson
-  4, // Kokanee Glacier
-  8, // Golden Ears
-  11, // Tunkwa
-  15, // Mount Seymour
-  19, // Tweedsmuir
-  24, // Wells Gray
-  28, // Elk Falls
-  33, // E.C. Manning
-  41, // Cultus Lake
-  90, // Alice Lake
-  122, // Rolley Lake
-  142, // sẁiẁs Park (has audio clips)
-  166, // Bridal Veil Falls
-  193, // Rathtrevor Beach
-  200, // Sasquatch
-  258, // Chilliwack Lake
-  314, // Porteau Cove
-  363, // Joffre Lakes
+// Parks to sample. The name is only used in the test title. Busy park pages
+// are included, plus parks that cover the less common relations. If GitHub
+// Actions runners are rate limited, the run pauses (see utils/networkPause.js).
+const PARKS = [
+  // Popular and typical parks
+  { orcs: 1, name: "Strathcona" },
+  { orcs: 2, name: "Mount Robson" }, // guidelines
+  { orcs: 4, name: "Kokanee Glacier" },
+  { orcs: 7, name: "Garibaldi" },
+  { orcs: 8, name: "Golden Ears" }, // trail reports, guidelines
+  { orcs: 15, name: "Mount Seymour" }, // trail reports, guidelines
+  { orcs: 24, name: "Wells Gray" }, // trail reports, guidelines
+  { orcs: 28, name: "Elk Falls" },
+  { orcs: 33, name: "E.C. Manning" },
+  { orcs: 41, name: "Cultus Lake" },
+  { orcs: 90, name: "Alice Lake" },
+  { orcs: 122, name: "Rolley Lake" },
+  { orcs: 143, name: "Monashee" },
+  { orcs: 166, name: "Bridal Veil Falls" },
+  { orcs: 193, name: "Rathtrevor Beach" }, // guidelines
+  { orcs: 200, name: "Sasquatch" },
+  { orcs: 258, name: "Sx̱ótsaqel/Chilliwack Lake" },
+  { orcs: 314, name: "Porteau Cove" },
+  { orcs: 363, name: "Joffre Lakes" }, // guidelines
+  { orcs: 6878, name: "Tunkwa" },
 
-  // Ecological Reserves
-  3011, // Sartine Island Ecological Reserve
-  3087, // Heather Lake Ecological Reserve
-  3089, // Skagit River Cottonwoods Ecological Reserve
-  3097, // Race Rocks Ecological Reserve
-
-  // Conservancies
-  343, // Fiordland Conservancy
-  547, // Hakai Lúxvbálís Conservancy
-  1000, // Khutzeymateen Inlet Conservancy
-
-  // Protected Areas
-  464, // South Okanagan Grasslands Protected Area
-  616, // Stawamus Chief Protected Area
-  4433, // Lac du Bois Grasslands Protected Area
+  // Coverage for other relations and protected area types
+  { orcs: 19, name: "Tweedsmuir" }, // the only sampled park with nearby parks
+  { orcs: 142, name: "sẁiẁs Park" }, // the only sampled park with audio clips
+  { orcs: 343, name: "Fiordland Conservancy" }, // conservancy
+  { orcs: 464, name: "South Okanagan Grasslands Protected Area" }, // protected area
+  { orcs: 547, name: "Hakai Lúxvbálís Conservancy" }, // conservancy
+  { orcs: 616, name: "Stawamus Chief Protected Area" }, // protected area
+  { orcs: 1000, name: "Hunwadi/Ahnuhati – Bald Conservancy" }, // conservancy
+  { orcs: 3011, name: "Sartine Island Ecological Reserve" }, // ecological lists, marine ecosections
+  { orcs: 3087, name: "Heather Lake Ecological Reserve" }, // ecological lists, no marine ecosections
+  { orcs: 3089, name: "Skagit River Cottonwoods Ecological Reserve" }, // ecological lists
+  { orcs: 3097, name: "Race Rocks Ecological Reserve" }, // ecological lists, marine ecosections
+  { orcs: 4433, name: "Lac du Bois Grasslands Protected Area" }, // protected area
 ];
 
 // Locator for the park page's main column, which holds most page sections
 const PAGE_CONTENT = ".page-content";
+
+// Resource types that aren't downloaded, since only the page text is checked.
+// Scripts are needed since park.js renders facilities and camping types from
+// pagedata after load.
+const SKIPPED_RESOURCE_TYPES = new Set([
+  "image",
+  "stylesheet",
+  "font",
+  "media",
+]);
 
 /**
  * Removes the "<orcs>:" prefix Strapi adds to internal relation names,
@@ -217,6 +232,71 @@ const SKIPPED_RELATIONS = {
     "The page shows searchArea.searchAreaName, which populate=* does not return",
 };
 
+// When the Strapi API or the park page can't be reached (a timeout, network
+// error, 429 or 5xx), GitHub Actions runners are probably rate limited. The
+// whole run is paused until the site responds again (see utils/networkPause.js),
+// and the park is retried after the pause. If the retry can't reach it either,
+// the park is skipped, not failed: only parks that load are checked for
+// corruption. Each request has its own timeout, so it fails before the test
+// timeout does: a test timeout can't be turned into a retry or skip.
+const REQUEST_TIMEOUT_MS = 10000;
+const TEST_TIMEOUT_MS = 60000;
+
+/**
+ * Pauses the test run, then fails the test so it is retried after the pause.
+ * On the last attempt, skips the test instead, and says why in the log and
+ * the report.
+ * @param {string} reason why the park couldn't be checked
+ * @param {string} url URL that couldn't be loaded, so the pause waits for its server
+ * @returns {never}
+ */
+function skipPark(reason, url) {
+  pauseTests(reason, url);
+  const { retry, project } = test.info();
+  if (retry < project.retries) {
+    throw new Error(`${reason}. Retrying after the network pause.`);
+  }
+  console.log(`Skipped: ${reason}`);
+  test.skip(true, reason);
+}
+
+/**
+ * Runs a request or navigation, and skips the test (see skipPark) if the
+ * server can't be reached. Other errors are rethrown, so they still fail the test.
+ * @template T
+ * @param {string} name what is being loaded, for the skip reason
+ * @param {string} url URL being loaded
+ * @param {() => Promise<T>} action the request or navigation
+ * @returns {Promise<T>} the action's result
+ */
+async function skipIfUnreachable(name, url, action) {
+  try {
+    return await action();
+  } catch (error) {
+    if (!isUnreachableError(error)) {
+      throw error;
+    }
+    skipPark(
+      `${name} could not be reached: ${String(error.message).split("\n")[0]}`,
+      url,
+    );
+  }
+}
+
+/**
+ * Skips the test if a response shows the server is rate limiting or failing
+ * (429 or 5xx). Other statuses, such as 404, are left for the test to check.
+ * @param {string} name what was loaded, for the skip reason
+ * @param {string} url URL that was loaded
+ * @param {number|undefined} status HTTP status of the response
+ * @returns {void}
+ */
+function skipIfUnavailableStatus(name, url, status) {
+  if (status === 429 || status >= 500) {
+    skipPark(`${name} returned ${status}`, url);
+  }
+}
+
 /**
  * Fetches protected areas from the Strapi API and returns the one match.
  * @param {import('@playwright/test').APIRequestContext} request Playwright request fixture
@@ -226,9 +306,13 @@ const SKIPPED_RELATIONS = {
  */
 async function fetchProtectedArea(request, orcs, params) {
   const url = new URL("api/protected-areas", process.env.CMS_URL).href;
-  const response = await request.get(url, {
-    params: { "filters[orcs]": orcs, ...params },
-  });
+  const response = await skipIfUnreachable("The Strapi API", url, () =>
+    request.get(url, {
+      params: { "filters[orcs]": orcs, ...params },
+      timeout: REQUEST_TIMEOUT_MS,
+    }),
+  );
+  skipIfUnavailableStatus("The Strapi API", url, response.status());
   expect(
     response.ok(),
     `Strapi API returned ${response.status()} for ORCS ${orcs}`,
@@ -324,6 +408,9 @@ const ENV_SETTINGS = {
 };
 
 test.describe("Strapi and Gatsby content comparison", () => {
+  // Room for each request's own timeout (see REQUEST_TIMEOUT_MS)
+  test.describe.configure({ timeout: TEST_TIMEOUT_MS });
+
   test.beforeAll(({}, testInfo) => {
     if (!process.env.CMS_URL) {
       throw new Error(
@@ -336,14 +423,19 @@ test.describe("Strapi and Gatsby content comparison", () => {
     }
   });
 
-  test.beforeEach(() => {
+  test.beforeEach(async ({ page }) => {
     for (const [name, value] of Object.entries(ENV_SETTINGS)) {
       test.info().annotations.push({ type: name, description: value });
     }
+    await page.route("**/*", (route) =>
+      SKIPPED_RESOURCE_TYPES.has(route.request().resourceType())
+        ? route.abort()
+        : route.continue(),
+    );
   });
 
-  for (const orcs of PARK_ORCS) {
-    test(`Park page content matches Strapi for ORCS ${orcs}`, async ({
+  for (const { orcs, name } of PARKS) {
+    test(`Park page content matches Strapi for ${name} (ORCS ${orcs})`, async ({
       page,
       request,
     }) => {
@@ -351,12 +443,28 @@ test.describe("Strapi and Gatsby content comparison", () => {
       const annotate = (type, description) =>
         test.info().annotations.push({ type, description });
 
-      const parkLabel = `${park.protectedAreaName} (ORCS ${park.orcs})`;
-      console.log(`Checking ${parkLabel}`);
-      annotate("park", parkLabel);
+      annotate("park", `${park.protectedAreaName} (ORCS ${park.orcs})`);
 
-      await page.goto(`/${park.slug}/`);
-      await page.waitForLoadState("networkidle");
+      const parkUrl = new URL(`${park.slug}/`, process.env.BASE_URL).href;
+      const response = await skipIfUnreachable("The park page", parkUrl, () =>
+        page.goto(`/${park.slug}/`, { timeout: REQUEST_TIMEOUT_MS }),
+      );
+      skipIfUnavailableStatus("The park page", parkUrl, response?.status());
+      // Give the page's scripts and data requests time to finish. The page
+      // itself has loaded, so if a request is still running after the
+      // timeout, compare the content anyway: the checks below wait for
+      // each item, and only fail if it's missing.
+      await page
+        .waitForLoadState("networkidle", { timeout: REQUEST_TIMEOUT_MS })
+        .catch((error) => {
+          if (error?.name !== "TimeoutError") {
+            throw error;
+          }
+          annotate(
+            "network not idle",
+            `Requests still running after ${REQUEST_TIMEOUT_MS / 1000}s; compared the content anyway`,
+          );
+        });
       await expect(page.locator("h1")).toContainText(park.protectedAreaName);
 
       for (const [relation, items] of getRelations(park)) {
