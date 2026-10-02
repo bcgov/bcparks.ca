@@ -1,8 +1,9 @@
 name: Publish Gatsby
 
 on:
-  repository_dispatch:
-    types: [publish-gatsby]
+  # Started by build-dev.yaml and the deploy-*.yaml workflows with
+  # `gh workflow run --ref <branch>`, so the triggering branch's copy of this
+  # file is used. Can also be run manually.
   workflow_dispatch:
     inputs:
       branchName:
@@ -24,7 +25,7 @@ on:
           - dev
 
 concurrency:
-  group: publish-gatsby-${{ github.event.client_payload.branch }}${{ github.event.inputs.branchName }}-${{ github.event.client_payload.env }}${{ github.event.inputs.buildEnv }}
+  group: publish-gatsby-${{ github.event.inputs.branchName }}-${{ github.event.inputs.buildEnv }}
   cancel-in-progress: true
 
 env:
@@ -34,6 +35,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
     steps:
       - name: Validate inputs
         run: |
@@ -43,7 +47,7 @@ jobs:
           fi
       - name: Set env based on branch
         run: |
-          if [[ "${{ github.event.client_payload.branch }}" == "main" || "${{ github.event.inputs.branchName }}" == "main" ]]; then
+          if [[ "${{ github.event.inputs.branchName }}" == "main" ]]; then
               echo "BRANCH=main" >> $GITHUB_ENV
               echo "BUILDER_IMAGE_NAME=public-builder-main" >> $GITHUB_ENV
               echo "IMAGE_NAME=public-main" >> $GITHUB_ENV
@@ -59,19 +63,19 @@ jobs:
         run: |
           echo "registry_image=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.IMAGE_NAME }}" >> $GITHUB_OUTPUT
           echo "registry_builder_image=${{ secrets.OPENSHIFT_GOLD_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-tools/${{ env.BUILDER_IMAGE_NAME }}" >> $GITHUB_OUTPUT
-      - name: Set env based on client_payload
+      - name: Set env based on buildEnv
         run: |
-          if [[ "${{ github.event.client_payload.env }}" == "prod" || "${{ github.event.inputs.buildEnv }}" == "prod" ]]; then
+          if [[ "${{ github.event.inputs.buildEnv }}" == "prod" ]]; then
               echo "ENV_SUFFIX=prod" >> $GITHUB_ENV
               echo "IMAGE_TAG=prod" >> $GITHUB_ENV
               echo "STRAPI_SOURCE_URL=https://cms.bcparks.ca" >> $GITHUB_ENV
               echo "REACT_APP_CMS_BASE_URL=https://cms.bcparks.ca" >> $GITHUB_ENV
               echo "REACT_APP_SITE_URL=https://bcparks.ca" >> $GITHUB_ENV
               echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_PROD__GOLD }}" >> $GITHUB_ENV
-          elif [[ "${{ github.event.client_payload.env }}" == "test" || "${{ github.event.inputs.buildEnv }}" == "test" ]]; then
+          elif [[ "${{ github.event.inputs.buildEnv }}" == "test" ]]; then
               echo "ENV_SUFFIX=test" >> $GITHUB_ENV
               echo "IMAGE_TAG=test" >> $GITHUB_ENV
-              if [[ "${{ github.event.client_payload.branch }}" == "main" || "${{ github.event.inputs.branchName }}" == "main" ]]; then
+              if [[ "${{ github.event.inputs.branchName }}" == "main" ]]; then
                   echo "STRAPI_SOURCE_URL=https://test-cms.bcparks.ca" >> $GITHUB_ENV
                   echo "REACT_APP_CMS_BASE_URL=https://bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://test.bcparks.ca" >> $GITHUB_ENV
@@ -84,7 +88,7 @@ jobs:
           else
               echo "ENV_SUFFIX=dev" >> $GITHUB_ENV
               echo "IMAGE_TAG=latest" >> $GITHUB_ENV
-              if [[ "${{ github.event.client_payload.branch }}" == "main" || "${{ github.event.inputs.branchName }}" == "main" ]]; then
+              if [[ "${{ github.event.inputs.branchName }}" == "main" ]]; then
                   echo "REACT_APP_CMS_BASE_URL=https://dev-cms.bcparks.ca" >> $GITHUB_ENV
                   echo "REACT_APP_SITE_URL=https://dev.bcparks.ca" >> $GITHUB_ENV
                   echo "STRAPI_TOKEN=${{ secrets.GATSBY_STRAPI_API_TOKEN__MAIN_DEV__GOLD }}" >> $GITHUB_ENV
@@ -168,6 +172,19 @@ jobs:
         run: |
           TIMESTAMP=$(TZ=America/Vancouver date +'%Y%m%dT%H%M')
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public-main:prod public-main:rollback${TIMESTAMP}
+
+      - name: Wait for the rollout to finish
+        # Run the content check only after the deployment rollout succeeds.
+        run: oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-${{ env.ENV_SUFFIX }} rollout status deployment ${{ env.DEPLOYMENT_NAME }} --timeout=10m
+
+      - name: Trigger Playwright content check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Playwright uses one name per environment: prod, test, dev, alpha-test, alpha-dev
+          if [ "$BRANCH" = "alpha" ]; then environment="alpha-$ENV_SUFFIX"; else environment="$ENV_SUFFIX"; fi
+          gh workflow run playwright.yaml --repo "$GITHUB_REPOSITORY" \
+            --ref "$BRANCH" -f environment="$environment" -f suite=content-check
 
   # alert-if-failure:
   #   if: ${{ always() && (needs.build.result=='failure')}}

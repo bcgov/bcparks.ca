@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Set env
         run: |
-          echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+          echo "SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
           echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       - name: Install OpenShift CLI tools
@@ -37,11 +37,3 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag maintenance-main:${{ env.SHORT_SHA }} maintenance-main:${{ env.RELEASE_VERSION }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag etl-main:${{ env.SHORT_SHA }} etl-main:${{ env.RELEASE_VERSION }}
           oc -n ${{ env.TOOLS_NAMESPACE }} tag scheduler-main:${{ env.SHORT_SHA }} scheduler-main:${{ env.RELEASE_VERSION }}
-
-      - name: Delete images tags with commit hash
-        run: |
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d public-builder-main:${{ env.SHORT_SHA }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d strapi-main:${{ env.SHORT_SHA }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d maintenance-main:${{ env.SHORT_SHA }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d etl-main:${{ env.SHORT_SHA }}
-          oc -n ${{ env.TOOLS_NAMESPACE }} tag -d scheduler-main:${{ env.SHORT_SHA }}

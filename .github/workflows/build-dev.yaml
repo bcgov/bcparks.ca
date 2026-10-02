@@ -227,6 +227,9 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
     needs: [build-cms]
     steps:
       - name: Git Checkout
@@ -251,8 +254,11 @@ jobs:
           oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev rollout restart deployment ${{ github.ref_name }}-scheduler
 
       - name: Trigger Gatsby static build workflow
-        uses: peter-evans/repository-dispatch@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          event-type: publish-gatsby
-          client-payload: '{"env": "dev", "branch": "${{ github.ref_name }}" }'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.ref_name }}
+          BUILD_ENV: dev
+        run: |
+          # workflow_dispatch runs the publish-gatsby.yaml from the triggering branch
+          gh workflow run publish-gatsby.yaml --repo "$GITHUB_REPOSITORY" \
+            --ref "$BRANCH" -f branchName="$BRANCH" -f buildEnv="$BUILD_ENV"

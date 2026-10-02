@@ -19,8 +19,6 @@ jobs:
         with:
           node-version: "22"
 
-      - run: cd src/cms
-
       - name: Set env
         run: |
           echo "APP_KEYS=unit,test,keys" >> $GITHUB_ENV
