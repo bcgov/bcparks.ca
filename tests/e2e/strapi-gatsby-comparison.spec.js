@@ -73,9 +73,13 @@ const hasText = (value) => typeof value === "string" && value.trim() !== "";
  * @returns {boolean} true if the About section is shown
  */
 const hasAboutSection = (park) =>
-  ["conservation", "culturalHeritage", "history", "wildlife"].some((field) =>
-    hasText(park[field]),
-  );
+  ["conservation", "culturalHeritage", "history", "wildlife"].some((field) => {
+    const value = park[field];
+    return (
+      typeof value === "string" &&
+      value.replace(/(<([^>]+)>)|^\s+|\s+$|\s+/g, "") !== ""
+    );
+  });
 
 // Relations whose display name and visibility come from a related type,
 // which populate=* does not return. They are fetched with a second request.
