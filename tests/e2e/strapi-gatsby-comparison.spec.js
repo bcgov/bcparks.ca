@@ -20,7 +20,7 @@ const PARK_ORCS = [
   41, // Cultus Lake
   90, // Alice Lake
   122, // Rolley Lake
-  143, // Monashee
+  142, // sẁiẁs Park (has audio clips)
   166, // Bridal Veil Falls
   193, // Rathtrevor Beach
   200, // Sasquatch
@@ -80,6 +80,27 @@ const hasAboutSection = (park) =>
       value.replace(/(<([^>]+)>)|^\s+|\s+$|\s+/g, "") !== ""
     );
   });
+
+/**
+ * Checks whether an audio clip's title is shown on the park page. The title
+ * is shown in the highlights, history and cultural heritage sections, when
+ * that section is shown. The "tldr" location is a play button with no text,
+ * so it is not checked (see components/audioButton.js and components/park/).
+ * @param {object} clip audio clip from the Strapi API
+ * @param {object} park protected area from the Strapi API
+ * @returns {boolean} true if the clip's title is shown
+ */
+const isAudioClipShown = (clip, park) => {
+  const locations = clip.displayLocation ?? [];
+  if (!clip.url || !hasText(clip.title)) {
+    return false;
+  }
+  return (
+    (locations.includes("highlights") && hasText(park.description)) ||
+    (locations.includes("history") && hasText(park.history)) ||
+    (locations.includes("heritage") && hasText(park.culturalHeritage))
+  );
+};
 
 // Relations whose display name and visibility come from a related type,
 // which populate=* does not return. They are fetched with a second request.
@@ -160,12 +181,20 @@ const RELATION_CHECKS = {
     isEligible: (item, park) => hasAboutSection(park),
     getText: (item) => item.marineEcosection,
   },
+  audioClips: {
+    isEligible: (item, park) => isAudioClipShown(item, park),
+    getText: (item) => item.title,
+  },
 };
 
-// Relations that are not checked, and why
+// Relations that are not checked, and why. Together with RELATION_CHECKS,
+// this should list every relation in
+// src/cms/src/api/protected-area/content-types/protected-area/schema.json.
+// Update both maps when relations are added to or removed from the schema.
 const RUNTIME =
   "Loaded by the browser at runtime, not from the Gatsby database";
 const NOT_QUERIED = "Not in the Gatsby park page query";
+const PRIVATE = "Used internally, not available in the public API";
 const SKIPPED_RELATIONS = {
   publicAdvisories: RUNTIME,
   parkFeatures: RUNTIME,
@@ -179,6 +208,8 @@ const SKIPPED_RELATIONS = {
   parkNames: NOT_QUERIED,
   managementDocuments: NOT_QUERIED,
   parkOperationSubAreas: NOT_QUERIED,
+  geoShape: PRIVATE,
+  publicAdvisoryAudits: PRIVATE,
   parkPhotos: "Photos come from a separate query and are images, not text",
   parkOperation: "One-to-one relation, so a poor sample",
   parkSubPages: "Shown on a different page",
@@ -225,6 +256,7 @@ async function getProtectedArea(request, orcs) {
     "slug",
     "protectedAreaName",
     "parkContact",
+    "description",
     "conservation",
     "culturalHeritage",
     "history",
