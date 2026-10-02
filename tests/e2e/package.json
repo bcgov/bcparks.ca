@@ -9,6 +9,7 @@
   "scripts": {
     "test": "playwright test --project=full-chromium --project=full-firefox --project=full-webkit",
     "test:smoke": "playwright test --project=smoke",
+    "test:content-check": "playwright test --project=strapi-gatsby-comparison",
     "agents:update": "node scripts/update-agents.js"
   },
   "license": "Apache-2.0",
