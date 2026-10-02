@@ -1,7 +1,7 @@
 // spec: specs/contact-page.plan.md
 // seed: tests/seed.spec.ts
 import { ContactPage } from './pages/ContactPage.js';
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 test.describe('In-Page Anchor Navigation', () => {
     let contactPage;
@@ -460,23 +460,17 @@ test.describe('Follow Us / Social Links', () => {
     await expect(blogLink).toHaveAttribute('href', 'https://engage.gov.bc.ca/bcparksblog/');
   });
 
-  test('Social media moderation policy PDF link opens in a new tab', async ({ page, context }) => {
+  test('Social media moderation policy PDF link opens in a new tab', async ({ page }) => {
     // 1. Scroll to the moderation policy sentence at the bottom of 'Follow us'
     const followUsSection = page.getByText('Follow usFollow us on social');
     const moderationPolicyLink = followUsSection.getByRole('link', { name: 'social media moderation policy' });
     await expect(moderationPolicyLink).toBeVisible();
 
-    // 2. Inspect the link's target/rel attributes
+    // 2. Inspect the link's target/rel/href attributes. The PDF is on an
+    // external object store, so it is not opened (see the href checks above).
     await expect(moderationPolicyLink).toHaveAttribute('target', '_blank');
     await expect(moderationPolicyLink).toHaveAttribute('rel', /noopener/);
     await expect(moderationPolicyLink).toHaveAttribute('href', /social_media_moderation_policy.*\.pdf$/);
-
-    // 3. Click the link and capture the new tab/page that opens
-    const [newPage] = await Promise.all([
-      context.waitForEvent('page'),
-      moderationPolicyLink.click(),
-    ]);
-    await expect(page).toHaveURL('/contact/');
   });
 
   test('Social response-time and moderation disclaimer copy is present', async ({ page }) => {

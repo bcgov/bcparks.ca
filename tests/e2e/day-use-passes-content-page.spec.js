@@ -1,5 +1,5 @@
 // Import the test and expect functions from Playwright
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 //wait for the page to load before running the tests
 test.beforeEach(async ({page})=>{

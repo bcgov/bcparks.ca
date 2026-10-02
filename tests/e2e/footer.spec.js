@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 import { Footer } from './pages/Footer.js';
 
 test.describe('Footer tests', () => {

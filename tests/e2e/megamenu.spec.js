@@ -1,7 +1,7 @@
 // @ts-check
 
 // Import the test and expect functions from Playwright
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 import { BasePage } from './pages/basePage.js';
 
 //wait for the page to load before running the tests
