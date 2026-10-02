@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Run Playwright Tests
 on:
   # Run Playwright tests on PRs that modify the E2E tests or the workflow itself
   pull_request:
