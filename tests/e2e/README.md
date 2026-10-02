@@ -31,10 +31,15 @@ npx playwright show-report
 `alpha-test` or `local`. Tests must use paths relative to `BASE_URL`
 (`page.goto('/contact/')`, `toHaveURL('/find-a-park/')`), never a full site URL.
 Only links to separate systems, such as camping.bcparks.ca, stay absolute.
+Check those links with `toHaveAttribute('href', ...)` and don't open them:
+GitHub Actions runners can't reach some external sites, such as
+www2.gov.bc.ca. These tests aren't a broken link checker.
 The non-prod sites may only be reachable from the BC Gov network or VPN.
 
 ## Layout
 - `*.spec.js`: tests (`seed.spec.js` is the seed used by the AI agents)
+- `fixtures.js`: the `test` and `expect` that specs import, instead of
+  `@playwright/test`. It blocks Snowplow analytics requests.
 - `pages/`: page objects
 - `specs/`: test plans for the AI agents
 - `scripts/update-agents.js`: regenerates the root agent/MCP config (`npm run agents:update`)
