@@ -174,9 +174,8 @@ jobs:
           oc -n ${{ env.TOOLS_NAMESPACE }} tag public-main:prod public-main:rollback${TIMESTAMP}
 
       - name: Wait for the rollout to finish
-        # Gives the new public pods time to roll out before the content check.
-        # Starting at 3 minutes; adjust after monitoring rollouts.
-        run: sleep 180
+        # Run the content check only after the deployment rollout succeeds.
+        run: oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-${{ env.ENV_SUFFIX }} rollout status deployment ${{ env.DEPLOYMENT_NAME }} --timeout=10m
 
       - name: Trigger Playwright content check
         env:
