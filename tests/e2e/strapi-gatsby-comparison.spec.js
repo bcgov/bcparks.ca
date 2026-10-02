@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures.js";
 
 // Compares Strapi API content with the published park pages to detect
 // Gatsby local database corruption after a build. For each park, one item
@@ -47,6 +47,11 @@ const PARK_ORCS = [
 
 // Locator for the park page's main column, which holds most page sections
 const PAGE_CONTENT = ".page-content";
+
+// Resource types that aren't downloaded, since only the page text is checked.
+// Scripts and data requests still load: some sections, such as facilities
+// and camping types, are only rendered by the browser after the page loads.
+const SKIPPED_RESOURCE_TYPES = new Set(["image", "stylesheet", "font", "media"]);
 
 /**
  * Removes the "<orcs>:" prefix Strapi adds to internal relation names,
@@ -336,10 +341,17 @@ test.describe("Strapi and Gatsby content comparison", () => {
     }
   });
 
-  test.beforeEach(() => {
+  test.beforeEach(async ({ page }) => {
     for (const [name, value] of Object.entries(ENV_SETTINGS)) {
       test.info().annotations.push({ type: name, description: value });
     }
+    // fallback() passes other requests on to the routes in fixtures.js,
+    // which block Snowplow
+    await page.route("**/*", (route) =>
+      SKIPPED_RESOURCE_TYPES.has(route.request().resourceType())
+        ? route.abort()
+        : route.fallback(),
+    );
   });
 
   for (const orcs of PARK_ORCS) {
