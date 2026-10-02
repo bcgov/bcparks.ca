@@ -26,7 +26,7 @@ test.describe('Find a park page tests', ()=>{
 
     test('Check the filter headings are present', async ({page})=>{
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
-        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL('/find-a-park/');
         await expect(page.locator('b').filter({ hasText: 'Filter' })).toBeVisible();
         await expect(page.getByText('Popular')).toBeVisible();
         await expect(page.getByText('Area', { exact: true })).toBeVisible();
@@ -39,7 +39,6 @@ test.describe('Find a park page tests', ()=>{
     test("Check the suggestion box is displayed when search by city has been selected", async ({page})=>{
         const dropdownOption = page.getByRole('option', { name: 'Current location' });
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
-        await page.waitForLoadState('networkidle');
         await expect(page).toHaveURL("/find-a-park/");
         await page.getByLabel('Near a city').click();
         await expect(page.getByLabel('menu-options')).toBeVisible();
@@ -48,8 +47,9 @@ test.describe('Find a park page tests', ()=>{
 
     test('Check the suggestion box in search is displayed for park search', async ({page})=>{
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
-        await page.waitForLoadState('networkidle');
         await expect(page).toHaveURL("/find-a-park/");
+        // Wait for the search results, so the search box is ready for input
+        await expect(page.getByLabel('Load more results')).toBeVisible();
         await page.getByLabel('By park name').fill("J")
         await expect(page.getByLabel('menu-options')).toBeVisible();
         await expect(page.getByLabel('menu-options')).toContainText("Jackman Flats Park");
@@ -64,8 +64,9 @@ test.describe('Find a park page tests', ()=>{
 
     test('Check the suggestion box in search is displayed for city search', async ({page})=>{
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
-        await page.waitForLoadState('networkidle');
         await expect(page).toHaveURL("/find-a-park/");
+        // Wait for the search results, so the search box is ready for input
+        await expect(page.getByLabel('Load more results')).toBeVisible();
         await page.getByLabel('Near a city').fill("K");
         await expect(page.getByLabel('menu-options')).toBeVisible();
         await expect(page.getByLabel('menu-options')).toContainText("Kamloops");
@@ -154,7 +155,6 @@ test.describe('Find a park page tests', ()=>{
 
     test('Check the A-Z park list redirects to the correct page', async ({page})=>{
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
-        await page.waitForLoadState('networkidle');
         await expect(page).toHaveURL("/find-a-park/");
         await page.getByRole('link', { name: 'A–Z park list' }).click();
         await expect(page).toHaveURL('/find-a-park/a-z-list/');
@@ -163,7 +163,6 @@ test.describe('Find a park page tests', ()=>{
 
     test('Check each park card', async ({page})=>{
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
-        await page.waitForLoadState('networkidle');
         await expect(page).toHaveURL("/find-a-park/");
         await expect(page.getByLabel('Load more results')).toBeVisible();
         await page.getByRole('button', { name: 'Load more results' }).click();
@@ -174,7 +173,7 @@ test.describe('Find a park page tests', ()=>{
 
     test('Check the land acknowledgment message is visible', async ({page})=>{
         await page.getByRole('menuitem', { name: 'Find a park' }, customTimeout).click();
-        await page.waitForLoadState('networkidle');
+        await expect(page).toHaveURL('/find-a-park/');
         await page.evaluate(() =>{
             window.scrollBy(0, 5000);
         });
