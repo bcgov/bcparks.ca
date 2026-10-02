@@ -54,6 +54,7 @@ module.exports = defineConfig({
        and the smoke project's @smoke filter would skip it. */
     {
       name: 'full-chromium',
+      testIgnore: /strapi-gatsby-comparison\.spec\.js/,
       use: { ...devices['Desktop Chrome'] },
     },
     {
@@ -61,14 +62,23 @@ module.exports = defineConfig({
       grep: /@smoke/,
       use: { ...devices['Desktop Chrome'] },
     },
+    /* Compares Strapi API content with the published park pages to detect
+       Gatsby local database corruption after a build. */
+    {
+      name: 'strapi-gatsby-comparison',
+      testMatch: /strapi-gatsby-comparison\.spec\.js/,
+      use: { ...devices['Desktop Chrome'] },
+    },
 
     {
       name: 'full-firefox',
+      testIgnore: /strapi-gatsby-comparison\.spec\.js/,
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'full-webkit',
+      testIgnore: /strapi-gatsby-comparison\.spec\.js/,
       use: { ...devices['Desktop Safari'] }
     }
 

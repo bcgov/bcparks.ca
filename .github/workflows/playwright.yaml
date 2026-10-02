@@ -1,24 +1,20 @@
 name: Playwright Tests
+run-name: Playwright Tests (${{ inputs.suite || 'full' }}, ${{ inputs.environment || 'prod' }})
 on:
   # Run Playwright tests on PRs that modify the E2E tests or the workflow itself
   pull_request:
     branches:
       # QA PRs should target main, which tests against https://bcparks.ca/.
-      # The alpha environments can only be tested with a manual run (workflow_dispatch).
+      # The alpha environments are tested with workflow_dispatch runs.
       - main
     paths:
       - tests/e2e/**
       - .github/workflows/playwright.yaml
       
-  # TODO: After a prod Gatsby build, run a content verification test (not written
-  # yet) that samples select pages on https://bcparks.ca/ to detect Gatsby
-  # local database corruption. publish-gatsby.yaml will send this event (prod only)
-  # after a 3-5 minute wait to let the OpenShift rollout finish.
-  # repository_dispatch:
-  #   types:
-  #     - playwright-content-verification
-
-  # Allow manual trigger via the GitHub UI
+  # Manual runs from the GitHub UI. publish-gatsby.yaml also starts this after
+  # every publish (with `gh workflow run --ref <branch>`, suite=content-check)
+  # to detect Gatsby local database corruption, once the rollout has had time
+  # to finish.
   workflow_dispatch:
     inputs:
       environment:
@@ -31,6 +27,13 @@ on:
           - dev
           - alpha-test
           - alpha-dev
+      suite:
+        description: Tests to run
+        type: choice
+        default: full
+        options:
+          - full
+          - content-check
 permissions:
   contents: read
 jobs:
@@ -43,8 +46,9 @@ jobs:
     steps:
     - name: Set target site
       env:
-        # Only manual runs set inputs.environment; PRs and repository_dispatch use prod
+        # Only workflow_dispatch runs set inputs; PRs use prod and the full suite
         ENVIRONMENT: ${{ inputs.environment || 'prod' }}
+        SUITE: ${{ inputs.suite || 'full' }}
         LICENSE_PLATE: ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}
       run: |
         if [ "$ENVIRONMENT" = "prod" ]; then
@@ -60,11 +64,18 @@ jobs:
           esac
           base_url="https://${release}-public-${LICENSE_PLATE}-${namespace_env}.apps.gold.devops.gov.bc.ca/"
         fi
+        if [ "$ENVIRONMENT" = "prod" ]; then
+          cms_url="https://cms.bcparks.ca/"
+        else
+          cms_url="https://${ENVIRONMENT}-cms.bcparks.ca/"
+        fi
         echo "ENV=$ENVIRONMENT" >> "$GITHUB_ENV"
         echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
+        echo "CMS_URL=$cms_url" >> "$GITHUB_ENV"
+        echo "SUITE=$SUITE" >> "$GITHUB_ENV"
       working-directory: .
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
       with:
         node-version-file: tests/e2e/.nvmrc
         cache: npm
@@ -72,9 +83,20 @@ jobs:
     - name: Install dependencies
       run: npm ci
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: |
+        # The content check only runs in Chromium
+        if [ "$SUITE" = "content-check" ]; then
+          npx playwright install --with-deps chromium
+        else
+          npx playwright install --with-deps
+        fi
     - name: Run Playwright tests
-      run: npm test
+      run: |
+        if [ "$SUITE" = "content-check" ]; then
+          npm run test:content-check
+        else
+          npm test
+        fi
     - uses: actions/upload-artifact@v4
       if: always()
       with:

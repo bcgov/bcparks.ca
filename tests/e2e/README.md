@@ -33,6 +33,25 @@ npx playwright show-report
 Only links to separate systems, such as camping.bcparks.ca, stay absolute.
 The non-prod sites may only be reachable from the BC Gov network or VPN.
 
+## Strapi and Gatsby content comparison
+`strapi-gatsby-comparison.spec.js` checks published park pages against the
+Strapi API, to detect Gatsby local database corruption after a build. It runs
+only in its own project (the full-* projects skip it):
+
+```sh
+npm run test:content-check
+```
+
+It needs `CMS_URL` in `env/.env.<ENV>` (see the `.example` files). For each
+park in `PARK_ORCS`, it fetches the park from `CMS_URL`, opens `/<slug>/` on
+`BASE_URL`, and looks for one shown item from each child relation:
+- `RELATION_CHECKS`: how to tell whether an item is shown, and what text to look
+  for. These mirror the rules in `src/gatsby/src/templates/park.js`.
+- `SKIPPED_RELATIONS`: relations that aren't checked, and why. For example, some
+  are loaded by the browser at runtime rather than from the Gatsby database.
+- A relation in neither map is reported as an `unmapped relation` annotation in
+  the HTML report. Add it to one of the maps.
+
 ## Layout
 - `*.spec.js`: tests (`seed.spec.js` is the seed used by the AI agents)
 - `pages/`: page objects
