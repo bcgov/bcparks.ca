@@ -38,13 +38,31 @@ function trackRequests(context) {
     ];
 }
 
+// Pause before each test on GitHub Actions runners (any workflow trigger), to
+// spread out the requests they send to bcparks.ca, which may rate limit them.
+// With 2 workers, a test starts about every 1.5 seconds on average.
+// GitHub Actions sets the CI environment variable; local runs don't pause.
+const GITHUB_RUNNER_PAUSE_MS = 3000;
+
 /**
  * Playwright test with Snowplow requests blocked in every browser context.
  * When a test fails, the requests that were still pending or that failed are
  * printed, to show what slowed or broke the page.
+ * On GitHub Actions runners, each test waits GITHUB_RUNNER_PAUSE_MS before it starts.
  * Specs should import test and expect from this file, not '@playwright/test'.
  */
 export const test = base.extend({
+    // Runs for every test. Its own timeout keeps the pause out of the test timeout.
+    pauseOnGitHubRunners: [
+        async ({}, use) => {
+            if (process.env.CI) {
+                await new Promise((resolve) => setTimeout(resolve, GITHUB_RUNNER_PAUSE_MS));
+            }
+            await use();
+        },
+        { auto: true, timeout: GITHUB_RUNNER_PAUSE_MS + 5000 },
+    ],
+
     context: async ({ context }, use, testInfo) => {
         await context.route(SNOWPLOW, (route) => route.abort());
         const getRequestReport = trackRequests(context);

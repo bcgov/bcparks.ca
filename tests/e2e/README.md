@@ -22,6 +22,9 @@ for f in env/.env.*.example; do cp -n "$f" "${f%.example}"; done
 ## Running tests
 ```sh
 npm test                 # all projects against prod
+npm run test:chromium    # all tests, Chromium only (what PRs run)
+npm run test:firefox     # all tests, Firefox only
+npm run test:webkit      # all tests, WebKit only
 npm run test:smoke       # @smoke tests only
 ENV=dev npm test         # use env/.env.dev
 npx playwright show-report
