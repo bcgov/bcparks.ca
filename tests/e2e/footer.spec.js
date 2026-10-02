@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 import { Footer } from './pages/Footer.js';
 
 test.describe('Footer tests', () => {
@@ -77,10 +77,11 @@ test.describe('Footer tests', () => {
     });
 
 
-    test('BC Parks blog footer link', async({ page })=>{
+    // External links are checked by href, not by loading the other site,
+    // which may block GitHub Actions runners
+    test('BC Parks blog footer link', async()=>{
         await footer.bcParksBlogLinkIsPresent();
-        await footer.clickBcParksBlogLink();
-        await expect(page).toHaveURL('https://engage.gov.bc.ca/bcparksblog/');
+        await expect(footer.bcParksBlogLink).toHaveAttribute('href', 'https://engage.gov.bc.ca/bcparksblog/');
     });
 
     test('Site map footer link', async({ page })=>{
@@ -89,55 +90,31 @@ test.describe('Footer tests', () => {
         await expect(page).toHaveURL('/' + 'site-map/');
     });
 
-    test('Disclaimer footer link', async({ page })=>{
+    test('Disclaimer footer link', async()=>{
         await footer.disclaimerLinkIsPresent();
-        await footer.clickDisclaimerLink();
-        await expect(page).toHaveURL('https://www2.gov.bc.ca/gov/content/home/disclaimer');
+        await expect(footer.disclaimerLink).toHaveAttribute('href', 'https://www2.gov.bc.ca/gov/content/home/disclaimer');
     });
 
 
-    test('Privacy footer link', async ({ page })=>{
+    test('Privacy footer link', async ()=>{
         await footer.privacyLinkIsPresent();
-        await footer.clickPrivacyLink();
-        await expect(page).toHaveURL('https://www2.gov.bc.ca/gov/content/home/privacy');
+        await expect(footer.privacyLink).toHaveAttribute('href', 'https://www2.gov.bc.ca/gov/content/home/privacy');
     });
 
-    test('Accessibility footer link', async({ page })=>{
+    test('Accessibility footer link', async()=>{
         await footer.accessibilityLinkIsPresent();
-        await footer.clickAccessibilityLink();
-        await expect(page).toHaveURL('https://www2.gov.bc.ca/gov/content/home/accessible-government');
+        await expect(footer.accessibilityLink).toHaveAttribute('href', 'https://www2.gov.bc.ca/gov/content/home/accessible-government');
     });
 
-    test('Copyright footer link', async ({ page })=>{
+    test('Copyright footer link', async ()=>{
         await footer.copyrightLinkIsPresent();
-        await footer.clickCopyrightLink();
-        await expect(page).toHaveURL('https://www2.gov.bc.ca/gov/content/home/copyright');
+        await expect(footer.copyrightLink).toHaveAttribute('href', 'https://www2.gov.bc.ca/gov/content/home/copyright');
     });
 
-    test('Verify social media links are visible and redirect to the correct page', async ({ browser }) => {
-        // Set a custom user-agent to mimic a real browser
-        const context = await browser.newContext({
-            baseURL: process.env.BASE_URL,
-            userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        });
-
-        const page = await context.newPage();
-
-        await page.goto('/');
-        await page.getByRole('link', { name: 'Facebook' }).click();
-        await expect(page).toHaveURL('https://www.facebook.com/YourBCParks/');
-        await page.goBack();
-        await page.waitForLoadState('networkidle');
-        // Click on the Instagram link
-        await page.getByRole('link', { name: 'Instagram' }).click();
-        await page.waitForLoadState('networkidle');
-
-        const instagramURL = page.url();
-        console.log(`Current URL after clicking Instagram: ${instagramURL}`);
-        if(instagramURL.includes('login')){
-            console.warn('Redirected to Instagram login page.');
-        } else{
-            await expect(page).toHaveURL('https://www.instagram.com/yourbcparks/');
-        };
+    test('Verify social media links are visible and point to the correct page', async () => {
+        await expect(footer.faceBooklink).toBeVisible();
+        await expect(footer.faceBooklink).toHaveAttribute('href', 'https://www.facebook.com/YourBCParks/');
+        await expect(footer.instagramLink).toBeVisible();
+        await expect(footer.instagramLink).toHaveAttribute('href', 'https://www.instagram.com/yourbcparks/');
     });
 });

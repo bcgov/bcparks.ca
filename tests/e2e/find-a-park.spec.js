@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 test.describe('Find a park page tests', ()=>{
     const customTimeout = { timeout: 90000 };

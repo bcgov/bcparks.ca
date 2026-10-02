@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 test.describe('Approved management plan tests', ()=>{
     const approvedManagementPlanURL = '/about/management-plans/approved/';

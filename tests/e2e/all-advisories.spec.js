@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 import { AllAdvisoriesPage } from './pages/AllAdvisoriesPage.js'; 
 
 test.describe('All advisories page tests', ()=>{
@@ -58,24 +58,22 @@ test.describe('All advisories page tests', ()=>{
         await expect(allAdvisoriesPage.searchField).toBeEmpty();
     });
 
-    test('BC Wildfire link redirects to the correct page', async({page})=>{
-        await allAdvisoriesPage.clickWildfireServicesLink();
-        await expect(page).toHaveURL('https://www2.gov.bc.ca/gov/content/safety/wildfire-status');
+    // External links are checked by href, not by loading the other site,
+    // which may block GitHub Actions runners
+    test('BC Wildfire link points to the correct page', async()=>{
+        await expect(allAdvisoriesPage.wildfireServicesLink).toHaveAttribute('href', 'https://www2.gov.bc.ca/gov/content/safety/wildfire-status');
     });
 
-    test('BC River Forecast Centre link redirects to the correct page', async({page})=>{
-        await allAdvisoriesPage.clickRiverForecastCentreLink();
-        await expect(page).toHaveURL('https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/drought-flooding-dikes-dams/river-forecast-centre');
+    test('BC River Forecast Centre link points to the correct page', async()=>{
+        await expect(allAdvisoriesPage.riverForecaseCentreLink).toHaveAttribute('href', 'https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/drought-flooding-dikes-dams/river-forecast-centre');
     });
 
-    test('DriveBC link redirects to the correct page', async({page})=>{
-        await allAdvisoriesPage.clickDriveBCLink();
-        await expect(page).toHaveTitle('DriveBC');
+    test('DriveBC link points to the correct page', async()=>{
+        await expect(allAdvisoriesPage.driveBCLink).toHaveAttribute('href', 'https://drivebc.ca');
     });
 
-    test('Emergency Info BC link redirects to the correct page', async({page})=>{
-        await allAdvisoriesPage.clickEmergencyInfoLink();
-        await expect(page).toHaveURL('https://www.emergencyinfobc.gov.bc.ca/');
+    test('Emergency Info BC link points to the correct page', async()=>{
+        await expect(allAdvisoriesPage.emergencyInfoLink).toHaveAttribute('href', 'https://www.emergencyinfobc.gov.bc.ca');
     });
 
 
