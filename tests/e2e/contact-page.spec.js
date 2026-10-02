@@ -342,13 +342,10 @@ test.describe('Shared Header, Footer, and Cross-Page Navigation', () => {
       await contactPage.waitForLoad();
     });
 
-  test(`'Book camping' header button navigates to the camping reservation portal`, async ({ page }) => {
-    // 1. Click the 'Book camping' button in the header
-    await page.getByRole('button', { name: 'Book camping button' }).click();
-
-    // expect: Browser navigates to https://camping.bcparks.ca/ and the camping reservation home page loads
-    await expect(page).toHaveURL('https://camping.bcparks.ca/');
-    await expect(page).toHaveTitle('Home Page');
+  test(`'Book camping' header button points to the camping reservation portal`, async ({ page }) => {
+    // External links are checked by href, not by loading the other site,
+    // which may block GitHub Actions runners
+    await expect(page.getByRole('button', { name: 'Book camping button' })).toHaveAttribute('href', 'https://camping.bcparks.ca');
   });
 
   test('Main mega-menu navigation items are present and functional from the contact page', async ({ page }) => {
@@ -456,16 +453,11 @@ test.describe('Follow Us / Social Links', () => {
     // 3. Inspect the 'Instagram' link href
     const instagramLink = followUsSection.getByRole('link', { name: 'Instagram' });
     await expect(instagramLink).toHaveAttribute('href', 'https://www.instagram.com/yourbcparks/');
-
-    // 4. Click the 'Facebook' link
-    await facebookLink.click();
-    await expect(page).toHaveURL(/facebook\.com/);
   });
 
-  test('BC Parks blog link navigates correctly', async ({ page }) => {
-    // 1. Click the 'BC Parks blog' link in the 'Follow us' section
-    await page.locator('#follow-us').getByRole('link', { name: 'BC Parks blog' }).click();
-    await expect(page).toHaveURL('https://engage.gov.bc.ca/bcparksblog/');
+  test('BC Parks blog link points to the blog', async ({ page }) => {
+    const blogLink = page.locator('#follow-us').getByRole('link', { name: 'BC Parks blog' });
+    await expect(blogLink).toHaveAttribute('href', 'https://engage.gov.bc.ca/bcparksblog/');
   });
 
   test('Social media moderation policy PDF link opens in a new tab', async ({ page, context }) => {
