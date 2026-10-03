@@ -62,6 +62,10 @@ park in `PARK_ORCS`, it fetches the park from `CMS_URL`, opens `/<slug>/` on
 - `*.spec.js`: tests (`seed.spec.js` is the seed used by the AI agents)
 - `fixtures.js`: the `test` and `expect` that specs import, instead of
   `@playwright/test`. It blocks Snowplow analytics requests.
+- `networkBreaker.js`: pauses the whole run when bcparks.ca stops responding
+  (GitHub Actions runners get rate limited). After a network error, one
+  request every 30 seconds checks the site, and tests resume once it responds.
+  Tests that failed during the outage are retried.
 - `pages/`: page objects
 - `specs/`: test plans for the AI agents
 - `scripts/update-agents.js`: regenerates the root agent/MCP config (`npm run agents:update`)
