@@ -231,7 +231,7 @@ const TEST_TIMEOUT_MS = 60000;
 function isUnreachableError(error) {
   return (
     error?.name === "TimeoutError" ||
-    /net::ERR_|ECONNREFUSED|ECONNRESET|ETIMEDOUT|EAI_AGAIN|ENOTFOUND|socket hang up/i.test(
+    /Timeout \d+ms exceeded|Request timed out after \d+ms|net::ERR_|ECONNREFUSED|ECONNRESET|ETIMEDOUT|EAI_AGAIN|ENOTFOUND|socket hang up/i.test(
       String(error?.message),
     )
   );
