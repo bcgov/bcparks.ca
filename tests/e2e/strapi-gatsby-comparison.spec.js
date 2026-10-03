@@ -1,47 +1,32 @@
 import { test, expect } from "./fixtures.js";
+import { pauseTests } from "./networkBreaker.js";
 
 // Compares Strapi API content with the published park pages to detect
 // Gatsby local database corruption after a build. For each park, one item
 // from each child relation is looked up on the park page.
 
-// Parks to sample, by ORCS number
+// Parks to sample, by ORCS number. Kept small, since GitHub Actions runners
+// may be rate limited by bcparks.ca. Busy park pages are included, plus parks
+// that cover the less common relations.
 const PARK_ORCS = [
-  // Parks
-  1, // Strathcona
-  2, // Mount Robson
-  4, // Kokanee Glacier
-  8, // Golden Ears
-  11, // Tunkwa
-  15, // Mount Seymour
-  19, // Tweedsmuir
-  24, // Wells Gray
-  28, // Elk Falls
+  // High-traffic parks
+  2, // Mount Robson (guidelines)
+  8, // Golden Ears (trail reports, guidelines)
+  15, // Mount Seymour (trail reports, guidelines)
+  24, // Wells Gray (trail reports, guidelines)
   33, // E.C. Manning
   41, // Cultus Lake
   90, // Alice Lake
-  122, // Rolley Lake
-  142, // sẁiẁs Park (has audio clips)
-  166, // Bridal Veil Falls
-  193, // Rathtrevor Beach
-  200, // Sasquatch
-  258, // Chilliwack Lake
+  193, // Rathtrevor Beach (guidelines)
   314, // Porteau Cove
-  363, // Joffre Lakes
+  363, // Joffre Lakes (guidelines)
 
-  // Ecological Reserves
-  3011, // Sartine Island Ecological Reserve
-  3087, // Heather Lake Ecological Reserve
-  3089, // Skagit River Cottonwoods Ecological Reserve
-  3097, // Race Rocks Ecological Reserve
-
-  // Conservancies
-  343, // Fiordland Conservancy
+  // Coverage for other relations and protected area types
+  19, // Tweedsmuir (the only sampled park with nearby parks)
+  142, // sẁiẁs Park (the only sampled park with audio clips)
   547, // Hakai Lúxvbálís Conservancy
-  1000, // Khutzeymateen Inlet Conservancy
-
-  // Protected Areas
-  464, // South Okanagan Grasslands Protected Area
-  616, // Stawamus Chief Protected Area
+  3087, // Heather Lake Ecological Reserve (ecological lists, no marine ecosections)
+  3097, // Race Rocks Ecological Reserve (ecological lists, marine ecosections)
   4433, // Lac du Bois Grasslands Protected Area
 ];
 
@@ -51,7 +36,12 @@ const PAGE_CONTENT = ".page-content";
 // Resource types that aren't downloaded, since only the page text is checked.
 // Scripts and data requests still load: some sections, such as facilities
 // and camping types, are only rendered by the browser after the page loads.
-const SKIPPED_RESOURCE_TYPES = new Set(["image", "stylesheet", "font", "media"]);
+const SKIPPED_RESOURCE_TYPES = new Set([
+  "image",
+  "stylesheet",
+  "font",
+  "media",
+]);
 
 /**
  * Removes the "<orcs>:" prefix Strapi adds to internal relation names,
@@ -222,6 +212,86 @@ const SKIPPED_RELATIONS = {
     "The page shows searchArea.searchAreaName, which populate=* does not return",
 };
 
+// When the Strapi API or the park page can't be reached (a timeout, network
+// error, 429 or 5xx), GitHub Actions runners are probably rate limited. The
+// whole run is paused until the site responds again (see networkBreaker.js),
+// and the park is retried after the pause. If the retry can't reach it either,
+// the park is skipped, not failed: only parks that load are checked for
+// corruption. Each request has its own timeout, so it fails before the test
+// timeout does: a test timeout can't be turned into a retry or skip.
+const REQUEST_TIMEOUT_MS = 10000;
+const TEST_TIMEOUT_MS = 60000;
+
+/**
+ * Checks whether an error means a server couldn't be reached (a timeout or a
+ * network error), rather than a problem with the page content.
+ * @param {unknown} error error thrown by a Playwright request or navigation
+ * @returns {boolean} true if the server couldn't be reached
+ */
+function isUnreachableError(error) {
+  return (
+    error?.name === "TimeoutError" ||
+    /Timeout \d+ms exceeded|Request timed out after \d+ms|net::ERR_|ECONNREFUSED|ECONNRESET|ETIMEDOUT|EAI_AGAIN|ENOTFOUND|socket hang up/i.test(
+      String(error?.message),
+    )
+  );
+}
+
+/**
+ * Pauses the test run, then fails the test so it is retried after the pause.
+ * On the last attempt, skips the test instead, and says why in the log and
+ * the report.
+ * @param {string} reason why the park couldn't be checked
+ * @param {string} url URL that couldn't be loaded, so the pause waits for its server
+ * @returns {never}
+ */
+function skipPark(reason, url) {
+  pauseTests(reason, url);
+  const { retry, project } = test.info();
+  if (retry < project.retries) {
+    throw new Error(`${reason}. Retrying after the network pause.`);
+  }
+  console.log(`Skipped: ${reason}`);
+  test.skip(true, reason);
+}
+
+/**
+ * Runs a request or navigation, and skips the test (see skipPark) if the
+ * server can't be reached. Other errors are rethrown, so they still fail the test.
+ * @template T
+ * @param {string} name what is being loaded, for the skip reason
+ * @param {string} url URL being loaded
+ * @param {() => Promise<T>} action the request or navigation
+ * @returns {Promise<T>} the action's result
+ */
+async function skipIfUnreachable(name, url, action) {
+  try {
+    return await action();
+  } catch (error) {
+    if (!isUnreachableError(error)) {
+      throw error;
+    }
+    skipPark(
+      `${name} could not be reached: ${String(error.message).split("\n")[0]}`,
+      url,
+    );
+  }
+}
+
+/**
+ * Skips the test if a response shows the server is rate limiting or failing
+ * (429 or 5xx). Other statuses, such as 404, are left for the test to check.
+ * @param {string} name what was loaded, for the skip reason
+ * @param {string} url URL that was loaded
+ * @param {number|undefined} status HTTP status of the response
+ * @returns {void}
+ */
+function skipIfUnavailableStatus(name, url, status) {
+  if (status === 429 || status >= 500) {
+    skipPark(`${name} returned ${status}`, url);
+  }
+}
+
 /**
  * Fetches protected areas from the Strapi API and returns the one match.
  * @param {import('@playwright/test').APIRequestContext} request Playwright request fixture
@@ -231,9 +301,13 @@ const SKIPPED_RELATIONS = {
  */
 async function fetchProtectedArea(request, orcs, params) {
   const url = new URL("api/protected-areas", process.env.CMS_URL).href;
-  const response = await request.get(url, {
-    params: { "filters[orcs]": orcs, ...params },
-  });
+  const response = await skipIfUnreachable("The Strapi API", url, () =>
+    request.get(url, {
+      params: { "filters[orcs]": orcs, ...params },
+      timeout: REQUEST_TIMEOUT_MS,
+    }),
+  );
+  skipIfUnavailableStatus("The Strapi API", url, response.status());
   expect(
     response.ok(),
     `Strapi API returned ${response.status()} for ORCS ${orcs}`,
@@ -329,6 +403,9 @@ const ENV_SETTINGS = {
 };
 
 test.describe("Strapi and Gatsby content comparison", () => {
+  // Room for each request's own timeout (see REQUEST_TIMEOUT_MS)
+  test.describe.configure({ timeout: TEST_TIMEOUT_MS });
+
   test.beforeAll(({}, testInfo) => {
     if (!process.env.CMS_URL) {
       throw new Error(
@@ -367,8 +444,26 @@ test.describe("Strapi and Gatsby content comparison", () => {
       console.log(`Checking ${parkLabel}`);
       annotate("park", parkLabel);
 
-      await page.goto(`/${park.slug}/`);
-      await page.waitForLoadState("networkidle");
+      const parkUrl = new URL(`${park.slug}/`, process.env.BASE_URL).href;
+      const response = await skipIfUnreachable("The park page", parkUrl, () =>
+        page.goto(`/${park.slug}/`, { timeout: REQUEST_TIMEOUT_MS }),
+      );
+      skipIfUnavailableStatus("The park page", parkUrl, response?.status());
+      // Give the page's scripts and data requests time to finish. The page
+      // itself has loaded, so if a request is still running after the
+      // timeout, compare the content anyway: the checks below wait for
+      // each item, and only fail if it's missing.
+      await page
+        .waitForLoadState("networkidle", { timeout: REQUEST_TIMEOUT_MS })
+        .catch((error) => {
+          if (error?.name !== "TimeoutError") {
+            throw error;
+          }
+          annotate(
+            "network not idle",
+            `Requests still running after ${REQUEST_TIMEOUT_MS / 1000}s; compared the content anyway`,
+          );
+        });
       await expect(page.locator("h1")).toContainText(park.protectedAreaName);
 
       for (const [relation, items] of getRelations(park)) {

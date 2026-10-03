@@ -12,6 +12,11 @@ if (!process.env.BASE_URL) {
   throw new Error(`BASE_URL is not set. Create env/.env.${environment} from env/.env.${environment}.example or set BASE_URL.`);
 }
 
+// 3. Folder the workers share to pause the run on network errors (see
+// networkBreaker.js). Workers inherit it from the main process, so the
+// whole run uses one folder.
+process.env.E2E_BREAKER_DIR ??= path.join(require('os').tmpdir(), `bcparks-e2e-breaker-${process.pid}`);
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
