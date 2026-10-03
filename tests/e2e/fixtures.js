@@ -36,7 +36,7 @@ function trackRequests(context) {
             const errorText = request.failure()?.errorText;
             failed.push(`failed: ${errorText} ${request.url()}`);
             if (isSiteUrl(request.url()) && isNetworkError(errorText)) {
-                pauseTests(`${errorText} ${request.url()}`);
+                pauseTests(`${errorText} ${request.url()}`, request.url());
             }
         }
     });
@@ -83,7 +83,7 @@ export const test = base.extend({
         if (testInfo.status !== testInfo.expectedStatus) {
             const stalledUrl = requests.stalledSiteRequest();
             if (stalledUrl) {
-                pauseTests(`no response from ${stalledUrl}`);
+                pauseTests(`no response from ${stalledUrl}`, stalledUrl);
             }
             const lines = requests.report();
             if (lines.length > 0) {

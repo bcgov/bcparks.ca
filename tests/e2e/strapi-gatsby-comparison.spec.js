@@ -242,10 +242,11 @@ function isUnreachableError(error) {
  * On the last attempt, skips the test instead, and says why in the log and
  * the report.
  * @param {string} reason why the park couldn't be checked
+ * @param {string} url URL that couldn't be loaded, so the pause waits for its server
  * @returns {never}
  */
-function skipPark(reason) {
-  pauseTests(reason);
+function skipPark(reason, url) {
+  pauseTests(reason, url);
   const { retry, project } = test.info();
   if (retry < project.retries) {
     throw new Error(`${reason}. Retrying after the network pause.`);
@@ -259,10 +260,11 @@ function skipPark(reason) {
  * server can't be reached. Other errors are rethrown, so they still fail the test.
  * @template T
  * @param {string} name what is being loaded, for the skip reason
+ * @param {string} url URL being loaded
  * @param {() => Promise<T>} action the request or navigation
  * @returns {Promise<T>} the action's result
  */
-async function skipIfUnreachable(name, action) {
+async function skipIfUnreachable(name, url, action) {
   try {
     return await action();
   } catch (error) {
@@ -271,6 +273,7 @@ async function skipIfUnreachable(name, action) {
     }
     skipPark(
       `${name} could not be reached: ${String(error.message).split("\n")[0]}`,
+      url,
     );
   }
 }
@@ -279,12 +282,13 @@ async function skipIfUnreachable(name, action) {
  * Skips the test if a response shows the server is rate limiting or failing
  * (429 or 5xx). Other statuses, such as 404, are left for the test to check.
  * @param {string} name what was loaded, for the skip reason
+ * @param {string} url URL that was loaded
  * @param {number|undefined} status HTTP status of the response
  * @returns {void}
  */
-function skipIfUnavailableStatus(name, status) {
+function skipIfUnavailableStatus(name, url, status) {
   if (status === 429 || status >= 500) {
-    skipPark(`${name} returned ${status}`);
+    skipPark(`${name} returned ${status}`, url);
   }
 }
 
@@ -297,13 +301,13 @@ function skipIfUnavailableStatus(name, status) {
  */
 async function fetchProtectedArea(request, orcs, params) {
   const url = new URL("api/protected-areas", process.env.CMS_URL).href;
-  const response = await skipIfUnreachable("The Strapi API", () =>
+  const response = await skipIfUnreachable("The Strapi API", url, () =>
     request.get(url, {
       params: { "filters[orcs]": orcs, ...params },
       timeout: REQUEST_TIMEOUT_MS,
     }),
   );
-  skipIfUnavailableStatus("The Strapi API", response.status());
+  skipIfUnavailableStatus("The Strapi API", url, response.status());
   expect(
     response.ok(),
     `Strapi API returned ${response.status()} for ORCS ${orcs}`,
@@ -440,13 +444,26 @@ test.describe("Strapi and Gatsby content comparison", () => {
       console.log(`Checking ${parkLabel}`);
       annotate("park", parkLabel);
 
-      const response = await skipIfUnreachable("The park page", () =>
+      const parkUrl = new URL(`${park.slug}/`, process.env.BASE_URL).href;
+      const response = await skipIfUnreachable("The park page", parkUrl, () =>
         page.goto(`/${park.slug}/`, { timeout: REQUEST_TIMEOUT_MS }),
       );
-      skipIfUnavailableStatus("The park page", response?.status());
-      await skipIfUnreachable("The park page", () =>
-        page.waitForLoadState("networkidle", { timeout: REQUEST_TIMEOUT_MS }),
-      );
+      skipIfUnavailableStatus("The park page", parkUrl, response?.status());
+      // Give the page's scripts and data requests time to finish. The page
+      // itself has loaded, so if a request is still running after the
+      // timeout, compare the content anyway: the checks below wait for
+      // each item, and only fail if it's missing.
+      await page
+        .waitForLoadState("networkidle", { timeout: REQUEST_TIMEOUT_MS })
+        .catch((error) => {
+          if (error?.name !== "TimeoutError") {
+            throw error;
+          }
+          annotate(
+            "network not idle",
+            `Requests still running after ${REQUEST_TIMEOUT_MS / 1000}s; compared the content anyway`,
+          );
+        });
       await expect(page.locator("h1")).toContainText(park.protectedAreaName);
 
       for (const [relation, items] of getRelations(park)) {
