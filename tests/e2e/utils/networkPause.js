@@ -8,10 +8,12 @@ import { setTimeout as sleep } from 'node:timers/promises';
 // Strapi API) is unreachable, which happens when GitHub Actions runners are
 // rate limited. A spec imports `test` and `expect` from here instead of
 // '@playwright/test', and calls pauseTests() when a request fails with
-// isUnreachableError(); every worker then waits before its next test. One worker checks a server that's down every 30 seconds, and
-// tests resume when every server that failed responds. If one outage lasts
-// longer than MAX_PAUSE_MS, the run stops pausing, so it can finish within the
-// workflow's time limit.
+// isUnreachableError(). Every worker then waits before its next test, and the
+// spec can call waitWhilePaused() to wait before retrying the request. One
+// worker checks a server that's down every 30 seconds, and tests resume when
+// every server that failed responds. If one outage lasts longer than
+// MAX_PAUSE_MS, the run stops pausing, so it can finish within the workflow's
+// time limit.
 //
 // Playwright replaces a worker process after a test fails, so the state is
 // kept in files in STATE_DIR (one per run, see playwright.config.js): a
@@ -22,7 +24,7 @@ const PROBE_LOCK = path.join(STATE_DIR, 'probe.lock');
 const GAVE_UP = path.join(STATE_DIR, 'gave-up');
 const PROBE_INTERVAL_MS = 30000;
 const POLL_INTERVAL_MS = 2000;
-const MAX_PAUSE_MS = 15 * 60 * 1000;
+export const MAX_PAUSE_MS = 15 * 60 * 1000;
 
 // Timeouts and network errors from Playwright and Node, and the connection
 // errors that Chromium, Firefox and WebKit report in navigation errors
@@ -77,7 +79,7 @@ export { expect };
  * @returns {Promise<void>} resolves when no servers are down, or the outage
  * has lasted longer than MAX_PAUSE_MS
  */
-async function waitWhilePaused() {
+export async function waitWhilePaused() {
     for (let down = downServers(); down.length > 0 && !fs.existsSync(GAVE_UP); down = downServers()) {
         const since = Math.min(...down.map((server) => server.since));
         if (Date.now() - since > MAX_PAUSE_MS) {

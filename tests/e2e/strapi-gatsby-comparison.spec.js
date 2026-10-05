@@ -2,7 +2,9 @@ import {
   test,
   expect,
   isUnreachableError,
+  MAX_PAUSE_MS,
   pauseTests,
+  waitWhilePaused,
 } from "./utils/networkPause.js";
 
 // Compares Strapi API content with the published park pages to detect
@@ -234,66 +236,53 @@ const SKIPPED_RELATIONS = {
 
 // When the Strapi API or the park page can't be reached (a timeout, network
 // error, 429 or 5xx), GitHub Actions runners are probably rate limited. The
-// whole run is paused until the site responds again (see utils/networkPause.js),
-// and the park is retried after the pause. If the retry can't reach it either,
-// the park is skipped, not failed: only parks that load are checked for
-// corruption. Each request has its own timeout, so it fails before the test
-// timeout does: a test timeout can't be turned into a retry or skip.
+// whole run is paused until the server responds (see utils/networkPause.js),
+// then the request is tried once more. If that fails too, the park is skipped,
+// not failed: only parks that load are checked for corruption. Each request
+// has its own timeout, so it fails before the test timeout does.
 const REQUEST_TIMEOUT_MS = 10000;
 const TEST_TIMEOUT_MS = 60000;
 
 /**
- * Pauses the test run, then fails the test so it is retried after the pause.
- * On the last attempt, skips the test instead, and says why in the log and
- * the report.
- * @param {string} reason why the park couldn't be checked
- * @param {string} url URL that couldn't be loaded, so the pause waits for its server
- * @returns {never}
- */
-function skipPark(reason, url) {
-  pauseTests(reason, url);
-  const { retry, project } = test.info();
-  if (retry < project.retries) {
-    throw new Error(`${reason}. Retrying after the network pause.`);
-  }
-  console.log(`Skipped: ${reason}`);
-  test.skip(true, reason);
-}
-
-/**
- * Runs a request or navigation, and skips the test (see skipPark) if the
- * server can't be reached. Other errors are rethrown, so they still fail the test.
+ * Runs a request or navigation. If the server can't be reached (a timeout,
+ * network error, 429 or 5xx), pauses the run, waits for the server, and tries
+ * once more. If it still can't be reached, the park is skipped. On a Playwright
+ * retry, it fails instead: an earlier attempt failed for some other reason,
+ * which a skip would hide. Other errors are rethrown, so they fail the test.
  * @template T
- * @param {string} name what is being loaded, for the skip reason
- * @param {string} url URL being loaded
- * @param {() => Promise<T>} action the request or navigation
- * @returns {Promise<T>} the action's result
+ * @param {string} name what is being loaded, for the log and the skip reason
+ * @param {string} url URL being loaded, so the pause waits for its server
+ * @param {() => Promise<T>} action the request or navigation, returning its response
+ * @returns {Promise<T>} the action's response
  */
-async function skipIfUnreachable(name, url, action) {
-  try {
-    return await action();
-  } catch (error) {
-    if (!isUnreachableError(error)) {
-      throw error;
+async function loadOrSkip(name, url, action) {
+  for (let attempt = 1; ; attempt++) {
+    let reason;
+    try {
+      const response = await action();
+      const status = response?.status();
+      if (status !== 429 && !(status >= 500)) {
+        return response;
+      }
+      reason = `${name} returned ${status}`;
+    } catch (error) {
+      if (!isUnreachableError(error)) {
+        throw error;
+      }
+      reason = `${name} could not be reached: ${String(error.message).split("\n")[0]}`;
     }
-    skipPark(
-      `${name} could not be reached: ${String(error.message).split("\n")[0]}`,
-      url,
-    );
-  }
-}
 
-/**
- * Skips the test if a response shows the server is rate limiting or failing
- * (429 or 5xx). Other statuses, such as 404, are left for the test to check.
- * @param {string} name what was loaded, for the skip reason
- * @param {string} url URL that was loaded
- * @param {number|undefined} status HTTP status of the response
- * @returns {void}
- */
-function skipIfUnavailableStatus(name, url, status) {
-  if (status === 429 || status >= 500) {
-    skipPark(`${name} returned ${status}`, url);
+    pauseTests(reason, url);
+    if (attempt === 2) {
+      if (test.info().retry > 0) {
+        throw new Error(`${reason}. Not skipped, because an earlier attempt of this test failed.`);
+      }
+      console.log(`Skipped: ${reason}`);
+      test.skip(true, reason);
+    }
+    // Room to wait for the pause, which can be longer than the test timeout
+    test.setTimeout(test.info().timeout + MAX_PAUSE_MS);
+    await waitWhilePaused();
   }
 }
 
@@ -306,13 +295,12 @@ function skipIfUnavailableStatus(name, url, status) {
  */
 async function fetchProtectedArea(request, orcs, params) {
   const url = new URL("api/protected-areas", process.env.CMS_URL).href;
-  const response = await skipIfUnreachable("The Strapi API", url, () =>
+  const response = await loadOrSkip("The Strapi API", url, () =>
     request.get(url, {
       params: { "filters[orcs]": orcs, ...params },
       timeout: REQUEST_TIMEOUT_MS,
     }),
   );
-  skipIfUnavailableStatus("The Strapi API", url, response.status());
   expect(
     response.ok(),
     `Strapi API returned ${response.status()} for ORCS ${orcs}`,
@@ -446,10 +434,9 @@ test.describe("Strapi and Gatsby content comparison", () => {
       annotate("park", `${park.protectedAreaName} (ORCS ${park.orcs})`);
 
       const parkUrl = new URL(`${park.slug}/`, process.env.BASE_URL).href;
-      const response = await skipIfUnreachable("The park page", parkUrl, () =>
+      await loadOrSkip("The park page", parkUrl, () =>
         page.goto(`/${park.slug}/`, { timeout: REQUEST_TIMEOUT_MS }),
       );
-      skipIfUnavailableStatus("The park page", parkUrl, response?.status());
       // Give the page's scripts and data requests time to finish. The page
       // itself has loaded, so if a request is still running after the
       // timeout, compare the content anyway: the checks below wait for
