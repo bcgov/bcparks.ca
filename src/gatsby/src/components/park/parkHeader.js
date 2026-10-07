@@ -164,14 +164,11 @@ export default function ParkHeader({
   const hasDatesSection =
     isParkOpen !== false && (hasParkDates || hasNote || hasFeatureDates);
 
-  // Check if array contains a "tldr"
-  const hasTldr = (array) => array?.includes("tldr") || false;
-  // Filter audio clips if it has a "tldr" displayLocation
+  // Filter audio clips that are shown with the park name
   const audioClip = useMemo(() => {
     return (
       audioClips?.filter(
-        (audio) =>
-          hasTldr(audio.displayLocation?.strapi_json_value) && audio.url,
+        (audio) => audio.showWithProtectedAreaName && audio.url,
       ) || []
     );
   }, [audioClips]);

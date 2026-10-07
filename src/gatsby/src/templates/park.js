@@ -877,9 +877,10 @@ export const query = graphql`
         languageName
         firstNationName
         phoneticSpelling
-        displayLocation {
-          strapi_json_value
-        }
+        showWithProtectedAreaName
+        showWithDescription
+        showWithHistory
+        showWithCulturalHeritage
         description {
           data {
             description

@@ -21,27 +21,26 @@ export const AccordionList = ({
   activeAudio,
   setActiveAudio,
 }) => {
-  // Filter function for audio clips
-  const findAudioClipsByLocation = useCallback(
-    (location) => {
-      return (
-        audioClips?.find(
-          (audio) =>
-            audio.displayLocation?.strapi_json_value?.includes(location) &&
-            audio.url,
-        ) || null
-      );
+  /**
+   * Finds the first audio clip with a URL that has the given boolean field set.
+   *
+   * @param {string} field - The audio clip field to check, e.g. "showWithHistory".
+   * @returns {Object|null} The matching audio clip, or null if none.
+   */
+  const findAudioClipByField = useCallback(
+    (field) => {
+      return audioClips?.find((audio) => audio[field] && audio.url) || null;
     },
     [audioClips],
   );
   // Filtered audio clips
   const heritageAudioClip = useMemo(
-    () => findAudioClipsByLocation("heritage"),
-    [findAudioClipsByLocation],
+    () => findAudioClipByField("showWithCulturalHeritage"),
+    [findAudioClipByField],
   );
   const historyAudioClip = useMemo(
-    () => findAudioClipsByLocation("history"),
-    [findAudioClipsByLocation],
+    () => findAudioClipByField("showWithHistory"),
+    [findAudioClipByField],
   );
 
   return (
