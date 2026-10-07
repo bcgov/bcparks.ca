@@ -44,7 +44,7 @@ Every deploy starts `publish-gatsby.yaml` to rebuild the public Gatsby site, and
 | `deploy-prod.yaml` | Manual | `releaseTag` (required) | Same as `deploy-test.yaml`, for prod |
 | `deploy-alpha-test.yaml` | Manual | None | Promotes the latest `alpha` images to alpha-test, publishes Gatsby, and restarts CMS and scheduler |
 | `publish-gatsby.yaml` | Manual, or started by the workflows above | `branchName`: `main` (default) or `alpha`<br>`buildEnv`: `prod` (default), `test` or `dev` | Builds the public Gatsby site and deploys the `public` image, then runs the Playwright content check |
-| `playwright.yaml` | PR to `main` that changes `tests/e2e/**`, manual, or started by `publish-gatsby.yaml` | `environment`: `prod` (default), `test`, `dev`, `alpha-test` or `alpha-dev`<br>`suite`: `full` (default) or `content-check` | Runs the end-to-end tests against an environment. PR runs use `prod` and `full` |
+| `playwright.yaml` | PR to `main` or `alpha` that changes `tests/e2e/**` or the workflow, manual, or started by `publish-gatsby.yaml` | `environment`: `prod` (default), `test`, `dev`, `alpha-test` or `alpha-dev`<br>`suite`: `full-chromium` (default), `full-firefox`, `full-webkit` or `content-check` | Runs the end-to-end tests against an environment, in one browser. PR runs use `full-chromium`, against `prod` for PRs to `main` and `alpha-test` for PRs to `alpha` |
 | `on-pr.yaml` | PR to `main` or `alpha` that changes `src/**` | None | Runs the CMS and Gatsby unit tests |
 
 ## Dev Environment
@@ -133,7 +133,7 @@ curl --location --request POST 'https://api.github.com/repos/bcgov/bcparks.ca/ac
 Playwright tests can be run manually from the Actions tab ("Playwright Tests" > "Run workflow"), or with the GitHub CLI:
 
 ```
-gh workflow run playwright.yaml --repo bcgov/bcparks.ca --ref main -f environment=test -f suite=full
+gh workflow run playwright.yaml --repo bcgov/bcparks.ca --ref main -f environment=test -f suite=full-chromium
 ```
 
 See [tests/e2e/README.md](../../tests/e2e/README.md) for details about the tests.

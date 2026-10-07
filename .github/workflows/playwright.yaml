@@ -1,12 +1,15 @@
 name: Playwright Tests
-run-name: Playwright Tests (${{ inputs.suite || 'full' }}, ${{ inputs.environment || 'prod' }})
+run-name: Playwright Tests (${{ inputs.suite || 'full-chromium' }}, ${{ inputs.environment || (github.base_ref == 'alpha' && 'alpha-test') || 'prod' }})
 on:
-  # Run Playwright tests on PRs that modify the E2E tests or the workflow itself
+  # Run Playwright tests on PRs that modify the E2E tests or the workflow itself.
+  # PRs run the full suite in Chromium only, to limit the requests from
+  # GitHub's runners to bcparks.ca. Manual runs can pick another browser.
   pull_request:
     branches:
-      # QA PRs should target main, which tests against https://bcparks.ca/.
-      # The alpha environments are tested with workflow_dispatch runs.
+      # PRs to main test against prod (https://bcparks.ca/), and PRs to alpha
+      # test against alpha-test. Other environments use workflow_dispatch runs.
       - main
+      - alpha
     paths:
       - tests/e2e/**
       - .github/workflows/playwright.yaml
@@ -30,14 +33,17 @@ on:
       suite:
         description: Tests to run
         type: choice
-        default: full
+        default: full-chromium
         options:
-          - full
+          - full-chromium
+          - full-firefox
+          - full-webkit
           - content-check
 permissions:
   contents: read
 jobs:
   test:
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == 'bcgov/bcparks.ca' }}
     timeout-minutes: 60
     runs-on: ubuntu-latest
     defaults:
@@ -46,9 +52,10 @@ jobs:
     steps:
     - name: Set target site
       env:
-        # Only workflow_dispatch runs set inputs; PRs use prod and the full suite
-        ENVIRONMENT: ${{ inputs.environment || 'prod' }}
-        SUITE: ${{ inputs.suite || 'full' }}
+        # Only manual runs set inputs. PRs use full-chromium, and prod for PRs
+        # to main or alpha-test for PRs to alpha.
+        ENVIRONMENT: ${{ inputs.environment || (github.base_ref == 'alpha' && 'alpha-test') || 'prod' }}
+        SUITE: ${{ inputs.suite || 'full-chromium' }}
         LICENSE_PLATE: ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}
       run: |
         if [ "$ENVIRONMENT" = "prod" ]; then
@@ -73,6 +80,11 @@ jobs:
         echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
         echo "CMS_URL=$cms_url" >> "$GITHUB_ENV"
         echo "SUITE=$SUITE" >> "$GITHUB_ENV"
+        # The browser to install: the content check runs in Chromium
+        case "$SUITE" in
+          full-*) echo "BROWSER=${SUITE#full-}" >> "$GITHUB_ENV" ;;
+          *) echo "BROWSER=chromium" >> "$GITHUB_ENV" ;;
+        esac
       working-directory: .
     - uses: actions/checkout@v6
     - uses: actions/setup-node@v6
@@ -83,19 +95,13 @@ jobs:
     - name: Install dependencies
       run: npm ci
     - name: Install Playwright Browsers
-      run: |
-        # The content check only runs in Chromium
-        if [ "$SUITE" = "content-check" ]; then
-          npx playwright install --with-deps chromium
-        else
-          npx playwright install --with-deps
-        fi
+      run: npx playwright install --with-deps "$BROWSER"
     - name: Run Playwright tests
       run: |
         if [ "$SUITE" = "content-check" ]; then
           npm run test:content-check
         else
-          npm test
+          npm run "test:$BROWSER"
         fi
     - uses: actions/upload-artifact@v4
       if: always()
