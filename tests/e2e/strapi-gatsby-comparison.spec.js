@@ -101,7 +101,7 @@ const hasAboutSection = (park) =>
 /**
  * Checks whether an audio clip's title is shown on the park page. The title
  * is shown in the highlights, history and cultural heritage sections, when
- * that section is shown. showWithProtectedAreaName is a play button with no
+ * that section is shown. showWithParkName is a play button with no
  * text, so it is not checked (see components/audioButton.js and
  * components/park/).
  * @param {object} clip audio clip from the Strapi API
@@ -113,9 +113,9 @@ const isAudioClipShown = (clip, park) => {
     return false;
   }
   return (
-    (clip.showWithDescription && hasText(park.description)) ||
-    (clip.showWithHistory && hasText(park.history)) ||
-    (clip.showWithCulturalHeritage && hasText(park.culturalHeritage))
+    (clip.showInHighlightsSection && hasText(park.description)) ||
+    (clip.showInHistorySection && hasText(park.history)) ||
+    (clip.showInCulturalHeritageSection && hasText(park.culturalHeritage))
   );
 };
 
@@ -275,7 +275,9 @@ async function loadOrSkip(name, url, action) {
     pauseTests(reason, url);
     if (attempt === 2) {
       if (test.info().retry > 0) {
-        throw new Error(`${reason}. Not skipped, because an earlier attempt of this test failed.`);
+        throw new Error(
+          `${reason}. Not skipped, because an earlier attempt of this test failed.`,
+        );
       }
       console.log(`Skipped: ${reason}`);
       test.skip(true, reason);

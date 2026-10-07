@@ -71,10 +71,10 @@ exports.createSchemaCustomization = ({ actions }) => {
     phoneticSpelling: String
     recordingDate: Date
     audioClipType: String
-    showWithProtectedAreaName: Boolean
-    showWithDescription: Boolean
-    showWithHistory: Boolean
-    showWithCulturalHeritage: Boolean
+    showWithParkName: Boolean
+    showInHighlightsSection: Boolean
+    showInHistorySection: Boolean
+    showInCulturalHeritageSection: Boolean
     description: STRAPI_AUDIO_CLIPDescription
     transcript: STRAPI_AUDIO_CLIPTranscript
   }

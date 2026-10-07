@@ -24,7 +24,7 @@ export const AccordionList = ({
   /**
    * Finds the first audio clip with a URL that has the given boolean field set.
    *
-   * @param {string} field - The audio clip field to check, e.g. "showWithHistory".
+   * @param {string} field - The audio clip field to check, e.g. "showInHistorySection".
    * @returns {Object|null} The matching audio clip, or null if none.
    */
   const findAudioClipByField = useCallback(
@@ -35,11 +35,11 @@ export const AccordionList = ({
   );
   // Filtered audio clips
   const heritageAudioClip = useMemo(
-    () => findAudioClipByField("showWithCulturalHeritage"),
+    () => findAudioClipByField("showInCulturalHeritageSection"),
     [findAudioClipByField],
   );
   const historyAudioClip = useMemo(
-    () => findAudioClipByField("showWithHistory"),
+    () => findAudioClipByField("showInHistorySection"),
     [findAudioClipByField],
   );
 

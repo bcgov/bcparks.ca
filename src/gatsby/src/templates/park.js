@@ -70,7 +70,7 @@ export default function ParkTemplate({ data }) {
 
   const activeActivities = sortBy(
     (park.parkActivities || []).filter(
-      (activity) => activity.isActive && activity.activityType?.isActive
+      (activity) => activity.isActive && activity.activityType?.isActive,
     ),
     ["activityType.rank", "activityType.activityName"],
     ["asc"],
@@ -877,10 +877,10 @@ export const query = graphql`
         languageName
         firstNationName
         phoneticSpelling
-        showWithProtectedAreaName
-        showWithDescription
-        showWithHistory
-        showWithCulturalHeritage
+        showWithParkName
+        showInHighlightsSection
+        showInHistorySection
+        showInCulturalHeritageSection
         description {
           data {
             description

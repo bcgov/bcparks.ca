@@ -39,22 +39,22 @@
       "type": "enumeration",
       "enum": ["Place name", "Welcome message"]
     },
-    "showWithProtectedAreaName": {
+    "showWithParkName": {
       "type": "boolean",
       "required": true,
       "default": true
     },
-    "showWithDescription": {
+    "showInHighlightsSection": {
       "type": "boolean",
       "required": true,
       "default": true
     },
-    "showWithHistory": {
+    "showInHistorySection": {
       "type": "boolean",
       "required": true,
       "default": false
     },
-    "showWithCulturalHeritage": {
+    "showInCulturalHeritageSection": {
       "type": "boolean",
       "required": true,
       "default": false

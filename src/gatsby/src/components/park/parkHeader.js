@@ -167,9 +167,7 @@ export default function ParkHeader({
   // Filter audio clips that are shown with the park name
   const audioClip = useMemo(() => {
     return (
-      audioClips?.filter(
-        (audio) => audio.showWithProtectedAreaName && audio.url,
-      ) || []
+      audioClips?.filter((audio) => audio.showWithParkName && audio.url) || []
     );
   }, [audioClips]);
 

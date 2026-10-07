@@ -30,8 +30,9 @@ export default function ParkOverview({
   // Filter audio clips that are shown with the description (highlights)
   const audioClip = useMemo(() => {
     return (
-      audioClips?.filter((audio) => audio.showWithDescription && audio.url) ||
-      []
+      audioClips?.filter(
+        (audio) => audio.showInHighlightsSection && audio.url,
+      ) || []
     );
   }, [audioClips]);
   // Set the expand condition if

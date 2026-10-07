@@ -11,7 +11,7 @@ the schema, so they need to exist before they can be populated.
 Updates are done with knex so both draft and published rows are updated.
 */
 
-// Strapi maps showWithProtectedAreaName to show_with_protected_area_name, etc.
+// Strapi maps showWithParkName to show_with_protected_area_name, etc.
 const COLUMNS_BY_LOCATION = {
   tldr: "show_with_protected_area_name",
   highlights: "show_with_description",
