@@ -18,10 +18,11 @@ const GATE_DATE_TYPE_ID = 1;
 const OPERATION_DATE_TYPE_ID = 6;
 
 const getToday = () => {
-  // Convert to America/Vancouver to ensure consistent closure logic across timezones
+  // Convert to America/Dawson_Creek (UTC-7), matching BC time
+  // to ensure consistent closure logic across timezones
   const pacificTime = utcToZonedTime(
     new Date().toISOString(),
-    "America/Vancouver"
+    "America/Dawson_Creek",
   );
   return format(pacificTime, "yyyy-MM-dd");
 };

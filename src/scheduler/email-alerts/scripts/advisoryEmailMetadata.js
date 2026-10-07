@@ -18,7 +18,7 @@ const METADATA_LABELS = {
   [METADATA_FIELDS.SUBMITTER]: "Submitter",
 };
 
-const METADATA_TIMEZONE = "America/Vancouver";
+const METADATA_TIMEZONE = "America/Dawson_Creek";
 const METADATA_DATE_FORMAT = "MMMM dd, yyyy hh:mm a";
 
 /**
