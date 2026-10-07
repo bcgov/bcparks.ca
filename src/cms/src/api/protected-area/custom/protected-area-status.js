@@ -18,10 +18,10 @@ const GATE_DATE_TYPE_ID = 1;
 const OPERATION_DATE_TYPE_ID = 6;
 
 const getToday = () => {
-  // Convert to America/Los_Angeles to ensure consistent closure logic across timezones
+  // Convert to America/Vancouver to ensure consistent closure logic across timezones
   const pacificTime = utcToZonedTime(
     new Date().toISOString(),
-    "America/Los_Angeles"
+    "America/Vancouver"
   );
   return format(pacificTime, "yyyy-MM-dd");
 };

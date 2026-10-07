@@ -12,8 +12,8 @@ const disabled = process.env.DISABLE_LIFECYCLES === "true";
 
 const formatDateToPacificTime = (dateString) => {
   // Strapi returns the date in ISO format e.g. 2025-01-01T00:00:00.000Z
-  // Convert dateString to Pacific Time
-  const pacificTime = utcToZonedTime(dateString, "America/Los_Angeles");
+  // Convert dateString to Pacific Time (PCT)
+  const pacificTime = utcToZonedTime(dateString, "America/Vancouver");
   // Format the date in YYYY-MM-DD e.g. 2025-01-01
   return format(pacificTime, "yyyy-MM-dd");
 };
