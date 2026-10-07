@@ -39,7 +39,8 @@ permissions:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on:
+      group: Larger Runners - OpenShift Static-IP
     defaults:
       run:
         working-directory: tests/e2e
