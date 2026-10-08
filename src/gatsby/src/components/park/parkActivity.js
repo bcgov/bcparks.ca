@@ -8,6 +8,7 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import HtmlContent from "../htmlContent";
 import StaticIcon from "./staticIcon";
 import CustomToggle from "./customToggle";
+import { TrailReports } from "./visitorGuidelines";
 import DiscoverParksLogo from "../../images/discover-parks-instagram-dark-green-icon-with-text.png";
 import { isNullOrWhiteSpace } from "../../utils/helpers";
 import { trackSnowplowEvent } from "../../utils/snowplowHelper";
@@ -18,6 +19,7 @@ export const AccordionList = ({
   activity,
   openAccordions,
   toggleAccordion,
+  trailReports,
 }) => {
   return (
     <Accordion className={`is-open--${openAccordions[eventKey]}`}>
@@ -63,13 +65,23 @@ export const AccordionList = ({
                 </HtmlContent>
               </blockquote>
             )}
+
+          {/* Display trail reports for hiking section */}
+          {activity.activityType.activityCode === "hiking" && (
+            <TrailReports reports={trailReports} />
+          )}
         </div>
       </Accordion.Collapse>
     </Accordion>
   );
 };
 
-export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
+export default function ParkActivity({
+  data,
+  slug,
+  hasDiscoverParksLink,
+  trailReports,
+}) {
   const [activityData] = useState(
     JSON.parse(JSON.stringify(data)), // deep copy
   );
@@ -185,6 +197,7 @@ export default function ParkActivity({ data, slug, hasDiscoverParksLink }) {
               activity={activity}
               openAccordions={openAccordions}
               toggleAccordion={toggleAccordion}
+              trailReports={trailReports}
             />
           ))}
         </Col>

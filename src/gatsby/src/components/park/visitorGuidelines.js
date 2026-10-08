@@ -19,6 +19,24 @@ const addCacheBuster = (url, isoDate) => {
   return `${url}${separator}cb=${cacheBuster}`;
 };
 
+export const TrailReports = ({ reports }) => {
+  if (!reports?.length) return null;
+
+  return reports.map((report, index) => (
+    <p key={index}>
+      View the{" "}
+      <a
+        href={addCacheBuster(report.reportUrl, report.updatedAt)}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {report.title} [PDF]
+      </a>
+      {` (${formatDate(report.reportDate)})`}.
+    </p>
+  ));
+};
+
 export const Guideline = ({ guide, reports }) => {
   const guidelineType = guide.guidelineType;
   const guidelineTypeIcon = guidelineType?.icon
@@ -37,21 +55,7 @@ export const Guideline = ({ guide, reports }) => {
             ? guide.description.data.description
             : guidelineType.defaultDescription.data.defaultDescription}
         </HtmlContent>
-        {guidelineType.hasTrailReport &&
-          reports?.length > 0 &&
-          reports.map((report, index) => (
-            <p key={index}>
-              View the{" "}
-              <a
-                href={addCacheBuster(report.reportUrl, report.updatedAt)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {report.title} [PDF]
-              </a>
-              {` (${formatDate(report.reportDate)})`}.
-            </p>
-          ))}
+        {guidelineType.hasTrailReport && <TrailReports reports={reports} />}
       </Col>
     </Row>
   );

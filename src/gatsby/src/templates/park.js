@@ -518,6 +518,7 @@ export default function ParkTemplate({ data }) {
                   data={activeActivities}
                   slug={park.slug}
                   hasDiscoverParksLink={park.hasDiscoverParksLink}
+                  trailReports={park.trailReports}
                 />
               </div>
             )}
