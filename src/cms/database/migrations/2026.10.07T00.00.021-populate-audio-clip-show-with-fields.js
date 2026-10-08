@@ -1,8 +1,8 @@
 "use strict";
 
 /*
-Populate the new showWith* boolean fields on audio_clips from the existing
-displayLocation multi-select values. This is the first step in replacing
+Populate the new showWithParkName and showIn*Section boolean fields on
+audio_clips from the existing displayLocation multi-select values. This is the first step in replacing
 strapi-plugin-multi-select with built-in boolean fields.
 
 The columns are created here because Strapi runs migrations before it syncs
@@ -11,12 +11,12 @@ the schema, so they need to exist before they can be populated.
 Updates are done with knex so both draft and published rows are updated.
 */
 
-// Strapi maps showWithParkName to show_with_protected_area_name, etc.
+// Strapi maps showWithParkName to show_with_park_name, etc.
 const COLUMNS_BY_LOCATION = {
-  tldr: "show_with_protected_area_name",
-  highlights: "show_with_description",
-  history: "show_with_history",
-  heritage: "show_with_cultural_heritage",
+  tldr: "show_with_park_name",
+  highlights: "show_in_highlights_section",
+  history: "show_in_history_section",
+  heritage: "show_in_cultural_heritage_section",
 };
 
 /**
