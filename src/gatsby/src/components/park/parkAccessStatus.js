@@ -167,6 +167,7 @@ function parkAccessFromAdvisories(
 export default function ParkAccessStatus({
   advisories,
   slug,
+  parkName,
   parkFeatures,
   operationDates,
   onStatusCalculated,
@@ -289,6 +290,12 @@ export default function ParkAccessStatus({
             <Link to={`/${slug}/#advisories`}>
               {hideComma ? "C" : "c"}heck advisories{" "}
               {`(${advisoriesWithSeasonal.length})`}
+              {parkName && (
+                <span className="visually-hidden">
+                  {" "}
+                  (active for {parkName})
+                </span>
+              )}
             </Link>
           )}
           {punctuation}
@@ -301,6 +308,7 @@ export default function ParkAccessStatus({
 ParkAccessStatus.propTypes = {
   advisories: PropTypes.array.isRequired,
   slug: PropTypes.string.isRequired,
+  parkName: PropTypes.string,
   parkFeatures: PropTypes.array.isRequired,
   operationDates: PropTypes.array.isRequired,
   onStatusCalculated: PropTypes.func,
