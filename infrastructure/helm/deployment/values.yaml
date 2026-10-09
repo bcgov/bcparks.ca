@@ -50,7 +50,7 @@ cms:
     smtpReplyTo: noreply@gov.bc.ca
     cacheEnabled: true
     cacheType: redis
-    cacheTtl: "600"
+    cacheTtl: "600000"
     enableGraphQLPlayground: true
     indexName: bcparks-protected-areas
 
