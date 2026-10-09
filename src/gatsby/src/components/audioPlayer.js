@@ -92,7 +92,7 @@ const AudioPlayer = ({ src, trackSrc }) => {
       />
       <div className="volume">
         <button
-          aria-label={`${showVolumeControl ? "Show" : "Hide"} volume control`}
+          aria-label={`${showVolumeControl ? "Hide" : "Show"} volume control`}
           onClick={() => setShowVolumeControl(!showVolumeControl)}
           className="btn btn-volume"
         >
@@ -101,6 +101,8 @@ const AudioPlayer = ({ src, trackSrc }) => {
         {showVolumeControl && (
           <input
             type="range"
+            aria-label="Volume control"
+            title="Volume control"
             min="0"
             max="1"
             step="0.01"
