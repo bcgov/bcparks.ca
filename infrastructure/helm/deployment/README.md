@@ -85,3 +85,14 @@ Run the following commands from the `infrastructure/helm/deployment` directory.
 ### Alpha Test (alpha branch)
 
 `helm -n c1643c-test uninstall   alpha`
+
+## Manually created secrets
+
+These secrets are created by hand in each namespace and are not managed by Helm.
+
+- `bcparks-ssl-wildcard` (all namespaces): the `*.bcparks.ca` TLS certificate used by the `vanity-*` routes.
+- `bcparks-ip-allowlist` (dev and test): the IP allowlist for the public `vanity-*` routes. If it's missing, those routes have no allowlist.
+
+To create `bcparks-ip-allowlist` from an existing route:
+
+`oc -n c1643c-dev create secret generic bcparks-ip-allowlist --from-literal=cidrs="$(oc -n c1643c-dev get route vanity-dev -o jsonpath='{.metadata.annotations.haproxy\.router\.openshift\.io/ip_whitelist}')"`

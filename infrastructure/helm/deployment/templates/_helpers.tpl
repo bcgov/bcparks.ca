@@ -88,6 +88,39 @@ https://{{ .Release.Name }}-{{ .Values.admin.componentName }}-{{ .Release.Namesp
 https://{{ .Release.Name }}-{{ .Values.public.componentName }}-{{ .Release.Namespace }}.{{ .Values.cluster.domain }}
 {{- end -}}
 
+{{/*
+CMS vanity route name: vanity-cms for the main release, vanity-<release>-cms otherwise.
+Override with cms.vanityRoute.name.
+*/}}
+{{ define "bcparks_cms_vanity_route_name" -}}
+{{- if .Values.cms.vanityRoute.name -}}
+{{ .Values.cms.vanityRoute.name }}
+{{- else if eq .Release.Name "main" -}}
+vanity-cms
+{{- else -}}
+vanity-{{ .Release.Name }}-cms
+{{- end -}}
+{{- end -}}
+
+{{/*
+Public vanity route name: vanity-<cms.env.environment>. Override with public.vanityRoute.name.
+*/}}
+{{ define "bcparks_public_vanity_route_name" -}}
+{{ .Values.public.vanityRoute.name | default (printf "vanity-%s" .Values.cms.env.environment) }}
+{{- end -}}
+
+{{/*
+CIDRs for the public vanity routes' IP allowlist, read from a manually created secret
+that Helm doesn't manage. Returns "" when the secret isn't found, including offline
+renders (helm template, client-side --dry-run) where lookup can't reach the cluster.
+*/}}
+{{ define "bcparks_ip_allowlist" -}}
+{{- $secret := lookup "v1" "Secret" .Release.Namespace .Values.cluster.ipAllowlistSecretName -}}
+{{- if $secret -}}
+{{- index $secret.data "cidrs" | default "" | b64dec -}}
+{{- end -}}
+{{- end -}}
+
 {{ define "bcparks_etl_fullname" -}}
 {{ .Release.Name }}-{{ .Values.etl.componentName }}
 {{- end -}}

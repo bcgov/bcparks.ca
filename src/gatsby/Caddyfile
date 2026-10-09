@@ -2,10 +2,6 @@ http://www.bcparks.ca:3000 {
     redir https://bcparks.ca{uri}
 }
 
-http://beta.bcparks.ca:3000 {
-  redir https://bcparks.ca{uri} permanent
-}
-
 :3000 {
     header /page-data/* Cache-Control "public, max-age=0, must-revalidate"
     header /static/* Cache-Control "public, max-age=31536000, immutable"
