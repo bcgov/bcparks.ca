@@ -10,6 +10,7 @@ const fs = require("fs");
 const data = require("./public-documentation.json");
 
 const pathsToDelete = [
+  // Strapi internal endpoints to delete
   "/tokens",
   "/email/settings",
   "/upload",
@@ -18,6 +19,8 @@ const pathsToDelete = [
   "/auth",
   "/connect",
   "/email",
+  // Other non-public endpoints to delete
+  "/staff-contacts",
 ];
 const paths = data.paths;
 
@@ -37,8 +40,8 @@ delete data.tags;
 
 // Fix Website schema if it exists (may not exist in newer Strapi versions)
 if (
-  data.components?.schemas?.Website?.properties?.homepage?.properties?.data?.properties?.attributes
-    ?.properties?.Content
+  data.components?.schemas?.Website?.properties?.homepage?.properties?.data
+    ?.properties?.attributes?.properties?.Content
 ) {
   data.components.schemas.Website.properties.homepage.properties.data.properties.attributes.properties.Content.type =
     "object";

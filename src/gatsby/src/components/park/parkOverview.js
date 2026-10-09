@@ -27,14 +27,11 @@ export default function ParkOverview({
   const hasHr = $("hr").length > 0;
   const hrAtEnd = description.trim().endsWith("<hr>");
   const hasAudioClipPlaceholder = $(".audio-clip").length > 0;
-  // Check if array contains a "highlights"
-  const hasHighlights = (array) => array?.includes("highlights") || false;
-  // Filter audio clips if it has a "highlights" displayLocation
+  // Filter audio clips that are shown with the description (highlights)
   const audioClip = useMemo(() => {
     return (
       audioClips?.filter(
-        (audio) =>
-          hasHighlights(audio.displayLocation?.strapi_json_value) && audio.url,
+        (audio) => audio.showInHighlightsSection && audio.url,
       ) || []
     );
   }, [audioClips]);

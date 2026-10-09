@@ -61,10 +61,6 @@ exports.createSchemaCustomization = ({ actions }) => {
     data: STRAPI_AUDIO_CLIP_TRANSCRIPT_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
-  type STRAPI_AUDIO_CLIP_DISPLAYLOCATION_JSONNODE implements Node @childOf(types: ["STRAPI_AUDIO_CLIP"]) @dontInfer {
-    strapi_json_value: [String]
-  }
-
   type STRAPI_AUDIO_CLIP implements Node @dontInfer {
     title: String
     url: String
@@ -75,7 +71,10 @@ exports.createSchemaCustomization = ({ actions }) => {
     phoneticSpelling: String
     recordingDate: Date
     audioClipType: String
-    displayLocation: STRAPI_AUDIO_CLIP_DISPLAYLOCATION_JSONNODE @link(by: "id", from: "displayLocation___NODE")
+    showWithParkName: Boolean
+    showInHighlightsSection: Boolean
+    showInHistorySection: Boolean
+    showInCulturalHeritageSection: Boolean
     description: STRAPI_AUDIO_CLIPDescription
     transcript: STRAPI_AUDIO_CLIPTranscript
   }

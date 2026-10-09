@@ -58,7 +58,7 @@ export default function SiteTemplate({ data }) {
 
   const activeActivities = sortBy(
     (site.parkActivities || []).filter(
-      (activity) => activity.isActive && activity.activityType?.isActive
+      (activity) => activity.isActive && activity.activityType?.isActive,
     ),
     ["activityType.rank", "activityType.activityName"],
     ["asc"],
@@ -697,9 +697,10 @@ export const query = graphql`
         languageName
         firstNationName
         phoneticSpelling
-        displayLocation {
-          strapi_json_value
-        }
+        showWithParkName
+        showInHighlightsSection
+        showInHistorySection
+        showInCulturalHeritageSection
         description {
           data {
             description

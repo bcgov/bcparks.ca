@@ -39,16 +39,25 @@
       "type": "enumeration",
       "enum": ["Place name", "Welcome message"]
     },
-    "displayLocation": {
-      "type": "customField",
-      "options": [
-        "Park name:tldr",
-        "Highlights in this park:highlights",
-        "About this park - history:history",
-        "About this park - cultural heritage:heritage"
-      ],
-      "customField": "plugin::multi-select.multi-select",
-      "required": false
+    "showWithParkName": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "showInHighlightsSection": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "showInHistorySection": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "showInCulturalHeritageSection": {
+      "type": "boolean",
+      "required": true,
+      "default": false
     },
     "description": {
       "type": "customField",

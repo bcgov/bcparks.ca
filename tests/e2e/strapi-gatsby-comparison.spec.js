@@ -101,21 +101,21 @@ const hasAboutSection = (park) =>
 /**
  * Checks whether an audio clip's title is shown on the park page. The title
  * is shown in the highlights, history and cultural heritage sections, when
- * that section is shown. The "tldr" location is a play button with no text,
- * so it is not checked (see components/audioButton.js and components/park/).
+ * that section is shown. showWithParkName is a play button with no
+ * text, so it is not checked (see components/audioButton.js and
+ * components/park/).
  * @param {object} clip audio clip from the Strapi API
  * @param {object} park protected area from the Strapi API
  * @returns {boolean} true if the clip's title is shown
  */
 const isAudioClipShown = (clip, park) => {
-  const locations = clip.displayLocation ?? [];
   if (!clip.url || !hasText(clip.title)) {
     return false;
   }
   return (
-    (locations.includes("highlights") && hasText(park.description)) ||
-    (locations.includes("history") && hasText(park.history)) ||
-    (locations.includes("heritage") && hasText(park.culturalHeritage))
+    (clip.showInHighlightsSection && hasText(park.description)) ||
+    (clip.showInHistorySection && hasText(park.history)) ||
+    (clip.showInCulturalHeritageSection && hasText(park.culturalHeritage))
   );
 };
 
@@ -275,7 +275,9 @@ async function loadOrSkip(name, url, action) {
     pauseTests(reason, url);
     if (attempt === 2) {
       if (test.info().retry > 0) {
-        throw new Error(`${reason}. Not skipped, because an earlier attempt of this test failed.`);
+        throw new Error(
+          `${reason}. Not skipped, because an earlier attempt of this test failed.`,
+        );
       }
       console.log(`Skipped: ${reason}`);
       test.skip(true, reason);
