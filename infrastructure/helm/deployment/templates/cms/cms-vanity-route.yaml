@@ -1,0 +1,25 @@
+{{- if .Values.cms.env.externalUrl }}
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ include "bcparks_cms_vanity_route_name" . }}
+  labels:
+    component: {{ .Values.cms.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  host: {{ (urlParse .Values.cms.env.externalUrl).host }}
+  to:
+    kind: Service
+    name: {{ .Release.Name }}-{{ .Values.cms.componentName }}
+    weight: 100
+  port:
+    targetPort: {{ .Values.cms.service.portName }}
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+    externalCertificate:
+      name: {{ .Values.cluster.vanityTlsSecretName }}
+  wildcardPolicy: None
+{{- end }}

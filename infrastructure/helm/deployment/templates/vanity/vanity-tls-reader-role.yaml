@@ -1,0 +1,20 @@
+{{- /*
+Lets the OpenShift router read the TLS secret referenced by the vanity routes'
+externalCertificate. Required by OpenShift for routes with external certificates.
+*/ -}}
+{{- if or .Values.cms.env.externalUrl .Values.cluster.publicUrl }}
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ .Release.Name }}-vanity-tls-reader
+  labels:
+    component: vanity
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: [{{ .Values.cluster.vanityTlsSecretName | quote }}]
+    verbs: ["get", "list", "watch"]
+{{- end }}
