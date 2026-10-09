@@ -476,7 +476,10 @@ export default function SiteTemplate({ data }) {
             )}
             {menuItems[4].visible && (
               <div ref={activityRef} className="w-100">
-                <ParkActivity data={activeActivities} />
+                <ParkActivity
+                  data={activeActivities}
+                  trailReports={site.trailReports}
+                />
               </div>
             )}
             {menuItems[5].visible && (

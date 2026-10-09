@@ -65,6 +65,11 @@ const SKIPPED_RESOURCE_TYPES = new Set([
   "media",
 ]);
 
+// Locators for the places a trail report link is shown
+// (see components/park/visitorGuidelines.js and components/park/parkActivity.js)
+const VISITOR_GUIDELINES = "#visitor-guidelines";
+const HIKING_ACCORDION = "#things-to-do .accordion:has(#hiking)";
+
 /**
  * Removes the "<orcs>:" prefix Strapi adds to internal relation names,
  * e.g. "1:Drinking water" -> "Drinking water".
@@ -152,6 +157,8 @@ const getTypeName = (item, relation) => {
 
 // Relations to check on the park page. isEligible mirrors the Gatsby rules
 // for when an item is shown; getText returns the text to look for.
+// locator (one place) or getLocators (several places) sets where to look,
+// defaulting to PAGE_CONTENT.
 const RELATION_CHECKS = {
   parkActivities: {
     isEligible: (item) => isTypeItemShown(item, "parkActivities"),
@@ -181,10 +188,17 @@ const RELATION_CHECKS = {
     locator: "#nearby-parks-container",
   },
   trailReports: {
-    // Trail reports only render inside an active visitor guideline whose
-    // type has hasTrailReport (see components/park/visitorGuidelines.js)
-    isEligible: (item, park) => park.hasTrailReportGuideline,
+    // Trail reports render inside an active visitor guideline whose type has
+    // hasTrailReport, and at the end of the active Hiking activity. Each
+    // place is checked separately so one cannot hide a missing link in the other.
+    isEligible: (item, park) =>
+      park.hasTrailReportGuideline || park.hasHikingActivity,
     getText: (item) => item.title,
+    getLocators: (park) =>
+      [
+        park.hasTrailReportGuideline && VISITOR_GUIDELINES,
+        park.hasHikingActivity && HIKING_ACCORDION,
+      ].filter(Boolean),
   },
   biogeoclimaticZones: {
     isEligible: (item, park) => hasAboutSection(park),
@@ -319,7 +333,7 @@ async function fetchProtectedArea(request, orcs, params) {
 /**
  * Fetches a protected area with its first-level relations, then merges in
  * the related types for the relations in TYPE_RELATIONS and sets
- * hasTrailReportGuideline.
+ * hasTrailReportGuideline and hasHikingActivity.
  * @param {import('@playwright/test').APIRequestContext} request Playwright request fixture
  * @param {number} orcs park ORCS number
  * @returns {Promise<object>} the protected area
@@ -349,6 +363,8 @@ async function getProtectedArea(request, orcs) {
     typeParams[`populate[${relation}][populate][${type}][fields][1]`] =
       "isActive";
   }
+  typeParams["populate[parkActivities][populate][activityType][fields][2]"] =
+    "activityCode";
   typeParams["populate[parkGuidelines][fields][0]"] = "isActive";
   typeParams["populate[parkGuidelines][populate][guidelineType][fields][0]"] =
     "hasTrailReport";
@@ -370,6 +386,12 @@ async function getProtectedArea(request, orcs) {
       item[type] = typesById.get(item.documentId);
     }
   }
+
+  park.hasHikingActivity = (park.parkActivities ?? []).some(
+    (item) =>
+      isTypeItemShown(item, "parkActivities") &&
+      item.activityType.activityCode === "hiking",
+  );
   return park;
 }
 
@@ -471,13 +493,15 @@ test.describe("Strapi and Gatsby content comparison", () => {
           continue;
         }
         const text = check.getText(item);
-        annotate("checked", `${relation}: "${text}"`);
-        await expect
-          .soft(
-            page.locator(check.locator ?? PAGE_CONTENT).first(),
-            `${relation}: "${text}"`,
-          )
-          .toContainText(text);
+        const locators = check.getLocators?.(park) ?? [
+          check.locator ?? PAGE_CONTENT,
+        ];
+        for (const locator of locators) {
+          annotate("checked", `${relation}: "${text}" in ${locator}`);
+          await expect
+            .soft(page.locator(locator).first(), `${relation}: "${text}"`)
+            .toContainText(text);
+        }
       }
     });
   }
