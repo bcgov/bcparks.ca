@@ -1,19 +1,24 @@
 name: Playwright Tests
 run-name: Playwright Tests (${{ inputs.suite || 'full-chromium' }}, ${{ inputs.environment || (github.base_ref == 'alpha' && 'alpha-test') || 'prod' }})
 on:
-  # Run Playwright tests on PRs that modify the E2E tests or the workflow itself.
-  # PRs run the full suite in Chromium only, to limit the requests from
-  # GitHub's runners to bcparks.ca. Manual runs can pick another browser.
-  pull_request:
-    branches:
-      # PRs to main test against prod (https://bcparks.ca/), and PRs to alpha
-      # test against alpha-test. Other environments use workflow_dispatch runs.
-      - main
-      - alpha
-    paths:
-      - tests/e2e/**
-      - .github/workflows/playwright.yaml
-      
+  # PR runs are disabled because of an ongoing issue where the Kamloops Data
+  # Centre blocks the Playwright test traffic, even from the static-IP runner
+  # group. Uncomment this trigger once that's resolved. The pull_request
+  # handling in the job below is still in place, so nothing else needs to change.
+  #
+  # # Run Playwright tests on PRs that modify the E2E tests or the workflow itself.
+  # # PRs run the full suite in Chromium only, to limit the requests from
+  # # GitHub's runners to bcparks.ca. Manual runs can pick another browser.
+  # pull_request:
+  #   branches:
+  #     # PRs to main test against prod (https://bcparks.ca/), and PRs to alpha
+  #     # test against alpha-test. Other environments use workflow_dispatch runs.
+  #     - main
+  #     - alpha
+  #   paths:
+  #     - tests/e2e/**
+  #     - .github/workflows/playwright.yaml
+
   # Manual runs from the GitHub UI. publish-gatsby.yaml also starts this after
   # every publish (with `gh workflow run --ref <branch>`, suite=content-check)
   # to detect Gatsby local database corruption, once the rollout has had time
@@ -51,62 +56,62 @@ jobs:
       run:
         working-directory: tests/e2e
     steps:
-    - name: Set target site
-      env:
-        # Only manual runs set inputs. PRs use full-chromium, and prod for PRs
-        # to main or alpha-test for PRs to alpha.
-        ENVIRONMENT: ${{ inputs.environment || (github.base_ref == 'alpha' && 'alpha-test') || 'prod' }}
-        SUITE: ${{ inputs.suite || 'full-chromium' }}
-        LICENSE_PLATE: ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}
-      run: |
-        if [ "$ENVIRONMENT" = "prod" ]; then
-          base_url="https://bcparks.ca/"
-        else
-          # Non-prod tests use the Helm default routes, which don't have the
-          # ip_whitelist annotation used on the vanity routes. Robots.txt and
-          # canonical tags keep them out of search results. Temporary until
-          # Caddy handles IP-or-password auth for these environments.
-          case "$ENVIRONMENT" in
-            alpha-*) release="alpha"; namespace_env="${ENVIRONMENT#alpha-}" ;;
-            *) release="main"; namespace_env="$ENVIRONMENT" ;;
+      - name: Set target site
+        env:
+          # Only manual runs set inputs. PRs use full-chromium, and prod for PRs
+          # to main or alpha-test for PRs to alpha.
+          ENVIRONMENT: ${{ inputs.environment || (github.base_ref == 'alpha' && 'alpha-test') || 'prod' }}
+          SUITE: ${{ inputs.suite || 'full-chromium' }}
+          LICENSE_PLATE: ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}
+        run: |
+          if [ "$ENVIRONMENT" = "prod" ]; then
+            base_url="https://bcparks.ca/"
+          else
+            # Non-prod tests use the Helm default routes, which don't have the
+            # ip_whitelist annotation used on the vanity routes. Robots.txt and
+            # canonical tags keep them out of search results. Temporary until
+            # Caddy handles IP-or-password auth for these environments.
+            case "$ENVIRONMENT" in
+              alpha-*) release="alpha"; namespace_env="${ENVIRONMENT#alpha-}" ;;
+              *) release="main"; namespace_env="$ENVIRONMENT" ;;
+            esac
+            base_url="https://${release}-public-${LICENSE_PLATE}-${namespace_env}.apps.gold.devops.gov.bc.ca/"
+          fi
+          if [ "$ENVIRONMENT" = "prod" ]; then
+            cms_url="https://cms.bcparks.ca/"
+          else
+            cms_url="https://${ENVIRONMENT}-cms.bcparks.ca/"
+          fi
+          echo "ENV=$ENVIRONMENT" >> "$GITHUB_ENV"
+          echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
+          echo "CMS_URL=$cms_url" >> "$GITHUB_ENV"
+          echo "SUITE=$SUITE" >> "$GITHUB_ENV"
+          # The browser to install: the content check runs in Chromium
+          case "$SUITE" in
+            full-*) echo "BROWSER=${SUITE#full-}" >> "$GITHUB_ENV" ;;
+            *) echo "BROWSER=chromium" >> "$GITHUB_ENV" ;;
           esac
-          base_url="https://${release}-public-${LICENSE_PLATE}-${namespace_env}.apps.gold.devops.gov.bc.ca/"
-        fi
-        if [ "$ENVIRONMENT" = "prod" ]; then
-          cms_url="https://cms.bcparks.ca/"
-        else
-          cms_url="https://${ENVIRONMENT}-cms.bcparks.ca/"
-        fi
-        echo "ENV=$ENVIRONMENT" >> "$GITHUB_ENV"
-        echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
-        echo "CMS_URL=$cms_url" >> "$GITHUB_ENV"
-        echo "SUITE=$SUITE" >> "$GITHUB_ENV"
-        # The browser to install: the content check runs in Chromium
-        case "$SUITE" in
-          full-*) echo "BROWSER=${SUITE#full-}" >> "$GITHUB_ENV" ;;
-          *) echo "BROWSER=chromium" >> "$GITHUB_ENV" ;;
-        esac
-      working-directory: .
-    - uses: actions/checkout@v6
-    - uses: actions/setup-node@v6
-      with:
-        node-version-file: tests/e2e/.nvmrc
-        cache: npm
-        cache-dependency-path: tests/e2e/package-lock.json
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps "$BROWSER"
-    - name: Run Playwright tests
-      run: |
-        if [ "$SUITE" = "content-check" ]; then
-          npm run test:content-check
-        else
-          npm run "test:$BROWSER"
-        fi
-    - uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: playwright-report
-        path: tests/e2e/playwright-report/
-        retention-days: 30
+        working-directory: .
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: tests/e2e/.nvmrc
+          cache: npm
+          cache-dependency-path: tests/e2e/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps "$BROWSER"
+      - name: Run Playwright tests
+        run: |
+          if [ "$SUITE" = "content-check" ]; then
+            npm run test:content-check
+          else
+            npm run "test:$BROWSER"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: tests/e2e/playwright-report/
+          retention-days: 30
