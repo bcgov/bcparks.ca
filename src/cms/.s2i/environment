@@ -1,0 +1,2 @@
+# @swc/core 1.16+ rejects cache dirs under the group-writable /opt/app-root/src
+SWC_NATIVE_BINDING_CACHE=/tmp/swc-cache
