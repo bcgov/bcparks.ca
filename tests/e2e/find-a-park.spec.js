@@ -169,7 +169,7 @@ test.describe('Find a park page tests', ()=>{
         await page.getByRole('button', { name: 'Load more results' }).click();
         await expect(page.getByText('Anarchist Protected AreaOkanaganOpen').first()).toBeVisible();
         await page.getByRole('button', { name: 'Load more results' }).click();
-        await expect(page.getByText('Arctic Pacific Lakes ParkOminecasee allOpen').first()).toBeVisible();
+        await expect(page.getByRole('link', { name: 'see all (facilities and activities for Arctic Pacific Lakes Park)' }).first()).toBeVisible();
     });
 
     test('Check the land acknowledgment message is visible', async ({page})=>{

@@ -133,6 +133,7 @@ const ParkCard = ({ r }) => {
                   <FeatureIcons
                     page="find a park"
                     slug={r.slug}
+                    parkName={r.protectedAreaName}
                     iconSize={32}
                     parkFacilities={r.parkFacilities}
                     parkActivities={r.parkActivities}
@@ -144,6 +145,7 @@ const ParkCard = ({ r }) => {
                 <ParkAccessStatus
                   advisories={r.advisories}
                   slug={r.slug}
+                  parkName={r.protectedAreaName}
                   parkFeatures={r.parkFeatures}
                   operationDates={r.parkDates}
                   hideComma={true}
@@ -232,6 +234,7 @@ const ParkCard = ({ r }) => {
             <FeatureIcons
               page="find a park"
               slug={r.slug}
+              parkName={r.protectedAreaName}
               iconSize={32}
               parkFacilities={r.parkFacilities}
               parkActivities={r.parkActivities}
@@ -242,6 +245,7 @@ const ParkCard = ({ r }) => {
             <ParkAccessStatus
               advisories={r.advisories}
               slug={r.slug}
+              parkName={r.protectedAreaName}
               parkFeatures={r.parkFeatures}
               operationDates={r.parkDates}
               hideComma={true}
