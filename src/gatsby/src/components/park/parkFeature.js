@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId, useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Tooltip from "react-bootstrap/Tooltip";
@@ -11,13 +11,22 @@ import FontAwesome from "../fontAwesome";
 import { countsList } from "../../utils/constants";
 import { formattedTime } from "../../utils/parkDatesHelper";
 
-const DateTypeTooltip = ({ dateType, description }) => {
+const DateTypeTooltip = ({ dateType, label, description }) => {
+  const [show, setShow] = useState(false);
+  const tooltipId = `${dateType}-tooltip-${useId()}`;
+
   return (
     <OverlayTrigger
       placement="top"
-      overlay={<Tooltip id={`${dateType}-tooltip`}>{description}</Tooltip>}
+      show={show}
+      onToggle={setShow}
+      overlay={<Tooltip id={tooltipId}>{description}</Tooltip>}
     >
-      <button className="btn-tooltip btn">
+      <button
+        className="btn-tooltip btn"
+        aria-label={label}
+        aria-describedby={show ? tooltipId : undefined}
+      >
         <FontAwesome icon="generic-information" />
       </button>
     </OverlayTrigger>
@@ -108,6 +117,7 @@ export default function ParkFeature({ data, showHeading = false }) {
                   {reservationName}{" "}
                   <DateTypeTooltip
                     dateType="reservation"
+                    label={`${reservationName} information`}
                     description={reservationDescription}
                   />
                 </h4>
@@ -134,6 +144,7 @@ export default function ParkFeature({ data, showHeading = false }) {
                   Winter rate{" "}
                   <DateTypeTooltip
                     dateType="winter-rate"
+                    label="Winter rate information"
                     description="Shoulder season with reduced fees and services"
                   />
                 </h4>
