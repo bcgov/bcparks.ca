@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Tooltip from "react-bootstrap/Tooltip";
@@ -13,7 +13,7 @@ import { formattedTime } from "../../utils/parkDatesHelper";
 
 const DateTypeTooltip = ({ dateType, label, description }) => {
   const [show, setShow] = useState(false);
-  const tooltipId = `${dateType}-tooltip`;
+  const tooltipId = `${dateType}-tooltip-${useId()}`;
 
   return (
     <OverlayTrigger
