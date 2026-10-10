@@ -73,7 +73,7 @@ We use an OpenShift feature called `externalCertificate`, which lets routes refe
    The project name `a7dd13-dev` assumes you are installing the secret in our dev namespace on the Silver cluster.
 
    ```
-   read -rs "KEYPASS?Key passphrase: "; echo
+   printf "Key passphrase: "; read -rs KEYPASS; echo
    export KEYPASS
    oc create secret tls bcparks-ssl-wildcard \
    -n a7dd13-dev \
