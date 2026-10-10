@@ -4,10 +4,12 @@ We use the same wildcard certificate on all bcparks.ca routes on both the OpenSh
 
 We use an OpenShift feature called `externalCertificate`, which lets routes reference a TLS secret instead of embedding the certificate in each route. There is a separate copy of the secret in each of our dev, test and prod namespaces on both Gold and Silver (six in total), but each one can be updated with a CLI command instead of editing every route by hand.
 
-> **TODO:** `externalCertificate` is only a Technology Preview feature on OpenShift 4.18, so it doesn't work on Gold or Silver yet. Finish these docs (see step 5) and remove this note once the clusters are on 4.20. The October 2026 update was applied by adding the secrets to all six OpenShift environments and running the commands in `cli-update.bash` for each.
+This document covers the three Gold namespaces used by bcparks.ca and the CMS (`c1643c-dev`, `c1643c-test` and `c1643c-prod`). The Silver namespaces are covered by the same document in the staff portal repo.
+
+> **TODO:** `externalCertificate` is only a Technology Preview feature on OpenShift 4.18, so it doesn't work on Gold or Silver yet. Remove this note once the clusters are on 4.20.
 
 > [!WARNING]
-> **Back up `bcparks-ssl-wildcard` from Gold prod before changing anything (step 0).** Without a backup, a bad certificate can't be rolled back quickly, and the public bcparks.ca site stays broken until it's fixed.
+> **Back up `bcparks-ssl-wildcard` from Gold prod before changing anything (step 0).** Without a backup, a bad certificate can't be rolled back quickly, and bcparks.ca and cms.bcparks.ca stay broken until it's fixed.
 
 0. **Back up the Gold prod secret. Do not skip this step.**
 
@@ -70,37 +72,26 @@ We use an OpenShift feature called `externalCertificate`, which lets routes refe
 3. Copy the datestamped key file (e.g., `bcparks-ca-20261008.key`) into the same folder and name it `server.key` so it works with the following instructions.
 
 4. Run these commands. You will be prompted for the key's passphrase.
-   The project name `a7dd13-dev` assumes you are installing the secret in our dev namespace on the Silver cluster.
+   The project name `c1643c-dev` assumes you are installing the secret in our dev namespace. Repeat for `c1643c-test` and `c1643c-prod`. The `main` and `alpha` releases share the secret in dev and test, so each namespace only needs updating once.
 
    ```
    printf "Key passphrase: "; read -rs KEYPASS; echo
    export KEYPASS
-   oc create secret tls bcparks-ssl-wildcard \
-   -n a7dd13-dev \
-   --cert=fullchain.crt \
-   --key=<(openssl pkey -in server.key -passin env:KEYPASS)
+   oc set data secret/bcparks-ssl-wildcard \
+   -n c1643c-dev \
+   --from-file=tls.crt=fullchain.crt \
+   --from-file=tls.key=<(openssl pkey -in server.key -passin env:KEYPASS)
    unset KEYPASS
    ```
 
-5. TO BE CONTINUED. The next step would be replacing the TLS info in our routes. However, it turns out that letting routes reference the cert secret (`externalCertificate`) is only a Technology Preview feature on OpenShift 4.18. The BC Government is in the process of rolling out 4.20.
+   `oc set data` only updates an existing secret. If the namespace doesn't have `bcparks-ssl-wildcard` yet, create it instead with `oc create secret tls bcparks-ssl-wildcard -n c1643c-dev --cert=fullchain.crt --key=<(openssl pkey -in server.key -passin env:KEYPASS)`.
 
-   Once the feature is available, the route should look something like this:
+5. Check the new certificate. The `vanity-*` routes are created by the Helm chart (`infrastructure/helm/deployment/templates/public/public-vanity-route.yaml` and `infrastructure/helm/deployment/templates/cms/cms-vanity-route.yaml`) and already reference the `bcparks-ssl-wildcard` secret, so the router picks up the updated secret without any route edits or a Helm upgrade.
 
-   ```yaml
-   apiVersion: route.openshift.io/v1
-   kind: Route
-   metadata:
-     name: vanity-alpha-staff
-   spec:
-     host: alpha-dev-staff.bcparks.ca
-     to:
-       kind: Service
-       name: alpha-frontend
-     port:
-       targetPort: frontend
-     tls:
-       termination: edge
-       insecureEdgeTerminationPolicy: Redirect
-       externalCertificate:
-         name: bcparks-ssl-wildcard
+   Confirm that the new expiry date is being served. The CMS hostnames are used here because the non-prod public hostnames only accept connections from the IP allowlist.
+
    ```
+   echo | openssl s_client -connect dev-cms.bcparks.ca:443 -servername dev-cms.bcparks.ca 2>/dev/null | openssl x509 -noout -subject -enddate
+   ```
+
+   Repeat with `test-cms.bcparks.ca` and `cms.bcparks.ca`, and check `bcparks.ca` as well after updating prod.
