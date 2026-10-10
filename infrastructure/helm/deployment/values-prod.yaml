@@ -49,6 +49,12 @@ public:
     maxReplicas: 8
     cpuUtilizationThreshold: 35
 
+  vanityRoute:
+    name: vanity-bcparks.ca
+    extraRoutes:
+      - name: vanity-www
+        host: www.bcparks.ca
+
 etl:
   env:
     parkNamesApi: https://data.bcparks.ca/api/parks/names?status=established
