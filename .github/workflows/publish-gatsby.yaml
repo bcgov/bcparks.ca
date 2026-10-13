@@ -179,6 +179,8 @@ jobs:
         run: oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-${{ env.ENV_SUFFIX }} rollout status deployment ${{ env.DEPLOYMENT_NAME }} --timeout=10m
 
       - name: Trigger Playwright content check
+        # skip for alpha-dev to reduce CI load
+        if: ${{ !(env.BRANCH == 'alpha' && env.ENV_SUFFIX == 'dev') }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

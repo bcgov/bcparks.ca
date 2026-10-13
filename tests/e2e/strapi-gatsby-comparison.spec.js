@@ -1,19 +1,11 @@
-import {
-  test,
-  expect,
-  isUnreachableError,
-  MAX_PAUSE_MS,
-  pauseTests,
-  waitWhilePaused,
-} from "./utils/networkPause.js";
+import { test, expect } from "@playwright/test";
 
 // Compares Strapi API content with the published park pages to detect
 // Gatsby local database corruption after a build. For each park, one item
 // from each child relation is looked up on the park page.
 
 // Parks to sample. The name is only used in the test title. Busy park pages
-// are included, plus parks that cover the less common relations. If GitHub
-// Actions runners are rate limited, the run pauses (see utils/networkPause.js).
+// are included, plus parks that cover the less common relations.
 const PARKS = [
   // Popular and typical parks
   { orcs: 1, name: "Strathcona" },
@@ -248,59 +240,9 @@ const SKIPPED_RELATIONS = {
     "The page shows searchArea.searchAreaName, which populate=* does not return",
 };
 
-// When the Strapi API or the park page can't be reached (a timeout, network
-// error, 429 or 5xx), GitHub Actions runners are probably rate limited. The
-// whole run is paused until the server responds (see utils/networkPause.js),
-// then the request is tried once more. If that fails too, the park is skipped,
-// not failed: only parks that load are checked for corruption. Each request
-// has its own timeout, so it fails before the test timeout does.
+// Each request has its own timeout, so it fails before the test timeout does.
 const REQUEST_TIMEOUT_MS = 10000;
 const TEST_TIMEOUT_MS = 60000;
-
-/**
- * Runs a request or navigation. If the server can't be reached (a timeout,
- * network error, 429 or 5xx), pauses the run, waits for the server, and tries
- * once more. If it still can't be reached, the park is skipped. On a Playwright
- * retry, it fails instead: an earlier attempt failed for some other reason,
- * which a skip would hide. Other errors are rethrown, so they fail the test.
- * @template T
- * @param {string} name what is being loaded, for the log and the skip reason
- * @param {string} url URL being loaded, so the pause waits for its server
- * @param {() => Promise<T>} action the request or navigation, returning its response
- * @returns {Promise<T>} the action's response
- */
-async function loadOrSkip(name, url, action) {
-  for (let attempt = 1; ; attempt++) {
-    let reason;
-    try {
-      const response = await action();
-      const status = response?.status();
-      if (status !== 429 && !(status >= 500)) {
-        return response;
-      }
-      reason = `${name} returned ${status}`;
-    } catch (error) {
-      if (!isUnreachableError(error)) {
-        throw error;
-      }
-      reason = `${name} could not be reached: ${String(error.message).split("\n")[0]}`;
-    }
-
-    pauseTests(reason, url);
-    if (attempt === 2) {
-      if (test.info().retry > 0) {
-        throw new Error(
-          `${reason}. Not skipped, because an earlier attempt of this test failed.`,
-        );
-      }
-      console.log(`Skipped: ${reason}`);
-      test.skip(true, reason);
-    }
-    // Room to wait for the pause, which can be longer than the test timeout
-    test.setTimeout(test.info().timeout + MAX_PAUSE_MS);
-    await waitWhilePaused();
-  }
-}
 
 /**
  * Fetches protected areas from the Strapi API and returns the one match.
@@ -311,12 +253,10 @@ async function loadOrSkip(name, url, action) {
  */
 async function fetchProtectedArea(request, orcs, params) {
   const url = new URL("api/protected-areas", process.env.CMS_URL).href;
-  const response = await loadOrSkip("The Strapi API", url, () =>
-    request.get(url, {
-      params: { "filters[orcs]": orcs, ...params },
-      timeout: REQUEST_TIMEOUT_MS,
-    }),
-  );
+  const response = await request.get(url, {
+    params: { "filters[orcs]": orcs, ...params },
+    timeout: REQUEST_TIMEOUT_MS,
+  });
   expect(
     response.ok(),
     `Strapi API returned ${response.status()} for ORCS ${orcs}`,
@@ -457,10 +397,7 @@ test.describe("Strapi and Gatsby content comparison", () => {
 
       annotate("park", `${park.protectedAreaName} (ORCS ${park.orcs})`);
 
-      const parkUrl = new URL(`${park.slug}/`, process.env.BASE_URL).href;
-      await loadOrSkip("The park page", parkUrl, () =>
-        page.goto(`/${park.slug}/`, { timeout: REQUEST_TIMEOUT_MS }),
-      );
+      await page.goto(`/${park.slug}/`, { timeout: REQUEST_TIMEOUT_MS });
       // Give the page's scripts and data requests time to finish. The page
       // itself has loaded, so if a request is still running after the
       // timeout, compare the content anyway: the checks below wait for

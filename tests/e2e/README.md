@@ -55,34 +55,11 @@ park in `PARKS`, it fetches the park from `CMS_URL`, opens `/<slug>/` on
 - A relation in neither map is reported as an `unmapped relation` annotation in
   the HTML report. Add it to one of the maps.
 
-## Network pause (temporary)
-The BC Government network rate limits GitHub Actions runners, which share IP
-addresses with every other GitHub user. After about a minute of test traffic,
-bcparks.ca refuses connections and cms.bcparks.ca stops responding for about
-two minutes, and this repeats for the rest of the run. Runs from our own
-network, at much higher rates, are never blocked.
-
-`utils/networkPause.js` works around this for the content check. When the
-Strapi API or a park page can't be reached, the whole run pauses, one request
-every 30 seconds checks the server, and tests resume once it responds. The
-park is retried after the pause, and only skipped if it still can't be
-reached, since a network problem isn't Gatsby corruption. If one outage lasts
-more than 15 minutes, the run stops pausing so it can finish in time. The log
-shows "Pausing all tests" and "Resuming tests" when this happens.
-
-This is temporary until the network issue is fixed. The static-IP larger
-runner group is blocked the same way, so `playwright.yaml` now runs the suite
-as a Job inside OpenShift; see
-[openshift/README.md](openshift/README.md).
-Once runs no longer pause, delete `utils/networkPause.js`, import `test` and
-`expect` from `@playwright/test` in the content check, and remove its
-retry and skip handling for unreachable servers.
-
 ## Layout
 - `*.spec.js`: tests (`seed.spec.js` is the seed used by the AI agents)
-- `utils/networkPause.js`: pauses the run while the site is unreachable; see
-  [Network pause (temporary)](#network-pause-temporary)
 - `pages/`: page objects
+- `utils/githubFinalAttemptReporter.js`: adds a GitHub annotation for each failed
+  test, from its final retry only
 - `specs/`: test plans for the AI agents
 - `scripts/update-agents.js`: regenerates the root agent/MCP config (`npm run agents:update`)
 
