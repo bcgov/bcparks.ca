@@ -1,0 +1,38 @@
+# Lets the playwright.yaml workflow build the test image and run the test Job.
+# The workflow logs in as the builder ServiceAccount (OPENSHIFT_GOLD_SERVICE_TOKEN) for every
+# step, so this is bound to builder, not githubactions. These rules only add what builder
+# doesn't already have in tools from registry-editor (ImageStreams) and system:image-builder
+# (get builds).
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: playwright-test-runner
+  labels:
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+rules:
+  # oc start-build --from-archive, and oc logs -f on the build
+  - apiGroups: ["build.openshift.io"]
+    resources: ["buildconfigs"]
+    verbs: ["get"]
+  - apiGroups: ["build.openshift.io"]
+    resources: ["buildconfigs/instantiatebinary"]
+    verbs: ["create"]
+  - apiGroups: ["build.openshift.io"]
+    resources: ["builds/log"]
+    verbs: ["get"]
+  # oc create and oc delete the test Job
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create", "delete"]
+  # Find the Job's pod, stream its logs, read the exit code, and oc cp the report out
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]

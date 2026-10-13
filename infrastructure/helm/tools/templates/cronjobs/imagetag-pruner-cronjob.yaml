@@ -8,7 +8,7 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service }}    
 spec:
-  schedule: 0 10 * * *
+  schedule: 0 17 * * *
   concurrencyPolicy: Forbid
   suspend: false
   jobTemplate:
@@ -46,7 +46,7 @@ spec:
                   value: '10'
                 - name: IMAGESTREAMS_TO_CLEAN
                   value: >-
-                    etl-alpha,etl-main,maintenance-alpha,maintenance-main,public-builder-alpha,public-builder-main,strapi-alpha,strapi-main,scheduler-main,scheduler-alpha
+                    etl-alpha,etl-main,maintenance-alpha,maintenance-main,public-builder-alpha,public-builder-main,scheduler-alpha,scheduler-main,strapi-alpha,strapi-main
               resources: {}
               terminationMessagePath: /dev/termination-log
               terminationMessagePolicy: File

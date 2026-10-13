@@ -1,0 +1,9 @@
+node_modules
+playwright-report
+test-results
+blob-report
+# Local env files can hold credentials. Only the committed examples go in the image.
+env/.env.*
+!env/.env.*.example
+# OpenShift setup for running these tests, not needed inside the image.
+openshift

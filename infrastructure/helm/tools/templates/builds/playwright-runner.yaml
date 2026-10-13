@@ -1,0 +1,41 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: playwright-runner
+  labels:
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: playwright-runner:latest
+  resources:
+    limits:
+      cpu: 2
+      memory: 6Gi
+    requests:
+      cpu: 100m
+      memory: 1Gi
+  runPolicy: Serial
+  # The Git source is only used by builds started without --from-archive. The
+  # playwright.yaml workflow uploads tests/e2e from the commit under test instead.
+  source:
+    contextDir: tests/e2e
+    git:
+      uri: https://github.com/bcgov/bcparks.ca
+      ref: main
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile.e2e
+      # Overrides the FROM line in Dockerfile.e2e. Keep both in sync with @playwright/test.
+      from:
+        kind: DockerImage
+        name: "{{ .Values.images.playwright.name }}:{{ .Values.images.playwright.tag }}"
+    type: Docker
+  failedBuildsHistoryLimit: 2
+  successfulBuildsHistoryLimit: 2
+  # No triggers: builds only start from the workflow (or a manual oc start-build).
+  triggers: []

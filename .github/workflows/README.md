@@ -136,7 +136,7 @@ Playwright tests can be run manually from the Actions tab ("Playwright Tests" > 
 gh workflow run playwright.yaml --repo bcgov/bcparks.ca --ref main -f environment=test -f suite=full-chromium
 ```
 
-See [tests/e2e/README.md](../../tests/e2e/README.md) for details about the tests.
+The tests run as a Job in the tools namespace on OpenShift, not on the GitHub runner. See [tests/e2e/openshift/README.md](../../tests/e2e/openshift/README.md) for setup and troubleshooting, and [tests/e2e/README.md](../../tests/e2e/README.md) for details about the tests.
 
 ## Secrets
 

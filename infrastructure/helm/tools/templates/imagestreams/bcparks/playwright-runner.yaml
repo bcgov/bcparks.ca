@@ -1,0 +1,13 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: playwright-runner
+  annotations:
+    description: Playwright e2e test image
+  labels:
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+spec:
+  lookupPolicy:
+    local: false
