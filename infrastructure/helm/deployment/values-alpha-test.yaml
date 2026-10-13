@@ -9,9 +9,6 @@ images:
   strapi:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/strapi-alpha
     tag: test
-  admin:
-    name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/admin-alpha
-    tag: test
   public:
     name: image-registry.openshift-image-registry.svc:5000/c1643c-tools/public-alpha
     tag: test
