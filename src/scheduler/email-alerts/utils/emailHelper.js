@@ -68,9 +68,7 @@ const filterRecipientsByEnvironment = function (
 };
 
 /**
- * Returns the Parks logo variants as inline email attachments: a light version
- * with a white background (also used by Outlook) and a dark version that CSS
- * swaps in for clients that support dark mode.
+ * Returns the Parks logo as an inline email attachment.
  *
  * @returns {{filename: string, path: string, cid: string, contentDisposition: string}[]} Logo attachment configuration.
  */
@@ -80,12 +78,6 @@ const getLogoAttachment = function () {
       filename: "logo-light.png",
       path: path.join(__dirname, "..", "images", "logo-light.png"),
       cid: "logo-light.png",
-      contentDisposition: "inline",
-    },
-    {
-      filename: "logo-dark.png",
-      path: path.join(__dirname, "..", "images", "logo-dark.png"),
-      cid: "logo-dark.png",
       contentDisposition: "inline",
     },
   ];
