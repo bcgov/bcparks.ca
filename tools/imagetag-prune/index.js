@@ -29,16 +29,12 @@ const IMAGETAGS_TO_KEEP = splitAndTrim(process.env.IMAGETAGS_TO_KEEP) || [
 const IMAGESTREAMS_TO_CLEAN = splitAndTrim(
   process.env.IMAGESTREAMS_TO_CLEAN,
 ) || [
-  "admin-alpha",
-  "admin-main",
   "etl-alpha",
   "etl-main",
   "maintenance-alpha",
   "maintenance-main",
   "public-builder-alpha",
   "public-builder-main",
-  "public-alpha",
-  "public-main",
   "strapi-alpha",
   "strapi-main",
   "scheduler-main",

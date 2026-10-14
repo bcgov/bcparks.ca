@@ -8,8 +8,6 @@ cluster:
 images:
   strapi:
     tag: prod
-  admin:
-    tag: prod
   public:
     tag: prod
   maintenance:

@@ -8,8 +8,6 @@ cluster:
 images:
   strapi:
     tag: test
-  admin:
-    tag: test
   public:
     tag: test
   maintenance:
