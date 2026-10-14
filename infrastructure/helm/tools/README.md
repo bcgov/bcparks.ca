@@ -20,6 +20,8 @@ Run the following commands from the `infrastructure/helm/tools` directory.
 
 `helm -n c1643c-tools uninstall bcparks-tools`
 
+The chart also installs the BuildConfig and RBAC for the Playwright tests on OpenShift. See [tests/e2e/openshift/README.md](../../../tests/e2e/openshift/README.md).
+
 
 ## Allow service accounts to pull images from tools.
 

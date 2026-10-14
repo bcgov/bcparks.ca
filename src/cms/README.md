@@ -36,6 +36,8 @@ This step should be completed by someone familiar with OpenShift. It involves ru
 
 ### Importing PROD data
 
+> **Note:** The export and import steps in this README haven't been tested in a while. For the current process, including DOOT data, see the Confluence pages "Copying prod data to Docker Desktop" and "Copying prod data to other environments".
+
 1. Run the export steps above or get someone with OpenShift permissions to run them for you. (make sure you call the file prod.tar.gz and copy it into the bcparks.ca/src/cms directory to follow these instructions)
 
 ##### Linux / Mac terminals

@@ -1,4 +1,5 @@
 name: Publish Gatsby
+run-name: Publish Gatsby (${{ inputs.branchName != 'main' && format('{0}-', inputs.branchName) || '' }}${{ inputs.buildEnv }})
 
 on:
   # Started by build-dev.yaml and the deploy-*.yaml workflows with

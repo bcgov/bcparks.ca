@@ -1,0 +1,10 @@
+# The Playwright base image already includes Chromium, Firefox and WebKit.
+# Keep its tag in sync with @playwright/test in package.json.
+FROM mcr.microsoft.com/playwright:v1.63.0-noble
+
+WORKDIR /e2e
+
+COPY package.json package-lock.json ./
+RUN npm ci --ignore-scripts
+
+COPY . .

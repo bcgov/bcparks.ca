@@ -4,16 +4,12 @@ images:
     tag: 2.6.2-alpine
   node:
     name: node
-    tag: 18-slim
+    tag: 22-slim
   redis:
     name: redis
-    tag: 6.2.14-alpine
-  patronipostgres:
-    name: artifacts.developer.gov.bc.ca/bcgov-docker-local/patroni-postgres
-    tag: 2.0.1-12.4-latest
-  pgbouncer:
-    name: bitnami/pgbouncer
-    tag: 1.22.1
-  backupcontainer:
-    name: bcgovimages/backup-container
-    tag: 2.8.1
+    tag: 6.2.20-alpine
+  # Base image for the Playwright e2e test image (tests/e2e/Dockerfile.e2e).
+  # Keep the tag in sync with @playwright/test in tests/e2e/package.json.
+  playwright:
+    name: mcr.microsoft.com/playwright
+    tag: v1.63.0-noble

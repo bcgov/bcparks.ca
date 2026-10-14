@@ -70,8 +70,10 @@ reached, since a network problem isn't Gatsby corruption. If one outage lasts
 more than 15 minutes, the run stops pausing so it can finish in time. The log
 shows "Pausing all tests" and "Resuming tests" when this happens.
 
-This is temporary until the network issue is fixed. A larger GitHub runner
-with a static IP range has been requested, so its traffic isn't throttled.
+This is temporary until the network issue is fixed. The static-IP larger
+runner group is blocked the same way, so `playwright.yaml` now runs the suite
+as a Job inside OpenShift; see
+[openshift/README.md](openshift/README.md).
 Once runs no longer pause, delete `utils/networkPause.js`, import `test` and
 `expect` from `@playwright/test` in the content check, and remove its
 retry and skip handling for unreachable servers.

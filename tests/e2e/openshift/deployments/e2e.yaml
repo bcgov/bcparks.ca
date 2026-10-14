@@ -1,0 +1,104 @@
+kind: Template
+apiVersion: template.openshift.io/v1
+labels:
+  template: e2e-job-template
+metadata:
+  name: e2e-job
+parameters:
+  - name: JOB_NAME
+    description: Unique Job name for this run, so concurrent runs don't collide
+    required: true
+  - name: E2E_IMAGE
+    description: Test image, ideally pinned by digest (…/playwright-runner@sha256:…)
+    required: true
+  - name: ENV
+    description: Environment name passed to the tests (prod, test, dev, alpha-test, alpha-dev)
+    required: true
+  - name: BASE_URL
+    description: Public base URL of the site being tested
+    required: true
+  - name: CMS_URL
+    description: Public URL of the CMS for the same environment
+    required: true
+  - name: SUITE
+    description: full-chromium, full-firefox, full-webkit or content-check
+    required: true
+    value: full-chromium
+  - name: FS_GROUP
+    description: >-
+      Pod fsGroup for the shared results volume. Must fall in the namespace's supplemental group
+      range: oc describe ns <tools-namespace> | grep supplemental-groups
+    required: true
+objects:
+  - apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: "${JOB_NAME}"
+      labels:
+        app: bcparks-e2e
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 3600
+      # Removes Jobs that a cancelled workflow run never got to delete.
+      ttlSecondsAfterFinished: 3600
+      template:
+        metadata:
+          labels:
+            app: bcparks-e2e
+        spec:
+          restartPolicy: Never
+          securityContext:
+            fsGroup: ${{FS_GROUP}}
+          containers:
+            - name: e2e
+              image: "${E2E_IMAGE}"
+              command:
+                - /bin/bash
+                - -c
+                - |-
+                  if [ "$SUITE" = "content-check" ]; then
+                    npm run test:content-check -- --output=/e2e/results/artifacts
+                  else
+                    npm run "test:${SUITE#full-}" -- --output=/e2e/results/artifacts
+                  fi
+              env:
+                - name: HOME
+                  value: /tmp
+                - name: CI
+                  value: "true"
+                - name: ENV
+                  value: "${ENV}"
+                - name: BASE_URL
+                  value: "${BASE_URL}"
+                - name: CMS_URL
+                  value: "${CMS_URL}"
+                - name: SUITE
+                  value: "${SUITE}"
+                - name: PLAYWRIGHT_HTML_OUTPUT_DIR
+                  value: /e2e/results/report
+              volumeMounts:
+                - name: e2e-results
+                  mountPath: /e2e/results
+              resources:
+                limits:
+                  memory: 4Gi
+                requests:
+                  memory: 1Gi
+            # Keeps the pod (and the results volume) alive after the tests finish, so the workflow
+            # can oc cp the report out. The workflow deletes the Job afterwards.
+            - name: artifact-sync
+              image: "${E2E_IMAGE}"
+              command:
+                - sleep
+                - infinity
+              volumeMounts:
+                - name: e2e-results
+                  mountPath: /e2e/results
+              resources:
+                limits:
+                  memory: 128Mi
+                requests:
+                  memory: 64Mi
+          volumes:
+            - name: e2e-results
+              emptyDir: {}

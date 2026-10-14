@@ -1,23 +1,20 @@
 name: Playwright Tests
 run-name: Playwright Tests (${{ inputs.suite || 'full-chromium' }}, ${{ inputs.environment || (github.base_ref == 'alpha' && 'alpha-test') || 'prod' }})
+# Runs the tests/e2e suite inside OpenShift as a Job in the tools namespace, instead of on a
+# GitHub runner, because the Kamloops Data Centre blocks test traffic from GitHub's runners.
+# The runner only builds the image, starts the Job and collects the report.
+# Setup and troubleshooting: tests/e2e/openshift/README.md
 on:
-  # PR runs are disabled because of an ongoing issue where the Kamloops Data
-  # Centre blocks the Playwright test traffic, even from the static-IP runner
-  # group. Uncomment this trigger once that's resolved. The pull_request
-  # handling in the job below is still in place, so nothing else needs to change.
-  #
-  # # Run Playwright tests on PRs that modify the E2E tests or the workflow itself.
-  # # PRs run the full suite in Chromium only, to limit the requests from
-  # # GitHub's runners to bcparks.ca. Manual runs can pick another browser.
-  # pull_request:
-  #   branches:
-  #     # PRs to main test against prod (https://bcparks.ca/), and PRs to alpha
-  #     # test against alpha-test. Other environments use workflow_dispatch runs.
-  #     - main
-  #     - alpha
-  #   paths:
-  #     - tests/e2e/**
-  #     - .github/workflows/playwright.yaml
+  # PRs that modify the E2E tests or this workflow. PRs run the full suite in Chromium only.
+  pull_request:
+    branches:
+      # PRs to main test against prod (https://bcparks.ca/), and PRs to alpha
+      # test against alpha-test. Other environments use workflow_dispatch runs.
+      - main
+      - alpha
+    paths:
+      - tests/e2e/**
+      - .github/workflows/playwright.yaml
 
   # Manual runs from the GitHub UI. publish-gatsby.yaml also starts this after
   # every publish (with `gh workflow run --ref <branch>`, suite=content-check)
@@ -44,17 +41,26 @@ on:
           - full-firefox
           - full-webkit
           - content-check
+
 permissions:
   contents: read
+
+# Cancel superseded runs on the same PR. Manual runs never cancel each other.
+concurrency:
+  group: playwright-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   test:
-    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == 'bcgov/bcparks.ca' }}
-    timeout-minutes: 60
-    runs-on:
-      group: Larger Runners - OpenShift Static-IP
-    defaults:
-      run:
-        working-directory: tests/e2e
+    # PRs from forks don't get the OpenShift secrets.
+    if: ${{ github.event_name != 'pull_request' || (github.actor != 'dependabot[bot]' && github.event.pull_request.head.repo.full_name == 'bcgov/bcparks.ca') }}
+    timeout-minutes: 75
+    runs-on: ubuntu-latest
+    env:
+      # Unique per run, so concurrent runs get separate Jobs.
+      JOB_NAME: bcparks-e2e-${{ github.run_id }}-${{ github.run_attempt }}
+      # Pod fsGroup for the tools namespace: oc describe ns <tools-namespace> | grep supplemental-groups
+      FS_GROUP: ${{ vars.E2E_FS_GROUP }}
     steps:
       - name: Set target site
         env:
@@ -82,36 +88,130 @@ jobs:
           else
             cms_url="https://${ENVIRONMENT}-cms.bcparks.ca/"
           fi
+          if [ -z "$FS_GROUP" ]; then
+            echo "::error::Set the E2E_FS_GROUP repo variable (oc describe ns ${LICENSE_PLATE}-tools | grep supplemental-groups)."
+            exit 1
+          fi
           echo "ENV=$ENVIRONMENT" >> "$GITHUB_ENV"
           echo "BASE_URL=$base_url" >> "$GITHUB_ENV"
           echo "CMS_URL=$cms_url" >> "$GITHUB_ENV"
           echo "SUITE=$SUITE" >> "$GITHUB_ENV"
-          # The browser to install: the content check runs in Chromium
-          case "$SUITE" in
-            full-*) echo "BROWSER=${SUITE#full-}" >> "$GITHUB_ENV" ;;
-            *) echo "BROWSER=chromium" >> "$GITHUB_ENV" ;;
-          esac
-        working-directory: .
+          echo "NAMESPACE_TOOLS=${LICENSE_PLATE}-tools" >> "$GITHUB_ENV"
+
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+
+      - name: Install oc
+        uses: redhat-actions/openshift-tools-installer@v1
         with:
-          node-version-file: tests/e2e/.nvmrc
-          cache: npm
-          cache-dependency-path: tests/e2e/package-lock.json
-      - name: Install dependencies
-        run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps "$BROWSER"
-      - name: Run Playwright tests
+          oc: "4.16"
+          skip_cache: true
+
+      - name: Log in to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ secrets.OPENSHIFT_GOLD_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_GOLD_SERVICE_TOKEN }}
+
+      - name: Build playwright-runner image on OpenShift from this commit
         run: |
-          if [ "$SUITE" = "content-check" ]; then
-            npm run test:content-check
-          else
-            npm run "test:$BROWSER"
+          # Upload tests/e2e from the checkout, so the image always matches the commit under test.
+          # The archive keeps the tests/e2e/ path, which the BuildConfig's contextDir expects.
+          git archive --format=tar -o e2e.tar HEAD tests/e2e
+          build=$(oc start-build playwright-runner -n "$NAMESPACE_TOOLS" --from-archive=e2e.tar -o name)
+          echo "Started $build"
+          oc logs -f "$build" -n "$NAMESPACE_TOOLS" || true
+          phase=""
+          for i in $(seq 1 60); do
+            phase=$(oc get "$build" -n "$NAMESPACE_TOOLS" -o jsonpath='{.status.phase}')
+            case "$phase" in Complete|Failed|Cancelled|Error) break ;; esac
+            sleep 10
+          done
+          if [ "$phase" != "Complete" ]; then
+            echo "::error::$build ended with phase '$phase'"
+            exit 1
           fi
+          # Pin the Job to this build's digest. Another run may retag :latest in the meantime.
+          digest=$(oc get "$build" -n "$NAMESPACE_TOOLS" -o jsonpath='{.status.output.to.imageDigest}')
+          echo "E2E_IMAGE=image-registry.openshift-image-registry.svc:5000/$NAMESPACE_TOOLS/playwright-runner@$digest" >> "$GITHUB_ENV"
+
+      - name: Start test job on OpenShift
+        run: |
+          # --local processes the template on the runner, so no template RBAC is needed.
+          oc process --local -f tests/e2e/openshift/deployments/e2e.yaml \
+            -p JOB_NAME="$JOB_NAME" \
+            -p E2E_IMAGE="$E2E_IMAGE" \
+            -p ENV="$ENV" \
+            -p BASE_URL="$BASE_URL" \
+            -p CMS_URL="$CMS_URL" \
+            -p SUITE="$SUITE" \
+            -p FS_GROUP="$FS_GROUP" \
+            | oc create -f - -n "$NAMESPACE_TOOLS"
+
+      - name: Wait for tests to finish
+        id: suite
+        run: |
+          pod=""
+          for i in $(seq 1 30); do
+            pod=$(oc get pods -l job-name="$JOB_NAME" -n "$NAMESPACE_TOOLS" -o jsonpath='{.items[0].metadata.name}' 2>/dev/null || true)
+            [ -n "$pod" ] && break
+            sleep 10
+          done
+          if [ -z "$pod" ]; then
+            echo "::error::Test pod was never scheduled"
+            exit 1
+          fi
+          echo "pod=$pod" >> "$GITHUB_OUTPUT"
+          # Stream the test output into this step's log while waiting.
+          for i in $(seq 1 30); do
+            oc logs -f "$pod" -c e2e -n "$NAMESPACE_TOOLS" 2>/dev/null && break
+            sleep 10
+          done
+          exit_code=""
+          for i in $(seq 1 120); do
+            exit_code=$(oc get pod "$pod" -n "$NAMESPACE_TOOLS" -o jsonpath='{.status.containerStatuses[?(@.name=="e2e")].state.terminated.exitCode}' 2>/dev/null || true)
+            [ -n "$exit_code" ] && break
+            sleep 30
+          done
+          if [ -z "$exit_code" ]; then
+            echo "::error::Timed out waiting for the tests to finish"
+            exit 1
+          fi
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+
+      - name: Copy report from the OpenShift pod back to GitHub Actions workspace
+        if: always() && steps.suite.outputs.pod != ''
+        continue-on-error: true
+        env:
+          POD: ${{ steps.suite.outputs.pod }}
+        run: |
+          mkdir -p playwright-report test-results
+          oc cp "$POD:/e2e/results/report/." playwright-report -c artifact-sync -n "$NAMESPACE_TOOLS" || true
+          oc cp "$POD:/e2e/results/artifacts/." test-results -c artifact-sync -n "$NAMESPACE_TOOLS" || true
+
       - uses: actions/upload-artifact@v4
-        if: always()
+        id: report
+        if: always() && steps.suite.outputs.pod != ''
         with:
           name: playwright-report
-          path: tests/e2e/playwright-report/
+          path: |
+            playwright-report/
+            test-results/
           retention-days: 30
+
+      - name: Delete test Job on OpenShift
+        if: always()
+        run: |
+          oc delete job "$JOB_NAME" -n "$NAMESPACE_TOOLS" --ignore-not-found=true
+
+      - name: Fail if tests failed
+        if: always() && steps.suite.outputs.exit_code != '' && steps.suite.outputs.exit_code != '0'
+        env:
+          REPORT_URL: ${{ steps.report.outputs.artifact-url }}
+        run: |
+          echo "To see which tests failed:"
+          echo "- Return to the workflow run page to view the annotations."
+          echo "- Or expand the \"Wait for tests to finish\" step above. The test output lists each failure and its error."
+          echo "- Or download the HTML report, which includes screenshots and traces for failed tests:"
+          echo "  ${REPORT_URL}"
+          echo "  After unzipping the report, open playwright-report/index.html in a browser."
+          exit 1
