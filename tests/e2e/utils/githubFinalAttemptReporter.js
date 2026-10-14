@@ -22,20 +22,16 @@ const { stripVTControlCharacters } = require('util');
 const E2E_DIR = path.join(__dirname, '..');
 
 /**
- * Escapes a GitHub workflow command message.
- * @param {string} value message text
+ * Escapes a value for a GitHub workflow command. Properties (file, title, ...)
+ * also need `:` and `,` escaped; the message itself does not.
+ * @param {string} value text to escape
+ * @param {boolean} [isProperty] true to also escape `:` and `,`
  * @returns {string} escaped text
  */
-const escapeData = (value) =>
-  value.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
-
-/**
- * Escapes a GitHub workflow command property, such as the file or title.
- * @param {string} value property value
- * @returns {string} escaped value
- */
-const escapeProperty = (value) =>
-  escapeData(value).replace(/:/g, '%3A').replace(/,/g, '%2C');
+function escape(value, isProperty = false) {
+  const escaped = value.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+  return isProperty ? escaped.replace(/:/g, '%3A').replace(/,/g, '%2C') : escaped;
+}
 
 /**
  * Adds a GitHub error annotation for each failed test, from its final attempt
@@ -63,13 +59,13 @@ class GitHubFinalAttemptReporter {
       const location = error.location ?? test.location;
       const file = path.join('tests/e2e', path.relative(E2E_DIR, location.file));
       const properties = [
-        `file=${escapeProperty(file)}`,
+        `file=${escape(file, true)}`,
         `line=${location.line}`,
         `col=${location.column}`,
-        `title=${escapeProperty(title)}`,
+        `title=${escape(title, true)}`,
       ].join(',');
       const message = stripVTControlCharacters(error.message ?? error.value ?? 'Test failed');
-      console.log(`::error ${properties}::${escapeData(`${message}\n${attempt}`)}`);
+      console.log(`::error ${properties}::${escape(`${message}\n${attempt}`)}`);
     }
   }
 }
