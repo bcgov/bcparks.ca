@@ -25,6 +25,7 @@ const Icon = ({ src, label, size }) => {
 const FeatureIcons = ({
   page,
   slug,
+  parkName,
   iconSize,
   parkFacilities,
   parkActivities,
@@ -35,6 +36,15 @@ const FeatureIcons = ({
     parkActivities.filter((a) => [1, 3, 8, 9].includes(a.num)) || [];
   const campings =
     parkCampingTypes.filter((c) => [1, 36].includes(c.num)) || [];
+
+  // park page section the "see all" link jumps to
+  const seeAllAnchor = campings.length
+    ? "camping"
+    : activities.length
+      ? "things-to-do"
+      : facilities.length
+        ? "facilities"
+        : null;
 
   return (
     <>
@@ -63,32 +73,19 @@ const FeatureIcons = ({
       {activities.some((x) => x.code === "pets-on-leash") && (
         <Icon src={petsIcon} label="Pets on leash" size={iconSize} />
       )}
-      {page !== "park" &&
-        (campings.length ? (
-          <Link
-            to={`/${slug}/#camping`}
-            aria-label="See all campings, activities, and facilities"
-          >
-            see all
-          </Link>
-        ) : (
-          (activities.length > 0 || facilities.length > 0) &&
-          (activities.length ? (
-            <Link
-              to={`/${slug}/#things-to-do`}
-              aria-label="See all activities and facilities"
-            >
-              see all
-            </Link>
-          ) : (
-            <Link
-              to={`/${slug}/#facilities`}
-              aria-label="See all activities and facilities"
-            >
-              see all
-            </Link>
-          ))
-        ))}
+      {page !== "park" && seeAllAnchor && (
+        <Link to={`/${slug}/#${seeAllAnchor}`}>
+          see all
+          <span className="visually-hidden">
+            {" "}
+            (
+            {campings.length
+              ? "campings, activities, and facilities"
+              : "facilities and activities"}
+            {parkName && ` for ${parkName}`})
+          </span>
+        </Link>
+      )}
     </>
   );
 };

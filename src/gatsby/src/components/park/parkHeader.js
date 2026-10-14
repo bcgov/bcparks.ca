@@ -193,7 +193,11 @@ export default function ParkHeader({
             {searchArea.searchAreaName}.&nbsp;
             {latitude && longitude && (
               <>
-                <a href={externalLink}>View detailed map</a>.
+                <a href={externalLink}>
+                  View detailed map
+                  <span className="visually-hidden"> (for {parkName})</span>
+                </a>
+                .
               </>
             )}
           </div>
@@ -206,6 +210,7 @@ export default function ParkHeader({
             <ParkAccessStatus
               advisories={advisories}
               slug={slug}
+              parkName={parkName}
               parkFeatures={parkFeatures}
               operationDates={operationDates}
               onStatusCalculated={onStatusCalculated}
