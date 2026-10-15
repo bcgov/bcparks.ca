@@ -13,6 +13,7 @@ import {
   combineFacilities,
 } from "../utils/parkFeaturesHelper";
 import { getParkFeatures, getProtectedArea } from "../utils/apiHelper";
+import { useScrollToHash } from "../utils/useScrollToHash";
 
 import About from "../components/park/about";
 import Acknowledgment from "../components/acknowledgment";
@@ -204,24 +205,9 @@ export default function ParkTemplate({ data }) {
     processedFeatures,
   ]);
 
-  useEffect(() => {
-    if (
-      window.location.hash &&
-      !isLoadingProtectedArea &&
-      !isLoadingAdvisories &&
-      !isLoadingParkFeatures
-    ) {
-      const id = window.location.hash.replace("#", "");
-      const element =
-        document.getElementById(id) ||
-        document.querySelector(window.location.hash);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 100);
-      }
-    }
-  }, [isLoadingProtectedArea, isLoadingAdvisories, isLoadingParkFeatures]);
+  useScrollToHash(
+    !isLoadingProtectedArea && !isLoadingAdvisories && !isLoadingParkFeatures,
+  );
 
   const handleAccessStatus = (statusObj) => {
     setParkAccessStatus(statusObj);
