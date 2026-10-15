@@ -21,7 +21,7 @@ parameters:
     description: Public URL of the CMS for the same environment
     required: true
   - name: SUITE
-    description: full-chromium, full-firefox, full-webkit or content-check
+    description: full-all-browsers, full-chromium, full-firefox, full-webkit, smoke-test or content-check
     required: true
     value: full-chromium
   - name: FS_GROUP
@@ -56,11 +56,13 @@ objects:
                 - /bin/bash
                 - -c
                 - |-
-                  if [ "$SUITE" = "content-check" ]; then
-                    npm run test:content-check -- --output=/e2e/results/artifacts
-                  else
-                    npm run "test:${SUITE#full-}" -- --output=/e2e/results/artifacts
-                  fi
+                  case "$SUITE" in
+                    full-all-browsers) script=test ;;
+                    full-*) script="test:${SUITE#full-}" ;;
+                    smoke-test) script=test:smoke ;;
+                    *) script="test:$SUITE" ;;
+                  esac
+                  npm run "$script" -- --output=/e2e/results/artifacts
               env:
                 - name: HOME
                   value: /tmp

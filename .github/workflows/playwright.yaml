@@ -35,19 +35,22 @@ on:
       suite:
         description: Tests to run
         type: choice
-        default: full-chromium
+        default: full-all-browsers
         options:
+          - full-all-browsers
           - full-chromium
           - full-firefox
           - full-webkit
+          - smoke-test
           - content-check
 
 permissions:
   contents: read
 
-# Cancel superseded runs on the same PR. Manual runs never cancel each other.
+# Cancel a superseded run against the same PR, or the same manual
+# environment/suite combination, in favour of the new one.
 concurrency:
-  group: playwright-${{ github.event.pull_request.number || github.run_id }}
+  group: playwright-${{ github.event.pull_request.number || format('{0}-{1}', inputs.environment, inputs.suite) }}
   cancel-in-progress: true
 
 jobs:

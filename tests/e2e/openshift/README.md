@@ -1,6 +1,6 @@
 # E2E tests on OpenShift
 
-The `playwright.yaml` workflow runs the Playwright suite in `tests/e2e/` as a one-shot Job in the **tools** namespace (`c1643c-tools`) instead of on a GitHub Actions runner. GitHub Actions runners are blocked by the Kamloops Data Centre partway through each run (see [tests/e2e/README.md](../README.md#network-pause-temporary)). Running inside the cluster keeps test traffic off GitHub's IP addresses.
+The `playwright.yaml` workflow runs the Playwright suite in `tests/e2e/` as a one-shot Job in the **tools** namespace (`c1643c-tools`) instead of on a GitHub Actions runner. GitHub Actions runners are blocked by the Kamloops Data Centre partway through each run. Running inside the cluster keeps test traffic off GitHub's IP addresses.
 
 The Job reaches the site being tested only through its public URLs, so one setup can test every environment. Nothing is deployed alongside the app.
 
@@ -13,7 +13,7 @@ GitHub Actions (playwright.yaml)                  OpenShift: c1643c-tools
 ├─ Set target site (environment → BASE_URL/CMS_URL)
 ├─ oc start-build --from-archive (tests/e2e) ───▶ BuildConfig playwright-runner → image @sha256
 ├─ oc process | oc create ──────────────────────▶ Job bcparks-e2e-<run id>-<attempt>
-├─ stream logs, wait for the exit code            ├─ e2e: npm run test:<browser> ──▶ public URL
+├─ stream logs, wait for the exit code            ├─ e2e: npm run <suite script> ──▶ public URL
 ├─ oc cp report → upload-artifact                 └─ artifact-sync: sleep infinity, holds results
 └─ delete the Job
 ```
@@ -72,7 +72,7 @@ Save the first number as the `E2E_FS_GROUP` repository **variable** (Settings �
 
 ## Running
 
-Run **Playwright Tests** from the Actions tab and pick an `environment` (prod, test, dev, alpha-test, alpha-dev) and a `suite` (full-chromium, full-firefox, full-webkit, content-check). The suite's exit code decides the workflow result, and the HTML report and test results are uploaded as the `playwright-report` artifact.
+Run **Playwright Tests** from the Actions tab and pick an `environment` (prod, test, dev, alpha-test, alpha-dev) and a `suite` (full-all-browsers, full-chromium, full-firefox, full-webkit, smoke-test, content-check). The suite's exit code decides the workflow result, and the HTML report and test results are uploaded as the `playwright-report` artifact.
 
 It also runs on PRs to `main` or `alpha` that change `tests/e2e/**` or the workflow. PRs run `full-chromium` against prod (PRs to `main`) or alpha-test (PRs to `alpha`), and PRs from forks are skipped because they don't get the secrets. A new push to the same PR cancels the previous run.
 
@@ -110,7 +110,7 @@ The `e2e` container's exit code is the suite result (0 = passed). The `artifact-
 
 ## How the Job runs the tests
 
-The Job sets `CI=true`, `ENV`, `BASE_URL`, `CMS_URL` and `SUITE`, then runs `npm run test:<browser>` (or `npm run test:content-check`), the same scripts as on a GitHub runner. `playwright.config.js` doesn't need changes:
+The Job sets `CI=true`, `ENV`, `BASE_URL`, `CMS_URL` and `SUITE`, then runs the npm script for the suite (`npm test` for `full-all-browsers`, `test:<browser>` for `full-<browser>`, `test:smoke` or `test:content-check`), the same scripts as locally. `playwright.config.js` doesn't need changes:
 
 - `PLAYWRIGHT_HTML_OUTPUT_DIR=/e2e/results/report` moves the HTML report onto the shared volume.
 - `--output=/e2e/results/artifacts` does the same for traces and screenshots.

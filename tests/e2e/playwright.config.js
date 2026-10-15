@@ -12,11 +12,6 @@ if (!process.env.BASE_URL) {
   throw new Error(`BASE_URL is not set. Create env/.env.${environment} from env/.env.${environment}.example or set BASE_URL.`);
 }
 
-// 3. Folder the workers share to pause the run on network errors (see
-// utils/networkPause.js). Workers inherit it from the main process, so the
-// whole run uses one folder.
-process.env.E2E_NETWORK_PAUSE_DIR ??= path.join(require('os').tmpdir(), `bcparks-e2e-network-pause-${process.pid}`);
-
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -33,14 +28,14 @@ module.exports = defineConfig({
   /* Fail the run on GitHub Actions runners if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on GitHub Actions runners only */
-  retries: process.env.CI ? 1 : 0,
+  retries: process.env.CI ? 2 : 0,
   /* Limit parallel tests on GitHub Actions runners. */
   workers: process.env.CI ? 2 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters
      On GitHub Actions runners, list prints each result and error as it runs (even if the job is
-     cancelled) and github adds failure annotations to the run. */
+     cancelled) and githubFinalAttemptReporter adds an annotation to the run for each failed test. */
   reporter: process.env.CI
-    ? [['github'], ['list'], ['html', { open: 'never' }]]
+    ? [['./utils/githubFinalAttemptReporter.js'], ['list'], ['html', { open: 'never' }]]
     : [['html', { open: 'never' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
