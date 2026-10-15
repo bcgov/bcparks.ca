@@ -12,16 +12,15 @@ export const useScrollToHash = (isReady, delay = 500) => {
     // Do nothing if the content isn't loaded or there's no hash in the URL
     if (!isReady || !window.location.hash) return;
 
-    // Find the element corresponding to the hash in the URL
-    const element = document.getElementById(
-      decodeURIComponent(window.location.hash.slice(1)),
-    );
-    if (!element) return;
-
-    // Scroll to the element after a delay to allow time for layout rendering
+    // Scroll to the target after a delay; it may not exist until a later render
     const timer = setTimeout(() => {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      const element = document.getElementById(
+        decodeURIComponent(window.location.hash.slice(1)),
+      );
+
+      element?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, delay);
+
     return () => clearTimeout(timer);
   }, [isReady, delay]);
 };
