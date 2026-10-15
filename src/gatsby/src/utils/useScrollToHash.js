@@ -18,17 +18,22 @@ export const useScrollToHash = (isReady, delay = 300, maxAttempts = 2) => {
     const timer = setInterval(() => {
       attempts += 1;
 
-      // Find the element corresponding to the hash in the URL
-      const element = document.getElementById(
-        decodeURIComponent(window.location.hash.slice(1)),
-      );
+      try {
+        // Find the element corresponding to the hash in the URL
+        const element = document.getElementById(
+          decodeURIComponent(window.location.hash.slice(1)),
+        );
 
-      // If the element exists, scroll to it;
-      // otherwise, retry until max attempts is reached
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
-        clearInterval(timer);
-      } else if (attempts >= maxAttempts) {
+        // If the element exists, scroll to it;
+        // otherwise, retry until max attempts is reached
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+          clearInterval(timer);
+        } else if (attempts >= maxAttempts) {
+          clearInterval(timer);
+        }
+      } catch {
+        // Malformed fragment; give up rather than throwing on every tick
         clearInterval(timer);
       }
     }, delay);
