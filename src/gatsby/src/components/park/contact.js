@@ -77,7 +77,7 @@ export const ParkContact = ({ contact }) => {
   );
 };
 
-export default function Contact({ contact, parkContacts, operations }) {
+export default function Contact({ parkContacts, operations }) {
   // Filter contacts by isActive and sort by rank
   const sortedContacts = parkContacts
     .filter((contact) => contact.isActive)
@@ -90,71 +90,65 @@ export default function Contact({ contact, parkContacts, operations }) {
   return (
     <div id="contact" className="anchor-link">
       <h2 className="section-heading">Contact</h2>
-      {contact === "" ? (
-        <figure className="table">
-          <table>
-            <tbody>
-              {/* display it only when the park is in the reservation system */}
-              {inReservationSystem && (
-                <tr>
-                  <th scope="row">Reservations, changes, and cancellations</th>
-                  <td>
-                    <p>
-                      Our call centre is open from 7 am to 7 pm Pacific Time.
-                      There is a $5 fee for reservations, changes, or
-                      cancellations made by phone.
-                    </p>
-                    <p>
-                      <FontAwesome icon="phone" />
-                      <a href="tel:+18006899025">
-                        <span className="visually-hidden">Phone number: </span>
-                        1-800-689-9025
-                      </a>{" "}
-                      (toll-free from Canada or the US)
-                    </p>
-                    <p>
-                      <FontAwesome icon="phone" />
-                      <a href="tel:+15198586161">
-                        <span className="visually-hidden">Phone number: </span>
-                        1-519-858-6161
-                      </a>{" "}
-                      (international)
-                    </p>
-                    <p>
-                      <FontAwesome icon="laptop" />
-                      <a href="https://camping.bcparks.ca/contact">
-                        Contact form and live chat
-                      </a>
-                    </p>
-                  </td>
-                </tr>
-              )}
-              {sortedContacts.length > 0 &&
-                sortedContacts.map((contact, index) => (
-                  <ParkContact key={index} contact={contact} />
-                ))}
-              {/* display it always */}
+      <figure className="table">
+        <table>
+          <tbody>
+            {/* display it only when the park is in the reservation system */}
+            {inReservationSystem && (
               <tr>
-                <th scope="row">General questions and feedback for BC Parks</th>
+                <th scope="row">Reservations, changes, and cancellations</th>
                 <td>
                   <p>
-                    We answer emails weekdays from 9 am to 5 pm Pacific Time.
+                    Our call centre is open from 7 am to 7 pm Pacific Time.
+                    There is a $5 fee for reservations, changes, or
+                    cancellations made by phone.
                   </p>
                   <p>
-                    <FontAwesome icon="envelope" />
-                    <a href="mailto:parkinfo@gov.bc.ca">
-                      <span className="visually-hidden">Email: </span>
-                      parkinfo@gov.bc.ca
+                    <FontAwesome icon="phone" />
+                    <a href="tel:+18006899025">
+                      <span className="visually-hidden">Phone number: </span>
+                      1-800-689-9025
+                    </a>{" "}
+                    (toll-free from Canada or the US)
+                  </p>
+                  <p>
+                    <FontAwesome icon="phone" />
+                    <a href="tel:+15198586161">
+                      <span className="visually-hidden">Phone number: </span>
+                      1-519-858-6161
+                    </a>{" "}
+                    (international)
+                  </p>
+                  <p>
+                    <FontAwesome icon="laptop" />
+                    <a href="https://camping.bcparks.ca/contact">
+                      Contact form and live chat
                     </a>
                   </p>
                 </td>
               </tr>
-            </tbody>
-          </table>
-        </figure>
-      ) : (
-        <HtmlContent>{contact}</HtmlContent>
-      )}
+            )}
+            {sortedContacts.length > 0 &&
+              sortedContacts.map((contact, index) => (
+                <ParkContact key={index} contact={contact} />
+              ))}
+            {/* display it always */}
+            <tr>
+              <th scope="row">General questions and feedback for BC Parks</th>
+              <td>
+                <p>We answer emails weekdays from 9 am to 5 pm Pacific Time.</p>
+                <p>
+                  <FontAwesome icon="envelope" />
+                  <a href="mailto:parkinfo@gov.bc.ca">
+                    <span className="visually-hidden">Email: </span>
+                    parkinfo@gov.bc.ca
+                  </a>
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </figure>
     </div>
   );
 }
