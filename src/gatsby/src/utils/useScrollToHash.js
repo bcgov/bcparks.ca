@@ -3,7 +3,7 @@ import { useEffect } from "react";
 /**
  * Scrolls to the element matching the URL hash once the page content is ready.
  *
- * @param {boolean} isReady - true once dynamically loaded content has rendered
+ * @param {boolean} isReady - true once async page data has finished loading
  * @param {number} delay - milliseconds between attempts to find the target and scroll
  * @param {number} maxAttempts - number of attempts before giving up
  * @returns {void}
