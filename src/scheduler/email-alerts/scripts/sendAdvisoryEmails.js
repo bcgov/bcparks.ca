@@ -60,7 +60,7 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
       let dateLabel = "";
       let dateString = "";
 
-      const tz = "America/Vancouver";
+      const tz = "America/Dawson_Creek";
       const fmt = "MMMM dd, yyyy hh:mm a";
 
       if (advisory.isAdvisoryDateDisplayed) {
