@@ -81,7 +81,7 @@ const FeatureIcons = ({
             (
             {campings.length
               ? "campings, activities, and facilities"
-              : "facilities and activities"}
+              : "activities and facilities"}
             {parkName && ` for ${parkName}`})
           </span>
         </Link>
