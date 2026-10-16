@@ -106,6 +106,12 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
         return { ...resource, link };
       });
 
+      // Match the CMS rules for standard messages: skip inactive messages and
+      // messages without a description, and order by precedence (lowest first)
+      advisory.standardMessages = (advisory.standardMessages ?? [])
+        .filter((m) => m.isActive !== false && m.description)
+        .sort((a, b) => (a.precedence ?? 0) - (b.precedence ?? 0));
+
       const emailData = {
         ...emailInfo,
         ...{
@@ -148,10 +154,13 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
           const environmentName = process.env.BCPARKS_ENVIRONMENT || "local";
           const environment = environmentName.toLowerCase();
           const subject = emailData.subject;
-          const summary = emailData.data.description.replace(
-            /(<([^>]+)>)/gi,
-            "",
-          );
+          const summary = [
+            emailData.data.description,
+            ...emailData.data.standardMessages.map((m) => m.description),
+          ]
+            .filter(Boolean)
+            .map((text) => text.replace(/(<([^>]+)>)/gi, ""))
+            .join("\n\n");
           const fromName =
             environment === "prod"
               ? "Staff Web Portal"
@@ -268,7 +277,7 @@ const getAdvisoryInfo = async function (advisoryNumber) {
         recreationResources: {
           fields: ["resourceName", "recResourceId", "isDisplayed"],
         },
-        standardMessages: { fields: ["description"] },
+        standardMessages: { fields: ["description", "precedence", "isActive"] },
         urgency: { fields: ["urgency"] },
       },
       filters: {

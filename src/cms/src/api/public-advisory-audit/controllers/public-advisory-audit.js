@@ -4,6 +4,10 @@
  */
 
 const { createCoreController } = require("@strapi/strapi").factories;
+const {
+  buildDescriptionWithStandardMessages,
+  addStandardMessagesPopulate,
+} = require("../../../helpers/standardMessages.js");
 
 module.exports = createCoreController(
   "api::public-advisory-audit.public-advisory-audit",
@@ -84,11 +88,17 @@ module.exports = createCoreController(
         .find({
           filters: mergedFilters,
           sort,
-          populate,
+          populate: addStandardMessagesPopulate(populate),
           ...paginationOption,
           fields,
           status: "published",
         });
+
+      // append the standardMessages to the description and then delete them from the entity
+      for (const entity of results) {
+        entity.description = buildDescriptionWithStandardMessages(entity);
+        delete entity.standardMessages;
+      }
 
       const sanitizedEntities = await this.sanitizeOutput(results, ctx);
 
