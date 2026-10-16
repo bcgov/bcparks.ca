@@ -5,7 +5,7 @@ const slugify = require("slugify");
 
 /**
  * Custom hook that processes HTML content containing YouTube video embeds.
- * Fetches video titles from YouTube via noembed API and adds them as
+ * Fetches video titles from YouTube's oEmbed endpoint and adds them as
  * id and title attributes to iframe elements for accessibility and analytics tracking.
  *
  * @param {string} content - HTML content containing figure.media elements with YouTube iframes
@@ -17,7 +17,7 @@ export const usePreRenderVideo = (content = "") => {
 
   /**
    * Fetches video titles for all YouTube iframes found in content.
-   * Extracts video IDs from iframe src URLs and calls noembed API for titles.
+   * Extracts video IDs from iframe src URLs and calls YouTube's oEmbed endpoint for titles.
    * @param {string} htmlContent - HTML content to process
    * @returns {Promise<string[]>} Array of video titles (with null for failed requests)
    */
@@ -41,12 +41,13 @@ export const usePreRenderVideo = (content = "") => {
       const videoId = rawSegment?.split("?")[0];
 
       if (videoId) {
-        // Fetch video title from noembed API (YouTube metadata service)
+        // Fetch video title from YouTube's oEmbed endpoint
         const titlePromise = fetch(
-          `https://noembed.com/embed?dataType=json&url=https://www.youtube.com/watch?v=${videoId}`,
+          `https://www.youtube.com/oembed?format=json&url=https://www.youtube.com/watch?v=${videoId}`,
         )
-          .then((response) => response.json())
-          .then((data) => data.title)
+          // oEmbed returns 400/401/404 for invalid, private, or removed videos
+          .then((response) => (response.ok ? response.json() : null))
+          .then((data) => data?.title)
           .catch(() => null); // Return null for failed requests to maintain array indices
 
         fetchPromises.push(titlePromise);
