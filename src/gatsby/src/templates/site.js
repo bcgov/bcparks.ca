@@ -16,6 +16,7 @@ import {
   getParkFeaturesByOrcsSiteNumber,
   getProtectedArea,
 } from "../utils/apiHelper";
+import { useScrollToHash } from "../utils/useScrollToHash";
 
 import Acknowledgment from "../components/acknowledgment";
 import AdvisoryDetails from "../components/park/advisoryDetails";
@@ -212,6 +213,10 @@ export default function SiteTemplate({ data }) {
     data.allStrapiCampingType.nodes,
     processedFeatures,
   ]);
+
+  useScrollToHash(
+    !isLoadingProtectedArea && !isLoadingAdvisories && !isLoadingParkFeatures,
+  );
 
   const handleAccessStatus = (statusObj) => {
     setParkAccessStatus(statusObj);
