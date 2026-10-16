@@ -6,6 +6,10 @@
 
 const { sanitize } = require("@strapi/utils");
 const { createCoreController } = require("@strapi/strapi").factories;
+const {
+  buildDescriptionWithStandardMessages,
+  addStandardMessagesPopulate,
+} = require("../../../helpers/standardMessages.js");
 
 const populateStandardMessages = function (query) {
   // Set default populate if not specified
@@ -31,14 +35,7 @@ const populateStandardMessages = function (query) {
 
 const appendStandardMessages = function (entity) {
   if (entity) {
-    const { description = "", standardMessages } = entity;
-    let content = description ? `<div>${description}</div>` : "";
-    if (standardMessages && standardMessages.length > 0) {
-      content += standardMessages
-        .map((m) => `<div>${m.description}</div>`)
-        .join(" ");
-    }
-    entity.description = content.trim();
+    entity.description = buildDescriptionWithStandardMessages(entity);
   }
   return entity;
 };
@@ -69,13 +66,12 @@ module.exports = createCoreController(
         .findFirst({
           filters: { advisoryNumber: id },
           ...ctx.query,
+          populate: addStandardMessagesPopulate(ctx.query.populate),
         });
 
       if (!entity) {
         return ctx.notFound();
       }
-
-      ctx.query = populateStandardMessages(ctx.query);
 
       // append the standardMessages to the description and then delete them from the entity
       const result = appendStandardMessages(entity);

@@ -3,6 +3,10 @@
  * queueing `recspace publish advisory` tasks.
  */
 
+const {
+  buildDescriptionWithStandardMessages,
+} = require("./standardMessages.js");
+
 /**
  * Maps a public advisory audit record to the flattened payload expected by
  * the RecSpace API.
@@ -19,7 +23,7 @@ function buildPayload(paAudit) {
     advisory_number: paAudit.advisoryNumber ?? null,
     revision_number: paAudit.revisionNumber ?? null,
     title: paAudit.title ?? null,
-    description: paAudit.description ?? null,
+    description: buildDescriptionWithStandardMessages(paAudit) || null,
     submitted_by: paAudit.submittedByName ?? paAudit.createdByName ?? null,
     access_status_name: paAudit.accessStatus?.accessStatus ?? null,
     access_status_grouplabel: paAudit.accessStatus?.groupLabel ?? null,
