@@ -62,7 +62,6 @@ export default function ParkTemplate({ data }) {
   const reconciliationNotes =
     park.reconciliationNotes?.data?.reconciliationNotes;
   const maps = park.maps?.data?.maps;
-  const contact = park.parkContact?.data?.parkContact;
   const hasNearbyParks = park.nearbyParks?.length > 0;
   const nearbyParks = park.nearbyParks;
   const hasParkGuidelines = park.parkGuidelines?.length > 0;
@@ -543,7 +542,6 @@ export default function ParkTemplate({ data }) {
             {menuItems[8].visible && (
               <div ref={contactRef} className="w-100">
                 <Contact
-                  contact={contact}
                   parkContacts={park.parkContacts || []}
                   operations={operations}
                 />
@@ -614,11 +612,6 @@ export const query = graphql`
       specialNotes {
         data {
           specialNotes
-        }
-      }
-      parkContact {
-        data {
-          parkContact
         }
       }
       conservation {

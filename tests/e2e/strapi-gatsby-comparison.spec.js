@@ -169,8 +169,7 @@ const RELATION_CHECKS = {
     getText: (item) => item.title,
   },
   parkContacts: {
-    // The legacy parkContact HTML replaces the contact list when it is set
-    isEligible: (item, park) => item.isActive && !hasText(park.parkContact),
+    isEligible: (item) => item.isActive,
     getText: (item) =>
       hasText(item.title) ? item.title : stripPrefix(item.name),
   },
@@ -283,7 +282,6 @@ async function getProtectedArea(request, orcs) {
     "orcs",
     "slug",
     "protectedAreaName",
-    "parkContact",
     "description",
     "conservation",
     "culturalHeritage",
