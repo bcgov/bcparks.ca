@@ -23,7 +23,7 @@ module.exports = ({ strapi }) => ({
     query.populate = {
       parkNames: {
         fields: ["parkName"],
-        populate: { parkNameType: { fields: ["nameTypeId"] } },
+        populate: { parkNameType: { fields: ["nameTypeNumber"] } },
       },
       parkFacilities: {
         fields: ["isFacilityOpen", "isActive", "publishedAt"],
@@ -76,7 +76,7 @@ module.exports = ({ strapi }) => ({
         fields: ["operatingYear", "startDate", "endDate", "publishedAt"],
         filters: {
           parkDateType: {
-            dateTypeId: {
+            dateTypeNumber: {
               $eq: GATE_DATE_TYPE_ID,
             },
           },
@@ -103,7 +103,7 @@ module.exports = ({ strapi }) => ({
             ],
             filters: {
               parkDateType: {
-                dateTypeId: {
+                dateTypeNumber: {
                   $eq: OPERATION_DATE_TYPE_ID,
                 },
               },
@@ -113,12 +113,12 @@ module.exports = ({ strapi }) => ({
             },
             populate: {
               parkDateType: {
-                fields: ["dateTypeId"],
+                fields: ["dateTypeNumber"],
               },
             },
           },
           parkFeatureType: {
-            fields: ["featureTypeId"],
+            fields: ["featureTypeNumber"],
           },
         },
       },

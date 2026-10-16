@@ -51,10 +51,11 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
     // check if data has isIgnored field (from Elasticsearch - find a park page)
     if ("isIgnored" in parkFeature) {
       if (parkFeature.isIgnored == null) {
-        // inherit from park feature type using parkFeatureTypeId
-        if (parkFeature.parkFeatureTypeId) {
+        // inherit from park feature type using parkFeatureTypeNumber
+        if (parkFeature.parkFeatureTypeNumber) {
           const parkFeatureType = parkFeatureTypes.find(
-            (type) => type.featureTypeId === parkFeature.parkFeatureTypeId,
+            (type) =>
+              type.featureTypeNumber === parkFeature.parkFeatureTypeNumber,
           );
           if (parkFeatureType) {
             closureAffectsAccessStatus =
@@ -92,7 +93,7 @@ function checkParkFeatureClosure(parkFeatures, staticData) {
       (d) =>
         d.isActive === true &&
         (d.parkDateType == null ||
-          d.parkDateType.dateTypeId === PARK_DATE_TYPE.OPERATION) &&
+          d.parkDateType.dateTypeNumber === PARK_DATE_TYPE.OPERATION) &&
         d.startDate &&
         d.endDate &&
         d.startDate <= today &&
@@ -190,7 +191,7 @@ export default function ParkAccessStatus({
       }
       allStrapiParkFeatureType {
         nodes {
-          featureTypeId
+          featureTypeNumber
           parkFeatureType
           closureAffectsAccessStatus
         }

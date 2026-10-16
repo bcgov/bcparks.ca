@@ -39,7 +39,7 @@ const PARK_DATES = {
     ],
   },
   populate: {
-    parkDateType: { fields: ["dateTypeId", "dateType"] },
+    parkDateType: { fields: ["dateTypeNumber", "dateType"] },
   },
 };
 const PARK_FEATURE_TYPE = {
@@ -61,7 +61,7 @@ const PARK_GATE_DATES = {
       },
       {
         parkDateType: {
-          dateTypeId: { $eq: 1 }, // Gate dates only
+          dateTypeNumber: { $eq: 1 }, // Gate dates only
         },
       },
     ],

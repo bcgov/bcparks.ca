@@ -18,7 +18,7 @@ exports.dootPublish = async function () {
 
   // Date types DOOT manages by season type.
   // Each publish contains a full season, so managed types missing from dateRanges are safe to delete.
-  const DOOT_MANAGED_DATE_TYPE_IDS = {
+  const DOOT_MANAGED_DATE_TYPE_NUMBERS = {
     regular: [1, 2, 3, 6, 7, 8], // Gate, Tier 1, Tier 2, Operation, Reservation, Backcountry registration
     winter: [4],
   };
@@ -209,7 +209,7 @@ exports.dootPublish = async function () {
             fields: ["documentId", "sourceDateRangeId"],
             populate: {
               parkDateType: {
-                fields: ["dateTypeId"],
+                fields: ["dateTypeNumber"],
               },
             },
           };
@@ -227,12 +227,14 @@ exports.dootPublish = async function () {
             break;
           }
 
-          const managedDateTypeIds =
-            DOOT_MANAGED_DATE_TYPE_IDS[item.seasonType] ?? [];
+          const managedDateTypeNumbers =
+            DOOT_MANAGED_DATE_TYPE_NUMBERS[item.seasonType] ?? [];
 
           // collect incoming sourceDateRangeIds to skip deleting records that can be updated with PUT
           const incomingSourceIds = new Set(
-            item.dateRanges?.map((dateRange) => dateRange.id).filter((id) => id != null) || [],
+            item.dateRanges
+              ?.map((dateRange) => dateRange.id)
+              .filter((id) => id != null) || [],
           );
 
           // Note: sourceDateRangeId is a newer field added to track which DOOT record created
@@ -241,17 +243,19 @@ exports.dootPublish = async function () {
           // are published from DOOT, newly generated records will populate this field correctly.
           // The situation will self-correct over time as older date ranges expire and are
           // replaced by new DOOT records.
-          
+
           // Build a map of sourceDateRangeId -> documentId for existing records that can be updated.
           const existingBySourceId = new Map();
           for (const dateRange of datesToDelete.data.data) {
             if (dateRange.sourceDateRangeId != null) {
-              existingBySourceId.set(dateRange.sourceDateRangeId, dateRange.documentId);
+              existingBySourceId.set(
+                dateRange.sourceDateRangeId,
+                dateRange.documentId,
+              );
             }
           }
 
-          // create a map of the park-date-types collection to get the id for each
-          // dateTypeId
+          // Build a map from each Strapi dateTypeNumber to its documentId.
           let dateTypeMap;
           try {
             dateTypeMap = await getDateTypeMap();
@@ -263,14 +267,14 @@ exports.dootPublish = async function () {
             break;
           }
 
-          // validate all the dateTypeIds before deleting anything, 
+          // Validate all dateTypeNumbers before deleting anything,
           // so an invalid payload can't leave the season partially deleted
           const invalidDateRange = item.dateRanges?.find(
-            (dootDateRange) => !dateTypeMap.has(dootDateRange.dateTypeId),
+            (dootDateRange) => !dateTypeMap.has(dootDateRange.dateTypeNumber),
           );
           if (invalidDateRange) {
             logger.error(
-              `dootPublish() failed: Invalid dateTypeId ${invalidDateRange.dateTypeId} in DOOT data for ${relationName}`,
+              `dootPublish() failed: Invalid dateTypeNumber ${invalidDateRange.dateTypeNumber} in DOOT data for ${relationName}`,
             );
             errorProcessingMessage = true;
             break;
@@ -283,11 +287,15 @@ exports.dootPublish = async function () {
           try {
             for (const dateRange of datesToDelete.data.data) {
               if (
-                managedDateTypeIds.includes(dateRange.parkDateType.dateTypeId) &&
+                managedDateTypeNumbers.includes(
+                  dateRange.parkDateType.dateTypeNumber,
+                ) &&
                 (dateRange.sourceDateRangeId == null ||
                   !incomingSourceIds.has(dateRange.sourceDateRangeId))
               ) {
-                await cmsAxios.delete(`/api/park-dates/${dateRange.documentId}`);
+                await cmsAxios.delete(
+                  `/api/park-dates/${dateRange.documentId}`,
+                );
                 deletedCount++;
               }
             }
@@ -305,9 +313,11 @@ exports.dootPublish = async function () {
               // create/update/delete the date ranges
               for (const dootDateRange of item.dateRanges) {
                 const existingDocId =
-                  dootDateRange.id != null ? existingBySourceId.get(dootDateRange.id) : undefined;
+                  dootDateRange.id != null
+                    ? existingBySourceId.get(dootDateRange.id)
+                    : undefined;
 
-                // a blank startDate/endDate means the date range was intentionally removed in DOOT, 
+                // a blank startDate/endDate means the date range was intentionally removed in DOOT,
                 // so the matching Strapi record should be deleted rather than saved with
                 // blank required fields (which would fail validation and abort the whole message).
                 const isBlankDateRange =
@@ -325,7 +335,7 @@ exports.dootPublish = async function () {
                   endDate: dootDateRange.endDate,
                   isActive: dootDateRange.isActive,
                   adminNote: dootDateRange.adminNote,
-                  parkDateType: dateTypeMap.get(dootDateRange.dateTypeId),
+                  parkDateType: dateTypeMap.get(dootDateRange.dateTypeNumber),
                   isDateAnnual: dootDateRange.isDateAnnual,
                   operatingYear: item.operatingYear,
                   protectedArea: protectedAreaDocId
@@ -356,7 +366,9 @@ exports.dootPublish = async function () {
                 .filter(Boolean)
                 .join(", ");
               if (summary) {
-                logger.info(`${summary} park-dates record(s) for ${relationName}.`);
+                logger.info(
+                  `${summary} park-dates record(s) for ${relationName}.`,
+                );
               }
             } catch (error) {
               logger.error(

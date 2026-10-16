@@ -14,7 +14,7 @@
     "parkAreaType": {
       "type": "string"
     },
-    "areaTypeId": {
+    "areaTypeNumber": {
       "type": "integer",
       "required": true,
       "unique": true

@@ -149,14 +149,14 @@ exports.createSchemaCustomization = ({ actions }) => {
   }
 
   type STRAPI_MARINE_ECOSECTION implements Node @dontInfer {
-    marineEcosectionId: Int
+    marineEcosectionNumber: Int
     marineEcosection: String
     marineEcosectionCode: String
     protectedAreas: [STRAPI_PROTECTED_AREA] @link(by: "id", from: "protectedAreas___NODE")
   }
 
   type STRAPI_TERRESTRIAL_ECOSECTION implements Node @dontInfer {
-    terrestrialEcosectionId: Int
+    terrestrialEcosectionNumber: Int
     terrestrialEcosection: String
     terrestrialEcosectionCode: String
     parentEcoregionCode: String

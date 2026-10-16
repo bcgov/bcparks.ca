@@ -10,7 +10,7 @@ export const PARK_NAME_TYPE = {
   Historic: 6,
 };
 
-// dateTypeId from Strapi park-date-type
+// dateTypeNumber from Strapi park-date-type
 export const PARK_DATE_TYPE = {
   GATE: 1,
   TIER_1: 2,

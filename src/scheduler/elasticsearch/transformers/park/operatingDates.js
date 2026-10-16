@@ -29,7 +29,7 @@ const convertParkFeatures = function (parkFeatures) {
       const f = {
         isActive: true,
         isOpen: true,
-        parkFeatureTypeId: feature?.parkFeatureType?.featureTypeId,
+        parkFeatureTypeNumber: feature?.parkFeatureType?.featureTypeNumber,
         isIgnored:
           feature.closureAffectsAccessStatus === null
             ? null
@@ -48,9 +48,9 @@ const convertParkFeatures = function (parkFeatures) {
             operatingYear: d.operatingYear,
             startDate: d.startDate,
             endDate: d.endDate,
-            ...(d.parkDateType?.dateTypeId && {
+            ...(d.parkDateType?.dateTypeNumber && {
               parkDateType: {
-                dateTypeId: d.parkDateType.dateTypeId,
+                dateTypeNumber: d.parkDateType.dateTypeNumber,
               },
             }),
           })),

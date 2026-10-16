@@ -14,7 +14,7 @@
       "type": "string",
       "required": true
     },
-    "featureTypeId": {
+    "featureTypeNumber": {
       "type": "integer",
       "required": true,
       "unique": true
