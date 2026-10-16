@@ -1,17 +1,15 @@
 /**
  * Builds the full advisory description by wrapping the advisory's own
- * description and appending the description of each active linked standard
- * message, ordered by precedence (lowest first). Messages without a
- * description are skipped. Does not mutate the entity.
+ * description and appending the description of each linked standard message,
+ * ordered by precedence (lowest first). Messages without a description are
+ * skipped. Does not mutate the entity.
  */
 function buildDescriptionWithStandardMessages(entity) {
   const { description = "", standardMessages } = entity;
   let content = description ? `<div>${description}</div>` : "";
-  const activeMessages = (standardMessages ?? []).filter(
-    (m) => m.isActive !== false && m.description,
-  );
-  if (activeMessages.length > 0) {
-    content += activeMessages
+  const messages = (standardMessages ?? []).filter((m) => m.description);
+  if (messages.length > 0) {
+    content += messages
       .sort((a, b) => (a.precedence ?? 0) - (b.precedence ?? 0))
       .map((m) => `<div>${m.description}</div>`)
       .join(" ");
@@ -20,13 +18,13 @@ function buildDescriptionWithStandardMessages(entity) {
 }
 
 /**
- * Returns a Strapi populate value that also loads the description,
- * precedence and isActive flag of each standard message, preserving whatever
- * else the caller asked to populate.
+ * Returns a Strapi populate value that also loads the description and
+ * precedence of each standard message, preserving whatever else the caller
+ * asked to populate.
  */
 function addStandardMessagesPopulate(populate) {
   const standardMessages = {
-    fields: ["description", "precedence", "isActive"],
+    fields: ["description", "precedence"],
   };
 
   if (populate === "*") {

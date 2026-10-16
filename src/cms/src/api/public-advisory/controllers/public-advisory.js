@@ -25,7 +25,7 @@ const populateStandardMessages = function (query) {
           ...query.populate,
           ...{
             standardMessages: {
-              fields: ["title", "description", "precedence", "isActive"],
+              fields: ["title", "description", "precedence"],
             },
           },
         },

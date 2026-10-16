@@ -106,10 +106,10 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
         return { ...resource, link };
       });
 
-      // Match the CMS rules for standard messages: skip inactive messages and
-      // messages without a description, and order by precedence (lowest first)
+      // Match the CMS rules for standard messages: skip messages without a
+      // description and order by precedence (lowest first)
       advisory.standardMessages = (advisory.standardMessages ?? [])
-        .filter((m) => m.isActive !== false && m.description)
+        .filter((m) => m.description)
         .sort((a, b) => (a.precedence ?? 0) - (b.precedence ?? 0));
 
       const emailData = {
@@ -277,7 +277,7 @@ const getAdvisoryInfo = async function (advisoryNumber) {
         recreationResources: {
           fields: ["resourceName", "recResourceId", "isDisplayed"],
         },
-        standardMessages: { fields: ["description", "precedence", "isActive"] },
+        standardMessages: { fields: ["description", "precedence"] },
         urgency: { fields: ["urgency"] },
       },
       filters: {
