@@ -17,7 +17,6 @@ spec:
         template: {{ template "bcparks_etl_fullname" . }}-job
         cronjob: {{ template "bcparks_etl_fullname" . }}
     spec:
-      backoffLimit: {{ .Values.etl.backoffLimit }}
       template:
         metadata:
           labels:
