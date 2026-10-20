@@ -45,7 +45,7 @@ exports.sendParkNamesEmails = async function () {
     }
 
     if (shouldSend && emailEnabled) {
-      const subject = `A Protected Area Name Was Changed`;
+      const subject = `A park name was changed`;
       const summary = `${jsonData.oldName} was changed to ${jsonData.newName}`;
       // Split EMAIL_RECIPIENT because it can be a comma-separated list
       const recipients = (process.env.EMAIL_RECIPIENT || "")
