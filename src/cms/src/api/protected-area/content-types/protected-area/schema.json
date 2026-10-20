@@ -168,13 +168,6 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
-    "parkContact": {
-      "type": "customField",
-      "options": {
-        "preset": "default"
-      },
-      "customField": "plugin::ckeditor5.CKEditor"
-    },
     "reservations": {
       "type": "customField",
       "options": {
