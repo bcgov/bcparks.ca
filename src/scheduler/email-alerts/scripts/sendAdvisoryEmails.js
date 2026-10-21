@@ -106,6 +106,12 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
         return { ...resource, link };
       });
 
+      // Match the CMS rules for standard messages: skip messages without a
+      // description
+      advisory.standardMessages = (advisory.standardMessages ?? []).filter(
+        (m) => m.description,
+      );
+
       const emailData = {
         ...emailInfo,
         ...{
@@ -148,10 +154,13 @@ exports.sendAdvisoryEmails = async function (recentAdvisoryEmails) {
           const environmentName = process.env.BCPARKS_ENVIRONMENT || "local";
           const environment = environmentName.toLowerCase();
           const subject = emailData.subject;
-          const summary = emailData.data.description.replace(
-            /(<([^>]+)>)/gi,
-            "",
-          );
+          const summary = [
+            emailData.data.description,
+            ...emailData.data.standardMessages.map((m) => m.description),
+          ]
+            .filter(Boolean)
+            .map((text) => text.replace(/(<([^>]+)>)/gi, ""))
+            .join("\n\n");
           const fromName =
             environment === "prod"
               ? "Staff Web Portal"
