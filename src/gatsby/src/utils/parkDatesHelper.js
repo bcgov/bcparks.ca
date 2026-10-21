@@ -119,17 +119,17 @@ const getParkDates = (parkOperationDates) => {
 const groupParkFeatureDates = (feature) => {
   const featureDates = feature.parkDates || [];
 
-  // Group dates by dateTypeId
-  const datesByTypeId = featureDates
-    .filter((date) => date.isActive && date.parkDateType?.dateTypeId != null)
+  // Group dates by dateTypeNumber
+  const datesByTypeNumber = featureDates
+    .filter((date) => date.isActive && date.parkDateType?.dateTypeNumber != null)
     .reduce((acc, date) => {
-      const dateTypeId = date.parkDateType.dateTypeId;
+      const dateTypeNumber = date.parkDateType.dateTypeNumber;
 
-      if (!acc[dateTypeId]) {
-        acc[dateTypeId] = [];
+      if (!acc[dateTypeNumber]) {
+        acc[dateTypeNumber] = [];
       }
 
-      acc[dateTypeId].push({
+      acc[dateTypeNumber].push({
         operatingYear: date.operatingYear,
         start: date.startDate,
         end: date.endDate,
@@ -138,17 +138,17 @@ const groupParkFeatureDates = (feature) => {
       return acc;
     }, {});
 
-  // Map dateTypeIds to feature properties based on your API data
-  feature.gateDates = datesByTypeId[1] || []; // Gate
-  feature.tier1Dates = datesByTypeId[2] || []; // Tier 1
-  feature.tier2Dates = datesByTypeId[3] || []; // Tier 2
-  feature.winterFeeDates = datesByTypeId[4] || []; // Winter fee
-  feature.dayUsePassDates = datesByTypeId[5] || []; // Day-use pass
-  feature.operationDates = datesByTypeId[6] || []; // Operation
-  feature.reservationDates = datesByTypeId[7] || []; // Reservation
-  feature.backcountryDates = datesByTypeId[8] || []; // Backcountry registration
-  feature.firstComeFirstServedDates = datesByTypeId[9] || []; // First come, first served
-  feature.serviceAndFeeDates = datesByTypeId[10] || []; // Full services and fees
+  // Map dateTypeNumbers to feature properties based on your API data
+  feature.gateDates = datesByTypeNumber[1] || []; // Gate
+  feature.tier1Dates = datesByTypeNumber[2] || []; // Tier 1
+  feature.tier2Dates = datesByTypeNumber[3] || []; // Tier 2
+  feature.winterFeeDates = datesByTypeNumber[4] || []; // Winter fee
+  feature.dayUsePassDates = datesByTypeNumber[5] || []; // Day-use pass
+  feature.operationDates = datesByTypeNumber[6] || []; // Operation
+  feature.reservationDates = datesByTypeNumber[7] || []; // Reservation
+  feature.backcountryDates = datesByTypeNumber[8] || []; // Backcountry registration
+  feature.firstComeFirstServedDates = datesByTypeNumber[9] || []; // First come, first served
+  feature.serviceAndFeeDates = datesByTypeNumber[10] || []; // Full services and fees
 
   return feature;
 };

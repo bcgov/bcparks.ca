@@ -58,13 +58,13 @@ async function getProtectedAreaDocId(orcs) {
   return undefined;
 }
 
-// get a map of dateTypeId to Strapi documentId
+// get a map of dateTypeNumber to Strapi documentId
 async function getDateTypeMap() {
   const dateTypeMap = new Map();
   let dateTypesResponse;
   dateTypesResponse = await cmsAxios.get("/api/park-date-types");
   for (const dateType of dateTypesResponse.data.data) {
-    dateTypeMap.set(dateType.dateTypeId, dateType.documentId);
+    dateTypeMap.set(dateType.dateTypeNumber, dateType.documentId);
   }
   return dateTypeMap;
 }

@@ -11,7 +11,7 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "terrestrialEcosectionId": {
+    "terrestrialEcosectionNumber": {
       "type": "integer"
     },
     "terrestrialEcosection": {

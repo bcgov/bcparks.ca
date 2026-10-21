@@ -13,7 +13,7 @@ const getHasCampfiresFacility = (parkFacilities) => {
   );
 };
 
-// dateTypeId values from park-date-type
+// dateTypeNumber values from park-date-type
 const GATE_DATE_TYPE_ID = 1;
 const OPERATION_DATE_TYPE_ID = 6;
 
@@ -186,7 +186,7 @@ const getProtectedAreaStatus = async (ctx) => {
       filters: {
         isActive: { $eq: true },
         endDate: { $gte: `${thisYear}-01-01` },
-        parkDateType: { dateTypeId: { $eq: GATE_DATE_TYPE_ID } },
+        parkDateType: { dateTypeNumber: { $eq: GATE_DATE_TYPE_ID } },
       },
     },
     parkFeatures: {
@@ -197,7 +197,7 @@ const getProtectedAreaStatus = async (ctx) => {
           fields: ["startDate", "endDate", "isActive"],
           filters: {
             endDate: { $gte: `${thisYear}-01-01` },
-            parkDateType: { dateTypeId: { $eq: OPERATION_DATE_TYPE_ID } },
+            parkDateType: { dateTypeNumber: { $eq: OPERATION_DATE_TYPE_ID } },
           },
         },
       },

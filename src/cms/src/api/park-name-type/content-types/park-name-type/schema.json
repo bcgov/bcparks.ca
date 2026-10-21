@@ -13,7 +13,7 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "nameTypeId": {
+    "nameTypeNumber": {
       "type": "integer"
     },
     "nameType": {

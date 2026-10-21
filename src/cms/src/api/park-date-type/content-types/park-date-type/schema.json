@@ -11,7 +11,7 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "dateTypeId": {
+    "dateTypeNumber": {
       "type": "integer",
       "required": true,
       "unique": true

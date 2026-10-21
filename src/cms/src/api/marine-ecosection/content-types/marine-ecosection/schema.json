@@ -11,7 +11,7 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "marineEcosectionId": {
+    "marineEcosectionNumber": {
       "type": "integer"
     },
     "marineEcosection": {
