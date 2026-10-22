@@ -1,5 +1,7 @@
 cluster:
   domain: apps.gold.devops.gov.bc.ca
+  vanityTlsSecretName: bcparks-ssl-wildcard
+  ipAllowlistSecretName: bcparks-ip-allowlist
   ssoAuthUrl: https://dev.loginproxy.gov.bc.ca/auth
   ssoRealm: bcparks-service-transformation
   ssoClientId: staff-portal
@@ -63,6 +65,11 @@ cms:
     maxReplicas: 2
     cpuUtilizationThreshold: 125
 
+  vanityRoute:
+    # Route name. Defaults to vanity-cms for main and vanity-<release>-cms otherwise; set only
+    # to override. The route is created when env.externalUrl (its host) is set.
+    name: ""
+
 crunchy:
   instanceName: crunchy-postgres
   componentName: crunchy
@@ -86,6 +93,13 @@ public:
     minReplicas: 1
     maxReplicas: 2
     cpuUtilizationThreshold: 125
+
+  vanityRoute:
+    # Route name. Defaults to vanity-<cms.env.environment>; set only to override. The route is
+    # created when cluster.publicUrl (its host) is set.
+    name: ""
+    # Additional vanity routes ({ name, host }) for the public site
+    extraRoutes: []
 
 maintenance:
   imagePullPolicy: Always
