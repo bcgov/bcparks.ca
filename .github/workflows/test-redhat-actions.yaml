@@ -1,0 +1,33 @@
+name: TEMP - test Red Hat actions (remove before merge)
+
+on:
+  push:
+    branches:
+      - CMS-2052
+
+jobs:
+  test-redhat-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install OpenShift CLI tools
+        uses: redhat-actions/openshift-tools-installer@v3
+        with:
+          oc: "4.18"
+          skip_cache: true
+
+      - name: oc client version
+        run: oc version --client
+
+      - name: Login OpenShift
+        uses: redhat-actions/oc-login@v2
+        with:
+          openshift_server_url: ${{ secrets.OPENSHIFT_GOLD_SERVER_URL }}
+          openshift_token: ${{ secrets.OPENSHIFT_GOLD_SERVICE_TOKEN }}
+
+      - name: Check login (read-only)
+        run: |
+          echo "KUBECONFIG=$KUBECONFIG"
+          test -f "$KUBECONFIG"
+          oc version
+          oc whoami
+          oc -n ${{ secrets.OPENSHIFT_GOLD_LICENSE_PLATE }}-dev get deployments -o name
