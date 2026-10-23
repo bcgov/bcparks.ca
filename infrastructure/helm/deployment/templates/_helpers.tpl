@@ -138,4 +138,6 @@ The "00_" prefix keeps it at the top of the key list in the OpenShift console.
 
   To make a change permanent, update the secret in Vault and then perform a Helm upgrade. See "Running a Helm Upgrade":
   https://apps.nrs.gov.bc.ca/int/confluence/spaces/BCPRS/pages/317194679/Running+a+Helm+Upgrade
+
+  In test and prod, Vault also contains S3_ACCESS_KEY_ID and S3_ACCESS_SECRET, which go in the s3-pgbackrest secret. Helm upgrade doesn't update that secret. It is applied manually following steps in helm/crunchy-postgres/README.md.
 {{- end -}}
