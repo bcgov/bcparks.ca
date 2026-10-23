@@ -37,21 +37,9 @@ jobs:
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
-      # Downgrade/pin Docker Engine to v28.x on the hosted runner
-      - name: Set up Docker 28.x
-        uses: docker/setup-docker-action@v5
-        with:
-          version: "28.5.2"
-          set-host: true # <— this sets DOCKER_HOST for all following steps
-
-      - name: Sanity check Docker version (should be 28.x / API < 1.44)
-        run: |
-          docker version
-          docker info
-
       - name: s2i Build
         id: build_image
-        uses: redhat-actions/s2i-build@v2
+        uses: redhat-actions/s2i-build@v3
         with:
           path_context: "src/cms"
           builder_image: ${{ env.BUILDER_IMAGE }}
@@ -152,21 +140,9 @@ jobs:
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
-      # Downgrade/pin Docker Engine to v28.x on the hosted runner
-      - name: Set up Docker 28.x
-        uses: docker/setup-docker-action@v5
-        with:
-          version: "28.5.2"
-          set-host: true # <— this sets DOCKER_HOST for all following steps
-
-      - name: Sanity check Docker version (should be 28.x / API < 1.44)
-        run: |
-          docker version
-          docker info
-
       - name: s2i Build
         id: build_image
-        uses: redhat-actions/s2i-build@v2
+        uses: redhat-actions/s2i-build@v3
         with:
           path_context: "src/etl"
           builder_image: ${{ env.BUILDER_IMAGE }}
@@ -201,21 +177,9 @@ jobs:
           username: ${{secrets.OPENSHIFT_GOLD_SA_USERNAME}}
           password: ${{secrets.OPENSHIFT_GOLD_SA_PASSWORD}}
 
-      # Downgrade/pin Docker Engine to v28.x on the hosted runner
-      - name: Set up Docker 28.x
-        uses: docker/setup-docker-action@v5
-        with:
-          version: "28.5.2"
-          set-host: true # <— this sets DOCKER_HOST for all following steps
-
-      - name: Sanity check Docker version (should be 28.x / API < 1.44)
-        run: |
-          docker version
-          docker info
-
       - name: s2i Build
         id: build_image
-        uses: redhat-actions/s2i-build@v2
+        uses: redhat-actions/s2i-build@v3
         with:
           path_context: "src/scheduler"
           builder_image: ${{ env.BUILDER_IMAGE }}
