@@ -116,13 +116,44 @@ spec:
               value: {{ .Values.cms.env.enableGraphQLPlayground | quote }}
             - name: ELASTIC_PARK_INDEX_NAME
               value: {{ .Values.cms.env.indexName | quote }}
+            - name: ELASTIC_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_vault_managed_secret" . }}
+                  key: ELASTIC_HOST
+            - name: ELASTIC_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_vault_managed_secret" . }}
+                  key: ELASTIC_USERNAME
+            - name: ELASTIC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_vault_managed_secret" . }}
+                  key: ELASTIC_PASSWORD
+            - name: S3_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_vault_managed_secret" . }}
+                  key: STRAPI_S3_ACCESS_KEY_ID
+            - name: S3_ACCESS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_vault_managed_secret" . }}
+                  key: STRAPI_S3_ACCESS_SECRET
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_vault_managed_secret" . }}
+                  key: STRAPI_S3_BUCKET
+            - name: S3_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_vault_managed_secret" . }}
+                  key: STRAPI_S3_ENDPOINT
           envFrom:
             - secretRef:
                 name: {{ template "bcparks_cms_secret" . }}
-            - secretRef:
-                name: {{ template "bcparks_elasticsearch_secret" . }}
-            - secretRef:
-                name: bcparks-object-storage
           readinessProbe:
             httpGet:
               path: /health
