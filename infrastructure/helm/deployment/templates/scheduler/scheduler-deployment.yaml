@@ -30,16 +30,28 @@ spec:
 {{ toYaml .Values.scheduler.resources | indent 12 }}
           image: {{ .Values.images.scheduler.name }}:{{ .Values.images.scheduler.tag }}
           imagePullPolicy: {{ .Values.scheduler.imagePullPolicy }}
-          envFrom:
-            - secretRef:
-                name: {{ template "bcparks_elasticsearch_secret" . }}
           env:
+            - name: ELASTIC_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_vault_managed_secret" . }}
+                  key: ELASTIC_HOST
+            - name: ELASTIC_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_vault_managed_secret" . }}
+                  key: ELASTIC_USERNAME
+            - name: ELASTIC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "bcparks_vault_managed_secret" . }}
+                  key: ELASTIC_PASSWORD
             - name: STRAPI_BASE_URL
               value: {{ .Values.cms.env.externalUrl }}
             - name: STRAPI_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bcparks_etl_secret" . }}
+                  name: {{ template "bcparks_strapi_token_secret" . }}
                   key: STRAPI_API_TOKEN
             - name: ELASTIC_PARK_INDEX_NAME
               value: {{ .Values.cms.env.indexName | quote }}
@@ -83,7 +95,7 @@ spec:
             - name: REC_SPACE_KEYCLOAK_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bcparks_etl_secret" . }}
+                  name: {{ template "bcparks_vault_managed_secret" . }}
                   key: REC_SPACE_KEYCLOAK_CLIENT_SECRET
           livenessProbe:
             exec:

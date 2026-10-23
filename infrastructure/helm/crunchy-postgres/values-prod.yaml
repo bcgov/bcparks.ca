@@ -16,6 +16,8 @@ pgBackRest:
       storage: 6Gi
   s3:
     enabled: true
+    # s3-pgbackrest is created with CLI commands that copy the values from Vault. See "S3 backup secret" in README.md.
+    createS3Secret: false
     bucket: "parks-cms-prod"
     endpoint: "nrs.objectstore.gov.bc.ca"
 

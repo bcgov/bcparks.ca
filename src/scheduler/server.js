@@ -31,6 +31,13 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
     path: `.env`,
   });
 
+  // A plain `helm upgrade` (without helm-secrets) leaves Vault references unresolved
+  if (process.env.ELASTIC_HOST?.startsWith("ref+vault://")) {
+    throw new Error(
+      "ELASTIC_HOST is an unresolved Vault reference. Redeploy with `helm secrets --evaluate-templates`.",
+    );
+  }
+
   const logger = getLogger();
 
   let recentAdvisoryEmails = [];

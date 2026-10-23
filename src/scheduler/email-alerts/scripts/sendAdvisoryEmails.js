@@ -34,6 +34,12 @@ exports.sendAdvisoryEmails = (recent) =>
           }),
         );
 
+        // Match the CMS rules for standard messages: skip messages without a
+        // description
+        advisory.standardMessages = (advisory.standardMessages ?? []).filter(
+          (m) => m.description,
+        );
+
         return {
           ...emailInfo,
           data: advisory,
@@ -50,7 +56,14 @@ exports.sendAdvisoryEmails = (recent) =>
         ...(message?.jsonData?.additionalRecipients ?? []),
       ],
 
-      getSummaryText: (emailData) => emailData.data.description,
+      getSummaryText: (emailData) =>
+        [
+          emailData.data.description,
+          ...emailData.data.standardMessages.map((m) => m.description),
+        ]
+          .filter(Boolean)
+          .map((text) => `<div>${text}</div>`)
+          .join(""),
       getTestFileName: (message) => `./mail-test-${message?.numericData}.html`,
     },
     recent,

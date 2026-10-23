@@ -54,6 +54,52 @@ spec:
 
 Alpha environments share the crunchy-postgres infrastructure with the main environments.
 
+## S3 backup secret
+
+Test and prod also back up to S3 object storage (`pgBackRest.s3.enabled`). The S3 credentials are in the `s3-pgbackrest` secret, which the Crunchy operator reads. The operator can't read from Vault, so the secret is created once by running the commands below, which copy the values from Vault. `createS3Secret` is `false` in the values files, so Helm never creates this secret.
+
+The credentials are stored in Vault as `S3_ACCESS_KEY_ID` and `S3_ACCESS_SECRET`, at `<environment>/s3-pgbackrest` (see the [Vault layout](../deployment/README.md#vault-layout)). The bucket and endpoint are in the values files.
+
+Log in to Vault (see [Log in to Vault](../deployment/README.md#log-in-to-vault)), then create or update the secret. Run the command again whenever the values change in Vault.
+
+### Test
+
+```sh
+(
+  KEY_ID=$(vault kv get -mount=c1643c-nonprod -field=S3_ACCESS_KEY_ID test/s3-pgbackrest) || exit 1
+  KEY_SECRET=$(vault kv get -mount=c1643c-nonprod -field=S3_ACCESS_SECRET test/s3-pgbackrest) || exit 1
+  if [ -z "$KEY_ID" ] || [ -z "$KEY_SECRET" ]; then
+    echo "Empty value from Vault; s3-pgbackrest not changed" >&2
+    exit 1
+  fi
+
+  oc -n c1643c-test create secret generic s3-pgbackrest \
+    --from-file=s3.conf=<(printf '[global]\nrepo2-s3-key=%s\nrepo2-s3-key-secret=%s\n' \
+      "$KEY_ID" "$KEY_SECRET") \
+    --dry-run=client -o yaml | oc apply -f -
+)
+```
+
+### Prod
+
+```sh
+(
+  KEY_ID=$(vault kv get -mount=c1643c-prod -field=S3_ACCESS_KEY_ID prod/s3-pgbackrest) || exit 1
+  KEY_SECRET=$(vault kv get -mount=c1643c-prod -field=S3_ACCESS_SECRET prod/s3-pgbackrest) || exit 1
+  if [ -z "$KEY_ID" ] || [ -z "$KEY_SECRET" ]; then
+    echo "Empty value from Vault; s3-pgbackrest not changed" >&2
+    exit 1
+  fi
+
+  oc -n c1643c-prod create secret generic s3-pgbackrest \
+    --from-file=s3.conf=<(printf '[global]\nrepo2-s3-key=%s\nrepo2-s3-key-secret=%s\n' \
+      "$KEY_ID" "$KEY_SECRET") \
+    --dry-run=client -o yaml | oc apply -f -
+)
+```
+
+Each command runs in a subshell, so if a Vault read fails or returns an empty value, it stops without changing the existing secret.
+
 ## Upgrading
 
 ### Dev
@@ -170,7 +216,7 @@ A chart to provision a [Crunchy Postgres](https://www.crunchydata.com/) cluster.
 | `pgBackRest.sidecars.limits.cpu`                     | sidecars CPU limits                                                                                                                          | `50m`                  |
 | `pgBackRest.sidecars.limits.memory`                  | sidecars Memory limits                                                                                                                       | `128Mi`                |
 | `pgBackRest.s3.enabled`                              | Enables the s3 repo backups                                                                                                                  | `false`                |
-| `pgBackRest.s3.createS3Secret`                       | Creates the s3 secret based on key and keySecret                                                                                             | `true`                 |
+| `pgBackRest.s3.createS3Secret`                       | Creates the s3 secret based on key and keySecret (`false` in test and prod; see [S3 backup secret](#s3-backup-secret))                       | `true`                 |
 | `pgBackRest.s3.s3Secret`                             | The secret name to be created or read from                                                                                                   | `s3-pgbackrest`        |
 | `pgBackRest.s3.s3Path`                               | The path inside the bucket where the backups will be saved to, set it to `/` to use the root of the bucket.                                  | `/dbbackup`            |
 | `pgBackRest.s3.s3UriStyle`                           | Style of URL to use for S3 communication. [More Info](https://pgbackrest.org/configuration.html#section-repository/option-repo-s3-uri-style) | `path`                 |

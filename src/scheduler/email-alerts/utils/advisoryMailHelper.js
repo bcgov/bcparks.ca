@@ -58,7 +58,7 @@ const getAdvisoryInfo = async function (advisoryNumber) {
  * @returns {{dateLabel: string, dateString: string}} Display date information.
  */
 const getAdvisoryDateInfo = function (advisory) {
-  const tz = "America/Vancouver";
+  const tz = "America/Dawson_Creek";
   const fmt = "MMMM dd, yyyy hh:mm a";
 
   if (advisory.isAdvisoryDateDisplayed) {

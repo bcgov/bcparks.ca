@@ -41,12 +41,12 @@ spec:
                 - name: STRAPI_API_TOKEN
                   valueFrom:
                     secretKeyRef:
-                      name: {{ template "bcparks_etl_secret" . }}
+                      name: {{ template "bcparks_strapi_token_secret" . }}
                       key: STRAPI_API_TOKEN
                 - name: PARK_NAMES_API_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: {{ template "bcparks_etl_secret" . }}
+                      name: {{ template "bcparks_vault_managed_secret" . }}
                       key: PARK_NAMES_API_KEY
                 - name: DISABLE_BCWFS_CRON
                   value: {{ .Values.etl.disableBcwfsCron | quote }}
