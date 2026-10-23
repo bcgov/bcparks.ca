@@ -31,11 +31,11 @@
     "@strapi-community/plugin-redis": "^2.0.0",
     "@strapi-community/plugin-rest-cache": "5.1.0",
     "@strapi-community/provider-rest-cache-redis": "5.1.0",
-    "@strapi/plugin-documentation": "5.58.0",
-    "@strapi/plugin-graphql": "5.58.0",
-    "@strapi/plugin-users-permissions": "5.58.0",
-    "@strapi/provider-upload-aws-s3": "5.58.0",
-    "@strapi/strapi": "5.58.0",
+    "@strapi/plugin-documentation": "5.59.0",
+    "@strapi/plugin-graphql": "5.59.0",
+    "@strapi/plugin-users-permissions": "5.59.0",
+    "@strapi/provider-upload-aws-s3": "5.59.0",
+    "@strapi/strapi": "5.59.0",
     "keyv": "^5.6.0",
     "pg": "^8.23.1",
     "react": "^18.3.1",
@@ -51,7 +51,7 @@
     "prettier": "^3.9.10"
   },
   "overrides": {
-    "shell-quote": "^1.12.0"
+    "dompurify": "3.4.17"
   },
   "engines": {
     "node": ">=22.0.0 <25.0.0",
