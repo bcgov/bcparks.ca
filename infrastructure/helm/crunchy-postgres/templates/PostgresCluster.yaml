@@ -96,6 +96,7 @@ spec:
             name: {{ .Values.dataSource.secretName }}
       global:
         repo2-path: {{ .Values.dataSource.repo.path }}
+        repo2-s3-uri-style: {{ .Values.pgBackRest.s3.s3UriStyle }}
       repo:
         name: {{ .Values.dataSource.repo.name }}
         s3:
@@ -231,5 +232,5 @@ spec:
                 labelSelector:
                   matchLabels:
                     postgres-operator.crunchydata.com/cluster:
-                      {{ template "crunchy-postgres.fullname" . }}
+                      {{ .Values.instances.name }}
                     postgres-operator.crunchydata.com/role: pgbouncer
