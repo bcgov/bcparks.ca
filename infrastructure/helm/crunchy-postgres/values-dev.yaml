@@ -17,6 +17,3 @@ pgBackRest:
 proxy:
   pgBouncer:
     replicas: 1
-
-pgmonitor:
-  namespace: c1643c #The high level namespace of your project without the -tools -dev, etc part.
