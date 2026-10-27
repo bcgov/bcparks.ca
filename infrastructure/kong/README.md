@@ -9,8 +9,6 @@ API access is controlled via Kong, administered via the BC Gov API Programme Ser
 For an overview of the API Gateway update process, see:
 https://developer.gov.bc.ca/docs/default/component/aps-infra-platform-docs/
 
-Access to the web UI for creating service accounts can be requested in the `#aps-ops` rocketchat channel.
-
 ## Prerequisites
 
 - Install GWA CLI v3.x from https://github.com/bcgov/gwa-cli/releases
@@ -30,47 +28,80 @@ Access to the web UI for creating service accounts can be requested in the `#aps
 ## TEST Environment Publication
 
 1. Log into https://api-gov-bc-ca.test.api.gov.bc.ca/
-2. Select the BC Parks namespace
-3. Create a service account with `GatewayConfig.Publish` scope and note down the client id and client secret
-4. Download the GWA CLI from https://github.com/bcgov/gwa-cli/releases
-5. In command prompt run the following commands (the first command create a .env file locally, which will need to be deleted if you need to create one for the other environment):
+2. Select **Gateways** > **Gateway bcparks** and check that your IDIR has the `GatewayConfig.Publish` permission under
+   **Gateway Administration Access**
+3. From `infrastructure/kong/`, run the following commands. `gwa` stores its settings globally in `~/.gwa-config.yaml`,
+   so these commands also switch away from the other environment:
 
    ```sh
-   # Set the gateway (use namespace name)
-   gwa config set gateway bcparks
-
    # Set the host for TEST environment
    gwa config set host api-gov-bc-ca.test.api.gov.bc.ca
 
-   # Login with service account credentials
-   gwa login --client-id=<CLIENT_ID> --client-secret=<CLIENT_SECRET>
+   # Set the gateway
+   gwa config set gateway bcparks
 
-   # Publish the configuration
-   gwa pg public-test.yaml
+   # Login with your IDIR
+   gwa login
+
+   # Preview the changes
+   gwa pg --dry-run public-test.yaml
    ```
 
-6. Check the Gateway in the API Service Portal to make sure that the routes have been published
+4. Review the dry run output, then publish the configuration and check the upstream status and published hostnames:
+
+   ```sh
+   gwa pg public-test.yaml
+   gwa status --hosts
+   ```
+
+   `gwa pg` replaces all of the Gateway's Kong configuration tagged `ns.bcparks`, so any service or route that is not in
+   the file will be deleted.
+
+   In the TEST environment, route hosts are rewritten, so `bcparks.test.api.gov.bc.ca` in `public-test.yaml` is
+   served at `bcparks-test-api-gov-bc-ca.test.api.gov.bc.ca`.
 
 ## PROD Environment Publication
 
 1. Log into https://api.gov.bc.ca/
-2. Select the BC Parks namespace
-3. Create a service account with `GatewayConfig.Publish` scope and note down the client id and client secret
-4. Download the GWA CLI from https://github.com/bcgov/gwa-cli/releases
-5. In command prompt run the following commands (the first command create a .env file locally, which will need to be deleted if you need to create one for the other environment):
+2. Select **Gateways** > **Gateway bcparks** and check that your IDIR has the `GatewayConfig.Publish` permission under
+   **Gateway Administration Access**
+3. From `infrastructure/kong/`, run the following commands. `gwa` stores its settings globally in `~/.gwa-config.yaml`,
+   so these commands also switch away from the other environment:
 
    ```sh
-   # Set the gateway (use namespace name)
-   gwa config set gateway bcparks
-
    # Set the host for PROD environment
    gwa config set host api.gov.bc.ca
 
-   # Login with service account credentials
-   gwa login --client-id=<CLIENT_ID> --client-secret=<CLIENT_SECRET>
+   # Set the gateway
+   gwa config set gateway bcparks
 
-   # Publish the configuration
-   gwa pg public-prod.yaml
+   # Login with your IDIR
+   gwa login
+
+   # Preview the changes
+   gwa pg --dry-run public-prod.yaml
    ```
 
-6. Check the Gateway in the API Service Portal to make sure that the routes have been published
+4. Review the dry run output, then publish the configuration and check the upstream status and published hostnames:
+
+   ```sh
+   gwa pg public-prod.yaml
+   gwa status --hosts
+   ```
+
+   `gwa pg` replaces all of the Gateway's Kong configuration tagged `ns.bcparks`, so any service or route that is not in
+   the file will be deleted.
+
+## Service Accounts
+
+To log in without an IDIR (for example, from automation), select **Gateways** > **Gateway bcparks** > **Service Accounts**
+in the portal and create a service account with the `GatewayConfig.Publish` permission. Note down the client id and
+client secret, as they cannot be retrieved after the dialog is closed. Then log in with:
+
+```sh
+gwa login --client-id=<CLIENT_ID> --client-secret=<CLIENT_SECRET>
+```
+
+## Support
+
+Ask questions in the API-ProgramServices-operations Microsoft Teams channel.
