@@ -16,19 +16,26 @@ module.exports = {
    */
   register({ strapi }) {
     // configure the documentation plugin to ignore some content types
-    strapi
-      .plugin("documentation")
-      .service("override")
-      .excludeFromGeneration([
-        "public-advisory-audit",
-        "queued-task",
-        "search-indexing",
-        "statutory-holiday",
-        "geo-shape",
-        "search-city",
-        "footer-menu",
-        "menu",
-      ]);
+    strapi.plugin("documentation").service("override").excludeFromGeneration([
+      // internal
+      "business-hour",
+      "footer-menu",
+      "geo-shape",
+      "legacy-redirect",
+      "menu",
+      "public-advisory-audit",
+      "queued-task",
+      "search-city",
+      "search-indexing",
+      "staff-contact",
+      "statutory-holiday",
+
+      // grandfathered
+      "park-operation-date",
+      "park-operation-sub-area",
+      "park-operation-sub-area-date",
+      "park-operation-sub-area-type",
+    ]);
 
     if (process.env.DISABLE_LIFECYCLES === "true") {
       strapi.log.warn("🚫 Lifecycles disabled via DISABLE_LIFECYCLES");

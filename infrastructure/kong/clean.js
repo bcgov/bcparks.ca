@@ -11,6 +11,7 @@ const data = require("./public-documentation.json");
 
 const pathsToDelete = [
   // Strapi internal endpoints to delete
+  // excludeFromGeneration in src/cms/src/index.js controls custom content types
   "/tokens",
   "/email/settings",
   "/upload",
@@ -19,8 +20,6 @@ const pathsToDelete = [
   "/auth",
   "/connect",
   "/email",
-  // Other non-public endpoints to delete
-  "/staff-contacts",
 ];
 const paths = data.paths;
 

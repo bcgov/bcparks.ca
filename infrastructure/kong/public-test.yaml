@@ -59,7 +59,6 @@ services:
           max_age: null
           preflight_continue: false
       - name: proxy-cache
-        service: BCPARKS-TEST
         tags:
           - ns.bcparks
         enabled: true
