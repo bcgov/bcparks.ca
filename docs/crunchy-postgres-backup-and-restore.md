@@ -130,7 +130,21 @@ oc exec -n $NS $REPOHOST -- pgbackrest info --repo=2
 oc -n $NS get postgrescluster $C -o jsonpath='{.spec.backups.pgbackrest}' | jq 'del(.repos, .global, .repoHost, .sidecars, .configuration)'
 ```
 
-This should print `{}`.
+This should print `{}`. If it shows a leftover `restore` section, go to 6.9 to remove it, then run this check again.
+
+If it shows a leftover `manual` section, first confirm that no manual backup is still running:
+
+```sh
+oc -n $NS get jobs -l $SEL,postgres-operator.crunchydata.com/pgbackrest-backup=manual
+```
+
+Wait for any active manual backup to finish before removing its configuration. Once none is running:
+
+```sh
+oc -n $NS patch postgrescluster $C --type=merge -p '{"spec":{"backups":{"pgbackrest":{"manual":null}}}}'
+```
+
+Then run the check above again. Section 6.9 only removes `restore`, not `manual`.
 
 ## 5. Take a manual full backup
 
