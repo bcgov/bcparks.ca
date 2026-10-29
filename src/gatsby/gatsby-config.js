@@ -44,7 +44,7 @@ module.exports = {
           "camping-type",
           "guideline-type",
           "park-guideline",
-          "legacy-redirect",
+          "redirect",
           "menu",
           "footer-menu",
           "park-operation",

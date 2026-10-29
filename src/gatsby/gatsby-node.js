@@ -700,7 +700,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `;
   const redirectQuery = `
   {
-    allStrapiLegacyRedirect {
+    allStrapiRedirect {
       nodes {
         toPath
         fromPath
@@ -806,7 +806,7 @@ async function createRedirects(
 ) {
   const response = await strapiApiRequest(graphql, redirectQuery);
   const resultPark = await strapiApiRequest(graphql, parkQuery);
-  const redirects = response.data.allStrapiLegacyRedirect.nodes;
+  const redirects = response.data.allStrapiRedirect.nodes;
   const parks = resultPark.data.allStrapiProtectedArea.nodes;
 
   redirects.map((item) => {
