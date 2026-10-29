@@ -52,7 +52,8 @@ export default function SiteTemplate({ data }) {
 
   const description = site.description?.data?.description;
   const safetyInfo = site.safetyInfo?.data?.safetyInfo;
-  const locationNotes = site.locationNotes?.data?.locationNotes;
+  const locationDescription =
+    site.locationDescription?.data?.locationDescription;
   const hasSiteGuidelines = site.parkGuidelines?.length > 0;
   const managementAreas = park?.managementAreas || [];
   const searchArea = managementAreas[0]?.searchArea || {};
@@ -264,7 +265,7 @@ export default function SiteTemplate({ data }) {
       sectionIndex: 2,
       display: "Maps and location",
       link: "#maps-and-location",
-      visible: !isNullOrWhiteSpace(locationNotes),
+      visible: !isNullOrWhiteSpace(locationDescription),
     },
     {
       sectionIndex: 3,
@@ -463,7 +464,7 @@ export default function SiteTemplate({ data }) {
             )}
             {menuItems[2].visible && (
               <div ref={mapLocationRef} className="w-100">
-                <MapLocation locationNotes={locationNotes} />
+                <MapLocation locationDescription={locationDescription} />
               </div>
             )}
             {menuItems[3].visible && (
@@ -538,9 +539,9 @@ export const query = graphql`
       mapZoom
       longitude
       latitude
-      locationNotes {
+      locationDescription {
         data {
-          locationNotes
+          locationDescription
         }
       }
       description {
