@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "legacy_redirects",
+  "collectionName": "redirects",
   "info": {
-    "singularName": "legacy-redirect",
-    "pluralName": "legacy-redirects",
-    "displayName": "Legacy-redirect",
-    "name": "legacy-redirect",
+    "singularName": "redirect",
+    "pluralName": "redirects",
+    "displayName": "Redirect",
+    "name": "redirect",
     "description": ""
   },
   "options": {
@@ -19,7 +19,11 @@
       "type": "string"
     },
     "note": {
-      "type": "string"
+      "type": "text"
+    },
+    "adminNote": {
+      "type": "text",
+      "private": true
     }
   }
 }
