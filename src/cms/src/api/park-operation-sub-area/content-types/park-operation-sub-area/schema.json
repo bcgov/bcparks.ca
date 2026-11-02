@@ -166,13 +166,6 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
-    "reservationsNote": {
-      "type": "customField",
-      "options": {
-        "preset": "default"
-      },
-      "customField": "plugin::ckeditor5.CKEditor"
-    },
     "reservationNote": {
       "type": "customField",
       "options": {
