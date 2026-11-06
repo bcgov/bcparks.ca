@@ -1,0 +1,34 @@
+{{- if .Values.cluster.publicUrl }}
+{{- $cidrs := include "bcparks_ip_allowlist" . }}
+{{- $primary := dict "name" (include "bcparks_public_vanity_route_name" .) "host" (urlParse .Values.cluster.publicUrl).host }}
+{{- range prepend .Values.public.vanityRoute.extraRoutes $primary }}
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ .name }}
+  labels:
+    component: {{ $.Values.public.componentName }}
+    release: {{ $.Release.Name }}
+    chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
+    heritage: {{ $.Release.Service }}
+  {{- if $cidrs }}
+  annotations:
+    haproxy.router.openshift.io/ip_whitelist: {{ $cidrs | quote }}
+  {{- end }}
+spec:
+  host: {{ .host }}
+  to:
+    kind: Service
+    name: {{ $.Release.Name }}-{{ $.Values.public.componentName }}
+    weight: 100
+  port:
+    targetPort: {{ $.Values.public.service.portName }}
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+    externalCertificate:
+      name: {{ $.Values.cluster.vanityTlsSecretName }}
+  wildcardPolicy: None
+{{- end }}
+{{- end }}
