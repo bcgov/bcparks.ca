@@ -247,12 +247,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     data: STRAPI_PROTECTED_AREA_SPECIALNOTES_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
-  type STRAPI_PROTECTED_AREA_LOCATIONNOTES_TEXTNODE implements Node @dontInfer {
-    locationNotes: String
+  type STRAPI_PROTECTED_AREA_LOCATIONDESCRIPTION_TEXTNODE implements Node @dontInfer {
+    locationDescription: String
   }
 
-  type STRAPI_PROTECTED_AREALocationNotes {
-    data: STRAPI_PROTECTED_AREA_LOCATIONNOTES_TEXTNODE @link(by: "id", from: "data___NODE")
+  type STRAPI_PROTECTED_AREALocationDescription {
+    data: STRAPI_PROTECTED_AREA_LOCATIONDESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
   type STRAPI_PROTECTED_AREA_RESERVATIONS_TEXTNODE implements Node @dontInfer {
@@ -339,7 +339,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     description: STRAPI_PROTECTED_AREADescription
     safetyInfo: STRAPI_PROTECTED_AREASafetyInfo
     specialNotes: STRAPI_PROTECTED_AREASpecialNotes
-    locationNotes: STRAPI_PROTECTED_AREALocationNotes
+    locationDescription: STRAPI_PROTECTED_AREALocationDescription
     reservations: STRAPI_PROTECTED_AREAReservations
     maps: STRAPI_PROTECTED_AREAMaps
     managementPlanning: STRAPI_PROTECTED_AREAManagementPlanning

@@ -25925,7 +25925,7 @@
               "specialNotes": {
                 "type": "string"
               },
-              "locationNotes": {
+              "locationDescription": {
                 "type": "string"
               },
               "reservations": {
@@ -26469,7 +26469,7 @@
           "specialNotes": {
             "type": "string"
           },
-          "locationNotes": {
+          "locationDescription": {
             "type": "string"
           },
           "reservations": {
@@ -28664,7 +28664,7 @@
               "safetyInfo": {
                 "type": "string"
               },
-              "locationNotes": {
+              "locationDescription": {
                 "type": "string"
               },
               "reservations": {
@@ -28964,7 +28964,7 @@
           "safetyInfo": {
             "type": "string"
           },
-          "locationNotes": {
+          "locationDescription": {
             "type": "string"
           },
           "reservations": {
