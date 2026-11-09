@@ -75,7 +75,7 @@
       "type": "boolean",
       "default": null
     },
-    "featureId": {
+    "bcgnisFeatureId": {
       "type": "integer"
     },
     "sites": {

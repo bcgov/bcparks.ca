@@ -25787,7 +25787,7 @@
               "isFogZone": {
                 "type": "boolean"
               },
-              "featureId": {
+              "bcgnisFeatureId": {
                 "type": "integer"
               },
               "sites": {
@@ -26395,7 +26395,7 @@
           "isFogZone": {
             "type": "boolean"
           },
-          "featureId": {
+          "bcgnisFeatureId": {
             "type": "integer"
           },
           "sites": {
