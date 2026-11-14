@@ -16,7 +16,7 @@
     "@loadable/babel-plugin": "^5.16.1",
     "@loadable/component": "^5.16.7",
     "@loadable/webpack-plugin": "^5.15.2",
-    "axios": "^1.20.0",
+    "axios": "^1.21.0",
     "bootstrap": "^5.3.8",
     "cheerio": "1.2.0",
     "date-fns": "^2.30.0",
@@ -39,10 +39,10 @@
     "parse-url": "^8.1.0",
     "popper.js": "^1.14.6",
     "prop-types": "^15.7.2",
-    "qs": "^6.16.1",
+    "qs": "^6.17.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.10",
-    "react-bootstrap-typeahead": "^6.4.1",
+    "react-bootstrap-typeahead": "^6.4.2",
     "react-device-detect": "^2.0.1",
     "react-dom": "^18.3.1",
     "react-lazy-load-image-component": "^1.6.3",
@@ -54,7 +54,7 @@
     "slugify": "^1.6.9",
     "typography": "^0.16.24",
     "typography-theme-kirkham": "^0.16.19",
-    "yet-another-react-lightbox": "^3.32.2"
+    "yet-another-react-lightbox": "^3.33.0"
   },
   "devDependencies": {
     "babel-jest": "^27.5.1",
@@ -69,6 +69,7 @@
   ],
   "scripts": {
     "build": "gatsby build",
+    "dev": "npm run develop",
     "develop": "gatsby develop -H 0.0.0.0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
