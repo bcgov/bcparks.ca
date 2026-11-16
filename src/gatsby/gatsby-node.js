@@ -559,6 +559,30 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(typeDefs);
 };
 
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    STRAPI_AUDIO_CLIP: {
+      url: {
+        resolve: async (source, args, context) => {
+          const fileNodeId = source.file___NODE;
+          const file = fileNodeId
+            ? await context.nodeModel.getNodeById({
+                id: fileNodeId,
+                type: "STRAPI__MEDIA",
+              })
+            : null;
+          if (file?.url) {
+            return file.url.startsWith("/")
+              ? new URL(file.url, process.env.REACT_APP_CMS_BASE_URL).href
+              : file.url;
+          }
+          return source.url || null;
+        },
+      },
+    },
+  });
+};
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const pageQuery = `
   {
