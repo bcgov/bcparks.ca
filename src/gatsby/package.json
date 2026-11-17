@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "dependencies": {
     "@bcgov/bc-sans": "^2.1.2",
-    "@bcgov/bootstrap-v5-theme": "^1.1.0",
+    "@bcgov/bootstrap-v5-theme": "^1.1.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fortawesome/fontawesome-free": "^5.15.4",
@@ -16,8 +16,8 @@
     "@loadable/babel-plugin": "^5.16.1",
     "@loadable/component": "^5.16.7",
     "@loadable/webpack-plugin": "^5.15.2",
-    "axios": "^1.20.0",
-    "bootstrap": "^5.3.8",
+    "axios": "^1.21.1",
+    "bootstrap": "^5.3.9",
     "cheerio": "1.2.0",
     "date-fns": "^2.30.0",
     "gatsby": "^5.16.1",
@@ -39,10 +39,10 @@
     "parse-url": "^8.1.0",
     "popper.js": "^1.14.6",
     "prop-types": "^15.7.2",
-    "qs": "^6.16.1",
+    "qs": "^6.17.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.10",
-    "react-bootstrap-typeahead": "^6.4.1",
+    "react-bootstrap-typeahead": "^6.4.2",
     "react-device-detect": "^2.0.1",
     "react-dom": "^18.3.1",
     "react-lazy-load-image-component": "^1.6.3",
@@ -54,14 +54,14 @@
     "slugify": "^1.6.9",
     "typography": "^0.16.24",
     "typography-theme-kirkham": "^0.16.19",
-    "yet-another-react-lightbox": "^3.32.2"
+    "yet-another-react-lightbox": "^3.33.0"
   },
   "devDependencies": {
     "babel-jest": "^27.5.1",
     "babel-preset-gatsby": "^3.16.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
-    "prettier": "^3.9.10",
+    "prettier": "^3.10.1",
     "react-test-renderer": "^18.3.1"
   },
   "keywords": [
