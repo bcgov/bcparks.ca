@@ -17,7 +17,7 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@playwright/test": "^1.63.0",
+    "@playwright/test": "^1.65.1",
     "@types/node": "^20.14.1"
   },
   "dependencies": {
