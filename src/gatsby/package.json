@@ -54,7 +54,7 @@
     "slugify": "^1.6.9",
     "typography": "^0.16.24",
     "typography-theme-kirkham": "^0.16.19",
-    "yet-another-react-lightbox": "^3.33.0"
+    "yet-another-react-lightbox": "^3.33.1"
   },
   "devDependencies": {
     "babel-jest": "^27.5.1",
