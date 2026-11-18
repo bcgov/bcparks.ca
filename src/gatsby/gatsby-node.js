@@ -247,12 +247,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     data: STRAPI_PROTECTED_AREA_SPECIALNOTES_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
-  type STRAPI_PROTECTED_AREA_LOCATIONNOTES_TEXTNODE implements Node @dontInfer {
-    locationNotes: String
+  type STRAPI_PROTECTED_AREA_LOCATIONDESCRIPTION_TEXTNODE implements Node @dontInfer {
+    locationDescription: String
   }
 
-  type STRAPI_PROTECTED_AREALocationNotes {
-    data: STRAPI_PROTECTED_AREA_LOCATIONNOTES_TEXTNODE @link(by: "id", from: "data___NODE")
+  type STRAPI_PROTECTED_AREALocationDescription {
+    data: STRAPI_PROTECTED_AREA_LOCATIONDESCRIPTION_TEXTNODE @link(by: "id", from: "data___NODE")
   }
 
   type STRAPI_PROTECTED_AREA_RESERVATIONS_TEXTNODE implements Node @dontInfer {
@@ -339,7 +339,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     description: STRAPI_PROTECTED_AREADescription
     safetyInfo: STRAPI_PROTECTED_AREASafetyInfo
     specialNotes: STRAPI_PROTECTED_AREASpecialNotes
-    locationNotes: STRAPI_PROTECTED_AREALocationNotes
+    locationDescription: STRAPI_PROTECTED_AREALocationDescription
     reservations: STRAPI_PROTECTED_AREAReservations
     maps: STRAPI_PROTECTED_AREAMaps
     managementPlanning: STRAPI_PROTECTED_AREAManagementPlanning
@@ -557,6 +557,30 @@ exports.createSchemaCustomization = ({ actions }) => {
   }
   `;
   createTypes(typeDefs);
+};
+
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    STRAPI_AUDIO_CLIP: {
+      url: {
+        resolve: async (source, args, context) => {
+          const fileNodeId = source.file___NODE;
+          const file = fileNodeId
+            ? await context.nodeModel.getNodeById({
+                id: fileNodeId,
+                type: "STRAPI__MEDIA",
+              })
+            : null;
+          if (file?.url) {
+            return file.url.startsWith("/")
+              ? new URL(file.url, process.env.REACT_APP_CMS_BASE_URL).href
+              : file.url;
+          }
+          return source.url || null;
+        },
+      },
+    },
+  });
 };
 
 exports.createPages = async ({ graphql, actions, reporter }) => {

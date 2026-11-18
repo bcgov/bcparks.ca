@@ -1,7 +1,7 @@
 import React from "react";
 import HtmlContent from "../htmlContent";
 
-export default function MapLocation({ maps, locationNotes }) {
+export default function MapLocation({ maps, locationDescription }) {
   return (
     <div id="maps-and-location" className="anchor-link">
       {/* id="park-map-details-container" should be removed once it's removed from the contents */}
@@ -9,10 +9,10 @@ export default function MapLocation({ maps, locationNotes }) {
         Maps and location
       </h2>
       {maps && <HtmlContent>{maps}</HtmlContent>}
-      {locationNotes && (
+      {locationDescription && (
         <>
           <h3>Getting there</h3>
-          <HtmlContent>{locationNotes}</HtmlContent>
+          <HtmlContent>{locationDescription}</HtmlContent>
         </>
       )}
     </div>

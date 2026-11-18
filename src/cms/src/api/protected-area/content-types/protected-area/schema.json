@@ -75,7 +75,7 @@
       "type": "boolean",
       "default": null
     },
-    "featureId": {
+    "bcgnisFeatureId": {
       "type": "integer"
     },
     "sites": {
@@ -161,7 +161,7 @@
       },
       "customField": "plugin::ckeditor5.CKEditor"
     },
-    "locationNotes": {
+    "locationDescription": {
       "type": "customField",
       "options": {
         "preset": "default"

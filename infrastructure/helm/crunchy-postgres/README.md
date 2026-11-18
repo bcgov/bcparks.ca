@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Install `helm` CLI from https://helm.sh/docs/intro/install/
+- Install Helm 4 and the other tools listed in [Prerequisite](../deployment/README.md#prerequisite) in the deployment chart README
 
 ## Installing
 

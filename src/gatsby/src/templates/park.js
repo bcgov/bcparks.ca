@@ -54,7 +54,8 @@ export default function ParkTemplate({ data }) {
   const description = park.description?.data?.description;
   const safetyInfo = park.safetyInfo?.data?.safetyInfo;
   const specialNotes = park.specialNotes?.data?.specialNotes;
-  const locationNotes = park.locationNotes?.data?.locationNotes;
+  const locationDescription =
+    park.locationDescription?.data?.locationDescription;
   const conservation = park.conservation?.data?.conservation;
   const culturalHeritage = park.culturalHeritage?.data?.culturalHeritage;
   const history = park.history?.data?.history;
@@ -260,7 +261,8 @@ export default function ParkTemplate({ data }) {
       sectionIndex: 2,
       display: "Maps and location",
       link: "#maps-and-location",
-      visible: !isNullOrWhiteSpace(maps) || !isNullOrWhiteSpace(locationNotes),
+      visible:
+        !isNullOrWhiteSpace(maps) || !isNullOrWhiteSpace(locationDescription),
     },
     {
       sectionIndex: 3,
@@ -481,7 +483,10 @@ export default function ParkTemplate({ data }) {
             )}
             {menuItems[2].visible && (
               <div ref={mapLocationRef} className="w-100">
-                <MapLocation maps={maps} locationNotes={locationNotes} />
+                <MapLocation
+                  maps={maps}
+                  locationDescription={locationDescription}
+                />
               </div>
             )}
             {menuItems[3].visible && (
@@ -594,9 +599,9 @@ export const query = graphql`
       typeCode
       hasCampfireBan
       hasDiscoverParksLink
-      locationNotes {
+      locationDescription {
         data {
-          locationNotes
+          locationDescription
         }
       }
       reconciliationNotes {

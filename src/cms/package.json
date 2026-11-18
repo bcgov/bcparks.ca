@@ -5,6 +5,7 @@
   "description": "BC Parks CMS",
   "scripts": {
     "build": "strapi build",
+    "dev": "npm run develop",
     "develop": "strapi develop",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

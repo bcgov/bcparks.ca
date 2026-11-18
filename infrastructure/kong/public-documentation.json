@@ -17,7 +17,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-10-27T01:05:23.589Z"
+    "x-generation-date": "2026-10-29T18:47:46.093Z"
   },
   "servers": [
     {
@@ -24482,9 +24482,6 @@
               "serviceNote": {
                 "type": "string"
               },
-              "reservationsNote": {
-                "type": "string"
-              },
               "reservationNote": {
                 "type": "string"
               },
@@ -24806,9 +24803,6 @@
             "type": "string"
           },
           "serviceNote": {
-            "type": "string"
-          },
-          "reservationsNote": {
             "type": "string"
           },
           "reservationNote": {
@@ -25793,7 +25787,7 @@
               "isFogZone": {
                 "type": "boolean"
               },
-              "featureId": {
+              "bcgnisFeatureId": {
                 "type": "integer"
               },
               "sites": {
@@ -25931,7 +25925,7 @@
               "specialNotes": {
                 "type": "string"
               },
-              "locationNotes": {
+              "locationDescription": {
                 "type": "string"
               },
               "reservations": {
@@ -26401,7 +26395,7 @@
           "isFogZone": {
             "type": "boolean"
           },
-          "featureId": {
+          "bcgnisFeatureId": {
             "type": "integer"
           },
           "sites": {
@@ -26475,7 +26469,7 @@
           "specialNotes": {
             "type": "string"
           },
-          "locationNotes": {
+          "locationDescription": {
             "type": "string"
           },
           "reservations": {
@@ -28670,7 +28664,7 @@
               "safetyInfo": {
                 "type": "string"
               },
-              "locationNotes": {
+              "locationDescription": {
                 "type": "string"
               },
               "reservations": {
@@ -28970,7 +28964,7 @@
           "safetyInfo": {
             "type": "string"
           },
-          "locationNotes": {
+          "locationDescription": {
             "type": "string"
           },
           "reservations": {
