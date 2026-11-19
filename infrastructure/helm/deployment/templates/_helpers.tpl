@@ -101,6 +101,10 @@ https://{{ .Release.Name }}-{{ .Values.public.componentName }}-{{ .Release.Names
 {{ .Release.Name }}-{{ .Values.scheduler.componentName }}-secret
 {{- end -}}
 
+{{ define "bcparks_scheduler_volume_claim" -}}
+{{ .Release.Name }}-{{ .Values.scheduler.componentName }}
+{{- end -}}
+
 {{ define "bcparks_strapi_token_secret" -}}
 {{ .Release.Name }}-strapi-token
 {{- end -}}
