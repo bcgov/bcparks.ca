@@ -108,9 +108,26 @@ const getSenderName = function () {
     : environment.toUpperCase();
 };
 
+/**
+ * Makes an email's HTML viewable as a local preview file. Inline images
+ * referenced by cid (only resolved when the email is sent with attachments)
+ * are pointed at the image files on disk instead.
+ *
+ * @param {string} html Rendered email HTML.
+ * @returns {string} HTML for a preview file in the scheduler folder.
+ */
+const getPreviewHtml = function (html) {
+  return _.replace(
+    html,
+    /cid:logo-light\.png/g,
+    "./shared/email/images/logo-light.png",
+  );
+};
+
 module.exports = {
   csvToArray,
   filterRecipientsByEnvironment,
   getLogoAttachment,
+  getPreviewHtml,
   getSenderName,
 };
