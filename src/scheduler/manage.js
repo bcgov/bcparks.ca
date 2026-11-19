@@ -25,6 +25,9 @@ const {
 } = require("./email-alerts/scripts/sendParkNamesEmails");
 const { dootPublish } = require("./doot/scripts/publish");
 const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
+const {
+  checkSystemAlerts,
+} = require("./system-alerts/scripts/checkSystemAlerts");
 
 (async () => {
   dotenv.config({
@@ -140,6 +143,7 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
     await sendAdvisoryEmails([]);
     await sendDootEmails([]);
     await sendParkNamesEmails();
+    await checkSystemAlerts();
     return;
   }
 
@@ -173,6 +177,16 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
     return;
   }
 
+  /**
+   * Check for stuck queued tasks and send system alert emails
+   * (manually triggered via OpenShift terminal / mainly for debugging purposes)
+   */
+  if (scriptKeySpecified("systemalerts")) {
+    logger.info("Checking for stuck queued tasks");
+    await checkSystemAlerts();
+    return;
+  }
+
   console.log("\nUsage: \n");
   console.log("node manage.js [command]\n");
   console.log("Command options:\n");
@@ -193,4 +207,5 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
   );
   console.log("dootpublish : publish queued DOOT data to Strapi\n");
   console.log("rstsync     : process RecSpace advisory sync queue\n");
+  console.log("systemalerts: email alerts for stuck queued tasks\n");
 })();

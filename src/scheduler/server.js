@@ -26,6 +26,9 @@ const {
 } = require("./email-alerts/scripts/sendParkNamesEmails");
 const { dootPublish } = require("./doot/scripts/publish");
 const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
+const {
+  checkSystemAlerts,
+} = require("./system-alerts/scripts/checkSystemAlerts");
 
 (async () => {
   dotenv.config({
@@ -89,6 +92,7 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
 
       await dootPublish();
       await publishToRecSpace();
+      await checkSystemAlerts();
       await clearTaskErrorsIfQueueEmpty();
 
       // record pod liveness for health check every time the job runs
