@@ -50,7 +50,7 @@ exports.indexParks = async function (options) {
     }
 
     for (const park of parkList) {
-      if (await indexPark(park, photoList)) {
+      if (await indexPark(park, photoList, taskId(queue, park.orcs))) {
         indexed.push(taskId(queue, park.orcs));
       } else {
         logger.error(
@@ -84,7 +84,7 @@ exports.indexParks = async function (options) {
     for (const task of queue) {
       const orcs = task.numericData;
       logger.info(`removing park ${task.numericData}`);
-      if (await removePark(orcs)) {
+      if (await removePark(orcs, task.documentId)) {
         removed.push(taskId(queue, task.numericData));
       } else {
         logger.error(`error removing park ${orcs}`);
@@ -110,9 +110,15 @@ exports.indexParks = async function (options) {
 };
 
 /**
- *  Adds a single park to Elasticsearch
+ * Adds a single park to Elasticsearch.
+ *
+ * @param {Object} park Park (protected area) from Strapi.
+ * @param {Object[]} photos Park photos from Strapi.
+ * @param {string} [documentId] Queued task documentId. When set, an
+ *   Elasticsearch error is saved as that task's last error.
+ * @returns {Promise<boolean>} True when the park was indexed or removed.
  */
-const indexPark = async function (park, photos) {
+const indexPark = async function (park, photos, documentId) {
   if (!park) {
     return false;
   }
@@ -123,7 +129,7 @@ const indexPark = async function (park, photos) {
     getLogger().warn(
       `removing park ${park.orcs} due to unpublished or undisplayed status`,
     );
-    await removePark(park.orcs);
+    await removePark(park.orcs, documentId);
     return true;
   }
 
@@ -135,20 +141,25 @@ const indexPark = async function (park, photos) {
     getLogger().info(`indexing park ${park.orcs}`);
     await elasticClient.indexPark({ itemId: doc.orcs, document: doc });
   } catch (error) {
-    getLogger().error(error);
+    getLogger().error(error, documentId);
     return false;
   }
   return true;
 };
 
 /**
- *  Removes a single park from Elasticsearch
+ * Removes a single park from Elasticsearch.
+ *
+ * @param {number} orcs Park ORCS number.
+ * @param {string} [documentId] Queued task documentId. When set, an
+ *   Elasticsearch error is saved as that task's last error.
+ * @returns {Promise<boolean>} True when the park was removed.
  */
-const removePark = async function (orcs) {
+const removePark = async function (orcs, documentId) {
   try {
     await elasticClient.removePark({ itemId: orcs });
   } catch (error) {
-    getLogger().error(error);
+    getLogger().error(error, documentId);
     return false;
   }
   return true;
