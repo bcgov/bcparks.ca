@@ -6,8 +6,11 @@ const {
   scriptKeySpecified,
   noCommandLineArgs,
 } = require("../../shared/commandLine");
-const { send } = require("../utils/mailer");
-const { getSenderName, getLogoAttachment } = require("../utils/emailHelper");
+const { send } = require("../../shared/email/mailer");
+const {
+  getSenderName,
+  getLogoAttachment,
+} = require("../../shared/email/emailHelper");
 
 /**
  * Sends queued emails
