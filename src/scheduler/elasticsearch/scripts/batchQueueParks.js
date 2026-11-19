@@ -65,9 +65,12 @@ exports.batchQueueParks = async function () {
       for (const orcs of orcsValues) {
         try {
           if (!(await existsInQueue("elastic index park", orcs))) {
-            const addedToQueue = await addToQueue({
-              data: { action: "elastic index park", numericData: orcs },
-            });
+            const addedToQueue = await addToQueue(
+              {
+                data: { action: "elastic index park", numericData: orcs },
+              },
+              task.documentId,
+            );
             if (!addedToQueue) {
               isError = true;
             }
