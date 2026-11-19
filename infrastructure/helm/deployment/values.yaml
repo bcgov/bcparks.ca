@@ -156,6 +156,10 @@ scheduler:
     dootIsRecipient: cardweb@gov.bc.ca
     dootRsRecipient: discover.camping@gov.bc.ca
 
+  pvc:
+    storageClassName: netapp-file-standard
+    size: 20Mi # smallest size netapp-file-standard allows; smaller requests are rounded up
+
   resources:
     requests:
       cpu: 10m

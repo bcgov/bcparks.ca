@@ -75,11 +75,8 @@ spec:
               value: {{ .Values.scheduler.env.dootIsRecipient | quote }}
             - name: DOOT_RS_RECIPIENT
               value: {{ .Values.scheduler.env.dootRsRecipient | quote }}
-            - name: EMAIL_RECIPIENT_WHITELIST
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "bcparks_scheduler_secret" . }}
-                  key: EMAIL_RECIPIENT_WHITELIST
+            - name: PERSISTENT_DATA_DIR
+              value: /data
             - name: PUBLIC_URL
               value: {{ .Values.cluster.publicUrl | quote }}
             - name: ADMIN_URL
@@ -97,6 +94,12 @@ spec:
                 secretKeyRef:
                   name: {{ template "bcparks_vault_managed_secret" . }}
                   key: REC_SPACE_KEYCLOAK_CLIENT_SECRET
+          envFrom:
+            - secretRef:
+                name: {{ template "bcparks_scheduler_secret" . }}
+          volumeMounts:
+            - name: data
+              mountPath: /data
           livenessProbe:
             exec:
               command:
@@ -107,3 +110,7 @@ spec:
             periodSeconds: 120
             successThreshold: 1
             failureThreshold: 3
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ template "bcparks_scheduler_volume_claim" . }}
