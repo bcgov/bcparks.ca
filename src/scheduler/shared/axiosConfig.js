@@ -7,6 +7,7 @@ dotenv.config({
 
 const cmsAxios = axios.create({
   baseURL: process.env.STRAPI_BASE_URL,
+  timeout: 120000,
   headers: {
     common: {
       "Content-Type": "application/json",
