@@ -16,11 +16,14 @@
  * - description: plain-language explanation shown in the email (HTML allowed)
  * - headerTitle (optional): text next to the logo in the email header.
  *   Defaults to "Parks and Recreation staff web portal".
+ * - reminderHours (optional): hours between reminder emails while the alert
+ *   is still active. Defaults to 6.
  */
 module.exports = [
   {
     key: "recspace-sync",
     // "RecSpace advisory sync is failing" (alert subject and heading)
+    // "Still failing: RecSpace advisory sync" (reminder subject)
     name: "RecSpace advisory sync",
     // "...you are on the alert list for the advisory sync from ACT to RecSpace."
     systemName: "the advisory sync from ACT to RecSpace",

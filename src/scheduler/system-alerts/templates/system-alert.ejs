@@ -22,6 +22,12 @@
   </div>
 
   <table style="margin: 0 0 20px 0; border-collapse: collapse;">
+    <% if (isReminder) { %>
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700;">First alerted</td>
+      <td style="padding: 4px 0;"><%= firstAlertedDate %></td>
+    </tr>
+    <% } %>
     <tr>
       <td style="padding: 4px 16px 4px 0; font-weight: 700;">Environment</td>
       <td style="padding: 4px 0;"><%= environment %></td>
@@ -73,7 +79,8 @@
 
   <div style="margin: 0">
     You are receiving this email because you are on the alert list for <%= systemName %>.
-    You will only get one email per incident.
+    You get an email when an alert starts and every <%= reminderHours %> hours while it
+    continues.
   </div>
 </body>
 </html>
