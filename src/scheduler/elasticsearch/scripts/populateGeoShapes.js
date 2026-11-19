@@ -100,7 +100,7 @@ const processParkList = async function (parks) {
           await cmsAxios.post("/api/geo-shapes", { data: geoShape });
         } catch (error) {
           logger.error(`populateGeoShapes.js failed saving geoshape: ${error}`);
-          logger.error(error.response.data);
+          logger.error(error.response?.data);
           continue;
         }
       }

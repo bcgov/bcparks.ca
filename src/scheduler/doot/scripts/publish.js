@@ -56,7 +56,14 @@ exports.dootPublish = async function () {
         logger.info(
           `Splitting dootpublish task with ${jsonData.length} items into separate messages`,
         );
-        await dootSplitMessage(message);
+        try {
+          await dootSplitMessage(message);
+        } catch (error) {
+          logger.error(
+            `dootPublish() failed while splitting message: ${error}`,
+            message.documentId,
+          );
+        }
         continue;
       }
 
@@ -77,11 +84,21 @@ exports.dootPublish = async function () {
           errorProcessingMessage = true;
           break;
         }
-        const parkGateDocIds = await getParkGateDocIds(
-          protectedAreaDocId,
-          parkAreaDocId,
-          parkFeatureDocId,
-        );
+        let parkGateDocIds;
+        try {
+          parkGateDocIds = await getParkGateDocIds(
+            protectedAreaDocId,
+            parkAreaDocId,
+            parkFeatureDocId,
+          );
+        } catch (error) {
+          logger.error(
+            `dootPublish() failed while retrieving park gates: ${error}`,
+            message.documentId,
+          );
+          errorProcessingMessage = true;
+          break;
+        }
 
         let singleRelationFix = {};
         if (protectedAreaDocId) {
