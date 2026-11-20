@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const { exec } = require("child_process");
 
 const { getLogger } = require("./shared/logging");
+const { clearTaskErrorsIfQueueEmpty } = require("./shared/taskQueue");
 const { batchQueueParks } = require("./elasticsearch/scripts/batchQueueParks");
 const { indexParks } = require("./elasticsearch/scripts/indexParks");
 const {
@@ -88,6 +89,7 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
 
       await dootPublish();
       await publishToRecSpace();
+      await clearTaskErrorsIfQueueEmpty();
 
       // record pod liveness for health check every time the job runs
       // (use shell command to prevent file locking)

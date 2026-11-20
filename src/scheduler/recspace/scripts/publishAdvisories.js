@@ -17,9 +17,6 @@ async function postRecSpacePublicAdvisory(payload) {
     logger.error(
       `postRecSpacePublicAdvisory() failed for advisory ${payload.advisory_number} with rec_resource_ids ${recResourceIdsText}: ${error?.message ?? error}`,
     );
-    if (error?.response?.data) {
-      logger.error(`Response body: ${JSON.stringify(error.response.data)}`);
-    }
     throw error;
   }
 }
@@ -122,8 +119,18 @@ exports.publishToRecSpace = async function () {
 
       await removeFromQueue([message.documentId]);
     } catch (error) {
+      // Include the RecSpace response body in the error. On its own, an axios
+      // error only says "Request failed with status code 400", but RecSpace puts
+      // the reason in the body (e.g. "effective_date must be a Date instance").
+      // During CMS-1826 that body was the only clue that the problem was on the
+      // RecSpace side, while tasks stayed stuck in the queue. This message is
+      // also saved as the task's last error, so it needs the full reason.
+      const responseBody = error?.response?.data
+        ? ` ${JSON.stringify(error.response.data)}`
+        : "";
       logger.error(
-        `publishToRecSpace() failed while processing advisory ${message?.numericData}: ${error}`,
+        `publishToRecSpace() failed while processing advisory ${message?.numericData}: ${error}${responseBody}`,
+        message.documentId,
       );
     }
   }
