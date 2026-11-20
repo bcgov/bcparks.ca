@@ -31,6 +31,16 @@ const RESOLVED_TEMPLATE_PATH =
 const TIMEZONE = "America/Dawson_Creek";
 const DATE_FORMAT = "MMMM dd, yyyy hh:mm a";
 // used when SYSTEM_ALERT_REMINDER_HOURS is not set
+//
+// To preview a reminder email locally:
+// 1. Set SYSTEM_ALERT_REMINDER_HOURS=0.01 in .env so reminders are due after
+//    1 minute. If the rule sets its own reminderHours in alertRules.js,
+//    temporarily change that instead.
+// 2. With EMAIL_ENABLED=true, run `node manage.js systemalerts` to email the
+//    first alert. The alert is only saved to data/system-alerts.json once
+//    that email goes out, and a reminder needs a saved alert.
+// 3. Wait a minute, then run `node manage.js emailtest` to write the reminder
+//    to mail-test-alert-<rule key>-reminder.html.
 const DEFAULT_REMINDER_HOURS = 6;
 
 /**
@@ -338,18 +348,6 @@ const checkSystemAlerts = async function () {
 
     const isStuck = stuck.total > 0;
     const isActive = Boolean(state[rule.key]);
-
-    // emailtest renders the alert email for the rule's current state to a
-    // file (a reminder for an active alert, even if one isn't due yet) and
-    // leaves the state alone
-    if (scriptKeySpecified("emailtest")) {
-      if (isStuck) {
-        await sendAlert(rule, stuck.tasks, stuck.total, state[rule.key]);
-      } else if (isActive) {
-        await sendResolved(rule, state[rule.key]);
-      }
-      continue;
-    }
 
     const now = new Date().toISOString();
 
