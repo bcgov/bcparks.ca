@@ -5,7 +5,7 @@ const {
   statSync,
   writeFileSync,
 } = require("node:fs");
-const { rm } = require("node:fs").promises;
+const { readFile, rm } = require("node:fs").promises;
 
 // The scheduler runs once a minute, so a file written in the last 10 seconds
 // is from the current run
@@ -52,6 +52,24 @@ const writeTaskError = function (documentId, message) {
 };
 
 /**
+ * Reads the saved errors for a queued task.
+ *
+ * @param {string} documentId Strapi documentId of the queued task.
+ * @returns {Promise<string|null>} The errors from the task's most recent
+ *   failed run, one per line, or null when none are saved.
+ */
+const readTaskError = async function (documentId) {
+  try {
+    return await readFile(
+      path.join(getTaskErrorsDir(), `${documentId}.txt`),
+      "utf8",
+    );
+  } catch {
+    return null;
+  }
+};
+
+/**
  * Deletes all saved task errors.
  *
  * @returns {Promise<void>} Resolves when the folder has been removed.
@@ -61,6 +79,7 @@ const clearTaskErrors = async function () {
 };
 
 module.exports = {
+  readTaskError,
   writeTaskError,
   clearTaskErrors,
 };
