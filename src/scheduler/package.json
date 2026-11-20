@@ -10,7 +10,8 @@
     "deleteindex": "node manage.js deleteindex",
     "reindex": "node manage.js reindex",
     "rebuild": "node manage.js rebuild",
-    "liveness": "node manage.js liveness"
+    "liveness": "node manage.js liveness",
+    "test": "jest"
   },
   "author": "mike@oxd.com",
   "license": "Apache-2.0",
@@ -29,5 +30,8 @@
     "qs": "^6.17.1",
     "simple-oauth2": "^5.1.0",
     "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
