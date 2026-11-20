@@ -205,7 +205,7 @@ const {
   console.log(
     "emailtest   : test email template (writes to file 'mail-test-[#].html')",
   );
-  console.log("dootpublish : publish queued DOOT data to Strapi\n");
-  console.log("rstsync     : process RecSpace advisory sync queue\n");
+  console.log("dootpublish : publish queued DOOT data to Strapi");
+  console.log("rstsync     : process RecSpace advisory sync queue");
   console.log("systemalerts: email alerts for stuck queued tasks\n");
 })();
