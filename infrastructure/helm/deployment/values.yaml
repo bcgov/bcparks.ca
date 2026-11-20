@@ -155,6 +155,7 @@ scheduler:
     emailRecipient: cardweb@gov.bc.ca
     dootIsRecipient: cardweb@gov.bc.ca
     dootRsRecipient: discover.camping@gov.bc.ca
+    systemAlertReminderHours: 6
 
   pvc:
     storageClassName: netapp-file-standard

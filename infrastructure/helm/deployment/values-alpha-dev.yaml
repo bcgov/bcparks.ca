@@ -36,3 +36,4 @@ scheduler:
     dootRsRecipient: manuji+RS@oxd.com,mike+RS@oxd.com
     recSpaceKeycloakTokenUrl: https://dev.loginproxy.gov.bc.ca/auth/realms/standard/protocol/openid-connect/token
     recSpaceKeycloakClientId: testing-act-integration-6456
+    systemAlertReminderHours: 24
