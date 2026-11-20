@@ -155,6 +155,11 @@ scheduler:
     emailRecipient: cardweb@gov.bc.ca
     dootIsRecipient: cardweb@gov.bc.ca
     dootRsRecipient: discover.camping@gov.bc.ca
+    systemAlertReminderHours: 6
+
+  pvc:
+    storageClassName: netapp-file-standard
+    size: 20Mi # smallest size netapp-file-standard allows; smaller requests are rounded up
 
   resources:
     requests:
