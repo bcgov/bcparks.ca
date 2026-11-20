@@ -75,6 +75,8 @@ spec:
               value: {{ .Values.scheduler.env.dootIsRecipient | quote }}
             - name: DOOT_RS_RECIPIENT
               value: {{ .Values.scheduler.env.dootRsRecipient | quote }}
+            - name: SYSTEM_ALERT_REMINDER_HOURS
+              value: {{ .Values.scheduler.env.systemAlertReminderHours | quote }}
             - name: PERSISTENT_DATA_DIR
               value: /data
             - name: PUBLIC_URL
