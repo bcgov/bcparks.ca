@@ -295,14 +295,12 @@ const checkSystemAlerts = async function () {
     const isStuck = stuck.total > 0;
     const isActive = Boolean(state[rule.key]);
 
-    // emailtest renders every email that could apply to a file and leaves
-    // the state alone
+    // emailtest renders the alert email for the rule's current state to a
+    // file (a reminder for an active alert, even if one isn't due yet) and
+    // leaves the state alone
     if (scriptKeySpecified("emailtest")) {
       if (isStuck) {
-        await sendAlert(rule, stuck.tasks, stuck.total);
-        if (isActive) {
-          await sendAlert(rule, stuck.tasks, stuck.total, state[rule.key]);
-        }
+        await sendAlert(rule, stuck.tasks, stuck.total, state[rule.key]);
       }
       continue;
     }
