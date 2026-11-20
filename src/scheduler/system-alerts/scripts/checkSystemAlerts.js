@@ -24,6 +24,8 @@ const { readAlertState, writeAlertState } = require("../utils/alertState");
 const ALERT_TEMPLATE_PATH = "./system-alerts/templates/system-alert.ejs";
 const TIMEZONE = "America/Dawson_Creek";
 const DATE_FORMAT = "MMMM dd, yyyy hh:mm a";
+// used when SYSTEM_ALERT_REMINDER_HOURS is not set
+const DEFAULT_REMINDER_HOURS = 6;
 
 /**
  * Returns the rule's label, e.g. "RecSpace advisory sync is failing".
@@ -33,6 +35,20 @@ const DATE_FORMAT = "MMMM dd, yyyy hh:mm a";
  */
 const getRuleLabel = function (rule) {
   return _.upperFirst(`${rule.name} is failing`);
+};
+
+/**
+ * Returns how many hours to wait between reminder emails for a rule. Uses the
+ * rule's own reminderHours if set, otherwise SYSTEM_ALERT_REMINDER_HOURS, or
+ * 6 if that isn't a positive number.
+ *
+ * @param {Object} rule Alert rule from alertRules.js.
+ * @returns {number} Hours between reminders.
+ */
+const getReminderHours = function (rule) {
+  const envHours = Number(process.env.SYSTEM_ALERT_REMINDER_HOURS);
+  const defaultHours = envHours > 0 ? envHours : DEFAULT_REMINDER_HOURS;
+  return rule.reminderHours ?? defaultHours;
 };
 
 /**
@@ -108,16 +124,25 @@ const getStuckTaskErrors = async function (tasks) {
  * @param {number} total Total number of stuck tasks.
  * @param {string[]} errors Distinct saved errors for the stuck tasks, from
  *   getStuckTaskErrors().
+ * @param {Object} [alertState] The rule's entry in the alert state file. When
+ *   set, the email is a reminder for an alert that was already sent.
  * @returns {Object} Template data, including the subject.
  */
-const buildEmailData = function (rule, tasks, total, errors) {
+const buildEmailData = function (rule, tasks, total, errors, alertState) {
   const { environment, subjectPrefix } = getEnvironment();
   const oldestCreatedAt = parseJSON(tasks[0].createdAt);
+  const isReminder = Boolean(alertState);
 
   return {
     ...rule,
     label: getRuleLabel(rule),
-    subject: `${subjectPrefix}Scheduler alert: ${getRuleLabel(rule)}`,
+    subject: isReminder
+      ? `${subjectPrefix}Still failing: ${_.upperFirst(rule.name)}`
+      : `${subjectPrefix}Scheduler alert: ${getRuleLabel(rule)}`,
+    isReminder,
+    firstAlertedDate: isReminder
+      ? formatDate(alertState.firstSentAt ?? alertState.since)
+      : null,
     environment,
     total,
     stuckActions: _.uniq(_.map(tasks, "action")),
@@ -125,6 +150,7 @@ const buildEmailData = function (rule, tasks, total, errors) {
     oldestAgeMinutes: differenceInMinutes(new Date(), oldestCreatedAt),
     ids: _.compact(_.map(tasks, "numericData")),
     errors,
+    reminderHours: getReminderHours(rule),
     queuedTasksUrl: `${process.env.STRAPI_BASE_URL}/admin/content-manager/collection-types/api::queued-task.queued-task`,
     podPattern: getPodPattern(),
   };
@@ -213,28 +239,33 @@ const sendRuleEmail = async function (
 };
 
 /**
- * Sends the alert email for one rule.
+ * Sends the alert email for one rule, or a reminder when the alert is already
+ * active.
  *
  * @param {Object} rule Alert rule from alertRules.js.
  * @param {Object[]} tasks Oldest stuck tasks.
  * @param {number} total Total number of stuck tasks.
+ * @param {Object} [alertState] The rule's entry in the alert state file, for
+ *   a reminder.
  * @returns {Promise<boolean>} True when the email was sent.
  */
-const sendAlert = async function (rule, tasks, total) {
+const sendAlert = async function (rule, tasks, total, alertState) {
   const errors = await getStuckTaskErrors(tasks);
-  const emailData = buildEmailData(rule, tasks, total, errors);
+  const emailData = buildEmailData(rule, tasks, total, errors, alertState);
+  const suffix = alertState ? "-reminder" : "";
   return sendRuleEmail(
     rule,
     ALERT_TEMPLATE_PATH,
     emailData,
     `${emailData.label}: ${total} queued tasks waiting`,
-    `./mail-test-alert-${rule.key}.html`,
+    `./mail-test-alert-${rule.key}${suffix}.html`,
   );
 };
 
 /**
  * Checks every alert rule for queued tasks that have been waiting longer than
- * the rule's threshold, and emails the rule's recipients once per incident.
+ * the rule's threshold. Emails the rule's recipients when an alert starts and
+ * every few hours while it continues (reminderHours).
  * Active alerts are kept in a state file so restarts don't cause repeat
  * emails.
  *
@@ -269,13 +300,17 @@ const checkSystemAlerts = async function () {
     const isStuck = stuck.total > 0;
     const isActive = Boolean(state[rule.key]);
 
-    // emailtest renders every stuck alert to a file and leaves the state alone
+    // emailtest renders the alert email for the rule's current state to a
+    // file (a reminder for an active alert, even if one isn't due yet) and
+    // leaves the state alone
     if (scriptKeySpecified("emailtest")) {
       if (isStuck) {
-        await sendAlert(rule, stuck.tasks, stuck.total);
+        await sendAlert(rule, stuck.tasks, stuck.total, state[rule.key]);
       }
       continue;
     }
+
+    const now = new Date().toISOString();
 
     if (isStuck && !isActive) {
       // send first, then record it, so a crash causes a duplicate email
@@ -286,8 +321,29 @@ const checkSystemAlerts = async function () {
           since: stuck.tasks[0].createdAt,
           count: stuck.total,
           stuckActions: _.uniq(_.map(stuck.tasks, "action")),
+          firstSentAt: now,
+          lastSentAt: now,
         };
         stateChanged = true;
+      }
+    } else if (isStuck && isActive) {
+      const alertState = state[rule.key];
+      const lastSentAt = alertState.lastSentAt ?? alertState.since;
+      const minutesSinceLastEmail = differenceInMinutes(
+        new Date(),
+        parseJSON(lastSentAt),
+      );
+      if (minutesSinceLastEmail >= getReminderHours(rule) * 60) {
+        const sent = await sendAlert(
+          rule,
+          stuck.tasks,
+          stuck.total,
+          alertState,
+        );
+        if (sent) {
+          alertState.lastSentAt = now;
+          stateChanged = true;
+        }
       }
     } else if (!isStuck && isActive) {
       logger.info(`System alert "${rule.key}" has cleared`);
