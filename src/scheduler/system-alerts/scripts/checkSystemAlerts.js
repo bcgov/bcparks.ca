@@ -1,7 +1,11 @@
 const _ = require("lodash");
 const ejs = require("ejs");
 const { writeFile } = require("node:fs").promises;
-const { differenceInMinutes, parseJSON } = require("date-fns");
+const {
+  differenceInMinutes,
+  formatDistanceStrict,
+  parseJSON,
+} = require("date-fns");
 const { formatInTimeZone } = require("date-fns-tz");
 const { getLogger } = require("../../shared/logging");
 const { getStuckTasks } = require("../../shared/taskQueue");
@@ -22,9 +26,21 @@ const alertRules = require("../utils/alertRules");
 const { readAlertState, writeAlertState } = require("../utils/alertState");
 
 const ALERT_TEMPLATE_PATH = "./system-alerts/templates/system-alert.ejs";
+const RESOLVED_TEMPLATE_PATH =
+  "./system-alerts/templates/system-alert-resolved.ejs";
 const TIMEZONE = "America/Dawson_Creek";
 const DATE_FORMAT = "MMMM dd, yyyy hh:mm a";
 // used when SYSTEM_ALERT_REMINDER_HOURS is not set
+//
+// To preview a reminder email locally:
+// 1. Set SYSTEM_ALERT_REMINDER_HOURS=0.01 in .env so reminders are due after
+//    1 minute. If the rule sets its own reminderHours in alertRules.js,
+//    temporarily change that instead.
+// 2. With EMAIL_ENABLED=true, run `node manage.js systemalerts` to email the
+//    first alert. The alert is only saved to data/system-alerts.json once
+//    that email goes out, and a reminder needs a saved alert.
+// 3. Wait a minute, then run `node manage.js emailtest` to write the reminder
+//    to mail-test-alert-<rule key>-reminder.html.
 const DEFAULT_REMINDER_HOURS = 6;
 
 /**
@@ -263,9 +279,42 @@ const sendAlert = async function (rule, tasks, total, alertState) {
 };
 
 /**
+ * Sends the email saying an alert has cleared.
+ *
+ * @param {Object} rule Alert rule from alertRules.js.
+ * @param {Object} alertState The rule's entry in the alert state file.
+ * @returns {Promise<boolean>} True when the email was sent.
+ */
+const sendResolved = async function (rule, alertState) {
+  const { environment, subjectPrefix } = getEnvironment();
+  const now = new Date();
+  const label = getRuleLabel(rule);
+  const emailData = {
+    ...rule,
+    label,
+    workingAgainLabel: _.upperFirst(`${rule.name} is working again`),
+    subject: `${subjectPrefix}Resolved: ${label}`,
+    environment,
+    sentDate: formatDate(alertState.firstSentAt ?? alertState.since),
+    clearedDate: formatDate(now),
+    duration: formatDistanceStrict(new Date(alertState.since), now),
+    count: alertState.count,
+    stuckActions: alertState.stuckActions ?? rule.actions,
+    reminderHours: getReminderHours(rule),
+  };
+  return sendRuleEmail(
+    rule,
+    RESOLVED_TEMPLATE_PATH,
+    emailData,
+    `Resolved: ${label}`,
+    `./mail-test-alert-${rule.key}-resolved.html`,
+  );
+};
+
+/**
  * Checks every alert rule for queued tasks that have been waiting longer than
- * the rule's threshold. Emails the rule's recipients when an alert starts and
- * every few hours while it continues (reminderHours).
+ * the rule's threshold. Emails the rule's recipients when an alert starts,
+ * every few hours while it continues (reminderHours), and when it clears.
  * Active alerts are kept in a state file so restarts don't cause repeat
  * emails.
  *
@@ -299,16 +348,6 @@ const checkSystemAlerts = async function () {
 
     const isStuck = stuck.total > 0;
     const isActive = Boolean(state[rule.key]);
-
-    // emailtest renders the alert email for the rule's current state to a
-    // file (a reminder for an active alert, even if one isn't due yet) and
-    // leaves the state alone
-    if (scriptKeySpecified("emailtest")) {
-      if (isStuck) {
-        await sendAlert(rule, stuck.tasks, stuck.total, state[rule.key]);
-      }
-      continue;
-    }
 
     const now = new Date().toISOString();
 
@@ -346,9 +385,14 @@ const checkSystemAlerts = async function () {
         }
       }
     } else if (!isStuck && isActive) {
-      logger.info(`System alert "${rule.key}" has cleared`);
-      delete state[rule.key];
-      stateChanged = true;
+      // keep the alert until the resolved email is sent, so it's retried on
+      // the next run if sending fails
+      const sent = await sendResolved(rule, state[rule.key]);
+      if (sent) {
+        logger.info(`System alert "${rule.key}" has cleared`);
+        delete state[rule.key];
+        stateChanged = true;
+      }
     }
   }
 

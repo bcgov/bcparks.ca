@@ -24,6 +24,8 @@ module.exports = [
     key: "recspace-sync",
     // "RecSpace advisory sync is failing" (alert subject and heading)
     // "Still failing: RecSpace advisory sync" (reminder subject)
+    // "RecSpace advisory sync is working again" (resolved heading)
+    // "Good news: the problem with RecSpace advisory sync has been fixed."
     name: "RecSpace advisory sync",
     // "...you are on the alert list for the advisory sync from ACT to RecSpace."
     systemName: "the advisory sync from ACT to RecSpace",
