@@ -24,6 +24,7 @@ const { readAlertState, writeAlertState } = require("../utils/alertState");
 const ALERT_TEMPLATE_PATH = "./system-alerts/templates/system-alert.ejs";
 const TIMEZONE = "America/Dawson_Creek";
 const DATE_FORMAT = "MMMM dd, yyyy hh:mm a";
+// used when SYSTEM_ALERT_REMINDER_HOURS is not set
 const DEFAULT_REMINDER_HOURS = 6;
 
 /**
@@ -37,13 +38,17 @@ const getRuleLabel = function (rule) {
 };
 
 /**
- * Returns how many hours to wait between reminder emails for a rule.
+ * Returns how many hours to wait between reminder emails for a rule. Uses the
+ * rule's own reminderHours if set, otherwise SYSTEM_ALERT_REMINDER_HOURS, or
+ * 6 if that isn't a positive number.
  *
  * @param {Object} rule Alert rule from alertRules.js.
  * @returns {number} Hours between reminders.
  */
 const getReminderHours = function (rule) {
-  return rule.reminderHours ?? DEFAULT_REMINDER_HOURS;
+  const envHours = Number(process.env.SYSTEM_ALERT_REMINDER_HOURS);
+  const defaultHours = envHours > 0 ? envHours : DEFAULT_REMINDER_HOURS;
+  return rule.reminderHours ?? defaultHours;
 };
 
 /**
