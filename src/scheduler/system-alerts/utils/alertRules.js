@@ -17,7 +17,7 @@
  * - headerTitle (optional): text next to the logo in the email header.
  *   Defaults to "Parks and Recreation staff web portal".
  * - reminderHours (optional): hours between reminder emails while the alert
- *   is still active. Defaults to 6.
+ *   is still active. Defaults to SYSTEM_ALERT_REMINDER_HOURS (6 if unset).
  */
 module.exports = [
   {
