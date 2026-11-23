@@ -2,6 +2,7 @@
 
 const { map } = require("lodash/fp");
 const { UnauthorizedError } = require("@strapi/utils").errors;
+const baseVerify = require("./users-permissions-verify");
 
 const AUTH_URL =
   process.env.STRAPI_SSO_AUTH_URL || "https://dev.loginproxy.gov.bc.ca/auth";
@@ -92,8 +93,9 @@ const authenticate = async (ctx) => {
 };
 
 const verify = async (auth, config) => {
-  // Basic JWT verification - just return the auth object
-  return auth;
+  // Check the route against the Strapi role's permissions.
+  // baseVerify is a vendored copy of the plugin's own verify().
+  return await baseVerify(auth, config);
 };
 
 module.exports = {
