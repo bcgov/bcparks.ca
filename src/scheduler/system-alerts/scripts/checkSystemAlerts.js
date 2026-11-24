@@ -221,15 +221,20 @@ const sendRuleEmail = async function (
  * @returns {Promise<boolean>} True when the email was sent.
  */
 const sendAlert = async function (rule, tasks, total) {
-  const errors = await getStuckTaskErrors(tasks);
-  const emailData = buildEmailData(rule, tasks, total, errors);
-  return sendRuleEmail(
-    rule,
-    ALERT_TEMPLATE_PATH,
-    emailData,
-    `${emailData.label}: ${total} queued tasks waiting`,
-    `./mail-test-alert-${rule.key}.html`,
-  );
+  try {
+    const errors = await getStuckTaskErrors(tasks);
+    const emailData = buildEmailData(rule, tasks, total, errors);
+    return await sendRuleEmail(
+      rule,
+      ALERT_TEMPLATE_PATH,
+      emailData,
+      `${emailData.label}: ${total} queued tasks waiting`,
+      `./mail-test-alert-${rule.key}.html`,
+    );
+  } catch (error) {
+    getLogger().error(`sendAlert() failed for "${rule.key}": ${error}`);
+    return false;
+  }
 };
 
 /**
