@@ -61,6 +61,7 @@ const getAdvisoryDateInfo = function (advisory) {
   const tz = "America/Dawson_Creek";
   const fmt = "MMMM dd, yyyy hh:mm a";
 
+  // Posting date
   if (advisory.isAdvisoryDateDisplayed) {
     return {
       dateLabel: "Posted",
@@ -68,14 +69,21 @@ const getAdvisoryDateInfo = function (advisory) {
     };
   }
 
-  if (advisory.isUpdatedDateDisplayed) {
+  // Updated date
+  if (advisory.isUpdatedDateDisplayed && advisory.updatedDate) {
     return {
       dateLabel: "Updated",
       dateString: formatInTimeZone(parseJSON(advisory.updatedDate), tz, fmt),
     };
   }
 
-  if (advisory.isEffectiveDateDisplayed && advisory.isEndDateDisplayed) {
+  // Event date range
+  if (
+    advisory.isEffectiveDateDisplayed &&
+    advisory.effectiveDate &&
+    advisory.isEndDateDisplayed &&
+    advisory.endDate
+  ) {
     return {
       dateLabel: "In effect",
       dateString: `${formatInTimeZone(
@@ -86,13 +94,15 @@ const getAdvisoryDateInfo = function (advisory) {
     };
   }
 
-  if (advisory.isEffectiveDateDisplayed) {
+  // Start date
+  if (advisory.isEffectiveDateDisplayed && advisory.effectiveDate) {
     return {
       dateLabel: "In effect",
       dateString: formatInTimeZone(parseJSON(advisory.effectiveDate), tz, fmt),
     };
   }
 
+  // No date
   return {
     dateLabel: "",
     dateString: "",
