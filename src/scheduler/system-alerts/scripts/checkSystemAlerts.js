@@ -291,29 +291,34 @@ const sendAlert = async function (rule, tasks, total, alertState) {
  * @returns {Promise<boolean>} True when the email was sent.
  */
 const sendResolved = async function (rule, alertState) {
-  const { environment, subjectPrefix } = getEnvironment();
-  const now = new Date();
-  const label = getRuleLabel(rule);
-  const emailData = {
-    ...rule,
-    label,
-    workingAgainLabel: _.upperFirst(`${rule.name} is working again`),
-    subject: `${subjectPrefix}Resolved: ${label}`,
-    environment,
-    sentDate: formatDate(alertState.firstSentAt ?? alertState.since),
-    clearedDate: formatDate(now),
-    duration: formatDistanceStrict(new Date(alertState.since), now),
-    count: alertState.count,
-    stuckActions: alertState.stuckActions ?? rule.actions,
-    reminderHours: getReminderHours(rule),
-  };
-  return sendRuleEmail(
-    rule,
-    RESOLVED_TEMPLATE_PATH,
-    emailData,
-    `Resolved: ${label}`,
-    `./mail-test-alert-${rule.key}-resolved.html`,
-  );
+  try {
+    const { environment, subjectPrefix } = getEnvironment();
+    const now = new Date();
+    const label = getRuleLabel(rule);
+    const emailData = {
+      ...rule,
+      label,
+      workingAgainLabel: _.upperFirst(`${rule.name} is working again`),
+      subject: `${subjectPrefix}Resolved: ${label}`,
+      environment,
+      sentDate: formatDate(alertState.firstSentAt ?? alertState.since),
+      clearedDate: formatDate(now),
+      duration: formatDistanceStrict(new Date(alertState.since), now),
+      count: alertState.count,
+      stuckActions: alertState.stuckActions ?? rule.actions,
+      reminderHours: getReminderHours(rule),
+    };
+    return await sendRuleEmail(
+      rule,
+      RESOLVED_TEMPLATE_PATH,
+      emailData,
+      `Resolved: ${label}`,
+      `./mail-test-alert-${rule.key}-resolved.html`,
+    );
+  } catch (error) {
+    getLogger().error(`sendResolved() failed for "${rule.key}": ${error}`);
+    return false;
+  }
 };
 
 /**
