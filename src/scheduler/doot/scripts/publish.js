@@ -9,7 +9,9 @@ const {
 const { dootSplitMessage } = require("./splitMessage");
 
 /**
- * Publishes DOOT date and gate info to Strapi
+ * Publishes DOOT date and gate info to Strapi.
+ *
+ * @returns {Promise<void>} Resolves after processing queued publish tasks
  */
 exports.dootPublish = async function () {
   let queue;
@@ -88,6 +90,7 @@ exports.dootPublish = async function () {
           singleRelationFix = { protectedArea: null, parkArea: null };
         }
 
+        // DOOT currently sends only an empty gateNote placeholder; preserve existing notes.
         if (item.gateInfo) {
           // check the park-gates collection to see if there is an existing record
           // matching the protectedAreaDocId, parkAreaDocId, or parkFeatureDocId
@@ -95,7 +98,6 @@ exports.dootPublish = async function () {
             // update the existing park-gates record
             const updateData = {
               hasGate: item.gateInfo.hasGate,
-              gateNote: item.gateInfo.gateNote,
               gateOpenHoursStartTime: item.gateInfo.gateOpenTime,
               gateOpenHoursEndTime: item.gateInfo.gateCloseTime,
               gateOpen24Hours: item.gateInfo.gateOpen24Hours,
@@ -147,12 +149,12 @@ exports.dootPublish = async function () {
         } else {
           // If gateInfo is not provided in the input, update any existing park-gates records
           // for this entity to indicate no gate info
+          // Preserves gateNote because DOOT currently does not manage notes.
           if (parkGateDocIds.length > 0) {
             try {
               await cmsAxios.put(`/api/park-gates/${parkGateDocIds[0]}`, {
                 data: {
                   hasGate: false,
-                  gateNote: "",
                   gateOpenHoursStartTime: null,
                   gateOpenHoursEndTime: null,
                   gateOpen24Hours: null,
