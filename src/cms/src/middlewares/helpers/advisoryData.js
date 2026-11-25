@@ -210,15 +210,17 @@ function isAdvisoryEqual(newData, oldData) {
       continue;
     }
 
+    // Sort a copy so the request data keeps its order (e.g. attachment order)
+    let newValue = newData[key];
+
     if (Array.isArray(oldData[key])) {
       oldData[key] = oldData[key].map((x) => x.documentId).sort();
-      if (newData[key]) newData[key].sort();
+      if (newValue) newValue = [...newValue].sort();
     } else {
       if (typeof oldData[key] === "object" && oldData[key])
         oldData[key] = oldData[key].documentId;
     }
-    if (JSON.stringify(newData[key]) != JSON.stringify(oldData[key]))
-      return false;
+    if (JSON.stringify(newValue) != JSON.stringify(oldData[key])) return false;
   }
   return true;
 }
