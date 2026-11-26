@@ -67,6 +67,7 @@ async function fetchRecSpaceAccessToken() {
 
 const recSpaceAxios = axios.create({
   baseURL: process.env.REC_SPACE_ADMIN_API_URL,
+  timeout: 30000,
   headers: {
     common: {
       "Content-Type": "application/json",

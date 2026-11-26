@@ -51,96 +51,106 @@ async function processEmailQueue(config, recent = []) {
   }
 
   for (const message of queue) {
-    const dedupeKey = config.getDedupeKey(message);
-    const isDuplicate = [...recent, ...sent].some(
-      (email) => email.dedupeKey === dedupeKey,
-    );
-
-    if (isDuplicate) {
-      logger.info(
-        `Skipped ${config.label} email "${dedupeKey}" because a duplicate was sent recently. Email not sent.`,
-      );
-    } else {
-      const emailData = await config.buildEmailData(message);
-
-      const recipients = [
-        ...new Set(
-          config
-            .getRecipients(message)
-            .map((r) => r.trim())
-            .filter(Boolean),
-        ),
-      ];
-
-      const toRecipientSet = new Set(
-        recipients.map((recipient) => recipient.toLowerCase()),
-      );
-      const ccRecipients = [
-        ...new Set(
-          (config.getCCRecipients?.(message) || [])
-            .map((recipient) => recipient.trim())
-            .filter(Boolean)
-            .filter(
-              (recipient) => !toRecipientSet.has(recipient.toLowerCase()),
-            ),
-        ),
-      ];
-
-      if (scriptKeySpecified("emailtest")) {
-        emailData.debugToRecipients = recipients;
-        emailData.debugCcRecipients = ccRecipients;
-      }
-
-      const htmlMessageBody = await ejs.renderFile(
-        config.templatePath,
-        emailData,
+    try {
+      const dedupeKey = config.getDedupeKey(message);
+      const isDuplicate = [...recent, ...sent].some(
+        (email) => email.dedupeKey === dedupeKey,
       );
 
-      if (scriptKeySpecified("emailtest")) {
-        await writeFile(config.getTestFileName(message), htmlMessageBody);
-      }
-
-      if (shouldSend && emailEnabled) {
-        // prevent spamming real users from non-production environments
-        const recipientsToSend = filterRecipientsByEnvironment(
-          recipients,
-          logger,
-          `${config.label} email ${dedupeKey}`,
+      if (isDuplicate) {
+        logger.info(
+          `Skipped ${config.label} email "${dedupeKey}" because a duplicate was sent recently. Email not sent.`,
         );
-        const recipientsToCC = filterRecipientsByEnvironment(
-          ccRecipients,
-          logger,
-          `${config.label} CC ${dedupeKey}`,
-          true,
+      } else {
+        const emailData = await config.buildEmailData(message);
+
+        const recipients = [
+          ...new Set(
+            config
+              .getRecipients(message)
+              .map((r) => r.trim())
+              .filter(Boolean),
+          ),
+        ];
+
+        const toRecipientSet = new Set(
+          recipients.map((recipient) => recipient.toLowerCase()),
+        );
+        const ccRecipients = [
+          ...new Set(
+            (config.getCCRecipients?.(message) || [])
+              .map((recipient) => recipient.trim())
+              .filter(Boolean)
+              .filter(
+                (recipient) => !toRecipientSet.has(recipient.toLowerCase()),
+              ),
+          ),
+        ];
+
+        if (scriptKeySpecified("emailtest")) {
+          emailData.debugToRecipients = recipients;
+          emailData.debugCcRecipients = ccRecipients;
+        }
+
+        const htmlMessageBody = await ejs.renderFile(
+          config.templatePath,
+          emailData,
         );
 
-        if (recipientsToSend.length || recipientsToCC.length) {
-          const summary = convert(config.getSummaryText(emailData), {
-            wordwrap: false,
-          });
+        if (scriptKeySpecified("emailtest")) {
+          await writeFile(config.getTestFileName(message), htmlMessageBody);
+        }
 
-          await send(
-            emailData.subject,
-            htmlMessageBody,
-            summary,
-            getSenderName(),
-            recipientsToSend,
-            recipientsToCC,
-            getLogoAttachment(),
+        if (shouldSend && emailEnabled) {
+          // prevent spamming real users from non-production environments
+          const recipientsToSend = filterRecipientsByEnvironment(
+            recipients,
+            logger,
+            `${config.label} email ${dedupeKey}`,
+          );
+          const recipientsToCC = filterRecipientsByEnvironment(
+            ccRecipients,
+            logger,
+            `${config.label} CC ${dedupeKey}`,
+            true,
           );
 
-          sent.push({ dedupeKey, lastEmailSent: new Date().toISOString() });
+          if (recipientsToSend.length || recipientsToCC.length) {
+            const summary = convert(config.getSummaryText(emailData), {
+              wordwrap: false,
+            });
+
+            await send(
+              emailData.subject,
+              htmlMessageBody,
+              summary,
+              getSenderName(),
+              recipientsToSend,
+              recipientsToCC,
+              getLogoAttachment(),
+            );
+
+            sent.push({ dedupeKey, lastEmailSent: new Date().toISOString() });
+          }
         }
       }
-    }
 
-    // Remove processed messages except when production email is disabled.
-    // In production, EMAIL_ENABLED=false acts as a kill switch and preserves
-    // the queue for later retry.
-    const shouldRemoveFromQueue = shouldSend && (!isProduction || emailEnabled);
+      // Remove processed messages except when production email is disabled.
+      // In production, EMAIL_ENABLED=false acts as a kill switch and preserves
+      // the queue for later retry.
+      const shouldRemoveFromQueue =
+        shouldSend && (!isProduction || emailEnabled);
 
-    if (shouldRemoveFromQueue) {
-      await removeFromQueue([message.documentId]);
+      if (shouldRemoveFromQueue) {
+        await removeFromQueue([message.documentId]);
+      }
+    } catch (error) {
+      // leave the task in the queue so it is retried, and carry on with the
+      // rest so one bad email does not block the others
+      logger.error(
+        `processEmailQueue() failed while processing ${config.label} email ${message?.numericData}: ${error}`,
+        message.documentId,
+      );
     }
   }
 
