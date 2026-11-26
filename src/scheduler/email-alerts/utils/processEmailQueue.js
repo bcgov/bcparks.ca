@@ -8,12 +8,12 @@ const {
   scriptKeySpecified,
   noCommandLineArgs,
 } = require("../../shared/commandLine");
-const { send } = require("../utils/mailer");
+const { send } = require("../../shared/email/mailer");
 const {
   filterRecipientsByEnvironment,
   getLogoAttachment,
   getSenderName,
-} = require("../utils/emailHelper");
+} = require("../../shared/email/emailHelper");
 
 const THROTTLE_MINUTES = 10;
 

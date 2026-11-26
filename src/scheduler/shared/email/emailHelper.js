@@ -1,4 +1,13 @@
 const path = require("node:path");
+const _ = require("lodash");
+
+/**
+ * Splits a comma-separated string into a trimmed array of non-empty values.
+ *
+ * @param {string} csv Comma-separated values.
+ * @returns {string[]} Trimmed, non-empty values.
+ */
+const csvToArray = (csv) => _.compact(_.map(_.split(csv || "", ","), _.trim));
 
 /**
  * Filters recipients against the configured non-production whitelist.
@@ -76,7 +85,7 @@ const getLogoAttachment = function () {
   return [
     {
       filename: "logo-light.png",
-      path: path.join(__dirname, "..", "images", "logo-light.png"),
+      path: path.join(__dirname, "images", "logo-light.png"),
       cid: "logo-light.png",
       contentDisposition: "inline",
     },
@@ -100,6 +109,7 @@ const getSenderName = function () {
 };
 
 module.exports = {
+  csvToArray,
   filterRecipientsByEnvironment,
   getLogoAttachment,
   getSenderName,

@@ -1,12 +1,5 @@
-const _ = require("lodash");
 const { processEmailQueue } = require("../utils/processEmailQueue");
-
-/**
- * Splits a comma-separated string into a trimmed array of non-empty values.
- * @param {string} csv comma-separated values
- * @returns {string[]} trimmed, non-empty values
- */
-const csvToArray = (csv) => _.compact(_.map(_.split(csv || "", ","), _.trim));
+const { csvToArray } = require("../../shared/email/emailHelper");
 
 exports.sendDootEmails = (recent) =>
   processEmailQueue(
