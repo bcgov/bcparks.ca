@@ -45,6 +45,7 @@ exports.dootPublish = async function () {
       if (!Array.isArray(jsonData)) {
         logger.error(
           `dootPublish() expected jsonData to be an array but got: ${typeof jsonData}`,
+          message.documentId,
         );
         continue;
       }
@@ -71,6 +72,7 @@ exports.dootPublish = async function () {
         } catch (error) {
           logger.error(
             `dootPublish() failed while retrieving entity IDs: ${error}`,
+            message.documentId,
           );
           errorProcessingMessage = true;
           break;
@@ -114,6 +116,7 @@ exports.dootPublish = async function () {
             } catch (error) {
               logger.error(
                 `dootPublish() failed while updating park-gates: ${error}`,
+                message.documentId,
               );
               errorProcessingMessage = true;
               break;
@@ -141,6 +144,7 @@ exports.dootPublish = async function () {
             } catch (error) {
               logger.error(
                 `dootPublish() failed while creating park-gates: ${error}`,
+                message.documentId,
               );
               errorProcessingMessage = true;
               break;
@@ -171,6 +175,7 @@ exports.dootPublish = async function () {
             } catch (error) {
               logger.error(
                 `dootPublish() failed while updating park-gates: ${error}`,
+                message.documentId,
               );
               errorProcessingMessage = true;
               break;
@@ -189,6 +194,7 @@ exports.dootPublish = async function () {
             } catch (error) {
               logger.error(
                 `dootPublish() failed while deleting duplicate park-gates: ${error}`,
+                message.documentId,
               );
               errorProcessingMessage = true;
               break;
@@ -224,6 +230,7 @@ exports.dootPublish = async function () {
           } catch (error) {
             logger.error(
               `dootPublish() failed while retrieving park-dates: ${error}`,
+              message.documentId,
             );
             errorProcessingMessage = true;
             break;
@@ -264,6 +271,7 @@ exports.dootPublish = async function () {
           } catch (error) {
             logger.error(
               `dootPublish() failed while retrieving dateTypeMap: ${error}`,
+              message.documentId,
             );
             errorProcessingMessage = true;
             break;
@@ -277,6 +285,7 @@ exports.dootPublish = async function () {
           if (invalidDateRange) {
             logger.error(
               `dootPublish() failed: Invalid dateTypeNumber ${invalidDateRange.dateTypeNumber} in DOOT data for ${relationName}`,
+              message.documentId,
             );
             errorProcessingMessage = true;
             break;
@@ -304,6 +313,7 @@ exports.dootPublish = async function () {
           } catch (error) {
             logger.error(
               `dootPublish() failed while deleting park-dates: ${error}`,
+              message.documentId,
             );
             errorProcessingMessage = true;
             break;
@@ -375,6 +385,7 @@ exports.dootPublish = async function () {
             } catch (error) {
               logger.error(
                 `dootPublish() failed while creating park-dates: ${error}`,
+                message.documentId,
               );
               errorProcessingMessage = true;
               break;
@@ -390,6 +401,7 @@ exports.dootPublish = async function () {
         } catch (error) {
           logger.error(
             `dootPublish() failed while removing message from queue: ${error}`,
+            message.documentId,
           );
           continue;
         }
