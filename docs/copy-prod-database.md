@@ -72,6 +72,13 @@ echo "exit=$?"
 
 This takes a few minutes. It prints `exit=0` at the end.
 
+If you run into problems, run steps 2 and 3 back to back, so nothing can connect to the empty database in between:
+
+1. Copy step 2 to your clipboard and paste it into the terminal, without pressing Enter.
+2. Copy step 3 to your clipboard.
+3. Press Enter to run step 2.
+4. As soon as it finishes, paste step 3 and press Enter.
+
 The Crunchy operator has already set up the new database with its own `pgbouncer` schema and `pgaudit` extension. `-N pgbouncer` leaves that schema out of the copy. The `grep` drops the extension comments, which only the extension owner can set.
 
 The copy runs as a single transaction. If it fails partway through, nothing is kept, so go back to step 2 and try again.
