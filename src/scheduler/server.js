@@ -2,6 +2,7 @@ const schedule = require("node-schedule");
 const dotenv = require("dotenv");
 const { exec } = require("child_process");
 
+const { cmsAxios } = require("./shared/axiosConfig");
 const { getLogger } = require("./shared/logging");
 const { clearTaskErrorsIfQueueEmpty } = require("./shared/taskQueue");
 const { batchQueueParks } = require("./elasticsearch/scripts/batchQueueParks");
@@ -46,6 +47,7 @@ const {
 
   let recentAdvisoryEmails = [];
   let recentDootEmails = [];
+  let strapiFailures = 0;
 
   /**
    * Starts the cron job to reindex parks as entries are added to the queuedTasks
@@ -67,8 +69,31 @@ const {
     }
     try {
       logger.info("Starting cron");
+
+      // Jobs catch their own errors, so on prod, exit after repeated Strapi
+      // failures to put the pod in CrashLoopBackOff and trigger a Platform
+      // Services alert.
+      if (process.env.BCPARKS_ENVIRONMENT === "prod") {
+        try {
+          await cmsAxios.get("/api/queued-tasks?pagination[limit]=1");
+          strapiFailures = 0;
+        } catch (error) {
+          strapiFailures++;
+          logger.error(
+            `Strapi check failed (${strapiFailures} in a row): ${error}`,
+          );
+          if (strapiFailures > 2) {
+            process.exit(1);
+          }
+          return;
+        }
+      }
+
+      // TODO: The recent-email dedupe lists live in memory and are lost on
+      // restart. Move them to the PVC (or Redis for everything?).
       recentAdvisoryEmails = await sendAdvisoryEmails(recentAdvisoryEmails);
       recentDootEmails = await sendDootEmails(recentDootEmails);
+
       await sendParkNamesEmails();
       await populateGeoShapes({ silent: true });
       await batchQueueParks();
