@@ -1,0 +1,18 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "bcparks_scheduler_volume_claim" . }}
+  labels:
+    component: {{ .Values.scheduler.componentName }}
+    release: {{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+  annotations:
+    "helm.sh/resource-policy": keep
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: {{ .Values.scheduler.pvc.storageClassName }}
+  resources:
+    requests:
+      storage: {{ .Values.scheduler.pvc.size }}
