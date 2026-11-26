@@ -55,6 +55,7 @@ exports.batchQueueParks = async function () {
         } catch (error) {
           logger.error(
             `batchQueueParks() failed while retrieving parks: ${error}`,
+            task.documentId,
           );
           return;
         }
@@ -64,9 +65,12 @@ exports.batchQueueParks = async function () {
       for (const orcs of orcsValues) {
         try {
           if (!(await existsInQueue("elastic index park", orcs))) {
-            const addedToQueue = await addToQueue({
-              data: { action: "elastic index park", numericData: orcs },
-            });
+            const addedToQueue = await addToQueue(
+              {
+                data: { action: "elastic index park", numericData: orcs },
+              },
+              task.documentId,
+            );
             if (!addedToQueue) {
               isError = true;
             }
@@ -75,6 +79,7 @@ exports.batchQueueParks = async function () {
           isError = true;
           logger.error(
             `batchQueueParks() failed while adding park ${orcs} to queue: ${error}`,
+            task.documentId,
           );
         }
       }
@@ -85,6 +90,7 @@ exports.batchQueueParks = async function () {
         } catch (error) {
           logger.error(
             `batchQueueParks() failed while removing batch-queue task from queue: ${error}`,
+            task.documentId,
           );
           return;
         }

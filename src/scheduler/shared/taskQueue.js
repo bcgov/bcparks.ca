@@ -1,5 +1,6 @@
 const { cmsAxios } = require("./axiosConfig");
 const { getLogger } = require("./logging");
+const { clearTaskErrors } = require("./taskErrors");
 const qs = require("qs");
 
 const readQueue = async function (actionName, options) {
@@ -29,12 +30,21 @@ const readQueue = async function (actionName, options) {
   return queuedTasks;
 };
 
-const addToQueue = async function (task) {
+/**
+ * Adds a task to the queue.
+ *
+ * @param {Object} task Queued task to create, as { data: {...} }.
+ * @param {string} [documentId] documentId of the queued task being processed
+ *   when this one is added. When set, an error is saved as that task's last
+ *   error.
+ * @returns {Promise<boolean>} True when the task was added.
+ */
+const addToQueue = async function (task, documentId) {
   try {
     await cmsAxios.post("/api/queued-tasks", task);
     return true;
   } catch (error) {
-    getLogger().error(error);
+    getLogger().error(error, documentId);
     return false;
   }
 };
@@ -71,9 +81,47 @@ const existsInQueue = async function (actionName, numericData) {
   return queuedTasks.length > 0;
 };
 
+/**
+ * Checks whether the queue has no tasks of any action.
+ *
+ * @returns {Promise<boolean>} True when the queue is empty.
+ */
+const isQueueEmpty = async function () {
+  const query = qs.stringify(
+    {
+      fields: ["documentId"],
+      pagination: {
+        limit: 1,
+      },
+    },
+    {
+      encodeValuesOnly: true,
+    },
+  );
+  const queueResponse = await cmsAxios.get(`/api/queued-tasks?${query}`);
+  return queueResponse.data.meta.pagination.total === 0;
+};
+
+/**
+ * Deletes all saved task errors once the queue is empty, so errors for tasks
+ * that are no longer queued don't pile up on the PVC.
+ *
+ * @returns {Promise<void>} Resolves when the check (and any cleanup) is done.
+ */
+const clearTaskErrorsIfQueueEmpty = async function () {
+  try {
+    if (await isQueueEmpty()) {
+      await clearTaskErrors();
+    }
+  } catch (error) {
+    getLogger().warn(`Could not clear saved task errors: ${error}`);
+  }
+};
+
 module.exports = {
   readQueue,
   removeFromQueue,
   addToQueue,
   existsInQueue,
+  clearTaskErrorsIfQueueEmpty,
 };
