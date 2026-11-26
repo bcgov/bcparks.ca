@@ -4,7 +4,7 @@ Replaces the `cms` database in dev, alpha-dev, test or alpha-test with a copy of
 
 **Everything in the target database is lost.**
 
-**You need:** `oc` logged in to Gold (in the OpenShift web console, your name in the top right → **Copy login command**).
+**You need:** `oc` logged in to Gold (in the OpenShift web console, your name in the top right → **Copy login command**), with access to run commands in pods (`oc exec`) in both `c1643c-prod` and the target namespace.
 
 ## 1. Set the variables
 
@@ -81,7 +81,7 @@ If you run into problems, run steps 2 and 3 back to back, so nothing can connect
 
 The Crunchy operator has already set up the new database with its own `pgbouncer` schema and `pgaudit` extension. `-N pgbouncer` leaves that schema out of the copy. The `grep` drops the extension comments, which only the extension owner can set.
 
-The copy runs as a single transaction. If it fails partway through, nothing is kept, so go back to step 2 and try again.
+If `exit` isn't 0, go back to step 2 and try again. A SQL error rolls the whole copy back, but if the prod side fails partway through, part of the copy may already be saved.
 
 ## After the copy
 
@@ -93,3 +93,4 @@ Log in to the target's Strapi admin panel with your **prod** credentials, since 
    1. Gatsby token: update the GitHub Actions secret (for example `GATSBY_STRAPI_API_TOKEN__MAIN_DEV__GOLD`), delete the two Gatsby caches for the environment, then run the Gatsby build for it.
    2. Background Jobs token: update `STRAPI_API_TOKEN` in the `main-strapi-token` (or `alpha-strapi-token`) secret on Gold, then restart the scheduler.
    3. DOOT token: update `STRAPI_TOKEN` in the `main-strapi-token` (or `alpha-strapi-token`) secret on Silver, then restart the Staff Portal backend.
+4. Rebuild the search index: run `node manage.js rebuild` in the scheduler pod (`main-scheduler` or `alpha-scheduler`). The copy doesn't go through Strapi, so nothing reindexes the parks on its own.
