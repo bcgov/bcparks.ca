@@ -19,6 +19,24 @@ const resourceTypeMap = {
   RTE: "Trail",
 };
 
+// event types that don't read well as a reason, so the title is just "<Type> closed"
+const eventTypesWithoutReason = [
+  "Facility closure",
+  "Trail closure",
+  "Campground closure",
+  "Cultural",
+  "Facilities unavailable",
+  "Environmental related",
+];
+
+// event types that are reworded to read naturally after "closed due to"
+const eventTypeReasons = {
+  "Road inaccessible": "inaccessible road",
+  "Wildfire nearby": "nearby wildfire",
+  "Hazard facility": "hazardous facility",
+  "Access restricted": "restricted access",
+};
+
 function formatIdirName(idirName) {
   // remove the prefix and make it lowercase based on the original format IDIR\USERNAME
   const nameParts = idirName.split("\\");
@@ -39,13 +57,13 @@ const loadData = async function () {
   try {
     const ftaDataPath = path.resolve(
       __dirname,
-      "closed-rec-resources-2026-07-22.json",
+      "closed-rec-resources-2026-11-26.json",
     );
     const fileContents = await readFile(ftaDataPath, "utf8");
     rstClosures = JSON.parse(fileContents);
   } catch (error) {
     console.error(
-      `Error loading recreation resources from local file closed-rec-resources-2026-07-22.json.`,
+      `Error loading recreation resources from local file closed-rec-resources-2026-11-26.json.`,
     );
     throw error;
   }
@@ -53,7 +71,20 @@ const loadData = async function () {
   for (const resource of rstClosures) {
     const resourceType =
       resourceTypeMap[resource.rec_resource_type_code] || "Site";
-    resource.advisory_title = `${resourceType} is closed`;
+    const eventType = resource.Event_Type;
+
+    if (eventType === "Seasonal") {
+      resource.advisory_title = `${resourceType} closed for the 2026/2027 winter season`;
+    } else if (eventTypesWithoutReason.includes(eventType)) {
+      resource.advisory_title = `${resourceType} closed`;
+    } else {
+      const reason = eventTypeReasons[eventType] || eventType.toLowerCase();
+      resource.advisory_title = `${resourceType} closed due to ${reason}`;
+    }
+
+    // convert comment_date from M/D/YYYY to YYYY-MM-DD
+    const [month, day, year] = resource.comment_date.split("/");
+    resource.comment_date = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
   }
 
   // fetch recreation resources from Strapi
@@ -110,21 +141,21 @@ const loadData = async function () {
     throw error;
   }
 
-  // get the documentId of the "High" urgency
-  let highUrgency;
+  // get the documentId of the "Medium" urgency
+  let mediumUrgency;
   try {
     const url = `${process.env.STRAPI_BASE_URL}/api/urgencies`;
     const { data } = await axios.get(url, {
       headers: httpReqHeaders,
-      params: { filters: { urgency: "High" }, fields: ["documentId"] },
+      params: { filters: { urgency: "Medium" }, fields: ["documentId"] },
       paramsSerializer: (params) =>
         qs.stringify(params, { encodeValuesOnly: true }),
     });
 
-    highUrgency = data?.data?.[0]?.documentId;
+    mediumUrgency = data?.data?.[0]?.documentId;
   } catch (error) {
     console.error(
-      `Error getting high urgency from Strapi: ${error?.message ?? error}`,
+      `Error getting medium urgency from Strapi: ${error?.message ?? error}`,
     );
     throw error;
   }
@@ -152,24 +183,30 @@ const loadData = async function () {
     throw error;
   }
 
-  // get the documentId for the "Area closure" event type
-  let areaClosureEventType;
+  // create a lookup object for event types to get documentId from eventType
+  const eventTypeLookup = {};
   try {
     const url = `${process.env.STRAPI_BASE_URL}/api/event-types`;
-    const { data } = await axios.get(url, {
-      headers: httpReqHeaders,
-      params: {
-        filters: { eventType: "Area closure" },
-        fields: ["documentId"],
-      },
-      paramsSerializer: (params) =>
-        qs.stringify(params, { encodeValuesOnly: true }),
-    });
 
-    areaClosureEventType = data?.data?.[0]?.documentId;
+    for (let page = 1, pageCount = 1; page <= pageCount; page++) {
+      const { data } = await axios.get(url, {
+        headers: httpReqHeaders,
+        params: {
+          fields: ["eventType", "documentId"],
+          pagination: { page, pageSize: 1000 },
+        },
+        paramsSerializer: (params) =>
+          qs.stringify(params, { encodeValuesOnly: true }),
+      });
+
+      for (const eventType of data?.data || []) {
+        eventTypeLookup[eventType.eventType] = eventType.documentId;
+      }
+      pageCount = data?.meta?.pagination?.pageCount || 1;
+    }
   } catch (error) {
     console.error(
-      `Error getting area closure event type from Strapi: ${error?.message ?? error}`,
+      `Error getting event types from Strapi: ${error?.message ?? error}`,
     );
     throw error;
   }
@@ -199,11 +236,15 @@ const loadData = async function () {
   if (!fullClosureAccessStatus) {
     throw new Error('Access status "Full closure" not found');
   }
-  if (!highUrgency) {
-    throw new Error('Urgency "High" not found');
+  if (!mediumUrgency) {
+    throw new Error('Urgency "Medium" not found');
   }
-  if (!areaClosureEventType) {
-    throw new Error('Event type "Area closure" not found');
+
+  const missingEventTypes = [
+    ...new Set(rstClosures.map((closure) => closure.Event_Type)),
+  ].filter((eventType) => !eventTypeLookup[eventType]);
+  if (missingEventTypes.length) {
+    throw new Error(`Event types not found: ${missingEventTypes.join(", ")}`);
   }
   if (!publishedAdvisoryStatus) {
     throw new Error('Advisory status "Published" not found');
@@ -241,7 +282,7 @@ const loadData = async function () {
       title: closure.advisory_title,
       description: closure.closure_comment.trim(),
       accessStatus: fullClosureAccessStatus,
-      submittedByName: formatIdirName(closure.entry_userid),
+      submittedByName: null,
       createdByName: formatIdirName(closure.entry_userid),
       modifiedByName: formatIdirName(closure.update_userid),
       advisoryDate: new Date(closure.entry_timestamp)
@@ -250,7 +291,7 @@ const loadData = async function () {
       effectiveDate: null,
       createdDate: closure.entry_timestamp,
       modifiedDate: closure.update_timestamp,
-      eventType: areaClosureEventType,
+      eventType: eventTypeLookup[closure.Event_Type],
       isLatestRevision: true,
       revisionNumber: 1,
       advisoryNumber: latestAdvisoryNumber + 1,
@@ -262,7 +303,7 @@ const loadData = async function () {
       isReservationsAffected: false,
       isEffectiveDateDisplayed: false,
       isEndDateDisplayed: false,
-      urgency: highUrgency,
+      urgency: mediumUrgency,
       isUrgentAfterHours: false,
       advisoryStatus: publishedAdvisoryStatus,
       publishedDate: closure.update_timestamp,
