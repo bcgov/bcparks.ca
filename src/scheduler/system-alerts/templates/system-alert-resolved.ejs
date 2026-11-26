@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title><%= subject %></title>
+</head>
+
+<% if (typeof debugToRecipients !== "undefined" && Array.isArray(debugToRecipients) && debugToRecipients.length > 0) { %>
+<!-- To: <%= debugToRecipients.join(", ") %> -->
+<% } %>
+
+<body style="font-family: Arial, Helvetica; color: #1a1a1a">
+  <%- include("../../shared/email/templates/includes/header.ejs") %>
+
+  <h1 style="margin: 24px 0; font-size: 1.25em; font-weight: 400; line-height: 1.4;">
+    <%= workingAgainLabel %>
+  </h1>
+
+  <div style="margin: 0 0 20px 0">
+    Good news: the problem with <%= name %> has been fixed. No tasks have been waiting longer than
+    <%= thresholdMinutes %> minutes, so no further action is needed.
+  </div>
+
+  <table style="margin: 0 0 20px 0; border-collapse: collapse;">
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700;">Environment</td>
+      <td style="padding: 4px 0;"><%= environment %></td>
+    </tr>
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700;">Alert sent</td>
+      <td style="padding: 4px 0;"><%= sentDate %></td>
+    </tr>
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700;">Cleared</td>
+      <td style="padding: 4px 0;"><%= clearedDate %></td>
+    </tr>
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700;">Duration</td>
+      <td style="padding: 4px 0;"><%= duration %></td>
+    </tr>
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700;">Tasks waiting when alerted</td>
+      <td style="padding: 4px 0;"><%= count %> (<% stuckActions.forEach(function (action, i) { %><%= i ? ", " : "" %><code style="font-family: Menlo, Consolas, 'Courier New', monospace; font-size: 0.85em; background-color: #f2f2f2; padding: 1px 4px; border-radius: 3px;"><%= action %></code><% }) %>)</td>
+    </tr>
+  </table>
+
+  <div style="margin: 0">
+    You are receiving this email because you are on the alert list for <%= systemName %>.
+    You get an email when an alert starts, every <%= reminderHours %> hours while it continues,
+    and when it clears.
+  </div>
+</body>
+</html>
