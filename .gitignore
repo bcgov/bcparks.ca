@@ -69,7 +69,6 @@
 **/*.log
 **/*.sqlite
 **/*.sqlite3
-tools/syncdb/*.sql
 
 ############################
 # Misc.
