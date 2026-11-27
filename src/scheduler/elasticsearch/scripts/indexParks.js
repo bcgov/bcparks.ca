@@ -133,11 +133,11 @@ const indexPark = async function (park, photos, documentId) {
     return true;
   }
 
-  // transform the Strapi object into an Elasticsearch object
-  const doc = await createElasticPark(park, photos);
-
-  // send the data to elasticsearch
   try {
+    // transform the Strapi object into an Elasticsearch object
+    const doc = await createElasticPark(park, photos);
+
+    // send the data to elasticsearch
     getLogger().info(`indexing park ${park.orcs}`);
     await elasticClient.indexPark({ itemId: doc.orcs, document: doc });
   } catch (error) {

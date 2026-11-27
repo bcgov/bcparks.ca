@@ -100,6 +100,10 @@ const {
       exec("date +%s > lastrun.txt");
     } catch (error) {
       logger.error(`Error running cron task: ${error}`);
+      // Each step handles its own errors, so this one is unexpected. Exit now.
+      // The health check would take ~16 minutes to restart the pod, and
+      // restarts over 10 minutes apart never trigger CrashLoopBackOff.
+      process.exit(1);
     }
   });
 })();
