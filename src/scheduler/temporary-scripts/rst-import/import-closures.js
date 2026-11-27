@@ -284,7 +284,7 @@ const loadData = async function () {
     const advisory = {
       recreationResources: [recreationResourceDocumentId],
       title: closure.advisory_title,
-      description: closure.closure_comment.trim(),
+      description: closure.cleaned_comment.trim(),
       accessStatus: fullClosureAccessStatus,
       submittedByName: null,
       createdByName: formatIdirName(closure.entry_userid),
