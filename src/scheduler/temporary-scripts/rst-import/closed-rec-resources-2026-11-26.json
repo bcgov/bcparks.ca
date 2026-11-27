@@ -222,7 +222,7 @@
   {
     "rec_resource_id": "REC0140",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "<p>Site closed for the season.</p>",
+    "closure_comment": "",
     "Event_Type": "Seasonal",
     "comment_date": "10/7/2026",
     "entry_userid": "IDIR\\JMCKIER",
@@ -541,7 +541,7 @@
   {
     "rec_resource_id": "REC0271",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "<p>Site closed</p>",
+    "closure_comment": "",
     "Event_Type": "Facility closure",
     "comment_date": "10/12/2021",
     "entry_userid": "IDIR\\ZMARTIN",
@@ -563,7 +563,7 @@
   {
     "rec_resource_id": "REC0274",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "<p>Site is closed</p>",
+    "closure_comment": "",
     "Event_Type": "Facility closure",
     "comment_date": "7/21/2022",
     "entry_userid": "IDIR\\LUCLARKE",
@@ -1388,7 +1388,7 @@
   {
     "rec_resource_id": "REC169078",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "<p>Closed due to wildfire</p>",
+    "closure_comment": "",
     "Event_Type": "Wildfire",
     "comment_date": "7/27/2026",
     "entry_userid": "IDIR\\SAMACKEN",
@@ -1399,7 +1399,7 @@
   {
     "rec_resource_id": "REC169080",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "<p>Closed due to wildfire</p>",
+    "closure_comment": "",
     "Event_Type": "Wildfire",
     "comment_date": "7/27/2026",
     "entry_userid": "IDIR\\SAMACKEN",
@@ -1476,7 +1476,7 @@
   {
     "rec_resource_id": "REC1824",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "<p>Closed</p>",
+    "closure_comment": "",
     "Event_Type": "Facility closure",
     "comment_date": "5/15/2026",
     "entry_userid": "IDIR\\GDHODSON",
@@ -2389,7 +2389,7 @@
   {
     "rec_resource_id": "REC4555",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "<p>Closed due to wildfire</p>",
+    "closure_comment": "",
     "Event_Type": "Wildfire",
     "comment_date": "7/27/2026",
     "entry_userid": "IDIR\\SAMACKEN",
@@ -2433,7 +2433,7 @@
   {
     "rec_resource_id": "REC4672",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "<p>Closed due to wildfire.</p>",
+    "closure_comment": "",
     "Event_Type": "Wildfire",
     "comment_date": "7/23/2024",
     "entry_userid": "IDIR\\GELECLAI",
@@ -2565,7 +2565,7 @@
   {
     "rec_resource_id": "REC5752",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "<p>Trail is closed</p>",
+    "closure_comment": "",
     "Event_Type": "Trail closure",
     "comment_date": "5/2/2022",
     "entry_userid": "IDIR\\LUCLARKE",
@@ -3335,7 +3335,7 @@
   {
     "rec_resource_id": "REC97838",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "<p>Closed due to wildfire.</p>",
+    "closure_comment": "",
     "Event_Type": "Wildfire",
     "comment_date": "7/23/2024",
     "entry_userid": "IDIR\\BRPETCH",
