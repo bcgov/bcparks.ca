@@ -497,7 +497,7 @@
   {
     "rec_resource_id": "REC0266",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "<p>Public Notice: Recreation Site Closure – Hideaway Squamish</p><p>Effective September 17, 2026, at 09:00, access to the Squamish Hideaway Recreation Site via the Squamish River Forest Service Road at Mud Creek (21 km) will be closed.</p><p>Access Restrictions: No vehicle traffic will be permitted beyond the closure point.</p>",
+    "closure_comment": "<p>Public Notice: Recreation Site Closure – Hideaway Squamish</p><p>Effective September 17, 2026, at 9:00 am, access to the Squamish Hideaway Recreation Site via the Squamish River Forest Service Road at Mud Creek (21 km) will be closed.</p><p>Access Restrictions: No vehicle traffic will be permitted beyond the closure point.</p>",
     "Event_Type": "Facility closure",
     "comment_date": "11/4/2026",
     "entry_userid": "IDIR\\TAMCMILL",
@@ -1135,7 +1135,7 @@
   {
     "rec_resource_id": "REC154996",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "<p>Public Notice: Recreation Site Closure – Squamish Elaho</p><p>Effective August 28, 2026, at 09:00, access to the Squamish Elaho Recreation Site via the Squamish River Forest Service Road at Mud Creek (21 km) will be closed.</p><p>Access Restrictions: No vehicle traffic will be permitted beyond the closure point.</p>",
+    "closure_comment": "<p>Public Notice: Recreation Site Closure – Squamish Elaho</p><p>Effective August 28, 2026, at 9:00 am, access to the Squamish Elaho Recreation Site via the Squamish River Forest Service Road at Mud Creek (21 km) will be closed.</p><p>Access Restrictions: No vehicle traffic will be permitted beyond the closure point.</p>",
     "Event_Type": "Road closure",
     "comment_date": "8/28/2026",
     "entry_userid": "IDIR\\RTATE",
