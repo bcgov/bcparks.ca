@@ -118,7 +118,40 @@ const clearTaskErrorsIfQueueEmpty = async function () {
   }
 };
 
+/**
+ * Finds queued tasks that were created before a cutoff time, oldest first.
+ *
+ * @param {string[]} actionNames Queued-task actions to look for.
+ * @param {Date} olderThan Only tasks created before this time are returned.
+ * @param {number} [limit=25] Maximum number of tasks to return.
+ * @returns {Promise<{tasks: Object[], total: number}>} The oldest matching
+ *   tasks (with numericData and createdAt) and the total number that match.
+ */
+const getStuckTasks = async function (actionNames, olderThan, limit = 25) {
+  const query = qs.stringify(
+    {
+      fields: ["action", "numericData", "createdAt"],
+      filters: {
+        action: { $in: actionNames },
+        createdAt: { $lt: olderThan.toISOString() },
+      },
+      pagination: {
+        limit: limit,
+      },
+      sort: ["createdAt", "id"],
+    },
+    {
+      encodeValuesOnly: true,
+    },
+  );
+  const queueResponse = await cmsAxios.get(`/api/queued-tasks?${query}`);
+  const tasks = queueResponse.data.data;
+  const total = queueResponse.data.meta?.pagination?.total ?? tasks.length;
+  return { tasks, total };
+};
+
 module.exports = {
+  getStuckTasks,
   readQueue,
   removeFromQueue,
   addToQueue,

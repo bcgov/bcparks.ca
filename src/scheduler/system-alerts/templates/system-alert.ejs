@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title><%= subject %></title>
+</head>
+
+<% if (typeof debugToRecipients !== "undefined" && Array.isArray(debugToRecipients) && debugToRecipients.length > 0) { %>
+<!-- To: <%= debugToRecipients.join(", ") %> -->
+<% } %>
+
+<body style="font-family: Arial, Helvetica; color: #1a1a1a">
+  <%- include("../../shared/email/templates/includes/header.ejs") %>
+
+  <h1 style="margin: 24px 0; font-size: 1.25em; font-weight: 400; line-height: 1.4;">
+    <%= label %>
+  </h1>
+
+  <div style="margin: 0 0 20px 0">
+    <%- description %>
+  </div>
+
+  <table style="margin: 0 0 20px 0; border-collapse: collapse;">
+    <% if (isReminder) { %>
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700;">First alerted</td>
+      <td style="padding: 4px 0;"><%= firstAlertedDate %></td>
+    </tr>
+    <% } %>
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700;">Environment</td>
+      <td style="padding: 4px 0;"><%= environment %></td>
+    </tr>
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700;">Queued tasks waiting</td>
+      <td style="padding: 4px 0;"><%= total %> (<% stuckActions.forEach(function (action, i) { %><%= i ? ", " : "" %><code style="font-family: Menlo, Consolas, 'Courier New', monospace; font-size: 0.85em; background-color: #f2f2f2; padding: 1px 4px; border-radius: 3px;"><%= action %></code><% }) %>)</td>
+    </tr>
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700;">Waiting since</td>
+      <td style="padding: 4px 0;"><%= oldestDate %> (<%= oldestAgeMinutes %> minutes)</td>
+    </tr>
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700;">Alert threshold</td>
+      <td style="padding: 4px 0;"><%= thresholdMinutes %> minutes</td>
+    </tr>
+    <% if (ids.length > 0) { %>
+    <tr>
+      <td style="padding: 4px 16px 4px 0; font-weight: 700; vertical-align: top;"><%= numericDataLabel %></td>
+      <td style="padding: 4px 0;">
+        <%= ids.join(", ") %><% if (total > ids.length) { %> and <%= total - ids.length %> more<% } %>
+      </td>
+    </tr>
+    <% } %>
+  </table>
+
+  <% if (errors.length > 0) { %>
+  <div style="margin: 0 0 20px 0">
+    <strong>Last error</strong>
+    <% errors.forEach(function (error) { %>
+    <div style="color: #d8292f; font-family: Menlo, Consolas, 'Courier New', monospace; font-size: 0.85em; word-break: break-word; margin: 8px 0 0 0;"><%= error %></div>
+    <% }) %>
+  </div>
+  <% } %>
+
+  <div style="margin: 0 0 20px 0">
+    <strong>Where to look</strong>
+    <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+      <li>The <a href="<%= queuedTasksUrl %>">Queued-task collection</a> in Strapi.</li>
+      <li>The <code style="font-family: Menlo, Consolas, 'Courier New', monospace; font-size: 0.85em; background-color: #f2f2f2; padding: 1px 4px; border-radius: 3px;"><%= podPattern %></code> pod logs on OpenShift Gold, only if you need more
+        context. The errors above come from there.</li>
+    </ul>
+  </div>
+
+  <div style="margin: 0 0 20px 0">
+    The scheduler retries every minute. Once the cause is fixed, the waiting tasks will
+    clear on their own.
+  </div>
+
+  <div style="margin: 0">
+    You are receiving this email because you are on the alert list for <%= systemName %>.
+    You get an email when an alert starts, every <%= reminderHours %> hours while it continues,
+    and when it clears.
+  </div>
+</body>
+</html>
