@@ -73,7 +73,11 @@ const loadData = async function () {
       resourceTypeMap[resource.rec_resource_type_code] || "Site";
     const eventType = resource.Event_Type;
 
-    if (eventType === "Seasonal") {
+    if (resource.rec_resource_id === "REC5937") {
+      // Bear Dens Trail is a trail, but RST lists it as a recreation site. With its
+      // "Trail closure" event type, the default title would be "Site closed"
+      resource.advisory_title = "Trail closed due to blowdown";
+    } else if (eventType === "Seasonal") {
       resource.advisory_title = `${resourceType} closed for the 2026/2027 winter season`;
     } else if (eventTypesWithoutReason.includes(eventType)) {
       resource.advisory_title = `${resourceType} closed`;
