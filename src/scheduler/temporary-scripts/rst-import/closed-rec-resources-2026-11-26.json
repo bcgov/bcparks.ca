@@ -2,7 +2,7 @@
   {
     "rec_resource_id": "REC0002",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Tamihi West - Seasonal Closure\r\nTamihi East - Open Year Round",
+    "closure_comment": "<p>Tamihi West – Seasonal closure<br>Tamihi East – Open year-round</p>",
     "Event_Type": "Seasonal",
     "comment_date": "4/16/2026",
     "entry_userid": "IDIR\\MPETERS",
@@ -13,7 +13,7 @@
   {
     "rec_resource_id": "REC0011",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " Seasonal Closure",
+    "closure_comment": "<p>Seasonal closure</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/31/2026",
     "entry_userid": "IDIR\\MPETERS",
@@ -24,7 +24,7 @@
   {
     "rec_resource_id": "REC0013",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure \r\nOpening Spring 2027 ",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/5/2026",
     "entry_userid": "IDIR\\MPETERS",
@@ -35,7 +35,7 @@
   {
     "rec_resource_id": "REC0019",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " Seasonal Closure",
+    "closure_comment": "<p>Seasonal closure</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/31/2026",
     "entry_userid": "IDIR\\MPETERS",
@@ -46,7 +46,7 @@
   {
     "rec_resource_id": "REC0024",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "  Seasonal Closure, additional information and updates, please visit <a href=\"https://firesidecamping.ca/\" target=\"_blank\">https://firesidecamping.ca//</a>",
+    "closure_comment": "<p>Seasonal closure, additional information and updates, please visit <a href=\"https://firesidecamping.ca/\">https://firesidecamping.ca//</a></p>",
     "Event_Type": "Seasonal",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\MPETERS",
@@ -57,7 +57,7 @@
   {
     "rec_resource_id": "REC0039",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The Recreation Site/Trail is closed due impact from 2023 wildfire - rehab needed.",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to impact from 2023 wildfire – rehab needed.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "6/28/2024",
     "entry_userid": "IDIR\\MADUNN",
@@ -68,7 +68,7 @@
   {
     "rec_resource_id": "REC0047",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The Recreation Site/Trail is closed due to damage from 2023 wildfire - rehab needed.",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to damage from 2023 wildfire – rehab needed.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "6/28/2024",
     "entry_userid": "IDIR\\JACQHORN",
@@ -79,7 +79,7 @@
   {
     "rec_resource_id": "REC0048",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The Recreation Site/Trail is closed due to impact from 2023 wildfire - rehab needed.",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to impact from 2023 wildfire – rehab needed.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "6/28/2024",
     "entry_userid": "IDIR\\JACQHORN",
@@ -90,7 +90,7 @@
   {
     "rec_resource_id": "REC0064",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The Recreation Site/Trail is closed due to extensive damage from 2023 wildfire - No access.",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to extensive damage from 2023 wildfire – No access.</p>",
     "Event_Type": "Wildfire damage",
     "comment_date": "6/28/2024",
     "entry_userid": "IDIR\\JACQHORN",
@@ -101,7 +101,7 @@
   {
     "rec_resource_id": "REC0066",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure \r\nOpening Spring 2027",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/5/2026",
     "entry_userid": "IDIR\\MPETERS",
@@ -112,7 +112,7 @@
   {
     "rec_resource_id": "REC0067",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure\r\nOpening Spring 2027",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/26/2026",
     "entry_userid": "IDIR\\MPETERS",
@@ -123,7 +123,7 @@
   {
     "rec_resource_id": "REC0071",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The Recreation Site/Trail is closed due to impact from 2023 wildfire - rehab needed.",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to impact from 2023 wildfire – rehab needed.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "6/28/2024",
     "entry_userid": "IDIR\\MPETERS",
@@ -134,7 +134,7 @@
   {
     "rec_resource_id": "REC0073",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure \r\nOpening Spring 2027",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/5/2026",
     "entry_userid": "IDIR\\MADUNN",
@@ -145,7 +145,7 @@
   {
     "rec_resource_id": "REC0074",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED UNTIL FURTHER NOTICE DUE TO\r\n\r\n<BR>INCREASED RISK RESULTING FROM WILDFIRE\r\n\r\n<BR>HIGH RISK OF SLIDE, SLOPE FAILURE & DANGER TREES \r\n\r\n<BR>ABOVE AND ALONGSIDE RECREATION SITE.\r\n\r\nWATER ACCESS ONLY AS TRAIL FROM ROAD CURRENTLY BLOCKED.",
+    "closure_comment": "<p>Closed until further notice due to increased risk resulting from wildfire and high risk of slide, slope failure &amp; danger trees above and alongside the recreation site.</p><p>Water access only, as the trail from the road is currently blocked.</p>",
     "Event_Type": "Wildfire damage",
     "comment_date": "9/2/2015",
     "entry_userid": "IDIR\\JCROOKS",
@@ -156,7 +156,7 @@
   {
     "rec_resource_id": "REC0075",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED UNTIL FURTHER NOTICE DUE TO\r\n\r\n<BR>INCREASED RISK RESULTING FROM WILDFIRE.\r\n\r\nRISK OF TREE FAILURE AND INCREASED RISK OF SLIDES.",
+    "closure_comment": "<p>Closed until further notice due to increased risk resulting from wildfire. Risk of tree failure and increased risk of slides.</p>",
     "Event_Type": "Wildfire damage",
     "comment_date": "9/2/2015",
     "entry_userid": "IDIR\\JCROOKS",
@@ -167,7 +167,7 @@
   {
     "rec_resource_id": "REC0078",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure \r\nOpening Spring 2027",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/5/2026",
     "entry_userid": "IDIR\\JAINSWOR",
@@ -178,7 +178,7 @@
   {
     "rec_resource_id": "REC0087",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure \r\nOpening Spring 2027",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "5/16/2024",
     "entry_userid": "IDIR\\MPETERS",
@@ -189,7 +189,7 @@
   {
     "rec_resource_id": "REC0094",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Salsbury Lake Recreation Site is not market ready yet. It is not maintained and there are no structures (outhouses, fire rings). Road is not accessible to site as someone has felled over 20 trees to block access to the road. C&E have been asked to investigate. No time frame on how quickly trees can be cleared and the site re-opened.  There is concern as to why someone is trying to block access to this area.  ",
+    "closure_comment": "<p>Salsbury Lake Recreation Site is not market ready yet. It is not maintained and there are no structures (outhouses, fire rings). Road is not accessible to site as someone has felled over 20 trees to block access to the road. C&amp;E have been asked to investigate. No time frame on how quickly trees can be cleared and the site re-opened. There is concern as to why someone is trying to block access to this area.</p>",
     "Event_Type": "Road inaccessible",
     "comment_date": "7/17/2009",
     "entry_userid": "IDIR\\DALLENBE",
@@ -200,7 +200,7 @@
   {
     "rec_resource_id": "REC0123",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " SITE CLOSED FOR THE SEASON - Access Gate locked.",
+    "closure_comment": "<p>Site closed for the season – Access gate locked.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/7/2026",
     "entry_userid": "IDIR\\JMCKIER",
@@ -211,7 +211,7 @@
   {
     "rec_resource_id": "REC0125",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Closed due to recent damage from the atmospheric river.  The access road has been compromised and is not in adequate condition for use.  Repairs will take place as soon as the weather has stabilized.",
+    "closure_comment": "<p>Closed due to recent damage from the atmospheric river. The access road has been compromised and is not in adequate condition for use. Repairs will take place as soon as the weather has stabilized.</p>",
     "Event_Type": "Storm damage",
     "comment_date": "1/9/2026",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -222,7 +222,7 @@
   {
     "rec_resource_id": "REC0140",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " SITE CLOSED FOR THE SEASON.",
+    "closure_comment": "<p>Site closed for the season.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/7/2026",
     "entry_userid": "IDIR\\JMCKIER",
@@ -233,7 +233,7 @@
   {
     "rec_resource_id": "REC0144",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Elk Creek is now closed and gated for the season.  The site will open in May 2027.",
+    "closure_comment": "<p>Elk Creek is now closed and gated for the season. The site will open in May 2027.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/13/2025",
     "entry_userid": "IDIR\\JJLEACH",
@@ -244,7 +244,7 @@
   {
     "rec_resource_id": "REC0151",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -255,7 +255,7 @@
   {
     "rec_resource_id": "REC0159",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Campbell Lake Recreation Site is now closed and gated for the season.  The site will open again May 2027.  Shoulder season group rentals are now available. ",
+    "closure_comment": "<p>Campbell Lake Recreation Site is now closed and gated for the season. The site will open again May 2027. Shoulder season group rentals are now available.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "9/8/2026",
     "entry_userid": "IDIR\\JJLEACH",
@@ -266,7 +266,7 @@
   {
     "rec_resource_id": "REC0165",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Closed due to vehicle fire and associated site remediation. Estimated opening November 9, 2026. Please do not enter the area.",
+    "closure_comment": "<p>Closed due to vehicle fire and associated site remediation. Estimated opening November 9, 2026. Please do not enter the area.</p>",
     "Event_Type": "Scheduled closure",
     "comment_date": "10/26/2026",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -277,7 +277,7 @@
   {
     "rec_resource_id": "REC0168",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Permanently closed",
+    "closure_comment": "<p>Permanently closed</p>",
     "Event_Type": "Facility closure",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -288,7 +288,7 @@
   {
     "rec_resource_id": "REC0171",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Camp 5 is currently closed due to hazardous trees. Check back here for updates. ",
+    "closure_comment": "<p>Camp 5 is currently closed due to hazardous trees. Check back here for updates.</p>",
     "Event_Type": "Hazard trees",
     "comment_date": "10/6/2026",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -299,7 +299,7 @@
   {
     "rec_resource_id": "REC0173",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Brewster Lake Recreation Site is now closed and gated for the season.  The site will open again with a host May 2027.  Shoulder season group rentals are now available. ",
+    "closure_comment": "<p>Brewster Lake Recreation Site is now closed and gated for the season. The site will open again with a host May 2027. Shoulder season group rentals are now available.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "9/8/2026",
     "entry_userid": "IDIR\\JJLEACH",
@@ -310,7 +310,7 @@
   {
     "rec_resource_id": "REC0178",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site remains closed due to unsafe conditions.\r\nUpdate 15 May, 2025",
+    "closure_comment": "<p>This site remains closed due to unsafe conditions.<br>Update 15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/24/2012",
     "entry_userid": "IDIR\\JJLEACH",
@@ -321,7 +321,7 @@
   {
     "rec_resource_id": "REC0186",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The Stella Bay Rec Site is closed until further notice.  The outhouse on site is condemned and there is no washroom facility available.  Please refrain from using this site until repairs can be made.",
+    "closure_comment": "<p>The Stella Bay Rec Site is closed until further notice. The outhouse on site is condemned and there is no washroom facility available. Please refrain from using this site until repairs can be made.</p>",
     "Event_Type": "Facilities unavailable",
     "comment_date": "2/10/2026",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -332,7 +332,7 @@
   {
     "rec_resource_id": "REC0188",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Miller Creek Recreation Site is now closed and gated for the season.  The site will open again May 2027. Shoulder season group rentals are now available.  ",
+    "closure_comment": "<p>Miller Creek Recreation Site is now closed and gated for the season. The site will open again May 2027. Shoulder season group rentals are now available.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/7/2026",
     "entry_userid": "IDIR\\JJLEACH",
@@ -343,7 +343,7 @@
   {
     "rec_resource_id": "REC0189",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -354,7 +354,7 @@
   {
     "rec_resource_id": "REC0195",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Orchard Meadow Recreation Site is now closed and gated for the season.  The site will open again May 2027. Shoulder season group rentals are now available.",
+    "closure_comment": "<p>Orchard Meadow Recreation Site is now closed and gated for the season. The site will open again May 2027. Shoulder season group rentals are now available.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "9/8/2026",
     "entry_userid": "IDIR\\JJLEACH",
@@ -365,7 +365,7 @@
   {
     "rec_resource_id": "REC0206",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED FOR THE SEASON - Access gate locked.",
+    "closure_comment": "<p>Closed for the season – Access gate locked.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/7/2026",
     "entry_userid": "IDIR\\FULLMANN",
@@ -376,7 +376,7 @@
   {
     "rec_resource_id": "REC0211",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED FOR THE SEASON - Access gate locked.",
+    "closure_comment": "<p>Closed for the season – Access gate locked.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/7/2026",
     "entry_userid": "IDIR\\JMCKIER",
@@ -387,7 +387,7 @@
   {
     "rec_resource_id": "REC0218",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "SITE CLOSED due to high landslide hazard resulting from recent wildfire activity.<BR><BR> Intense wildfire activity in the summer of 2026 has created numerous unstable slope above the site. This site will remain closed until January 1 2028 to allow for these slopes to stabilize. ",
+    "closure_comment": "<p>Site closed due to high landslide hazard resulting from recent wildfire activity.</p><p>Intense wildfire activity in the summer of 2026 has created numerous unstable slopes above the site. This site will remain closed until January 1, 2028 to allow for these slopes to stabilize.</p>",
     "Event_Type": "Wildfire damage",
     "comment_date": "11/12/2026",
     "entry_userid": "IDIR\\AMCCRONE",
@@ -398,7 +398,7 @@
   {
     "rec_resource_id": "REC0219",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Owl Creek Recreation Site will remain closed until May 1st 2027 ",
+    "closure_comment": "<p>Owl Creek Recreation Site will remain closed until May 1st 2027</p>",
     "Event_Type": "Area closure",
     "comment_date": "11/10/2026",
     "entry_userid": "IDIR\\TAMCMILL",
@@ -409,7 +409,7 @@
   {
     "rec_resource_id": "REC0221",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "SITE CLOSED Access to this site is blocked by a landslide at Km. 6. on the In-Shuck FSR",
+    "closure_comment": "<p>Site closed. Access to this site is blocked by a landslide at Km. 6. on the In-Shuck FSR</p>",
     "Event_Type": "Landslide",
     "comment_date": "11/12/2026",
     "entry_userid": "IDIR\\TAMCMILL",
@@ -420,7 +420,7 @@
   {
     "rec_resource_id": "REC0225",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " SITE CLOSED Access to this site is blocked by a landslide at Km. 6. on the In-Shuck FSR",
+    "closure_comment": "<p>Site closed. Access to this site is blocked by a landslide at Km. 6. on the In-Shuck FSR</p>",
     "Event_Type": "Landslide",
     "comment_date": "11/12/2026",
     "entry_userid": "IDIR\\AMCCRONE",
@@ -431,7 +431,7 @@
   {
     "rec_resource_id": "REC0230",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed due to natural hazards that cannot be mitigated.",
+    "closure_comment": "<p>This site is closed due to natural hazards that cannot be mitigated.</p>",
     "Event_Type": "Hazard conditions",
     "comment_date": "11/12/2008",
     "entry_userid": "IDIR\\TAMCMILL",
@@ -442,7 +442,7 @@
   {
     "rec_resource_id": "REC0236",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "SITE CLOSED: Nqw'elqw'elusten (Meager Creek) Hot Springs are within Lil&#787;wat Nation territory. This is a place of cultural and spiritual significance for Lil&#787;wat Nation. The site closure supports the protection of important cultural, environmental, and wildlife values. The Meager Creek Drainage is prone to extremely large landslides, avalanches, and flooding/washouts. The Province will be enforcing this closure and will issue violation tickets to anyone caught ignoring the restrictions. \r\n  \r\n",
+    "closure_comment": "<p>Site closed: Nqw'elqw'elusten (Meager Creek) Hot Springs are within Lil̓wat Nation territory. This is a place of cultural and spiritual significance for Lil̓wat Nation. The site closure supports the protection of important cultural, environmental, and wildlife values. The Meager Creek Drainage is prone to extremely large landslides, avalanches, and flooding/washouts. The Province will be enforcing this closure and will issue violation tickets to anyone caught ignoring the restrictions.</p>",
     "Event_Type": "Cultural",
     "comment_date": "4/7/2021",
     "entry_userid": "IDIR\\TAMCMILL",
@@ -453,7 +453,7 @@
   {
     "rec_resource_id": "REC0242",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Marble River Recreation Site is now closed and gated for the season.  The site will open May 2027.   ",
+    "closure_comment": "<p>Marble River Recreation Site is now closed and gated for the season. The site will open May 2027.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "9/8/2026",
     "entry_userid": "IDIR\\JJLEACH",
@@ -464,7 +464,7 @@
   {
     "rec_resource_id": "REC0248",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " Rhodes Creek Recreation Site will be intermittently closed between September 11, 2026 and November 30, 2026 while adjacent harvest activities take place.  The site cannot be used for overnight camping during this time as helicopter operations will pose a potential hazard to site users.  Please be respectful of this closure and ensure you are planning appropriately.  Little Espinosa Rec Site remains an option for short overnight camping, however users may encounter noise from helicopters and significant logging traffic on the roads.",
+    "closure_comment": "<p>Rhodes Creek Recreation Site will be intermittently closed between September 11, 2026 and November 30, 2026 while adjacent harvest activities take place. The site cannot be used for overnight camping during this time as helicopter operations will pose a potential hazard to site users. Please be respectful of this closure and ensure you are planning appropriately. Little Espinosa Rec Site remains an option for short overnight camping, however users may encounter noise from helicopters and significant logging traffic on the roads.</p>",
     "Event_Type": "Industrial activity",
     "comment_date": "9/11/2026",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -475,7 +475,7 @@
   {
     "rec_resource_id": "REC0254",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The Recreation Site/Trail is closed due to extensive wildfire damage - No Access",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to extensive wildfire damage – No access</p>",
     "Event_Type": "Wildfire damage",
     "comment_date": "8/28/2023",
     "entry_userid": "IDIR\\MPETERS",
@@ -486,7 +486,7 @@
   {
     "rec_resource_id": "REC0265",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site closed due to flooding",
+    "closure_comment": "<p>Site closed due to flooding</p>",
     "Event_Type": "Flood",
     "comment_date": "11/12/2026",
     "entry_userid": "IDIR\\AMCCRONE",
@@ -497,7 +497,7 @@
   {
     "rec_resource_id": "REC0266",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Public Notice: Recreation Site Closure ? Hideaway Squamish <BR>\r\n\r\nEffective September 17, 2026, at 09:00, access to the Squamish Hideaway Recreation Site via the Squamish River Forest Service Road at Mud Creek (21 km) will be closed.<BR>\r\n\r\nAccess Restrictions: No vehicle traffic will be permitted beyond the closure point.",
+    "closure_comment": "<p>Public Notice: Recreation Site Closure – Hideaway Squamish</p><p>Effective September 17, 2026, at 09:00, access to the Squamish Hideaway Recreation Site via the Squamish River Forest Service Road at Mud Creek (21 km) will be closed.</p><p>Access Restrictions: No vehicle traffic will be permitted beyond the closure point.</p>",
     "Event_Type": "Facility closure",
     "comment_date": "11/4/2026",
     "entry_userid": "IDIR\\TAMCMILL",
@@ -508,7 +508,7 @@
   {
     "rec_resource_id": "REC0268",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED FOR THE SEASON - Access gate locked.",
+    "closure_comment": "<p>Closed for the season – Access gate locked.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/7/2026",
     "entry_userid": "IDIR\\FULLMANN",
@@ -519,7 +519,7 @@
   {
     "rec_resource_id": "REC0269",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED FOR THE SEASON - Access gate locked.",
+    "closure_comment": "<p>Closed for the season – Access gate locked.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/7/2026",
     "entry_userid": "IDIR\\FULLMANN",
@@ -530,7 +530,7 @@
   {
     "rec_resource_id": "REC0270",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "SITE CLOSED - San Juan Campsite has been decommissioned and is closed.",
+    "closure_comment": "<p>Site closed – San Juan Campsite has been decommissioned and is closed.</p>",
     "Event_Type": "Campground closure",
     "comment_date": "11/3/2020",
     "entry_userid": "IDIR\\JMCKIER",
@@ -541,7 +541,7 @@
   {
     "rec_resource_id": "REC0271",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "SITE CLOSED",
+    "closure_comment": "<p>Site closed</p>",
     "Event_Type": "Facility closure",
     "comment_date": "10/12/2021",
     "entry_userid": "IDIR\\ZMARTIN",
@@ -552,7 +552,7 @@
   {
     "rec_resource_id": "REC0273",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is permanantly closed due to a catastrophic storm event.",
+    "closure_comment": "<p>This site is permanently closed due to a catastrophic storm event.</p>",
     "Event_Type": "Catastrophic event",
     "comment_date": "11/22/2006",
     "entry_userid": "IDIR\\FULLMANN",
@@ -563,7 +563,7 @@
   {
     "rec_resource_id": "REC0274",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site is Closed ",
+    "closure_comment": "<p>Site is closed</p>",
     "Event_Type": "Facility closure",
     "comment_date": "7/21/2022",
     "entry_userid": "IDIR\\LUCLARKE",
@@ -574,7 +574,7 @@
   {
     "rec_resource_id": "REC0278",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site remains closed for safety reasons until further notice.\r\nUpdated 15 May, 2025",
+    "closure_comment": "<p>This site remains closed for safety reasons until further notice.<br>Updated 15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/1/2023",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -585,7 +585,7 @@
   {
     "rec_resource_id": "REC0281",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Viner Sounds is closed until further notice due to unsafe conditions",
+    "closure_comment": "<p>Viner Sounds is closed until further notice due to unsafe conditions</p>",
     "Event_Type": "Public safety",
     "comment_date": "11/19/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -596,7 +596,7 @@
   {
     "rec_resource_id": "REC0287",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site is closed for overnight camping to address public safety concerns and impacts to the land.",
+    "closure_comment": "<p>Site is closed for overnight camping to address public safety concerns and impacts to the land.</p>",
     "Event_Type": "Public safety",
     "comment_date": "7/7/2022",
     "entry_userid": "IDIR\\FULLMANN",
@@ -607,7 +607,7 @@
   {
     "rec_resource_id": "REC0289",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "SITE CLOSED Access to this site is blocked by a landslide at Km. 6. on the In-Shuck FSR",
+    "closure_comment": "<p>Site closed. Access to this site is blocked by a landslide at Km. 6. on the In-Shuck FSR</p>",
     "Event_Type": "Landslide",
     "comment_date": "11/12/2026",
     "entry_userid": "IDIR\\AMCCRONE",
@@ -618,7 +618,7 @@
   {
     "rec_resource_id": "REC0299",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Closed due to flooding",
+    "closure_comment": "<p>Closed due to flooding</p>",
     "Event_Type": "Flood",
     "comment_date": "2/25/2025",
     "entry_userid": "IDIR\\MPETERS",
@@ -629,7 +629,7 @@
   {
     "rec_resource_id": "REC0301",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -640,7 +640,7 @@
   {
     "rec_resource_id": "REC0428",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -651,7 +651,7 @@
   {
     "rec_resource_id": "REC0433",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -662,7 +662,7 @@
   {
     "rec_resource_id": "REC0443",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -673,7 +673,7 @@
   {
     "rec_resource_id": "REC0467",
     "rec_resource_type_code": "SIT",
-    "closure_comment": ".",
+    "closure_comment": "",
     "Event_Type": "Area closure",
     "comment_date": "9/21/2021",
     "entry_userid": "IDIR\\RDEVOS",
@@ -684,7 +684,7 @@
   {
     "rec_resource_id": "REC0468",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site CLOSED due to hazardous trees.",
+    "closure_comment": "<p>Site closed due to hazardous trees.</p>",
     "Event_Type": "Hazard trees",
     "comment_date": "3/19/2024",
     "entry_userid": "IDIR\\JMCKIER",
@@ -695,7 +695,7 @@
   {
     "rec_resource_id": "REC0471",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "*****Cougar Creek Rec Site and dock are now closed and gated for the season. The site will open with a host in April 2027.",
+    "closure_comment": "<p>Cougar Creek Rec Site and dock are now closed and gated for the season. The site will open with a host in April 2027.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/7/2026",
     "entry_userid": "IDIR\\DMACTAVI",
@@ -706,7 +706,7 @@
   {
     "rec_resource_id": "REC0487",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -717,7 +717,7 @@
   {
     "rec_resource_id": "REC0496",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This trail is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -728,7 +728,7 @@
   {
     "rec_resource_id": "REC0521",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "There is a First Nations gate/blockade at 15 km on the Suskwa FSR, just beyond the bridge. Public access restricted.",
+    "closure_comment": "<p>There is a First Nations gate/blockade at 15 km on the Suskwa FSR, just beyond the bridge. Public access restricted.</p>",
     "Event_Type": "Cultural",
     "comment_date": "4/9/2020",
     "entry_userid": "IDIR\\JMWILLIA",
@@ -739,7 +739,7 @@
   {
     "rec_resource_id": "REC0532",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "First Nations gate/blockade at site, public access restricted ",
+    "closure_comment": "<p>First Nations gate/blockade at site, public access restricted</p>",
     "Event_Type": "Cultural",
     "comment_date": "8/24/2020",
     "entry_userid": "IDIR\\BHHEEMSK",
@@ -750,7 +750,7 @@
   {
     "rec_resource_id": "REC0536",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site is closed until further notice. Public access restricted due to First Nations cabins/cultural camp, beware of dogs ",
+    "closure_comment": "<p>Site is closed until further notice. Public access restricted due to First Nations cabins/cultural camp, beware of dogs</p>",
     "Event_Type": "Cultural",
     "comment_date": "8/4/2023",
     "entry_userid": "IDIR\\BHHEEMSK",
@@ -761,7 +761,7 @@
   {
     "rec_resource_id": "REC0542",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Binta Lake Recreation Site remains closed until further notice due to significant danger tree risk. The Province is working with Stellat'en Duchun Forestry to address the risk. A plan is in place. The next step is securing funding, which is in progress. The site will remain closed for the 2026 summer season.  \r\nPlease visit nearby recreation sites: Uncha, Binta North, and Indian Bay. If you have any questions, please call Recreation Sites and Trails BC at 250-847-6300. Updates will be posted to: https://www.sitesandtrailsbc.ca/\r\n",
+    "closure_comment": "<p>Binta Lake Recreation Site remains closed until further notice due to significant danger tree risk. The Province is working with Stellat'en Duchun Forestry to address the risk. A plan is in place. The next step is securing funding, which is in progress. The site will remain closed for the 2026 summer season.<br>Please visit nearby recreation sites: Uncha, Binta North, and Indian Bay. If you have any questions, please call Recreation Sites and Trails BC at 250-847-6300. Updates will be posted to: https://www.sitesandtrailsbc.ca/</p>",
     "Event_Type": "Hazard trees",
     "comment_date": "5/12/2026",
     "entry_userid": "IDIR\\BHHEEMSK",
@@ -772,7 +772,7 @@
   {
     "rec_resource_id": "REC0543",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The site is open but a warning is in place for toxic cyanobacteria in the lake, also known as a blue-green algae bloom. \r\nReport algae blooms to: https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/water-quality/algae-watch\r\n\r\nAlert issued by the Office of the Chief Veterinarian. \r\nhttps://www2.gov.bc.ca/gov/content/industry/agriculture-seafood/animals-and-crops/animal-health/office-of-the-chief-veterinarian/current-disease-alerts-and-events#cyanobacteria",
+    "closure_comment": "<p>The site is open but a warning is in place for toxic cyanobacteria in the lake, also known as a blue-green algae bloom.<br>Report algae blooms to: https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/water-quality/algae-watch</p><p>Alert issued by the Office of the Chief Veterinarian.<br>https://www2.gov.bc.ca/gov/content/industry/agriculture-seafood/animals-and-crops/animal-health/office-of-the-chief-veterinarian/current-disease-alerts-and-events#cyanobacteria</p>",
     "Event_Type": "Water quality",
     "comment_date": "7/16/2026",
     "entry_userid": "IDIR\\BHHEEMSK",
@@ -783,7 +783,7 @@
   {
     "rec_resource_id": "REC0574",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Kager Lake campground is closed for the winter as of November 4, 2026. The campground entrance/exit is blocked off with concrete blocks. There is no vehicle access to campground until spring 2027. The past few years have seen abandoned vehicles left in the campground. Vehicles left in the campsite for more than 14 days will be towed and impounded. The parking lot, trails, picnic shelter and other infrastructure remain open, unless otherwise posted on this site. ",
+    "closure_comment": "<p>Kager Lake campground is closed for the winter as of November 4, 2026. The campground entrance/exit is blocked off with concrete blocks. There is no vehicle access to campground until spring 2027. The past few years have seen abandoned vehicles left in the campground. Vehicles left in the campsite for more than 14 days will be towed and impounded. The parking lot, trails, picnic shelter and other infrastructure remain open, unless otherwise posted on this site.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "11/4/2026",
     "entry_userid": "IDIR\\JMWILLIA",
@@ -794,7 +794,7 @@
   {
     "rec_resource_id": "REC0587",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Agate Point Recreation Site is closed until further notice due to dangerous trees that cannot be felled or stubbed. The Province is working with qualified biologists to determine a solution for re-opening the site. ",
+    "closure_comment": "<p>Agate Point Recreation Site is closed until further notice due to dangerous trees that cannot be felled or stubbed. The Province is working with qualified biologists to determine a solution for re-opening the site.</p>",
     "Event_Type": "Hazard trees",
     "comment_date": "5/22/2026",
     "entry_userid": "IDIR\\DKRISS",
@@ -805,7 +805,7 @@
   {
     "rec_resource_id": "REC0926",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal closure November 1 - spring 2027 due to avalanche risk at Twin Falls Recreation Site: campground, parking lot and viewing platform are closed during avalanche season (Nov 1 - spring). Travel on trails is not recommended - use at your own risk. The site is being monitored by avalanche professionals and will open when it is deemed safe.\r\n\r\n",
+    "closure_comment": "<p>Seasonal closure November 1 – spring 2027 due to avalanche risk at Twin Falls Recreation Site: campground, parking lot and viewing platform are closed during avalanche season (Nov 1 – spring). Travel on trails is not recommended – use at your own risk. The site is being monitored by avalanche professionals and will open when it is deemed safe.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "11/1/2026",
     "entry_userid": "IDIR\\JMWILLIA",
@@ -816,7 +816,7 @@
   {
     "rec_resource_id": "REC1031",
     "rec_resource_type_code": "RR",
-    "closure_comment": "The Recreation Site is closed\r\n",
+    "closure_comment": "<p>The Recreation Site is closed</p>",
     "Event_Type": "Facility closure",
     "comment_date": "7/29/2026",
     "entry_userid": "IDIR\\MWAGMANN",
@@ -827,7 +827,7 @@
   {
     "rec_resource_id": "REC1032",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The site is closed due to deactivation of the Teardrop FSR from 59km to 70 km.\r\n\r\n\r\n",
+    "closure_comment": "<p>The site is closed due to deactivation of the Teardrop FSR from 59km to 70 km.</p>",
     "Event_Type": "Road inaccessible",
     "comment_date": "9/8/2025",
     "entry_userid": "IDIR\\MWAGMANN",
@@ -838,7 +838,7 @@
   {
     "rec_resource_id": "REC106440",
     "rec_resource_type_code": "RTE",
-    "closure_comment": " Frisby Ridge Mountain Bike Trail is closed annually until July 15 to protect grizzly and caribou habitat.",
+    "closure_comment": "<p>Frisby Ridge Mountain Bike Trail is closed annually until July 15 to protect grizzly and caribou habitat.</p>",
     "Event_Type": "Scheduled closure",
     "comment_date": "8/10/2021",
     "entry_userid": "IDIR\\KKNOLL",
@@ -849,7 +849,7 @@
   {
     "rec_resource_id": "REC106882",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Closed due to fire",
+    "closure_comment": "<p>Closed due to fire</p>",
     "Event_Type": "Trail closure",
     "comment_date": "5/24/2023",
     "entry_userid": "IDIR\\AAMURRAY",
@@ -860,7 +860,7 @@
   {
     "rec_resource_id": "REC106896",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -871,7 +871,7 @@
   {
     "rec_resource_id": "REC107021",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -882,7 +882,7 @@
   {
     "rec_resource_id": "REC1110",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site Open May 01-Sept 15th. \r\n\r\nReservations - you can call on or after May 01 through Sept 15th to book for the 8 sites available for reservation.  Please contact Site Operator Gary Peters directly to discuss booking of sites 1-250-944-0701. Minimum weekend reservation booking 2 nights, except for long weekends which are minimum 3 nights.\r\n",
+    "closure_comment": "<p>Site Open May 01-Sept 15th.</p><p>Reservations – you can call on or after May 01 through Sept 15th to book for the 8 sites available for reservation. Please contact Site Operator Gary Peters directly to discuss booking of sites 1-250-944-0701. Minimum weekend reservation booking 2 nights, except for long weekends which are minimum 3 nights.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "9/15/2026",
     "entry_userid": "IDIR\\TPPETERS",
@@ -893,7 +893,7 @@
   {
     "rec_resource_id": "REC1123",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "All facilities have been removed.  Site is not currently being maintained for recreational purposes.  Site has been significantly impacted by Mountain Pine Beetle.",
+    "closure_comment": "<p>All facilities have been removed. Site is not currently being maintained for recreational purposes. Site has been significantly impacted by Mountain Pine Beetle.</p>",
     "Event_Type": "Facilities unavailable",
     "comment_date": "1/12/2009",
     "entry_userid": "IDIR\\ABILAWCH",
@@ -904,7 +904,7 @@
   {
     "rec_resource_id": "REC1133",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " As of May 2025, this site remains closed due to high volume of danger trees from spruce beetle attack. Please avoid using this site until the hazards have been addressed. ",
+    "closure_comment": "<p>As of May 2025, this site remains closed due to high volume of danger trees from spruce beetle attack. Please avoid using this site until the hazards have been addressed.</p>",
     "Event_Type": "Hazard trees",
     "comment_date": "6/25/2024",
     "entry_userid": "IDIR\\BPACIEJE",
@@ -915,7 +915,7 @@
   {
     "rec_resource_id": "REC1167",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site closed due to road washout and presence of danger trees in site. Currently no estimated time of reopening. Alternative rec site options in the area include Stony Lake, Ahbau Lake and Naver Creek. ",
+    "closure_comment": "<p>Site closed due to road washout and presence of danger trees in site. Currently no estimated time of reopening. Alternative rec site options in the area include Stony Lake, Ahbau Lake and Naver Creek.</p>",
     "Event_Type": "Road washout",
     "comment_date": "6/26/2023",
     "entry_userid": "IDIR\\ABILAWCH",
@@ -926,7 +926,7 @@
   {
     "rec_resource_id": "REC1186",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening. ",
+    "closure_comment": "<p>Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening.</p>",
     "Event_Type": "Road washout",
     "comment_date": "6/1/2023",
     "entry_userid": "IDIR\\ABILAWCH",
@@ -937,7 +937,7 @@
   {
     "rec_resource_id": "REC1188",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site closed due to downrating of bridge used to access site. Please avoid using this site until further notice. ",
+    "closure_comment": "<p>Site closed due to downrating of bridge used to access site. Please avoid using this site until further notice.</p>",
     "Event_Type": "Bridge outage",
     "comment_date": "2/26/2026",
     "entry_userid": "IDIR\\ABILAWCH",
@@ -948,7 +948,7 @@
   {
     "rec_resource_id": "REC1191",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening. Boat Access Only ",
+    "closure_comment": "<p>Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening. Boat access only.</p>",
     "Event_Type": "Road washout",
     "comment_date": "6/1/2023",
     "entry_userid": "IDIR\\BPACIEJE",
@@ -959,7 +959,7 @@
   {
     "rec_resource_id": "REC1192",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening. ",
+    "closure_comment": "<p>Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening.</p>",
     "Event_Type": "Road washout",
     "comment_date": "6/1/2023",
     "entry_userid": "IDIR\\ABILAWCH",
@@ -970,7 +970,7 @@
   {
     "rec_resource_id": "REC1245",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The Recreation Site is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca",
+    "closure_comment": "<p>The Recreation Site is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/12/2021",
     "entry_userid": "IDIR\\KAMOHR",
@@ -981,7 +981,7 @@
   {
     "rec_resource_id": "REC1335",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "The Recreation Site/Trail is closed due to danger trees and excessive blowdown.  A significant risk to public health and safety exists and this trail should not be utilized  or occupied.",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to danger trees and excessive blowdown. A significant risk to public health and safety exists and this trail should not be utilized or occupied.</p>",
     "Event_Type": "Hazard trees",
     "comment_date": "7/13/2023",
     "entry_userid": "IDIR\\JCMOSHER",
@@ -992,7 +992,7 @@
   {
     "rec_resource_id": "REC136018",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure \r\nOpening Spring 2027",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/5/2026",
     "entry_userid": "IDIR\\MADUNN",
@@ -1003,7 +1003,7 @@
   {
     "rec_resource_id": "REC13846",
     "rec_resource_type_code": null,
-    "closure_comment": "Site is closed due to wildfire activity in the area.  Significant threat to human health and safety exists.",
+    "closure_comment": "<p>Site is closed due to wildfire activity in the area. Significant threat to human health and safety exists.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/20/2023",
     "entry_userid": "IDIR\\JCMOSHER",
@@ -1014,7 +1014,7 @@
   {
     "rec_resource_id": "REC1401",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening. ",
+    "closure_comment": "<p>Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening.</p>",
     "Event_Type": "Road washout",
     "comment_date": "6/1/2023",
     "entry_userid": "IDIR\\ABILAWCH",
@@ -1025,7 +1025,7 @@
   {
     "rec_resource_id": "REC1411",
     "rec_resource_type_code": "RR",
-    "closure_comment": "Site is closed due to an active wildfire in the area and an evacuation Alert is in place.  For further information please go to the BC Wildfire website www.bcwildfire.ca ",
+    "closure_comment": "<p>Site is closed due to an active wildfire in the area and an Evacuation Alert is in place. For further information please go to the BC Wildfire website www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/25/2024",
     "entry_userid": "IDIR\\JCMOSHER",
@@ -1036,7 +1036,7 @@
   {
     "rec_resource_id": "REC1412",
     "rec_resource_type_code": "RR",
-    "closure_comment": "Site is closed due to an active wildfire in the area and an evacuation Alert is in place.  For further information please go to the BC Wildfire website www.bcwildfire.ca ",
+    "closure_comment": "<p>Site is closed due to an active wildfire in the area and an Evacuation Alert is in place. For further information please go to the BC Wildfire website www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/25/2024",
     "entry_userid": "IDIR\\JCMOSHER",
@@ -1047,7 +1047,7 @@
   {
     "rec_resource_id": "REC1459",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site is closed due to flooding of the Kite road at 2km and 4km.",
+    "closure_comment": "<p>Site is closed due to flooding of the Kite road at 2km and 4km.</p>",
     "Event_Type": "Road closure",
     "comment_date": "7/21/2025",
     "entry_userid": "IDIR\\JCMOSHER",
@@ -1058,7 +1058,7 @@
   {
     "rec_resource_id": "REC1474",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Trail closed ",
+    "closure_comment": "<p>Trail closed</p>",
     "Event_Type": "Trail closure",
     "comment_date": "10/14/2020",
     "entry_userid": "IDIR\\SAMACKEN",
@@ -1069,7 +1069,7 @@
   {
     "rec_resource_id": "REC1476",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "The Recreation Site/Trail is closed due to an active wildfire in the area. The area is \r\ncurrently under Evacuation order. Find further information at www.bcwildfire.ca ",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to an active wildfire in the area. The area is currently under Evacuation Order. Find further information at www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/21/2024",
     "entry_userid": "IDIR\\MELWERT",
@@ -1080,7 +1080,7 @@
   {
     "rec_resource_id": "REC1499",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "The Recreation Site/Trail is closed due to damage from the 2018 wildfire season.  Excessive blowdown and danger trees make this trail unsafe for use or travel. ",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to damage from the 2018 wildfire season. Excessive blowdown and danger trees make this trail unsafe for use or travel.</p>",
     "Event_Type": "Hazard trees",
     "comment_date": "7/21/2018",
     "entry_userid": "IDIR\\JCMOSHER",
@@ -1091,7 +1091,7 @@
   {
     "rec_resource_id": "REC1528",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The campsite is closed for the season.",
+    "closure_comment": "<p>The campsite is closed for the season.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/5/2026",
     "entry_userid": "IDIR\\MICWIEBE",
@@ -1102,7 +1102,7 @@
   {
     "rec_resource_id": "REC1533",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The campground is closed for the season.",
+    "closure_comment": "<p>The campground is closed for the season.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "9/16/2026",
     "entry_userid": "IDIR\\NKEKULA",
@@ -1113,7 +1113,7 @@
   {
     "rec_resource_id": "REC1537",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "BRENNAN CREEK RECREATION SITE IS CLOSED UNTIL FURTHER NOTICE",
+    "closure_comment": "<p>Brennan Creek Recreation Site is closed until further notice</p>",
     "Event_Type": "Facility closure",
     "comment_date": "4/20/2017",
     "entry_userid": "IDIR\\GELECLAI",
@@ -1124,7 +1124,7 @@
   {
     "rec_resource_id": "REC154994",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " Site closed due to flooding",
+    "closure_comment": "<p>Site closed due to flooding</p>",
     "Event_Type": "Flood",
     "comment_date": "11/12/2026",
     "entry_userid": "IDIR\\TAMCMILL",
@@ -1135,7 +1135,7 @@
   {
     "rec_resource_id": "REC154996",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " Public Notice: Recreation Site Closure - Squamish Elaho <BR><BR>\r\n\r\nEffective August 28, 2026, at 09:00, access to the Squamish Elaho Recreation Site via the Squamish River Forest Service Road at Mud Creek (21 km) will be closed.<BR><BR>\r\n\r\nAccess Restrictions: No vehicle traffic will be permitted beyond the closure point.",
+    "closure_comment": "<p>Public Notice: Recreation Site Closure – Squamish Elaho</p><p>Effective August 28, 2026, at 09:00, access to the Squamish Elaho Recreation Site via the Squamish River Forest Service Road at Mud Creek (21 km) will be closed.</p><p>Access Restrictions: No vehicle traffic will be permitted beyond the closure point.</p>",
     "Event_Type": "Road closure",
     "comment_date": "8/28/2026",
     "entry_userid": "IDIR\\RTATE",
@@ -1146,7 +1146,7 @@
   {
     "rec_resource_id": "REC1557",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The campground is closed for the season.",
+    "closure_comment": "<p>The campground is closed for the season.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "9/16/2026",
     "entry_userid": "IDIR\\NKEKULA",
@@ -1157,7 +1157,7 @@
   {
     "rec_resource_id": "REC15780",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Footbridges have been damaged by recent flood events and are unsafe to use.  Trail is closed.",
+    "closure_comment": "<p>Footbridges have been damaged by recent flood events and are unsafe to use. Trail is closed.</p>",
     "Event_Type": "Flood damage",
     "comment_date": "6/11/2021",
     "entry_userid": "IDIR\\BKLAST",
@@ -1168,7 +1168,7 @@
   {
     "rec_resource_id": "REC1596",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Evely Recreation Site is closed for the winter season. The site will reopen in the spring 2027. ",
+    "closure_comment": "<p>Evely Recreation Site is closed for the winter season. The site will reopen in the spring 2027.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/29/2026",
     "entry_userid": "IDIR\\JTGLASPI",
@@ -1179,7 +1179,7 @@
   {
     "rec_resource_id": "REC16018",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -1190,7 +1190,7 @@
   {
     "rec_resource_id": "REC16024",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -1201,7 +1201,7 @@
   {
     "rec_resource_id": "REC160442",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately.  The site will not be maintained during this closure and the public are advised to use the space at their own risk.",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately. The site will not be maintained during this closure and the public are advised to use the space at their own risk.</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\JJLEACH",
@@ -1212,7 +1212,7 @@
   {
     "rec_resource_id": "REC16077",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Clint Beek Recreation Site is now closed and gated for the season. ",
+    "closure_comment": "<p>Clint Beek Recreation Site is now closed and gated for the season.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/22/2026",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -1223,7 +1223,7 @@
   {
     "rec_resource_id": "REC16078",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Cluxewe Beach Trail is currently closed for safety reasons. ",
+    "closure_comment": "<p>Cluxewe Beach Trail is currently closed for safety reasons.</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/5/2026",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -1234,7 +1234,7 @@
   {
     "rec_resource_id": "REC16079",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This trail is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -1245,7 +1245,7 @@
   {
     "rec_resource_id": "REC16102",
     "rec_resource_type_code": "RTR",
-    "closure_comment": " Grant Bay is closed until further notice until the site can be made safe and sanitary for recreational users.",
+    "closure_comment": "<p>Grant Bay is closed until the site can be made safe and sanitary for recreational users.</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/1/2023",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1256,7 +1256,7 @@
   {
     "rec_resource_id": "REC16108",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Winter motorized closure from November 20th thru April 10th annually.",
+    "closure_comment": "<p>Winter motorized closure from November 20th through April 10th annually.</p>",
     "Event_Type": "Access restricted",
     "comment_date": "11/20/2006",
     "entry_userid": "IDIR\\ELGILLET",
@@ -1267,7 +1267,7 @@
   {
     "rec_resource_id": "REC16193",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The Recreation Site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife. ",
+    "closure_comment": "<p>The Recreation Site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "9/14/2026",
     "entry_userid": "IDIR\\EMGUNOFF",
@@ -1278,7 +1278,7 @@
   {
     "rec_resource_id": "REC1621",
     "rec_resource_type_code": "RR",
-    "closure_comment": "The Recreation Site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife. ",
+    "closure_comment": "<p>The Recreation Site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "9/14/2026",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1289,7 +1289,7 @@
   {
     "rec_resource_id": "REC164257",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED - Due to Active Wildfire in area",
+    "closure_comment": "<p>Closed – due to active wildfire in area</p>",
     "Event_Type": "Wildfire",
     "comment_date": "9/4/2025",
     "entry_userid": "IDIR\\TIMBENNE",
@@ -1300,7 +1300,7 @@
   {
     "rec_resource_id": "REC1660",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED - Due to active wildfire in area",
+    "closure_comment": "<p>Closed – due to active wildfire in area</p>",
     "Event_Type": "Wildfire",
     "comment_date": "9/4/2025",
     "entry_userid": "IDIR\\TIMBENNE",
@@ -1311,7 +1311,7 @@
   {
     "rec_resource_id": "REC166219",
     "rec_resource_type_code": "RTE",
-    "closure_comment": "Closed due to proximity to wildfires. No estimated date of re-opening at this time. Stay updated by checking https://www2.gov.bc.ca/gov/content/safety/wildfire-status",
+    "closure_comment": "<p>Closed due to proximity to wildfires. No estimated date of re-opening at this time. Stay updated by checking https://www2.gov.bc.ca/gov/content/safety/wildfire-status</p>",
     "Event_Type": "Wildfire nearby",
     "comment_date": "7/23/2026",
     "entry_userid": "IDIR\\JSIM",
@@ -1322,7 +1322,7 @@
   {
     "rec_resource_id": "REC166345",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This recreation site and parking area is closed.",
+    "closure_comment": "<p>This recreation site and parking area is closed.</p>",
     "Event_Type": "Public safety",
     "comment_date": "8/17/2026",
     "entry_userid": "IDIR\\GELECLAI",
@@ -1333,7 +1333,7 @@
   {
     "rec_resource_id": "REC166414",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The Recreation Site is closed due to wildfire rehab needed. ",
+    "closure_comment": "<p>The Recreation Site is closed due to wildfire rehab needed.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "6/28/2024",
     "entry_userid": "IDIR\\TGBLACKB",
@@ -1344,7 +1344,7 @@
   {
     "rec_resource_id": "REC166988",
     "rec_resource_type_code": "RTR",
-    "closure_comment": " This trail is closed due to extensive damage in wet and sensitive areas. This trail is closed to all access due to large mud holes.",
+    "closure_comment": "<p>This trail is closed due to extensive damage in wet and sensitive areas. This trail is closed to all access due to large mud holes.</p>",
     "Event_Type": "Trail closure",
     "comment_date": "6/1/2012",
     "entry_userid": "IDIR\\TAMCMILL",
@@ -1355,7 +1355,7 @@
   {
     "rec_resource_id": "REC168676",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site closed due to COVID-19 health and safety concerns.",
+    "closure_comment": "<p>Site closed due to COVID-19 health and safety concerns.</p>",
     "Event_Type": "Pandemic",
     "comment_date": "4/8/2020",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -1366,7 +1366,7 @@
   {
     "rec_resource_id": "REC1687",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The Recreation Site/Trail is closed due to an active wildfire in the area. For further \r\ninformation visit www.bcwildfire.ca ",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "8/13/2026",
     "entry_userid": "IDIR\\EMGUNOFF",
@@ -1377,7 +1377,7 @@
   {
     "rec_resource_id": "REC169043",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure\r\nOpening Spring 2027",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "3/15/2016",
     "entry_userid": "IDIR\\MADUNN",
@@ -1388,7 +1388,7 @@
   {
     "rec_resource_id": "REC169078",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "closed due to wildfire",
+    "closure_comment": "<p>Closed due to wildfire</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/27/2026",
     "entry_userid": "IDIR\\SAMACKEN",
@@ -1399,7 +1399,7 @@
   {
     "rec_resource_id": "REC169080",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "closed due to wildfire ",
+    "closure_comment": "<p>Closed due to wildfire</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/27/2026",
     "entry_userid": "IDIR\\SAMACKEN",
@@ -1410,7 +1410,7 @@
   {
     "rec_resource_id": "REC169186",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " Closed due to fire rehabilitation work in the area.",
+    "closure_comment": "<p>Closed due to fire rehabilitation work in the area.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "10/20/2021",
     "entry_userid": "IDIR\\NKEKULA",
@@ -1421,7 +1421,7 @@
   {
     "rec_resource_id": "REC169532",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Eagle Pass Fire Lookout CLOSED.  Unsafe conditions exist to public.\r\n\r\n",
+    "closure_comment": "<p>Eagle Pass Fire Lookout closed. Unsafe conditions exist for the public.</p>",
     "Event_Type": "Hazard facility",
     "comment_date": "6/25/2021",
     "entry_userid": "IDIR\\TRAVFISK",
@@ -1432,7 +1432,7 @@
   {
     "rec_resource_id": "REC1718",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " Notice: The Lily Lake Recreation Site has been closed due to wildfire activity in the area. No public access. ",
+    "closure_comment": "<p>Notice: The Lily Lake Recreation Site has been closed due to wildfire activity in the area. No public access.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/29/2026",
     "entry_userid": "IDIR\\TIMBENNE",
@@ -1443,7 +1443,7 @@
   {
     "rec_resource_id": "REC1744",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "<br><strong>BRIDGE OUT<br><br><Access to Kidney Lake Recreation Site has been lost due to a failing bridge and road closure.  </strong>  ",
+    "closure_comment": "<p><strong>Bridge out</strong></p><p><strong>Access to Kidney Lake Recreation Site has been lost due to a failing bridge and road closure.</strong></p>",
     "Event_Type": "Road closure",
     "comment_date": "9/9/2021",
     "entry_userid": "IDIR\\EMGUNOFF",
@@ -1454,7 +1454,7 @@
   {
     "rec_resource_id": "REC1745",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Road access has been lost via Cooke Creek Forest Service Road",
+    "closure_comment": "<p>Road access has been lost via Cooke Creek Forest Service Road</p>",
     "Event_Type": "Road inaccessible",
     "comment_date": "6/1/2020",
     "entry_userid": "IDIR\\JTGLASPI",
@@ -1465,7 +1465,7 @@
   {
     "rec_resource_id": "REC1775",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc) and to prevent negative impacts to ecosystems and wildlife.  <BR>Click here:<a href=https://www2.gov.bc.ca/assets/gov/sports-recreation-arts-and-culture/outdoor-recreation/motor-vehicle-prohibitions/wildfire-closures/mvpr_1_130_white_rock_lake.pdf target=\"_blank\">White Rock Lake Wildfire</a>\r\n<BR> More Information on the motor-vehicle closure and maps can be found: by emailing regional resource management: 2021Wildlife.closures@gov.bc.ca or by calling 778 362-4683. Note that this is an answering service. Staff will return calls within two business days.\r\n",
+    "closure_comment": "<p>This site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.<br>Click here: <a href=\"https://www2.gov.bc.ca/assets/gov/sports-recreation-arts-and-culture/outdoor-recreation/motor-vehicle-prohibitions/wildfire-closures/mvpr_1_130_white_rock_lake.pdf\">White Rock Lake Wildfire</a><br>More information on the motor-vehicle closure and maps can be found: by emailing regional resource management: 2021Wildlife.closures@gov.bc.ca or by calling 778 362-4683. Note that this is an answering service. Staff will return calls within two business days.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "11/2/2021",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1476,7 +1476,7 @@
   {
     "rec_resource_id": "REC1824",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Closed",
+    "closure_comment": "<p>Closed</p>",
     "Event_Type": "Facility closure",
     "comment_date": "5/15/2026",
     "entry_userid": "IDIR\\GDHODSON",
@@ -1487,7 +1487,7 @@
   {
     "rec_resource_id": "REC1829",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The recreation site is closed due to wildfire  damage and remains closed until an assessment is completed.",
+    "closure_comment": "<p>The recreation site is closed due to wildfire damage and remains closed until an assessment is completed.</p>",
     "Event_Type": "Wildfire damage",
     "comment_date": "11/15/2021",
     "entry_userid": "IDIR\\GDHODSON",
@@ -1498,7 +1498,7 @@
   {
     "rec_resource_id": "REC1831",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Notice: The Promontory Lookout has been closed due to wildfire activity in the area. No public access. ",
+    "closure_comment": "<p>Notice: The Promontory Lookout has been closed due to wildfire activity in the area. No public access.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/30/2026",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1509,7 +1509,7 @@
   {
     "rec_resource_id": "REC1834",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED - Due to proximity to out of control wildfire. No estimated date of re-opening at this time.",
+    "closure_comment": "<p>Closed – due to proximity to out of control wildfire. No estimated date of re-opening at this time.</p>",
     "Event_Type": "Wildfire nearby",
     "comment_date": "7/8/2026",
     "entry_userid": "IDIR\\GDHODSON",
@@ -1520,7 +1520,7 @@
   {
     "rec_resource_id": "REC1839",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site is Closed permanently at the original site location.  A new site is currently under construction in conjunction with the new damn and spillway.  It will be located on the South-East corner of Helmer Lake.  It is anticipated that the new site will be closed for the remainder of 2026 to allow for construction. \r\n\r\n\r\n\r\n",
+    "closure_comment": "<p>Site is closed permanently at the original site location. A new site is currently under construction in conjunction with the new dam and spillway. It will be located on the South-East corner of Helmer Lake. It is anticipated that the new site will be closed for the remainder of 2026 to allow for construction.</p>",
     "Event_Type": "Construction",
     "comment_date": "4/10/2025",
     "entry_userid": "IDIR\\KEVCAMPB",
@@ -1531,7 +1531,7 @@
   {
     "rec_resource_id": "REC1868",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed due to the Bonanza Creek Wildfire - K71082.",
+    "closure_comment": "<p>This site is closed due to the Bonanza Creek Wildfire – K71082.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/22/2026",
     "entry_userid": "IDIR\\GDHODSON",
@@ -1542,7 +1542,7 @@
   {
     "rec_resource_id": "REC1873",
     "rec_resource_type_code": "RR",
-    "closure_comment": "The Recreation Site/Trail is closed due to an active wildfire in the area. The area is \r\ncurrently under Evacuation Alert. Find further information at www.bcwildfire.ca  ",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to an active wildfire in the area. The area is currently under Evacuation Alert. Find further information at www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/23/2026",
     "entry_userid": "IDIR\\DCHEVERI",
@@ -1553,7 +1553,7 @@
   {
     "rec_resource_id": "REC190937",
     "rec_resource_type_code": "RTE",
-    "closure_comment": "The Recreation Site is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca",
+    "closure_comment": "<p>The Recreation Site is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "8/12/2021",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1564,7 +1564,7 @@
   {
     "rec_resource_id": "REC1923",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The Gorge Creek Trail is currently CLOSED until further notice due to public safety concerns.  Numerous dangerous trees stand in the trail corridor, the bridge over the creek is out due to spring flood damage, also of concern is the safety risk of crossing the Trans Canada Highway to access the trail head.  Please do not cross the highway to the trail.  We endeavor to address these safety concerns and reopen the trail in the future.",
+    "closure_comment": "<p>The Gorge Creek Trail is currently closed until further notice due to public safety concerns. Numerous dangerous trees stand in the trail corridor and the bridge over the creek is out due to spring flood damage. Also of concern is the safety risk of crossing the Trans Canada Highway to access the trail head. Please do not cross the highway to the trail. We endeavor to address these safety concerns and reopen the trail in the future.</p>",
     "Event_Type": "Trail closure",
     "comment_date": "10/1/2014",
     "entry_userid": "IDIR\\KEESKELI",
@@ -1575,7 +1575,7 @@
   {
     "rec_resource_id": "REC1961",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " Site closed due to fallen trees and facility damage.",
+    "closure_comment": "<p>Site closed due to fallen trees and facility damage.</p>",
     "Event_Type": "Damaged unsafe infrastructure",
     "comment_date": "5/29/2025",
     "entry_userid": "IDIR\\EMGUNOFF",
@@ -1586,7 +1586,7 @@
   {
     "rec_resource_id": "REC1974",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed due to the Bonanza Creek Wildfire - K71082.",
+    "closure_comment": "<p>This site is closed due to the Bonanza Creek Wildfire – K71082.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/22/2026",
     "entry_userid": "IDIR\\GDHODSON",
@@ -1597,7 +1597,7 @@
   {
     "rec_resource_id": "REC1978",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED - Due to close proximity of French Bar Creek Wildfire.",
+    "closure_comment": "<p>Closed – due to close proximity of French Bar Creek Wildfire.</p>",
     "Event_Type": "Wildfire nearby",
     "comment_date": "7/17/2026",
     "entry_userid": "IDIR\\EABELS",
@@ -1608,7 +1608,7 @@
   {
     "rec_resource_id": "REC198435",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail network remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc) and to prevent negative impacts to ecosystems and wildlife. ",
+    "closure_comment": "<p>This trail network remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "4/11/2024",
     "entry_userid": "IDIR\\GELECLAI",
@@ -1619,7 +1619,7 @@
   {
     "rec_resource_id": "REC198437",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail network remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc) and to prevent negative impacts to ecosystems and wildlife.  ",
+    "closure_comment": "<p>This trail network remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "4/11/2024",
     "entry_userid": "IDIR\\GELECLAI",
@@ -1630,7 +1630,7 @@
   {
     "rec_resource_id": "REC1988",
     "rec_resource_type_code": "RR",
-    "closure_comment": "This site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc) and to prevent negative impacts to ecosystems and wildlife.  <BR>Click here:<a href=https://www2.gov.bc.ca/assets/gov/sports-recreation-arts-and-culture/outdoor-recreation/motor-vehicle-prohibitions/wildfire-closures/mvpr_1_130_white_rock_lake.pdf target=\"_blank\">White Rock Lake Wildfire</a>\r\n<BR> More Information on the motor-vehicle closure and maps can be found: by emailing regional resource management: 2021Wildlife.closures@gov.bc.ca or by calling 778 362-4683. Note that this is an answering service. Staff will return calls within two business days.\r\n",
+    "closure_comment": "<p>This site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.<br>Click here: <a href=\"https://www2.gov.bc.ca/assets/gov/sports-recreation-arts-and-culture/outdoor-recreation/motor-vehicle-prohibitions/wildfire-closures/mvpr_1_130_white_rock_lake.pdf\">White Rock Lake Wildfire</a><br>More information on the motor-vehicle closure and maps can be found: by emailing regional resource management: 2021Wildlife.closures@gov.bc.ca or by calling 778 362-4683. Note that this is an answering service. Staff will return calls within two business days.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "11/2/2021",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1641,7 +1641,7 @@
   {
     "rec_resource_id": "REC202159",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Avatar Grove (T'l'oqwxwat) Recreation Site is Closed for Public Safety and Environmental Protection.    \r\n",
+    "closure_comment": "<p>Avatar Grove (T'l'oqwxwat) Recreation Site is closed for public safety and environmental protection.</p>",
     "Event_Type": "Public safety",
     "comment_date": "1/17/2022",
     "entry_userid": "IDIR\\MGRANDBO",
@@ -1652,7 +1652,7 @@
   {
     "rec_resource_id": "REC202717",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "PUBLIC SAFETY CLOSURE\r\nRecent wildfire activity has destabilized the cliffs above the trail and hot springs. In addition the fire has created a very large number of hazardous trees in the area. RST has determined the risk to public safety from the use of the trail is Extreme. The trail will remain closed until these hazards can be assessed and if possible mitigated. \r\n",
+    "closure_comment": "<p>Public safety closure<br>Recent wildfire activity has destabilized the cliffs above the trail and hot springs. In addition the fire has created a very large number of hazardous trees in the area. RST has determined the risk to public safety from the use of the trail is Extreme. The trail will remain closed until these hazards can be assessed and if possible mitigated.</p>",
     "Event_Type": "Public safety",
     "comment_date": "10/24/2023",
     "entry_userid": "IDIR\\GELECLAI",
@@ -1663,7 +1663,7 @@
   {
     "rec_resource_id": "REC202921",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "The Tommy Archie Lake trail is closed due to a bridge closure on the forest service road that provides access to the recreation trail. It is not known yet at this time when the bridge will be reopened. Please observe all posted road closures and signs.",
+    "closure_comment": "<p>The Tommy Archie Lake trail is closed due to a bridge closure on the forest service road that provides access to the recreation trail. It is not known yet at this time when the bridge will be reopened. Please observe all posted road closures and signs.</p>",
     "Event_Type": "Road closure",
     "comment_date": "3/3/2026",
     "entry_userid": "IDIR\\GELECLAI",
@@ -1674,7 +1674,7 @@
   {
     "rec_resource_id": "REC202937",
     "rec_resource_type_code": "RTR",
-    "closure_comment": " The Hagensborg Loop / Schoolhouse Falls Trails are currently CLOSED for public safety due to bear activity in the area. Posted November 3, 2026.",
+    "closure_comment": "<p>The Hagensborg Loop / Schoolhouse Falls Trails are currently closed for public safety due to bear activity in the area. Posted November 3, 2026.</p>",
     "Event_Type": "Wildlife",
     "comment_date": "11/3/2026",
     "entry_userid": "IDIR\\COFSTIE",
@@ -1685,7 +1685,7 @@
   {
     "rec_resource_id": "REC203040",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -1696,7 +1696,7 @@
   {
     "rec_resource_id": "REC203929",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The Lookout recreation site and trails to the lookout are closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca ",
+    "closure_comment": "<p>The Lookout recreation site and trails to the lookout are closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "8/26/2026",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1707,7 +1707,7 @@
   {
     "rec_resource_id": "REC204276",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The lookout has been damaged by wildfire.  Danger tree assessments and falling has not occurred so access is not recommended for safety reasons.",
+    "closure_comment": "<p>The lookout has been damaged by wildfire. Danger tree assessments and falling have not occurred so access is not recommended for safety reasons.</p>",
     "Event_Type": "Public safety",
     "comment_date": "7/23/2024",
     "entry_userid": "IDIR\\TRMITCHE",
@@ -1718,7 +1718,7 @@
   {
     "rec_resource_id": "REC204278",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Site Closed.\r\nThe lookout has been damaged by wildfire. Danger tree assessments and falling has not occurred so access is not recommended for safety reasons",
+    "closure_comment": "<p>Site closed.<br>The lookout has been damaged by wildfire. Danger tree assessments and falling have not occurred so access is not recommended for safety reasons.</p>",
     "Event_Type": "Public safety",
     "comment_date": "9/9/2024",
     "entry_userid": "IDIR\\TRMITCHE",
@@ -1729,7 +1729,7 @@
   {
     "rec_resource_id": "REC204461",
     "rec_resource_type_code": "IF",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -1740,7 +1740,7 @@
   {
     "rec_resource_id": "REC205064",
     "rec_resource_type_code": "RTR",
-    "closure_comment": " The Gorge Creek Trail is currently CLOSED until further notice due to public safety concerns. <BR><BR>\r\nNumerous dangerous trees stand in the trail corridor and the bridge over the creek is out due to spring flood damage.  Also of concern is the safety risk of crossing the Trans Canada Highway to access the trail head.  We endeavor to address these safety concerns and reopen the trail in the future.",
+    "closure_comment": "<p>The Gorge Creek Trail is currently closed until further notice due to public safety concerns.</p><p>Numerous dangerous trees stand in the trail corridor and the bridge over the creek is out due to spring flood damage. Also of concern is the safety risk of crossing the Trans Canada Highway to access the trail head. We endeavor to address these safety concerns and reopen the trail in the future.</p>",
     "Event_Type": "Public safety",
     "comment_date": "10/14/2014",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1751,7 +1751,7 @@
   {
     "rec_resource_id": "REC205666",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The Jesmond Fire Lookout Recreation Site is currently closed for safety and environmental concerns due to extensive wildfire damage in the summer of 2026. Further assessments and repair work are tentatively being planned for the summer of 2027. Check back here to this page for future updates.",
+    "closure_comment": "<p>The Jesmond Fire Lookout Recreation Site is currently closed for safety and environmental concerns due to extensive wildfire damage in the summer of 2026. Further assessments and repair work are tentatively being planned for the summer of 2027. Check back here to this page for future updates.</p>",
     "Event_Type": "Wildfire damage",
     "comment_date": "7/23/2026",
     "entry_userid": "IDIR\\GELECLAI",
@@ -1762,7 +1762,7 @@
   {
     "rec_resource_id": "REC206138",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " Pye Mountain Rec Site has been closed due to unsafe and unsanitary conditions. The site will remain closed until further notice.",
+    "closure_comment": "<p>Pye Mountain Rec Site has been closed due to unsafe and unsanitary conditions. The site will remain closed until further notice.</p>",
     "Event_Type": "Public safety",
     "comment_date": "4/1/2026",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -1773,7 +1773,7 @@
   {
     "rec_resource_id": "REC2155",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The Recreation Site is closed due to an active wildfire in the area. The area is currently under Evacuation Order. Find further information at <a href=\"https://www2.gov.bc.ca/gov/content/safety/wildfire-status\"target=\"_blank\">BC Wildfire Service</a>.",
+    "closure_comment": "<p>The Recreation Site is closed due to an active wildfire in the area. The area is currently under Evacuation Order. Find further information at <a href=\"https://www2.gov.bc.ca/gov/content/safety/wildfire-status\">BC Wildfire Service</a>.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "8/7/2026",
     "entry_userid": "IDIR\\ROICUMMI",
@@ -1784,7 +1784,7 @@
   {
     "rec_resource_id": "REC230063",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail network remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc) and to prevent negative impacts to ecosystems and wildlife.  <BR>Click here:<a href=https://www2.gov.bc.ca/assets/gov/sports-recreation-arts-and-culture/outdoor-recreation/motor-vehicle-prohibitions/wildfire-closures/mvpr_1_130_white_rock_lake.pdf target=\"_blank\">White Rock Lake Wildfire</a>\r\n<BR> More Information on the motor-vehicle closure and maps can be found: by emailing regional resource management: 2021Wildlife.closures@gov.bc.ca or by calling 778 362-4683. Note that this is an answering service. Staff will return calls within two business days.\r\n",
+    "closure_comment": "<p>This trail network remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.<br>Click here: <a href=\"https://www2.gov.bc.ca/assets/gov/sports-recreation-arts-and-culture/outdoor-recreation/motor-vehicle-prohibitions/wildfire-closures/mvpr_1_130_white_rock_lake.pdf\">White Rock Lake Wildfire</a><br>More information on the motor-vehicle closure and maps can be found: by emailing regional resource management: 2021Wildlife.closures@gov.bc.ca or by calling 778 362-4683. Note that this is an answering service. Staff will return calls within two business days.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "11/2/2021",
     "entry_userid": "IDIR\\GELECLAI",
@@ -1795,7 +1795,7 @@
   {
     "rec_resource_id": "REC230151",
     "rec_resource_type_code": "RR",
-    "closure_comment": "This site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc) and to prevent negative impacts to ecosystems and wildlife.  <BR>Click here:<a href=https://www2.gov.bc.ca/assets/gov/sports-recreation-arts-and-culture/outdoor-recreation/motor-vehicle-prohibitions/wildfire-closures/mvpr_1_130_white_rock_lake.pdf target=\"_blank\">White Rock Lake Wildfire</a>\r\n<BR> More Information on the motor-vehicle closure and maps can be found: by emailing regional resource management: 2021Wildlife.closures@gov.bc.ca or by calling 778 362-4683. Note that this is an answering service. Staff will return calls within two business days.\r\n",
+    "closure_comment": "<p>This site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.<br>Click here: <a href=\"https://www2.gov.bc.ca/assets/gov/sports-recreation-arts-and-culture/outdoor-recreation/motor-vehicle-prohibitions/wildfire-closures/mvpr_1_130_white_rock_lake.pdf\">White Rock Lake Wildfire</a><br>More information on the motor-vehicle closure and maps can be found: by emailing regional resource management: 2021Wildlife.closures@gov.bc.ca or by calling 778 362-4683. Note that this is an answering service. Staff will return calls within two business days.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "11/2/2021",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1806,7 +1806,7 @@
   {
     "rec_resource_id": "REC231189",
     "rec_resource_type_code": "RTE",
-    "closure_comment": "Frances Creek FSR closed at 51km due to a bridge closure.ﾠ The bridge is not safe for vehicle crossings.ﾠ The road is bermed at the 51km mark and not passable by motor vehicle.ﾠ This closure restricts access to the trailheads of the McLean Creek, Azure Lake, and Septet Pass trails.",
+    "closure_comment": "<p>Frances Creek FSR closed at 51km due to a bridge closure. The bridge is not safe for vehicle crossings. The road is bermed at the 51km mark and not passable by motor vehicle. This closure restricts access to the trailheads of the McLean Creek, Azure Lake, and Septet Pass trails.</p>",
     "Event_Type": "Road closure",
     "comment_date": "10/26/2026",
     "entry_userid": "IDIR\\THANN",
@@ -1817,7 +1817,7 @@
   {
     "rec_resource_id": "REC231261",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Permanently closed\r\n",
+    "closure_comment": "<p>Permanently closed</p>",
     "Event_Type": "Facility closure",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -1828,7 +1828,7 @@
   {
     "rec_resource_id": "REC2396",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "The Recreation Trail is closed due to an active wildfire in the area. For further \r\ninformation visit www.bcwildfire.ca ",
+    "closure_comment": "<p>The Recreation Trail is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "8/19/2026",
     "entry_userid": "IDIR\\KKNOLL",
@@ -1839,7 +1839,7 @@
   {
     "rec_resource_id": "REC240834",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail network remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc) and to prevent negative impacts to ecosystems and wildlife.  ",
+    "closure_comment": "<p>This trail network remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "4/11/2024",
     "entry_userid": "IDIR\\GELECLAI",
@@ -1850,7 +1850,7 @@
   {
     "rec_resource_id": "REC241010",
     "rec_resource_type_code": "RR",
-    "closure_comment": "This site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc) and to prevent negative impacts to ecosystems and wildlife.  <BR>Click here:<a href=https://www2.gov.bc.ca/assets/gov/sports-recreation-arts-and-culture/outdoor-recreation/motor-vehicle-prohibitions/wildfire-closures/mvpr_1_130_white_rock_lake.pdf target=\"_blank\">White Rock Lake Wildfire</a>\r\n<BR> More Information on the motor-vehicle closure and maps can be found: by emailing regional resource management: 2021Wildlife.closures@gov.bc.ca or by calling 778 362-4683. Note that this is an answering service. Staff will return calls within two business days.\r\n",
+    "closure_comment": "<p>This site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.<br>Click here: <a href=\"https://www2.gov.bc.ca/assets/gov/sports-recreation-arts-and-culture/outdoor-recreation/motor-vehicle-prohibitions/wildfire-closures/mvpr_1_130_white_rock_lake.pdf\">White Rock Lake Wildfire</a><br>More information on the motor-vehicle closure and maps can be found: by emailing regional resource management: 2021Wildlife.closures@gov.bc.ca or by calling 778 362-4683. Note that this is an answering service. Staff will return calls within two business days.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "11/2/2021",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1861,7 +1861,7 @@
   {
     "rec_resource_id": "REC2472",
     "rec_resource_type_code": "RTE",
-    "closure_comment": "The Mt. Cartier Lookout trail is closed due to the instability of the McKay Creek bridge.",
+    "closure_comment": "<p>The Mt. Cartier Lookout trail is closed due to the instability of the McKay Creek bridge.</p>",
     "Event_Type": "Trail closure",
     "comment_date": "10/29/2020",
     "entry_userid": "IDIR\\DDORNIK",
@@ -1872,7 +1872,7 @@
   {
     "rec_resource_id": "REC2473",
     "rec_resource_type_code": "RTE",
-    "closure_comment": "The Recreation Trail is closed due to an active wildfire in the area. For further \r\ninformation visit www.bcwildfire.ca ",
+    "closure_comment": "<p>The Recreation Trail is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "8/26/2026",
     "entry_userid": "IDIR\\KRGIBSON",
@@ -1883,7 +1883,7 @@
   {
     "rec_resource_id": "REC257445",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure \r\nOpening Spring 2027",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/5/2026",
     "entry_userid": "IDIR\\DBRADLEY",
@@ -1894,7 +1894,7 @@
   {
     "rec_resource_id": "REC257447",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure \r\nOpening Spring 2027",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/5/2026",
     "entry_userid": "IDIR\\DBRADLEY",
@@ -1905,7 +1905,7 @@
   {
     "rec_resource_id": "REC257540",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Closed due to proximity to wildfire.",
+    "closure_comment": "<p>Closed due to proximity to wildfire.</p>",
     "Event_Type": "Wildfire nearby",
     "comment_date": "7/10/2026",
     "entry_userid": "IDIR\\GDHODSON",
@@ -1916,7 +1916,7 @@
   {
     "rec_resource_id": "REC258099",
     "rec_resource_type_code": "RR",
-    "closure_comment": "The Recreation Site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife. ",
+    "closure_comment": "<p>The Recreation Site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "9/14/2026",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1927,7 +1927,7 @@
   {
     "rec_resource_id": "REC258591",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "CLOSED - Due to Active Wildfire in area",
+    "closure_comment": "<p>Closed – due to active wildfire in area</p>",
     "Event_Type": "Wildfire",
     "comment_date": "9/4/2025",
     "entry_userid": "IDIR\\GDHODSON",
@@ -1938,7 +1938,7 @@
   {
     "rec_resource_id": "REC259401",
     "rec_resource_type_code": "RTE",
-    "closure_comment": "This trail is closed due to an area restriction associated with the Bootleg Fire Complex.",
+    "closure_comment": "<p>This trail is closed due to an area restriction associated with the Bootleg Fire Complex.</p>",
     "Event_Type": "Trail closure",
     "comment_date": "7/23/2026",
     "entry_userid": "IDIR\\LDCOX",
@@ -1949,7 +1949,7 @@
   {
     "rec_resource_id": "REC261703",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Pacific Yew Recreation Site is now closed and gated for the season.  The site will open with a host May 2027. Shoulder season group rentals are now available. ",
+    "closure_comment": "<p>Pacific Yew Recreation Site is now closed and gated for the season. The site will open with a host May 2027. Shoulder season group rentals are now available.</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/7/2026",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -1960,7 +1960,7 @@
   {
     "rec_resource_id": "REC265626",
     "rec_resource_type_code": "RTR",
-    "closure_comment": " The Lost Marbles Recreation Trail is currently closed for safety and environmental concerns due to extensive wildfire damage in the summer of 2026. Further assessments and repair work are tentatively being planned for the summer of 2027. Check back here to this page for future updates.",
+    "closure_comment": "<p>The Lost Marbles Recreation Trail is currently closed for safety and environmental concerns due to extensive wildfire damage in the summer of 2026. Further assessments and repair work are tentatively being planned for the summer of 2027. Check back here to this page for future updates.</p>",
     "Event_Type": "Wildfire damage",
     "comment_date": "11/17/2026",
     "entry_userid": "IDIR\\COFSTIE",
@@ -1971,7 +1971,7 @@
   {
     "rec_resource_id": "REC265953",
     "rec_resource_type_code": "RTR",
-    "closure_comment": " Closure due to sensitive wildlife activity. ",
+    "closure_comment": "<p>Closure due to sensitive wildlife activity.</p>",
     "Event_Type": "Wildlife protection",
     "comment_date": "9/15/2021",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -1982,7 +1982,7 @@
   {
     "rec_resource_id": "REC266077",
     "rec_resource_type_code": "RTR",
-    "closure_comment": " The Stairway to Heaven Recreation Trail is currently closed for safety and environmental concerns due to extensive wildfire damage in the summer of 2026. Further assessments and repair work are tentatively being planned for the summer of 2027. Check back here to this page for future updates.",
+    "closure_comment": "<p>The Stairway to Heaven Recreation Trail is currently closed for safety and environmental concerns due to extensive wildfire damage in the summer of 2026. Further assessments and repair work are tentatively being planned for the summer of 2027. Check back here to this page for future updates.</p>",
     "Event_Type": "Wildfire damage",
     "comment_date": "11/17/2026",
     "entry_userid": "IDIR\\COFSTIE",
@@ -1993,7 +1993,7 @@
   {
     "rec_resource_id": "REC266306",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "  <font color= \"red\"> NOTICE: The Beef Trail Road that provides the only vehicle access to the recreation trail is currently closed to support a Motor Vehicle Hunting Closed Area (MVHCA) under the Wildlife Act. It is anticipated the gate at the start of the Beef Trail Road on the north side of Highway 20 will remain closed throughout hunting season, so there will be no vehicle access to the recreation trail during this time. \r\n\r\n For more detailed information on the specific areas where motor vehicles are closed for hunting, individuals can refer to the Wildlife Act Motor Vehicle Prohibition Regulation and the Hunting and Trapping Regulations Synopsis. These resources provide comprehensive details on the regulations and maps outlining the closed areas. </font> <br><br>.\r\n",
+    "closure_comment": "<p>Notice: The Beef Trail Road that provides the only vehicle access to the recreation trail is currently closed to support a Motor Vehicle Hunting Closed Area (MVHCA) under the Wildlife Act. It is anticipated the gate at the start of the Beef Trail Road on the north side of Highway 20 will remain closed throughout hunting season, so there will be no vehicle access to the recreation trail during this time.</p><p>For more detailed information on the specific areas where motor vehicles are closed for hunting, individuals can refer to the Wildlife Act Motor Vehicle Prohibition Regulation and the Hunting and Trapping Regulations Synopsis. These resources provide comprehensive details on the regulations and maps outlining the closed areas.</p>",
     "Event_Type": "Road closure",
     "comment_date": "9/28/2026",
     "entry_userid": "IDIR\\JADAVIDS",
@@ -2004,7 +2004,7 @@
   {
     "rec_resource_id": "REC2683",
     "rec_resource_type_code": "RR",
-    "closure_comment": "The Recreation Site is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca",
+    "closure_comment": "<p>The Recreation Site is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/12/2021",
     "entry_userid": "IDIR\\DCHEVERI",
@@ -2015,7 +2015,7 @@
   {
     "rec_resource_id": "REC270620",
     "rec_resource_type_code": "RTR",
-    "closure_comment": " The recreation trail is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca",
+    "closure_comment": "<p>The recreation trail is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/24/2026",
     "entry_userid": "IDIR\\COFSTIE",
@@ -2026,7 +2026,7 @@
   {
     "rec_resource_id": "REC270700",
     "rec_resource_type_code": "RTE",
-    "closure_comment": "The Recreation Trail is closed due to an active wildfire in the area. For further \r\ninformation visit www.bcwildfire.ca ",
+    "closure_comment": "<p>The Recreation Trail is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "8/26/2026",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -2037,7 +2037,7 @@
   {
     "rec_resource_id": "REC2971",
     "rec_resource_type_code": "RTR",
-    "closure_comment": " The Big Bar Cross Country Ski Trails are currently closed for safety and environmental concerns due to extensive wildfire damage in the summer of 2026. Further assessments and repair work are tentatively being planned for the summer of 2027. Check back here to this page for future updates.  ",
+    "closure_comment": "<p>The Big Bar Cross Country Ski Trails are currently closed for safety and environmental concerns due to extensive wildfire damage in the summer of 2026. Further assessments and repair work are tentatively being planned for the summer of 2027. Check back here to this page for future updates.</p>",
     "Event_Type": "Wildfire damage",
     "comment_date": "7/24/2026",
     "entry_userid": "IDIR\\DOUGHARR",
@@ -2048,7 +2048,7 @@
   {
     "rec_resource_id": "REC2988",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The Pendleton Lake Recreation Site is closed due to a bridge closure on the forest service road that provides access to the recreation site. It is not known yet at this time when the bridge will be reopened. Please observe all posted road closures and signs.",
+    "closure_comment": "<p>The Pendleton Lake Recreation Site is closed due to a bridge closure on the forest service road that provides access to the recreation site. It is not known yet at this time when the bridge will be reopened. Please observe all posted road closures and signs.</p>",
     "Event_Type": "Road closure",
     "comment_date": "3/3/2026",
     "entry_userid": "IDIR\\GELECLAI",
@@ -2059,7 +2059,7 @@
   {
     "rec_resource_id": "REC3032",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " Seasonal Closure, additional information and updates, please visit <a href=\"https://firesidecamping.ca/\" target=\"_blank\">https://firesidecamping.ca//</a>",
+    "closure_comment": "<p>Seasonal closure, additional information and updates, please visit <a href=\"https://firesidecamping.ca/\">https://firesidecamping.ca//</a></p>",
     "Event_Type": "Seasonal",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\MPETERS",
@@ -2070,7 +2070,7 @@
   {
     "rec_resource_id": "REC3033",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2081,7 +2081,7 @@
   {
     "rec_resource_id": "REC3035",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Permanently closed",
+    "closure_comment": "<p>Permanently closed</p>",
     "Event_Type": "Facility closure",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2092,7 +2092,7 @@
   {
     "rec_resource_id": "REC3038",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure",
+    "closure_comment": "<p>Seasonal closure</p>",
     "Event_Type": "Seasonal",
     "comment_date": "11/1/2026",
     "entry_userid": "IDIR\\MADUNN",
@@ -2103,7 +2103,7 @@
   {
     "rec_resource_id": "REC3061",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Closed until further notice due to damages from flood waters",
+    "closure_comment": "<p>Closed until further notice due to damages from flood waters</p>",
     "Event_Type": "Flood damage",
     "comment_date": "11/15/2021",
     "entry_userid": "IDIR\\MADUNN",
@@ -2114,7 +2114,7 @@
   {
     "rec_resource_id": "REC3066",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED UNTIL FURTHER NOTICE DUE TO\r\n\r\n<BR>INCREASED RISK RESULTING FROM WILDFIRE",
+    "closure_comment": "<p>Closed until further notice due to increased risk resulting from wildfire.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "9/2/2015",
     "entry_userid": "IDIR\\JCROOKS",
@@ -2125,7 +2125,7 @@
   {
     "rec_resource_id": "REC3069",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Closed to Flood Damage - No access",
+    "closure_comment": "<p>Closed due to flood damage – No access</p>",
     "Event_Type": "Flood damage",
     "comment_date": "3/1/2022",
     "entry_userid": "IDIR\\DBRADLEY",
@@ -2136,7 +2136,7 @@
   {
     "rec_resource_id": "REC3100",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This trail is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2147,7 +2147,7 @@
   {
     "rec_resource_id": "REC3101",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This trail is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2158,7 +2158,7 @@
   {
     "rec_resource_id": "REC3104",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This trail is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2169,7 +2169,7 @@
   {
     "rec_resource_id": "REC3105",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This trail is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2180,7 +2180,7 @@
   {
     "rec_resource_id": "REC3113",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure \r\nOpening Spring 2027",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/5/2026",
     "entry_userid": "IDIR\\MADUNN",
@@ -2191,7 +2191,7 @@
   {
     "rec_resource_id": "REC3124",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2202,7 +2202,7 @@
   {
     "rec_resource_id": "REC3125",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2213,7 +2213,7 @@
   {
     "rec_resource_id": "REC3126",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2224,7 +2224,7 @@
   {
     "rec_resource_id": "REC3127",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2235,7 +2235,7 @@
   {
     "rec_resource_id": "REC3128",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "CLOSED FOR THE SEASON - Access Gates Locked",
+    "closure_comment": "<p>Closed for the season – Access gates locked</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/20/2026",
     "entry_userid": "IDIR\\FULLMANN",
@@ -2246,7 +2246,7 @@
   {
     "rec_resource_id": "REC3131",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The recreation site is closed, no camping is permitted.  ",
+    "closure_comment": "<p>The recreation site is closed, no camping is permitted.</p>",
     "Event_Type": "Road closure",
     "comment_date": "3/10/2022",
     "entry_userid": "IDIR\\JMCKIER",
@@ -2257,7 +2257,7 @@
   {
     "rec_resource_id": "REC3173",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2268,7 +2268,7 @@
   {
     "rec_resource_id": "REC3174",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2279,7 +2279,7 @@
   {
     "rec_resource_id": "REC3175",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2290,7 +2290,7 @@
   {
     "rec_resource_id": "REC3177",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This trail is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2301,7 +2301,7 @@
   {
     "rec_resource_id": "REC31979",
     "rec_resource_type_code": "RTE",
-    "closure_comment": "Public Notice:<BR><BR> \r\n\r\nDue to the impacts of the Bald Range Fire near Summerland, the KVR is closed from Trout Crossing (at the KVRT junction at approximately 13km on the Princeton-Summerland Road) to Summerland.  Post wildfire assessments are ongoing and closure updates will be posted here when more information is available. \r\n\r\n<BR><BR> The maintenance of the trail is supported by the Regional District of the Okanagan Similkameen and the Trails to the Boundary Society. Both have active facebook pages with updated trail information.",
+    "closure_comment": "<p>Public Notice:</p><p>Due to the impacts of the Bald Range Fire near Summerland, the KVR is closed from Trout Crossing (at the KVRT junction at approximately 13km on the Princeton-Summerland Road) to Summerland. Post wildfire assessments are ongoing and closure updates will be posted here when more information is available.</p><p>The maintenance of the trail is supported by the Regional District of the Okanagan Similkameen and the Trails to the Boundary Society. Both have active Facebook pages with updated trail information.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "8/11/2026",
     "entry_userid": "IDIR\\JTGLASPI",
@@ -2312,7 +2312,7 @@
   {
     "rec_resource_id": "REC32116",
     "rec_resource_type_code": "RR",
-    "closure_comment": "NOTICE:   Starr Creek Cabin is currently CLOSED until further notice - due to avalanche risk at current location.   ",
+    "closure_comment": "<p>Notice: Starr Creek Cabin is currently closed until further notice – due to avalanche risk at current location.</p>",
     "Event_Type": "Facility closure",
     "comment_date": "12/7/2012",
     "entry_userid": "IDIR\\KEESKELI",
@@ -2323,7 +2323,7 @@
   {
     "rec_resource_id": "REC3258",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Seasonal Closure \r\nOpening Spring 2027",
+    "closure_comment": "<p>Seasonal closure<br>Opening spring 2027</p>",
     "Event_Type": "Seasonal",
     "comment_date": "10/5/2026",
     "entry_userid": "IDIR\\MADUNN",
@@ -2334,7 +2334,7 @@
   {
     "rec_resource_id": "REC32655",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening. ",
+    "closure_comment": "<p>Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening.</p>",
     "Event_Type": "Road closure",
     "comment_date": "6/1/2023",
     "entry_userid": "IDIR\\ABILAWCH",
@@ -2345,7 +2345,7 @@
   {
     "rec_resource_id": "REC32895",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "The Recreation Site is closed due to unknown impacts from a 2021 wildfire in the area. ",
+    "closure_comment": "<p>The Recreation Site is closed due to unknown impacts from a 2021 wildfire in the area.</p>",
     "Event_Type": "Wildfire damage",
     "comment_date": "7/12/2021",
     "entry_userid": "IDIR\\KAMOHR",
@@ -2356,7 +2356,7 @@
   {
     "rec_resource_id": "REC3521",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Bridge access to site is closed. Site will reopen when bridge repairs complete. ",
+    "closure_comment": "<p>Bridge access to site is closed. Site will reopen when bridge repairs are complete.</p>",
     "Event_Type": "Bridge outage",
     "comment_date": "5/12/2014",
     "entry_userid": "IDIR\\CJOHANSE",
@@ -2367,7 +2367,7 @@
   {
     "rec_resource_id": "REC3527",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "The Recreation Trail is closed due to an active wildfire in the area. The BC Wildfire Service has implemented an Area Restriction Order under Section 11(1) of the Wildfire Act to address a public safety concern. Find further information at www.bcwildfire.ca \r\n\r\nRoad is deactivated from 800m to 3.2km for fire guard.",
+    "closure_comment": "<p>The Recreation Trail is closed due to an active wildfire in the area. The BC Wildfire Service has implemented an Area Restriction Order under Section 11(1) of the Wildfire Act to address a public safety concern. Find further information at www.bcwildfire.ca</p><p>Road is deactivated from 800m to 3.2km for fire guard.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/23/2026",
     "entry_userid": "IDIR\\DKRISS",
@@ -2378,7 +2378,7 @@
   {
     "rec_resource_id": "REC4532",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc) and to prevent negative impacts to ecosystems and wildlife.  ",
+    "closure_comment": "<p>This site remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "11/2/2021",
     "entry_userid": "IDIR\\BDOWEDOF",
@@ -2389,7 +2389,7 @@
   {
     "rec_resource_id": "REC4555",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "closed due to wildfire",
+    "closure_comment": "<p>Closed due to wildfire</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/27/2026",
     "entry_userid": "IDIR\\SAMACKEN",
@@ -2400,7 +2400,7 @@
   {
     "rec_resource_id": "REC4556",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed due to the Bonanza Creek Wildfire - K71082.",
+    "closure_comment": "<p>This site is closed due to the Bonanza Creek Wildfire – K71082.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/22/2026",
     "entry_userid": "IDIR\\GDHODSON",
@@ -2411,7 +2411,7 @@
   {
     "rec_resource_id": "REC4669",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail is currently closed as it was impacted by the 2023 Wildfire Season.  It will be updated once and assessment is complete.",
+    "closure_comment": "<p>This trail is currently closed as it was impacted by the 2023 wildfire season. It will be updated once an assessment is complete.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "8/2/2023",
     "entry_userid": "IDIR\\TIMBENNE",
@@ -2422,7 +2422,7 @@
   {
     "rec_resource_id": "REC4671",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The recreation site is closed due to flood damage and remains closed until an assessment is completed.",
+    "closure_comment": "<p>The recreation site is closed due to flood damage and remains closed until an assessment is completed.</p>",
     "Event_Type": "Flood damage",
     "comment_date": "11/15/2021",
     "entry_userid": "IDIR\\TIMBENNE",
@@ -2433,7 +2433,7 @@
   {
     "rec_resource_id": "REC4672",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Closed due to wildfire.",
+    "closure_comment": "<p>Closed due to wildfire.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/23/2024",
     "entry_userid": "IDIR\\GELECLAI",
@@ -2444,7 +2444,7 @@
   {
     "rec_resource_id": "REC4716",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail network remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc) and to prevent negative impacts to ecosystems and wildlife.  ",
+    "closure_comment": "<p>This trail network remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "4/11/2024",
     "entry_userid": "IDIR\\GELECLAI",
@@ -2455,7 +2455,7 @@
   {
     "rec_resource_id": "REC5249",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Frances Creek FSR closed at 51km due to a bridge closure.  The bridge is not safe for vehicle crossings.  The road is bermed at the 51km mark and not passable by motor vehicle.  This closure restricts access to the trailheads of the McLean Creek, Azure Lake, and Septet Pass trails.",
+    "closure_comment": "<p>Frances Creek FSR closed at 51km due to a bridge closure. The bridge is not safe for vehicle crossings. The road is bermed at the 51km mark and not passable by motor vehicle. This closure restricts access to the trailheads of the McLean Creek, Azure Lake, and Septet Pass trails.</p>",
     "Event_Type": "Road closure",
     "comment_date": "10/26/2026",
     "entry_userid": "IDIR\\ACERNOKS",
@@ -2466,7 +2466,7 @@
   {
     "rec_resource_id": "REC5515",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Frances Creek FSR closed at 51km due to a bridge closure.  The bridge is not safe for vehicle crossings.  The road is bermed at the 51km mark and not passable by motor vehicle.  This closure restricts access to the trailheads of the McLean Creek, Azure Lake, and Septet Pass trails.\r\nNote: the north access via the Bugaboo-Septet FSR is available.",
+    "closure_comment": "<p>Frances Creek FSR closed at 51km due to a bridge closure. The bridge is not safe for vehicle crossings. The road is bermed at the 51km mark and not passable by motor vehicle. This closure restricts access to the trailheads of the McLean Creek, Azure Lake, and Septet Pass trails.<br>Note: the north access via the Bugaboo-Septet FSR is available.</p>",
     "Event_Type": "Road closure",
     "comment_date": "10/26/2026",
     "entry_userid": "IDIR\\GELECLAI",
@@ -2477,7 +2477,7 @@
   {
     "rec_resource_id": "REC5539",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Lawless Britton FSR, right above Murphy Lakes is closed due to a severe washout.  ",
+    "closure_comment": "<p>Lawless Britton FSR, right above Murphy Lakes is closed due to a severe washout.</p>",
     "Event_Type": "Road closure",
     "comment_date": "12/11/2023",
     "entry_userid": "IDIR\\EABELS",
@@ -2488,7 +2488,7 @@
   {
     "rec_resource_id": "REC5576",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "North Carnes Recreation site will be CLOSED from Nov 2nd 2026 to Nov 15th for road improvements. South Carnes Camping area is still open. If you have any questions regarding this closure please contact recinfo@gov.bc.ca",
+    "closure_comment": "<p>North Carnes Recreation site will be closed from Nov 2nd 2026 to Nov 15th for road improvements. South Carnes Camping area is still open. If you have any questions regarding this closure please contact recinfo@gov.bc.ca</p>",
     "Event_Type": "Construction",
     "comment_date": "11/2/2023",
     "entry_userid": "IDIR\\MARBENNE",
@@ -2499,7 +2499,7 @@
   {
     "rec_resource_id": "REC5595",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "The recreation trail is closed due to flooding and safety concerns.",
+    "closure_comment": "<p>The recreation trail is closed due to flooding and safety concerns.</p>",
     "Event_Type": "Public safety",
     "comment_date": "4/30/2018",
     "entry_userid": "IDIR\\DCHEVERI",
@@ -2510,7 +2510,7 @@
   {
     "rec_resource_id": "REC5627",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2521,7 +2521,7 @@
   {
     "rec_resource_id": "REC5641",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2532,7 +2532,7 @@
   {
     "rec_resource_id": "REC5647",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This trail is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2543,7 +2543,7 @@
   {
     "rec_resource_id": "REC5668",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "The Recreation Site/Trail is closed due to an active wildfire in the area. The area is \r\ncurrently under Evacuation Alert. Find further information at www.bcwildfire.ca ",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to an active wildfire in the area. The area is currently under Evacuation Alert. Find further information at www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/21/2024",
     "entry_userid": "IDIR\\MELWERT",
@@ -2554,7 +2554,7 @@
   {
     "rec_resource_id": "REC5713",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening. ",
+    "closure_comment": "<p>Site currently inaccessible due to washout at 41km on Parsnip West FSR. No estimated time of reopening.</p>",
     "Event_Type": "Road closure",
     "comment_date": "6/1/2023",
     "entry_userid": "IDIR\\ABILAWCH",
@@ -2565,7 +2565,7 @@
   {
     "rec_resource_id": "REC5752",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "TRAIL IS CLOSED ",
+    "closure_comment": "<p>Trail is closed</p>",
     "Event_Type": "Trail closure",
     "comment_date": "5/2/2022",
     "entry_userid": "IDIR\\LUCLARKE",
@@ -2576,7 +2576,7 @@
   {
     "rec_resource_id": "REC5758",
     "rec_resource_type_code": "RR",
-    "closure_comment": "The Recreation Site/Trail is closed due to an active wildfire in the area. The area is \r\ncurrently under Evacuation Alert. Find further information at www.bcwildfire.ca ",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to an active wildfire in the area. The area is currently under Evacuation Alert. Find further information at www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/13/2023",
     "entry_userid": "IDIR\\MELWERT",
@@ -2587,7 +2587,7 @@
   {
     "rec_resource_id": "REC5760",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site is closed due to failing infrastructure and danger trees creating a risk to public health and safety.",
+    "closure_comment": "<p>Site is closed due to failing infrastructure and danger trees creating a risk to public health and safety.</p>",
     "Event_Type": "Public safety",
     "comment_date": "8/31/2026",
     "entry_userid": "IDIR\\MWAGMANN",
@@ -2598,7 +2598,7 @@
   {
     "rec_resource_id": "REC5762",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site is closed due to failing infrastructure and danger trees creating a risk to public health and safety.\r\n",
+    "closure_comment": "<p>Site is closed due to failing infrastructure and danger trees creating a risk to public health and safety.</p>",
     "Event_Type": "Public safety",
     "comment_date": "8/31/2026",
     "entry_userid": "IDIR\\MWAGMANN",
@@ -2609,7 +2609,7 @@
   {
     "rec_resource_id": "REC5763",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site is closed due to failing infrastructure and danger trees creating a risk to public health and safety.",
+    "closure_comment": "<p>Site is closed due to failing infrastructure and danger trees creating a risk to public health and safety.</p>",
     "Event_Type": "Public safety",
     "comment_date": "8/31/2026",
     "entry_userid": "IDIR\\MWAGMANN",
@@ -2620,7 +2620,7 @@
   {
     "rec_resource_id": "REC5862",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2631,7 +2631,7 @@
   {
     "rec_resource_id": "REC5874",
     "rec_resource_type_code": "RTR",
-    "closure_comment": " The Recreation Site/Trail is closed due to an active wildfire in the area. ",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to an active wildfire in the area.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/21/2025",
     "entry_userid": "IDIR\\GELECLAI",
@@ -2642,7 +2642,7 @@
   {
     "rec_resource_id": "REC5880",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " The recreation site is closed due to flood damage and remains closed until an assessment is completed.",
+    "closure_comment": "<p>The recreation site is closed due to flood damage and remains closed until an assessment is completed.</p>",
     "Event_Type": "Flood damage",
     "comment_date": "11/15/2021",
     "entry_userid": "IDIR\\GELECLAI",
@@ -2653,7 +2653,7 @@
   {
     "rec_resource_id": "REC5886",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Trail is closed from Sky Pit Road south as the bridge over Slim Creek has failed and it is not safe to cross.",
+    "closure_comment": "<p>Trail is closed from Sky Pit Road south as the bridge over Slim Creek has failed and it is not safe to cross.</p>",
     "Event_Type": "Trail closure",
     "comment_date": "4/14/2026",
     "entry_userid": "IDIR\\MELWERT",
@@ -2664,7 +2664,7 @@
   {
     "rec_resource_id": "REC5932",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2675,7 +2675,7 @@
   {
     "rec_resource_id": "REC5937",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Bear Den's Trail is currently impassable due to significant blowdown. For other hiking ideas, please visit: https://beta.sitesandtrailsbc.ca/ ",
+    "closure_comment": "<p>Bear Den's Trail is currently impassable due to significant blowdown. For other hiking ideas, please visit: https://beta.sitesandtrailsbc.ca/</p>",
     "Event_Type": "Trail closure",
     "comment_date": "7/2/2025",
     "entry_userid": "IDIR\\BRHUGHES",
@@ -2686,7 +2686,7 @@
   {
     "rec_resource_id": "REC5940",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "TRAIL IS CLOSED ",
+    "closure_comment": "<p>Trail is closed</p>",
     "Event_Type": "Trail closure",
     "comment_date": "5/2/2022",
     "entry_userid": "IDIR\\LUCLARKE",
@@ -2697,7 +2697,7 @@
   {
     "rec_resource_id": "REC5967",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2708,7 +2708,7 @@
   {
     "rec_resource_id": "REC5968",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2719,7 +2719,7 @@
   {
     "rec_resource_id": "REC5969",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2730,7 +2730,7 @@
   {
     "rec_resource_id": "REC5970",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2741,7 +2741,7 @@
   {
     "rec_resource_id": "REC5971",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2752,7 +2752,7 @@
   {
     "rec_resource_id": "REC5974",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2763,7 +2763,7 @@
   {
     "rec_resource_id": "REC5975",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2774,7 +2774,7 @@
   {
     "rec_resource_id": "REC5976",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2785,7 +2785,7 @@
   {
     "rec_resource_id": "REC5977",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2796,7 +2796,7 @@
   {
     "rec_resource_id": "REC6044",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2807,7 +2807,7 @@
   {
     "rec_resource_id": "REC6057",
     "rec_resource_type_code": "RTE",
-    "closure_comment": "This trail is closed until further notice due to wildfire activity in the area.",
+    "closure_comment": "<p>This trail is closed until further notice due to wildfire activity in the area.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/25/2023",
     "entry_userid": "IDIR\\LDCOX",
@@ -2818,7 +2818,7 @@
   {
     "rec_resource_id": "REC6081",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2829,7 +2829,7 @@
   {
     "rec_resource_id": "REC6082",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Permanently Closed",
+    "closure_comment": "<p>Permanently closed</p>",
     "Event_Type": "Facility closure",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2840,7 +2840,7 @@
   {
     "rec_resource_id": "REC6084",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "closed due to blowdown",
+    "closure_comment": "<p>Closed due to blowdown</p>",
     "Event_Type": "Trail closure",
     "comment_date": "7/8/2019",
     "entry_userid": "IDIR\\JCMOSHER",
@@ -2851,7 +2851,7 @@
   {
     "rec_resource_id": "REC6093",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2862,7 +2862,7 @@
   {
     "rec_resource_id": "REC6094",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2873,7 +2873,7 @@
   {
     "rec_resource_id": "REC6095",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2884,7 +2884,7 @@
   {
     "rec_resource_id": "REC6132",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This Recreation Trail is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca",
+    "closure_comment": "<p>This Recreation Trail is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "8/4/2021",
     "entry_userid": "IDIR\\RTATE",
@@ -2895,7 +2895,7 @@
   {
     "rec_resource_id": "REC6144",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025\r\n\r\n****** Please be advised: 2025 ***** \r\nCedar Lake Recreation Site near Campbell River will be closed from mid-July to mid-August as the Blackwater FSR access will require closure during a Western toadlet migration. The exact dates will depend on the migration start and end. For more information and updates:\r\nhttps://www2.gov.bc.ca/gov/content/industry/natural-resource-use/resource-roads/local-road-safety-information/campbell-river-road-safety-information#restrictions\r\n",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p><p>Please be advised: 2025<br>Cedar Lake Recreation Site near Campbell River will be closed from mid-July to mid-August as the Blackwater FSR access will require closure during a Western toadlet migration. The exact dates will depend on the migration start and end. For more information and updates:<br>https://www2.gov.bc.ca/gov/content/industry/natural-resource-use/resource-roads/local-road-safety-information/campbell-river-road-safety-information#restrictions</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2906,7 +2906,7 @@
   {
     "rec_resource_id": "REC6208",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2917,7 +2917,7 @@
   {
     "rec_resource_id": "REC6214",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2928,7 +2928,7 @@
   {
     "rec_resource_id": "REC6215",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2939,7 +2939,7 @@
   {
     "rec_resource_id": "REC6216",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "This trail is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This trail is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2950,7 +2950,7 @@
   {
     "rec_resource_id": "REC6276",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Due to excessive flooding and high water all sites up the Squamish Valley have been closed until further notice. ",
+    "closure_comment": "<p>Due to excessive flooding and high water all sites up the Squamish Valley have been closed until further notice.</p>",
     "Event_Type": "Flood",
     "comment_date": "11/12/2026",
     "entry_userid": "IDIR\\TAMCMILL",
@@ -2961,7 +2961,7 @@
   {
     "rec_resource_id": "REC6304",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -2972,7 +2972,7 @@
   {
     "rec_resource_id": "REC6328",
     "rec_resource_type_code": "RTR",
-    "closure_comment": " The Snooka Creek Trails are currently CLOSED for public safety due to bear activity in the area. Posted November 3, 2026.",
+    "closure_comment": "<p>The Snooka Creek Trails are currently closed for public safety due to bear activity in the area. Posted November 3, 2026.</p>",
     "Event_Type": "Wildlife",
     "comment_date": "11/3/2026",
     "entry_userid": "IDIR\\COFSTIE",
@@ -2983,7 +2983,7 @@
   {
     "rec_resource_id": "REC6358",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Trail is CLOSED due to hazards from dead and burned trees, as a result of the Elaho Fire in 2015.  The Elaho Giant Tree has unfortunately been confirmed dead as well.",
+    "closure_comment": "<p>Trail is closed due to hazards from dead and burned trees, as a result of the Elaho Fire in 2015. The Elaho Giant Tree has unfortunately been confirmed dead as well.</p>",
     "Event_Type": "Trail closure",
     "comment_date": "5/2/2016",
     "entry_userid": "IDIR\\TAMCMILL",
@@ -2994,7 +2994,7 @@
   {
     "rec_resource_id": "REC6415",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3005,7 +3005,7 @@
   {
     "rec_resource_id": "REC6416",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3016,7 +3016,7 @@
   {
     "rec_resource_id": "REC6427",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3027,7 +3027,7 @@
   {
     "rec_resource_id": "REC6428",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Permanently closed",
+    "closure_comment": "<p>Permanently closed</p>",
     "Event_Type": "Facility closure",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3038,7 +3038,7 @@
   {
     "rec_resource_id": "REC6435",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3049,7 +3049,7 @@
   {
     "rec_resource_id": "REC6436",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3060,7 +3060,7 @@
   {
     "rec_resource_id": "REC6437",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025\r\n\r\n****** Please be advised: 2025 ***** \r\nCedar Lake Recreation Site near Campbell River will be closed from mid-July to mid-August as the Blackwater FSR access will require closure during a Western toadlet migration. The exact dates will depend on the migration start and end. For more information and updates:\r\nhttps://www2.gov.bc.ca/gov/content/industry/natural-resource-use/resource-roads/local-road-safety-information/campbell-river-road-safety-information#restrictions\r\n",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p><p>Please be advised: 2025<br>Cedar Lake Recreation Site near Campbell River will be closed from mid-July to mid-August as the Blackwater FSR access will require closure during a Western toadlet migration. The exact dates will depend on the migration start and end. For more information and updates:<br>https://www2.gov.bc.ca/gov/content/industry/natural-resource-use/resource-roads/local-road-safety-information/campbell-river-road-safety-information#restrictions</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3071,7 +3071,7 @@
   {
     "rec_resource_id": "REC6446",
     "rec_resource_type_code": "SIT",
-    "closure_comment": " This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -3082,7 +3082,7 @@
   {
     "rec_resource_id": "REC6455",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3093,7 +3093,7 @@
   {
     "rec_resource_id": "REC6477",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3104,7 +3104,7 @@
   {
     "rec_resource_id": "REC6484",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site closed indefinitely due to flooding.",
+    "closure_comment": "<p>Site closed indefinitely due to flooding.</p>",
     "Event_Type": "Flood",
     "comment_date": "6/25/2012",
     "entry_userid": "IDIR\\ELGILLET",
@@ -3115,7 +3115,7 @@
   {
     "rec_resource_id": "REC6505",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3126,7 +3126,7 @@
   {
     "rec_resource_id": "REC6545",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Trail closed due to proximity to wildfire.",
+    "closure_comment": "<p>Trail closed due to proximity to wildfire.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/6/2026",
     "entry_userid": "IDIR\\GDHODSON",
@@ -3137,7 +3137,7 @@
   {
     "rec_resource_id": "REC6551",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\KAMITCHE",
@@ -3148,7 +3148,7 @@
   {
     "rec_resource_id": "REC6571",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3159,7 +3159,7 @@
   {
     "rec_resource_id": "REC6591",
     "rec_resource_type_code": "RR",
-    "closure_comment": "The Recreation Site is closed due to an active  wildfire in the area. For further information visit www.bcwildfire.ca",
+    "closure_comment": "<p>The Recreation Site is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/14/2021",
     "entry_userid": "IDIR\\DCHEVERI",
@@ -3170,7 +3170,7 @@
   {
     "rec_resource_id": "REC6592",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The Spirit Lake Trail is closed at the Mid-Mission Creek bridge located approximately 700 m from the trailhead due to public safety concerns with the bridge structure at that location. Trail users may still access and enjoy the first 700 m of trail from the trailhead; however, the bridge closure prevents access to the remainder of the trail beyond the bridge.",
+    "closure_comment": "<p>The Spirit Lake Trail is closed at the Mid-Mission Creek bridge located approximately 700 m from the trailhead due to public safety concerns with the bridge structure at that location. Trail users may still access and enjoy the first 700 m of trail from the trailhead; however, the bridge closure prevents access to the remainder of the trail beyond the bridge.</p>",
     "Event_Type": "Bridge outage",
     "comment_date": "5/8/2026",
     "entry_userid": "IDIR\\LADUKE",
@@ -3181,7 +3181,7 @@
   {
     "rec_resource_id": "REC6613",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3192,7 +3192,7 @@
   {
     "rec_resource_id": "REC6618",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3203,7 +3203,7 @@
   {
     "rec_resource_id": "REC6619",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3214,7 +3214,7 @@
   {
     "rec_resource_id": "REC6636",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3225,7 +3225,7 @@
   {
     "rec_resource_id": "REC6664",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "The Recreation Site & Trail is closed due to an active wildfire in the area.   For further information visit www.bcwildfire.ca",
+    "closure_comment": "<p>The Recreation Site &amp; Trail is closed due to an active wildfire in the area. For further information visit www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "8/19/2026",
     "entry_userid": "IDIR\\THANN",
@@ -3236,7 +3236,7 @@
   {
     "rec_resource_id": "REC6678",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3247,7 +3247,7 @@
   {
     "rec_resource_id": "REC6784",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed until further notice. New natural hazards have been created by the Capricorn Mudslide of August 6, 2010.  This site is no longer safe to use. ",
+    "closure_comment": "<p>This site is closed until further notice. New natural hazards have been created by the Capricorn Mudslide of August 6, 2010. This site is no longer safe to use.</p>",
     "Event_Type": "Public safety",
     "comment_date": "8/6/2010",
     "entry_userid": "IDIR\\TAMCMILL",
@@ -3258,7 +3258,7 @@
   {
     "rec_resource_id": "REC6802",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "The Recreation Site/Trail is closed due to an active wildfire in the area. The area is \r\ncurrently under Evacuation order. Find further information at www.bcwildfire.ca ",
+    "closure_comment": "<p>The Recreation Site/Trail is closed due to an active wildfire in the area. The area is currently under Evacuation Order. Find further information at www.bcwildfire.ca</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/21/2024",
     "entry_userid": "IDIR\\JCMOSHER",
@@ -3269,7 +3269,7 @@
   {
     "rec_resource_id": "REC6822",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Trail closed due to bridge issues. Will remain closed until major repairs. ",
+    "closure_comment": "<p>Trail closed due to bridge issues. Will remain closed until major repairs.</p>",
     "Event_Type": "Bridge outage",
     "comment_date": "1/23/2024",
     "entry_userid": "IDIR\\ELGILLET",
@@ -3280,7 +3280,7 @@
   {
     "rec_resource_id": "REC6826",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "This site is closed for safety reasons, effective immediately, until further notice.\r\n15 May, 2025",
+    "closure_comment": "<p>This site is closed for safety reasons, effective immediately, until further notice.<br>15 May, 2025</p>",
     "Event_Type": "Public safety",
     "comment_date": "5/15/2025",
     "entry_userid": "IDIR\\GRACAMER",
@@ -3291,7 +3291,7 @@
   {
     "rec_resource_id": "REC6851",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site Closed.  Bonanza Bluffs is a user maintained recreation site that has experienced soil erosion and vegetation damage in sensitive ecosystems from off-trail motorcycle use and garbage accumulation from users.  ",
+    "closure_comment": "<p>Site closed. Bonanza Bluffs is a user maintained recreation site that has experienced soil erosion and vegetation damage in sensitive ecosystems from off-trail motorcycle use and garbage accumulation from users.</p>",
     "Event_Type": "Environmental related",
     "comment_date": "5/9/2022",
     "entry_userid": "IDIR\\LUCLARKE",
@@ -3302,7 +3302,7 @@
   {
     "rec_resource_id": "REC6941",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Trails north and west of Porcupine Meadows and Bonaparte Provincial Park remains closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc) and to prevent negative impacts to ecosystems and wildlife.\r\n",
+    "closure_comment": "<p>Trails north and west of Porcupine Meadows and Bonaparte Provincial Park remain closed for wildfire recovery activities (for example, danger tree assessing and falling, area assessments, etc.) and to prevent negative impacts to ecosystems and wildlife.</p>",
     "Event_Type": "Fire rehabilitation",
     "comment_date": "4/11/2024",
     "entry_userid": "IDIR\\NKEKULA",
@@ -3313,7 +3313,7 @@
   {
     "rec_resource_id": "REC97585",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Harvey Recreation Site was completely washed away by flooding in the fall of 2017. ",
+    "closure_comment": "<p>Harvey Recreation Site was completely washed away by flooding in the fall of 2017.</p>",
     "Event_Type": "Catastrophic event",
     "comment_date": "1/2/2018",
     "entry_userid": "IDIR\\JDCOUTTS",
@@ -3324,7 +3324,7 @@
   {
     "rec_resource_id": "REC97641",
     "rec_resource_type_code": "SIT",
-    "closure_comment": "Site Closed.\r\nThe Recreation Site/Trail is closed due to an active wildfire in the area. ",
+    "closure_comment": "<p>Site closed.<br>The Recreation Site/Trail is closed due to an active wildfire in the area.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/21/2025",
     "entry_userid": "IDIR\\EABELS",
@@ -3335,7 +3335,7 @@
   {
     "rec_resource_id": "REC97838",
     "rec_resource_type_code": "RTR",
-    "closure_comment": "Closed due to wildfire.",
+    "closure_comment": "<p>Closed due to wildfire.</p>",
     "Event_Type": "Wildfire",
     "comment_date": "7/23/2024",
     "entry_userid": "IDIR\\BRPETCH",
