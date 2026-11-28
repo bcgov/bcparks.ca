@@ -2,7 +2,9 @@ const schedule = require("node-schedule");
 const dotenv = require("dotenv");
 const { exec } = require("child_process");
 
+const { cmsAxios } = require("./shared/axiosConfig");
 const { getLogger } = require("./shared/logging");
+const { clearTaskErrorsIfQueueEmpty } = require("./shared/taskQueue");
 const { batchQueueParks } = require("./elasticsearch/scripts/batchQueueParks");
 const { indexParks } = require("./elasticsearch/scripts/indexParks");
 const {
@@ -25,6 +27,9 @@ const {
 } = require("./email-alerts/scripts/sendParkNamesEmails");
 const { dootPublish } = require("./doot/scripts/publish");
 const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
+const {
+  checkSystemAlerts,
+} = require("./system-alerts/scripts/checkSystemAlerts");
 
 (async () => {
   dotenv.config({
@@ -42,6 +47,7 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
 
   let recentAdvisoryEmails = [];
   let recentDootEmails = [];
+  let strapiFailures = 0;
 
   /**
    * Starts the cron job to reindex parks as entries are added to the queuedTasks
@@ -63,8 +69,31 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
     }
     try {
       logger.info("Starting cron");
+
+      // Jobs catch their own errors, so on prod, exit after repeated Strapi
+      // failures to put the pod in CrashLoopBackOff and trigger a Platform
+      // Services alert.
+      if (process.env.BCPARKS_ENVIRONMENT === "prod") {
+        try {
+          await cmsAxios.get("/api/queued-tasks?pagination[limit]=1");
+          strapiFailures = 0;
+        } catch (error) {
+          strapiFailures++;
+          logger.error(
+            `Strapi check failed (${strapiFailures} in a row): ${error}`,
+          );
+          if (strapiFailures > 2) {
+            process.exit(1);
+          }
+          return;
+        }
+      }
+
+      // TODO: The recent-email dedupe lists live in memory and are lost on
+      // restart. Move them to the PVC (or Redis for everything?).
       recentAdvisoryEmails = await sendAdvisoryEmails(recentAdvisoryEmails);
       recentDootEmails = await sendDootEmails(recentDootEmails);
+
       await sendParkNamesEmails();
       await populateGeoShapes({ silent: true });
       await batchQueueParks();
@@ -88,6 +117,8 @@ const { publishToRecSpace } = require("./recspace/scripts/publishAdvisories");
 
       await dootPublish();
       await publishToRecSpace();
+      await checkSystemAlerts();
+      await clearTaskErrorsIfQueueEmpty();
 
       // record pod liveness for health check every time the job runs
       // (use shell command to prevent file locking)

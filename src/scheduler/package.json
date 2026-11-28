@@ -10,13 +10,14 @@
     "deleteindex": "node manage.js deleteindex",
     "reindex": "node manage.js reindex",
     "rebuild": "node manage.js rebuild",
-    "liveness": "node manage.js liveness"
+    "liveness": "node manage.js liveness",
+    "test": "jest"
   },
   "author": "mike@oxd.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "@opensearch-project/opensearch": "^2.13.0",
-    "axios": "^1.21.0",
+    "@opensearch-project/opensearch": "^2.14.0",
+    "axios": "^1.21.1",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.1",
     "dotenv": "^16.6.1",
@@ -25,9 +26,12 @@
     "lodash": "^4.18.1",
     "node-schedule": "^2.1.2",
     "nodemailer": "^6.10.1",
-    "proj4": "^2.22.0",
+    "proj4": "^2.23.0",
     "qs": "^6.17.1",
     "simple-oauth2": "^5.1.0",
     "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

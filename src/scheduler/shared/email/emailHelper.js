@@ -1,4 +1,13 @@
 const path = require("node:path");
+const _ = require("lodash");
+
+/**
+ * Splits a comma-separated string into a trimmed array of non-empty values.
+ *
+ * @param {string} csv Comma-separated values.
+ * @returns {string[]} Trimmed, non-empty values.
+ */
+const csvToArray = (csv) => _.compact(_.map(_.split(csv || "", ","), _.trim));
 
 /**
  * Filters recipients against the configured non-production whitelist.
@@ -76,7 +85,7 @@ const getLogoAttachment = function () {
   return [
     {
       filename: "logo-light.png",
-      path: path.join(__dirname, "..", "images", "logo-light.png"),
+      path: path.join(__dirname, "images", "logo-light.png"),
       cid: "logo-light.png",
       contentDisposition: "inline",
     },
@@ -99,8 +108,26 @@ const getSenderName = function () {
     : environment.toUpperCase();
 };
 
+/**
+ * Makes an email's HTML viewable as a local preview file. Inline images
+ * referenced by cid (only resolved when the email is sent with attachments)
+ * are pointed at the image files on disk instead.
+ *
+ * @param {string} html Rendered email HTML.
+ * @returns {string} HTML for a preview file in the scheduler folder.
+ */
+const getPreviewHtml = function (html) {
+  return _.replace(
+    html,
+    /cid:logo-light\.png/g,
+    "./shared/email/images/logo-light.png",
+  );
+};
+
 module.exports = {
+  csvToArray,
   filterRecipientsByEnvironment,
   getLogoAttachment,
+  getPreviewHtml,
   getSenderName,
 };

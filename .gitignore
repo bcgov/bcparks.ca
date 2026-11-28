@@ -69,7 +69,6 @@
 **/*.log
 **/*.sqlite
 **/*.sqlite3
-tools/syncdb/*.sql
 
 ############################
 # Misc.
@@ -195,6 +194,7 @@ bcparks.ca-scrape.laccdb
 
 **/cms/data/images/*
 **/scheduler/mail-test-**.html
+**/scheduler/data/
 
 # Don't ignore .s2i bin
 !**/.s2i/bin/

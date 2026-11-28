@@ -7,13 +7,16 @@ exports.dootSplitMessage = async function (message) {
   // add the individual items back into the queue
   for (const item of message?.jsonData) {
     try {
-      await addToQueue({
-        data: {
-          action: "doot publish",
-          numericData: tryGetOrcs(item),
-          jsonData: [item],
+      await addToQueue(
+        {
+          data: {
+            action: "doot publish",
+            numericData: tryGetOrcs(item),
+            jsonData: [item],
+          },
         },
-      });
+        message.documentId,
+      );
     } catch (error) {
       splitOk = false;
       throw new Error(
